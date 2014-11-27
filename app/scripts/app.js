@@ -24,7 +24,7 @@ angular.module('ngChemApp', [
       
           // catch all route
     // send users to the form page 
-    $urlRouterProvider.otherwise('/demo/add');
+    $urlRouterProvider.otherwise('/demo/intro');
 
 
       $stateProvider
@@ -39,6 +39,14 @@ angular.module('ngChemApp', [
         // nested states 
         // each of these sections will have their own view
         // url will be nested (/form/profile)
+        .state('demo.intro', {
+            url: '/intro',
+            templateUrl: 'views/demo-intro.html',
+            controller: function($rootScope) {
+              $rootScope.dynamic = 0;
+            }
+        })
+
         .state('demo.add', {
             url: '/add',
             templateUrl: 'views/demo-add.html',

@@ -13,7 +13,7 @@ angular.module('ngChemApp')
 
     $scope.formData = {};
 
-    $rootScope.dynamic = 0.5;
+    $rootScope.dynamic = 0;
     $rootScope.max = 4;
     
     // function to process the form
