@@ -14,7 +14,7 @@ angular.module('ngChemApp', [
     'ngCookies',
     'ngMessages',
     'ngResource',
-    //'ngRoute',
+    'ngGrid',
     'ngSanitize',
     'ngTouch',
     'ui.router',
