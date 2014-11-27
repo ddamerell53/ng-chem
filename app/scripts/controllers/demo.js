@@ -13,8 +13,11 @@ angular.module('ngChemApp')
 
     $scope.formData = {};
 
+    $rootScope.step = 0
+    $rootScope.totalSteps = 4
     $rootScope.dynamic = 0;
-    $rootScope.max = 4;
+    $rootScope.max = 100;
+    $state.current = "demo.intro";
     
     // function to process the form
     $scope.processForm = function() {
