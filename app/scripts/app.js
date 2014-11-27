@@ -17,10 +17,16 @@ angular.module('ngChemApp', [
     //'ngRoute',
     'ngSanitize',
     'ngTouch',
-    'ui.router'
+    'ui.router',
+    'ui.bootstrap'
   ])
   .config(function ($stateProvider, $urlRouterProvider) {
-    
+      
+          // catch all route
+    // send users to the form page 
+    $urlRouterProvider.otherwise('/demo/add');
+
+
       $stateProvider
           
         // HOME STATES AND NESTED VIEWS ========================================
@@ -35,32 +41,37 @@ angular.module('ngChemApp', [
         // url will be nested (/form/profile)
         .state('demo.add', {
             url: '/add',
-            //template: '<p>Hello</p>'
-            templateUrl: 'views/demo-add.html'
+            templateUrl: 'views/demo-add.html',
+            controller: function($rootScope) {
+              $rootScope.dynamic = 0.5;
+            }
         })
 
         .state('demo.map', {
             url: '/map',
-            //template: '<p>Hello</p>'
-            templateUrl: 'views/demo-map.html'
+            templateUrl: 'views/demo-map.html',
+            controller: function($rootScope) {
+              $rootScope.dynamic = 1.5;
+            }
         })
         
         // url will be /form/interests
         .state('demo.validate', {
             url: '/validate',
-            templateUrl: 'views/demo-validate.html'
-            //template: '<p>second</p>'
+            templateUrl: 'views/demo-validate.html',
+            controller: function($rootScope) {
+              $rootScope.dynamic = 2.5;
+            }
         })
         
         // url will be /form/payment
         .state('demo.finish', {
             url: '/finish',
-            templateUrl: 'views/demo-finish.html'
-            //template: '<p>third</p>'
+            templateUrl: 'views/demo-finish.html',
+            controller: function($rootScope) {
+              $rootScope.dynamic = 3.5;
+            }
         });
         
-    // catch all route
-    // send users to the form page 
-    //$urlRouterProvider.otherwise('/demo/add');
 
   });
