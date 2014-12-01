@@ -45,7 +45,6 @@ angular.module('ngChemApp', [
             controller: function($rootScope) {
               $rootScope.step = 0;
               $rootScope.dynamic = 0;
-
             }
         })
 
@@ -55,6 +54,7 @@ angular.module('ngChemApp', [
             controller: function($rootScope) {
               $rootScope.step = 1;
               $rootScope.dynamic = 41;
+              applyTicks("add");
             }
         })
 
@@ -64,6 +64,7 @@ angular.module('ngChemApp', [
             controller: function($rootScope) {
               $rootScope.step = 2;
               $rootScope.dynamic = 58;
+              applyTicks("map");
             }
         })
         
@@ -74,6 +75,7 @@ angular.module('ngChemApp', [
             controller: function($rootScope) {
               $rootScope.step = 3;
               $rootScope.dynamic = 74;
+              applyTicks("validate");
             }
         })
         
@@ -84,6 +86,7 @@ angular.module('ngChemApp', [
             controller: function($rootScope) {
               $rootScope.step = 4;
               $rootScope.dynamic = 90.5;
+              applyTicks("finish");
             }
         });
         
