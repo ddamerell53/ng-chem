@@ -45,6 +45,7 @@ angular.module('ngChemApp', [
             controller: function($rootScope) {
               $rootScope.step = 0;
               $rootScope.dynamic = 0;
+              applyTicks("intro");
             }
         })
 
