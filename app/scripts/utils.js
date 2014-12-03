@@ -76,11 +76,17 @@ function smilesOrInchi(in_str) {
     //if it starts with InChi, it's inchi
     //otherwise SMILES (for now)
     var type_str = ""
+    //is it inchi?
     if (in_str.trim().match(/^((InChI=)?[^J][0-9BCOHNSOPrIFla+\-\(\)\\\/,pqbtmsih]{6,})$/ig)) {
         type_str = "InChi";
     }
+    //is it inchikey?
     else if (27===in_str.length && '-'===in_str[14] && '-'===in_str[25] && !!in_str.match(/^([0-9A-Z\-]+)$/)) {
         type_str = "InChi Key"
+    }
+    //is it a chembl id?
+    else if (in_str.trim().match(/^((CHEMBL)?[0-9])$/)) {
+        type_str = "ChEMBL ID"
     }
     else {
         type_str = "SMILES"

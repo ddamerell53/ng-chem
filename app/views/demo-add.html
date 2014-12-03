@@ -6,7 +6,6 @@
 			<label for="text_input" class="blue text-center"><strong class="nexa">Paste your SMILES or IDs here</strong></label>
 			<textarea id="text_input" name="text_input" class="form-control" rows="5" ng-model="input_string" ng-model-options="{ debounce:700 }"></textarea>
 		</div>
-		<div>Previous entry: {{input_string || "none"}}</div>
 			<a class="btn btn-primary pull-right" role="button" ui-sref="demo.map" ng-click="parseInput()">Next</a>
 	</div>
 
