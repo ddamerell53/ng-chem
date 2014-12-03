@@ -3,7 +3,8 @@ home:
 
 add:
 #Labels 
-# Sd file parsed by SDMolSupplier
+# Sd file parsed by SDMolSupplier in rdkit, chemdraw conversion via import openbabel conv=openbabel.OBConversion()
+# http://openbabel.org/docs/dev/UseTheLibrary/PythonDoc.html
     smiles_or_id_label: Paste your SMILES or IDs here
     file_upload_label: Or upload a file here
     drawing_label: Draw a molecule here
@@ -14,7 +15,7 @@ add:
     drawing_help_text: Draw the molecule you would like to register. If salts or hydrates are required, draw these as neutral molecules alongside
 
 
-#File errors including 
+#File errors including, load the file using pandas http://nbviewer.ipython.org/github/Team-SKI/snippets/blob/master/IPython/RDKit%26pandas%20demo%20of%20new%20functions.ipynb
     sd_invalid: The SD file uploaded was not of a valid format, please verify
     cdmxl_invalid: The Chemdraw XML file uploaded was not of a valid format, please verify
 
