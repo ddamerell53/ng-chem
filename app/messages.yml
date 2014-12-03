@@ -2,7 +2,8 @@ home:
     help_text_1: You will need either a SMILES string or list of SMILES; an ID or list of IDs; or a SD file
 
 add:
-#Labels
+#Labels 
+# Sd file parsed by SDMolSupplier
     smiles_or_id_label: Paste your SMILES or IDs here
     file_upload_label: Or upload a file here
     drawing_label: Draw a molecule here
@@ -23,6 +24,8 @@ add:
     cdmxl_mol_invalid: The molecule in the uploaded file was not of a valid format due to valency errors or miscelaneous non-chemical content
     drawing_mol_invalid: The drawn molecule was not of a valid format due to valency errors or miscelaneous non-chemical content
 
+#PAINS hits ttp://blog.rguha.net/?p=850. query against the list of SMARTS using http://www.rdkit.org/docs/GettingStartedInPython.html
+    mol_pains_hits_warning: [number] molecules are classified as Pan Assay Interference Compounds - are you sure you wish to register these?
 
 
 map:
