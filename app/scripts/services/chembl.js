@@ -12,7 +12,8 @@ app.factory('ChEMBLFactory',[ '$http', function ($http) {
         querySmiles: function(input_smiles) {
         	
         	//send smiles off to ChEMBL web service - populate returned data into our table
-        	$http.get(chembl_base_url + 'smiles/' + input_smiles + '.json')
+        	console.log(input_smiles);
+        	$http.get(chembl_base_url + 'smiles/' + input_smiles)
                    .success(function(data, status, headers, config) {
 					    // this callback will be called asynchronously
 					    // when the response is available

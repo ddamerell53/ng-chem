@@ -26,7 +26,7 @@ app.controller('DemoCtrl', function ($scope, $rootScope, $state, ChEMBLFactory) 
 
 	$scope.parsed_input = [];
 
-	this.input_string = "";
+	$scope.input_string = "";
 
 	$scope.gridOptions = { data: 'parsed_input',
 						   columnDefs: [{field: 'type', displayName: 'Type'},
@@ -67,7 +67,7 @@ app.controller('DemoCtrl', function ($scope, $rootScope, $state, ChEMBLFactory) 
         	}
         	else if (val.type == 'SMILES') {
         		//val.extraData = ChEMBLFactory.querySmiles("");
-        		var returned_json = ChEMBLFactory.querySmiles("").then(function(response){
+        		var returned_json = ChEMBLFactory.querySmiles(val.input_str).then(function(response){
 		        	$scope.addAlert("success", response.message );
         		},function(error) {
         			$scope.addAlert("danger", response.message );
