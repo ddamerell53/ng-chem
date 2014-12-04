@@ -28,10 +28,7 @@ app.controller('DemoCtrl', function ($scope, $rootScope, $state, ChEMBLFactory) 
 
 	$scope.input_string = "";
 
-	$scope.gridOptions = { data: 'parsed_input',
-						   columnDefs: [{field: 'type', displayName: 'Type'},
-                                        {field:'input_str', displayName:'Value'},
-                                        {field:'extraData', displayName:'From Factory'}]
+	$scope.gridOptions = { data: 'parsed_input.compounds'
 	                      };
 
 	$scope.parseInput = function (){
@@ -44,54 +41,44 @@ app.controller('DemoCtrl', function ($scope, $rootScope, $state, ChEMBLFactory) 
 		//now try a delimited list of SMILES
 		var splitted = splitInput(this.input_string);
 
-		jQuery.each(splitted, function(idx,val) {
+
+		angular.each(splitted, function(idx,val) {
 			
 			//intervene here with Chembl calls using the ChEMBLFactory
         	//interrogate each val for its type, then call the appropriate ChEMBL service to retrieve data
-        	var returned_json = {}
+        	//var returned_json = {}
         	if (val.type == 'InChi') {
         		//val.extraData = ChEMBLFactory.queryInChi();
-        		ChEMBLFactory.queryInChi().then(function(response){
-		        	$scope.addAlert("success", response.message );
-        		},function(error) {
-        			$scope.addAlert("danger", response.message );
-        		});
+        		$scope.parsed_input.push(new ChEMBLFactory(val.input_str, "inchi"));
+        		
         	}
         	else if (val.type == 'InChi Key') {
         		//val.extraData = ChEMBLFactory.queryInChiKey();
-        		var returned_json = ChEMBLFactory.queryInChiKey().then(function(response){
-		        	$scope.addAlert("success", response.message );
-        		},function(error) {
-        			$scope.addAlert("danger", response.message );
-        		});
+        		$scope.parsed_input.push(new ChEMBLFactory(val.input_str, "inchikey"));
+        		
+        		
         	}
         	else if (val.type == 'SMILES') {
-        		//val.extraData = ChEMBLFactory.querySmiles("");
-        		var returned_json = ChEMBLFactory.querySmiles(val.input_str).then(function(response){
-		        	$scope.addAlert("success", response.message );
-        		},function(error) {
-        			$scope.addAlert("danger", response.message );
-        		});
+        		$scope.parsed_input = (new ChEMBLFactory(val.input_str, "smiles"));
+        		
+        		
         	}
         	else if (val.type == 'ChEMBL ID') {
-        		//val.extraData = ChEMBLFactory.queryChemblId();
-        		var returned_json = ChEMBLFactory.queryChemblId().then(function(response){
-		        	$scope.addAlert("success", response.message );
-        		},function(error) {
-        			$scope.addAlert("danger", response.message );
-        		});
+        		$scope.parsed_input.push(new ChEMBLFactory(val.input_str, "chemblid"));
+        		
         	}
 
         	//display errors
-        	if (returned_json.resp == "danger") {
+        	/*if (returned_json.resp == "danger") {
         		$scope.addAlert(returned_json.resp, returned_json.message );
-        	}
-			$scope.parsed_input.push(val);	
+        	}*/
+			//$scope.parsed_input.push(val);	
+			console.log($scope.parsed_input);
 		});
 
 
 
-		$scope.parsed_input.push(splitted);
+		//$scope.parsed_input.push(splitted);
 	};
 
     $scope.addAlert = function(message, alert_type){
