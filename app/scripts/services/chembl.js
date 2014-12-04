@@ -5,7 +5,8 @@ var app = angular.module('ngChemApp');
 /** Factories for querying APIs **/
 app.factory('ChEMBLFactory',[ '$http', function ($http) {
 	
-	var chembl_base_url = "http://www.ebi.ac.uk/chemblws/compounds/";
+	//efine your web service location here.
+	var chembl_base_url = "http://dee.sgc.ox.ac.uk:8000/chemblws/compounds/";
 
 	return {
         querySmiles: function(input_smiles) {
