@@ -1,12 +1,123 @@
 <div class="row">
-	<h2 class="blue">Table goes here</h2>
-	<div>
-	  <div class="gridStyle" ng-grid="gridOptions"></div>
+	
+	<div class="container">
+		<div class="row">
+			<div class="alert alert-info">
+				<p class="centered"><strong>There are unmapped columns in your dataset.</strong><br/>Drag the unmapped column headers to the most appropriate panel on the right hand side</p>
+			</div>
+		</div>
+		<div class="row">
+
+			<!-- <div class="col-lg-3 col-md-3">
+
+				<div draggable>
+					<ul class="list-unstyled dimensions-list">
+						
+						<li class="dimension" data-dimension="{'key':'one', 'type':'number'}">one</li>
+						<li class="dimension" data-dimension="{'key':'one', 'type':'number'}">two</li>
+						<li class="dimension" data-dimension="{'key':'one', 'type':'number'}">three</li>
+					</ul>
+				</div>
+
+			</div>
+
+			<div class="col-lg-9 col-md-9">
+				
+				<div droppable class="well">
+					<ul class="dimensions-container list-unstyled">
+
+					</ul>
+				</div>
+
+			</div> -->
+
+			<div class="col-lg-3 col-md-3">
+
+				<div class="row">
+					<div class="col-xs-12">
+						<p class="nexa blue">Unmapped column headers</p>
+						<ul class="list-unstyled dimensions-list sortable">
+							
+							<li class="dimension well draggable" style="background-color:limegreen; color:#fff; cursor:pointer;">catalogue_no</li>
+							<li class="dimension well draggable" style="background-color:limegreen; color:#fff; cursor:pointer;">lab_id</li>
+							<li class="dimension well draggable" style="background-color:limegreen; color:#fff; cursor:pointer;">pur_percent</li>
+							<li class="dimension well draggable" style="background-color:limegreen; color:#fff; cursor:pointer;">for_pi</li>
+							<li class="dimension well draggable" style="background-color:limegreen; color:#fff; cursor:pointer;">extra_data</li>
+							<li class="dimension well draggable" style="background-color:limegreen; color:#fff; cursor:pointer;">old_project_id</li>
+							<li class="dimension well draggable" style="background-color:limegreen; color:#fff; cursor:pointer;">approved_by</li>
+						</ul>
+					</div>
+				</div>
+				
+
+			</div>
+
+			<div class="col-lg-9 col-md-9">
+				<div class="row">
+					<div class="col-md-4">
+						<p class="nexa blue">Source ID</p>
+						<ul class="dimensions-container list-unstyled sortable well" style="min-height:100px;">
+
+						</ul>
+					</div>
+
+					<div class="col-md-4">
+						<p class="nexa blue">Project ID</p>
+						<ul class="dimensions-container list-unstyled sortable well" style="min-height:100px;">
+
+						</ul>
+					</div>
+					
+					<div class="col-md-4">
+						<p class="nexa blue">Supplier</p>
+						<ul class="dimensions-container list-unstyled sortable well" style="min-height:100px;">
+
+						</ul>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-4">
+						<p class="nexa blue">Purity</p>
+						<ul class="dimensions-container list-unstyled sortable well" style="min-height:100px;">
+
+						</ul>
+					</div>
+
+					<div class="col-md-4">
+						<p class="nexa blue">Comments</p>
+						<ul class="dimensions-container list-unstyled sortable well" style="min-height:100px;">
+
+						</ul>
+					</div>
+					
+					<div class="col-md-4">
+						<p class="nexa blue">Miscellaneous</p>
+						<ul class="dimensions-container list-unstyled sortable well" style="min-height:100px;">
+
+						</ul>
+					</div>
+				</div>
+				
+					
+				
+
+			</div>
+
+		</div>	
 	</div>
-	<div>
-		{{parsed_input}}
-	</div>
-	<div class="btn-group">
-		<a class="btn btn-primary" role="button" ui-sref="demo.add">Back</a>
-	</div>	
 </div>
+
+<script>
+//
+ 
+    $( ".sortable" ).sortable();
+    $( ".draggable" ).draggable({
+      connectToSortable: ".sortable"
+    });
+    $( ".droppable" ).droppable({
+      accept: 'li.dimension',
+      snap: true
+    });
+//
+  </script>
