@@ -103,6 +103,91 @@ app.controller('DemoCtrl', function ($scope, $rootScope, $state, ChEMBLFactory) 
     };
 
 
+    $scope.validatedData = [
+                                [
+                                    {
+                                        name: "Original",
+                                        smiles: "Cn1cnc2c1c(=O)n(c(=O)n2C)C",
+                                        status: "start"
+                                    },
+                                    {
+                                        name: "Metals and Salts",
+                                        smiles: "Cn1cnc2c1c(=O)n(c(=O)n2C)C",
+                                        status: "no_change_req"
+                                    },
+                                    {
+                                        name: "Tautomers and Charges",
+                                        smiles: "Cn1cnc2c1c(=O)n(c(=O)n2C)C",
+                                        status: "no_change_req"
+                                    },
+                                    {
+                                        name: "Isotopes and Stereochemistry",
+                                        smiles: "Cn1cnc2c1c(=O)n(c(=O)n2C)C",
+                                        status: "changed"
+                                    },
+                                    {
+                                        name: "Complete",
+                                        smiles: "Cn1cnc2c1c(=O)n(c(=O)n2C)C",
+                                        status: "end"
+                                    }
+                                ],
+                                [
+                                    {
+                                        name: "Original",
+                                        smiles: "Cn1cnc2c1c(=O)n(c(=O)n2C)C",
+                                        status: "start"
+                                    },
+                                    {
+                                        name: "Metals and Salts",
+                                        smiles: "Cn1cnc2c1c(=O)n(c(=O)n2C)C",
+                                        status: "no_change_req"
+                                    },
+                                    {
+                                        name: "Tautomers and Charges",
+                                        smiles: "Cn1cnc2c1c(=O)n(c(=O)n2C)C",
+                                        status: "no_change_req"
+                                    },
+                                    {
+                                        name: "Isotopes and Stereochemistry",
+                                        smiles: "Cn1cnc2c1c(=O)n(c(=O)n2C)C",
+                                        status: "processing"
+                                    },
+                                    {
+                                        name: "Complete",
+                                        smiles: "Cn1cnc2c1c(=O)n(c(=O)n2C)C",
+                                        status: "processing"
+                                    }
+                                ],
+                                [
+                                    {
+                                        name: "Original",
+                                        smiles: "Cn1cnc2c1c(=O)n(c(=O)n2C)C",
+                                        status: "start"
+                                    },
+                                    {
+                                        name: "Metals and Salts",
+                                        smiles: "Cn1cnc2c1c(=O)n(c(=O)n2C)C",
+                                        status: "no_change_req"
+                                    },
+                                    {
+                                        name: "Tautomers and Charges",
+                                        smiles: "Cn1cnc2c1c(=O)n(c(=O)n2C)C",
+                                        status: "error"
+                                    },
+                                    {
+                                        name: "Isotopes and Stereochemistry",
+                                        smiles: "Cn1cnc2c1c(=O)n(c(=O)n2C)C",
+                                        status: "error"
+                                    },
+                                    {
+                                        name: "Complete",
+                                        smiles: "Cn1cnc2c1c(=O)n(c(=O)n2C)C",
+                                        status: "error"
+                                    }
+                                ]
+                            ];
+                            
+
 
 
 });
