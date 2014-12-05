@@ -6,81 +6,39 @@ var app = angular.module('ngChemApp');
 app.factory('ChEMBLFactory',[ '$http', function ($http) {
 	
 	//efine your web service location here.
-	var chembl_base_url = "http://dee.sgc.ox.ac.uk:8000/chemblws/compounds/";
 
-	return {
-        querySmiles: function(input_smiles) {
-        	
+	
+
+	var ChEMBLFactory = function(input_str, input_type) {
+		
+		//initialize by storing the input string as a variable
+		var self = this;
+		self.input_str = input_str;
+		self.input_type = input_type;
+		var chembl_base_url = "http://dee.sgc.ox.ac.uk:8000/chemblws/compounds/";
+
+		this.queryChembl = function(query_string) {
         	//send smiles off to ChEMBL web service - populate returned data into our table
-        	console.log(input_smiles);
-        	$http.get(chembl_base_url + 'smiles/' + input_smiles)
-                   .success(function(data, status, headers, config) {
-					    // this callback will be called asynchronously
-					    // when the response is available
-					    console.log(data);
-					    return {resp:"success", message:'successfully got smiles'};
-					  })
-                   .error(function(data, status, headers, config) {
-					    // this callback will be called asynchronously
-					    // when the response is available
-					    console.log(data);
-					    //add an error
-					    
-					    return {resp:"danger", message:'there was a problem talking to the chembl api for smiles'};
-					  });
+        	var chembl_data = $http.get(query_string);
+			chembl_data.then(function(response){
+				angular.extend(self, response.data);
+			});
+        };
 
-        	
+		if(self.input_type == "inchi") {
+			this.queryChembl(chembl_base_url + self.input_str + '.json');
+		}
+		else if(self.input_type == "inchikey") {
+			this.queryChembl(chembl_base_url + 'stdinchikey/' + self.input_str + '.json');
+		}
+		else if(self.input_type == "smiles") {
+			this.queryChembl(chembl_base_url + 'smiles/' + self.input_str + '.json');
+		}
+		else if(self.input_type == "chemblid") {
+			this.queryChembl(chembl_base_url + self.input_str + '.json');
+		}
 
-        },
-        queryChemblId: function(input_chembl_id){
-        	//send chembl id off to ChEMBL web service - populate returned data into our table
-        	$http.get($rootScope.chembl_base_url + input_chembl_id + '.json')
-                   .success(function(data, status, headers, config) {
-					    // this callback will be called asynchronously
-					    // when the response is available
-					    return {resp:"success", message:'successfully got chembl id'};
-					  })
-                   .error(function(data, status, headers, config) {
-					    // this callback will be called asynchronously
-					    // when the response is available
-					    console.log(data);
-					    //add an error
-					    return {resp:"danger", message:'there was a problem talking to the chembl api for chembl id'};
-					  });
-        },
-        queryInChi: function(input_inchi) {
-        	//send inchi off to ChEMBL web service - populate returned data into our table
-        	$http.get($rootScope.chembl_base_url + input_inchi + '.json')
-                   .success(function(data, status, headers, config) {
-					    // this callback will be called asynchronously
-					    // when the response is available
-					    return {resp:"success", message:'successfully got inchi'};
-					  })
-                   .error(function(data, status, headers, config) {
-					    // this callback will be called asynchronously
-					    // when the response is available
-					    console.log(data);
-					    //add an error
-					    return {resp:"danger", message:'there was a problem talking to the chembl api for inchi'};
-					  });
-        },
-        queryInChiKey: function(input_inchikey) {
-        	http://www.ebi.ac.uk/chemblws/compounds//QFFGVLORLPOAEC-SNVBAGLBSA-N.json
-        	//send inchi off to ChEMBL web service - populate returned data into our table
-        	$http.get($rootScope.chembl_base_url + 'stdinchikey/' + input_inchikey + '.json')
-                   .success(function(data, status, headers, config) {
-					    // this callback will be called asynchronously
-					    // when the response is available
-					    return {resp:"success", message:'successfully got inchikey'};
-					  })
-                   .error(function(data, status, headers, config) {
-					    // this callback will be called asynchronously
-					    // when the response is available
-					    console.log(data);
-					    //add an error
-					    return {resp:"danger", message:'there was a problem talking to the chembl api for inchikey'};
-					  });
-        },
+	};
 
-    };
+	return (ChEMBLFactory);
 }]);
