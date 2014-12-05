@@ -28,7 +28,7 @@ app.controller('DemoCtrl', function ($scope, $rootScope, $state, ChEMBLFactory) 
 
 	$scope.input_string = "";
 
-	$scope.gridOptions = { data: 'parsed_input.compounds'
+	$scope.gridOptions = { data: 'parsed_input.data'
 	                      };
 
 	$scope.parseInput = function (){
