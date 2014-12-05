@@ -13,7 +13,7 @@ app.controller('DemoCtrl', function ($scope, $rootScope, $state, ChEMBLFactory) 
 
 	$scope.formData = {};
 
-	$scope.myData = [];
+	$scope.myData = [ ];
 
     $rootScope.step = 0;
     $rootScope.totalSteps = 4;
@@ -24,12 +24,21 @@ app.controller('DemoCtrl', function ($scope, $rootScope, $state, ChEMBLFactory) 
         /*{ type: 'danger', msg: 'Oh snap! Change a few things up and try submitting again.' }*/
 	];
 
-	$scope.parsed_input = [];
+	$scope.parsed_input = [ {"smiles": "COc1ccc2[C@@H]3[C@H](COc2c1)C(C)(C)OC4=C3C(=O)C(=O)C5=C4OC(C)(C)[C@H]6COc7cc(OC)ccc7[C@@H]56", "chemblId": "CHEMBL446858", "passesRuleOfThree": "No", "molecularWeight": 544.59, "molecularFormula": "C32H32O8", "acdLogp": 7.67, "knownDrug": "No", "stdInChiKey": "GHBOEFUAGSHXPO-UWXQAFAOSA-N", "species": null, "synonyms": null, "medChemFriendly": "Yes", "rotatableBonds": 2, "acdBasicPka": null, "alogp": 3.63, "preferredCompoundName": null, "numRo5Violations": 1, "acdLogd": 7.67, "acdAcidicPka": null},
+                      {"smiles": "CN1C(=O)N(C)c2ncn(C)c2C1=O", "chemblId": "CHEMBL113", "passesRuleOfThree": "Yes", "molecularWeight": 194.19, "molecularFormula": "C8H10N4O2", "acdLogp": -0.63, "knownDrug": "Yes", "stdInChiKey": "RYYVLZVUVIJVGH-UHFFFAOYSA-N", "species": "NEUTRAL", "synonyms": "Coffeine,SID104171124,SID11110908,Methyltheobromine,Caffeine,Cafcit,NoDoz Caplets and Chewable Tablets,SID124879556,Theine", "medChemFriendly": "Yes", "rotatableBonds": 0, "acdBasicPka": 0.52, "alogp": -0.10, "preferredCompoundName": "CAFFEINE", "numRo5Violations": 0, "acdLogd": -0.63, "acdAcidicPka": null} ];
 
 	$scope.input_string = "";
 
-	$scope.gridOptions = { data: 'parsed_input.compounds'
-	                      };
+	$scope.gridOptions = { data: 'parsed_input',
+                           showColumnMenu:true,
+                            enableColumnReordering:true,
+                            columnDefs: [{ field: "smiles", displayName: "Structure", cellTemplate:"<chemsvg smiles='{{row.getProperty(col.field)}}' baseUrl=''></chemsvg>" },
+                                        { field: "chemblId", displayName: "Chembl ID" },
+                                        { field: "molecularWeight", displayName: "Mol Weight" },
+                                        { field: "knownDrug", displayName: "Known Drug" },
+                                        { field: "stdInChiKey", displayName: "Std InChi Key" },
+                                        { field: "acdLogp", displayName: "acdLogp" }]
+                          };
 
 	$scope.parseInput = function (){
 		//take string

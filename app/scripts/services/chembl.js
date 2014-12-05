@@ -13,15 +13,16 @@ app.factory('ChEMBLFactory',[ '$http', function ($http) {
 		
 		//initialize by storing the input string as a variable
 		var self = this;
-		self.input_str = input_str;
-		self.input_type = input_type;
+		//self.input_str = input_str;
+		//self.input_type = input_type;
 		var chembl_base_url = "http://dee.sgc.ox.ac.uk:8000/chemblws/compounds/";
 
 		this.queryChembl = function(query_string) {
         	//send smiles off to ChEMBL web service - populate returned data into our table
         	var chembl_data = $http.get(query_string);
 			chembl_data.then(function(response){
-				angular.extend(self, response.data);
+				//angular.extend(self, response.data);
+				self.data = response.data.compounds[0];
 			});
         };
 

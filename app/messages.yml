@@ -33,7 +33,7 @@ add:
 map:
 #Labels
     label: Map the fields in your SD file to those in the registration system
-    help_text: We have already set the fields that are known, other fields that you would like displayed should be dragged to the "other" section
+    help_text: Known fields have already been mapped, other fields that you would like displayed should be dragged to the 'other' section
 
     source_id_label: Checking for re-uploaded source ids for these molecules
     source_id_none_success: No source id specified
