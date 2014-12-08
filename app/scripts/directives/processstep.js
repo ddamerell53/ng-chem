@@ -9,7 +9,7 @@
 angular.module('ngChemApp')
   .directive('processStep', function () {
     return {
-      template: '<div><div class="col-xs-8 col-xs-offset-2"><img style="margin-top:40px" width="80%" height="80%" ng-src="{{imageURL}}"></img></div></div>',
+      template: '<div><div class="col-xs-8 col-xs-offset-2"><img style="margin-top:40px" width="80%" height="80%" ng-src="{{imageURL}}" lazy-src></img></div></div>',
       restrict: 'E',
       link: function postLink(scope, element, attrs) {
         scope.getImageURL();
