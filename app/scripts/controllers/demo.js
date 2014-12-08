@@ -102,7 +102,7 @@ app.controller('DemoCtrl', function ($scope, $rootScope, $state, ChEMBLFactory) 
     $scope.validatedData = [
                                 [
                                     {
-                                        name: "Original",
+                                        name: "Original Structure",
                                         smiles: "Cn1cnc2c1c(=O)n(c(=O)n2C)C",
                                         status: "start"
                                     },
@@ -122,7 +122,7 @@ app.controller('DemoCtrl', function ($scope, $rootScope, $state, ChEMBLFactory) 
                                         status: "changed"
                                     },
                                     {
-                                        name: "Complete",
+                                        name: "Normalised Structure",
                                         smiles: "Cn1cnc2c1c(=O)n(c(=O)n2C)C",
                                         status: "end"
                                     }
