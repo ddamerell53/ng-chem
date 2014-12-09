@@ -24,8 +24,6 @@ angular.module('ngChemApp')
         size:'=',
         smiles: '=',
         baseUrl: '=',
-        ctab: '=',
-        
       }
     };
   });
