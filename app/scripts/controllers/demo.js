@@ -32,7 +32,7 @@ app.controller('DemoCtrl', function ($scope, $rootScope, $state, ChEMBLFactory) 
 	$scope.gridOptions = { data: 'parsed_input',
                            showColumnMenu:true,
                             enableColumnReordering:true,
-                            columnDefs: [{ field: "smiles", displayName: "Structure", cellTemplate:"<img ng-src='http://localhost:8000/utils/smiles2svg/{{row.getProperty(col.field)}}'></img>" },
+                            columnDefs: [{ field: "smiles", displayName: "Structure", cellTemplate:"img-template.html" },
                                         { field: "chemblId", displayName: "Chembl ID" },
                                         { field: "molecularWeight", displayName: "Mol Weight" },
                                         { field: "knownDrug", displayName: "Known Drug" },
