@@ -13,6 +13,8 @@ app.controller('DemoCtrl', function ($scope, $rootScope, $state, ChEMBLFactory) 
 
 	$scope.formData = {};
 
+    $scope.sketchMolfile = "";
+
 	$scope.myData = [ ];
 
     $rootScope.step = 0;
