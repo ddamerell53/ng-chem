@@ -9,7 +9,7 @@
 angular.module('ngChemApp')
   .directive('chemdoodleWindow', function () {
     return {
-      template: '<div class="col-xs-12" id="chemdoodle-holder"><div></div><canvas id="chemdoodle" ng-click="saveMol()"></canvas></div>',
+      template: '<div class="col-xs-12" id="chemdoodle-holder"><div>{{localMolFile}}</div><canvas id="chemdoodle" ng-click="saveMol()"></canvas></div>',
       restrict: 'E',
       scope:{'sketchMolfile':'=sketchMolfile' },
       link: function postLink(scope, element, attrs) {
@@ -27,7 +27,7 @@ angular.module('ngChemApp')
       controller: function($scope) {
       	$scope.localMolFile = "";
       	$scope.saveMol = function() {
-      		$scope.sketchMolfile = $scope.localMolFile;
+      		$scope.sketchMolfile = btoa("\n\n" + $scope.localMolFile.split("ichemlabs.com")[1]);
       	}
       }
     };

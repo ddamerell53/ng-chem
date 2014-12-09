@@ -184,7 +184,6 @@ app.controller('DemoCtrl', function ($scope, $rootScope, $state, ChEMBLFactory) 
                                     }
                                 ]
                             ];
-                            
 
 
 
