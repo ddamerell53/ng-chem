@@ -45,8 +45,8 @@
 
 
 			<!-- Custom Fields -->
-			<div class="form-group" ng-repeat="custom_field in custom_fields">
-				<div class="col-xs-3"><input class="form-control" placeholder="Field Name" type="text" id="custom_field_name_{{custom_field}}" name="custom_field_name_{{custom_field}}"></div><div class="col-xs-9"><input type="text" name="custom_field_value_{{custom_field}}" id="custom_field_value_{{custom_field}}" class="form-control" placeholder="Value"></div>
+			<div class="form-group" ng-repeat="custom_field in custom_fields" id="">
+				<div class="col-xs-3"><input class="form-control" placeholder="Field Name" type="text" id="custom_field_name_{{custom_field}}" name="custom_field_name_{{custom_field}}"></div><div class="col-xs-8"><input type="text" name="custom_field_value_{{custom_field}}" id="custom_field_value_{{custom_field}}" class="form-control" placeholder="Value"></div><div class="col-xs-1" ng-click="removeCustomField({{custom_field}})"><span class="glyphicon glyphicon-minus-sign"></span></div>
 			</div>
 
 			<!-- Calculated properties here -->
