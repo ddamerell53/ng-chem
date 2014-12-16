@@ -13,7 +13,9 @@ app.controller('DemoCtrl', function ($scope, $rootScope, $state, ChEMBLFactory) 
 
 	$scope.formData = {};
 
-    $scope.sketchMolfile = "";
+    $rootScope.sketchMolfile = "";
+
+    $scope.sketchChemdoodleJson = "";
 
 	$scope.myData = [ ];
 
@@ -104,17 +106,17 @@ app.controller('DemoCtrl', function ($scope, $rootScope, $state, ChEMBLFactory) 
     $scope.validatedData = [
                                 [
                                     {
-                                        name: "Original Structure",
+                                        name: "Structure",
                                         smiles: "Cn1cnc2c1c(=O)n(c(=O)n2C)C",
-                                        status: "start"
+                                        status: "start",
                                     },
                                     {
-                                        name: "Metals and Salts",
+                                        name: "Salt status",
                                         smiles: "Cn1cnc2c1c(=O)n(c(=O)n2C)C",
                                         status: "no_change_req"
                                     },
                                     {
-                                        name: "Tautomers and Charges",
+                                        name: "Tautomers",
                                         smiles: "Cn1cnc2c1c(=O)n(c(=O)n2C)C",
                                         status: "no_change_req"
                                     },
@@ -124,7 +126,12 @@ app.controller('DemoCtrl', function ($scope, $rootScope, $state, ChEMBLFactory) 
                                         status: "changed"
                                     },
                                     {
-                                        name: "Normalised Structure",
+                                        name: "Normalisation status",
+                                        smiles: "Cn1cnc2c1c(=O)n(c(=O)n2C)C",
+                                        status: "end"
+                                    },
+                                    {
+                                        name: "PAINS status",
                                         smiles: "Cn1cnc2c1c(=O)n(c(=O)n2C)C",
                                         status: "end"
                                     }

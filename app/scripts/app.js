@@ -79,6 +79,27 @@ angular.module('ngChemApp', [
               applyTicks("validate");
             }
         })
+
+        //substates of validate - we can tab out our output from the server
+        .state('demo.validate.pains', {
+          url:'/pains',
+          templateUrl: 'views/demo-validate-pains.html',
+          controller: function($rootScope) {
+            //stuff
+
+          }
+        })
+
+        .state('demo.validate.standardise', {
+          url:'/standardise',
+          templateUrl: 'views/demo-validate-standardise.html',
+          controller: function($rootScope) {
+            //stuff
+
+          }
+        })
+
+
         
         // url will be /form/payment
         .state('demo.finish', {

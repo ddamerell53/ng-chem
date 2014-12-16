@@ -7,7 +7,7 @@
 	<form name="inputForm">
 	
 	<div class="col-xs-8">
-		<chemdoodle-window sketch-molfile="sketchMolfile"></chemdoodle-window>
+		<chemdoodle-window sketch-molfile="sketchMolfile" sketch-chemdoodle-json="sketchChemdoodleJson"></chemdoodle-window>
 		<div id="sketcher_output"><!-- <chemsvg></chemsvg> --></div>
 	</div>
 
@@ -28,10 +28,10 @@
 </div>
 <div class="row">
 	<div class="col-xs-8">
-		<a class="btn btn-primary pull-right" role="button" ui-sref="demo.map" ng-click="parseInput()">Next</a>
+		<a class="btn btn-primary pull-right" role="button" ui-sref="demo.map">Next</a>
 	</div>
 	<div class="col-xs-4">
-		<a class="btn btn-primary pull-right" role="button" ui-sref="demo.map">Next</a>
+		<a class="btn btn-primary pull-right" role="button" ui-sref="demo.map" ng-click="parseInput()">Next</a>
 	</div>
 </div>
     
