@@ -1,0 +1,82 @@
+<div class="row">
+	<div class="alert alert-info">
+		<p><strong>Add your single compound to be registered. </strong><br/>Use the sketcher window to draw your compound. Sketcher window provided by ChemDoodle.</p>
+	</div>
+</div>
+<form name="inputForm" class="form-horizontal" role="form">
+	<div class="row">
+		
+		
+		<div class="col-xs-6">
+			<chemdoodle-window sketch-molfile="sketchMolfile" sketch-chemdoodle-json="sketchChemdoodleJson"></chemdoodle-window>
+			<div id="sketcher_output"></div>
+		</div>
+
+		<div class="col-xs-6">
+			
+			<!-- Stereochem selector -->
+			<div class="form-group" id="stereochem-group">
+				<div class="col-xs-3">
+					<label for="stereochem" class="nexa">Stereochem options</label>
+				</div>
+				<div class="col-xs-9">
+					<select name="stereochem" id="stereochem" class="form-control">
+						<option>1</option>
+						<option>2</option>
+						<option>3</option>
+					</select>
+				</div>
+				
+			</div>
+
+			<!-- Mandatory fields -->
+			<div class="form-group mandatory-group">
+				<!-- dropdown -->
+				<!-- freetext -->
+				<div class="col-xs-3">
+					<label for="labbook_id" class="nexa">Labbook ID</label>
+				</div>
+				<div class="col-xs-9">
+					<input type="text" name="labbook_id" id="labbook_id" class="form-control">
+				</div>
+
+			</div>
+
+
+
+			<!-- Custom Fields -->
+			<div class="form-group" ng-repeat="custom_field in custom_fields">
+				<div class="col-xs-3"><input class="form-control" placeholder="Field Name" type="text" id="custom_field_name_{{custom_field}}" name="custom_field_name_{{custom_field}}"></div><div class="col-xs-9"><input type="text" name="custom_field_value_{{custom_field}}" id="custom_field_value_{{custom_field}}" class="form-control" placeholder="Value"></div>
+			</div>
+
+			<!-- Calculated properties here -->
+			<div class="row text-center">
+				<a ng-click="addCustomField()" class="btn btn-primary" role="button" ><span class="glyphicon glyphicon-plus-sign"></span> Add Custom Field</a>
+			</div>
+			
+
+			<a class="btn btn-primary pull-right" role="button" ui-sref="demo.map" ng-click="saveToDatabase()">Save</a>
+
+		</div>
+
+		
+		
+	</div>
+	<!-- <div class="row">
+		<div class="alert alert-primary" id="validation-success">No compound found</div>
+	</div> -->
+	<div class="row">
+		 <div class="alert alert-danger" id="validation-errors"><span class="badge">4</span> total errors found</div>
+		 <accordion close-others="oneAtATime">
+		    <accordion-group is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled">
+		    	<accordion-heading>
+		            I can have markup, too! <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+		        </accordion-heading>
+		      <p>The body of the accordion group grows to fit the contents</p>
+		        <button class="btn btn-default btn-sm" ng-click="addItem()">Add Item</button>
+		        <div ng-repeat="item in items">{{item}}</div>
+		    </accordion-group>
+		  </accordion>
+	</div>
+
+</form>

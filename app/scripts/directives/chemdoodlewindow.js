@@ -33,7 +33,7 @@ angular.module('ngChemApp')
         element.repaint();
         
       },
-      controller: ['$scope', '$rootScope', '$timeout', function($scope, $rootScope, $timeout) {
+      controller: ['$scope', '$rootScope', function($scope, $rootScope) {
         //initialise the root scope variable, from empty if not present
       	if ($rootScope.sketchMolfile == undefined) {
           $rootScope.sketchMolfile = "";

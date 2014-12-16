@@ -59,6 +59,53 @@ angular.module('ngChemApp', [
             }
         })
 
+        .state('demo.add.single', {
+            url: '/single',
+            templateUrl: 'views/demo-add-single.html',
+            controller: function($scope, $rootScope) {
+              $scope.oneAtATime = true;
+
+                $scope.groups = [
+                  {
+                    title: 'Dynamic Group Header - 1',
+                    content: 'Dynamic Group Body - 1'
+                  },
+                  {
+                    title: 'Dynamic Group Header - 2',
+                    content: 'Dynamic Group Body - 2'
+                  }
+                ];
+
+                $scope.items = ['Item 1', 'Item 2', 'Item 3'];
+
+                $scope.custom_fields = [];
+
+                $scope.addItem = function() {
+                  var newItemNo = $scope.items.length + 1;
+                  $scope.items.push('Item ' + newItemNo);
+                };
+
+                $scope.addCustomField = function() {
+                  console.log('getting here');
+                  var newItemNo = $scope.custom_fields.length + 1;
+                  $scope.custom_fields.push(newItemNo);
+                }
+
+                $scope.status = {
+                  isFirstOpen: false,
+                  isFirstDisabled: false
+                };
+            }
+        })
+
+        .state('demo.add.multiple', {
+            url: '/multiple',
+            templateUrl: 'views/demo-add-multiple.html',
+            controller: function($rootScope) {
+              
+            }
+        })
+
         .state('demo.map', {
             url: '/map',
             templateUrl: 'views/demo-map.html',
