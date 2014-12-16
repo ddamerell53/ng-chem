@@ -76,16 +76,10 @@ angular.module('ngChemApp', [
                   }
                 ];
 
-                $scope.items = ['Item 1', 'Item 2', 'Item 3'];
-
                 $scope.cust_fields_count = 0
                 $scope.custom_fields = [];
 
-                $scope.addItem = function() {
-                  var newItemNo = $scope.items.length + 1;
-                  $scope.items.push('Item ' + newItemNo);
-
-                };
+                $scope.errors = [];
 
                 $scope.addCustomField = function() {
                   console.log('getting here');
@@ -95,7 +89,8 @@ angular.module('ngChemApp', [
                 };
 
                 $scope.removeCustomField = function(number) {
-                  $scope.custom_fields.pop(number);
+                  var ind = $scope.custom_fields.indexOf(number);
+                  $scope.custom_fields.splice(ind, 1);
                 }
 
                 $scope.status = {
