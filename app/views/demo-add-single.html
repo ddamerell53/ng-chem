@@ -105,13 +105,13 @@
 		 <div ng-show="open_warnings" ng-animate=" 'animate' ">
 		 	<!-- In here is your template per error found -->
 		 	<div class="row">
-			 	<div ng-show="validated.warnings.inorganicCount != 0" class="col-xs-4">
+			 	<div ng-show="validated.warnings.inorganicCount != '0'" class="col-xs-4">
 			 		<div class="well">Inorganic Count: {{ validated.warnings.inorganicCount }}</div>
 			 	</div>
-			 	<div ng-show="validated.warnings.saltCount != 0" class="col-xs-4">
+			 	<div ng-show="validated.warnings.saltCount != '0'" class="col-xs-4">
 			 		<div class="well">Salt Count: {{ validated.warnings.saltCount }}</div>
 			 	</div>
-			 	<div ng-show="validated.warnings.tautomerCount != 0" class="col-xs-4">
+			 	<div ng-show="validated.warnings.tautomerCount != '0'" class="col-xs-4">
 			 		<div class="well">Tautomer Count: {{ validated.warnings.tautomerCount }}</div>
 			 	</div>
 		 	</div>
@@ -124,7 +124,7 @@
 
 		 </div>
 	</div>
-
+{{ validated }}
 	<div class="row">
 		<div style="height:300px;"></div>
 	</div>
