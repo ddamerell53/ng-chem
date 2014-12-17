@@ -103,10 +103,12 @@ app.controller('DemoCtrl', function ($scope, $rootScope, $state, ChEMBLFactory, 
     };
 
     //call this method to retrieve data from services relating to the sketched molfile
-    $rootScope.fetchData = function() {
+    $scope.fetchData = function() {
         $timeout(function() {
             //build your http request here
-            console.log($rootScope.sketchMolfile);
+            //console.log($rootScope.sketchMolfile);
+            var valid_data = CBHCompoundBatch.validate($rootScope.sketchMolfile);
+            $scope.validated = valid_data;
         }, 500);
     };
 

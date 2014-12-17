@@ -8,15 +8,15 @@
  * Factory in the ngChemApp.
  */
 angular.module('ngChemApp')
-  .factory('CBHCompoundBatch', function ($resource) {
+  .factory('CBHCompoundBatch', [$http, function ($http) {
     // Service logic
     // ...
 
-    return $resource(
-        "/chemblws/cbh_compound_batches/:Id",
-        {Id: "@Id" },
-        {
-            "update": {method: "PUT"},
-        }
-    );
-  });
+    var urlBase = "/chemblws/cbh_compound_batches/";
+    var CBHCompoundBatch = {};
+
+    CBHCompoundBatch.validate(function(molfile) {
+      return $http.post({ctab:molfile}, urlBase + "validate");
+    });
+
+  }]);
