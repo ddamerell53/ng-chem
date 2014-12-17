@@ -19,7 +19,7 @@ angular.module('ngChemApp')
         console.log("picking up")
       var arr = window.location.href.split("/");
       var baseUrl = arr[0] + "//" + arr[2] + urlBase
-      return $http.post({ctab:molfile}, baseUrl + "validate");
+      return $http.post(baseUrl + "validate", {ctab:molfile});
     };
 
     return CBHCompoundBatch;

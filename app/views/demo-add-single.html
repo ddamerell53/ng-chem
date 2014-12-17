@@ -62,26 +62,34 @@
 		
 		
 	</div>
-	<!-- <div class="row">
-		<div class="alert alert-primary" id="validation-success">No compound found</div>
-	</div> -->
-	<div class="row">
-		 <div class="alert alert-danger" id="validation-errors"><span class="badge"></span> total errors found <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': open_warnings, 'glyphicon-chevron-right': !open_warnings}" ng-click="open_warnings = !open_warnings"></i></div>
+
+	<div class="row" ng-show="validated.warnings.inorganicCount == 0 && validated.warnings.tautomerCount ==0 && validated.warnings.saltCount ==0 &&  validated.warnings.painsCount == 0 ">
+		<div class="alert alert-success" id="validation-success">No errors found</div>
+	</div>
+
+	<div class="row" ng-hide="validated.warnings.inorganicCount == 0 && validated.warnings.tautomerCount ==0 && validated.warnings.saltCount ==0 &&  validated.warnings.painsCount == 0 ">
+		 <div class="alert alert-warning" id="validation-errors">{{ warningNumber }} total warnings <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': open_warnings, 'glyphicon-chevron-right': !open_warnings}" ng-click="open_warnings = !open_warnings"></i></div>
 		 <div ng-show="open_warnings" ng-animate=" 'animate' ">
 		 	<!-- In here is your template per error found -->
-		 	<div>
-		 		
+		 	<div class="row">
+			 	<div ng-show="validated.warnings.inorganicCount != 0" class="col-xs-4">
+			 		<div class="well">Inorganic Count: {{ validated.warnings.inorganicCount }}</div>
+			 	</div>
+			 	<div ng-show="validated.warnings.saltCount != 0" class="col-xs-4">
+			 		<div class="well">Salt Count: {{ validated.warnings.saltCount }}</div>
+			 	</div>
+			 	<div ng-show="validated.warnings.tautomerCount != 0" class="col-xs-4">
+			 		<div class="well">Tautomer Count: {{ validated.warnings.tautomerCount }}</div>
+			 	</div>
 		 	</div>
+
+		 	<div class="row">
+		 		<div class="col-xs-4" ng-repeat="warning in validated.warnings | filter:'pains' as painsWarnings">
+
+		 		</div>
+		 	</div>
+
 		 </div>
-		 <!-- <accordion close-others="oneAtATime">
-		    <accordion-group is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled">
-		    	<accordion-heading>
-		            I can have markup, too! <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
-		        </accordion-heading>
-		      <p>The body of the accordion group grows to fit the contents</p>
-		        <div ng-repeat="error in errors">{{error}}</div>
-		    </accordion-group>
-		  </accordion> -->
 	</div>
 
 	<div class="row">
