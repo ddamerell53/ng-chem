@@ -8,7 +8,7 @@
  * Factory in the ngChemApp.
  */
 angular.module('ngChemApp')
-  .factory('CBHCompoundBatch', ['$http', function ($http) {
+  .factory('CBHCompoundBatch', ['$http', '$q' ,function ($http) {
     // Service logic
     // ...
 
@@ -16,8 +16,10 @@ angular.module('ngChemApp')
     var CBHCompoundBatch = {};
 
     CBHCompoundBatch.validate = function(molfile) {
+
       var arr = window.location.href.split("/");
-      var myUrl = arr[0] + "//" + arr[2] + urlBase
+      var myUrl = arr[0] + "//" + arr[2] + urlBase;
+
       return $http.post( myUrl + "validate/", {ctab:molfile});
     };
 

@@ -126,17 +126,6 @@
 		 <div class="alert alert-warning" id="validation-errors">{{ validated.warnings.painsCount }} pan-assay intereference (PAINS) compounds found <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': open_warnings, 'glyphicon-chevron-right': !open_warnings}" ng-click="open_warnings = !open_warnings"></i></div>
 		 <div ng-show="open_warnings" ng-animate=" 'animate' ">
 		 	<!-- In here is your template per error found -->
-		 	<!-- <div class="row">
-			 	<div ng-show="validated.warnings.inorganicCount != 0" class="col-xs-4">
-			 		<div class="well">Inorganic Count: {{ validated.warnings.inorganicCount }}</div>
-			 	</div>
-			 	<div ng-show="validated.warnings.saltCount != 0" class="col-xs-4">
-			 		<div class="well">Salt Count: {{ validated.warnings.saltCount }}</div>
-			 	</div>
-			 	<div ng-show="validated.warnings.tautomerCount != 0" class="col-xs-4">
-			 		<div class="well">Tautomer Count: {{ validated.warnings.tautomerCount }}</div>
-			 	</div>
-		 	</div> -->
 
 		 	<div class="row">
 		 		<div class="col-xs-3" ng-repeat="(key, value) in validated.warnings " ng-if="key != 'painsCount' && key.indexOf('pains') == 0">
@@ -146,7 +135,7 @@
 
 		 </div>
 	</div>
-
+{{ validated }}
 	<div class="row">
 		<div style="height:300px;"></div>
 	</div>

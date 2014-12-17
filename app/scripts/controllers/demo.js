@@ -29,11 +29,11 @@ app.controller('DemoCtrl', function ($scope, $rootScope, $state, ChEMBLFactory, 
 	];
 
     $scope.validated = { "warnings": {
-                            "inorganicCount": "2",
-                            "painsCount": "1",
+                            "inorganicCount": "0",
+                            "painsCount": "0",
                             "painsQuinone_A": "{\"smarts\": \"[!#6&!#1]=[#6]-1-[#6]=,:[#6]-[#6](=[!#6&!#1])-[#6]=,:[#6]-1\"}",
-                            "saltCount": "1",
-                            "tautomerCount": "1"
+                            "saltCount": "0",
+                            "tautomerCount": "0"
                           }
                         };
 
@@ -121,11 +121,10 @@ app.controller('DemoCtrl', function ($scope, $rootScope, $state, ChEMBLFactory, 
     $scope.fetchData = function() {
         $timeout(function() {
             //build your http request here
-            //console.log($rootScope.sketchMolfile);
-            
-                var valid_data = CBHCompoundBatch.validate($rootScope.sketchMolfile);
-                $scope.validated = valid_data;
-            
+            //console.log($rootScope.sketchMolfile);    
+                CBHCompoundBatch.validate($rootScope.sketchMolfile).then(
+                    function(data){$scope.validated = data.data;}, function(error){});
+
         }, 500);
     };
 
