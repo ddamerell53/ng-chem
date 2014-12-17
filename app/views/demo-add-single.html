@@ -11,7 +11,7 @@
 			<div class="row">
 				<div class="col-xs-12 chemprop">
 					<strong class="nexa">alogp</strong><br/>
-					<span class="badge">{{ validated.properties.alogp | number:2 || 0 }}</span><br/>
+					<span class="badge">{{ validated.properties.alogp || 0 | number:2 }}</span><br/>
 				</div>
 			</div>
 			<div class="row">
@@ -29,7 +29,7 @@
 			<div class="row">
 				<div class="col-xs-12 chemprop">
 					<strong class="nexa">PSA</strong><br/>
-					<span class="badge">{{ validated.properties.psa | number:2 || 0 }}</span><br/>
+					<span class="badge">{{ validated.properties.psa || 0 | number:2 }}</span><br/>
 				</div>
 			</div>
 			<div class="row">
