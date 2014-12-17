@@ -29,10 +29,10 @@ app.controller('DemoCtrl', function ($scope, $rootScope, $state, ChEMBLFactory, 
 	];
 
     $scope.validated = { "warnings": {
-                            "inorganicCount": "1",
+                            "inorganicCount": "0",
                             "painsCount": "0",
                             "painsQuinone_A": "{\"smarts\": \"[!#6&!#1]=[#6]-1-[#6]=,:[#6]-[#6](=[!#6&!#1])-[#6]=,:[#6]-1\"}",
-                            "saltCount": "2",
+                            "saltCount": "0",
                             "tautomerCount": "0"
                           }
                         };
@@ -102,6 +102,12 @@ app.controller('DemoCtrl', function ($scope, $rootScope, $state, ChEMBLFactory, 
 
 		//$scope.parsed_input.push(splitted);
 	};
+
+    $scope.warningNumber = 0;
+
+    $scope.$watch('validated', function(){
+      $scope.warningNumber = parseInt($scope.validated.warnings.inorganicCount) + parseInt($scope.validated.warnings.tautomerCount) + parseInt($scope.validated.warnings.saltCount) + parseInt($scope.validated.warnings.painsCount);
+    });
 
     $scope.addAlert = function(message, alert_type){
       $scope.alerts.push({msg: message || 'There has been an error!', type : alert_type || "danger" });

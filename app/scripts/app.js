@@ -82,11 +82,7 @@ angular.module('ngChemApp', [
                 };
                 $scope.open_warnings = false;
 
-                $scope.warningNumber = 0;
-
-                $scope.$watch('validated', function(){
-                  $scope.warningNumber = parseInt($scope.validated.warnings.inorganicCount) + parseInt($scope.validated.warnings.tautomerCount) + parseInt($scope.validated.warnings.saltCount) + parseInt($scope.validated.warnings.painsCount);
-                });
+                
 
             }
         })
