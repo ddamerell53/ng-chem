@@ -9,16 +9,17 @@
 angular.module('ngChemApp')
   .directive('chemdoodleWindow', function () {
     return {
-      template: '<div class="col-xs-12" id="chemdoodle-holder"><canvas id="chemdoodle" ></canvas></div>',
+      template: '<div class="col-xs-12" id="chemdoodle-holder"><canvas id="chemdoodle" ng-click="fetchData()"></canvas></div>',
       restrict: 'E',
-      scope:{'sketchMolfile':'=sketchMolfile', 'sketchChemdoodleJson':'=sketchChemdoodleJson' },
+      scope:{'sketchMolfile':'=sketchMolfile', 'sketchChemdoodleJson':'=sketchChemdoodleJson', 'fetchData' : '&' },
       link: function postLink(scope, element, attrs) {
       	
-        //jquery watching for a mouseup event to trigger the change in scope value.
+        //jquery watching for a click event to trigger the change in scope value.
         element.bind('click', function(){
           console.log('click');
           scope.localMolfile = ChemDoodle.writeMOL(element.getMolecule());
           scope.saveMol();
+
 
         });        
         var cd_width = jQuery('#chemdoodle-holder').width();
@@ -46,6 +47,9 @@ angular.module('ngChemApp')
       	$scope.saveMol = function() {
           console.log("saveMol");
           $rootScope.sketchMolfile = $scope.localMolfile;
+          //injected service here
+          //$scope.fetchData($rootScope.sketchMolfile);
+          //set up a service elsewhere in this module and inject into controller
 
       	}
       }]

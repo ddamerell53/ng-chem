@@ -63,18 +63,6 @@ angular.module('ngChemApp', [
             url: '/single',
             templateUrl: 'views/demo-add-single.html',
             controller: function($scope, $rootScope) {
-              $scope.oneAtATime = true;
-
-                $scope.groups = [
-                  {
-                    title: 'Dynamic Group Header - 1',
-                    content: 'Dynamic Group Body - 1'
-                  },
-                  {
-                    title: 'Dynamic Group Header - 2',
-                    content: 'Dynamic Group Body - 2'
-                  }
-                ];
 
                 $scope.cust_fields_count = 0
                 $scope.custom_fields = [];
@@ -91,12 +79,10 @@ angular.module('ngChemApp', [
                 $scope.removeCustomField = function(number) {
                   var ind = $scope.custom_fields.indexOf(number);
                   $scope.custom_fields.splice(ind, 1);
-                }
-
-                $scope.status = {
-                  isFirstOpen: false,
-                  isFirstDisabled: false
                 };
+
+                $scope.open_warnings = false;
+
             }
         })
 

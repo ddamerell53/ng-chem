@@ -9,7 +9,7 @@
  */
 var app = angular.module('ngChemApp');
 
-app.controller('DemoCtrl', function ($scope, $rootScope, $state, ChEMBLFactory) {
+app.controller('DemoCtrl', function ($scope, $rootScope, $state, ChEMBLFactory, $timeout) {
 
 	$scope.formData = {};
 
@@ -102,6 +102,18 @@ app.controller('DemoCtrl', function ($scope, $rootScope, $state, ChEMBLFactory) 
       $scope.alerts.splice(index, 1);
     };
 
+    //call this method to retrieve data from services relating to the sketched molfile
+    $rootScope.fetchData = function() {
+        $timeout(function() {
+            //build your http request here
+            console.log($rootScope.sketchMolfile);
+        }, 500);
+    };
+
+    //call this to save data to the DB
+    $scope.saveData = function(molfile, json_data_fields) {
+        console.log('Im in ur app, savin ur data' );
+    }
 
     $scope.validatedData = [
                                 [
