@@ -6,8 +6,40 @@
 <form name="inputForm" class="form-horizontal" role="form">
 	<div class="row">
 		
-		
-		<div class="col-xs-6">
+		<div class="col-xs-1 centered">
+			<div class="row"><h3 class="nexa blue">Properties</h3></div>
+			<div class="row">
+				<div class="col-xs-12 chemprop">
+					<strong class="nexa">alogp</strong><br/>
+					<span class="badge">{{ validated.properties.alogp || 0 }}</span><br/>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12 chemprop">
+					<strong class="nexa">H-bond acceptors</strong><br/>
+					<span class="badge">{{ validated.properties.hba || 0 }}</span><br/>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12 chemprop">
+					<strong class="nexa">H-bond donors</strong><br/>
+					<span class="badge">{{ validated.properties.hbd || 0 }}</span><br/>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12 chemprop">
+					<strong class="nexa">PSA</strong><br/>
+					<span class="badge">{{ validated.properties.psa || 0 }}</span><br/>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12 chemprop">
+					<strong class="nexa">Rotatable bonds</strong><br/>
+					<span class="badge">{{ validated.properties.rtb || 0 }}</span><br/>
+				</div>
+			</div>
+		</div>
+		<div class="col-xs-5">
 			<chemdoodle-window sketch-molfile="sketchMolfile" sketch-chemdoodle-json="sketchChemdoodleJson" fetch-data="fetchData()"></chemdoodle-window>
 			<div id="sketcher_output"></div>
 		</div>
@@ -20,11 +52,12 @@
 					<label for="stereochem" class="nexa">Stereochem options</label>
 				</div>
 				<div class="col-xs-9">
-					<select name="stereochem" id="stereochem" class="form-control">
+					<!-- <select name="stereochem" id="stereochem" class="form-control">
 						<option>1</option>
 						<option>2</option>
 						<option>3</option>
-					</select>
+					</select> -->
+					<select ng-options="item.value for item in stereochem_options track by item.name" class="form-control" ng-model="stereoSelected"></select>
 				</div>
 				
 			</div>
