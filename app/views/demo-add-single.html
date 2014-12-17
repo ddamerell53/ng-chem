@@ -96,15 +96,37 @@
 		
 	</div>
 
+	<!-- Errors and warnings -->
+	<div class="row" data-ng-show="validated.errors.mixture">
+		<div class="alert alert-danger" id="validation-mixture-error">Mixture or Unknown salts found. Mixtures cannot be registered and only known salts can be registered.</div>
+	</div>
+	<div class="row" data-ng-show="validated.errors.invalid_valency">
+		<div class="alert alert-danger" id="validation-mixture-error">Invalid valency of sketched molecule. This cannot be registered.</div>
+	</div>
+	<div class="row" data-ng-show="validated.errors.invalid_valency">
+		<div class="alert alert-danger" id="validation-mixture-error">Wholly inorganic molecule - this cannot be registered.</div>
+	</div>
+
 	<div class="row" ng-show="validated.warnings.inorganicCount == 0 && validated.warnings.tautomerCount ==0 && validated.warnings.saltCount ==0 &&  validated.warnings.painsCount == 0 ">
 		<div class="alert alert-success" id="validation-success">No errors found</div>
 	</div>
+	<div class="row" data-ng-show="validated.warnings.inorganicCount > 0">
+		<div class="alert alert-warning" id="validation-inorganic-warning">{{validated.warnings.inorganicCount}} inorganic molecules detected</div>
+	</div>
+	<div class="row" data-ng-show="validated.warnings.saltCount > 0">
+		<div class="alert alert-warning" id="validation-salt-warning">{{validated.warnings.saltCount}} known salts detected - these will be automactically registered</div>
+	</div>
+	<div class="row" data-ng-show="validated.warnings.tautomerCount > 0">
+		<div class="alert alert-warning" id="validation-salt-warning">{{validated.warnings.tautomerCount}} tautomers or charge-separated systems were detected</div>
+	</div>
 
-	<div class="row" ng-hide="validated.warnings.inorganicCount == 0 && validated.warnings.tautomerCount ==0 && validated.warnings.saltCount ==0 &&  validated.warnings.painsCount == 0 ">
-		 <div class="alert alert-warning" id="validation-errors">{{ warningNumber }} total warnings <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': open_warnings, 'glyphicon-chevron-right': !open_warnings}" ng-click="open_warnings = !open_warnings"></i></div>
+
+
+	<div class="row" ng-show="validated.warnings.painsCount > 0 ">
+		 <div class="alert alert-warning" id="validation-errors">{{ validated.warnings.painsCount }} pan-assay intereference (PAINS) compounds found <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': open_warnings, 'glyphicon-chevron-right': !open_warnings}" ng-click="open_warnings = !open_warnings"></i></div>
 		 <div ng-show="open_warnings" ng-animate=" 'animate' ">
 		 	<!-- In here is your template per error found -->
-		 	<div class="row">
+		 	<!-- <div class="row">
 			 	<div ng-show="validated.warnings.inorganicCount != 0" class="col-xs-4">
 			 		<div class="well">Inorganic Count: {{ validated.warnings.inorganicCount }}</div>
 			 	</div>
@@ -114,11 +136,11 @@
 			 	<div ng-show="validated.warnings.tautomerCount != 0" class="col-xs-4">
 			 		<div class="well">Tautomer Count: {{ validated.warnings.tautomerCount }}</div>
 			 	</div>
-		 	</div>
+		 	</div> -->
 
 		 	<div class="row">
-		 		<div class="col-xs-4" ng-repeat="warning in validated.warnings | filter:'pains' ">
-		 			
+		 		<div class="col-xs-3" ng-repeat="(key, value) in validated.warnings " ng-if="key != 'painsCount' && key.indexOf('pains') == 0">
+		 			<div class="well">{{key}}</div>
 		 		</div>
 		 	</div>
 

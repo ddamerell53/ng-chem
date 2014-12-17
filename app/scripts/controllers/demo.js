@@ -29,11 +29,11 @@ app.controller('DemoCtrl', function ($scope, $rootScope, $state, ChEMBLFactory, 
 	];
 
     $scope.validated = { "warnings": {
-                            "inorganicCount": "0",
-                            "painsCount": "0",
+                            "inorganicCount": "2",
+                            "painsCount": "1",
                             "painsQuinone_A": "{\"smarts\": \"[!#6&!#1]=[#6]-1-[#6]=,:[#6]-[#6](=[!#6&!#1])-[#6]=,:[#6]-1\"}",
-                            "saltCount": "0",
-                            "tautomerCount": "0"
+                            "saltCount": "1",
+                            "tautomerCount": "1"
                           }
                         };
 
