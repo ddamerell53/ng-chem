@@ -111,19 +111,27 @@
 		<div class="alert alert-success" id="validation-success">No errors found</div>
 	</div>
 	<div class="row" data-ng-show="validated.warnings.inorganicCount > 0">
-		<div class="alert alert-warning" id="validation-inorganic-warning">{{validated.warnings.inorganicCount}} inorganic molecules detected</div>
+		<div class="alert alert-warning" id="validation-inorganic-warning">{{validated.warnings.inorganicCount}} inorganic <ng-pluralize count="validated.warnings.inorganicCount" when="{'0': 'atoms',
+                       'one': 'atom',
+                       'other': 'atoms'}"></ng-pluralize> detected</div>
 	</div>
 	<div class="row" data-ng-show="validated.warnings.saltCount > 0">
-		<div class="alert alert-warning" id="validation-salt-warning">{{validated.warnings.saltCount}} known salts detected - these will be automactically registered</div>
+		<div class="alert alert-warning" id="validation-salt-warning">{{validated.warnings.saltCount}} known <ng-pluralize count="validated.warnings.saltCount" when="{'0': 'salts',
+                       'one': 'salt',
+                       'other': 'salts'}"></ng-pluralize> detected - these will be automactically registered</div>
 	</div>
 	<div class="row" data-ng-show="validated.warnings.tautomerCount > 0">
-		<div class="alert alert-warning" id="validation-salt-warning">{{validated.warnings.tautomerCount}} tautomers or charge-separated systems were detected</div>
+		<div class="alert alert-warning" id="validation-salt-warning">{{validated.warnings.tautomerCount}} <ng-pluralize count="validated.warnings.tautomerCount" when="{'0': 'tautomers or charge-separated systems were',
+                       'one': 'tautomer or charge-separated system was',
+                       'other': 'tautomers or charge-separated systems were'}"></ng-pluralize> detected</div>
 	</div>
 
 
 
 	<div class="row" ng-show="validated.warnings.painsCount > 0 ">
-		 <div class="alert alert-warning" id="validation-errors">{{ validated.warnings.painsCount }} pan-assay intereference (PAINS) compounds found <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': open_warnings, 'glyphicon-chevron-right': !open_warnings}" ng-click="open_warnings = !open_warnings"></i></div>
+		 <div class="alert alert-warning" id="validation-errors">{{ validated.warnings.painsCount }} pan-assay interference (PAINS) <ng-pluralize count="validated.warnings.painsCount" when="{'0': 'hits',
+                       'one': 'hit',
+                       'other': 'hits'}"></ng-pluralize> found <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': open_warnings, 'glyphicon-chevron-right': !open_warnings}" ng-click="open_warnings = !open_warnings"></i></div>
 		 <div ng-show="open_warnings" ng-animate=" 'animate' ">
 		 	<!-- In here is your template per error found -->
 

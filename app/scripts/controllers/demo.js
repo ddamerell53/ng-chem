@@ -33,7 +33,7 @@ app.controller('DemoCtrl', function ($scope, $rootScope, $state, ChEMBLFactory, 
                             "painsCount": "0",
                             "painsQuinone_A": "{\"smarts\": \"[!#6&!#1]=[#6]-1-[#6]=,:[#6]-[#6](=[!#6&!#1])-[#6]=,:[#6]-1\"}",
                             "saltCount": "0",
-                            "tautomerCount": "0"
+                            "tautomerCount": "2"
                           }
                         };
 
