@@ -80,7 +80,6 @@ angular.module('ngChemApp', [
                   var ind = $scope.custom_fields.indexOf(number);
                   $scope.custom_fields.splice(ind, 1);
                 };
-
                 $scope.open_warnings = false;
 
                 $scope.warningNumber = 0;
@@ -154,4 +153,6 @@ angular.module('ngChemApp', [
         });
         
 
-  });
+  }).run(function($http, $cookies) {
+    $http.defaults.headers.post['X-CSRFToken'] = $cookies.csrftoken;
+});
