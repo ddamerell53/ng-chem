@@ -122,7 +122,7 @@ app.controller('DemoCtrl', function ($scope, $rootScope, $state, ChEMBLFactory, 
             //build your http request here
             //console.log($rootScope.sketchMolfile);    
                 CBHCompoundBatch.validate($rootScope.sketchMolfile).then(
-                    function(data){$scope.validated = data.data;}, function(error){});
+                    function(data){$scope.validated = data.data;}, function(error){$scope.validated = { 'errors': { 'invalidMolecule': true } } });
 
         }, 500);
     };
