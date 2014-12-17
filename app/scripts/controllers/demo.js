@@ -9,7 +9,7 @@
  */
 var app = angular.module('ngChemApp');
 
-app.controller('DemoCtrl', function ($scope, $rootScope, $state, ChEMBLFactory, $timeout) {
+app.controller('DemoCtrl', function ($scope, $rootScope, $state, ChEMBLFactory, CBHCompoundBatch, $timeout) {
 
 	$scope.formData = {};
 
@@ -107,8 +107,10 @@ app.controller('DemoCtrl', function ($scope, $rootScope, $state, ChEMBLFactory, 
         $timeout(function() {
             //build your http request here
             //console.log($rootScope.sketchMolfile);
-            var valid_data = CBHCompoundBatch.validate($rootScope.sketchMolfile);
-            $scope.validated = valid_data;
+            
+                var valid_data = CBHCompoundBatch.validate($rootScope.sketchMolfile);
+                $scope.validated = valid_data;
+            
         }, 500);
     };
 

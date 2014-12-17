@@ -66,8 +66,13 @@
 		<div class="alert alert-primary" id="validation-success">No compound found</div>
 	</div> -->
 	<div class="row">
-		 <div class="alert alert-danger" id="validation-errors"><span class="badge">4</span> total errors found <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': open_warnings, 'glyphicon-chevron-right': !open_warnings}" ng-click="open_warnings = !open_warnings"></i></div>
-		 <div ng-show="open_warnings" ng-animate=" 'animate' "><p>Iyer!</p></div>
+		 <div class="alert alert-danger" id="validation-errors"><span class="badge"></span> total errors found <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': open_warnings, 'glyphicon-chevron-right': !open_warnings}" ng-click="open_warnings = !open_warnings"></i></div>
+		 <div ng-show="open_warnings" ng-animate=" 'animate' ">
+		 	<!-- In here is your template per error found -->
+		 	<div>
+		 		
+		 	</div>
+		 </div>
 		 <!-- <accordion close-others="oneAtATime">
 		    <accordion-group is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled">
 		    	<accordion-heading>
