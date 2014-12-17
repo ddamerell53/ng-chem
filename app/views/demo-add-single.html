@@ -11,7 +11,7 @@
 			<div class="row">
 				<div class="col-xs-12 chemprop">
 					<strong class="nexa">alogp</strong><br/>
-					<span class="badge">{{ validated.properties.alogp || 0 }}</span><br/>
+					<span class="badge">{{ validated.properties.alogp | number:2 || 0 }}</span><br/>
 				</div>
 			</div>
 			<div class="row">
@@ -29,7 +29,7 @@
 			<div class="row">
 				<div class="col-xs-12 chemprop">
 					<strong class="nexa">PSA</strong><br/>
-					<span class="badge">{{ validated.properties.psa || 0 }}</span><br/>
+					<span class="badge">{{ validated.properties.psa | number:2 || 0 }}</span><br/>
 				</div>
 			</div>
 			<div class="row">
@@ -100,10 +100,10 @@
 	<div class="row" data-ng-show="validated.errors.mixture">
 		<div class="alert alert-danger" id="validation-mixture-error">Mixture or Unknown salts found. Mixtures cannot be registered and only known salts can be registered.</div>
 	</div>
-	<div class="row" data-ng-show="validated.errors.invalid_valency">
+	<div class="row" data-ng-show="validated.errors.invalid_molecule">
 		<div class="alert alert-danger" id="validation-mixture-error">Invalid valency of sketched molecule. This cannot be registered.</div>
 	</div>
-	<div class="row" data-ng-show="validated.errors.invalid_valency">
+	<div class="row" data-ng-show="validated.errors.no_organics">
 		<div class="alert alert-danger" id="validation-mixture-error">Wholly inorganic molecule - this cannot be registered.</div>
 	</div>
 
