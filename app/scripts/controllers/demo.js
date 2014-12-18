@@ -13,7 +13,8 @@ app.controller('DemoCtrl', function ($scope, $rootScope, $state, ChEMBLFactory, 
 
 	$scope.formData = {};
 
-    $rootScope.sketchMolfile = "";
+    $scope.molecule = { 'molfile' : "", 'molfileChanged': function() { CBHCompoundBatch.validate($scope.molecule.molfile).then(
+                    function(data){console.log(data);}, function(error){$scope.validated = { 'warnings': {'inorganicCount':"0"}, 'errors': { 'invalidMolecule': true } } }); } }
 
     $scope.sketchChemdoodleJson = "";
 
@@ -69,12 +70,10 @@ app.controller('DemoCtrl', function ($scope, $rootScope, $state, ChEMBLFactory, 
         	//interrogate each val for its type, then call the appropriate ChEMBL service to retrieve data
         	//var returned_json = {}
         	if (val.type == 'InChi') {
-        		//val.extraData = ChEMBLFactory.queryInChi();
         		$scope.parsed_input.push(new ChEMBLFactory(val.input_str, "inchi"));
         		
         	}
         	else if (val.type == 'InChi Key') {
-        		//val.extraData = ChEMBLFactory.queryInChiKey();
         		$scope.parsed_input.push(new ChEMBLFactory(val.input_str, "inchikey"));
         		
         		
@@ -114,17 +113,6 @@ app.controller('DemoCtrl', function ($scope, $rootScope, $state, ChEMBLFactory, 
 
     $scope.closeAlert = function(index) {
       $scope.alerts.splice(index, 1);
-    };
-
-    //call this method to retrieve data from services relating to the sketched molfile
-    $scope.fetchData = function() {
-        $timeout(function() {
-            //build your http request here
-            //console.log($rootScope.sketchMolfile);    
-                CBHCompoundBatch.validate($rootScope.sketchMolfile).then(
-                    function(data){$scope.validated = data.data;}, function(error){$scope.validated = { 'errors': { 'invalidMolecule': true } } });
-
-        }, 500);
     };
 
     //call this to save data to the DB

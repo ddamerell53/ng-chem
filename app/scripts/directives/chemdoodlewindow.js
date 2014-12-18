@@ -7,24 +7,31 @@
  * # chemdoodleWindow
  */
 angular.module('ngChemApp')
-  .directive('chemdoodleWindow', function () {
+  .directive('chemdoodleWindow', [ '$rootScope', function ($rootScope) {
     return {
-      template: '<div class="col-xs-12" id="chemdoodle-holder"><canvas id="chemdoodle" ng-click="fetchData()"></canvas></div>',
+      template: '<div class="col-xs-12" id="chemdoodle-holder"><canvas id="chemdoodle" tabindex="1"></canvas></div>',
       restrict: 'E',
-      scope:{'sketchMolfile':'=sketchMolfile', 'sketchChemdoodleJson':'=sketchChemdoodleJson', 'fetchData' : '&' },
+      scope:{'sketchMolfile':'=sketchMolfile', 'sketchChemdoodleJson':'=sketchChemdoodleJson', 'fetchData' : '&', 'molecule' : '=' },
       link: function postLink(scope, element, attrs) {
       	
         //jquery watching for a click event to trigger the change in scope value.
-        element.bind('click', function(){
-          console.log('click');
-          scope.localMolfile = ChemDoodle.writeMOL(element.getMolecule());
-          scope.saveMol();
-
-
+        //also bind a button press for the canvas - keyup
+        element.bind({
+          'click': function() {
+            scope.localMolfile = ChemDoodle.writeMOL(element.getMolecule());
+            scope.molecule.molfile = scope.localMolfile;
+            scope.molecule.molfileChanged();
+          },
+          'keyup' : function() {
+            scope.localMolfile = ChemDoodle.writeMOL(element.getMolecule());
+            scope.molecule.molfile = scope.localMolfile;
+            scope.molecule.molfileChanged();
+          }
         });        
+
         var cd_width = jQuery('#chemdoodle-holder').width();
         element = new ChemDoodle.SketcherCanvas('chemdoodle', cd_width, 300, {oneMolecule:false});
-
+        
         //if we have a retained molecule, load that into the canvas
         //otherwise let the Canvas initialise with its default methane molecule
         if(scope.localMolfile != '') {
@@ -43,15 +50,6 @@ angular.module('ngChemApp')
         //set the local variable to match the root scope
         $scope.localMolfile = $rootScope.sketchMolfile;
 
-        //assign the local variable to the rootscope when a click event is triggered in the canvas
-      	$scope.saveMol = function() {
-          console.log("saveMol");
-          $rootScope.sketchMolfile = $scope.localMolfile;
-          //injected service here
-          //$scope.fetchData($rootScope.sketchMolfile);
-          //set up a service elsewhere in this module and inject into controller
-
-      	}
       }]
     };
-  });
+  }]);

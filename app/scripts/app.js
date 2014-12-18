@@ -88,6 +88,8 @@ angular.module('ngChemApp', [
                 //$scope.stereoSelected = { value:'asdrawn'};
                 $scope.stereoSelected = { name:'1', value:'as drawn'};
 
+                $scope.sketchMolfile = "";
+
                 $scope.addCustomField = function() {
                   console.log('getting here');
                   var newItemNo = $scope.cust_fields_count + 1;
