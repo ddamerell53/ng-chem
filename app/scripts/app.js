@@ -42,9 +42,10 @@ angular.module('ngChemApp', [
         .state('demo.intro', {
             url: '/intro',
             templateUrl: 'views/demo-intro.html',
-            controller: function($rootScope) {
-              $rootScope.step = 0;
-              $rootScope.dynamic = 0;
+            controller: function($scope) {
+              $scope.wizard.step = 0;
+              $scope.wizard.dynamic = 0;
+              $scope.wizard.totalSteps = 0;
               applyTicks("intro");
             }
         })
@@ -52,9 +53,9 @@ angular.module('ngChemApp', [
         .state('demo.add', {
             url: '/add',
             templateUrl: 'views/demo-add.html',
-            controller: function($rootScope) {
-              $rootScope.step = 1;
-              $rootScope.dynamic = 41;
+            controller: function($scope) {
+              $scope.wizard.step = 1;
+              $scope.wizard.dynamic = 41;
               applyTicks("add");
             }
         })
@@ -62,7 +63,12 @@ angular.module('ngChemApp', [
         .state('demo.add.single', {
             url: '/single',
             templateUrl: 'views/demo-add-single.html',
-            controller: function($scope, $rootScope) {
+            controller: function($scope) {
+
+                $scope.wizard.step = 1;
+                $scope.wizard.dynamic = 49.5;
+                //only need 2 wizard steps if this is the case
+                $scope.wizard.totalSteps = 2;
 
                 $scope.cust_fields_count = 0
                 $scope.custom_fields = [];
@@ -84,8 +90,7 @@ angular.module('ngChemApp', [
                                             { name:'13', value:'trans'},
                                             { name:'14', value:'mixture of diastereoisomers'}
                                             ];
-                //$scope.stereo_selected = { name:'1', value:'as drawn'};
-                //$scope.stereoSelected = { value:'asdrawn'};
+                //this is to set the default selection of this select box                                            
                 $scope.stereoSelected = { name:'1', value:'as drawn'};
 
                 $scope.sketchMolfile = "";
@@ -111,17 +116,19 @@ angular.module('ngChemApp', [
         .state('demo.add.multiple', {
             url: '/multiple',
             templateUrl: 'views/demo-add-multiple.html',
-            controller: function($rootScope) {
-              
+            controller: function($scope) {
+              $scope.wizard.step = 1;
+              $scope.wizard.dynamic = 41;
+              $scope.wizard.totalSteps = 4;
             }
         })
 
         .state('demo.map', {
             url: '/map',
             templateUrl: 'views/demo-map.html',
-            controller: function($rootScope) {
-              $rootScope.step = 2;
-              $rootScope.dynamic = 58;
+            controller: function($scope) {
+              $scope.wizard.step = 2;
+              $scope.wizard.dynamic = 58;
               applyTicks("map");
             }
         })
@@ -130,9 +137,9 @@ angular.module('ngChemApp', [
         .state('demo.validate', {
             url: '/validate',
             templateUrl: 'views/demo-validate.html',
-            controller: function($rootScope) {
-              $rootScope.step = 3;
-              $rootScope.dynamic = 74;
+            controller: function($scope) {
+              $scope.wizard.step = 3;
+              $scope.wizard.dynamic = 74;
               applyTicks("validate");
             }
         })
@@ -141,7 +148,7 @@ angular.module('ngChemApp', [
         .state('demo.validate.pains', {
           url:'/pains',
           templateUrl: 'views/demo-validate-pains.html',
-          controller: function($rootScope) {
+          controller: function($scope) {
             //stuff
 
           }
@@ -150,7 +157,7 @@ angular.module('ngChemApp', [
         .state('demo.validate.standardise', {
           url:'/standardise',
           templateUrl: 'views/demo-validate-standardise.html',
-          controller: function($rootScope) {
+          controller: function($scope) {
             //stuff
 
           }
@@ -162,9 +169,15 @@ angular.module('ngChemApp', [
         .state('demo.finish', {
             url: '/finish',
             templateUrl: 'views/demo-finish.html',
-            controller: function($rootScope) {
-              $rootScope.step = 4;
-              $rootScope.dynamic = 90.5;
+            controller: function($scope) {
+              if ($scope.wizard.totalSteps == 4) {
+                $scope.wizard.step = 4;  
+              }
+              else {
+                $scope.wizard.step = 2;
+              }
+              
+              $scope.wizard.dynamic = 90.5;
               applyTicks("finish");
             }
         });

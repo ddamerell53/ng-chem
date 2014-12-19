@@ -9,7 +9,7 @@
  */
 var app = angular.module('ngChemApp');
 
-app.controller('DemoCtrl', function ($scope, $rootScope, $state, ChEMBLFactory, CBHCompoundBatch, $timeout) {
+app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 'CBHCompoundBatch', '$timeout', function ($scope, $rootScope, $state, ChEMBLFactory, CBHCompoundBatch, $timeout) {
 
 	$scope.formData = {};
 
@@ -20,10 +20,14 @@ app.controller('DemoCtrl', function ($scope, $rootScope, $state, ChEMBLFactory, 
 
 	$scope.myData = [ ];
 
-    $rootScope.step = 0;
-    $rootScope.totalSteps = 4;
-    $rootScope.dynamic = 0;
-    $rootScope.max = 100;
+    //config object for the progress bar
+    $scope.wizard = {
+        'step': 0,
+        'totalSteps': 4,
+        'dynamic': 0,
+        'max': 100,
+    };
+
 
 	$scope.alerts = [
         /*{ type: 'danger', msg: 'Oh snap! Change a few things up and try submitting again.' }*/
@@ -211,7 +215,7 @@ app.controller('DemoCtrl', function ($scope, $rootScope, $state, ChEMBLFactory, 
 
 
 
-});
+}]);
 
 app.controller('MessageCtrl', function ($scope){
 	

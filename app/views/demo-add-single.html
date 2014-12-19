@@ -57,11 +57,6 @@
 					<label for="stereochem" class="nexa">Stereochem options</label>
 				</div>
 				<div class="col-xs-9">
-					<!-- <select name="stereochem" id="stereochem" class="form-control">
-						<option>1</option>
-						<option>2</option>
-						<option>3</option>
-					</select> -->
 					<select ng-options="item.value | titlecase for item in stereochem_options track by item.name" class="form-control" ng-model="stereoSelected"></select>
 				</div>
 				
