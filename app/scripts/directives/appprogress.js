@@ -11,6 +11,10 @@ angular.module('ngChemApp')
     return {
       templateUrl: 'views/templates/app-progress.html',
       restrict: 'E',
-      scope: { wizard: '=' }
+      scope: { wizard: '=' },
+      controller: function() {
+      	//convert svg files in img tags to inline svgs for styling
+      	svgify();
+      }
     };
   }]);
