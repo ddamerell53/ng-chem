@@ -33,9 +33,11 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
                                                 value:'as drawn'
                                                },
                             'labbook_id':'',
-                            'custom_fields':  { 
+                            'custom_fields':  [
 
-                                              }
+                                              ]
+
+                                              
                         }
                         
                      };

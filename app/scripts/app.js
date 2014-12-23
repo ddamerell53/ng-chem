@@ -97,13 +97,19 @@ angular.module('ngChemApp', [
 
                 $scope.addCustomField = function() {
                   var newItemNo = $scope.cust_fields_count + 1;
-                  $scope.custom_fields.push(newItemNo);
+                  $scope.molecule.metadata.custom_fields.push( { 'name':'', 'value':'', 'id':newItemNo } );
                   $scope.cust_fields_count++;
                 };
 
                 $scope.removeCustomField = function(number) {
-                  var ind = $scope.custom_fields.indexOf(number);
-                  $scope.custom_fields.splice(ind, 1);
+
+                  var filteredFields = $scope.molecule.metadata.custom_fields.filter(function(element) {
+                    return element.id != number;
+                  });
+
+                  $scope.molecule.metadata.custom_fields = filteredFields;
+                  
+
                 };
                 $scope.open_warnings = false;
                 
