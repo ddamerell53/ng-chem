@@ -21,6 +21,7 @@ function svgify(){
 
             // Remove any invalid XML tags as per http://validator.w3.org
             $svg = $svg.removeAttr('xmlns:a');
+            //$svg = $svg.attr('width', '32px');
 
             // Replace image with new SVG
             $img.replaceWith($svg);

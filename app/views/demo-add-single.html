@@ -3,7 +3,7 @@
 		<p><strong>Add your single compound to be registered. </strong><br/>Use the sketcher window to draw your compound. Sketcher window provided by ChemDoodle.</p>
 	</div>
 </div>
-<form name="inputForm" class="form-horizontal" role="form">
+<form novalidate name="inputForm" class="form-horizontal" role="form" ng-submit="">
 	<div class="row">
 		
 		<div class="col-xs-1 centered">
@@ -45,7 +45,7 @@
 			</div>
 		</div>
 		<div class="col-xs-5">
-			<chemdoodle-window sketch-molfile="sketchMolfile" sketch-chemdoodle-json="sketchChemdoodleJson" fetch-data="fetchData()" molecule="molecule"></chemdoodle-window>
+			<chemdoodle-window sketch-molfile="sketchMolfile" fetch-data="fetchData()" molecule="molecule"></chemdoodle-window>
 			<div id="sketcher_output"></div>
 		</div>
 
@@ -57,7 +57,7 @@
 					<label for="stereochem" class="nexa">Stereochem options</label>
 				</div>
 				<div class="col-xs-9">
-					<select ng-options="item.value | titlecase for item in stereochem_options track by item.name" class="form-control" ng-model="stereoSelected"></select>
+					<select ng-options="item.value | titlecase for item in stereochem_options track by item.name" class="form-control" ng-model="molecule.metadata.stereoSelected"></select>
 				</div>
 				
 			</div>
@@ -70,7 +70,7 @@
 					<label for="labbook_id" class="nexa">Labbook ID</label>
 				</div>
 				<div class="col-xs-9">
-					<input type="text" name="labbook_id" id="labbook_id" class="form-control">
+					<input type="text" name="labbook_id" id="labbook_id" class="form-control" ng-model="molecule.metadata.labbook_id">
 				</div>
 
 			</div>
@@ -79,7 +79,7 @@
 
 			<!-- Custom Fields -->
 			<div class="form-group" ng-repeat="custom_field in custom_fields" id="">
-				<div class="col-xs-3"><input class="form-control" placeholder="Field Name" type="text" id="custom_field_name_{{custom_field}}" name="custom_field_name_{{custom_field}}"></div><div class="col-xs-8"><input type="text" name="custom_field_value_{{custom_field}}" id="custom_field_value_{{custom_field}}" class="form-control" placeholder="Value"></div><div class="col-xs-1" ng-click="removeCustomField({{custom_field}})"><span class="glyphicon glyphicon-minus-sign"></span></div>
+				<div class="col-xs-3 custom-field-key"><input class="form-control" placeholder="Field Name" type="text" id="custom_field_name_{{custom_field}}" name="custom_field_name_{{custom_field}}"></div><div class="col-xs-8 custom-field-value"><input type="text" name="custom_field_value_{{custom_field}}" id="custom_field_value_{{custom_field}}" class="form-control" placeholder="Value"></div><div class="col-xs-1" ng-click="removeCustomField({{custom_field}})"><span class="glyphicon glyphicon-minus-sign"></span></div>
 			</div>
 
 			<!-- Calculated properties here -->
@@ -88,7 +88,8 @@
 			</div>
 			
 
-			<a class="btn btn-primary pull-right" role="button" ui-sref="demo.map" ng-click="saveToDatabase()">Save</a>
+			<!-- <a class="btn btn-primary pull-right" role="button" ui-sref="demo.finish" id="submit" name="submit">Save</a> -->
+			<input type="submit" class="btn btn-primary pull-right" id="submit" ui-sref="demo.finish" value="Save">
 
 		</div>
 

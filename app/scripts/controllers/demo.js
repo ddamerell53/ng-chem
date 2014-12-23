@@ -13,10 +13,32 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
 
 	$scope.formData = {};
 
-    $scope.molecule = { 'molfile' : "", 'molfileChanged': function() { CBHCompoundBatch.validate($scope.molecule.molfile).then(
-                    function(data){console.log(data);}, function(error){$scope.validated = { 'warnings': {'inorganicCount':"0"}, 'errors': { 'invalidMolecule': true } } }); } }
+    $scope.molecule = { 'molfile' : "", 
+                        'molfileChanged': function() { CBHCompoundBatch.validate($scope.molecule.molfile).then(
+                                                        function(data){
+                                                            console.log(data);
+                                                        }, function(error){
+                                                            $scope.validated = { 
+                                                                'warnings': {
+                                                                    'inorganicCount':"0"
+                                                                }, 'errors': { 
+                                                                    'invalidMolecule': true 
+                                                                } 
+                                                            } 
+                                                        }); 
+                                                      },
+                        'metadata': { 
+                            'stereoSelected': {
+                                                name:'1', 
+                                                value:'as drawn'
+                                               },
+                            'labbook_id':'',
+                            'custom_fields':  { 
 
-    $scope.sketchChemdoodleJson = "";
+                                              }
+                        }
+                        
+                     };
 
 	$scope.myData = [ ];
 
@@ -118,11 +140,29 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
     $scope.closeAlert = function(index) {
       $scope.alerts.splice(index, 1);
     };
-
+    //$scope.stereoSelected = { name:'1', value:'as drawn'};
     //call this to save data to the DB
-    $scope.saveData = function(molfile, json_data_fields) {
-        console.log('Im in ur app, savin ur data' );
-    }
+    $scope.saveSingleMol = function() {
+        //send this to the service for saving data
+        //form fields bound to the scope molecule object
+        //this may be performed during the transition to the finish page - any results to be shown need a promise for that page.
+        console.log("submitted");
+        //if(inputForm.$valid) {
+          //$state.href('demo/finish');
+        //}
+        
+        console.log($scope.molecule);
+        
+
+        //submit
+        CBHCompoundBatch.saveSingleCompound($scope.molecule.molfile, $scope.molecule.custom_fields).then(
+                    function(data){
+                        console.log(data);
+                    }, function(error){
+                        //$scope.validated = { 'warnings': {'inorganicCount':"0"}, 'errors': { 'invalidMolecule': true } };
+                    });
+
+    };
 
     $scope.validatedData = [
                                 [

@@ -90,13 +90,12 @@ angular.module('ngChemApp', [
                                             { name:'13', value:'trans'},
                                             { name:'14', value:'mixture of diastereoisomers'}
                                             ];
-                //this is to set the default selection of this select box                                            
-                $scope.stereoSelected = { name:'1', value:'as drawn'};
+                //default selection set in the scope molecule object, select box value bound to form.                                           
+                
 
                 $scope.sketchMolfile = "";
 
                 $scope.addCustomField = function() {
-                  console.log('getting here');
                   var newItemNo = $scope.cust_fields_count + 1;
                   $scope.custom_fields.push(newItemNo);
                   $scope.cust_fields_count++;
@@ -107,6 +106,7 @@ angular.module('ngChemApp', [
                   $scope.custom_fields.splice(ind, 1);
                 };
                 $scope.open_warnings = false;
+                
 
                 
 
@@ -175,6 +175,8 @@ angular.module('ngChemApp', [
               }
               else {
                 $scope.wizard.step = 2;
+                //call submit single mol
+                $scope.saveSingleMol();
               }
               
               $scope.wizard.dynamic = 90.5;

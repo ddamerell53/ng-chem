@@ -11,7 +11,7 @@ angular.module('ngChemApp')
     return {
       template: '<div class="col-xs-12" id="chemdoodle-holder"><canvas id="chemdoodle" tabindex="1"></canvas></div>',
       restrict: 'E',
-      scope:{'sketchMolfile':'=sketchMolfile', 'sketchChemdoodleJson':'=sketchChemdoodleJson', 'fetchData' : '&', 'molecule' : '=' },
+      scope:{'sketchMolfile':'=sketchMolfile', 'fetchData' : '&', 'molecule' : '=' },
       link: function postLink(scope, element, attrs) {
       	
         //jquery watching for a click event to trigger the change in scope value.
