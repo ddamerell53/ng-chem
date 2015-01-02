@@ -193,4 +193,6 @@ angular.module('ngChemApp', [
 
   }).run(function($http, $cookies) {
     $http.defaults.headers.post['X-CSRFToken'] = $cookies.csrftoken;
+
+    
 });
