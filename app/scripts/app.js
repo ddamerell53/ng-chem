@@ -177,7 +177,8 @@ angular.module('ngChemApp', [
             templateUrl: 'views/demo-finish.html',
             controller: function($scope) {
               if ($scope.wizard.totalSteps == 4) {
-                $scope.wizard.step = 4;  
+                $scope.wizard.step = 4;
+                //call whatever method will move past validating the batch  
               }
               else {
                 $scope.wizard.step = 2;

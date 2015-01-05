@@ -70,16 +70,28 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
     $scope.parsed_input.map(function(d){d.smiles = btoa(d.smiles)});
 	$scope.input_string = "";
 
-	$scope.gridOptions = { data: 'parsed_input',
-                           showColumnMenu:true,
-                            enableColumnReordering:true,
-                            columnDefs: [{ field: "smiles", displayName: "Structure", cellTemplate:"img-template.html" },
-                                        { field: "chemblId", displayName: "Chembl ID" },
-                                        { field: "molecularWeight", displayName: "Mol Weight" },
-                                        { field: "knownDrug", displayName: "Known Drug" },
-                                        { field: "stdInChiKey", displayName: "Std InChi Key" },
-                                        { field: "acdLogp", displayName: "acdLogp" }]
-                          };
+	$scope.gridOptionsSingle = { data: 'molecule',
+                                   showColumnMenu:false,
+                                    enableColumnReordering:false,
+                                    columnDefs: [//{ field: "smiles", displayName: "Structure", cellTemplate:"img-template.html" },
+                                                { field: "metadata.labbook_id", displayName: "Labbook ID"},
+                                                { field: "metedata.stereoSelected.value", displayName: "Stereochem" },
+                                                { field: "molecularWeight", displayName: "Mol Weight" },
+                                                { field: "knownDrug", displayName: "Known Drug" },
+                                                { field: "stdInChiKey", displayName: "Std InChi Key" },
+                                                { field: "acdLogp", displayName: "acdLogp" }]
+                                  };
+    $scope.gridOptionsBatch = { data: 'parsed_input',
+                                   showColumnMenu:true,
+                                    enableColumnReordering:true,
+                                    columnDefs: [//{ field: "smiles", displayName: "Structure", cellTemplate:"img-template.html" },
+                                                { field: "metadata.labbook_id", displayName: "Labbook ID"},
+                                                { field: "chemblId", displayName: "Chembl ID" },
+                                                { field: "molecularWeight", displayName: "Mol Weight" },
+                                                { field: "knownDrug", displayName: "Known Drug" },
+                                                { field: "stdInChiKey", displayName: "Std InChi Key" },
+                                                { field: "acdLogp", displayName: "acdLogp" }]
+                                  };
 
 	$scope.parseInput = function (){
 		//take string
@@ -149,17 +161,16 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
         //form fields bound to the scope molecule object
         //this may be performed during the transition to the finish page - any results to be shown need a promise for that page.
         console.log("submitted");
-        //if(inputForm.$valid) {
-          //$state.href('demo/finish');
-        //}
         
         console.log($scope.molecule);
         
 
         //submit
-        CBHCompoundBatch.saveSingleCompound($scope.molecule.molfile, $scope.molecule.custom_fields).then(
+        CBHCompoundBatch.saveSingleCompound($scope.molecule.molfile, $scope.molecule.metadata.custom_fields).then(
                     function(data){
                         console.log(data);
+                        //do the magic of merging the response data with our molecule in scope
+                        //then bind the result to a scope object which will be the model for the table displayed in finish
                     }, function(error){
                         //$scope.validated = { 'warnings': {'inorganicCount':"0"}, 'errors': { 'invalidMolecule': true } };
                     });
