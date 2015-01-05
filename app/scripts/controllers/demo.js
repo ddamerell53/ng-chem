@@ -164,7 +164,7 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
         //this may be performed during the transition to the finish page - any results to be shown need a promise for that page.
 
         //submit
-        CBHCompoundBatch.saveSingleCompound($scope.molecule.molfile, $scope.molecule.metadata.custom_fields).then(
+         CBHCompoundBatch.saveSingleCompound($scope.molecule.molfile, $scope.molecule.metadata.custom_fields).then(
                     function(data){
                         console.log(data);
                         //do the magic of merging the response data with our molecule in scope
