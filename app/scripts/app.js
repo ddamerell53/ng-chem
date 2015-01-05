@@ -19,7 +19,8 @@ angular.module('ngChemApp', [
     'ngTouch',
     'ui.router',
     'ui.bootstrap',
-    'dndLists'
+    'dndLists',
+    'flow'
   ])
   .config(function ($stateProvider, $urlRouterProvider) {
       

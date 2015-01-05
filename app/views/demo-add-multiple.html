@@ -3,7 +3,7 @@
 		<p><strong>Add your compounds to be registered. </strong><br/>Paste a list of SMILES, Standard InChiKeys or upload SD, Excel or MOL files.</p>
 	</div>
 </div>
-<div class="row">
+<div class="row" flow-init>
 	<form name="inputForm">
 
 	<div class="col-xs-8">
@@ -11,9 +11,26 @@
 			<label for="text_input" class="blue text-center"><strong class="nexa">Paste your SMILES or IDs here</strong></label>
 			<textarea id="text_input" name="text_input" class="form-control" rows="5" ng-model="input_string" ng-model-options="{ debounce:700 }"></textarea>
 		</div>
-		<div class="form-group mt">
+		<!-- <div class="form-group mt">
 			<label for="file_input" class="blue text-center"><strong class="nexa">Or upload a file here</strong></label>
 			<input type="file" id="file_input">
+		</div> -->
+
+		<input type="file" flow-btn />
+		<input type="file" flow-btn flow-directory />
+		  Input OR Other element as upload button
+		<span flow-btn>Upload File</span>
+
+		<table>
+			<tr ng-repeat="file in $flow.files">
+		        <td>{{$index+1}}</td>
+		        <td>{{file.name}}</td>
+		        <td>{{file.msg}}</td>
+		    </tr>
+		</table>
+
+		<div class="alert" flow-drop flow-drag-enter="style={border:'4px solid green'}" flow-drag-leave="style={}" ng-style="style">
+		    Drag And Drop your file here
 		</div>
 
 	</div>
