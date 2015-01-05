@@ -18,7 +18,8 @@ angular.module('ngChemApp', [
     'ngSanitize',
     'ngTouch',
     'ui.router',
-    'ui.bootstrap'
+    'ui.bootstrap',
+    'dndLists'
   ])
   .config(function ($stateProvider, $urlRouterProvider) {
       
@@ -135,6 +136,22 @@ angular.module('ngChemApp', [
             controller: function($scope) {
               $scope.wizard.step = 2;
               $scope.wizard.dynamic = 58;
+
+              //set up test lists of droppables here
+              $scope.dragmodels = {
+                  selected: null,
+                  lists: {"A": []}
+              };
+              $scope.dropmodels = {
+                  selected: null,
+                  lists: {"Source ID": [], "Project ID": [], "Supplier": [], "Purity": [], "Comments": [], "Other": [],}
+              }
+
+              // Generate initial model
+              for (var i = 1; i <= 3; ++i) {
+                  $scope.dragmodels.lists.A.push({label: "Item A" + i});
+              }
+
               applyTicks("map");
             }
         })
