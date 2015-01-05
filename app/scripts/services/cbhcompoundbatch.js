@@ -23,24 +23,26 @@ angular.module('ngChemApp')
       return $http.post( myUrl + "validate/", {ctab:molfile});
     };
 
-    CBHCompoundBatch.saveSingleCompound = function(molfile, config) {
 
-        return $http.post( myUrl + "compound_batches/", {ctab:molfile, config:config });
+    CBHCompoundBatch.saveSingleCompound = function(molfile, customFields) {
+        var arr = window.location.href.split("/");
+        var myUrl = arr[0] + "//" + arr[2] + urlBase;
+        return $http.post( myUrl , {ctab:molfile, "customFields":customFields });
     };
 
     CBHCompoundBatch.saveBatch = function(molfile, config) {
 
-        return $http.post( myUrl + "compound_batches/bulk/save/", {ctab:molfile, config:config });
+        return $http.post( myUrl + "bulk/save/", {ctab:molfile, config:config });
     };
 
     CBHCompoundBatch.validateBatch = function(molfiles) {
 
-        return $http.post( myUrl + "compound_batches/bulk/validate", {ctab:molfile });
+        return $http.post( myUrl + "bulk/validate", {ctab:molfile });
     };
 
     CBHCompoundBatch.uploadBatch = function(molfiles) {
 
-        return $http.post( myUrl + "compound_batches/bulk/upload", {ctab:molfile });
+        return $http.post( myUrl + "bulk/upload", {ctab:molfile });
     };
 
     return CBHCompoundBatch;

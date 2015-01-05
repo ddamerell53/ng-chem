@@ -30,7 +30,7 @@ angular.module('ngChemApp')
         });        
 
         var cd_width = jQuery('#chemdoodle-holder').width();
-        element = new ChemDoodle.SketcherCanvas('chemdoodle', cd_width, 300, {oneMolecule:false});
+        element = new ChemDoodle.SketcherCanvas('chemdoodle', cd_width, 300, {oneMolecule:true});
         
         //if we have a retained molecule, load that into the canvas
         //otherwise let the Canvas initialise with its default methane molecule
