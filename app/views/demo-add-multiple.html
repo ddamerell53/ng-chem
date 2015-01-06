@@ -17,9 +17,9 @@
 		</div> -->
 
 		<input type="file" flow-btn />
-		<input type="file" flow-btn flow-directory />
+		<!-- <input type="file" flow-btn flow-directory />
 		  Input OR Other element as upload button
-		<span flow-btn>Upload File</span>
+		<span flow-btn>Upload File</span> -->
 
 		<table>
 			<tr ng-repeat="file in $flow.files">
@@ -29,8 +29,8 @@
 		    </tr>
 		</table>
 
-		<div class="alert" flow-drop flow-drag-enter="style={border:'4px solid green'}" flow-drag-leave="style={}" ng-style="style">
-		    Drag And Drop your file here
+		<div class="alert" flow-drop flow-drag-enter="style={border:'4px dashed green'}" flow-drag-leave="style={}" ng-style="style">
+		    Or Drag And Drop your file here
 		</div>
 
 	</div>
