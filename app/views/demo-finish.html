@@ -4,13 +4,34 @@
 	</div>
 </div>
 <div class="row">
-	<div>
-	  <div class="gridStyle" ng-grid="gridOptionsSingle"></div>
+	<div class="col-xs-6" ng-show="wizard.totalSteps == 2">
+	  <!-- <div class="gridStyle" ng-grid="gridOptionsSingle"></div> -->
+
+	  <!-- <p>Acidic pKa: {{ singleMol.acdAcidicPka }}</p> -->
+	  <!-- <p>Basic pKa: {{ singleMol.acdBasicPka }}</p> -->
+	  <!-- <p>logD: {{ singleMol.acdLogd }}</p> -->
+	  <!-- <p>logP: {{ singleMol.acdLogp }}</p> -->
+	  <p>AlogP: {{ singleMol.alogp }}</p>
+	  <p>UOx ID: {{ singleMol.chemblId }}</p>
+	  <p>Created: {{ singleMol.created }}</p>
+	  <p>Mol Formula: {{ singleMol.molecularFormula }}</p>
+	  <p>Mol Weight: {{ singleMol.molecularWeight }}</p>
+	  <p>Rotatable Bonds: {{ singleMol.rotatableBonds }}</p>
+	  <!-- <p>SMILES: {{ singleMol.smiles }}</p> -->
+	  <p>StdInChi Key: {{ singleMol.stdInChiKey }}</p>
+	  <p>Custom Fields: {{ singleMol.customFields }}</p>
+
+
 	</div>	
+	<div class="col-xs-6">
+		<!-- Image here -->
+
+	</div>
 </div>
 <div class="row">
 	
-		<a class="btn btn-primary" role="button" ui-sref="demo.validate">Back</a>
+		<a class="btn btn-primary" role="button" ui-sref="demo.validate" ng-show="wizard.totalSteps == 4">Back</a>
+		<a class="btn btn-primary" role="button" ui-sref="demo.add.single" ng-show="wizard.totalSteps == 2">Back</a>
 		<a class="btn btn-primary pull-right" role="button" ui-sref="demo.intro" onclick="reset()">Done</a>
 
 </div>

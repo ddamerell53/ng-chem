@@ -54,6 +54,33 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
         'max': 100,
     };
 
+    $scope.singleMol = { acdAcidicPka: null,
+                         acdBasicPka: null,
+                         acdLogd: null,
+                         acdLogp: null,
+                         alogp: null,
+                         chemblId: "",
+                         created: "",
+                         ctab: "",
+                         customFields: {},
+                         editableBy: {},
+                         id: null,
+                         knownDrug: 0,
+                         medChemFriendly: null,
+                         modified: "",
+                         molecularFormula: "",
+                         molecularWeight: null,
+                         numRo5Violations: null,
+                         passesRuleOfThree: null,
+                         preferredCompoundName: null,
+                         rotatableBonds: 0,
+                         smiles: null,
+                         species: null,
+                         stdCtab: "",
+                         stdInChiKey: "",
+                         svg: ""
+                     };
+
 
 	$scope.alerts = [
         /*{ type: 'danger', msg: 'Oh snap! Change a few things up and try submitting again.' }*/
@@ -166,7 +193,8 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
         //submit
          CBHCompoundBatch.saveSingleCompound($scope.molecule.molfile, $scope.molecule.metadata.custom_fields).then(
                     function(data){
-                        console.log(data);
+                        console.log(data.data);
+                        $scope.singleMol = data.data;
                         //do the magic of merging the response data with our molecule in scope
                         //then bind the result to a scope object which will be the model for the table displayed in finish
                     }, function(error){
