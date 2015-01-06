@@ -14,9 +14,11 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
 	$scope.formData = {};
 
     $scope.molecule = { 'molfile' : "", 
-                        'molfileChanged': function() { CBHCompoundBatch.validate($scope.molecule.molfile).then(
+                        'molfileChanged': function() { 
+
+                            CBHCompoundBatch.validate($scope.molecule.molfile).then(
                                                         function(data){
-                                                            console.log(data);
+                                                            $scope.validated = data.data;
                                                         }, function(error){
                                                             $scope.validated = { 
                                                                 'warnings': {
@@ -25,7 +27,7 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
                                                                     'invalidMolecule': true 
                                                                 } 
                                                             } 
-                                                        }); 
+                            }); 
                                                       },
                         'metadata': { 
                             'stereoSelected': {
@@ -160,19 +162,15 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
         //send this to the service for saving data
         //form fields bound to the scope molecule object
         //this may be performed during the transition to the finish page - any results to be shown need a promise for that page.
-        console.log("submitted");
-        
-        console.log($scope.molecule);
-        
 
         //submit
-        CBHCompoundBatch.saveSingleCompound($scope.molecule.molfile, $scope.molecule.metadata.custom_fields).then(
+         CBHCompoundBatch.saveSingleCompound($scope.molecule.molfile, $scope.molecule.metadata.custom_fields).then(
                     function(data){
                         console.log(data);
                         //do the magic of merging the response data with our molecule in scope
                         //then bind the result to a scope object which will be the model for the table displayed in finish
                     }, function(error){
-                        //$scope.validated = { 'warnings': {'inorganicCount':"0"}, 'errors': { 'invalidMolecule': true } };
+                        $scope.validated = { 'errors': { 'invalidMolecule': true } };
                     });
 
     };
