@@ -77,8 +77,7 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
                          smiles: null,
                          species: null,
                          stdCtab: "",
-                         stdInChiKey: "",
-                         svg: ""
+                         stdInChiKey: ""
                      };
 
 

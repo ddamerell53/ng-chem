@@ -22,20 +22,37 @@
 	  <p>Custom Fields: {{ singleMol.customFields }}</p> -->
 
 	  <p>
-	  	<ul class="list-unstyled">
-	  	  <li>AlogP: {{ singleMol.alogp || Loading }}</li>
-		  <li>UOx ID: {{ singleMol.chemblId || Loading}}</li>
-		  <li>Created: {{ singleMol.created || Loading}}</li>
-		  <li>Mol Formula: {{ singleMol.molecularFormula || Loading}}</li>
-		  <li>Mol Weight: {{ singleMol.molecularWeight || Loading}}</li>
-		  <li>Rotatable Bonds: {{ singleMol.rotatableBonds || Loading}}</li>
-		  <li>StdInChi Key: {{ singleMol.stdInChiKey || Loading}}</li>
-		  <li ng-hide="singleMol.customFields.length == 0"><strong>Custom Fields</strong></li>
-		  <ul ng-hide="singleMol.customFields == null">
-			  <li ng-repeat="(name, value) in singleMol.customFields">{{name}}: {{value}}</li>
-			</ul>
-	  	</ul>
+	  	<table class="table table-striped table-bordered">
+	  		<tbody>
+	  			<tr>
+		  			<th>UOx ID</th><td>{{ singleMol.chemblId || Loading}}</td>
+		  			</tr>
+		  		<tr>
+		  			<th>AlogP</th><td>{{ singleMol.alogp || Loading }}</td>
+		  		</tr>
+		  		<tr>
+		  			<th>Created</th><td>{{ singleMol.created || Loading}}</td>
+		  			</tr>
+		  		<tr>
+		  			<th>Mol Formula</th><td>{{ singleMol.molecularFormula || Loading}}</td>
+		  			</tr>
+		  		<tr>
+		  			<th>Mol Weight</th><td>{{ singleMol.molecularWeight || Loading}}</td>
+		  			</tr>
+		  		<tr>
+		  			<th>Rotatable Bonds</th><td>{{ singleMol.rotatableBonds || Loading}}</td>
+		  			</tr>
+		  		<tr>
+		  			<th colspan="2" class="text-center">Custom Fields</th>
+		  			</tr>
+		  		<tr ng-repeat="(name, value) in singleMol.customFields">
+		  			<th>{{name}}</th><td>{{ value || Loading}}</td>
+		  		</tr>
+		  	</tbody>
+	  	</table>
 	  </p>
+
+
 
 
 	</div>	
