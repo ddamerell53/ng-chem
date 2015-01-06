@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="alert alert-info">
-		<p><strong>Your prepared compounds are listed below. </strong><br/></p>
+		<p><strong>Your prepared compounds are listed below. Click "Save" if you are happy with the details shown.</strong><br/></p>
 	</div>
 </div>
 <div class="row">
@@ -11,15 +11,31 @@
 	  <!-- <p>Basic pKa: {{ singleMol.acdBasicPka }}</p> -->
 	  <!-- <p>logD: {{ singleMol.acdLogd }}</p> -->
 	  <!-- <p>logP: {{ singleMol.acdLogp }}</p> -->
-	  <p>AlogP: {{ singleMol.alogp }}</p>
+	  <!-- <p>SMILES: {{ singleMol.smiles }}</p> -->
+	  <!-- <p>AlogP: {{ singleMol.alogp }}</p>
 	  <p>UOx ID: {{ singleMol.chemblId }}</p>
 	  <p>Created: {{ singleMol.created }}</p>
 	  <p>Mol Formula: {{ singleMol.molecularFormula }}</p>
 	  <p>Mol Weight: {{ singleMol.molecularWeight }}</p>
 	  <p>Rotatable Bonds: {{ singleMol.rotatableBonds }}</p>
-	  <!-- <p>SMILES: {{ singleMol.smiles }}</p> -->
 	  <p>StdInChi Key: {{ singleMol.stdInChiKey }}</p>
-	  <p>Custom Fields: {{ singleMol.customFields }}</p>
+	  <p>Custom Fields: {{ singleMol.customFields }}</p> -->
+
+	  <p>
+	  	<ul class="list-unstyled">
+	  	  <li>AlogP: {{ singleMol.alogp || Loading }}</li>
+		  <li>UOx ID: {{ singleMol.chemblId || Loading}}</li>
+		  <li>Created: {{ singleMol.created || Loading}}</li>
+		  <li>Mol Formula: {{ singleMol.molecularFormula || Loading}}</li>
+		  <li>Mol Weight: {{ singleMol.molecularWeight || Loading}}</li>
+		  <li>Rotatable Bonds: {{ singleMol.rotatableBonds || Loading}}</li>
+		  <li>StdInChi Key: {{ singleMol.stdInChiKey || Loading}}</li>
+		  <li ng-hide="singleMol.customFields.length == 0"><strong>Custom Fields</strong></li>
+		  <ul ng-hide="singleMol.customFields == null">
+			  <li ng-repeat="(name, value) in singleMol.customFields">{{name}}: {{value}}</li>
+			</ul>
+	  	</ul>
+	  </p>
 
 
 	</div>	
@@ -32,6 +48,6 @@
 	
 		<a class="btn btn-primary" role="button" ui-sref="demo.validate" ng-show="wizard.totalSteps == 4">Back</a>
 		<a class="btn btn-primary" role="button" ui-sref="demo.add.single" ng-show="wizard.totalSteps == 2">Back</a>
-		<a class="btn btn-primary pull-right" role="button" ui-sref="demo.intro" onclick="reset()">Done</a>
+		<a class="btn btn-primary pull-right" role="button" ui-sref="demo.intro" onclick="reset()">Save</a>
 
 </div>
