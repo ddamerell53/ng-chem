@@ -31,7 +31,7 @@
 		  			<th>AlogP</th><td>{{ singleMol.alogp || Loading }}</td>
 		  		</tr>
 		  		<tr>
-		  			<th>Created</th><td>{{ singleMol.created || Loading}}</td>
+		  			<th>Created</th><td>{{ singleMol.created | date:'dd-MM-yyyy' || Loading}}</td>
 		  			</tr>
 		  		<tr>
 		  			<th>Mol Formula</th><td>{{ singleMol.molecularFormula || Loading}}</td>
