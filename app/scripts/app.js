@@ -128,6 +128,9 @@ angular.module('ngChemApp', [
               $scope.wizard.step = 1;
               $scope.wizard.dynamic = 41;
               $scope.wizard.totalSteps = 4;
+              $scope.urlBase = "/chemblws/cbh_compound_batches/";
+              var arr = window.location.href.split("/");
+              $scope.myUrl = arr[0] + "//" + arr[2] + $scope.urlBase;
             }
         })
 

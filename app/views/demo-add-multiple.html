@@ -3,11 +3,12 @@
 		<p><strong>Add your compounds to be registered. </strong><br/>Paste a list of SMILES, Standard InChiKeys or upload SD, Excel or MOL files.</p>
 	</div>
 </div>
-<div class="row" flow-init>
+<div class="row" flow-init="{target: '/chemblws/flow/upload/'}"
+			     flow-files-submitted="$flow.upload()">
 	<form name="inputForm">
-
-	<div class="col-xs-8">
-		<div class="form-group mt">
+	<!-- Paste list here -->
+	<div class="col-xs-6">
+		<div class="form-group">
 			<label for="text_input" class="blue text-center"><strong class="nexa">Paste your SMILES or IDs here</strong></label>
 			<textarea id="text_input" name="text_input" class="form-control" rows="5" ng-model="input_string" ng-model-options="{ debounce:700 }"></textarea>
 		</div>
@@ -16,21 +17,48 @@
 			<input type="file" id="file_input">
 		</div> -->
 
-		<input type="file" flow-btn />
+		
+
+	</div>
+
+
+	<!-- File upload here -->
+	<div class="col-xs-6">
+		<label for="file_input" class="blue text-center"><strong class="nexa">Upload your SD or Excel files here</strong></label>
+		<!-- <input name="file_input" type="file" flow-btn /> -->
+		<div class="row">
+			<div class="col-xs-12">
+				<span flow-btn name="file_input" role="btn" class="btn btn-primary align-center">Upload File</span> 
+			</div>
+		</div>
 		<!-- <input type="file" flow-btn flow-directory />
 		  Input OR Other element as upload button
 		<span flow-btn>Upload File</span> -->
+		<div class="row mt">
+			<div class="col-xs-12">
+				<div flow-drop flow-drag-enter="style={border:'4px dashed green', padding: '20px'}" flow-drag-leave="style={border:'4px dashed #ddd', padding: '20px'}" ng-style="style={border:'4px dashed #ddd', padding: '20px'}">
+				    <strong class="nexa blue">Or Drag And Drop your file here</strong>
+				</div>
+			</div>
+		</div>
 
-		<table>
-			<tr ng-repeat="file in $flow.files">
-		        <td>{{$index+1}}</td>
-		        <td>{{file.name}}</td>
-		        <td>{{file.msg}}</td>
-		    </tr>
-		</table>
-
-		<div class="alert" flow-drop flow-drag-enter="style={border:'4px dashed green'}" flow-drag-leave="style={}" ng-style="style">
-		    Or Drag And Drop your file here
+		<div class="row mt">
+			<div class="col-xs-12">
+				<table class="table table-striped table-bordered">
+					<thead>
+						<tr>
+							<th colspan="2">Files added</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="file in $flow.files">
+					        <td>{{$index+1}}</td>
+					        <td>{{file.name}}</td>
+					        <td>{{file.msg}}</td>
+					    </tr>
+					</tbody>
+				</table>
+			</div>
 		</div>
 
 	</div>
@@ -39,7 +67,7 @@
 	
 </div>
 <div class="row">
-	<div class="col-xs-8">
+	<div>
 		<a class="btn btn-primary pull-right" role="button" ui-sref="demo.map" ng-click="parseInput()">Next</a>
 	</div>
 </div>
