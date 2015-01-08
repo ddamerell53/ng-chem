@@ -12,7 +12,8 @@
 
 
 <div class="row" flow-init="{target: '/chemblws/flow/upload/'}"
-			     flow-files-submitted="$flow.upload()">
+			     flow-files-submitted="$flow.upload()"
+			     flow-file-success="assignFileId($file.name)">
 	<form name="inputForm">
 	<!-- Paste list here -->
 	<div class="col-xs-6">
@@ -79,6 +80,6 @@
 </div>
 <div class="row">
 	<div>
-		<a class="btn btn-primary pull-right" role="button" ui-sref="demo.map" ng-click="parseInput()">Next</a>
+		<a class="btn btn-primary pull-right" role="button" ui-sref="demo.map" ng-click="parseHeaders()">Next</a>
 	</div>
 </div>

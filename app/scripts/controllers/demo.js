@@ -121,6 +121,13 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
                                                 { field: "acdLogp", displayName: "acdLogp" }]
                                   };
 
+    $scope.uploaded_file_name = "";
+
+    $scope.assignFileId = function(id) {
+        $scope.uploaded_file_name = id;
+        console.log($scope.uploaded_file_name);
+    }
+
 	$scope.parseInput = function (){
 		//take string
 		//split on delims
@@ -202,6 +209,25 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
 
     };
 
+    
+
+    $scope.parseHeaders = function() {
+        //call service to pull out headers from uploaded file
+        //service backend detects file type
+        //returns object which is populated into the list for map page
+        
+        CBHCompoundBatch.fetchHeaders($scope.uploaded_file_name).then(
+                        function(data){
+                            //do something with the returned data
+                            console.log(data);
+
+                        }, function(error){
+                            console.log(error);
+                        });
+
+        }
+
+        
     $scope.validatedData = [
                                 [
                                     {
