@@ -219,7 +219,7 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
         CBHCompoundBatch.fetchHeaders($scope.uploaded_file_name).then(
                         function(data){
                             //do something with the returned data
-                            console.log(data);
+                            console.log("yep");
 
                         }, function(error){
                             console.log(error);

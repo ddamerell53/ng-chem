@@ -13,7 +13,7 @@ angular.module('ngChemApp')
     // ...
 
     var urlBase = "/chemblws/cbh_compound_batches/";
-    var urlBaseForHeaders = "/chemblws/cbh_compound_batches/";
+    var urlBaseForHeaders = "/chemblws/cbh_batch_upload/";
     var CBHCompoundBatch = {};
 
     var arr = window.location.href.split("/");
@@ -53,7 +53,7 @@ angular.module('ngChemApp')
         return $http.post( myUrl + "bulk/upload", {ctab:molfile });
     };
 
-    CBHCompoundBatch.fetchHeaders = function(file_id) {
+    CBHCompoundBatch.fetchHeaders = function(file_name) {
 
         return $http.post( myUrlForHeaders + "headers/", { file_name:file_name });
     };
