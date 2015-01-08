@@ -9,6 +9,8 @@
  */
 var app = angular.module('ngChemApp');
 
+
+
 app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 'CBHCompoundBatch', '$timeout', function ($scope, $rootScope, $state, ChEMBLFactory, CBHCompoundBatch, $timeout) {
 
 	$scope.formData = {};
@@ -54,31 +56,8 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
         'max': 100,
     };
 
-    $scope.singleMol = { acdAcidicPka: null,
-                         acdBasicPka: null,
-                         acdLogd: null,
-                         acdLogp: null,
-                         alogp: null,
-                         chemblId: "",
-                         created: "",
-                         ctab: "",
-                         customFields: {},
-                         editableBy: {},
-                         id: null,
-                         knownDrug: 0,
-                         medChemFriendly: null,
-                         modified: "",
-                         molecularFormula: "",
-                         molecularWeight: null,
-                         numRo5Violations: null,
-                         passesRuleOfThree: null,
-                         preferredCompoundName: null,
-                         rotatableBonds: 0,
-                         smiles: null,
-                         species: null,
-                         stdCtab: "",
-                         stdInChiKey: ""
-                     };
+    $scope.singleMol = CBHCompoundBatch.getSingleMol();
+
 
 
 	$scope.alerts = [
@@ -197,12 +176,11 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
         //this may be performed during the transition to the finish page - any results to be shown need a promise for that page.
 
         //submit
+        $scope.singleMol = CBHCompoundBatch.getSingleMol();
          CBHCompoundBatch.saveSingleCompound($scope.molecule.molfile, $scope.molecule.metadata.custom_fields).then(
                     function(data){
-                        console.log(data.data);
                         $scope.singleMol = data.data;
-                        //do the magic of merging the response data with our molecule in scope
-                        //then bind the result to a scope object which will be the model for the table displayed in finish
+                       
                     }, function(error){
                         $scope.validated = { 'errors': { 'invalidMolecule': true } };
                     });
