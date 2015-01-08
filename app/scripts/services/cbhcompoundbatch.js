@@ -18,6 +18,34 @@ angular.module('ngChemApp')
     var arr = window.location.href.split("/");
     var myUrl = arr[0] + "//" + arr[2] + urlBase;
 
+    CBHCompoundBatch.getSingleMol = function(){
+        return { acdAcidicPka: null,
+                         acdBasicPka: null,
+                         acdLogd: null,
+                         acdLogp: null,
+                         alogp: null,
+                         chemblId: "",
+                         created: "",
+                         ctab: "",
+                         customFields: {},
+                         editableBy: {},
+                         id: null,
+                         knownDrug: 0,
+                         medChemFriendly: null,
+                         modified: "",
+                         molecularFormula: "",
+                         molecularWeight: null,
+                         numRo5Violations: null,
+                         passesRuleOfThree: null,
+                         preferredCompoundName: null,
+                         rotatableBonds: 0,
+                         smiles: "",
+                         species: null,
+                         stdCtab: "",
+                         stdInChiKey: ""
+                     };
+    }
+
     CBHCompoundBatch.validate = function(molfile) {
 
       return $http.post( myUrl + "validate/", {ctab:molfile});

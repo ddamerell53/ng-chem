@@ -5,60 +5,48 @@
 </div>
 <div class="row">
 	<div class="col-xs-6" ng-show="wizard.totalSteps == 2">
-	  <!-- <div class="gridStyle" ng-grid="gridOptionsSingle"></div> -->
-
-	  <!-- <p>Acidic pKa: {{ singleMol.acdAcidicPka }}</p> -->
-	  <!-- <p>Basic pKa: {{ singleMol.acdBasicPka }}</p> -->
-	  <!-- <p>logD: {{ singleMol.acdLogd }}</p> -->
-	  <!-- <p>logP: {{ singleMol.acdLogp }}</p> -->
-	  <!-- <p>SMILES: {{ singleMol.smiles }}</p> -->
-	  <!-- <p>AlogP: {{ singleMol.alogp }}</p>
-	  <p>UOx ID: {{ singleMol.chemblId }}</p>
-	  <p>Created: {{ singleMol.created }}</p>
-	  <p>Mol Formula: {{ singleMol.molecularFormula }}</p>
-	  <p>Mol Weight: {{ singleMol.molecularWeight }}</p>
-	  <p>Rotatable Bonds: {{ singleMol.rotatableBonds }}</p>
-	  <p>StdInChi Key: {{ singleMol.stdInChiKey }}</p>
-	  <p>Custom Fields: {{ singleMol.customFields }}</p> -->
-
 	  <p>
 	  	<table class="table table-striped table-bordered">
 	  		<tbody>
 	  			<tr>
 		  			<th>UOx ID</th><td>{{ singleMol.chemblId || Loading}}</td>
-		  			</tr>
+		  		</tr>
 		  		<tr>
 		  			<th>AlogP</th><td>{{ singleMol.alogp || Loading }}</td>
 		  		</tr>
 		  		<tr>
 		  			<th>Created</th><td>{{ singleMol.created | date:'dd-MM-yyyy' || Loading}}</td>
-		  			</tr>
+		  		</tr>
 		  		<tr>
 		  			<th>Mol Formula</th><td>{{ singleMol.molecularFormula || Loading}}</td>
-		  			</tr>
+		  		</tr>
 		  		<tr>
 		  			<th>Mol Weight</th><td>{{ singleMol.molecularWeight || Loading}}</td>
-		  			</tr>
+		  		</tr>
 		  		<tr>
 		  			<th>Rotatable Bonds</th><td>{{ singleMol.rotatableBonds || Loading}}</td>
-		  			</tr>
+		  		</tr>
 		  		<tr>
+		  			<th>SMILES</th><td>{{singleMol.smiles || Loading}}</td>
+		  		</tr>
+			</tbody>
+	  	</table>
+	  </p>
+	  <p >
+	  	<table ng-show="singleMol.customFields | notEmpty" class="table table-striped table-bordered"  >
+	  		<tbody>
+	  			<tr>
 		  			<th colspan="2" class="text-center">Custom Fields</th>
-		  			</tr>
+		  		</tr>
 		  		<tr ng-repeat="(name, value) in singleMol.customFields">
 		  			<th>{{name}}</th><td>{{ value || Loading}}</td>
 		  		</tr>
 		  	</tbody>
 	  	</table>
 	  </p>
-
-
-
-
 	</div>	
-	<div class="col-xs-6">
-		<!-- Image here -->
-
+	<div class="col-xs-6" ng-show="singleMol.smiles.length > 0">
+		<chemsvg ng-show="singleMol.smiles.length > 0" size="'400'" smiles="singleMol"  base-url="'http://localhost:8001/'" ></chemsvg>
 	</div>
 </div>
 <div class="row">
