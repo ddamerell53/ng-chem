@@ -3,6 +3,14 @@
 		<p><strong>Add your compounds to be registered. </strong><br/>Paste a list of SMILES, Standard InChiKeys or upload SD, Excel or MOL files.</p>
 	</div>
 </div>
+
+<!-- TODO - confine flowjs to a single file upload limit -->
+<!-- TODO - implement better l&f to file upload result - alert to say it's completed etc? Should be examples in flowjs docs -->
+<!-- TODO - implement delete file for the uploade file - in case you wish to upload a different one -->
+<!-- TODO - add an on-success param here which puts the file ID into the scope  -->
+<!-- TODO - on page transition to map, call a service which parses the specified file for it's headers, populated into the appropriate scope list -->
+
+
 <div class="row" flow-init="{target: '/chemblws/flow/upload/'}"
 			     flow-files-submitted="$flow.upload()">
 	<form name="inputForm">
@@ -28,14 +36,14 @@
 		<!-- <input name="file_input" type="file" flow-btn /> -->
 		<div class="row">
 			<div class="col-xs-12">
-				<span flow-btn name="file_input" role="btn" class="btn btn-primary align-center">Upload File</span> 
+				<span flow-btn name="file_input" role="btn" class="btn btn-primary align-center" ng-disabled="$flow.files.length > 0">Upload File</span> 
 			</div>
 		</div>
 		<!-- <input type="file" flow-btn flow-directory />
 		  Input OR Other element as upload button
 		<span flow-btn>Upload File</span> -->
 		<div class="row mt">
-			<div class="col-xs-12">
+			<div class="col-xs-12" ng-hide="$flow.files.length > 0">
 				<div flow-drop flow-drag-enter="style={border:'4px dashed green', padding: '20px'}" flow-drag-leave="style={border:'4px dashed #ddd', padding: '20px'}" ng-style="style={border:'4px dashed #ddd', padding: '20px'}">
 				    <strong class="nexa blue">Or Drag And Drop your file here</strong>
 				</div>
@@ -44,17 +52,20 @@
 
 		<div class="row mt">
 			<div class="col-xs-12">
-				<table class="table table-striped table-bordered">
+				<table class="table table-striped">
 					<thead>
 						<tr>
-							<th colspan="2">Files added</th>
+							<th colspan="2"><strong class="nexa blue">Files added</strong></th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr ng-repeat="file in $flow.files">
-					        <td>{{$index+1}}</td>
+					        <!-- <td>{{$index+1}}</td> -->
 					        <td>{{file.name}}</td>
-					        <td>{{file.msg}}</td>
+					        <td class="text-center"><a ng-click="file.cancel()" class="btn btn-sm btn-danger" role="btn">Remove</a></td>
+					    </tr>
+					    <tr ng-show="$flow.files.length == 0">
+					    	<td colspan="2">No files uploaded</td>
 					    </tr>
 					</tbody>
 				</table>
