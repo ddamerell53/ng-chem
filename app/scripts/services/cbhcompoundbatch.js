@@ -51,9 +51,10 @@ angular.module('ngChemApp')
     CBHCompoundBatch.validateList = function(values){
         var promise = $http.post( urlBase + "validate_list/" , values).then(
             function(data){
-                console.log(data);
+                return data.data;
             }
         );
+        return promise;
     }
     CBHCompoundBatch.validate = function(molfile) {
 

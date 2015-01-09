@@ -58,11 +58,14 @@ function applyTicks(current_step) {
 }
 
 function splitInput(in_str) {
+    console.log(in_str);
     var data = [];
     var splitted = in_str.split(/(\r\n|\n|\r)/gm);
     if (splitted.length == 1){
         //try delimiting on commas
-        splitted = in_str.split(' ');
+        if (splitted[0].trim()==""){
+            return false;
+        }
     }
 
     //return some json
@@ -103,8 +106,11 @@ function smilesOrInchi(in_str) {
     else if (in_str.trim().match(/^((CHEMBL)?[0-9])$/)) {
         type_str = "ChEMBL ID"
     }
+    else if (in_str.trim().match(/^([^J][A-Za-z0-9@+\-\[\]\(\)\\=#$]+)$/)){
+        type_str = "Smiles"
+    }
     else {
-        type_str = "SMILES"
+        type_str = "unknown"
     }
     return type_str;
 }
