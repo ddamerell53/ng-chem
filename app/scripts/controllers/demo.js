@@ -178,12 +178,12 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
         //submit
         $scope.singleMol = CBHCompoundBatch.getSingleMol();
          CBHCompoundBatch.saveSingleCompound($scope.molecule.molfile, $scope.molecule.metadata.custom_fields).then(
-                    function(data){
-                        $scope.singleMol = data.data;
-                       
-                    }, function(error){
-                        $scope.validated = { 'errors': { 'invalidMolecule': true } };
-                    });
+            function(data){
+                $scope.singleMol = data.data;
+               
+            }, function(error){
+                $scope.validated = { 'errors': { 'invalidMolecule': true } };
+            });
 
     };
 
@@ -204,15 +204,15 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
         //returns object which is populated into the list for map page
         
         CBHCompoundBatch.fetchHeaders($scope.uploaded_file_name).then(
-                        function(data){
-                            //do something with the returned data
-                            angular.forEach(data.data.headers, function(value, key) {
-                              $scope.dragmodels.lists.headers.push({label: value});
-                            });
+            function(data){
+                //do something with the returned data
+                angular.forEach(data.data.headers, function(value, key) {
+                  $scope.dragmodels.lists.headers.push({label: value});
+                });
 
-                        }, function(error){
-                            console.log(error);
-                        });
+            }, function(error){
+                console.log(error);
+            });
 
         }
 
