@@ -115,40 +115,22 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
 		//for now push our test json to the Input
 
 		//now try a delimited list of SMILES
-		var splitted = splitInput(this.input_string);
+		var splitted = splitInput(this.input_string,$scope.dataTypeSelected);
 
+        if (splitted){
+            //We are able to split this
 
-		angular.each(splitted, function(idx,val) {
-			
-			//intervene here with Chembl calls using the ChEMBLFactory
-        	//interrogate each val for its type, then call the appropriate ChEMBL service to retrieve data
-        	//var returned_json = {}
-        	if (val.type == 'InChi') {
-        		$scope.parsed_input.push(new ChEMBLFactory(val.input_str, "inchi"));
-        		
-        	}
-        	else if (val.type == 'InChi Key') {
-        		$scope.parsed_input.push(new ChEMBLFactory(val.input_str, "inchikey"));
-        		
-        		
-        	}
-        	else if (val.type == 'SMILES') {
-        		$scope.parsed_input = (new ChEMBLFactory(val.input_str, "smiles"));
-        		
-        		
-        	}
-        	else if (val.type == 'ChEMBL ID') {
-        		$scope.parsed_input.push(new ChEMBLFactory(val.input_str, "chemblid"));
-        		
-        	}
+            //set unloaded variable to true
+            //set the $state
+            CBHCompoundBatch.validateList(splitted).then(
+                function(data){
 
-        	//display errors
-        	/*if (returned_json.resp == "danger") {
-        		$scope.addAlert(returned_json.resp, returned_json.message );
-        	}*/
-			//$scope.parsed_input.push(val);	
-			console.log($scope.parsed_input);
-		});
+                }
+            );
+        }
+
+        
+		
 
 
 

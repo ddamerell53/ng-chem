@@ -48,10 +48,18 @@ angular.module('ngChemApp')
                      };
     }
 
+    CBHCompoundBatch.validateList = function(values){
+        var promise = $http.post( urlBase + "validate_list/" , values).then(
+            function(data){
+                console.log(data);
+            }
+        );
+    }
     CBHCompoundBatch.validate = function(molfile) {
 
       return $http.post( myUrl + "validate/", {ctab:molfile});
     };
+
 
 
     CBHCompoundBatch.saveSingleCompound = function(molfile, customFields) {
