@@ -12,7 +12,7 @@
 		  			<th>UOx ID</th><td>{{ singleMol.chemblId || Loading}}</td>
 		  		</tr>
 		  		<tr>
-		  			<th>AlogP</th><td>{{ singleMol.alogp || Loading }}</td>
+		  			<th>AlogP</th><td>{{ singleMol.alogp | number:2 || Loading }}</td>
 		  		</tr>
 		  		<tr>
 		  			<th>Created</th><td>{{ singleMol.created | date:'dd-MM-yyyy' || Loading}}</td>
@@ -21,7 +21,7 @@
 		  			<th>Mol Formula</th><td>{{ singleMol.molecularFormula || Loading}}</td>
 		  		</tr>
 		  		<tr>
-		  			<th>Mol Weight</th><td>{{ singleMol.molecularWeight || Loading}}</td>
+		  			<th>Mol Weight</th><td>{{ singleMol.molecularWeight | number:2 || Loading}}</td>
 		  		</tr>
 		  		<tr>
 		  			<th>Rotatable Bonds</th><td>{{ singleMol.rotatableBonds || Loading}}</td>
