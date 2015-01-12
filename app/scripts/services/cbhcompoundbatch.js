@@ -99,9 +99,10 @@ angular.module('ngChemApp')
         return $http.post ( myUrl + "existing/");
     };
     CBHCompoundBatch.query = function(filters) {
-         var promise = $http.get( 
+        console.log(myUrl);
+         var promise = $http( 
             {
-                url: urlBase,
+                url: myUrl,
                 method: 'GET',
                 params: filters
             }

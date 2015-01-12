@@ -122,7 +122,7 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
     $scope.processInput = function(){
             CBHCompoundBatch.validateList($scope.input_string.splitted).then(
                 function(data){
-                    $scope.validatedData.currentBatch = data.currentBatch;
+                    $scope.validatedData = data;
                 }
             );
     };
@@ -158,7 +158,7 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
          CBHCompoundBatch.saveSingleCompound($scope.molecule.molfile, $scope.molecule.metadata.custom_fields).then(
             function(data){
                 $scope.singleMol = data.data;
-                $scope.validated.objects = [data.data];
+                $scope.finalData.objects = [data.data];
                
             }, function(error){
                 $scope.validated = { 'errors': { 'invalidMolecule': true } };
@@ -182,12 +182,14 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
     }
 
 
+$scope.finalData = {"objects":[]};
+
 
     $scope.saveMultiBatchMolecules = function(){
         CBHCompoundBatch.saveMultiBatchMolecules($scope.validatedData.currentBatch, $scope.molecule.metadata.custom_fields).then(
             function(data){
-                CBHCompoundBatch.query(multiple_batch=$scope.validatedData.currentBatch).then(function(result){
-                    $scope.validated.objects = result.data;
+                CBHCompoundBatch.query({multiple_batch : $scope.validatedData.currentBatch}).then(function(result){
+                    $scope.finalData.objects = result.objects;
                 });
             }, function(error){
                 $scope.validated = { 'errors': { 'invalidMolecule': true } };
@@ -268,94 +270,7 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
     }
 
         
-    $scope.validatedData = [
-                                [
-                                    {
-                                        name: "Structure",
-                                        smiles: "Cn1cnc2c1c(=O)n(c(=O)n2C)C",
-                                        status: "start",
-                                    },
-                                    {
-                                        name: "Salt status",
-                                        smiles: "Cn1cnc2c1c(=O)n(c(=O)n2C)C",
-                                        status: "no_change_req"
-                                    },
-                                    {
-                                        name: "Tautomers",
-                                        smiles: "Cn1cnc2c1c(=O)n(c(=O)n2C)C",
-                                        status: "no_change_req"
-                                    },
-                                    {
-                                        name: "Isotopes and Stereochemistry",
-                                        smiles: "Cn1cnc2c1c(=O)n(c(=O)n2C)C",
-                                        status: "changed"
-                                    },
-                                    {
-                                        name: "Normalisation status",
-                                        smiles: "Cn1cnc2c1c(=O)n(c(=O)n2C)C",
-                                        status: "end"
-                                    },
-                                    {
-                                        name: "PAINS status",
-                                        smiles: "Cn1cnc2c1c(=O)n(c(=O)n2C)C",
-                                        status: "end"
-                                    }
-                                ],
-                                [
-                                    {
-                                        name: "Original",
-                                        smiles: "Cn1cnc2c1c(=O)n(c(=O)n2C)C",
-                                        status: "start"
-                                    },
-                                    {
-                                        name: "Metals and Salts",
-                                        smiles: "Cn1cnc2c1c(=O)n(c(=O)n2C)C",
-                                        status: "no_change_req"
-                                    },
-                                    {
-                                        name: "Tautomers and Charges",
-                                        smiles: "Cn1cnc2c1c(=O)n(c(=O)n2C)C",
-                                        status: "no_change_req"
-                                    },
-                                    {
-                                        name: "Isotopes and Stereochemistry",
-                                        smiles: "Cn1cnc2c1c(=O)n(c(=O)n2C)C",
-                                        status: "processing"
-                                    },
-                                    {
-                                        name: "Complete",
-                                        smiles: "Cn1cnc2c1c(=O)n(c(=O)n2C)C",
-                                        status: "processing"
-                                    }
-                                ],
-                                [
-                                    {
-                                        name: "Original",
-                                        smiles: "Cn1cnc2c1c(=O)n(c(=O)n2C)C",
-                                        status: "start"
-                                    },
-                                    {
-                                        name: "Metals and Salts",
-                                        smiles: "Cn1cnc2c1c(=O)n(c(=O)n2C)C",
-                                        status: "no_change_req"
-                                    },
-                                    {
-                                        name: "Tautomers and Charges",
-                                        smiles: "Cn1cnc2c1c(=O)n(c(=O)n2C)C",
-                                        status: "error"
-                                    },
-                                    {
-                                        name: "Isotopes and Stereochemistry",
-                                        smiles: "Cn1cnc2c1c(=O)n(c(=O)n2C)C",
-                                        status: "error"
-                                    },
-                                    {
-                                        name: "Complete",
-                                        smiles: "Cn1cnc2c1c(=O)n(c(=O)n2C)C",
-                                        status: "error"
-                                    }
-                                ]
-                            ];
+
 
     $scope.validatedData = {};
 

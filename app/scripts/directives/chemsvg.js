@@ -22,7 +22,7 @@ angular.module('ngChemApp')
       },
       controller: ['$scope', function($scope) {
             $scope.getSmiles = function() {
-                $scope.encSmiles = btoa($scope.smiles);
+                $scope.encSmiles = btoa($scope.smiles.canonicalSmiles);
 
             };
             $scope.checkLocal = function() {

@@ -1,53 +1,55 @@
 <div class="row">
 	<div class="alert alert-info">
-		<p><strong>Your prepared compound is listed below. Click cancel to delete this molecule and start again.</strong><br/></p>
+		<p><strong>Your prepared compound data is listed below. Click cancel to delete this molecule and start again.</strong><br/></p>
 	</div>
 </div>
-<div class="row" ng-repeat="singleMol in validated.objects">
-	<div class="col-xs-6" ng-show="wizard.totalSteps == 2">
+<div  ng-repeat="mol in finalData.objects">
+<div class="row">
+	<div class="col-xs-8" ng-show="wizard.totalSteps == 2">
 	  <p>
 	  	<table class="table table-striped table-bordered">
 	  		<tbody>
 	  			<tr>
-		  			<th>UOx ID</th><td>{{ singleMol.chemblId || Loading}}</td>
+		  			<th>UOx ID</th><td>{{ mol.chemblId || Loading}}</td>
 		  		</tr>
 		  		<tr>
-		  			<th>AlogP</th><td>{{ singleMol.alogp | number:2 || Loading }}</td>
+		  			<th>AlogP</th><td>{{ mol.alogp | number:2 || Loading }}</td>
 		  		</tr>
 		  		<tr>
-		  			<th>Created</th><td>{{ singleMol.created | date:'dd-MM-yyyy' || Loading}}</td>
+		  			<th>Created</th><td>{{ mol.created | date:'dd-MM-yyyy' || Loading}}</td>
 		  		</tr>
 		  		<tr>
-		  			<th>Mol Formula</th><td>{{ singleMol.molecularFormula || Loading}}</td>
+		  			<th>Mol Formula</th><td>{{ mol.molecularFormula || Loading}}</td>
 		  		</tr>
 		  		<tr>
-		  			<th>Mol Weight</th><td>{{ singleMol.molecularWeight | number:2 || Loading}}</td>
+		  			<th>Mol Weight</th><td>{{ mol.molecularWeight | number:2 || Loading}}</td>
 		  		</tr>
 		  		<tr>
-		  			<th>Rotatable Bonds</th><td>{{ singleMol.rotatableBonds || Loading}}</td>
+		  			<th>Rotatable Bonds</th><td>{{ mol.rotatableBonds || Loading}}</td>
 		  		</tr>
 		  		<tr>
-		  			<th>SMILES</th><td>{{singleMol.canonicalSmiles || Loading}}</td>
+		  			<th>SMILES</th><td>{{mol.canonicalSmiles || Loading}}</td>
 		  		</tr>
 			</tbody>
 	  	</table>
 	  </p>
 	  <p >
-	  	<table ng-show="singleMol.customFields | notEmpty" class="table table-striped table-bordered"  >
+	  	<table ng-show="mol.customFields | notEmpty" class="table table-striped table-bordered"  >
 	  		<tbody>
 	  			<tr>
 		  			<th colspan="2" class="text-center">Custom Fields</th>
 		  		</tr>
-		  		<tr ng-repeat="(name, value) in singleMol.customFields">
+		  		<tr ng-repeat="(name, value) in mol.customFields">
 		  			<th>{{name}}</th><td>{{ value || Loading}}</td>
 		  		</tr>
 		  	</tbody>
 	  	</table>
 	  </p>
 	</div>	
-	<div class="col-xs-6" ng-show="singleMol.canonicalSmiles.length > 0">
-		<chemsvg ng-show="singleMol.canonicalSmiles.length > 0" size="'200'" smiles="singleMol.canonicalSmiles"  base-url="'/utils/smiles2svg'" ></chemsvg>
-	</div>
+<!-- 	<div class="col-xs-4" ng-show="mol.canonicalSmiles.length > 0">
+		<chemsvg ng-show="mol.canonicalSmiles.length > 0" size="'100'" smiles="mol"  base-url="'/utils/smiles2svg'" ></chemsvg>
+	</div> -->
+</div>
 </div>
 <div class="row">
 	
