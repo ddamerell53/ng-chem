@@ -223,12 +223,17 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
         CBHCompoundBatch.fetchExistingFields().then(
             function(data){
                 //do something with the returned data
-                console.log(data.data.fieldNames)
                 angular.forEach(data.data.fieldNames, function(value, key) {
-                    console.log(value)
-                    //var obj = { value.name : [] }
-
+                    //create a blank list for that custom field
+                    //"BW_ID", "Formula", "Mass_mg", "MolWeight"
                     $scope.dropmodels.lists[value.name] = [];
+                    //now try to automap the headers to the fields
+                    angular.forEach($scope.dragmodels.lists.headers, function(hdr, k) {
+                        if (hdr == value.name) {
+                            $scope.dragmodels.lists.headers.pop(hdr);
+                            $scope.dropmodels.lists[value.name].push(hdr);
+                        }
+                    });
                 });
 
             }, function(error){
@@ -236,6 +241,9 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
             });
 
         }
+
+        
+
 
     $scope.resetMappingForm = function() {
         //put all the draggable fields back to where they came from (assuming no automapping is displayed)
