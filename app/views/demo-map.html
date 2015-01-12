@@ -12,7 +12,7 @@
 
 				<div class="row" ng-repeat="list in dragmodels.lists">
 					<div class="col-xs-12">
-						<p class="nexa blue">Fields to create</p>
+						<p class="nexa blue"><span class="glyphicon glyphicon-list-alt"></span> Fields to create</p>
 						<ul class="list-unstyled dimensions-list" dnd-list="list">
 							
 							<li class="dimension alert-success" style="cursor:pointer; padding:10px;"
@@ -30,6 +30,7 @@
 			</div>
 
 			<div class="col-lg-6 col-md-6">
+				<p class="nexa blue"><span class="glyphicon glyphicon-link"></span> Mapping Fields</p>
 				<div class="row" ng-repeat="(listName, list) in dropmodels.lists">
 					<div class="col-xs-3">
 						<p class="nexa blue">{{listName}}</p>
@@ -51,9 +52,18 @@
 			</div>
 
 			<div class="col-lg-3 col-md-3">
-				<div class="row">
+				<div class="row" ng-repeat="list in binmodels.lists">
 					<div class="col-xs-12">
-						<p class="nexa blue">Ignore Columns</p>
+						<p class="nexa blue"><span class="glyphicon glyphicon-trash"></span> Ignore Columns</p>
+						<ul class="list-unstyled dimensions-container well" style="min-height: 200px;" dnd-list="list">
+							<li class="dimension draggable alert-success" style="cursor:pointer; padding:10px;"
+							ng-repeat="item in list"
+					        dnd-draggable="item"
+					        dnd-moved="list.splice($index, 1)"
+					        dnd-effect-allowed="move"
+					        dnd-selected="binmodels.selected = item"
+					        ng-class="{'selected': binmodels.selected === item}"><div>{{item.label}}</div></li>
+						</ul>
 					</div>
 				</div>
 			</div>

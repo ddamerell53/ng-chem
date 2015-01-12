@@ -197,6 +197,10 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
         selected: null,
         lists: { } //will be replaced by database fields
     }
+    $scope.binmodels = {
+        selected: null,
+        lists: { "Ignored": [] } //will be replaced by database fields
+    }
 
     $scope.parseHeaders = function() {
         //call service to pull out headers from uploaded file
