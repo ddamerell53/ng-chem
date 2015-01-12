@@ -1,29 +1,91 @@
-<!-- <div class="row">
-    <div class="alert alert-info">
-        <p><strong>Compound structure validation. </strong><br/>Compound Structures have been validated as shown below, where a change has been made a warning is displayed.</p>
+
+ <div  ng-hide="validatedData.objects.errors.length == 0" class="row">
+    <div class="alert alert-danger">
+      <p><strong>{{ validatedData.objects.errors.length  }} molecules could not be processed</strong></p>
+    </div>
+  </div>
+
+<div ng-show="validatedData.objects.total >0">
+  <div ng-show="validatedData.objects.errors.length == 0" class="row">
+    <div class="alert alert-success">
+      <p><strong><ng-pluralize count="validatedData.objects.total"
+                 when="{'0': '',
+                     'one': '1 molecule was processed succesfully.',
+                     'other': '{} molecules were processed succesfully.'}">
+          </ng-pluralize>
+      </strong></p>
     </div>
 </div>
- -->
 
-<ul class="nav nav-tabs pull-right">
-    <li class="tab alert-danger" role="tab"><a ui-sref="demo.validate.pains"><span class="nexa">PAINS</span></a></li>
-    <li class="tab alert-danger" role="tab"><a ui-sref="demo.validate.pains">Reactivity</a></li>
-    <li class="tab alert-danger" role="tab"><a ui-sref="demo.validate.pains">Toxicity</a></li>
-    <li class="tab alert-warning" role="tab"><a ui-sref="demo.validate.standardise">Standardisation</a></li>
-</ul>
+ 
 
-<ul class="nav navbar-nav align-center text-center col-xs-12">
-              <li class="col-xs-2 col-xs-offset-2 alert-danger"><a ui-sref-active="active" ui-sref="demo.validate.pains"><h2><small>PAINS <span class="glyphicon glyphicon-ok add text-success hidden"></span> </small></h2><img src="images/add.svg" class="svg" alt="add" title="add"></a></li>
-              <li class="col-xs-2"><a ui-sref-active="active" ui-sref="demo.map"><h2><small>map <span class="glyphicon glyphicon-ok map text-success hidden"></span></small></h2><img src="images/map.svg" class="svg" alt="map" title="map"></a></a></li>
-              <li class="col-xs-2"><a ui-sref-active="active" ui-sref="demo.validate"><h2><small>validate <span class="glyphicon glyphicon-ok validate text-success hidden"></span></small></h2><img src="images/validate.svg" class="svg" alt="validate" title="validate"></a></a></li>
-              <li class="col-xs-2"><a ui-sref-active="active" ui-sref="demo.finish"><h2><small>finish <span class="glyphicon glyphicon-ok text-success finish hidden"></span></small></h2><img src="images/finish.svg" class="svg" alt="finish" title="finish"></a></a></li>
-          </ul>
 
-<div class="row">
-    
+  <div ng-show="validatedData.objects.pains.length == 0" class="row">
+    <div class="alert alert-info">
+      <p><strong>No molecules were found to be Pan Assay Interference Compounds.</strong></p>
+    </div>
+  </div>
+
+  <div  ng-hide="validatedData.objects.pains.length == 0" class="row">
+    <div class="alert alert-warning">
+
+      <p><strong>
+          <ng-pluralize count="validatedData.objects.pains.length"
+                 when="{'0': '',
+                     'one': '1 molecule was found to be a Pan Assay Interference Compounds.',
+                     'other': '{} molecules were processed succesfully.'}">
+          </ng-pluralize>
+} </strong></p>
+    </div>
+  </div>
+  <div  ng-hide="validatedData.objects.pains.length == 0" class="row">
+    <div class="row">
+      <div ng-repeat="val in validatedData.pains">
+        <div class="col-md-2 col-xs-6" style="min-height:180px; " >
+             <chemsvg size="100" smiles="val.originalSmiles" base-url="'/utils/smiles2svg/'"></chemsvg>
+             {{ val.warnings }}
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <div ng-show="validatedData.objects.changed.length == 0" class="row">
+    <div class="alert alert-info">
+      <p><strong>No molecules needed to be redrawn</strong></p>
+    </div>
+  </div>
+
+  <div ng-hide="validatedData.objects.changed.length == 0">
+    <div class="row"   >
+      <div class="alert alert-warning">
+        <p><strong>
+          <ng-pluralize count="validatedData.objects.changed.length"
+                 when="{'0': '',
+                     'one': 'The following molecule was redrawn due to salts, tautomers or inorganics.',
+                     'other': 'The following {} molecules were redrawn due to salts, tautomers or inorganics.'}">
+          </ng-pluralize>
+
+          </strong></p>
+      </div>
+    </div>
+    <div class="row">
+      <div ng-repeat="val in validatedData.objects.changed">
+        <div class="col-md-2 col-xs-5" style="min-height:180px; " >
+             <chemsvg size="100" smiles="val.originalSmiles" base-url="'/utils/smiles2svg/'"></chemsvg>
+        </div>
+        <div class ="col-md-1 col-xs-2">
+        <img src="images/skip_next2.svg"></img>
+        </div>
+        <div class="col-md-2 col-xs-5" style="min-height:180px; " >
+            <chemsvg size="100" smiles="val.canonicalSmiles" base-url="'/utils/smiles2svg'"></chemsvg>
+        </div>
+        {{ val.warnings }}
+      </div>
+    </div>
+
+  </div>
+    <div class="row">
+          <input type="submit" class="btn btn-primary pull-right" id="submit" ui-sref="demo.finish" ng-click="saveMultiBatchMolecules()" value="Save"/>
+    </div>
 </div>
-
-
-
-<div  class="form-views" ui-view></div>
-

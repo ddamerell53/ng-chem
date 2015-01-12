@@ -1,51 +1,73 @@
 <div class="row">
 	<div class="alert alert-info">
-		<p><strong>Add your compounds to be registered. </strong><br/>Paste a list of SMILES, Standard InChiKeys or upload SD, Excel or MOL files.</p>
+		<p><strong>Add your compounds to be registered. </strong><br/>Paste a list of SMILES, Standard InChis</p>
 	</div>
 </div>
 
 <!-- TODO - implement better l&f to file upload result - alert to say it's completed etc? Should be examples in flowjs docs -->
 
+<<<<<<< HEAD
 
 <div class="row">
 	<form name="inputForm">
 	<!-- Paste list here -->
 	<div class="col-xs-6">
+=======
+<div class="row">
+	<div class="col-sm-6">
+>>>>>>> validation of data from form field
 		<div class="form-group">
 			<label for="text_input" class="blue text-center"><strong class="nexa">Paste your SMILES or IDs here</strong></label>
-			<textarea id="text_input" name="text_input" class="form-control" rows="5" ng-model="input_string" ng-model-options="{ debounce:700 }"></textarea>
+			<textarea id="text_input" name="text_input" ng-change="parseInput()" class="form-control" rows="5" ng-model="input_string.inputstring" ng-model-options="{ debounce:700 }"></textarea>
 		</div>
-		<!-- <div class="form-group mt">
-			<label for="file_input" class="blue text-center"><strong class="nexa">Or upload a file here</strong></label>
-			<input type="file" id="file_input">
-		</div> -->
-
-		
+	</div>
+	<div class="col-sm-6">
+		<label for="file_input" class="blue text-center"><strong class="nexa">Select which type of Ids you have:</strong></label>
+		<div class="form-group">
+		<select ng-options="dt for dt in input_string.dataTypes" class="form-control" ng-model="input_string.dataTypeSelected"></select>
+		</div>
 
 	</div>
+</div>
+<div class="row">
+	<div>
+		<a class="btn btn-primary pull-right" role="button" ui-sref="demo.map.multiple" ng-click="processInput()">Process Ids</a> <!--ui-sref="demo.map"-->
+	</div>
+</div>
+<div class="row">
+	<div class="alert alert-info">
+		<p><strong>...alternatively upload SD or Excel file.</p>
+	</div>
+</div>
 
+<div class="row" flow-init="{target: '/chemblws/flow/upload/'}"
+			     flow-files-submitted="$flow.upload()"
+			     flow-file-success="assignFileId($file.name)">
+	<form name="inputForm">
+	<!-- Paste list here -->
 
 	<!-- File upload here -->
-	<div class="col-xs-6">
-		<label for="file_input" class="blue text-center"><strong class="nexa">Upload your SD or Excel files here</strong></label>
-		<!-- <input name="file_input" type="file" flow-btn /> -->
-		<div class="row">
-			<div class="col-xs-12">
-				<span flow-btn name="file_input" role="btn" class="btn btn-primary align-center" ng-disabled="$flow.files.length > 0">Upload File</span> 
+	<div class="col-sm-12">
+		<div class="col-sm-6">
+			<label for="file_input" class="blue text-center"><strong class="nexa">Upload your SD or Excel files here</strong></label>
+			<!-- <input name="file_input" type="file" flow-btn /> -->
+			<div class="row">
+				<div class="col-xs-12">
+					<span flow-btn name="file_input" role="btn" class="btn btn-primary align-center" ng-disabled="$flow.files.length > 0">Upload File</span> 
+				</div>
 			</div>
-		</div>
-		<!-- <input type="file" flow-btn flow-directory />
-		  Input OR Other element as upload button
-		<span flow-btn>Upload File</span> -->
-		<div class="row mt">
-			<div class="col-xs-12" ng-hide="$flow.files.length > 0">
-				<div flow-drop flow-drag-enter="style={border:'4px dashed green', padding: '20px'}" flow-drag-leave="style={border:'4px dashed #ddd', padding: '20px'}" ng-style="style={border:'4px dashed #ddd', padding: '20px'}">
-				    <strong class="nexa blue">Or Drag And Drop your file here</strong>
+			<!-- <input type="file" flow-btn flow-directory />
+			  Input OR Other element as upload button
+			<span flow-btn>Upload File</span> -->
+			<div class="row mt">
+				<div class="col-xs-12" ng-hide="$flow.files.length > 0">
+					<div flow-drop flow-drag-enter="style={border:'4px dashed green', padding: '20px'}" flow-drag-leave="style={border:'4px dashed #ddd', padding: '20px'}" ng-style="style={border:'4px dashed #ddd', padding: '20px'}">
+					    <strong class="nexa blue">Or Drag And Drop your file here</strong>
+					</div>
 				</div>
 			</div>
 		</div>
-
-		<div class="row mt">
+		<div class="col-sm-6">
 			<div class="col-xs-12">
 				<table class="table table-striped">
 					<thead>
@@ -74,6 +96,11 @@
 </div>
 <div class="row">
 	<div>
+<<<<<<< HEAD
 		<a class="btn btn-primary pull-right" role="button" ui-sref="demo.map" ng-click="parseHeaders()">Next</a>
+		<a class="btn btn-primary pull-right" role="button"  ng-click="parseInput()">Next</a> <!--ui-sref="demo.map"-->
+=======
+		<a class="btn btn-primary pull-right" role="button" ui-sref="demo.map" ng-click="parseHeaders()">Process File</a>
+>>>>>>> validation of data from form field
 	</div>
 </div>

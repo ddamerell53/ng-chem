@@ -72,8 +72,7 @@ angular.module('ngChemApp', [
                 //only need 2 wizard steps if this is the case
                 $scope.wizard.totalSteps = 2;
 
-                $scope.cust_fields_count = 0
-                $scope.custom_fields = [];
+                
 
                 $scope.errors = [];
 
@@ -96,7 +95,8 @@ angular.module('ngChemApp', [
                 
 
                 $scope.sketchMolfile = "";
-
+                $scope.cust_fields_count = 0
+                $scope.custom_fields = [];
                 $scope.addCustomField = function() {
                   var newItemNo = $scope.cust_fields_count + 1;
                   $scope.molecule.metadata.custom_fields.push( { 'name':'', 'value':'', 'id':newItemNo } );
@@ -144,7 +144,53 @@ angular.module('ngChemApp', [
               applyTicks("map");
             }
         })
-        
+
+        .state('demo.map.file', {
+            url: '/map-file',
+            templateUrl: 'views/demo-map-file.html',
+            controller: function($scope) {
+          
+
+              //set up test lists of droppables here
+              $scope.dragmodels = {
+                  selected: null,
+                  lists: {"A": []}
+              };
+              $scope.dropmodels = {
+                  selected: null,
+                  lists: {"Source ID": [], "Project ID": [], "Supplier": [], "Purity": [], "Comments": [], "Other": [],}
+              }
+
+              // Generate initial model
+              for (var i = 1; i <= 3; ++i) {
+                  $scope.dragmodels.lists.A.push({label: "Item A" + i});
+              }
+            }
+        })
+        .state('demo.map.multiple', {
+            url: '/map-multiple',
+            templateUrl: 'views/demo-map-multiple.html',
+            controller: function($scope) {
+                $scope.cust_fields_count = 0
+                $scope.custom_fields = [];
+                $scope.addCustomField = function() {
+                  var newItemNo = $scope.cust_fields_count + 1;
+                  $scope.molecule.metadata.custom_fields.push( { 'name':'', 'value':'', 'id':newItemNo } );
+                  $scope.cust_fields_count++;
+                };
+
+                $scope.removeCustomField = function(number) {
+
+                  var filteredFields = $scope.molecule.metadata.custom_fields.filter(function(element) {
+                    return element.id != number;
+                  });
+
+                  $scope.molecule.metadata.custom_fields = filteredFields;
+                  
+
+                };
+            }
+        })
         // url will be /form/interests
         .state('demo.validate', {
             url: '/validate',
@@ -154,25 +200,6 @@ angular.module('ngChemApp', [
               $scope.wizard.dynamic = 74;
               applyTicks("validate");
             }
-        })
-
-        //substates of validate - we can tab out our output from the server
-        .state('demo.validate.pains', {
-          url:'/pains',
-          templateUrl: 'views/demo-validate-pains.html',
-          controller: function($scope) {
-            //stuff
-
-          }
-        })
-
-        .state('demo.validate.standardise', {
-          url:'/standardise',
-          templateUrl: 'views/demo-validate-standardise.html',
-          controller: function($scope) {
-            //stuff
-
-          }
         })
 
 
