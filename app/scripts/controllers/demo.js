@@ -218,21 +218,34 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
                     //"BW_ID", "Formula", "Mass_mg", "MolWeight"
                     $scope.dropmodels.lists[value.name] = [];
                     //now try to automap the headers to the fields
-                    angular.forEach($scope.dragmodels.lists.headers, function(hdr, k) {
-                        if (hdr.label == value.name) {
-                            $scope.dragmodels.lists.headers.pop(hdr);
-                            $scope.dropmodels.lists[value.name].push(hdr);
-                        }
-                    });
+                    
+
                 });
+                $scope.automap();
 
             }, function(error){
                 console.log(error);
             });
 
-        }
+    }
+
+    $scope.automap = function() {
+
+        angular.forEach($scope.dropmodels.lists, function(value, key) {
+            //console.log(key);
+            angular.forEach($scope.dragmodels.lists.headers, function(hdr, k) {
+                if (hdr.label == key) {
+                    $scope.dragmodels.lists.headers.pop(hdr);
+                    $scope.dropmodels.lists[key].push(hdr);
+                }
+            });
+
+        });
+
+
 
         
+    }
 
 
     $scope.resetMappingForm = function() {
