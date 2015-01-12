@@ -3,7 +3,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="alert alert-info">
-				<p><strong>Map the fields in your SD file to those in the registration system. </strong><br/>Known fields have already been mapped, other fields that you would like displayed should be dragged to the 'other' section.<br/>You can map multiple fields to one column header</p>
+				<p><strong>Map the fields in your SD or excel file to those in the registration system. </strong><br/>Drag column fields from your file to the appropriate custom mapping, or leave undragged to create a new custom field with that name.<br/>To ignore columns and not add them to the database, drag these to the <strong>Ignore Coulmns</strong> box.<br/>Your file must contain at least one structural field - this can be SMILES, MOL data or InChi/InChi Key values.</p>
 			</div>
 		</div>
 		<div class="row">
@@ -12,7 +12,7 @@
 
 				<div class="row" ng-repeat="list in dragmodels.lists">
 					<div class="col-xs-12">
-						<p class="nexa blue">Unmapped column headers</p>
+						<p class="nexa blue">Fields to create</p>
 						<ul class="list-unstyled dimensions-list" dnd-list="list">
 							
 							<li class="dimension alert-success" style="cursor:pointer; padding:10px;"
@@ -29,12 +29,12 @@
 
 			</div>
 
-			<div class="col-lg-9 col-md-9">
+			<div class="col-lg-6 col-md-6">
 				<div class="row" ng-repeat="(listName, list) in dropmodels.lists">
-					<div class="col-xs-2">
+					<div class="col-xs-3">
 						<p class="nexa blue">{{listName}}</p>
 					</div>
-					<div class="col-xs-10">
+					<div class="col-xs-9">
 						<ul class="dimensions-container list-unstyled well" dnd-list="list" style="min-height:100px;">
 							<li class="dimension draggable alert-success" style="cursor:pointer; padding:10px;"
 							ng-repeat="item in list"
@@ -47,16 +47,22 @@
 					</div>
 				</div>
 				
-					
-				
 
+			</div>
+
+			<div class="col-lg-3 col-md-3">
+				<div class="row">
+					<div class="col-xs-12">
+						<p class="nexa blue">Ignore Columns</p>
+					</div>
+				</div>
 			</div>
 
 		</div>	
 	</div>
 </div>
 <div>
-	<a class="btn btn-primary pull-left" role="button" ui-sref="demo.add">Back</a>
+	<a class="btn btn-primary pull-left" role="button" ui-sref="demo.add.multiple">Back</a>
 	<a class="btn btn-primary pull-right" role="button" ui-sref="demo.validate">Next</a>
 	<!-- <a class="btn btn-danger" ng-click="addAlert()">Add Alert</a> -->
 </div>

@@ -86,6 +86,10 @@ angular.module('ngChemApp')
         return $http.post( myUrlForHeaders + "headers/", { file_name:file_name });
     };
 
+    CBHCompoundBatch.fetchExistingFields = function() {
+        return $http.post ( myUrl + "existing/");
+    }
+
     return CBHCompoundBatch;
 
   }]);

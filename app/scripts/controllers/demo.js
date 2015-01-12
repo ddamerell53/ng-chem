@@ -195,7 +195,7 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
     };
     $scope.dropmodels = {
         selected: null,
-        lists: {"Source ID": [], "Project ID": [], "Supplier": [], "Purity": [], "Comments": [], "Other": [],} //will be replaced by database fields
+        lists: { } //will be replaced by database fields
     }
 
     $scope.parseHeaders = function() {
@@ -208,6 +208,22 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
                 //do something with the returned data
                 angular.forEach(data.data.headers, function(value, key) {
                   $scope.dragmodels.lists.headers.push({label: value});
+                });
+
+            }, function(error){
+                console.log(error);
+            });
+
+        //call to populate droppable fields
+        CBHCompoundBatch.fetchExistingFields().then(
+            function(data){
+                //do something with the returned data
+                console.log(data.data.fieldNames)
+                angular.forEach(data.data.fieldNames, function(value, key) {
+                    console.log(value)
+                    //var obj = { value.name : [] }
+
+                    $scope.dropmodels.lists[value.name] = [];
                 });
 
             }, function(error){
