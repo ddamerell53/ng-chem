@@ -222,21 +222,22 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
                     
 
                 });
-                $scope.automap();
+                
 
             }, function(error){
                 console.log(error);
             });
 
+        
     }
 
     $scope.automap = function() {
-
+        console.log("Automap being called");
         angular.forEach($scope.dropmodels.lists, function(value, key) {
             //console.log(key);
             angular.forEach($scope.dragmodels.lists.headers, function(hdr, k) {
                 if (hdr.label == key) {
-                    $scope.dragmodels.lists.headers.pop(hdr);
+                    $scope.dragmodels.lists.headers.splice(k, 1);
                     $scope.dropmodels.lists[key].push(hdr);
                 }
             });
