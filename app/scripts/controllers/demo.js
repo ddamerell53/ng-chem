@@ -158,6 +158,7 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
          CBHCompoundBatch.saveSingleCompound($scope.molecule.molfile, $scope.molecule.metadata.custom_fields).then(
             function(data){
                 $scope.singleMol = data.data;
+                $scope.validated.objects = [data.data];
                
             }, function(error){
                 $scope.validated = { 'errors': { 'invalidMolecule': true } };
@@ -186,7 +187,7 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
         CBHCompoundBatch.saveMultiBatchMolecules($scope.validatedData.currentBatch, $scope.molecule.metadata.custom_fields).then(
             function(data){
                 CBHCompoundBatch.query(multiple_batch=$scope.validatedData.currentBatch).then(function(result){
-                    $scope.validatedData.objects = result.data;
+                    $scope.validated.objects = result.data;
                 });
             }, function(error){
                 $scope.validated = { 'errors': { 'invalidMolecule': true } };
