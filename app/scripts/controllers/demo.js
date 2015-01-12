@@ -206,7 +206,8 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
         //call service to pull out headers from uploaded file
         //service backend detects file type
         //returns object which is populated into the list for map page
-        
+        $scope.dragmodels.lists.headers = [];
+
         CBHCompoundBatch.fetchHeaders($scope.uploaded_file_name).then(
             function(data){
                 //do something with the returned data
