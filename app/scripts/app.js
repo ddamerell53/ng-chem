@@ -149,22 +149,7 @@ angular.module('ngChemApp', [
             url: '/map-file',
             templateUrl: 'views/demo-map-file.html',
             controller: function($scope) {
-          
 
-              //set up test lists of droppables here
-              $scope.dragmodels = {
-                  selected: null,
-                  lists: {"A": []}
-              };
-              $scope.dropmodels = {
-                  selected: null,
-                  lists: {"Source ID": [], "Project ID": [], "Supplier": [], "Purity": [], "Comments": [], "Other": [],}
-              }
-
-              // Generate initial model
-              for (var i = 1; i <= 3; ++i) {
-                  $scope.dragmodels.lists.A.push({label: "Item A" + i});
-              }
             }
         })
         .state('demo.map.multiple', {
