@@ -199,7 +199,7 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
     }
     $scope.binmodels = {
         selected: null,
-        lists: { "Ignored": [] } //will be replaced by database fields
+        lists: { "ignored": [] } //will be replaced by database fields
     }
 
     $scope.parseHeaders = function() {
@@ -235,6 +235,23 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
             });
 
         }
+
+    $scope.resetMappingForm = function() {
+        //put all the draggable fields back to where they came from (assuming no automapping is displayed)
+        //loop through binmodels and put back into dragmodels
+        angular.forEach($scope.binmodels.lists.ignored, function(value, key) {
+            $scope.binmodels.lists.ignored.pop(value);
+            $scope.dragmodels.lists.headers.push(value);
+        });
+        //loop through dropmodels and put into dragmodels
+        angular.forEach($scope.dropmodels.lists, function(value, key) {
+            angular.forEach(value, function(inner_value, inner_key) {
+                value.pop(inner_value);
+                $scope.dragmodels.lists.headers.push(inner_value);
+            });
+        });
+
+    }
 
         
     $scope.validatedData = [

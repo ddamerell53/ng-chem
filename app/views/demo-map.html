@@ -3,7 +3,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="alert alert-info">
-				<p><strong>Map the fields in your SD or excel file to those in the registration system. </strong><br/>Drag column fields from your file to the appropriate custom mapping, or leave undragged to create a new custom field with that name.<br/>To ignore columns and not add them to the database, drag these to the <strong>Ignore Coulmns</strong> box.<br/>Your file must contain at least one structural field - this can be SMILES, MOL data or InChi/InChi Key values.</p>
+				<p><strong>Map the fields in your SD or excel file to those in the registration system. </strong><br/>Drag column fields from your file to the appropriate custom mapping, or leave undragged to create a new custom field with that name.<br/>To ignore columns and not add them to the database, drag these to the <strong>Ignore Columns</strong> box.<br/>Your file must contain at least one structural field - this can be SMILES, MOL data or InChi/InChi Key values.</p>
 			</div>
 		</div>
 		<div class="row">
@@ -73,6 +73,7 @@
 </div>
 <div>
 	<a class="btn btn-primary pull-left" role="button" ui-sref="demo.add.multiple">Back</a>
+	<a class="btn btn-primary pull-right" role="button" ng-click="resetMappingForm()">Reset form</a>
 	<a class="btn btn-primary pull-right" role="button" ui-sref="demo.validate">Next</a>
 	<!-- <a class="btn btn-danger" ng-click="addAlert()">Add Alert</a> -->
 </div>
