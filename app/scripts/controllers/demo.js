@@ -154,11 +154,12 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
         //this may be performed during the transition to the finish page - any results to be shown need a promise for that page.
 
         //submit
+        $scope.finalData.objects = [];
         $scope.singleMol = CBHCompoundBatch.getSingleMol();
          CBHCompoundBatch.saveSingleCompound($scope.molecule.molfile, $scope.molecule.metadata.custom_fields).then(
             function(data){
                 $scope.singleMol = data.data;
-                $scope.finalData.objects = [data.data];
+                $scope.finalData.objects.push(data.data);
                
             }, function(error){
                 $scope.validated = { 'errors': { 'invalidMolecule': true } };
@@ -182,13 +183,13 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
     }
 
 
-$scope.finalData = {"objects":[]};
+$scope.finalData = {"objects" :[]};
 
 
     $scope.saveMultiBatchMolecules = function(){
         CBHCompoundBatch.saveMultiBatchMolecules($scope.validatedData.currentBatch, $scope.molecule.metadata.custom_fields).then(
             function(data){
-                CBHCompoundBatch.query({multiple_batch : $scope.validatedData.currentBatch}).then(function(result){
+                CBHCompoundBatch.query({multiple_batch_id : $scope.validatedData.currentBatch}).then(function(result){
                     $scope.finalData.objects = result.objects;
                 });
             }, function(error){
