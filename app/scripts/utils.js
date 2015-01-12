@@ -31,7 +31,15 @@ function svgify(){
     });
 }
 
-
+Array.prototype.clean = function(deleteValue) {
+  for (var i = 0; i < this.length; i++) {
+    if (this[i] == deleteValue) {         
+      this.splice(i, 1);
+      i--;
+    }
+  }
+  return this;
+};
 
 /* Small function to apply a tick to steps which have been completed */
 function applyTicks(current_step) {
@@ -58,9 +66,10 @@ function applyTicks(current_step) {
 }
 
 function splitInput(in_str) {
-    console.log(in_str);
+
     var data = [];
-    var splitted = in_str.split(/(\r\n|\n|\r)/gm);
+    var re=/\r\n|\n\r|\n|\r/g;
+    var splitted = in_str.replace(re,"\n").split("\n");
     if (splitted.length == 1){
         //try delimiting on commas
         if (splitted[0].trim()==""){
@@ -68,6 +77,7 @@ function splitInput(in_str) {
         }
     }
 
+    splitted.clean(undefined);
     //return some json
     var isSingleType=true;
     var firstType="";
@@ -75,6 +85,7 @@ function splitInput(in_str) {
 
         //work out if it's SMILES or InChi (for now)
         var input_type = smilesOrInchi(value);
+
         if(index == 0){
             firstType = input_type;
         }
@@ -93,9 +104,12 @@ function splitInput(in_str) {
 function smilesOrInchi(in_str) {
     //if it starts with InChi, it's inchi
     //otherwise SMILES (for now)
-    var type_str = ""
-    //is it inchi?
-    if (in_str.trim().match(/^((InChI=)?[^J][0-9BCOHNSOPrIFla+\-\(\)\\\/,pqbtmsih]{6,})$/ig)) {
+    var type_str = "";
+    //is it inchi?InChI=1S/([^/]+)(?:/[^/]+)*\\S
+    if (in_str.trim().match(/^([^J][A-Za-z0-9@+\-\[\]\(\)\\=#$]+)$/)){
+        type_str = "Smiles"
+    }
+    else if (in_str.trim().match(/^((InChI=)?[^J][0-9BCOHNSOPrIFla+\-\(\)\\\/,pqbtmsih]{6,})$/ig) ){
         type_str = "InChi";
     }
     //is it inchikey?
@@ -105,9 +119,6 @@ function smilesOrInchi(in_str) {
     //is it a chembl id?
     else if (in_str.trim().match(/^((CHEMBL)?[0-9])$/)) {
         type_str = "ChEMBL ID"
-    }
-    else if (in_str.trim().match(/^([^J][A-Za-z0-9@+\-\[\]\(\)\\=#$]+)$/)){
-        type_str = "Smiles"
     }
     else {
         type_str = "unknown"

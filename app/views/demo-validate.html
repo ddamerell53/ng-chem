@@ -1,28 +1,91 @@
-<!-- <div class="row">
-    <div class="alert alert-info">
-        <p><strong>Compound structure validation. </strong><br/>Compound Structures have been validated as shown below, where a change has been made a warning is displayed.</p>
+
+ <div  ng-hide="validatedData.objects.errors.length == 0" class="row">
+    <div class="alert alert-danger">
+      <p><strong>{{ validatedData.objects.errors.length  }} molecules could not be processed</strong></p>
+    </div>
+  </div>
+
+<div ng-show="validatedData.objects.total >0">
+  <div ng-show="validatedData.objects.errors.length == 0" class="row">
+    <div class="alert alert-success">
+      <p><strong><ng-pluralize count="validatedData.objects.total"
+                 when="{'0': '',
+                     'one': '1 molecule was processed succesfully.',
+                     'other': '{} molecules were processed succesfully.'}">
+          </ng-pluralize>
+      </strong></p>
     </div>
 </div>
- -->
-<!-- <div class="row" ng-show="validatedData.length > 0">
-<div class="col-xs-1"/>
 
-<div class="col-xs-2"  ng-repeat="stage in validatedData[0]">
-            <h2><small>{{stage.name}} </small></h2>
-</div>
-</div> -->
-{{validatedData}}
-<div class="row" ng-repeat="val in validatedData.objects | filter: {hasChanged : true}">
-<div class="col-xs-2" style="min-height:180px; " >
-  {{val}}
-         <chemsvg size="100" smiles="val.smiles" base-url="'/utils/smiles2svg/'"></chemsvg>
-        <!-- <span ng-hide="$first || $last"> 
-            <process-step start-smiles="val[$index -1].smiles" 
-                end-smiles="stage.smiles" 
-                name="stage.name" 
-                status="stage.status">
-            </process-step>  
+ 
 
-        </span> -->
-</div>
+
+  <div ng-show="validatedData.objects.pains.length == 0" class="row">
+    <div class="alert alert-info">
+      <p><strong>No molecules were found to be Pan Assay Interference Compounds.</strong></p>
+    </div>
+  </div>
+
+  <div  ng-hide="validatedData.objects.pains.length == 0" class="row">
+    <div class="alert alert-warning">
+
+      <p><strong>
+          <ng-pluralize count="validatedData.objects.pains.length"
+                 when="{'0': '',
+                     'one': '1 molecule was found to be a Pan Assay Interference Compounds.',
+                     'other': '{} molecules were processed succesfully.'}">
+          </ng-pluralize>
+} </strong></p>
+    </div>
+  </div>
+  <div  ng-hide="validatedData.objects.pains.length == 0" class="row">
+    <div class="row">
+      <div ng-repeat="val in validatedData.pains">
+        <div class="col-md-2 col-xs-6" style="min-height:180px; " >
+             <chemsvg size="100" smiles="val.originalSmiles" base-url="'/utils/smiles2svg/'"></chemsvg>
+             {{ val.warnings }}
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <div ng-show="validatedData.objects.changed.length == 0" class="row">
+    <div class="alert alert-info">
+      <p><strong>No molecules needed to be redrawn</strong></p>
+    </div>
+  </div>
+
+  <div ng-hide="validatedData.objects.changed.length == 0">
+    <div class="row"   >
+      <div class="alert alert-warning">
+        <p><strong>
+          <ng-pluralize count="validatedData.objects.changed.length"
+                 when="{'0': '',
+                     'one': 'The following molecule was redrawn due to salts, tautomers or inorganics.',
+                     'other': 'The following {} molecules were redrawn due to salts, tautomers or inorganics.'}">
+          </ng-pluralize>
+
+          </strong></p>
+      </div>
+    </div>
+    <div class="row">
+      <div ng-repeat="val in validatedData.objects.changed">
+        <div class="col-md-2 col-xs-5" style="min-height:180px; " >
+             <chemsvg size="100" smiles="val.originalSmiles" base-url="'/utils/smiles2svg/'"></chemsvg>
+        </div>
+        <div class ="col-md-1 col-xs-2">
+        <img src="images/skip_next2.svg"></img>
+        </div>
+        <div class="col-md-2 col-xs-5" style="min-height:180px; " >
+            <chemsvg size="100" smiles="val.canonicalSmiles" base-url="'/utils/smiles2svg'"></chemsvg>
+        </div>
+        {{ val.warnings }}
+      </div>
+    </div>
+
+  </div>
+    <div class="row">
+          <input type="submit" class="btn btn-primary pull-right" id="submit" ui-sref="demo.finish" ng-click="saveMultiBatchMolecules()" value="Save"/>
+    </div>
 </div>

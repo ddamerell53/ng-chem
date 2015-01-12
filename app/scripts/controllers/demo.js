@@ -110,6 +110,7 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
     }
 
 	$scope.parseInput = function (){
+        $scope.input_string.splitted = {}
         var split = splitInput($scope.input_string.inputstring,$scope.dataTypeSelected);
         if ($scope.input_string.dataTypeSelected != "Auto-detect"){
             //Override if user sets a preference
@@ -119,10 +120,9 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
     };
 
     $scope.processInput = function(){
-        $state.go("demo.map.multiple");
             CBHCompoundBatch.validateList($scope.input_string.splitted).then(
                 function(data){
-                    $scope.validatedData.objects = data.objects;
+                    $scope.validatedData.currentBatch = data.currentBatch;
                 }
             );
     };
@@ -180,6 +180,18 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
         lists: { "ignored": [] } //will be replaced by database fields
     }
 
+
+
+    $scope.saveMultiBatchMolecules = function(){
+        CBHCompoundBatch.saveMultiBatchMolecules($scope.validatedData.currentBatch, $scope.molecule.metadata.custom_fields).then(
+            function(data){
+                CBHCompoundBatch.query(multiple_batch=$scope.validatedData.currentBatch).then(function(result){
+                    $scope.validatedData.objects = result.data;
+                });
+            }, function(error){
+                $scope.validated = { 'errors': { 'invalidMolecule': true } };
+        });
+    }
     $scope.parseHeaders = function() {
         //call service to pull out headers from uploaded file
         //service backend detects file type
