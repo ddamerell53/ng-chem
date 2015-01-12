@@ -219,8 +219,7 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
                     $scope.dropmodels.lists[value.name] = [];
                     //now try to automap the headers to the fields
                     angular.forEach($scope.dragmodels.lists.headers, function(hdr, k) {
-                        console.log(hdr);
-                        if (hdr == value.name) {
+                        if (hdr.label == value.name) {
                             $scope.dragmodels.lists.headers.pop(hdr);
                             $scope.dropmodels.lists[value.name].push(hdr);
                         }
