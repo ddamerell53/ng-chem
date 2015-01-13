@@ -195,7 +195,20 @@ $scope.finalData = {"objects" :[]};
             }, function(error){
                 $scope.validated = { 'errors': { 'invalidMolecule': true } };
         });
-    }
+    };
+
+    //for the mapping step of lists of smiles/inchis
+    $scope.mapCustomFieldsToMols = function() {
+        CBHCompoundBatch.saveBatchCustomFields($scope.validatedData.currentBatch, $scope.molecule.metadata.custom_fields).then(
+            function(data){
+                console.log(data.data);
+            }, function(error){
+                console.log(error);
+            }
+        );
+        
+    };
+
     $scope.parseHeaders = function() {
         //call service to pull out headers from uploaded file
         //service backend detects file type

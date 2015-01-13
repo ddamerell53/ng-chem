@@ -125,3 +125,14 @@ function smilesOrInchi(in_str) {
     }
     return type_str;
 }
+
+function prepCustomFields(customFields){
+    var obj = {};
+        var fields = customFields.map(function(d){
+            if (d.name && d.value){
+                obj[d.name] = d.value;
+            }
+        });
+    return obj;
+
+}

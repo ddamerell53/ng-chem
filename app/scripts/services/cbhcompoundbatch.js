@@ -66,13 +66,13 @@ angular.module('ngChemApp')
     CBHCompoundBatch.saveSingleCompound = function(molfile, customFields) {
         var arr = window.location.href.split("/");
         var myUrl = arr[0] + "//" + arr[2] + urlBase;
-        var obj = {};
+        /*var obj = {};
         var fields = customFields.map(function(d){
             if (d.name && d.value){
                 obj[d.name] = d.value;
             }
-        })
-        return $http.post( myUrl , {ctab:molfile, "customFields":obj });
+        })*/
+        return $http.post( myUrl , {ctab:molfile, "customFields":prepCustomFields(customFields) });
     };
 
     CBHCompoundBatch.saveMultiBatchMolecules = function(currentBatch, customFields) {
@@ -112,6 +112,10 @@ angular.module('ngChemApp')
             }
         );
         return promise;
+    };
+    CBHCompoundBatch.saveBatchCustomFields = function(currentBatch, customFields) {
+
+        return $http.post( myUrl + "multi_batch_custom_fields/", {"currentBatch":currentBatch, "customFields": prepCustomFields(customFields)});
     }
 
     return CBHCompoundBatch;
