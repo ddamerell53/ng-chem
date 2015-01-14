@@ -13,12 +13,12 @@ angular.module('ngChemApp')
     // ...
 
     var urlBase = "/chemblws/cbh_compound_batches/";
-    var urlBaseForHeaders = "/chemblws/cbh_batch_upload/";
+    var urlBaseForFiles = "/chemblws/cbh_batch_upload/";
     var CBHCompoundBatch = {};
 
     var arr = window.location.href.split("/");
     var myUrl = arr[0] + "//" + arr[2] + urlBase;
-    var myUrlForHeaders = arr[0] + "//" + arr[2] + urlBaseForHeaders;
+    var myUrlForFiles = arr[0] + "//" + arr[2] + urlBaseForFiles;
 
     CBHCompoundBatch.getSingleMol = function(){
         return { acdAcidicPka: null,
@@ -92,7 +92,7 @@ angular.module('ngChemApp')
 
     CBHCompoundBatch.fetchHeaders = function(file_name) {
 
-        return $http.post( myUrlForHeaders + "headers/", { file_name:file_name });
+        return $http.post( myUrlForFiles + "headers/", { file_name:file_name });
     };
 
     CBHCompoundBatch.fetchExistingFields = function() {
@@ -116,6 +116,14 @@ angular.module('ngChemApp')
     CBHCompoundBatch.saveBatchCustomFields = function(currentBatch, customFields) {
 
         return $http.post( myUrl + "multi_batch_custom_fields/", {"currentBatch":currentBatch, "customFields": prepCustomFields(customFields)});
+    }
+    CBHCompoundBatch.validateFiles = function(file_name) {
+        var promise = $http.post( myUrl + "validate_files/" , { file_name:file_name }).then(
+            function(data){
+                return data.data;
+            }
+        );
+        return promise;
     }
 
     return CBHCompoundBatch;

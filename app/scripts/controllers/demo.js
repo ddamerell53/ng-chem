@@ -126,6 +126,17 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
                 }
             );
     };
+
+    //convert our molfile or excel file containing smiles into CBHCompoundBatch objects 
+    //so they can be used in the validate methods provided for SMILES/InChi lists
+    //this method also needs to pass the field mapping from the map page
+    $scope.processFiles = function() {
+        CBHCompoundBatch.validateFiles($scope.uploaded_file_name).then(
+                function(data){
+                    $scope.validatedData = data;
+                }
+            )
+    }
         
 		
 
@@ -208,6 +219,23 @@ $scope.finalData = {"objects" :[]};
         );
         
     };
+
+    $scope.custom_field_mapping = { };
+
+    $scope.saveCustomFieldMapping = function() {
+        //create a new json object containing the drag, drop and bin models as they are
+        //pass to the backend to rationalise when reading the file
+        //translate appropriate datafields so that they go into custom_fields under the correct parameter. (dropmodels)
+        //use others as-is (dragmodels)
+        //and do not add the rest (binmodels)
+        
+        $scope.custom_field_mapping.new_fields = $scope.dragmodels.lists.headers
+        $scope.custom_field_mapping.remapped_fields = $scope.dropmodels.lists
+        $scope.custom_field_mapping.ignored_fields = $scope.binmodels.lists.ignored
+
+
+
+    }
 
     $scope.parseHeaders = function() {
         //call service to pull out headers from uploaded file
