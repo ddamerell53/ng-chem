@@ -19,7 +19,9 @@
 		<div class="form-group">
 		<select ng-options="dt for dt in input_string.dataTypes" class="form-control" ng-model="input_string.dataTypeSelected"></select>
 		</div>
-
+		<!-- <div ng-show="input_string.dataTypeSelected=='Auto-detect' && input_string.splitted.type != 'unknown'" class="alert alert-info">
+			<p><strong>[][]type detected].</p>
+		</div> -->
 	</div>
 </div>
 <div class="row">

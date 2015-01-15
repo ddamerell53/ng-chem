@@ -72,16 +72,15 @@
     <div class="row">
       <div ng-repeat="val in validatedData.objects.changed">
         <div class="col-md-2 col-xs-5" style="min-height:180px; " >
-             <chemsvg size="100" smiles="val.originalSmiles" base-url="'/utils/smiles2svg/'"></chemsvg>
+             <chemsvg size="100" smiles="{'canonicalSmiles' : val.originalSmiles} as  mol" base-url="'/utils/smiles2svg/'"></chemsvg>
         </div>
         <div class ="col-md-1 col-xs-2">
         <img src="images/skip_next2.svg"></img>
         </div>
         <div class="col-md-2 col-xs-5" style="min-height:180px; " >
-            <chemsvg size="100" smiles="val.canonicalSmiles" base-url="'/utils/smiles2svg'"></chemsvg>
+            <chemsvg size="100" smiles="val" base-url="'/utils/smiles2svg'"></chemsvg>
         </div>
-        {{ val.warnings }}
-      </div>
+   </div>
     </div>
 
   </div>
