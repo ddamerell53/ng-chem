@@ -103,10 +103,15 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
                                   };
 
     $scope.uploaded_file_name = "";
+    $scope.file_extension = "";
 
-    $scope.assignFileId = function(id) {
+    $scope.assignFileId = function(id, ext) {
         $scope.uploaded_file_name = id;
-        console.log($scope.uploaded_file_name);
+        $scope.file_extension = ext;
+    }
+
+    $scope.isFileExcel = function() {
+        return ($scope.file_extension == 'xls' || $scope.file_extension == 'xlsx');
     }
 
 	$scope.parseInput = function (){
@@ -126,22 +131,6 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
                 }
             );
     };
-
-    //convert our molfile or excel file containing smiles into CBHCompoundBatch objects 
-    //so they can be used in the validate methods provided for SMILES/InChi lists
-    //this method also needs to pass the field mapping from the map page
-    $scope.processFiles = function() {
-        CBHCompoundBatch.validateFiles($scope.uploaded_file_name).then(
-                function(data){
-                    $scope.validatedData = data;
-                }
-            )
-    }
-        
-		
-
-
-
 
 
     $scope.warningNumber = 0;
@@ -194,7 +183,7 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
     }
 
 
-$scope.finalData = {"objects" :[]};
+    $scope.finalData = {"objects" :[]};
 
 
     $scope.saveMultiBatchMolecules = function(){
@@ -228,13 +217,33 @@ $scope.finalData = {"objects" :[]};
         //translate appropriate datafields so that they go into custom_fields under the correct parameter. (dropmodels)
         //use others as-is (dragmodels)
         //and do not add the rest (binmodels)
-        
-        $scope.custom_field_mapping.new_fields = $scope.dragmodels.lists.headers
-        $scope.custom_field_mapping.remapped_fields = $scope.dropmodels.lists
-        $scope.custom_field_mapping.ignored_fields = $scope.binmodels.lists.ignored
+        var mapping_obj = {};
+        mapping_obj.new_fields = []
+        mapping_obj.remapped_fields = {}
+        angular.forEach($scope.dragmodels.lists.headers, function(value, key) {
+            mapping_obj.new_fields.push(value.label);
+        });
+        angular.forEach($scope.dropmodels.lists, function(value, key) {
+            mapping_obj.remapped_fields[key] = []
+            angular.forEach(value, function(i_key, i_value) {
+                mapping_obj.remapped_fields[key].push(i_key.label);    
+            });
+            
+        });
 
+        //mapping_obj.remapped_fields = $scope.dropmodels.lists
+        mapping_obj.ignored_fields = $scope.binmodels.lists.ignored
 
+        return mapping_obj;
 
+    };
+
+    //these things
+    $scope.struc_col_options = [ { name:"", value:"Please select"} ];
+    $scope.struc_col_str = "";
+
+    $scope.updateStrucCol = function(str){
+        $scope.struc_col_str = str;        
     }
 
     $scope.parseHeaders = function() {
@@ -248,8 +257,8 @@ $scope.finalData = {"objects" :[]};
                 //do something with the returned data
                 angular.forEach(data.data.headers, function(value, key) {
                   $scope.dragmodels.lists.headers.push({label: value});
+                  $scope.struc_col_options.push({ name:key, value:value});
                 });
-
             }, function(error){
                 console.log(error);
             });
@@ -264,7 +273,6 @@ $scope.finalData = {"objects" :[]};
                     $scope.dropmodels.lists[value.name] = [];
                     //now try to automap the headers to the fields
                     
-
                 });
                 
 
@@ -273,6 +281,20 @@ $scope.finalData = {"objects" :[]};
             });
 
         
+    };
+
+
+    //convert our molfile or excel file containing smiles into CBHCompoundBatch objects 
+    //so they can be used in the validate methods provided for SMILES/InChi lists
+    //this method also needs to pass the field mapping from the map page
+    $scope.processFiles = function() {
+        //console.log($scope.struc_col_selected)
+        var mapping_obj = $scope.saveCustomFieldMapping();
+        CBHCompoundBatch.validateFiles($scope.uploaded_file_name, $scope.struc_col_str, mapping_obj ).then(
+                function(data){
+                    $scope.validatedData = data;
+                }
+            )
     }
 
     $scope.automap = function() {
@@ -291,7 +313,7 @@ $scope.finalData = {"objects" :[]};
 
 
         
-    }
+    };
 
 
     $scope.resetMappingForm = function() {
@@ -309,7 +331,7 @@ $scope.finalData = {"objects" :[]};
             });
         });
 
-    }
+    };
 
         
 

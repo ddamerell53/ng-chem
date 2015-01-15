@@ -149,7 +149,7 @@ angular.module('ngChemApp', [
             url: '/map-file',
             templateUrl: 'views/demo-map-file.html',
             controller: function($scope) {
-
+              
             }
         })
         .state('demo.map.multiple', {
