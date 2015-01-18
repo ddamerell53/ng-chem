@@ -106,7 +106,7 @@ function smilesOrInchi(in_str) {
     //otherwise SMILES (for now)
     var type_str = "";
     //is it inchi?InChI=1S/([^/]+)(?:/[^/]+)*\\S
-    if (in_str.trim().match(/^([^J][A-Za-z0-9@+\-\[\]\(\)\\=#$]+)$/)){
+    if (in_str.trim().match(/^([^J][A-Za-z0-9@+\-\[\]\(\)\\=#$.]+)$/)){
         type_str = "Smiles"
     }
     else if (in_str.trim().match(/^((InChI=)?[^J][0-9BCOHNSOPrIFla+\-\(\)\\\/,pqbtmsih]{6,})$/ig) ){
