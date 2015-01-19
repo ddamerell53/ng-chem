@@ -116,7 +116,7 @@ angular.module('ngChemApp')
     CBHCompoundBatch.saveBatchCustomFields = function(currentBatch, customFields) {
 
         return $http.post( myUrl + "multi_batch_custom_fields/", {"currentBatch":currentBatch, "customFields": prepCustomFields(customFields)});
-    }
+    };
     CBHCompoundBatch.validateFiles = function(file_name, struc_col, mapping) {
         console.log(file_name);
         console.log(struc_col);
@@ -126,6 +126,9 @@ angular.module('ngChemApp')
             }
         );
         return promise;
+    };
+    CBHCompoundBatch.export = function(fileType, currentBatch) {
+        return $http.post( myUrl + "export_file/", { "fileType":fileType, "currentBatch": currentBatch } );
     }
 
     return CBHCompoundBatch;

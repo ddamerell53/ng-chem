@@ -13,6 +13,9 @@
 				<div class="row" ng-repeat="list in dragmodels.lists">
 					<div class="col-xs-12 centered">
 						<p class="nexa blue"><span class="glyphicon glyphicon-list-alt"></span> Fields to create</p>
+						
+							<button class="btn btn-default" ng-click="automap()">Automap</button>
+						
 						<ul class="list-unstyled dimensions-list" dnd-list="list">
 							
 							<li class="dimension alert-success" style="cursor:pointer; padding:10px;"
@@ -41,9 +44,7 @@
 						</select>
 						<br>
 					</div>
-					<div class="col-xs-2">
-						<button class="btn btn-default" ng-click="automap()">Automap</button>
-					</div>
+					
 				</div>
 				<div class="row" ng-repeat="(listName, list) in dropmodels.lists">
 					<div class="col-xs-3">

@@ -58,9 +58,33 @@
 	
 </div>
 <div class="row">
-	
-		<a class="btn btn-primary" role="button" ui-sref="demo.validate" ng-show="wizard.totalSteps == 4">Back</a>
-		<a class="btn btn-primary" role="button" ui-sref="demo.add.single" ng-show="wizard.totalSteps == 2">Back</a>
-		<a class="btn btn-primary pull-right" role="button" ui-sref="demo.intro" onclick="reset()">Save</a>
+		<div class="btn-group">
+			<a class="btn btn-primary" role="button" ui-sref="demo.validate" ng-show="wizard.totalSteps == 4">Back</a>
+		</div>
+		<div class="btn-group">
+			<a class="btn btn-primary" role="button" ui-sref="demo.add.single" ng-show="wizard.totalSteps == 2">Back</a>
+		</div>
+		<div class="btn-group">
+			<a class="btn btn-primary" role="button" ng-click="export('xls')">Export to Excel</a>
+		
+			<a class="btn btn-primary" role="button" ng-click="export('sd')">Export to SD</a>
+		</div>
+		
+		<!-- <div class="btn-group" ng-class='{open: open}'>
+		  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+		    Export to <span class="caret"></span>
+		  </button>
+		  <ul class="dropdown-menu" role="menu">
+		    <li><a href="#">Action</a></li>
+		    <li><a href="#">Another action</a></li>
+		    <li><a href="#">Something else here</a></li>
+		    <li class="divider"></li>
+		    <li><a href="#">Separated link</a></li>
+		  </ul>
+		</div> -->
+		<div class="btn-group pull-right">
+			<a class="btn btn-primary" role="button" ui-sref="demo.intro" onclick="reset()">Save</a>
+		
+		</div>
 
 </div>
