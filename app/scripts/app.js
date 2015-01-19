@@ -20,7 +20,10 @@ angular.module('ngChemApp', [
     'ui.router',
     'ui.bootstrap',
     'dndLists',
-    'flow'
+    'flow',
+    'ngClipboard',
+
+
   ])
   .config(function ($stateProvider, $urlRouterProvider) {
       
@@ -206,6 +209,9 @@ angular.module('ngChemApp', [
               
               $scope.wizard.dynamic = 90.5;
               applyTicks("finish");
+              // function getSmiles(mol){
+              //   return mol.canonicalSmiles;
+              // }
             }
         });
         
@@ -214,4 +220,8 @@ angular.module('ngChemApp', [
     $http.defaults.headers.post['X-CSRFToken'] = $cookies.csrftoken;
 
     
-});
+}).config(['ngClipProvider', function(ngClipProvider) {
+    ngClipProvider.setPath("../bower_components/zeroclipboard/dist/ZeroClipboard.swf");
+  }]);
+
+  ;
