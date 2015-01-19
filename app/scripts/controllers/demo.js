@@ -136,11 +136,14 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
     //if user has uploaded an Excel file, use that and create a new worksheet in the file with the exported data
     //if the user has uploaded a SD file, use that and add our data to the existing molecules
     $scope.export = function(file_type) {
-        CBHCompoundBatch.export(file_type).then(
+        /*CBHCompoundBatch.export(file_type).then(
             function(data) {
                 console.log(data);
             }
-        )
+        )*/
+        CBHCompoundBatch.query({multiple_batch_id : $scope.validatedData.currentBatch, format: file_type}).then(function(result){
+            //$scope.finalData.objects = result.objects;
+        });
     }
 
 

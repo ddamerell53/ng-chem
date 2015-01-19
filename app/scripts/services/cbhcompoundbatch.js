@@ -115,6 +115,7 @@ angular.module('ngChemApp')
         );
         return promise;
     };
+
     CBHCompoundBatch.saveBatchCustomFields = function(projectKey,currentBatch, customFields) {
 
         return $http.post( myUrl + "multi_batch_custom_fields/", {"projectKey": projectKey, "currentBatch":currentBatch, "customFields": prepCustomFields(customFields)});
@@ -129,7 +130,7 @@ angular.module('ngChemApp')
         return promise;
     };
     CBHCompoundBatch.export = function(fileType, currentBatch) {
-        return $http.post( myUrl + "export_file/", { "fileType":fileType, "currentBatch": currentBatch } );
+        return $http.get( myUrl, { "fileType":fileType, "currentBatch": currentBatch } );
     }
 
     return CBHCompoundBatch;
