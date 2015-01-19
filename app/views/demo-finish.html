@@ -81,9 +81,9 @@
 			<a class="btn btn-primary" role="button" ui-sref="demo.add.single" ng-show="wizard.totalSteps == 2">Back</a>
 		</div>
 		<div class="btn-group">
-			<a class="btn btn-primary" role="button" ng-click="export('xls')">Export to Excel</a>
+			<a class="btn btn-primary" role="button" href="/chemblws/cbh_compound_batches/?format=xls&multiple_batch_id={{validatedData.currentBatch}}">Export to Excel</a>
 		
-			<a class="btn btn-primary" role="button" ng-click="export('sd')">Export to SD</a>
+			<a class="btn btn-primary" role="button" ng-click="export('sdf')">Export to SD</a>
 		</div>
 		
 		<!-- <div class="btn-group" ng-class='{open: open}'>

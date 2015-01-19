@@ -113,6 +113,9 @@ angular.module('ngChemApp')
         );
         return promise;
     };
+    /*CBHCompoundBatch.downloadURL = function(filters) {
+        return myUrl + 
+    };*/
     CBHCompoundBatch.saveBatchCustomFields = function(currentBatch, customFields) {
 
         return $http.post( myUrl + "multi_batch_custom_fields/", {"currentBatch":currentBatch, "customFields": prepCustomFields(customFields)});
@@ -128,7 +131,7 @@ angular.module('ngChemApp')
         return promise;
     };
     CBHCompoundBatch.export = function(fileType, currentBatch) {
-        return $http.post( myUrl + "export_file/", { "fileType":fileType, "currentBatch": currentBatch } );
+        return $http.get( myUrl, { "fileType":fileType, "currentBatch": currentBatch } );
     }
 
     return CBHCompoundBatch;
