@@ -11,9 +11,11 @@ var app = angular.module('ngChemApp');
 
 
 
-app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 'CBHCompoundBatch', '$timeout', function ($scope, $rootScope, $state, ChEMBLFactory, CBHCompoundBatch, $timeout) {
+app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 'CBHCompoundBatch', '$timeout', '$stateParams', function ($scope, $rootScope, $state, ChEMBLFactory, CBHCompoundBatch, $timeout, $stateParams) {
 
-	$scope.formData = {};
+	console.log($stateParams);
+
+    $scope.formData = {};
 
     $scope.molecule = { 'molfile' : "", 
                         'molfileChanged': function() { 

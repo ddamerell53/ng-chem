@@ -29,14 +29,14 @@ angular.module('ngChemApp', [
       
           // catch all route
     // send users to the form page 
-    $urlRouterProvider.otherwise('/demo/intro');
+    //$urlRouterProvider.otherwise('/demo/intro');
 
 
       $stateProvider
           
         // HOME STATES AND NESTED VIEWS ========================================
         .state('demo', {
-            url: '/demo',
+            url: '/:projectKey/demo',
             templateUrl: 'views/start.html',
             controller: 'DemoCtrl'
         })
