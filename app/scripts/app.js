@@ -46,6 +46,14 @@ angular.module('ngChemApp', [
           templateUrl: 'views/projects.html',
           controller: 'ProjectCtrl'
         })
+
+        .state('projects.add', {
+          url: '/add',
+          templateUrl: 'views/projects-add.html',
+          controller: function($scope){
+            //add stuff here as necessary
+          }
+        })
         
         // nested states 
         // each of these sections will have their own view

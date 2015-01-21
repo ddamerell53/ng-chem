@@ -1,0 +1,48 @@
+li a svg.svg {
+  fill: #ddd;
+}
+
+li a.active svg.svg {
+  fill: #002147;
+}
+
+li a.active small {
+  color: #002147;
+}
+
+li a small {
+  color: #ddd;
+}
+div.reg-nav ul.nav li h2 {
+  margin-bottom: 0;
+}
+
+.form-views { width:auto; }
+
+.progress-bar {
+  background-color:#002147;
+}
+strong.nexa {
+  font-family:NexaLight;
+}
+
+.gridStyle {
+    border: 1px solid rgb(212,212,212);
+    height: 300px
+}
+.chemprop {
+  background-color:#eee;
+  color: #002147;
+  padding:5px;
+  margin-bottom:10px;
+  border-radius:5px;
+}
+.chemprop div {
+  background-color: #2e6da4;
+  color:white;
+  border-radius: 5px;
+}
+.projectbox {
+  background-color: lightcyan;
+  color: #002147;
+}
