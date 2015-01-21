@@ -1,17 +1,17 @@
 'use strict';
 
-describe('Controller: ProjectctrlCtrl', function () {
+describe('Controller: ProjectCtrl', function () {
 
   // load the controller's module
   beforeEach(module('ngChemApp'));
 
-  var ProjectctrlCtrl,
+  var ProjectCtrl,
     scope;
 
   // Initialize the controller and a mock scope
   beforeEach(inject(function ($controller, $rootScope) {
     scope = $rootScope.$new();
-    ProjectctrlCtrl = $controller('ProjectctrlCtrl', {
+    ProjectCtrl = $controller('ProjectCtrl', {
       $scope: scope
     });
   }));

@@ -2,16 +2,12 @@
 
 /**
  * @ngdoc function
- * @name ngChemApp.controller:ProjectctrlCtrl
+ * @name ngChemApp.controller:ProjectCtrl
  * @description
- * # ProjectctrlCtrl
+ * # ProjectCtrl
  * Controller of the ngChemApp
  */
 angular.module('ngChemApp')
-  .controller('ProjectctrlCtrl', function ($scope) {
-    $scope.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
-  });
+  .controller('ProjectCtrl', [ '$scope', 'ProjectFactory', function ($scope, ProjectFactory) {
+    //stuff
+  } ]);

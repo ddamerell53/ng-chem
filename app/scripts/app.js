@@ -40,6 +40,12 @@ angular.module('ngChemApp', [
             templateUrl: 'views/start.html',
             controller: 'DemoCtrl'
         })
+
+        .state('projects', {
+          url: '/projects',
+          templateUrl: 'views/projects.html',
+          controller: 'ProjectCtrl'
+        })
         
         // nested states 
         // each of these sections will have their own view
