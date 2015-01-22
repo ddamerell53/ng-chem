@@ -18,19 +18,20 @@ angular.module('ngChemApp')
       controller: ['$scope', function($scope) {
       	//$scope.tooltext = "test here";
       	$('[data-toggle="popover"]').popover();
-      	if($scope.tooltextdirect) {
-      		$scope.displaytext = $scope.tooltextdirect;
+      	if($scope.freetext) {
+      		$scope.displaytext = $scope.freetext;
       	}
       	else {
-      		$scope.displaytext = $scope.tooltextlookup;
+      		$scope.displaytext = $scope.lookup;
       	}
+
       	
       }],
       scope: {
       	//use lookup if you are using the MessageFactory service
-        tooltextlookup:'=',
+        lookup:'=',
         //use direct if you want to enter ad hoc text
-        tooltextdirect:'@',
+        freetext:'@',
 
       }
     };
