@@ -1,0 +1,54 @@
+{
+    "home": {
+        "help_text_1": "You will need either a SMILES string or list of SMILES; an ID or list of IDs; or a SD file"
+    },
+    "add": {
+        "smiles_or_id_label": "Paste your SMILES or IDs here",
+        "file_upload_label": "Or upload a file here",
+        "drawing_label": "Draw a molecule here",
+        "smiles_or_id_help_text": "IDs can be any of the following formats: InCHI, InCHI key, SMILES, CAS numbers, Sigma aldrich catalogue numbers",
+        "file_upload_help_text": "Chemdraw XML or SD files only",
+        "drawing_help_text": "Draw the molecule you would like to register. If salts or hydrates are required, draw these as neutral molecules alongside",
+        "sd_invalid": "The SD file uploaded was not of a valid format, please verify",
+        "cdmxl_invalid": "The Chemdraw XML file uploaded was not of a valid format, please verify",
+        "mol_success": "n records were succesfully digitised as displayed below",
+        "sd_mol_invalid": "The molecules at lines line in the sd file were not valid due to valency or similar errors, please check and re-upload",
+        "cdmxl_mol_invalid": "The molecule in the uploaded file was not of a valid format due to valency errors or miscelaneous non-chemical content",
+        "drawing_mol_invalid": "The drawn molecule was not of a valid format due to valency errors or miscelaneous non-chemical content",
+        "mol_pains_hits_warning": "n molecules are classified as Pan Assay Interference Compounds - are you sure you wish to register these?",
+        "mol_pains_hits_success": "No molecules are classified as Pan Assay Interference Compounds",
+        "mol_pains_hits_tooltip": null
+    },
+    "map": {
+        "label": "Map the fields in your SD file to those in the registration system",
+        "help_text": "Known fields have already been mapped, other fields that you would like displayed should be dragged to the 'other' section",
+        "source_id_label": "Checking for re-uploaded source ids for these molecules",
+        "source_id_none_success": "No source id specified",
+        "source_id_success": "No re-uploaded molecules found",
+        "source_id_error": "n molecules were found with existing records in the database - ignore or re-upload with a different id"
+    },
+    "validate": {
+        "label": "We have standardised the format the substances added, here are the results",
+        "metals_label": "Breaking any bonds to group I or II metals",
+        "metals_none_success": "No bonds to group I or II metals were found",
+        "metals_success": "n group I or II metals had their bonds removed",
+        "tautomer_label": "Standardising structural tautomers",
+        "tautomer_redraw_none_success": "No tautomers were redrawn",
+        "tautomer_redraw_success": "Tautomers or charge-separated systems were redrawn as shown for search purposes",
+        "neutralise_and_salts_label": "Checking for salts or charges",
+        "neutralise_and_salts_none_success": "No salts or charges to neutralise were found",
+        "neutralise_success": "n salts were found, these were neutralised and the salt was removed for  the default search",
+        "isotope_label": "Checking for isotopic labelling",
+        "isotope_none_success": "No isotopically labelled compounds were found, if you were expecting one or more, check your drawings",
+        "isotope_success": "n records were found with isotopes and the structures were standardised as shown, if you were expecting more - check your drawings",
+        "isotope_error": "n records were found with errors in the isotope layer, pick an action for each molecule",
+        "stereochemistry_label": "Removing stereochemistry for default search",
+        "stereochemistry_none_success": "No specific enantiomers found",
+        "stereochemistry_error": "n records were re-drawn to enable search, molecules will be registered as the drawn enantiomer"
+    },
+    "finish": {
+        "registration_success": "n molecules were registered with the ids and properties shown below",
+        "registration_none_success": "No molecules were registered",
+        "registration_error": "An unknown error occurred when registering compounds, the chembiohub team have been notified and will contact you when the issue has been understood"
+    }
+}
