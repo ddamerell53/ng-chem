@@ -11,7 +11,8 @@ var app = angular.module('ngChemApp');
 
 
 
-app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 'CBHCompoundBatch', '$timeout', function ($scope, $rootScope, $state, ChEMBLFactory, CBHCompoundBatch, $timeout) {
+app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 'MessageFactory', 'CBHCompoundBatch', '$timeout', '$stateParams', function ($scope, $rootScope, $state, ChEMBLFactory, MessageFactory, CBHCompoundBatch, $timeout, $stateParams) {
+
 
 	$scope.formData = {};
 
@@ -346,6 +347,11 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
         });
 
     };
+
+    $scope.getMessage = function(lookup_str){
+        return MessageFactory.getMessage(lookup_str);
+
+    }
 
         
 
