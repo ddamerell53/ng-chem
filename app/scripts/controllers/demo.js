@@ -12,6 +12,10 @@ var app = angular.module('ngChemApp');
 
 
 app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 'MessageFactory', 'CBHCompoundBatch', '$timeout', '$stateParams', function ($scope, $rootScope, $state, ChEMBLFactory, MessageFactory, CBHCompoundBatch, $timeout, $stateParams) {
+<<<<<<< HEAD
+=======
+
+>>>>>>> System messages via factory, info box directive
 
     $scope.formData = {};
 
@@ -384,6 +388,8 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
         //do we need any back-end resetting here?
     
     };
+
+
 
 
         

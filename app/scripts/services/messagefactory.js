@@ -36,12 +36,14 @@ angular.module('ngChemApp')
         //"home": {
             wizard_intro_text: "To upload multiple compounds you will need a list of SMILES; an InChi key or list of InChi keys; or either a SD or Excel file.",
             projects_help: "Clicking Add Compounds will take you to a wizard where you can add single or batches of compounds from files, SMILES, sketches and InChi keys.",
+
         //},
         //"add": {
             smiles_or_id_label: "Paste your SMILES or IDs here",
             file_upload_label: "Or upload a file here",
             drawing_label: "Add your single compound to be registered.",
             drawing_label_suppl: "Use the sketcher window to draw your compound. Sketcher window provided by ChemDoodle.",
+            drawing_label: "Draw a molecule here",
             smiles_or_id_help_text: "IDs can be any of the following formats: InCHI, InCHI key, SMILES, CAS numbers, Sigma aldrich catalogue numbers",
             file_upload_help_text: "Chemdraw XML or SD files only",
             drawing_help_text: "Draw the molecule you would like to register. If salts or hydrates are required, draw these as neutral molecules alongside",
