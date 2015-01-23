@@ -9,9 +9,7 @@
 		<div class="col-xs-12">
 
 			<!-- Mandatory fields -->
-			<div class="form-group mandatory-group">
-				<!-- dropdown -->
-				<!-- freetext -->
+			<!-- <div class="form-group mandatory-group">
 				<div class="col-xs-3">
 					<label for="labbook_id" class="nexa">Labbook ID</label>
 				</div>
@@ -19,7 +17,7 @@
 					<input type="text" name="labbook_id" id="labbook_id" class="form-control" ng-model="molecule.metadata.labbook_id">
 				</div>
 
-			</div>
+			</div> -->
 
 
 
@@ -35,8 +33,17 @@
 			</div>
 			
 
-			<input type="submit" class="btn btn-primary pull-right" id="submit" ui-sref="demo.validate" ng-click="mapCustomFieldsToMols()" value="Next">
+		</div>
 
+		<div class="row">
+			<div class="pull-left">
+				<a ui-sref="demo.add.multiple"><button class="btn btn-primary">Back</button></a>
+				<a role="button" class="btn btn-danger" ng-click="startAgain()" ui-sref="demo.intro">Cancel</a>
+			</div>
+			<div class="pull-right">
+				<input type="submit" class="btn btn-primary" id="submit" ui-sref="demo.validate" ng-click="mapCustomFieldsToMols()" value="Next">
+			</div>
+			
 		</div>
 
 		

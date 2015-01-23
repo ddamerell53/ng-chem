@@ -89,12 +89,20 @@
 			
 
 			<!-- <a class="btn btn-primary pull-right" role="button" ui-sref="demo.finish" id="submit" name="submit">Save</a> -->
-			<input type="submit" class="btn btn-primary pull-right" id="submit"  ui-sref="demo.finish" value="Save">
+
+			
 
 		</div>
 
 		
 		
+	</div>
+
+	<div class="row">
+		<div class="pull-right">
+			<a role="button" class="btn btn-danger" ng-click="startAgain()" ui-sref="demo.intro">Cancel</a>
+			<input type="submit" class="btn btn-primary" id="submit"  ui-sref="demo.finish" value="Save">
+		</div>
 	</div>
 
 	<!-- Errors and warnings -->
