@@ -351,7 +351,41 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
     $scope.getMessage = function(lookup_str){
         return MessageFactory.getMessage(lookup_str);
 
-    }
+    };
+
+    //User has pressed cancel or finished a registration - clear out all of the populated data
+    $scope.startAgain = function() {
+        $scope.finalData = {"objects" :[]};
+        $scope.custom_field_mapping = { };
+        $scope.warningNumber = 0;
+        $scope.uploaded_file_name = "";
+        $scope.file_extension = "";
+        $scope.validated = { "warnings": {
+                            "inorganicCount": "0",
+                            "painsCount": "0",
+                            "saltCount": "0",
+                            "tautomerCount": "0"
+                          }
+                        };
+        $scope.validatedData = {};
+        $scope.dragmodels = {
+        selected: null,
+        lists: {"headers": []}
+        };
+        $scope.dropmodels = {
+            selected: null,
+            lists: { } //will be replaced by database fields
+        }
+        $scope.binmodels = {
+            selected: null,
+            lists: { "ignored": [] } //will be replaced by database fields
+        }
+        $scope.finalData = {"objects" :[]};
+
+        //do we need any back-end resetting here?
+    
+    };
+
 
         
 
