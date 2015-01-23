@@ -36,7 +36,7 @@ angular.module('ngChemApp', [
           
         // HOME STATES AND NESTED VIEWS ========================================
         .state('demo', {
-            url: '/:projectKey/demo',
+            url: '/:project_key/demo',
             templateUrl: 'views/start.html',
             controller: 'DemoCtrl'
         })

@@ -8,7 +8,7 @@
  * Factory in the ngChemApp.
  */
 angular.module('ngChemApp')
-  .factory('CBHCompoundBatch', ['$http', '$q' ,function ($http) {
+  .factory('CBHCompoundBatch', ['$http', '$q' ,'$stateProvider' ,function ($http, $stateProvider) {
     // Service logic
     // ...
 
