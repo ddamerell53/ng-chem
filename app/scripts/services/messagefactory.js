@@ -58,6 +58,7 @@ angular.module('ngChemApp')
         //"map": {
             map_label: "Map the fields in your SD file to those in the registration system",
             help_text: "Known fields have already been mapped, other fields that you would like displayed should be dragged to the 'other' section",
+            mapping_fields_help: "Drag column fields from your file to the appropriate custom mapping, or leave undragged to create a new custom field with that name.",
             source_id_label: "Checking for re-uploaded source ids for these molecules",
             source_id_none_success: "No source id specified",
             source_id_success: "No re-uploaded molecules found",
