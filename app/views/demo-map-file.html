@@ -46,20 +46,22 @@
 					</div>
 					
 				</div>
-				<div class="row" ng-repeat="(listName, list) in dropmodels.lists">
-					<div class="col-xs-3">
-						<p class="nexa blue">{{listName}}</p>
-					</div>
-					<div class="col-xs-9">
-						<ul class="dimensions-container list-unstyled well" dnd-list="list" style="min-height:100px;">
-							<li class="dimension draggable alert-success" style="cursor:pointer; padding:10px;"
-							ng-repeat="item in list"
-					        dnd-draggable="item"
-					        dnd-moved="list.splice($index, 1)"
-					        dnd-effect-allowed="move"
-					        dnd-selected="dropmodels.selected = item"
-					        ng-class="{'selected': dropmodels.selected === item}"><div>{{item.label}}</div></li>
-						</ul>
+				<div style="overflow-y:scroll; overflow-x:hidden; height:400px;">
+					<div class="row" ng-repeat="(listName, list) in dropmodels.lists">
+						<div class="col-xs-3">
+							<p class="nexa blue">{{listName}}</p>
+						</div>
+						<div class="col-xs-9">
+							<ul class="dimensions-container list-unstyled well" dnd-list="list" style="min-height:100px;">
+								<li class="dimension draggable alert-success" style="cursor:pointer; padding:10px;"
+								ng-repeat="item in list"
+						        dnd-draggable="item"
+						        dnd-moved="list.splice($index, 1)"
+						        dnd-effect-allowed="move"
+						        dnd-selected="dropmodels.selected = item"
+						        ng-class="{'selected': dropmodels.selected === item}"><div>{{item.label}}</div></li>
+							</ul>
+						</div>
 					</div>
 				</div>
 				
