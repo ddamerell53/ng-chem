@@ -1,7 +1,12 @@
 
- <div  ng-hide="validatedData.objects.errors.length == 0" class="row">
+ <div ng-hide="validatedData.objects.errors.length == 0" class="row">
     <div class="alert alert-danger">
-      <p><strong>{{ validatedData.objects.errors.length  }} molecules could not be processed</strong></p>
+      <p><strong>{{ validatedData.objects.errors.length  }} molecules </strong></p>
+      <p><strong><ng-pluralize count="validatedData.objects.errors.length"
+                 when="{'0': '',
+                     'one': '1 molecule',
+                     'other': '{} molecules'}">
+          </ng-pluralize> could not be processed</strong></p>
     </div>
   </div>
 
