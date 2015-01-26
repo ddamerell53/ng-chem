@@ -353,6 +353,11 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
 
     };
 
+    $scope.isStrucColUnspecified = function() {
+        //indicates to the "next" button on mapping files page that the structure column has been specified
+        return ($scope.struc_col_str == "");
+    }
+
     //User has pressed cancel or finished a registration - clear out all of the populated data
     $scope.startAgain = function(flowfiles) {
         //$scope.
