@@ -362,6 +362,8 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
         $scope.custom_field_mapping = { };
         $scope.warningNumber = 0;
         $scope.uploaded_file_name = "";
+        $scope.struc_col_options = [ { name:"", value:"Please select"} ];
+        $scope.struc_col_str = "";
         $scope.file_extension = "";
         $scope.validated = { "warnings": {
                             "inorganicCount": "0",
@@ -384,6 +386,8 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
             lists: { "ignored": [] } //will be replaced by database fields
         }
         $scope.finalData = {"objects" :[]};
+
+        $flow.cancel();
 
         //do we need any back-end resetting here?
     
