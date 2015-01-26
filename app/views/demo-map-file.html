@@ -93,7 +93,10 @@
 	<div class="pull-right">
 		<a role="button" class="btn btn-danger" ng-click="startAgain($flow.files)" ui-sref="demo.intro">Cancel</a>
 		<a ng-click="resetMappingForm()"><button class="btn btn-primary" style="margin-right:5px;">Reset form</button></a>
-		<a ui-sref="demo.validate"><button class="btn btn-primary" ng-click="processFiles()">Next</button></a>
+		<a ui-sref="demo.validate">
+			<button class="btn btn-primary" ng-click="processFiles()" ng-show="isFileExcel()" ng-disabled="isStrucColUnspecified()">Next</button>
+			<button class="btn btn-primary" ng-click="processFiles()" ng-hide="isFileExcel()">Next</button>
+		</a>
 		
 	</div>
 </div>
