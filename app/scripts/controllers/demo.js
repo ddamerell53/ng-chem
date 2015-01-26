@@ -357,7 +357,8 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
     };
 
     //User has pressed cancel or finished a registration - clear out all of the populated data
-    $scope.startAgain = function() {
+    $scope.startAgain = function(flowfiles) {
+        //$scope.
         $scope.finalData = {"objects" :[]};
         $scope.custom_field_mapping = { };
         $scope.warningNumber = 0;
@@ -387,7 +388,9 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
         }
         $scope.finalData = {"objects" :[]};
 
-        $flow.cancel();
+        angular.forEach(flowfiles, function(file) {
+            file.cancel();
+        });
 
         //do we need any back-end resetting here?
     

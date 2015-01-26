@@ -1,6 +1,7 @@
 <app-progress wizard='wizard'></app-progress>
 
 <div class="col-xs-12" flow-init="{target: '/chemblws/flow/upload/'}"
+				 flow-name="flow"
 			     flow-files-submitted="$flow.upload()"
 			     flow-file-success="assignFileId($file.name, $file.getExtension())">
 
