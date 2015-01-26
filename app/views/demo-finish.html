@@ -75,20 +75,12 @@
 </div>
 <div class="row">
 
-		<div class="btn-group">
-			<a class="btn btn-primary" role="button" ui-sref="demo.validate" ng-show="wizard.totalSteps == 4">Back</a>
-		</div>
-		<div class="btn-group">
-			<a class="btn btn-primary" role="button" ui-sref="demo.add.single" ng-show="wizard.totalSteps == 2">Back</a>
-		</div>
-		<div class="btn-group">
+
 			<a class="btn btn-primary" role="button" href="/chemblws/cbh_compound_batches/?format=xls&multiple_batch_id={{validatedData.currentBatch}}">Export to Excel</a>
 		
 			<a class="btn btn-primary" role="button" href="/chemblws/cbh_compound_batches/?format=sdf&multiple_batch_id={{validatedData.currentBatch}}">Export to SD</a>
-		</div>
 		
 	
 		<a class="btn btn-primary pull-right" role="button" ui-sref="demo.intro" ng-click="startAgain($flow.files)">Register more compounds</a>
-
 
 </div>
