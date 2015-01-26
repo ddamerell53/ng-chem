@@ -356,6 +356,7 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
     //User has pressed cancel or finished a registration - clear out all of the populated data
     $scope.startAgain = function(flowfiles) {
         //$scope.
+        $scope.singleMol = CBHCompoundBatch.getSingleMol();
         $scope.finalData = {"objects" :[]};
         $scope.custom_field_mapping = { };
         $scope.warningNumber = 0;
@@ -371,6 +372,9 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
                           }
                         };
         $scope.validatedData = {};
+        $scope.input_string = {"inputstring":"",
+                            "dataTypes" : ["Auto-detect", "Smiles", "INCHI"],
+                            "dataTypeSelected" : "Auto-detect"};
         $scope.dragmodels = {
         selected: null,
         lists: {"headers": []}
@@ -388,6 +392,37 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
         angular.forEach(flowfiles, function(file) {
             file.cancel();
         });
+
+        $scope.molecule = { 'molfile' : "", 
+                        'molfileChanged': function() { 
+
+                            CBHCompoundBatch.validate($scope.molecule.molfile).then(
+                                                        function(data){
+                                                            $scope.validated = data.data;
+                                                        }, function(error){
+                                                            $scope.validated = { 
+                                                                'warnings': {
+                                                                    'inorganicCount':"0"
+                                                                }, 'errors': { 
+                                                                    'invalidMolecule': true 
+                                                                } 
+                                                            } 
+                            }); 
+                                                      },
+                        'metadata': { 
+                            'stereoSelected': {
+                                                name:'1', 
+                                                value:'as drawn'
+                                               },
+                            'labbook_id':'',
+                            'custom_fields':  [
+
+                                              ]
+
+                                              
+                        }
+                        
+                     };
 
         //do we need any back-end resetting here?
     
