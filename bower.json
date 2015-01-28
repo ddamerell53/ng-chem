@@ -32,5 +32,8 @@
     "chemdoodle": "http://web.chemdoodle.com/downloads/ChemDoodleWeb-6.0.1.zip",
     "dndLists": "https://raw.githubusercontent.com/marceljuenemann/angular-drag-and-drop-lists/master/angular-drag-and-drop-lists.js"
   },
-  "appPath": "app"
+  "appPath": "app",
+  "resolutions": {
+    "angular": "^1.0.8"
+  }
 }

@@ -13,14 +13,12 @@ var app = angular.module('ngChemApp');
 
 app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 'MessageFactory', 'CBHCompoundBatch', '$timeout', '$stateParams', function ($scope, $rootScope, $state, ChEMBLFactory, MessageFactory, CBHCompoundBatch, $timeout, $stateParams) {
 
-	console.log($stateParams);
-
     $scope.formData = {};
 
     $scope.molecule = { 'molfile' : "", 
                         'molfileChanged': function() { 
 
-                            CBHCompoundBatch.validate($scope.molecule.molfile).then(
+                            CBHCompoundBatch.validate($stateParams.projectKey,$scope.molecule.molfile).then(
                                                         function(data){
                                                             $scope.validated = data.data;
                                                         }, function(error){
@@ -127,7 +125,7 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
     };
 
     $scope.processInput = function(){
-            CBHCompoundBatch.validateList($scope.input_string.splitted).then(
+            CBHCompoundBatch.validateList($stateParams.projectKey, $scope.input_string.splitted).then(
                 function(data){
                     $scope.validatedData = data;
                 }
@@ -157,8 +155,8 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
 
         //submit
         $scope.finalData.objects = [];
-        $scope.singleMol = CBHCompoundBatch.getSingleMol();
-         CBHCompoundBatch.saveSingleCompound($scope.molecule.molfile, $scope.molecule.metadata.custom_fields).then(
+        $scope.singleMol = CBHCompoundBatch.getSingleMol($stateParams.projectKey);
+         CBHCompoundBatch.saveSingleCompound($stateParams.projectKey, $scope.molecule.molfile, $scope.molecule.metadata.custom_fields).then(
             function(data){
                 $scope.singleMol = data.data;
                 $scope.finalData.objects.push(data.data);
@@ -189,9 +187,9 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
 
 
     $scope.saveMultiBatchMolecules = function(){
-        CBHCompoundBatch.saveMultiBatchMolecules($scope.validatedData.currentBatch, $scope.molecule.metadata.custom_fields).then(
+        CBHCompoundBatch.saveMultiBatchMolecules($stateParams.projectKey,$scope.validatedData.currentBatch, $scope.molecule.metadata.custom_fields).then(
             function(data){
-                CBHCompoundBatch.query({multiple_batch_id : $scope.validatedData.currentBatch}).then(function(result){
+                CBHCompoundBatch.query($stateParams.projectKey, {multiple_batch_id : $scope.validatedData.currentBatch}).then(function(result){
                     $scope.finalData.objects = result.objects;
                 });
             }, function(error){
@@ -201,7 +199,7 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
 
     //for the mapping step of lists of smiles/inchis
     $scope.mapCustomFieldsToMols = function() {
-        CBHCompoundBatch.saveBatchCustomFields($scope.validatedData.currentBatch, $scope.molecule.metadata.custom_fields).then(
+        CBHCompoundBatch.saveBatchCustomFields($stateParams.projectKey,$scope.validatedData.currentBatch, $scope.molecule.metadata.custom_fields).then(
             function(data){
                 console.log(data.data);
             }, function(error){
@@ -254,7 +252,7 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
         //returns object which is populated into the list for map page
         $scope.dragmodels.lists.headers = [];
 
-        CBHCompoundBatch.fetchHeaders($scope.uploaded_file_name).then(
+        CBHCompoundBatch.fetchHeaders($stateParams.projectKey, $scope.uploaded_file_name).then(
             function(data){
                 //do something with the returned data
                 angular.forEach(data.data.headers, function(value, key) {
@@ -266,7 +264,7 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
             });
 
         //call to populate droppable fields
-        CBHCompoundBatch.fetchExistingFields().then(
+        CBHCompoundBatch.fetchExistingFields($stateParams.projectKey).then(
             function(data){
                 //do something with the returned data
                 angular.forEach(data.data.fieldNames, function(value, key) {
@@ -292,7 +290,7 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
     $scope.processFiles = function() {
         //console.log($scope.struc_col_selected)
         var mapping_obj = $scope.saveCustomFieldMapping();
-        CBHCompoundBatch.validateFiles($scope.uploaded_file_name, $scope.struc_col_str, mapping_obj ).then(
+        CBHCompoundBatch.validateFiles($stateParams.projectKey,$scope.uploaded_file_name, $scope.struc_col_str, mapping_obj ).then(
                 function(data){
                     $scope.validatedData = data;
                 }

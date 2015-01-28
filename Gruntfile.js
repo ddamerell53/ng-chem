@@ -341,7 +341,9 @@ module.exports = function (grunt) {
             '*.html',
             'views/{,*/}*.html',
             'images/{,*/}*.{webp}',
-            'fonts/{,*/}*.*'
+            'fonts/{,*/}*.*',
+            'bower_components/chembiohub-theme/fonts/{,*/}{,*/}{,*/}*.*',
+            'bower_components/bootstrap-sass-official/assets/fonts/bootstrap/*'
           ]
         }, {
           expand: true,
@@ -353,7 +355,19 @@ module.exports = function (grunt) {
           cwd: '.',
           src: 'bower_components/bootstrap-sass-official/assets/fonts/bootstrap/*',
           dest: '<%= yeoman.dist %>'
-        }]
+        }, {
+          expand: true,
+          cwd: '.',
+          src: 'bower_components/chembiohub-theme/{,*/}{,*/}{,*/}*.*',
+          dest: '<%= yeoman.dist %>'
+        },{                                                   
+                expand: true,
+        cwd: './bower_components/chembiohub-theme/fonts/',
+        dest: '<%= yeoman.dist %>/fonts',
+        src: '*.*'
+    }
+
+        ]
       },
       styles: {
         expand: true,

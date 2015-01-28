@@ -8,7 +8,7 @@
  * Factory in the ngChemApp.
  */
 angular.module('ngChemApp')
-  .factory('CBHCompoundBatch', ['$http', '$q' ,'$stateProvider' ,function ($http, $stateProvider) {
+  .factory('CBHCompoundBatch', ['$http', '$q'  ,function ($http) {
     // Service logic
     // ...
 
@@ -19,6 +19,7 @@ angular.module('ngChemApp')
     var arr = window.location.href.split("/");
     var myUrl = arr[0] + "//" + arr[2] + urlBase;
     var myUrlForFiles = arr[0] + "//" + arr[2] + urlBaseForFiles;
+
 
     CBHCompoundBatch.getSingleMol = function(){
         return { acdAcidicPka: null,
@@ -44,11 +45,12 @@ angular.module('ngChemApp')
                          smiles: "",
                          species: null,
                          stdCtab: "",
-                         stdInChiKey: ""
+                         stdInChiKey: "",
                      };
     }
 
-    CBHCompoundBatch.validateList = function(values){
+    CBHCompoundBatch.validateList = function(projectKey, values){
+        values.projectKey = projectKey;
         var promise = $http.post( urlBase + "validate_list/" , values).then(
             function(data){
                 return data.data;
@@ -56,14 +58,14 @@ angular.module('ngChemApp')
         );
         return promise;
     }
-    CBHCompoundBatch.validate = function(molfile) {
-
-      return $http.post( myUrl + "validate/", {ctab:molfile});
+    CBHCompoundBatch.validate = function(projectKey, data) {
+        data.projectKey = projectKey;
+      return $http.post( myUrl + "validate/", {"ctab":data, "projectKey": projectKey});
     };
 
 
 
-    CBHCompoundBatch.saveSingleCompound = function(molfile, customFields) {
+    CBHCompoundBatch.saveSingleCompound = function(projectKey, molfile, customFields) {
         var arr = window.location.href.split("/");
         var myUrl = arr[0] + "//" + arr[2] + urlBase;
         /*var obj = {};
@@ -72,34 +74,34 @@ angular.module('ngChemApp')
                 obj[d.name] = d.value;
             }
         })*/
-        return $http.post( myUrl , {ctab:molfile, "customFields":prepCustomFields(customFields) });
+        return $http.post( myUrl , {"projectKey": projectKey ,ctab:molfile, "customFields":prepCustomFields(customFields) });
     };
 
-    CBHCompoundBatch.saveMultiBatchMolecules = function(currentBatch, customFields) {
+    CBHCompoundBatch.saveMultiBatchMolecules = function(projectKey, currentBatch, customFields) {
 
-        return $http.post( myUrl + "multi_batch_save/", {"currentBatch":currentBatch, "customFields": customFields});
+        return $http.post( myUrl + "multi_batch_save/", {"projectKey": projectKey, "currentBatch":currentBatch, "customFields": customFields});
     };
 
-    CBHCompoundBatch.validateBatch = function(molfiles) {
+    CBHCompoundBatch.validateBatch = function(projectKey,molfiles) {
 
-        return $http.post( myUrl + "bulk/validate", {ctab:molfile });
+        return $http.post( myUrl + "bulk/validate", {"projectKey": projectKey, ctab:molfile });
     };
 
-    CBHCompoundBatch.uploadBatch = function(molfiles) {
+    CBHCompoundBatch.uploadBatch = function(projectKey, molfiles) {
 
-        return $http.post( myUrl + "bulk/upload", {ctab:molfile });
+        return $http.post( myUrl + "bulk/upload", {"projectKey": projectKey,ctab:molfile });
     };
 
-    CBHCompoundBatch.fetchHeaders = function(file_name) {
+    CBHCompoundBatch.fetchHeaders = function(projectKey, file_name) {
 
-        return $http.post( myUrlForFiles + "headers/", { file_name:file_name });
+        return $http.post( myUrlForFiles + "headers/", {"projectKey" :projectKey, file_name:file_name });
     };
 
-    CBHCompoundBatch.fetchExistingFields = function() {
-        return $http.post ( myUrl + "existing/");
+    CBHCompoundBatch.fetchExistingFields = function(projectKey) {
+        return $http.post ( myUrl + "existing/", {"projectKey" :projectKey});
     };
-    CBHCompoundBatch.query = function(filters) {
-        console.log(myUrl);
+    CBHCompoundBatch.query = function(projectKey,filters) {
+        filters.projectKey = projectKey;
          var promise = $http( 
             {
                 url: myUrl,
@@ -113,14 +115,12 @@ angular.module('ngChemApp')
         );
         return promise;
     };
-    CBHCompoundBatch.saveBatchCustomFields = function(currentBatch, customFields) {
+    CBHCompoundBatch.saveBatchCustomFields = function(projectKey,currentBatch, customFields) {
 
-        return $http.post( myUrl + "multi_batch_custom_fields/", {"currentBatch":currentBatch, "customFields": prepCustomFields(customFields)});
+        return $http.post( myUrl + "multi_batch_custom_fields/", {"projectKey": projectKey, "currentBatch":currentBatch, "customFields": prepCustomFields(customFields)});
     }
     CBHCompoundBatch.validateFiles = function(file_name, struc_col, mapping) {
-        console.log(file_name);
-        console.log(struc_col);
-        var promise = $http.post( myUrl + "validate_files/" , { "file_name":file_name, "struc_col":struc_col, "mapping":mapping }).then(
+        var promise = $http.post( myUrl + "validate_files/" , {"projectKey": projectKey, "file_name":file_name, "struc_col":struc_col, "mapping":mapping }).then(
             function(data){
                 return data.data;
             }
