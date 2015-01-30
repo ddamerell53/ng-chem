@@ -25,13 +25,6 @@ angular.module('ngChemApp')
       		$scope.displaytext = $scope.lookup;
       	}
 
-
-      	if($scope.tooltextdirect) {
-      		$scope.displaytext = $scope.tooltextdirect;
-      	}
-      	else {
-      		$scope.displaytext = $scope.tooltextlookup;
-      	}
       	
       }],
       scope: {
@@ -39,10 +32,6 @@ angular.module('ngChemApp')
         lookup:'=',
         //use direct if you want to enter ad hoc text
         freetext:'@',
-
-        tooltextlookup:'=',
-        //use direct if you want to enter ad hoc text
-        tooltextdirect:'@',
 
       }
     };
