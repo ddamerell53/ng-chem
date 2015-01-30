@@ -14,7 +14,8 @@ describe('Directive: chemsvg', function () {
 
   it('should make hidden element visible', inject(function ($compile) {
     element = angular.element('<chemsvg></chemsvg>');
+    scope.smiles = 'CCCCCC'
     element = $compile(element)(scope);
-    expect(element.text()).toBe('this is the chemsvg directive');
+    expect(element.attr('ng-show')).toBe('CCCCCC');
   }));
 });

@@ -32,7 +32,9 @@
     "angular-mocks": "~1.3.0",
     "angular-scenario": "~1.3.0",
     "chemdoodle": "http://web.chemdoodle.com/downloads/ChemDoodleWeb-6.0.1.zip",
-    "dndLists": "https://raw.githubusercontent.com/marceljuenemann/angular-drag-and-drop-lists/master/angular-drag-and-drop-lists.js"
+    "dndLists": "https://raw.githubusercontent.com/marceljuenemann/angular-drag-and-drop-lists/master/angular-drag-and-drop-lists.js",
+    "karma": "~0.10",
+    "karma-ng-html2js-preprocessor": "~0.1"
   },
   "appPath": "app",
   "resolutions": {

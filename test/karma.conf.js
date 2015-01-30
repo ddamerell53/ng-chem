@@ -28,10 +28,46 @@ module.exports = function(config) {
       'bower_components/angular-route/angular-route.js',
       'bower_components/angular-sanitize/angular-sanitize.js',
       'bower_components/angular-touch/angular-touch.js',
+      'bower_components/jquery/dist/jquery.js',
+      'bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/affix.js',
+      'bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/alert.js',
+      'bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/button.js',
+      'bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/carousel.js',
+      'bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/collapse.js',
+      'bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/dropdown.js',
+      'bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/tab.js',
+      'bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/transition.js',
+      'bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/scrollspy.js',
+      'bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/modal.js',
+      'bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/tooltip.js',
+      'bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/popover.js',
+      'bower_components/jquery-ui/jquery-ui.js',
+      'bower_components/d3/d3.js',
+      'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
+      'bower_components/FileSaver/FileSaver.js',
+      'bower_components/bootstrap/dist/js/bootstrap.js',
+      'bower_components/angular-bootstrap-checkbox/angular-bootstrap-checkbox.js',
+      'bower_components/ngScrollTo/ng-scrollto.js',
+      'bower_components/angular-ui-router/release/angular-ui-router.js',
+      'bower_components/angular-grid/build/ng-grid.js',
+      'bower_components/chemdoodle/install/ChemDoodleWeb.js',
+      'bower_components/chemdoodle/install/uis/ChemDoodleWeb-uis.js',
+      'bower_components/dndLists/index.js',
+      'bower_components/ng-flow/dist/ng-flow-standalone.js',
+      'bower_components/ng-clip/src/ngClip.js',
+      'bower_components/zeroclipboard/dist/ZeroClipboard.js',
+      'bower_components/ng-clip/src/ngClip.js',
       'app/scripts/**/*.js',
-      'test/mock/**/*.js',
-      'test/spec/**/*.js'
+      //'test/mock/**/*.js',
+      'test/spec/**/*.js',
+      //'*.html',
+      //'*.html.ext',
+      // if you wanna load template files in nested directories, you must use this
+      '**/*.html',
+      'app/views/*.html'
     ],
+
+
 
     // list of files / patterns to exclude
     exclude: [],
@@ -52,10 +88,21 @@ module.exports = function(config) {
     ],
 
     // Which plugins to enable
-    plugins: [
-      'karma-phantomjs-launcher',
-      'karma-jasmine'
+    plugins: [ 
+      'karma-phantomjs-launcher', 
+      'karma-jasmine', 
+      'karma-ng-html2js-preprocessor' 
     ],
+
+    preprocessors: { 
+      'app/views/templates/*.html': ['ng-html2js'] 
+    },
+
+    ngHtml2JsPreprocessor: { 
+      stripPrefix: 'app/', 
+      moduleName: 'my.templates' 
+    },
+
 
     // Continuous Integration mode
     // if true, it capture browsers, run tests and exit
