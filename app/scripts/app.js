@@ -29,16 +29,30 @@ angular.module('ngChemApp', [
       
           // catch all route
     // send users to the form page 
-    $urlRouterProvider.otherwise('/demo/intro');
+    //$urlRouterProvider.otherwise('/demo/intro');
 
 
       $stateProvider
           
         // HOME STATES AND NESTED VIEWS ========================================
         .state('demo', {
-            url: '/demo',
+            url: '/:projectKey/demo',
             templateUrl: 'views/start.html',
             controller: 'DemoCtrl'
+        })
+
+        .state('projects', {
+          url: '/projects',
+          templateUrl: 'views/projects.html',
+          controller: 'ProjectCtrl'
+        })
+
+        .state('projects.add', {
+          url: '/add',
+          templateUrl: 'views/projects-add.html',
+          controller: function($scope){
+            //add stuff here as necessary
+          }
         })
         
         // nested states 
@@ -79,20 +93,20 @@ angular.module('ngChemApp', [
 
                 $scope.errors = [];
 
-                $scope.stereochem_options = [{ name:'1', value:'as drawn'},
-                                            { name:'2', value:'achiral',}, 
-                                            { name:'3', value:'racemic',}, 
-                                            { name:'4', value:'single enantiomer of known absolute configuration'},
-                                            { name:'5', value:'single enantiomer of unknown absolute configuration'},
-                                            { name:'6', value:'single diastereoisomer of known absolute configuration'},
-                                            { name:'7', value:'single diastereoisomer of unknown absolute configuration'},
-                                            { name:'8', value:'meso'},
-                                            { name:'9', value:'E'},
-                                            { name:'10', value:'Z'},
-                                            { name:'11', value:'mixture E/Z'},
-                                            { name:'12', value:'cis'},
-                                            { name:'13', value:'trans'},
-                                            { name:'14', value:'mixture of diastereoisomers'}
+                $scope.stereochem_options = [{ name:'-1', value:'as drawn'},
+                                            { name:'6', value:'achiral',}, 
+                                            { name:'7', value:'racemic',}, 
+                                            { name:'8', value:'single enantiomer of known absolute configuration'},
+                                            { name:'9', value:'single enantiomer of unknown absolute configuration'},
+                                            { name:'10', value:'single diastereoisomer of known absolute configuration'},
+                                            { name:'11', value:'single diastereoisomer of unknown absolute configuration'},
+                                            { name:'12', value:'meso'},
+                                            { name:'13', value:'E'},
+                                            { name:'14', value:'Z'},
+                                            { name:'15', value:'mixture E/Z'},
+                                            { name:'16', value:'cis'},
+                                            { name:'17', value:'trans'},
+                                            { name:'18', value:'mixture of diastereoisomers'}
                                             ];
                 //default selection set in the scope molecule object, select box value bound to form.                                           
                 
