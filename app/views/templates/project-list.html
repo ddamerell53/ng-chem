@@ -1,0 +1,13 @@
+<div class="row">
+	<div class="col-xs-3 well projectbox" ng-repeat="project in projects">
+		<p class="nexa"><strong><a href="/projects/{{project.project_key}}">{{ project.name }}</a></strong><br/>
+			<span class="glyphicon glyphicon-time"></span> <small>Last Modified: {{ project.modified | date }}</small>
+			<a ui-sref="demo.intro({projectKey: project.project_key})" role="button" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-plus-sign"></span> Add Compounds</a>
+		</p>
+
+	</div>
+	
+</div>
+<div class="row text-center">
+		<a class="btn btn-primary btn-lg" ui-sref="projects.add"><span class="glyphicon glyphicon-plus-sign"></span> Add New Project</a>
+</div>

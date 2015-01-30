@@ -1,5 +1,8 @@
 
- <div ng-hide="validatedData.objects.errors.length == 0" class="row">
+
+
+<!--  <div  ng-hide="validatedData.objects.errors.length == 0" class="row">
+>>>>>>> origin/testingstandards
     <div class="alert alert-danger">
       <p><strong>{{ validatedData.objects.errors.length  }} molecules </strong></p>
       <p><strong><ng-pluralize count="validatedData.objects.errors.length"
@@ -7,9 +10,15 @@
                      'one': '1 molecule',
                      'other': '{} molecules'}">
           </ng-pluralize> could not be processed</strong></p>
+<<<<<<< HEAD
+=======
+    </div>
+  </div> -->
+ <div   class="row">
+    <div class="alert alert-info">
+      <p><strong>This page is under construction, please click save</strong></p>
     </div>
   </div>
-
 <div ng-show="validatedData.objects.total >0">
   <div ng-show="validatedData.objects.errors.length == 0" class="row">
     <div class="alert alert-success">
