@@ -89,7 +89,21 @@ angular.module('ngChemApp')
             registration_success: "$$ [molecules were] registered with the ids and properties shown below",
             registration_none_success: "No molecules were registered",
             registration_error: "An unknown error occurred when registering compounds, the chembiohub team have been notified and will contact you when the issue has been investigated"
-        //}
+        //}:
+        //"batch_reg":{
+            substance_submission_rules: "When a new molecule is registered to ChemBioHub ChemReg a substance record and a batch record are generated. For existing substances a new batch will be created unless the substance is private and in another project*.  Private substance records and associated batch records can only be viewed by members of the project. Once a substance record is made public, additional batches of the substance may be added in any project by any user. *The creation a new substance record for a substance that already exists in ChemReg is possible (but not advised).",
+            batch_reg_total_processed: "$$ [substances were] processed of which:",
+            batch_reg_new_to_chemreg: "$$ [are] new to chembiohub chemreg.",
+            batch_reg_initial_batches_to_project: "Initial [batches of these substances] will be registered in proja.", 
+            batch_reg_preregistered_to_project: "$$ [had] already been registered in proja.",
+            batch_reg_new_batch_to_project: "New [batches] will be registered in proja for [each of these].", //(change)
+            batch_reg_preregistered_to_public: "$$ [had] already been registered as public.",
+            batch_reg_new_batch_to_project_1: "New batches will be registered in proja for [each of these].", //(change)
+            batch_reg_recent_registration_error: "You already registered this batch today.", //make "conintue" the button icon?
+        }
+
+
+
     }
 
     return MessageFactory;
