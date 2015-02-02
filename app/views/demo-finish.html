@@ -75,32 +75,11 @@
 </div>
 <div class="row">
 
-		<div class="btn-group">
-			<a class="btn btn-primary" role="button" ui-sref="demo.validate" ng-show="wizard.totalSteps == 4">Back</a>
-		</div>
-		<div class="btn-group">
-			<a class="btn btn-primary" role="button" ui-sref="demo.add.single" ng-show="wizard.totalSteps == 2">Back</a>
-		</div>
-		<div class="btn-group">
-			<a class="btn btn-primary" role="button" href="/chemblws/cbh_compound_batches/?format=xls&multiple_batch_id={{validatedData.currentBatch}}">Export to Excel</a>
-		
-			<a class="btn btn-primary" role="button" href="/chemblws/cbh_compound_batches/?format=sdf&multiple_batch_id={{validatedData.currentBatch}}">Export to SD</a>
-		</div>
-		
-		<!-- <div class="btn-group" ng-class='{open: open}'>
-		  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-		    Export to <span class="caret"></span>
-		  </button>
-		  <ul class="dropdown-menu" role="menu">
-		    <li><a href="#">Action</a></li>
-		    <li><a href="#">Another action</a></li>
-		    <li><a href="#">Something else here</a></li>
-		    <li class="divider"></li>
-		    <li><a href="#">Separated link</a></li>
-		  </ul>
-		</div> -->
 	
-		<a class="btn btn-primary pull-right" role="button" ui-sref="demo.intro" ng-click="startAgain($flow.files)">Register more compounds</a>
+		<a class="btn btn-primary pull-right" 
+		role="button" 
+		ui-sref="demo.intro" 
+		ng-click="startAgain($flow.files)">Register more compounds</a>
 
 
 
@@ -108,7 +87,5 @@
 		
 			<a class="btn btn-primary" role="button" href="/chemblws/cbh_compound_batches/?format=sdf&multiple_batch_id={{validatedData.currentBatch}}">Export to SD</a>
 		
-	
-		<a class="btn btn-primary pull-right" role="button" ui-sref="demo.intro" ng-click="startAgain($flow.files)">Register more compounds</a>
 
 </div>
