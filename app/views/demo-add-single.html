@@ -119,7 +119,7 @@
 		<div class="alert alert-danger" id="validation-non-salt-error">Compound appears to be a mixture of organic salts - this cannot be registered at this time.</div>
 	</div>
 
-	<div class="row" ng-show="validated.warnings.inorganicCount == 0 && validated.warnings.tautomerCount ==0 && validated.warnings.saltCount ==0 &&  validated.warnings.painsCount == 0 ">
+	<div class="row" ng-show="validated.warnings.painsCount == '0' ">
 		<div class="alert alert-success" id="validation-success">No errors found</div>
 	</div>
 	<div class="row" data-ng-show="validated.warnings.inorganicCount > 0">

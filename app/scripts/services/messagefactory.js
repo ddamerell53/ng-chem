@@ -41,7 +41,6 @@ angular.module('ngChemApp')
         //"add": {
             smiles_or_id_label: "Paste your SMILES or IDs here",
             file_upload_label: "Or upload a file here",
-            drawing_label: "Add your single compound to be registered.",
             drawing_label_suppl: "Use the sketcher window to draw your compound. Sketcher window provided by ChemDoodle.",
             //drawing_label: "Draw a molecule here",
             smiles_or_id_help_text: "IDs can be any of the following formats: InCHI, InCHI key, SMILES, CAS numbers, Sigma aldrich catalogue numbers",
