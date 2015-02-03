@@ -24,7 +24,7 @@
 			<!-- Custom Fields -->
 			<!-- TODO - convert this to a directive -->
 			<div class="form-group" ng-repeat="custom_field in molecule.metadata.custom_fields" id="">
-				<div class="col-xs-3 custom-field-key"><input class="form-control" placeholder="Field Name" type="text" id="custom_field_name_{{custom_field.id}}" name="custom_field_name_{{custom_field.id}}" ng-model="custom_field.name"></div><div class="col-xs-8 custom-field-value"><input type="text" name="custom_field_value_{{custom_field.id}}" id="custom_field_value_{{custom_field.id}}" class="form-control" placeholder="Value" ng-model="custom_field.value"></div><div class="col-xs-1" ng-click="removeCustomField({{custom_field.id}})"><span class="glyphicon glyphicon-minus-sign"></span></div>
+				<div class="col-xs-3 custom-field-key"><input class="form-control" placeholder="Field Name" type="text" id="custom_field_name_{{custom_field.id}}" name="custom_field_name_{{custom_field.id}}" ng-model="custom_field.name"></div><div class="col-xs-8 custom-field-value"><input type="text" name="custom_field_value_{{custom_field.id}}" id="custom_field_value_{{custom_field.id}}" class="form-control" placeholder="Value" ng-model="custom_field.value"></div><div class="col-xs-1" ng-click="removeCustomField(custom_field.id)"><span class="glyphicon glyphicon-minus-sign"></span></div>
 			</div>
 
 			<!-- Calculated properties here -->
@@ -44,15 +44,7 @@
 				<input type="submit" class="btn btn-primary" id="submit" ui-sref="demo.validate" ng-click="mapCustomFieldsToMols()" value="Next">
 			</div>
 			
-	<div class="row">
-		<div class="pull-left">
-			<a ui-sref="demo.add.multiple"><button class="btn btn-primary">Back</button></a>
-			<a role="button" class="btn btn-danger" ng-click="startAgain($flow.files)" ui-sref="demo.intro">Cancel</a>
-		</div>
-		<div class="pull-right">
-			<input type="submit" class="btn btn-primary" id="submit" ui-sref="demo.validate" ng-click="mapCustomFieldsToMols()" value="Next">
-		</div>
-	</div>
+
 
 		
 		
