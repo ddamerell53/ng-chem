@@ -90,8 +90,8 @@ angular.module('ngChemApp')
 
         //"batch_reg":{
             substance_submission_rules: "When a new molecule is registered to ChemBioHub ChemReg a substance record and a batch record are generated. For existing substances a new batch will be created unless the substance is private and in another project*.  Private substance records and associated batch records can only be viewed by members of the project. Once a substance record is made public, additional batches of the substance may be added in any project by any user. *The creation a new substance record for a substance that already exists in ChemReg is possible (but not advised).",
-            batch_reg_total_processed_0: "No substances were processed"
-            batch_reg_total_processed_1: "One substance was processed and"
+            batch_reg_total_processed_0: "No substances were processed",
+            batch_reg_total_processed_1: "One substance was processed and",
             batch_reg_total_processed_other : "{} substances were processed of which",
 
             batch_reg_new_to_chemreg_0: "No substances are new to ChemBio Hub ChemReg.",
