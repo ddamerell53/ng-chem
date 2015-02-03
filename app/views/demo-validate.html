@@ -17,7 +17,7 @@
 <div ng-show="validatedData.total > 0">
     <div class="alert alert-success">
       <p><strong><ng-pluralize count="validatedData.total"
-                 when="{ '0' : '{{messages.batch_reg_total_processed_0}}',  '1': '{{messages.batch_reg_total_processed_1}}', 'other' : '{{messages.batch_reg_total_processed_other}}' }">
+                 when="{ '0' : '{{messages.batch_reg_total_processed_0}}',  '1': '{{messages.batch_reg_total_processed_1}}', 'other' : '{} {{messages.batch_reg_total_processed_other}}' }">
           </ng-pluralize> ...under construction press save to continue
       </strong></p>
 </div>

@@ -92,22 +92,22 @@ angular.module('ngChemApp')
             substance_submission_rules: "When a new molecule is registered to ChemBioHub ChemReg a substance record and a batch record are generated. For existing substances a new batch will be created unless the substance is private and in another project*.  Private substance records and associated batch records can only be viewed by members of the project. Once a substance record is made public, additional batches of the substance may be added in any project by any user. *The creation a new substance record for a substance that already exists in ChemReg is possible (but not advised).",
             batch_reg_total_processed_0: "No substances were processed",
             batch_reg_total_processed_1: "One substance was processed and",
-            batch_reg_total_processed_other : "{} substances were processed of which",
+            batch_reg_total_processed_other : "substances were processed of which",
 
             batch_reg_new_to_chemreg_0: "No substances are new to ChemBio Hub ChemReg.",
             batch_reg_new_to_chemreg_1 : "One substance is new to ChemBio Hub ChemReg. The first batch of this substance will be registered to this project", 
-            batch_reg_new_to_chemreg_other : "{} substances are new to ChemBio Hub ChemReg. Initial batches of these substances will be registered in this project for each of these.",
+            batch_reg_new_to_chemreg_other : "substances are new to ChemBio Hub ChemReg. Initial batches of these substances will be registered in this project for each of these.",
 
 
             batch_prereg_to_project_0: "No substances were already been registered in this project.",
             batch_prereg_to_project_1: "One substance has already been registered in this project. A new batch will be registered for this.",
-            batch_prereg_to_project_many: "{} substances have already been registered in this project. New batch will be registered for each of these.",
+            batch_prereg_to_project_many: "substances have already been registered in this project. New batch will be registered for each of these.",
 
 
         //(change)
             batch_prereg_to_public_0: "No substances have already been registered as public.",
             batch_prereg_to_public_1: "One substance was already registered as public. A new batch of this will be registered in this project.",
-            batch_prereg_to_public_many: "{} substances have already been registered as public. New batches will be registered in this project for each of these.",
+            batch_prereg_to_public_many: "substances have already been registered as public. New batches will be registered in this project for each of these.",
 
         //(change)
             batch_reg_recent_registration_error: "You have already registered this batch today. Are you sure you wish to continue?",
