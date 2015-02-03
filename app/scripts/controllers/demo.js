@@ -197,9 +197,10 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
         lists: { "ignored": [] } //will be replaced by database fields
     }
 
-
+    
     $scope.finalData = {"objects" :[]};
 
+    $scope.messages = MessageFactory.getMessages();
 
     $scope.saveMultiBatchMolecules = function(){
         CBHCompoundBatch.saveMultiBatchMolecules($stateParams.projectKey,$scope.validatedData.currentBatch, $scope.molecule.metadata.custom_fields).then(
@@ -216,7 +217,7 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
     $scope.mapCustomFieldsToMols = function() {
         CBHCompoundBatch.saveBatchCustomFields($stateParams.projectKey,$scope.validatedData.currentBatch, $scope.molecule.metadata.custom_fields).then(
             function(data){
-                console.log(data.data);
+                $scope.validatedData = (data.data);
             }, function(error){
                 console.log(error);
             }

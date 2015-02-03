@@ -12,21 +12,15 @@
 
     </div>
   </div> -->
- <div   class="row">
-    <div class="alert alert-info">
-      <p><strong>This page is under construction, please click save</strong></p>
-    </div>
-  </div>
-<div ng-show="validatedData.objects.total >0">
-  <div ng-show="validatedData.objects.errors.length == 0" class="row">
+
+
+<div ng-show="validatedData.total > 0">
     <div class="alert alert-success">
-      <p><strong><ng-pluralize count="validatedData.objects.total"
-                 when="{'0': '',
-                     'one': '1 molecule was processed succesfully.',
-                     'other': '{} molecules were processed succesfully.'}">
+      <p><strong><ng-pluralize count="validatedData.total"
+                 when="{ '0' : '{{messages.registration_none_success}}',  '1': '{{messages.registration_none_success}}', 'other' : '{} substances were processed of which' }">
           </ng-pluralize>
       </strong></p>
-    </div>
+</div>
 </div>
 
  
