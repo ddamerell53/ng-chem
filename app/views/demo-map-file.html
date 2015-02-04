@@ -8,7 +8,7 @@
 		</div>
 		<div class="row">
 
-			<div class="col-lg-3 col-md-3">
+			<div class="col-lg-3 col-sm-3">
 
 				<div class="row" ng-repeat="list in dragmodels.lists">
 					<div class="col-xs-12 centered">
@@ -16,9 +16,9 @@
 						
 							<button class="btn btn-default" ng-click="automap()">Automap</button>
 						
-						<ul class="list-unstyled dimensions-list" dnd-list="list">
+						<ul class="list-unstyled dimensions-list" dnd-list="list" style="min-height:60px;">
 							
-							<li class="dimension alert-success" style="cursor:pointer; padding:10px;"
+							<li class="dimension alert-success" 
 							ng-repeat="item in list"
 					        dnd-draggable="item"
 					        dnd-moved="list.splice($index, 1)"
@@ -32,13 +32,13 @@
 
 			</div>
 
-			<div class="col-lg-6 col-md-6">
+			<div class="col-lg-6 col-sm-6">
 				<p class="nexa blue"><span class="glyphicon glyphicon-link"></span> Mapping Fields <info-box lookup="getMessage('mapping_fields_help')"></info-box></p>
 				<div class="row" ng-show="isFileExcel()">
-					<div class="col-xs-3">
+					<div class="col-xs-6">
 						<p class="nexa blue">Structure Column</p>
 					</div>
-					<div class="col-xs-7">
+					<div class="col-xs-6">
 						<select ng-options="item.value for item in struc_col_options track by item.name" class="form-control" ng-model="struc_col_selected" ng-change="updateStrucCol(struc_col_selected.value)">
 						<!-- <option value="" selected>--Select Structure Column--</option> -->
 						</select>
@@ -47,16 +47,19 @@
 					
 				</div>
 				<div style="overflow-y:scroll; overflow-x:hidden; height:400px;">
-					<div class="row" ng-repeat="(listName, list) in dropmodels.lists">
-						<div class="col-xs-3">
-							<p class="nexa blue">{{listName}}</p>
+					<div class="row" ng-repeat="value in dropmodels.lists">
+						<div class="col-xs-6">
+							<p class="nexa blue"> {{value.name}} 
+								<span title="Required field for this project" ng-show="value.required" class='glyphicon glyphicon-star alert-danger'></span>
+
+							</p>
 						</div>
-						<div class="col-xs-9">
-							<ul class="dimensions-container list-unstyled well" dnd-list="list" style="min-height:100px;">
-								<li class="dimension draggable alert-success" style="cursor:pointer; padding:10px;"
-								ng-repeat="item in list"
+						<div class="col-xs-6">
+							<ul class=" list-unstyled well dimensions-container" dnd-list="value.list" style="">
+								<li class=" draggable alert-success dimension" style=""
+								ng-repeat="item in value.list"
 						        dnd-draggable="item"
-						        dnd-moved="list.splice($index, 1)"
+						        dnd-moved="value.list.splice($index, 1)"
 						        dnd-effect-allowed="move"
 						        dnd-selected="dropmodels.selected = item"
 						        ng-class="{'selected': dropmodels.selected === item}"><div>{{item.label}}</div></li>
@@ -68,11 +71,11 @@
 
 			</div>
 
-			<div class="col-lg-3 col-md-3">
+			<div class="col-lg-3 col-sm-3">
 				<div class="row" ng-repeat="list in binmodels.lists">
 					<div class="col-xs-12">
 						<p class="nexa blue"><span class="glyphicon glyphicon-trash"></span> Ignore Columns</p>
-						<ul class="list-unstyled dimensions-container well" style="min-height: 200px;" dnd-list="list">
+						<ul class="list-unstyled  well dimensions-container bin" style="" dnd-list="list">
 							<li class="dimension draggable alert-success" style="cursor:pointer; padding:10px;"
 							ng-repeat="item in list"
 					        dnd-draggable="item"

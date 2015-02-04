@@ -182,20 +182,22 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
 
     };
 
-    
-    //set up test lists of droppables here
-    $scope.dragmodels = {
-        selected: null,
-        lists: {"headers": []}
-    };
-    $scope.dropmodels = {
-        selected: null,
-        lists: { } //will be replaced by database fields
+    $scope.setupMapping = function(){
+                //set up test lists of droppables here
+        $scope.dragmodels = {
+            selected: null,
+            lists: {"headers": []}
+        };
+        $scope.dropmodels = {
+            selected: null,
+            lists: [] //will be replaced by database fields
+        }
+        $scope.binmodels = {
+            selected: null,
+            lists: { "ignored": [] } //will be replaced by database fields
+        }
     }
-    $scope.binmodels = {
-        selected: null,
-        lists: { "ignored": [] } //will be replaced by database fields
-    }
+    $scope.setupMapping();
 
     
     $scope.finalData = {"objects" :[]};
@@ -239,10 +241,10 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
         angular.forEach($scope.dragmodels.lists.headers, function(value, key) {
             mapping_obj.new_fields.push(value.label);
         });
-        angular.forEach($scope.dropmodels.lists, function(value, key) {
-            mapping_obj.remapped_fields[key] = []
-            angular.forEach(value, function(i_key, i_value) {
-                mapping_obj.remapped_fields[key].push(i_key.label);    
+        angular.forEach($scope.dropmodels.lists, function(value) {
+            mapping_obj.remapped_fields[value.name] = []
+            angular.forEach(value.list, function(i_key) {
+                mapping_obj.remapped_fields[value.name].push(i_key.label);    
             });
             
         });
@@ -267,6 +269,7 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
         //service backend detects file type
         //returns object which is populated into the list for map page
         $scope.dragmodels.lists.headers = [];
+        $scope.setupMapping();
 
         CBHCompoundBatch.fetchHeaders($stateParams.projectKey, $scope.uploaded_file_name).then(
             function(data){
@@ -283,10 +286,11 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
         CBHCompoundBatch.fetchExistingFields($stateParams.projectKey).then(
             function(data){
                 //do something with the returned data
-                angular.forEach(data.data.fieldNames, function(value, key) {
+                angular.forEach(data.data.fieldNames, function(value) {
                     //create a blank list for that custom field
                     //"BW_ID", "Formula", "Mass_mg", "MolWeight"
-                    $scope.dropmodels.lists[value.name] = [];
+                    value.list = [];
+                    $scope.dropmodels.lists.push(value);
                     //now try to automap the headers to the fields
                     
                 });
@@ -315,12 +319,12 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
 
     $scope.automap = function() {
         console.log("Automap being called");
-        angular.forEach($scope.dropmodels.lists, function(value, key) {
+        angular.forEach($scope.dropmodels.lists, function(value) {
             //console.log(key);
             angular.forEach($scope.dragmodels.lists.headers, function(hdr, k) {
-                if (hdr.label == key) {
+                if (hdr.label == value.name) {
                     $scope.dragmodels.lists.headers.splice(k, 1);
-                    $scope.dropmodels.lists[key].push(hdr);
+                    value.list.push(hdr);
                 }
             });
 
@@ -335,16 +339,17 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
     $scope.resetMappingForm = function() {
         //put all the draggable fields back to where they came from (assuming no automapping is displayed)
         //loop through binmodels and put back into dragmodels
-        angular.forEach($scope.binmodels.lists.ignored, function(value, key) {
-            $scope.binmodels.lists.ignored.pop(value);
+        angular.forEach($scope.binmodels.lists.ignored, function(value) {
             $scope.dragmodels.lists.headers.push(value);
         });
+        $scope.binmodels.lists.ignored = [];
         //loop through dropmodels and put into dragmodels
-        angular.forEach($scope.dropmodels.lists, function(value, key) {
-            angular.forEach(value, function(inner_value, inner_key) {
-                value.pop(inner_value);
-                $scope.dragmodels.lists.headers.push(inner_value);
-            });
+        angular.forEach($scope.dropmodels.lists, function(value) {
+            if (value.list.length == 1){
+                $scope.dragmodels.lists.headers.push(value.list[0]);
+                value.list = [];
+            }
+            value.list = [];
         });
 
     };
@@ -380,7 +385,7 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
         };
         $scope.dropmodels = {
             selected: null,
-            lists: { } //will be replaced by database fields
+            lists: [] //will be replaced by database fields
         }
         $scope.binmodels = {
             selected: null,
@@ -421,7 +426,7 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
         };
         $scope.dropmodels = {
             selected: null,
-            lists: { } //will be replaced by database fields
+            lists: [] //will be replaced by database fields
         }
         $scope.binmodels = {
             selected: null,

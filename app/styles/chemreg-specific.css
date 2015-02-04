@@ -46,3 +46,37 @@ strong.nexa {
   background-color: lightcyan;
   color: #002147;
 }
+
+.dimension{
+  cursor:pointer; 
+  padding:5px;
+  margin:0px;
+}
+
+.dimensions-container {
+  min-height:40px;
+}
+
+.dimensions-list {
+  min-height:300px;
+}
+
+.dimensions-list li {
+  margin:10px !important;
+}
+
+.well {
+  padding:5px;
+}
+
+.well .alert-success {
+    margin-bottom: 0;
+}
+
+.bin {
+  min-height: 200px;
+}
+
+.bin .alert-success {
+    margin-bottom: 10px;
+}
