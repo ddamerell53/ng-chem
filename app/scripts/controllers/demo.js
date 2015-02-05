@@ -115,7 +115,6 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
             function(data){
                 //add each of the pinned custom fields
                 angular.forEach(data.data.fieldNames, function(value) {
-                    console.log(value);
                     //Add the pinned custom fields
                     if (value.id){
                         $scope.cust_fields_count ++;
@@ -418,7 +417,6 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
     //so they can be used in the validate methods provided for SMILES/InChi lists
     //this method also needs to pass the field mapping from the map page
     $scope.processFiles = function() {
-        //console.log($scope.struc_col_selected)
         var mapping_obj = $scope.saveCustomFieldMapping();
         CBHCompoundBatch.validateFiles($stateParams.projectKey,$scope.uploaded_file_name, $scope.struc_col_str, mapping_obj ).then(
                 function(data){
