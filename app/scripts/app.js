@@ -71,8 +71,9 @@ angular.module('ngChemApp', [
         .state('projects.list', {
             url: '/list',
             templateUrl: 'views/projects-list.html',
-            controller: function($scope) {
-
+            controller: function($rootScope) {
+              $rootScope.headline = "Projects List"
+              $rootScope.subheading = "Click a project title to see more details and add compounds to that project"
             }
         })
 
@@ -100,8 +101,9 @@ angular.module('ngChemApp', [
         .state('projects.add', {
             url: '/add',
             templateUrl: 'views/projects-add.html',
-            controller: function($scope){
-              //add stuff here as necessary
+            controller: function($rootScope){
+              $rootScope.headline = "Add a new Project"
+              $rootScope.subheading = ""
             }
         })
 

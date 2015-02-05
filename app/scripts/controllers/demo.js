@@ -29,12 +29,14 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
           
 
         };
-
+        $rootScope.headline = "Wizard"
+        $rootScope.subheading= "Welcome to the ChemReg wizard"
 
 
 //User has pressed cancel or finished a registration - clear out all of the populated data
     $scope.startAgain = function(flowfiles) {
         //$scope.
+
         $scope.singleMol = CBHCompoundBatch.getSingleMol(); //
         $scope.finalData = {"objects" :[]}; //
         $scope.custom_field_mapping = { }; //
