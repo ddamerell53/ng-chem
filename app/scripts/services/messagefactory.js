@@ -58,6 +58,12 @@ angular.module('ngChemApp')
             mol_pains_hits_warning: "$$ [molecules are] classified as Pan Assay Interference Compounds - are you sure you wish to register these?",
             mol_pains_hits_success: "No molecules are classified as Pan Assay Interference Compounds",
             mol_pains_hits_tooltip: null,
+            headers_not_retrieved: "Headers could not be retrieved from the uploaded file, please check the format and try again.",
+            ids_not_processed: "Smiles or Inchi identifiers could not be processed, please check the format, remove spaces and try again.",
+            format_not_detected: "Id type cannot be automatically determined, please check the ids or select the id type manually",
+            file_error: "File cannot be processed, some records or the format is invalid. For excel files, the structure column must be correctly specified and all rows valid.",
+            oops: "You have either pressed back a number of times, gone to an outdated bookmark or lost your data by refreshing. Click cancel to restart.",
+
         //},
         //"map": {
             map_label: "Map the fields in your SD file to those in the registration system",

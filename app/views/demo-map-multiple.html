@@ -1,37 +1,20 @@
-<div class="row">
+<div ng-hide="validatedData.total" class="row">
+      <div class="row">
+        <div class="alert alert-warning" id="fsdfsd">{{messages.oops}}</div>
+      </div>
+ </div>
+<div class="row" ng-show="validatedData.total">
 	<div class="alert alert-info">
 		<p><strong>Add extra details to the list of compounds you have registered</strong></p>
 	</div>
 </div>
 <form novalidate name="inputForm" class="form-horizontal" role="form" ng-submit="">
-	<div class="row">
+	
 
-		<div class="col-xs-12">
+		<div class="col-xs-12" ng-show="validatedData.total">
 
-			<!-- Mandatory fields -->
-			<!-- <div class="form-group mandatory-group">
-				<div class="col-xs-3">
-					<label for="labbook_id" class="nexa">Labbook ID</label>
-				</div>
-				<div class="col-xs-9">
-					<input type="text" name="labbook_id" id="labbook_id" class="form-control" ng-model="molecule.metadata.labbook_id">
-				</div>
+			<div class="row" ng-include="'views/templates/custom_fields.html'"></div>
 
-			</div> -->
-
-
-
-			<!-- Custom Fields -->
-			<!-- TODO - convert this to a directive -->
-			<div class="form-group" ng-repeat="custom_field in molecule.metadata.custom_fields" id="">
-				<div class="col-xs-3 custom-field-key"><input class="form-control" placeholder="Field Name" type="text" id="custom_field_name_{{custom_field.id}}" name="custom_field_name_{{custom_field.id}}" ng-model="custom_field.name"></div><div class="col-xs-8 custom-field-value"><input type="text" name="custom_field_value_{{custom_field.id}}" id="custom_field_value_{{custom_field.id}}" class="form-control" placeholder="Value" ng-model="custom_field.value"></div><div class="col-xs-1" ng-click="removeCustomField(custom_field.id)"><span class="glyphicon glyphicon-minus-sign"></span></div>
-			</div>
-
-			<!-- Calculated properties here -->
-			<div class="row text-center">
-				<a ng-click="addCustomField()" class="btn btn-primary" role="button" ><span class="glyphicon glyphicon-plus-sign"></span> Add Custom Field</a>
-			</div>
-			
 
 		</div>
 
@@ -41,7 +24,7 @@
 				<a role="button" class="btn btn-danger" ng-click="startAgain($flow.files)" ui-sref="demo.intro">Cancel</a>
 			</div>
 			<div class="pull-right">
-				<input type="submit" class="btn btn-primary" id="submit" ui-sref="demo.validate" ng-click="mapCustomFieldsToMols()" value="Next">
+				<input type="submit" ng-disabled="!validatedData.total" class="btn btn-primary" id="submit" ui-sref="demo.validate" ng-click="mapCustomFieldsToMols()" value="Next">
 			</div>
 			
 
@@ -49,6 +32,5 @@
 		
 		
 	</div>
-
 
 </form>
