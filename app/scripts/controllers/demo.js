@@ -103,6 +103,8 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
                                                 { field: "acdLogp", displayName: "acdLogp" }]
                                   };
 
+
+
     $scope.uploaded_file_name = "";
     $scope.file_extension = "";
 

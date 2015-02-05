@@ -29,30 +29,67 @@ angular.module('ngChemApp', [
       
           // catch all route
     // send users to the form page 
-    //$urlRouterProvider.otherwise('/demo/intro');
+    $urlRouterProvider.otherwise('/404');
 
+    /*$urlRouterProvider.rule(function ($injector, $location) {
+       //what this function returns will be set as the $location.url
+        var path = $location.path(), normalized = path.toLowerCase();
+        if (path != normalized) {
+            //instead of returning a new url string, I'll just change the $location.path directly so I don't have to worry about constructing a new url string and so a new state change is not triggered
+            $location.replace().path(normalized);
+        }
+        // because we've returned nothing, no state change occurs
+    });*/
 
       $stateProvider
           
         // HOME STATES AND NESTED VIEWS ========================================
+        .state('404', {
+            url: '/404',
+            /*data: {
+              login_rule: ""
+            },*/
+            templateUrl: '404.html',
+            controller: function($scope) {
+
+            }
+        })
+
         .state('demo', {
+            data: {
+              login_rule: function($rootScope) {
+                //check login status here
+                //console.log($rootScope);
+                //is $rootScope.logged_in_user?
+                console.log($rootScope.isLoggedIn());
+                return $rootScope.isLoggedIn();
+
+              }
+            },
             url: '/:projectKey/demo',
             templateUrl: 'views/start.html',
             controller: 'DemoCtrl'
         })
 
         .state('projects', {
-          url: '/projects',
-          templateUrl: 'views/projects.html',
-          controller: 'ProjectCtrl'
+            url: '/projects',
+            data: {
+              login_rule: function($rootScope) {
+                //console.log('project rule');
+                console.log($rootScope.isLoggedIn());
+                return $rootScope.isLoggedIn();
+              }
+            },
+            templateUrl: 'views/projects.html',
+            controller: 'ProjectCtrl'
         })
 
         .state('projects.add', {
-          url: '/add',
-          templateUrl: 'views/projects-add.html',
-          controller: function($scope){
-            //add stuff here as necessary
-          }
+            url: '/add',
+            templateUrl: 'views/projects-add.html',
+            controller: function($scope){
+              //add stuff here as necessary
+            }
         })
         
         // nested states 
@@ -230,13 +267,47 @@ angular.module('ngChemApp', [
         });
         
 
-  }).run(function($http, $cookies) {
+  }).run(function($http, $cookies, $rootScope, $state, LoginService) {
     $http.defaults.headers.post['X-CSRFToken'] = $cookies.csrftoken;
-    
+
+    $rootScope.logged_in_user = {};
+
+    LoginService.setLoggedIn().then(
+                function(data){
+                    $rootScope.logged_in_user = data.objects[0];
+                }
+            );
+
+    $rootScope.$on('$stateChangeStart', function(e, to) {
+      console.log(to);
+      if (to.name == '404') return;
+      if (!angular.isFunction(to.data.login_rule)) return;
+      var result = to.data.login_rule($rootScope);
+
+      if (result && result.to) {
+        console.log("result and result.to is passing");
+        e.preventDefault();
+        // Optionally set option.notify to false if you don't want 
+        // to retrigger another $stateChangeStart event
+        $state.go(result.to, result.params, {notify: false});
+      }
+      else {
+        $state.go('404');
+      }
+    });
+
+    $rootScope.isLoggedIn = function() {
+        var loggedIn = false;
+        if($rootScope.logged_in_user.id > 0) {
+          loggedIn = true;
+        }
+        return loggedIn;
+    }
+
 
     
 }).config(['ngClipProvider', function(ngClipProvider) {
     ngClipProvider.setPath("../bower_components/zeroclipboard/dist/ZeroClipboard.swf");
-  }]);
+}]);
 
   ;
