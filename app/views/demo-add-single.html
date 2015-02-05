@@ -76,24 +76,10 @@
 			</div>
 
 
+			<div class="row" ng-include="'views/templates/custom_fields.html'"></div>
 
-			<!-- Custom Fields -->
-			<div class="form-group" ng-repeat="custom_field in molecule.metadata.custom_fields" id="">
-				<div class="col-xs-5 col-md-3 custom-field-key">
-					<input class="form-control" placeholder="Field Name" ng-readonly="custom_field.required" typeahead="field for field in custom_field_choices | filter:$viewValue | limitTo:20" type="text" id="custom_field_name_{{custom_field.id}}" name="custom_field_name_{{custom_field.id}}" ng-model="custom_field.name" typeahead-min-length="0">
-				</div>
-				<div class="col-xs-6 col-md-8 custom-field-value">
-					<input type="text" name="custom_field_value_{{custom_field.id}}"  typeahead="f for f in getValueTypeAhead(custom_field) | filter:$viewValue" id="custom_field_value_{{custom_field.id}}" class="form-control" placeholder="Value" ng-model="custom_field.value" typeahead-editable="getValueTypeAhead(custom_field).length > 0" typeahead-min-length="0">
-				</div>
-				<div class="col-xs-1" ng-click="removeCustomField(custom_field.id)">
-					<span class="glyphicon glyphicon-minus-sign"></span>
-				</div>
-			</div>
 
-			<!-- Calculated properties here -->
-			<div class="row text-center">
-				<a ng-click="addCustomField()" class="btn btn-primary" role="button" ><span class="glyphicon glyphicon-plus-sign"></span> Add Custom Field</a>
-			</div>
+			
 			
 
 			<!-- <a class="btn btn-primary pull-right" role="button" ui-sref="projects.project.demo.finish" id="submit" name="submit">Save</a> -->
@@ -106,46 +92,16 @@
 		
 	</div>
 
-	<div class="row">
-		<div class="pull-right">
-			<a role="button" class="btn btn-danger" ng-click="startAgain()" ui-sref="projects.project.demo.intro">Cancel</a>
-			<input type="submit" class="btn btn-primary" id="submit"  ui-sref="projects.project.demo.finish" value="Save">
-		</div>
-	</div>
-
 	<!-- Errors and warnings -->
-	<div class="row" data-ng-show="validated.errors.mixture">
-		<div class="alert alert-danger" id="validation-mixture-error">Mixture or Unknown salts found. Mixtures cannot be registered and only known salts can be registered.</div>
-	</div>
+
 	<div class="row" data-ng-show="validated.errors.invalidMolecule">
 		<div class="alert alert-danger" id="validation-invalid-error">Invalid valency of sketched molecule - this cannot be registered at this time.</div>
-	</div>
-	<div class="row" data-ng-show="validated.errors.fullyInorganic">
-		<div class="alert alert-danger" id="validation-inorganic-error">Wholly inorganic molecule - this cannot be registered at this time.</div>
-	</div>
-	<div class="row" data-ng-show="validated.errors.noNonSalt">
-		<div class="alert alert-danger" id="validation-non-salt-error">Compound appears to be a mixture of organic salts - this cannot be registered at this time.</div>
 	</div>
 
 	<div class="row" ng-show="validated.warnings.painsCount == '0' ">
 		<div class="alert alert-success" id="validation-success">No errors found</div>
 	</div>
-	<div class="row" data-ng-show="validated.warnings.inorganicCount > 0">
-		<div class="alert alert-warning" id="validation-inorganic-warning">{{validated.warnings.inorganicCount}} inorganic <ng-pluralize count="validated.warnings.inorganicCount" when="{'0': 'atoms',
-                       'one': 'atom',
-                       'other': 'atoms'}"></ng-pluralize> detected</div>
-	</div>
-	<div class="row" data-ng-show="validated.warnings.saltCount > 0">
-		<div class="alert alert-warning" id="validation-salt-warning">{{validated.warnings.saltCount}} known <ng-pluralize count="validated.warnings.saltCount" when="{'0': 'salts',
-                       'one': 'salt',
-                       'other': 'salts'}"></ng-pluralize> detected - these will be automactically registered</div>
-	</div>
-	<div class="row" data-ng-show="validated.warnings.tautomerCount > 0">
-		<div class="alert alert-warning" id="validation-salt-warning">{{validated.warnings.tautomerCount}} <ng-pluralize count="validated.warnings.tautomerCount" when="{'0': 'tautomers or charge-separated systems were',
-                       'one': 'tautomer or charge-separated system was',
-                       'other': 'tautomers or charge-separated systems were'}"></ng-pluralize> detected</div>
-	</div>
-
+	
 
 
 	<div class="row" ng-show="validated.warnings.painsCount > 0 ">
@@ -163,6 +119,14 @@
 
 		 </div>
 	</div>
+	<div class="row">
+		<div class="pull-right">
+			<a role="button" class="btn btn-danger" ng-click="startAgain()" ui-sref="projects.project.demo.intro">Cancel</a>
+			<input type="submit" class="btn btn-primary" id="submit" ng-disabled="validated.errors.invalidMolecule" ui-sref="projects.project.demo.finish" value="Save">
+		</div>
+	</div>
+
+
 	<div class="row">
 		<div style="height:300px;"></div>
 	</div>

@@ -35,8 +35,9 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
 
 //User has pressed cancel or finished a registration - clear out all of the populated data
     $scope.startAgain = function(flowfiles) {
-        //$scope.
 
+        $scope.format_not_detected = false;
+        $scope.file_error = "";
         $scope.singleMol = CBHCompoundBatch.getSingleMol(); //
         $scope.finalData = {"objects" :[]}; //
         $scope.custom_field_mapping = { }; //
@@ -73,7 +74,8 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
         angular.forEach(flowfiles, function(file) {
             file.cancel();
         });
-
+        $scope.headers_not_retrieved = false;
+        $scope.ids_not_processed = false;
         $scope.molecule = { 'molfile' : "", 
                         'molfileChanged': function() { 
                             CBHCompoundBatch.validate(projectKey ,$scope.molecule.molfile
@@ -203,6 +205,7 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
     $scope.assignFileId = function(id, ext) {
         $scope.uploaded_file_name = id;
         $scope.file_extension = ext;
+        $scope.headers_not_retrieved = false;
     }
 
     $scope.isFileExcel = function() {
@@ -210,11 +213,18 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
     }
 
 	$scope.parseInput = function (){
+        $scope.ids_not_processed = false;
+        $scope.format_not_detected = false;
         $scope.input_string.splitted = {}
         var split = splitInput($scope.input_string.inputstring,$scope.dataTypeSelected);
         if ($scope.input_string.dataTypeSelected != "Auto-detect"){
             //Override if user sets a preference
             split.type = scope.input_string.dataTypeSelected;
+        }else{
+            if (split.type=="unknown"){
+                $scope.format_not_detected = true;
+            }
+            
         }
 		$scope.input_string.splitted = split;
     };
@@ -222,9 +232,13 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
     $scope.processInput = function(){
             CBHCompoundBatch.validateList(projectKey, $scope.input_string.splitted).then(
                 function(data){
+                    data.total=data.objects.length;
                     $scope.validatedData = data;
-                }
-            );
+                }, function(error){
+                    $state.go('projects.project.demo.add.multiple');
+                    $scope.ids_not_processed = true;
+                });
+            
     };
 
     //export our resultset to either SD or Excel files
@@ -360,16 +374,20 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
         //returns object which is populated into the list for map page
         $scope.dragmodels.lists.headers = [];
         $scope.setupMapping();
+        $scope.file_error = "";
 
         CBHCompoundBatch.fetchHeaders(projectKey, $scope.uploaded_file_name).then(
+
             function(data){
+
                 //do something with the returned data
                 angular.forEach(data.data.headers, function(value, key) {
                   $scope.dragmodels.lists.headers.push({label: value});
                   $scope.struc_col_options.push({ name:key, value:value});
                 });
             }, function(error){
-                console.log(error);
+                $state.go('projects.project.demo.add.multiple');
+                $scope.headers_not_retrieved = true;
             });
 
         //call to populate droppable fields
@@ -398,11 +416,13 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
     //so they can be used in the validate methods provided for SMILES/InChi lists
     //this method also needs to pass the field mapping from the map page
     $scope.processFiles = function() {
-        //console.log($scope.struc_col_selected)
         var mapping_obj = $scope.saveCustomFieldMapping();
         CBHCompoundBatch.validateFiles(projectKey,$scope.uploaded_file_name, $scope.struc_col_str, mapping_obj ).then(
                 function(data){
                     $scope.validatedData = data;
+                }, function(error){
+                    $state.go('projects.project.demo.add.multiple');
+                    $scope.file_error = "file_not_processed";
                 }
             )
     }
