@@ -237,7 +237,7 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
                     data.total=data.objects.length;
                     $scope.validatedData = data;
                 }, function(error){
-                    $state.go('demo.add.multiple');
+                    $state.go('projects.project.demo.add.multiple');
                     $scope.ids_not_processed = true;
                 });
             
@@ -388,7 +388,7 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
                   $scope.struc_col_options.push({ name:key, value:value});
                 });
             }, function(error){
-                $state.go('demo.add.multiple');
+                $state.go('projects.project.demo.add.multiple');
                 $scope.headers_not_retrieved = true;
             });
 
@@ -424,7 +424,7 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
                 function(data){
                     $scope.validatedData = data;
                 }, function(error){
-                    $state.go('demo.add.multiple');
+                    $state.go('projects.project.demo.add.multiple');
                     $scope.file_error = "file_not_processed";
                 }
             )
