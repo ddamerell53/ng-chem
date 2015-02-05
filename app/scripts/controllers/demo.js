@@ -12,7 +12,27 @@ var app = angular.module('ngChemApp');
 
 
 app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 'MessageFactory', 'CBHCompoundBatch', '$timeout', '$stateParams', function ($scope, $rootScope, $state, ChEMBLFactory, MessageFactory, CBHCompoundBatch, $timeout, $stateParams) {
-    //User has pressed cancel or finished a registration - clear out all of the populated data
+
+        $scope.addCustomField = function() {
+          var newItemNo = $scope.cust_fields_count + 1;
+          $scope.molecule.metadata.custom_fields.push( { 'name':'', 'value':'', 'id':newItemNo } );
+          $scope.cust_fields_count++;
+        };
+
+        $scope.removeCustomField = function(number) {
+
+          var filteredFields = $scope.molecule.metadata.custom_fields.filter(function(element) {
+            return element.id != number;
+          });
+
+          $scope.molecule.metadata.custom_fields = filteredFields;
+          
+
+        };
+
+
+
+//User has pressed cancel or finished a registration - clear out all of the populated data
     $scope.startAgain = function(flowfiles) {
         //$scope.
         $scope.singleMol = CBHCompoundBatch.getSingleMol(); //
@@ -54,8 +74,8 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
 
         $scope.molecule = { 'molfile' : "", 
                         'molfileChanged': function() { 
-
-                            CBHCompoundBatch.validate($scope.molecule.molfile).then(
+                            CBHCompoundBatch.validate($stateParams.projectKey ,$scope.molecule.molfile
+                                                        ).then(
                                                         function(data){
                                                             $scope.validated = data.data;
                                                         }, function(error){
@@ -67,7 +87,7 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
                                                                 } 
                                                             } 
                             }); 
-                                                      },
+                            },
                         'metadata': { 
                             'stereoSelected': {
                                                 name:'1', 
@@ -78,15 +98,54 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
 
                                               ]
 
+
                                               
                         }
                         
                      };
 
+        $scope.cust_fields_count = 0
+        $scope.custom_fields = [];
+        $scope.custom_field_choices = [];
+
+        //Get the backend defined list of custom fields
+        CBHCompoundBatch.fetchExistingFields($stateParams.projectKey).then(
+            function(data){
+                //add each of the pinned custom fields
+                angular.forEach(data.data.fieldNames, function(value) {
+                    console.log(value);
+                    //Add the pinned custom fields
+                    if (value.id){
+                        $scope.cust_fields_count ++;
+                        value.id = $scope.cust_fields_count ;
+                        value.value = "";
+                        $scope.molecule.metadata.custom_fields.push(value);
+                    } else {
+                        $scope.custom_field_choices.push(value.name);
+                    }
+                    
+                });
+                
+
+            }, function(error){
+                console.log(error);
+            });
+
+
+            
 
         //do we need any back-end resetting here?
     
     };
+
+    $scope.getValueTypeAhead = function(field){
+        if (field.allowedValues){
+            return field.allowedValues.split(",");
+        }else{
+            return [];
+        }
+    }
+
 
 
 
@@ -211,6 +270,7 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
             function(data){
                 $scope.singleMol = data.data;
                 $scope.finalData.objects.push(data.data);
+                $scope.validatedData.currentBatch = data.data.multipleBatchId;
                
             }, function(error){
                 $scope.validated = { 'errors': { 'invalidMolecule': true } };

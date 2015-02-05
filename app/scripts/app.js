@@ -149,24 +149,7 @@ angular.module('ngChemApp', [
                 
 
                 $scope.sketchMolfile = "";
-                $scope.cust_fields_count = 0
-                $scope.custom_fields = [];
-                $scope.addCustomField = function() {
-                  var newItemNo = $scope.cust_fields_count + 1;
-                  $scope.molecule.metadata.custom_fields.push( { 'name':'', 'value':'', 'id':newItemNo } );
-                  $scope.cust_fields_count++;
-                };
-
-                $scope.removeCustomField = function(number) {
-
-                  var filteredFields = $scope.molecule.metadata.custom_fields.filter(function(element) {
-                    return element.id != number;
-                  });
-
-                  $scope.molecule.metadata.custom_fields = filteredFields;
-                  
-
-                };
+     
                 $scope.open_warnings = false;
                 
 
@@ -210,24 +193,7 @@ angular.module('ngChemApp', [
             url: '/map-multiple',
             templateUrl: 'views/demo-map-multiple.html',
             controller: function($scope) {
-                $scope.cust_fields_count = 0
-                $scope.custom_fields = [];
-                $scope.addCustomField = function() {
-                  var newItemNo = $scope.cust_fields_count + 1;
-                  $scope.molecule.metadata.custom_fields.push( { 'name':'', 'value':'', 'id':newItemNo } );
-                  $scope.cust_fields_count++;
-                };
 
-                $scope.removeCustomField = function(number) {
-
-                  var filteredFields = $scope.molecule.metadata.custom_fields.filter(function(element) {
-                    return element.id != number;
-                  });
-
-                  $scope.molecule.metadata.custom_fields = filteredFields;
-                  
-
-                };
             }
         })
         // url will be /form/interests
