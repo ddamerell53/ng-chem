@@ -68,9 +68,9 @@ angular.module('ngChemApp', [
             controller: 'ProjectCtrl'
         })
 
-        .state('projects.list', function() {
+        .state('projects.list', {
             url: '/list',
-            templateUrl: 'views/project-list.html',
+            templateUrl: 'views/projects-list.html',
             controller: function($scope) {
 
             }
@@ -89,6 +89,11 @@ angular.module('ngChemApp', [
             templateUrl: 'views/project-full.html',
             controller: function($scope) {
 
+            },
+            resolve:{
+              projectKey: ['$stateParams', function($stateParams){
+                  return $stateParams.projectKey;
+              }]
             }
         })
 
@@ -103,13 +108,13 @@ angular.module('ngChemApp', [
 
 
 
-        .state('demo', {
+        .state('projects.project.demo', {
             data: {
               login_rule: function($rootScope) {
                 return $rootScope.isLoggedIn();
               }
             },
-            url: '/:projectKey/demo',
+            url: '/demo',
             templateUrl: 'views/start.html',
             controller: 'DemoCtrl'
         })
@@ -117,7 +122,7 @@ angular.module('ngChemApp', [
         // nested states 
         // each of these sections will have their own view
         // url will be nested (/form/profile)
-        .state('demo.intro', {
+        .state('projects.project.demo.intro', {
             url: '/intro',
             templateUrl: 'views/demo-intro.html',
             controller: function($scope) {
@@ -128,7 +133,7 @@ angular.module('ngChemApp', [
             }
         })
 
-        .state('demo.add', {
+        .state('projects.project.demo.add', {
             url: '/add',
             templateUrl: 'views/demo-add.html',
             controller: function($scope) {
@@ -138,7 +143,7 @@ angular.module('ngChemApp', [
             }
         })
 
-        .state('demo.add.single', {
+        .state('projects.project.demo.add.single', {
             url: '/single',
             templateUrl: 'views/demo-add-single.html',
             controller: function($scope) {
@@ -180,7 +185,7 @@ angular.module('ngChemApp', [
             }
         })
 
-        .state('demo.add.multiple', {
+        .state('projects.project.demo.add.multiple', {
             url: '/multiple',
             templateUrl: 'views/demo-add-multiple.html',
             controller: function($scope) {
@@ -193,7 +198,7 @@ angular.module('ngChemApp', [
             }
         })
 
-        .state('demo.map', {
+        .state('projects.project.demo.map', {
             url: '/map',
             templateUrl: 'views/demo-map.html',
             controller: function($scope) {
@@ -204,14 +209,14 @@ angular.module('ngChemApp', [
             }
         })
 
-        .state('demo.map.file', {
+        .state('projects.project.demo.map.file', {
             url: '/map-file',
             templateUrl: 'views/demo-map-file.html',
             controller: function($scope) {
               
             }
         })
-        .state('demo.map.multiple', {
+        .state('projects.project.demo.map.multiple', {
             url: '/map-multiple',
             templateUrl: 'views/demo-map-multiple.html',
             controller: function($scope) {
@@ -219,7 +224,7 @@ angular.module('ngChemApp', [
             }
         })
         // url will be /form/interests
-        .state('demo.validate', {
+        .state('projects.project.demo.validate', {
             url: '/validate',
             templateUrl: 'views/demo-validate.html',
             controller: function($scope) {
@@ -232,7 +237,7 @@ angular.module('ngChemApp', [
 
         
         // url will be /form/payment
-        .state('demo.finish', {
+        .state('projects.project.demo.finish', {
             url: '/finish',
             templateUrl: 'views/demo-finish.html',
             controller: function($scope) {

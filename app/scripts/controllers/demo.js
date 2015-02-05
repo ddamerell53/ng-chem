@@ -11,7 +11,7 @@ var app = angular.module('ngChemApp');
 
 
 
-app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 'MessageFactory', 'CBHCompoundBatch', '$timeout', '$stateParams', function ($scope, $rootScope, $state, ChEMBLFactory, MessageFactory, CBHCompoundBatch, $timeout, $stateParams) {
+app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 'MessageFactory', 'CBHCompoundBatch', '$timeout', '$stateParams', 'projectKey', function ($scope, $rootScope, $state, ChEMBLFactory, MessageFactory, CBHCompoundBatch, $timeout, $stateParams, projectKey) {
 
         $scope.addCustomField = function() {
           var newItemNo = $scope.cust_fields_count + 1;
@@ -74,7 +74,7 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
 
         $scope.molecule = { 'molfile' : "", 
                         'molfileChanged': function() { 
-                            CBHCompoundBatch.validate($stateParams.projectKey ,$scope.molecule.molfile
+                            CBHCompoundBatch.validate(projectKey ,$scope.molecule.molfile
                                                         ).then(
                                                         function(data){
                                                             $scope.validated = data.data;
@@ -109,7 +109,7 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
         $scope.custom_field_choices = [];
 
         //Get the backend defined list of custom fields
-        CBHCompoundBatch.fetchExistingFields($stateParams.projectKey).then(
+        CBHCompoundBatch.fetchExistingFields(projectKey).then(
             function(data){
                 //add each of the pinned custom fields
                 angular.forEach(data.data.fieldNames, function(value) {
@@ -218,7 +218,7 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
     };
 
     $scope.processInput = function(){
-            CBHCompoundBatch.validateList($stateParams.projectKey, $scope.input_string.splitted).then(
+            CBHCompoundBatch.validateList(projectKey, $scope.input_string.splitted).then(
                 function(data){
                     $scope.validatedData = data;
                 }
@@ -261,8 +261,8 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
 
         //submit
         $scope.finalData.objects = [];
-        $scope.singleMol = CBHCompoundBatch.getSingleMol($stateParams.projectKey);
-         CBHCompoundBatch.saveSingleCompound($stateParams.projectKey, $scope.molecule.molfile, $scope.molecule.metadata.custom_fields).then(
+        $scope.singleMol = CBHCompoundBatch.getSingleMol(projectKey);
+         CBHCompoundBatch.saveSingleCompound(projectKey, $scope.molecule.molfile, $scope.molecule.metadata.custom_fields).then(
             function(data){
                 $scope.singleMol = data.data;
                 $scope.finalData.objects.push(data.data);
@@ -296,9 +296,9 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
     $scope.messages = MessageFactory.getMessages();
 
     $scope.saveMultiBatchMolecules = function(){
-        CBHCompoundBatch.saveMultiBatchMolecules($stateParams.projectKey,$scope.validatedData.currentBatch, $scope.molecule.metadata.custom_fields).then(
+        CBHCompoundBatch.saveMultiBatchMolecules(projectKey,$scope.validatedData.currentBatch, $scope.molecule.metadata.custom_fields).then(
             function(data){
-                CBHCompoundBatch.query($stateParams.projectKey, {multiple_batch_id : $scope.validatedData.currentBatch}).then(function(result){
+                CBHCompoundBatch.query(projectKey, {multiple_batch_id : $scope.validatedData.currentBatch}).then(function(result){
                     $scope.finalData.objects = result.objects;
                 });
             }, function(error){
@@ -308,7 +308,7 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
 
     //for the mapping step of lists of smiles/inchis
     $scope.mapCustomFieldsToMols = function() {
-        CBHCompoundBatch.saveBatchCustomFields($stateParams.projectKey,$scope.validatedData.currentBatch, $scope.molecule.metadata.custom_fields).then(
+        CBHCompoundBatch.saveBatchCustomFields(projectKey,$scope.validatedData.currentBatch, $scope.molecule.metadata.custom_fields).then(
             function(data){
                 $scope.validatedData = (data.data);
             }, function(error){
@@ -359,7 +359,7 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
         $scope.dragmodels.lists.headers = [];
         $scope.setupMapping();
 
-        CBHCompoundBatch.fetchHeaders($stateParams.projectKey, $scope.uploaded_file_name).then(
+        CBHCompoundBatch.fetchHeaders(projectKey, $scope.uploaded_file_name).then(
             function(data){
                 //do something with the returned data
                 angular.forEach(data.data.headers, function(value, key) {
@@ -371,7 +371,7 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
             });
 
         //call to populate droppable fields
-        CBHCompoundBatch.fetchExistingFields($stateParams.projectKey).then(
+        CBHCompoundBatch.fetchExistingFields(projectKey).then(
             function(data){
                 //do something with the returned data
                 angular.forEach(data.data.fieldNames, function(value) {
@@ -398,7 +398,7 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
     $scope.processFiles = function() {
         //console.log($scope.struc_col_selected)
         var mapping_obj = $scope.saveCustomFieldMapping();
-        CBHCompoundBatch.validateFiles($stateParams.projectKey,$scope.uploaded_file_name, $scope.struc_col_str, mapping_obj ).then(
+        CBHCompoundBatch.validateFiles(projectKey,$scope.uploaded_file_name, $scope.struc_col_str, mapping_obj ).then(
                 function(data){
                     $scope.validatedData = data;
                 }
