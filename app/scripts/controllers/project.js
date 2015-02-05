@@ -8,13 +8,15 @@
  * Controller of the ngChemApp
  */
 angular.module('ngChemApp')
-  .controller('ProjectCtrl', [ '$scope', '$state', 'ProjectFactory', 'MessageFactory', function ($scope, $state, ProjectFactory, MessageFactory) {
+  .controller('ProjectCtrl', [ '$scope', '$state', 'ProjectFactory', 'MessageFactory', '$stateParams', function ($scope, $state, ProjectFactory, MessageFactory, $stateParams) {
     //stuff
-    $scope.currentProjectKey = "";
+    $scope.currentProjectKey = $stateParams.projectKey;
 
     $scope.getMessage = function(lookup_str){
         return MessageFactory.getMessage(lookup_str);
 
     }
+
+    
     
   }]);

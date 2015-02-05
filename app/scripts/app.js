@@ -55,33 +55,41 @@ angular.module('ngChemApp', [
             }
         })
 
-        .state('demo', {
-            data: {
-              login_rule: function($rootScope) {
-                //check login status here
-                //console.log($rootScope);
-                //is $rootScope.logged_in_user?
-                console.log($rootScope.isLoggedIn());
-                return $rootScope.isLoggedIn();
-
-              }
-            },
-            url: '/:projectKey/demo',
-            templateUrl: 'views/start.html',
-            controller: 'DemoCtrl'
-        })
+        
 
         .state('projects', {
             url: '/projects',
             data: {
               login_rule: function($rootScope) {
-                //console.log('project rule');
-                console.log($rootScope.isLoggedIn());
                 return $rootScope.isLoggedIn();
               }
             },
             templateUrl: 'views/projects.html',
             controller: 'ProjectCtrl'
+        })
+
+        .state('projects.list', function() {
+            url: '/list',
+            templateUrl: 'views/project-list.html',
+            controller: function($scope) {
+
+            }
+        })
+
+        .state('projects.list.project', {
+            url: '/:projectKey',
+            templateUrl: 'views/project-summary.html',
+            controller: function($scope) {
+
+            }
+        })
+
+        .state('projects.project', {
+            url: '/:projectKey',
+            templateUrl: 'views/project-full.html',
+            controller: function($scope) {
+
+            }
         })
 
         .state('projects.add', {
@@ -90,6 +98,20 @@ angular.module('ngChemApp', [
             controller: function($scope){
               //add stuff here as necessary
             }
+        })
+
+
+
+
+        .state('demo', {
+            data: {
+              login_rule: function($rootScope) {
+                return $rootScope.isLoggedIn();
+              }
+            },
+            url: '/:projectKey/demo',
+            templateUrl: 'views/start.html',
+            controller: 'DemoCtrl'
         })
         
         // nested states 
@@ -233,19 +255,23 @@ angular.module('ngChemApp', [
         });
         
 
-  }).run(function($http, $cookies, $rootScope, $state, LoginService) {
+  }).run(function($http, $cookies, $rootScope, $state, LoginService, ProjectFactory) {
     $http.defaults.headers.post['X-CSRFToken'] = $cookies.csrftoken;
 
     $rootScope.logged_in_user = {};
+    $rootScope.projects = {};
 
     LoginService.setLoggedIn().then(
                 function(data){
                     $rootScope.logged_in_user = data.objects[0];
                 }
             );
+    ProjectFactory.get().$promise.then(function(res) {
+        console.log(res.objects)
+          $rootScope.projects = res.objects;
+        });
 
     $rootScope.$on('$stateChangeStart', function(e, to) {
-      console.log(to);
       if (to.name == '404') return;
       if (!angular.isFunction(to.data.login_rule)) return;
       var result = to.data.login_rule($rootScope);
@@ -269,6 +295,8 @@ angular.module('ngChemApp', [
         }
         return loggedIn;
     }
+
+
 
 
     

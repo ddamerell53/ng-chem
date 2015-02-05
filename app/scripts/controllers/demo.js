@@ -113,7 +113,6 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
             function(data){
                 //add each of the pinned custom fields
                 angular.forEach(data.data.fieldNames, function(value) {
-                    console.log(value);
                     //Add the pinned custom fields
                     if (value.id){
                         $scope.cust_fields_count ++;
@@ -146,10 +145,7 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
         }
     }
 
-
-
-
-
+    
 
     $scope.startAgain([]);
     $scope.formData = {};
