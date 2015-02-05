@@ -12,14 +12,50 @@ var app = angular.module('ngChemApp');
 
 
 app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 'MessageFactory', 'CBHCompoundBatch', '$timeout', '$stateParams', function ($scope, $rootScope, $state, ChEMBLFactory, MessageFactory, CBHCompoundBatch, $timeout, $stateParams) {
+    //User has pressed cancel or finished a registration - clear out all of the populated data
+    $scope.startAgain = function(flowfiles) {
+        //$scope.
+        $scope.singleMol = CBHCompoundBatch.getSingleMol(); //
+        $scope.finalData = {"objects" :[]}; //
+        $scope.custom_field_mapping = { }; //
+        $scope.warningNumber = 0; //
+        $scope.uploaded_file_name = ""; //
+        $scope.file_extension = "";
 
+        $scope.struc_col_options = [ { name:"", value:"Please select"} ]; //
+        $scope.struc_col_str = ""; //
+        $scope.validated = { "warnings": {
+                            "inorganicCount": "0",
+                            "painsCount": "0",
+                            "saltCount": "0",
+                            "tautomerCount": "0"
+                          }
+                        }; //
+        $scope.validatedData = {};//
+        $scope.input_string = {"inputstring":"",
+                            "dataTypes" : ["Auto-detect", "Smiles", "INCHI"],
+                            "dataTypeSelected" : "Auto-detect"};
+        $scope.dragmodels = {
+        selected: null,
+        lists: {"headers": []}
+        };
+        $scope.dropmodels = {
+            selected: null,
+            lists: [] //will be replaced by database fields
+        }
+        $scope.binmodels = {
+            selected: null,
+            lists: { "ignored": [] } //will be replaced by database fields
+        }
 
-    $scope.formData = {};
+        angular.forEach(flowfiles, function(file) {
+            file.cancel();
+        });
 
-    $scope.molecule = { 'molfile' : "", 
+        $scope.molecule = { 'molfile' : "", 
                         'molfileChanged': function() { 
 
-                            CBHCompoundBatch.validate($stateParams.projectKey,$scope.molecule.molfile).then(
+                            CBHCompoundBatch.validate($scope.molecule.molfile).then(
                                                         function(data){
                                                             $scope.validated = data.data;
                                                         }, function(error){
@@ -47,6 +83,20 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
                         
                      };
 
+
+        //do we need any back-end resetting here?
+    
+    };
+
+
+
+
+
+    $scope.startAgain([]);
+    $scope.formData = {};
+
+  
+
 	$scope.myData = [ ];
 
     //config object for the progress bar
@@ -57,7 +107,6 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
         'max': 100,
     };
 
-    $scope.singleMol = CBHCompoundBatch.getSingleMol();
 
 
 
@@ -65,20 +114,10 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
         /*{ type: 'danger', msg: 'Oh snap! Change a few things up and try submitting again.' }*/
 	];
 
-    $scope.validated = { "warnings": {
-                            "inorganicCount": "0",
-                            "painsCount": "0",
-                            "saltCount": "0",
-                            "tautomerCount": "0"
-                          }
-                        };
 
 	$scope.parsed_input = [ {"smiles": "COc1ccc2[C@@H]3[C@H](COc2c1)C(C)(C)OC4=C3C(=O)C(=O)C5=C4OC(C)(C)[C@H]6COc7cc(OC)ccc7[C@@H]56", "chemblId": "CHEMBL446858", "passesRuleOfThree": "No", "molecularWeight": 544.59, "molecularFormula": "C32H32O8", "acdLogp": 7.67, "knownDrug": "No", "stdInChiKey": "GHBOEFUAGSHXPO-UWXQAFAOSA-N", "species": null, "synonyms": null, "medChemFriendly": "Yes", "rotatableBonds": 2, "acdBasicPka": null, "alogp": 3.63, "preferredCompoundName": null, "numRo5Violations": 1, "acdLogd": 7.67, "acdAcidicPka": null},
                       {"smiles": "CN1C(=O)N(C)c2ncn(C)c2C1=O", "chemblId": "CHEMBL113", "passesRuleOfThree": "Yes", "molecularWeight": 194.19, "molecularFormula": "C8H10N4O2", "acdLogp": -0.63, "knownDrug": "Yes", "stdInChiKey": "RYYVLZVUVIJVGH-UHFFFAOYSA-N", "species": "NEUTRAL", "synonyms": "Coffeine,SID104171124,SID11110908,Methyltheobromine,Caffeine,Cafcit,NoDoz Caplets and Chewable Tablets,SID124879556,Theine", "medChemFriendly": "Yes", "rotatableBonds": 0, "acdBasicPka": 0.52, "alogp": -0.10, "preferredCompoundName": "CAFFEINE", "numRo5Violations": 0, "acdLogd": -0.63, "acdAcidicPka": null} ];
     $scope.parsed_input.map(function(d){d.smiles = btoa(d.smiles)});
-	$scope.input_string = {"inputstring":"",
-                            "dataTypes" : ["Auto-detect", "Smiles", "INCHI"],
-                            "dataTypeSelected" : "Auto-detect"};
 
 	$scope.gridOptionsSingle = { data: 'molecule',
                                    showColumnMenu:false,
@@ -103,8 +142,6 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
                                                 { field: "acdLogp", displayName: "acdLogp" }]
                                   };
 
-    $scope.uploaded_file_name = "";
-    $scope.file_extension = "";
 
     $scope.assignFileId = function(id, ext) {
         $scope.uploaded_file_name = id;
@@ -148,7 +185,6 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
     }
 
 
-    $scope.warningNumber = 0;
 
     $scope.$watch('validated', function(){
       $scope.warningNumber = parseInt($scope.validated.warnings.inorganicCount) + parseInt($scope.validated.warnings.tautomerCount) + parseInt($scope.validated.warnings.saltCount) + parseInt($scope.validated.warnings.painsCount);
@@ -200,7 +236,6 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
     $scope.setupMapping();
 
     
-    $scope.finalData = {"objects" :[]};
 
     $scope.messages = MessageFactory.getMessages();
 
@@ -227,7 +262,6 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
         
     };
 
-    $scope.custom_field_mapping = { };
 
     $scope.saveCustomFieldMapping = function() {
         //create a new json object containing the drag, drop and bin models as they are
@@ -257,8 +291,6 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
     };
 
     //these things
-    $scope.struc_col_options = [ { name:"", value:"Please select"} ];
-    $scope.struc_col_str = "";
 
     $scope.updateStrucCol = function(str){
         $scope.struc_col_str = str;        
@@ -364,118 +396,9 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
         return ($scope.struc_col_str == "");
     }
 
-    //User has pressed cancel or finished a registration - clear out all of the populated data
-    $scope.startAgain = function() {
-        $scope.finalData = {"objects" :[]};
-        $scope.custom_field_mapping = { };
-        $scope.warningNumber = 0;
-        $scope.uploaded_file_name = "";
-        $scope.file_extension = "";
-        $scope.validated = { "warnings": {
-                            "inorganicCount": "0",
-                            "painsCount": "0",
-                            "saltCount": "0",
-                            "tautomerCount": "0"
-                          }
-                        };
-        $scope.validatedData = {};
-        $scope.dragmodels = {
-        selected: null,
-        lists: {"headers": []}
-        };
-        $scope.dropmodels = {
-            selected: null,
-            lists: [] //will be replaced by database fields
-        }
-        $scope.binmodels = {
-            selected: null,
-            lists: { "ignored": [] } //will be replaced by database fields
-        }
-        $scope.finalData = {"objects" :[]};
-
-        //do we need any back-end resetting here?
-    
-    };
-
-
-    //User has pressed cancel or finished a registration - clear out all of the populated data
-    $scope.startAgain = function(flowfiles) {
-        //$scope.
-        $scope.singleMol = CBHCompoundBatch.getSingleMol();
-        $scope.finalData = {"objects" :[]};
-        $scope.custom_field_mapping = { };
-        $scope.warningNumber = 0;
-        $scope.uploaded_file_name = "";
-        $scope.struc_col_options = [ { name:"", value:"Please select"} ];
-        $scope.struc_col_str = "";
-        $scope.file_extension = "";
-        $scope.validated = { "warnings": {
-                            "inorganicCount": "0",
-                            "painsCount": "0",
-                            "saltCount": "0",
-                            "tautomerCount": "0"
-                          }
-                        };
-        $scope.validatedData = {};
-        $scope.input_string = {"inputstring":"",
-                            "dataTypes" : ["Auto-detect", "Smiles", "INCHI"],
-                            "dataTypeSelected" : "Auto-detect"};
-        $scope.dragmodels = {
-        selected: null,
-        lists: {"headers": []}
-        };
-        $scope.dropmodels = {
-            selected: null,
-            lists: [] //will be replaced by database fields
-        }
-        $scope.binmodels = {
-            selected: null,
-            lists: { "ignored": [] } //will be replaced by database fields
-        }
-        $scope.finalData = {"objects" :[]};
-
-        angular.forEach(flowfiles, function(file) {
-            file.cancel();
-        });
-
-        $scope.molecule = { 'molfile' : "", 
-                        'molfileChanged': function() { 
-
-                            CBHCompoundBatch.validate($scope.molecule.molfile).then(
-                                                        function(data){
-                                                            $scope.validated = data.data;
-                                                        }, function(error){
-                                                            $scope.validated = { 
-                                                                'warnings': {
-                                                                    'inorganicCount':"0"
-                                                                }, 'errors': { 
-                                                                    'invalidMolecule': true 
-                                                                } 
-                                                            } 
-                            }); 
-                                                      },
-                        'metadata': { 
-                            'stereoSelected': {
-                                                name:'1', 
-                                                value:'as drawn'
-                                               },
-                            'labbook_id':'',
-                            'custom_fields':  [
-
-                                              ]
-
-                                              
-                        }
-                        
-                     };
-
-        //do we need any back-end resetting here?
-    
-    };
 
 
 
-    $scope.validatedData = {};
 
 
 
