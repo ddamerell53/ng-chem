@@ -102,7 +102,17 @@
 		<div class="alert alert-success" id="validation-success">No errors found</div>
 	</div>
 	
+	<div class="row" ng-show="validated.warnings.linkedpublic > 0">
+		<div class="alert alert-info" id="validation-success1">{{mesages.batch_prereg_to_public_single}}</div>
+	</div>
+	
+	<div class="row" ng-show="validated.warnings.linkedproject > 0">
+		<div class="alert alert-info" id="validation-success2">{{mesages.batch_prereg_to_project_single}}</div>
+	</div>
 
+	<div class="row" ng-show="validated.warnings.new > 0">
+		<div class="alert alert-info" id="validation-success3">{{mesages.batch_reg_new_to_chemreg_single}}</div>
+	</div>
 
 	<div class="row" ng-show="validated.warnings.painsCount > 0 ">
 		 <div class="alert alert-warning" id="validation-errors">{{ validated.warnings.painsCount }} pan-assay interference (PAINS) <ng-pluralize count="validated.warnings.painsCount" when="{'0': 'hits',
@@ -119,6 +129,8 @@
 
 		 </div>
 	</div>
+
+
 	<div class="row">
 		<div class="pull-right">
 			<a role="button" class="btn btn-danger" ng-click="startAgain()" ui-sref="projects.project.demo.intro">Cancel</a>
