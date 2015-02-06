@@ -15,21 +15,21 @@ angular.module('ngChemApp')
       /*link: function postLink(scope, element, attrs) {
         element.text('this is the infoBox directive');
       }*/
-      controller: ['$scope', function($scope) {
+      controller: ['$scope', 'MessageFactory', function($scope, MessageFactory) {
       	//$scope.tooltext = "test here";
       	$('[data-toggle="popover"]').popover();
       	if($scope.freetext) {
       		$scope.displaytext = $scope.freetext;
       	}
       	else {
-      		$scope.displaytext = $scope.lookup;
+      		$scope.displaytext = MessageFactory.getMessage($scope.lookup);
       	}
 
       	
       }],
       scope: {
       	//use lookup if you are using the MessageFactory service
-        lookup:'=',
+        lookup:'@',
         //use direct if you want to enter ad hoc text
         freetext:'@',
 
