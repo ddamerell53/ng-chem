@@ -274,7 +274,6 @@ angular.module('ngChemApp', [
                 }
             );
     ProjectFactory.get().$promise.then(function(res) {
-        console.log(res.objects)
           $rootScope.projects = res.objects;
         });
 
