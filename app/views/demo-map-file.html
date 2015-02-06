@@ -1,17 +1,17 @@
 <div class="row">
 	
 	<div class="container">
-		<div class="row" ng-show="(dragmodels.lists.length + dragmodels.lists.length) > 0">
+		<div class="row" ng-show="(dragmodels.lists.headers.length + dropmodels.lists.length) > 0">
 			<div class="alert alert-info">
 				<p><strong>Map the fields in your SD or excel file to those in the registration system. </strong><br/>Drag column fields from your file to the appropriate custom mapping, or leave undragged to create a new custom field with that name.<br/>To ignore columns and not add them to the database, drag these to the <strong>Ignore Columns</strong> box.<br/>Your file must contain at least one structural field - this can be SMILES, MOL data or InChi/InChi Key values.</p>
 			</div>
 		</div>
-		<div ng-hide="(dragmodels.lists.length + dragmodels.lists.length) > 0" class="row">
+		<div ng-hide="(dragmodels.lists.headers.length + dropmodels.lists.length) >  0" class="row">
 			<div class="row" >
 				<div class="alert alert-warning" id="fsdfsd">{{messages.oops}}</div>
 			</div>
 		</div>
-		<div class="row" ng-show="(dragmodels.lists.length + dragmodels.lists.length) > 0">
+		<div class="row" ng-show="(dragmodels.lists.headers.length + dropmodels.lists.length) > 0">
 
 			<div class="col-lg-3 col-sm-3">
 
@@ -104,8 +104,8 @@
 		<a role="button" class="btn btn-danger" ng-click="startAgain($flow.files)" ui-sref="projects.project.demo.intro">Cancel</a>
 		<a ng-click="resetMappingForm()"><button class="btn btn-primary" style="margin-right:5px;">Reset form</button></a>
 		<a ui-sref="projects.project.demo.validate">
-			<button class="btn btn-primary" ng-click="processFiles()" ng-show="isFileExcel()" ng-disabled="isStrucColUnspecified()  + (dragmodels.lists.length + dragmodels.lists.length) == 0">Next</button>
-			<button class="btn btn-primary" ng-click="processFiles()" ng-hide="isFileExcel()" ng-disabled="(dragmodels.lists.length + dragmodels.lists.length) == 0">Next</button>
+			<button class="btn btn-primary" ng-click="processFiles()" ng-show="isFileExcel()" ng-disabled="isStrucColUnspecified()  + (dragmodels.lists.headers.length + dropmodels.lists.length) == 0">Next</button>
+			<button class="btn btn-primary" ng-click="processFiles()" ng-hide="isFileExcel()" ng-disabled="(dragmodels.lists.headers.length + dropmodels.lists.length) == 0">Next</button>
 		</a>
 
 	</div>
