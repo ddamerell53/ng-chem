@@ -102,6 +102,7 @@ angular.module('ngChemApp')
     };
     CBHCompoundBatch.query = function(projectKey,filters) {
         filters.projectKey = projectKey;
+        filters.project__project_key = projectKey;
          var promise = $http( 
             {
                 url: myUrl,

@@ -80,3 +80,8 @@ strong.nexa {
 .bin .alert-success {
     margin-bottom: 10px;
 }
+
+.myGrid {
+    width: 100%;
+    height: 300px;
+  }
