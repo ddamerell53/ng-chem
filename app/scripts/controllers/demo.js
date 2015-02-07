@@ -278,7 +278,11 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
         //submit
         $scope.finalData.objects = [];
         $scope.singleMol = CBHCompoundBatch.getSingleMol(projectKey);
-         CBHCompoundBatch.saveSingleCompound(projectKey, $scope.molecule.molfile, $scope.molecule.metadata.custom_fields).then(
+         CBHCompoundBatch.saveSingleCompound(projectKey, 
+            $scope.molecule.molfile, 
+            $scope.molecule.metadata.custom_fields, 
+            $scope.molecule.metadata.stereoSelected
+            ).then(
             function(data){
                 $scope.singleMol = data.data;
                 $scope.finalData.objects.push(data.data);
