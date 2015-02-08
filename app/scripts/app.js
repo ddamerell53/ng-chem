@@ -81,9 +81,7 @@ angular.module('ngChemApp', [
         .state('projects.list.project', {
             url: '/:projectKey',
             templateUrl: 'views/project-summary.html',
-            controller: function($scope, $stateParams) {
-              $scope.projectKey = $stateParams.projectKey;
-            }
+            controller: 'BatchesCtrl'
         })
 
         .state('projects.project', {
