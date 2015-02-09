@@ -320,6 +320,7 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
             function(data){
                 CBHCompoundBatch.query(projectKey, {multiple_batch_id : $scope.validatedData.currentBatch}).then(function(result){
                     $scope.finalData.objects = result.objects;
+                    $scope.finalData.meta = result.meta;
                 });
             }, function(error){
                 $scope.validated = { 'errors': { 'invalidMolecule': true } };
@@ -337,6 +338,26 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
         );
         
     };
+
+    $scope.paginateNext = function() {
+        CBHCompoundBatch.paginate($scope.finalData.meta.next).then(
+                function(data) {
+                    $scope.finalData.objects = result.objects;
+                    $scope.finalData.meta = result.meta;
+                }
+            );
+    }
+
+    $scope.paginatePrev = function() {
+        CBHCompoundBatch.paginate($scope.finalData.meta.previous).then(
+                function(data) {
+                    $scope.finalData.objects = result.objects;
+                    $scope.finalData.meta = result.meta;
+                }
+            );
+    }
+
+
 
 
     $scope.saveCustomFieldMapping = function() {

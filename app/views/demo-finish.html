@@ -3,8 +3,11 @@
 		<p><strong>Your prepared compound data is listed below. Click cancel to delete this molecule and start again.</strong><br/></p>
 	</div>
 </div>
-
-<div  ng-repeat="mol in finalData.objects track by mol.id">
+<div class="row">
+	<a ng-click="paginatePrev()" role="button" class="btn btn-primary pull-left" ng-hide="finalData.meta.previous == null">Prev</a>
+	<a ng-click="paginateNext()" role="button" class="btn btn-primary pull-right" ng-hide="finalData.meta.next == null">Next</a>
+</div>
+<div ng-repeat="mol in finalData.objects track by mol.id">
 	<div class="row">
 		<div class ="col-xs-12 well">
 		<p>
@@ -64,14 +67,19 @@
 	  </p>
 	</div>	
 	<div class="col-xs-8" ng-show="mol.canonicalSmiles.length > 0">
-<!-- 		<chemsvg class="pull-right" ng-show="mol.canonicalSmiles.length > 0" size="'200'" smiles="mol"  base-url="'/chemblws/cbh_compound_batches/smiles2svg'" ></chemsvg>
- -->	
- <div ng-bind-html="mol.properties.svg | toTrusted"></div>
+	<!-- 		<chemsvg class="pull-right" ng-show="mol.canonicalSmiles.length > 0" size="'200'" smiles="mol"  base-url="'/chemblws/cbh_compound_batches/smiles2svg'" ></chemsvg>
+	 -->	
+	 	<div ng-bind-html="mol.properties.svg | toTrusted"></div>
 
-</div>
+	</div>
+
 
 </div>
 	
+</div><!-- ng-repeat -->
+<div class="row">
+	<a ng-click="paginatePrev()" role="button" class="btn btn-primary pull-left" ng-hide="finalData.meta.previous == null">Prev</a>
+	<a ng-click="paginateNext()" role="button" class="btn btn-primary pull-right" ng-hide="finalData.meta.next == null">Next</a>
 </div>
 <div class="row">
 
