@@ -116,7 +116,7 @@ angular.module('ngChemApp')
         );
         return promise;
     };
-    CBHCompoundBatch.pagination = function(page_url) {
+    CBHCompoundBatch.paginate = function(page_url) {
         /*filters.projectKey = projectKey;
         filters.project__project_key = projectKey;*/
          var promise = $http( 
