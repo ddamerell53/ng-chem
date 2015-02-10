@@ -24,19 +24,21 @@ angular.module('ngChemApp')
                               enablePaging: true,
                   						pagingOptions: $scope.pagingOptions,
           									  showFooter: true,
-                              columnDefs: [//{ field: "smiles", displayName: "Structure", cellTemplate:"img-template.html" },
-                                            { field: "chemblId", displayName: "UOx ID", width: '20%' },
+                              rowHeight: 200,
+                              columnDefs: [//{ field: "smiles", displayName: "Structure", cellTemplate:"views/img-template.html"  },
+                                            { field: "properties.svg", displayName: "", width: '30%', cellTemplate:"views/img-template.html", cellClass: 'white-bg' },
+                                            { field: "chemblId", displayName: "UOx ID", width: '20%' },                                  
+                                            { field: "created", displayName: "Added on", cellFilter: 'date', width: '20%' },
+                                            { field: "createdBy", displayName: "Added by", width: '20%' },
                                             { field: "molecularWeight", displayName: "Mol Weight", visible: false },
                                             { field: "knownDrug", displayName: "Known Drug", visible: false },
-                                            { field: "stdInChiKey", displayName: "Std InChi Key" },
+                                            { field: "stdInChiKey", displayName: "Std InChi Key", visible: false },
                                             { field: "medChemFriendly", displayName: "MedChem Friendly", visible: false },
                                             { field: "passesRuleOfThree", displayName: "Ro3 Pass", visible: false },
                                             { field: "preferredCompoundName", displayName: "Name", visible: false },
                                             { field: "molecularFormula", displayName: "Formula", visible: false },
-                                            { field: "canonicalSmiles", displayName: "SMILES", width: '50%' },
                                             { field: "numRo5Violations", displayName: "Ro5 Violations", visible: false },
                                             { field: "rotatableBonds", displayName: "Rotatable Bonds", visible: false },
-                                            { field: "created", displayName: "Added on" },
                                             { field: "acdLogp", displayName: "acdLogp", visible: false }]
                               };
 
@@ -67,6 +69,6 @@ angular.module('ngChemApp')
       }
     }, true);
 
-
+    
 
   });

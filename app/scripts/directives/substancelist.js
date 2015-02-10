@@ -50,32 +50,32 @@ angular.module('ngChemApp')
       		$scope.totalServerItems = result.meta.totalCount;
       	});
 
-      	/*$scope.setPagingData = function(data, page, pageSize){	
+      	$scope.setPagingData = function(data, page, pageSize){	
 	        var pagedData = data.slice((page - 1) * pageSize, page * pageSize);
 	        $scope.compounds = pagedData;
 	        $scope.totalServerItems = data.length;
-	    };*/
+	    };
 
-      	/*$scope.getPagedDataAsync = function (pageSize, page) {
+      	$scope.getPagedDataAsync = function (pageSize, page) {
       		var data;
             
-                /*$http.get('jsonFiles/largeLoad.json').success(function (largeLoad) {
+                $http.get('jsonFiles/largeLoad.json').success(function (largeLoad) {
                     $scope.setPagingData(largeLoad,page,pageSize);
-                });*/
-			/*var offset = parseInt(page) * parseInt(pageSize);
+                });
+			var offset = parseInt(page) * parseInt(pageSize);
 
 			CBHCompoundBatch.query($scope.project, {'limit': pageSize, 'offset': offset}).then(function(result) {
 			      		//$scope.compounds = result.objects;
 			      		//$scope.pagingData = result.meta;
 			      		$scope.setPagingData(result.objects, (parseInt(result.meta.offset) / parseInt(result.meta.limit)), result.meta.limit);
 			      	});
-      	};*/
+      	};
 
-      	/*$scope.$watch('pagingOptions', function (newVal, oldVal) {
+      	$scope.$watch('pagingOptions', function (newVal, oldVal) {
 	        if (newVal !== oldVal && newVal.currentPage !== oldVal.currentPage) {
 	          $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage, $scope.filterOptions.filterText);
 	        }
-	    }, true);*/
+	    }, true);
 
 	    //$scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage);
 

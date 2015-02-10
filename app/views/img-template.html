@@ -1,1 +1,6 @@
-<img ng-src='http://localhost:8000/utils/smiles2svg/{{row.getProperty(col.field)}}' lazy-src></img>
+<!-- <img ng-src='http://localhost:8000/utils/smiles2svg/{{row.getProperty(col.field)}}' lazy-src></img> -->
+
+<!-- <chemsvg size="100" smiles="{'canonicalSmiles' : row.getProperty(col.field)}" base-url="'/utils/smiles2svg/'"></chemsvg> -->
+
+<div class="centered" ng-bind-html="row.getProperty(col.field) | toTrusted"></div>
+

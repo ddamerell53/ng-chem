@@ -9,11 +9,14 @@
 <div class="row">
 
 	<!-- Column with results -->
-	<div class="col-sm-8">
+	<div class="col-sm-12">
 
 		<div ng-include="'views/templates/compound-list.html'"></div>
 
 	</div>
+</div>
+
+<div class="row">
 
 	<div class="col-sm-4">
 
@@ -53,5 +56,16 @@
 		</p>
 
 	</div>
+</div>
 
-</div>	
+<script>
+
+angular.element(document).ready(function() {
+  $('svg').each(function() {
+  	$(this).attr('width', '100px');
+  	$(this).attr('height', '100px');
+  })
+});
+</script>
+
+	
