@@ -4,8 +4,24 @@
 	</div>
 </div>
 <div class="row">
-	<a ng-click="paginatePrev()" role="button" class="btn btn-primary pull-left" ng-hide="finalData.meta.previous == null">Prev</a>
-	<a ng-click="paginateNext()" role="button" class="btn btn-primary pull-right" ng-hide="finalData.meta.next == null">Next</a>
+
+	<div class="col-xs-4">
+		<a ng-click="paginatePrev()" role="button" class="btn btn-primary pull-left" ng-hide="finalData.meta.previous == null">Prev</a>
+	</div>
+	<div class="col-xs-4">
+		<a class="btn btn-primary" role="button" href="/chemblws/cbh_compound_batches/?format=xls&multiple_batch_id={{validatedData.currentBatch}}">Export to Excel</a>
+		
+			<a class="btn btn-primary" role="button" href="/chemblws/cbh_compound_batches/?format=sdf&multiple_batch_id={{validatedData.currentBatch}}">Export to SD</a>
+
+			<a class="btn btn-primary pull-right" 
+		role="button" 
+		ui-sref="projects.project.demo.intro" 
+		ng-click="startAgain($flow.files)">Register more compounds</a>
+	</div>
+	<div class="col-xs-4">
+		<a ng-click="paginateNext()" role="button" class="btn btn-primary pull-right" ng-hide="finalData.meta.next == null">Next</a>
+	</div>
+	
 </div>
 <div ng-repeat="mol in finalData.objects track by mol.id">
 	<div class="row">
