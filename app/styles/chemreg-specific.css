@@ -84,4 +84,47 @@ strong.nexa {
 .myGrid {
     width: 100%;
     height: 600px;
+    font-family: NexaLight;
   }
+
+.ngHeaderSortColumn {
+  text-align: center;
+}
+
+.ngFooterPanel {
+  background-color: #002147;
+  padding: 0;
+  border-top: 1px solid #d4d4d4;
+  position: relative;
+  color: white;
+}
+.ngPagerContainer select, .ngPagerCurrent {
+  color: #002147;
+}
+.ngPagerButton {
+  border-radius: 4px;
+}
+
+.ngTotalSelectContainer {
+  float: left;
+  margin: 2px;
+}
+
+.ngPagerButton {
+  border-radius: 4px;
+  color: white;
+  background-color: #002147;
+  border: 1px solid white;
+}
+.ngPagerFirstTriangle {
+  border-color: transparent #fff transparent transparent;
+}
+.ngPagerFirstBar {
+  border-left: 2px solid #fff;
+}
+.ngPagerLastTriangle {
+  border-color: transparent transparent transparent #fff
+}
+.ngPagerLastBar {
+  border-left: 2px solid #fff;
+}
