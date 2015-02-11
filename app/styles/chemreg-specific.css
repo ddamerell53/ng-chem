@@ -1,3 +1,6 @@
+button, a.btn {
+  font-family: NexaLight;
+}
 li a svg.svg {
   fill: #ddd;
 }
