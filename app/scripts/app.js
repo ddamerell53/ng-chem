@@ -64,6 +64,12 @@ angular.module('ngChemApp', [
                 return $rootScope.isLoggedIn();
               }
             },
+            resolve:{
+              gridconfig: ['CompoundListSetup', function(CompoundListSetup){
+                  //return CompoundListSetup.get();
+                  return CompoundListSetup;
+              }],
+            },
             templateUrl: 'views/projects.html',
             controller: 'ProjectCtrl'
         })
@@ -81,7 +87,33 @@ angular.module('ngChemApp', [
         .state('projects.list.project', {
             url: '/:projectKey',
             templateUrl: 'views/project-summary.html',
-            controller: 'BatchesCtrl'
+            //controller: 'BatchesCtrl',
+            resolve: {
+              projectKey: ['$stateParams', function($stateParams){
+                  return $stateParams.projectKey;
+              }]
+            },
+            //controller to handle ng-grid paging
+            //gridconfig is a service and defined in the projects parent state - cascades
+            controller: function($scope, gridconfig, projectKey){
+              $scope.projectKey = projectKey;
+              $scope.gridconfig = gridconfig;
+              $scope.gridconfig.initializeGridParams(projectKey,{}).then(function(result) {
+                $scope.gridconfig.configObject.totalServerItems = result.meta.totalCount;
+                $scope.gridconfig.configObject.compounds = result.objects;
+              });
+              //watches the paging buttons to pull in new results for the window
+              $scope.$watch('gridconfig.configObject.pagingOptions', function (newVal, oldVal) {
+                if (newVal !== oldVal && (newVal.currentPage !== oldVal.currentPage || newVal.pageSize !== oldVal.pageSize)) {
+                  console.log('paging change');
+                  $scope.gridconfig.initializeGridParams(projectKey,{}).then(function(result) {
+                    $scope.gridconfig.configObject.totalServerItems = result.meta.totalCount;
+                    $scope.gridconfig.configObject.compounds = result.objects;
+                  });
+                }
+              }, true);
+              
+            },
         })
 
         .state('projects.project', {
@@ -90,7 +122,7 @@ angular.module('ngChemApp', [
             controller: function($scope) {
 
             },
-            resolve:{
+            resolve: {
               projectKey: ['$stateParams', function($stateParams){
                   return $stateParams.projectKey;
               }]
@@ -242,7 +274,31 @@ angular.module('ngChemApp', [
         .state('projects.project.demo.finish', {
             url: '/finish',
             templateUrl: 'views/demo-finish.html',
-            controller: function($scope) {
+            controller: function($scope, $timeout, gridconfig, projectKey) {
+
+              $scope.projectKey = projectKey;
+              $scope.gridconfig = gridconfig;
+
+              var filters = {multiple_batch_id : $scope.validatedData.currentBatch};
+              //timeout to allow molecules to be saved
+              $timeout(function() {
+                  $scope.gridconfig.initializeGridParams(projectKey, filters).then(function(result) {
+                  $scope.gridconfig.configObject.totalServerItems = result.meta.totalCount;
+                  $scope.gridconfig.configObject.compounds = result.objects;
+                }, 200);
+              });
+              
+              //watches the paging buttons to pull in new results for the window
+              $scope.$watch('gridconfig.configObject.pagingOptions', function (newVal, oldVal) {
+                if (newVal !== oldVal && (newVal.currentPage !== oldVal.currentPage || newVal.pageSize !== oldVal.pageSize)) {
+                  console.log('paging change');
+                  $scope.gridconfig.initializeGridParams(projectKey, filters).then(function(result) {
+                    $scope.gridconfig.configObject.totalServerItems = result.meta.totalCount;
+                    $scope.gridconfig.configObject.compounds = result.objects;
+                  });
+                }
+              }, true);
+
               if ($scope.wizard.totalSteps == 4) {
                 $scope.wizard.step = 4;
                 //call whatever method will move past validating the batch  
@@ -255,9 +311,7 @@ angular.module('ngChemApp', [
               
               $scope.wizard.dynamic = 90.5;
               applyTicks("finish");
-              // function getSmiles(mol){
-              //   return mol.canonicalSmiles;
-              // }
+
             }
         });
         
@@ -292,6 +346,10 @@ angular.module('ngChemApp', [
       else {
         $state.go('404');
       }
+    });
+
+    $rootScope.$on('$stateChangeError', function(event, toState, toParams, fromState, fromParams, error){ 
+        console.log(error);
     });
 
     $rootScope.isLoggedIn = function() {
