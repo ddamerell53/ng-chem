@@ -149,7 +149,10 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
         }
     }
 
-    
+    $scope.cancelFile =function(field){
+        $scope.headers_not_retrieved=false;
+        $scope.file_error=false;
+    }
 
     $scope.startAgain([]);
     $scope.formData = {};
