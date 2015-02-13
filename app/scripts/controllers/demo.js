@@ -318,10 +318,10 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
     $scope.saveMultiBatchMolecules = function(){
         CBHCompoundBatch.saveMultiBatchMolecules(projectKey,$scope.validatedData.currentBatch, $scope.molecule.metadata.custom_fields).then(
             function(data){
-                CBHCompoundBatch.query(projectKey, {multiple_batch_id : $scope.validatedData.currentBatch}).then(function(result){
+                /*CBHCompoundBatch.query(projectKey, {multiple_batch_id : $scope.validatedData.currentBatch}).then(function(result){
                     $scope.finalData.objects = result.objects;
                     $scope.finalData.meta = result.meta;
-                });
+                });*/
             }, function(error){
                 $scope.validated = { 'errors': { 'invalidMolecule': true } };
         });
