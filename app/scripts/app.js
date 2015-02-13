@@ -78,9 +78,10 @@ angular.module('ngChemApp', [
             url: '/list',
             templateUrl: 'views/projects-list.html',
             controller: function($rootScope) {
-              $rootScope.headline = "Projects List"
-              $rootScope.subheading = "Click a project title to see more details and add compounds to that project"
-              $rootScope.help_lookup = ""
+              $rootScope.headline = "Projects List";
+              $rootScope.subheading = "Click a project title to see more details and add compounds to that project";
+              $rootScope.help_lookup = "";
+              $rootScope.projectKey = "Projects";
             }
         })
 
@@ -119,8 +120,8 @@ angular.module('ngChemApp', [
         .state('projects.project', {
             url: '/:projectKey',
             templateUrl: 'views/project-full.html',
-            controller: function($scope) {
-
+            controller: function($rootScope, projectKey) {
+              $rootScope.projectKey = projectKey;
             },
             resolve: {
               projectKey: ['$stateParams', function($stateParams){
