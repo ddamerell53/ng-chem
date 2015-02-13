@@ -203,11 +203,22 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
 
 
     $scope.assignFileId = function(id, ext, file) {
-        console.log(file);
+        $scope.startAgain();
         $scope.uploaded_file_name = id;
         $scope.file_extension = ext;
         $scope.headers_not_retrieved = false;
         $scope.parseHeaders();
+    }
+
+    $scope.mapFilePage = function(){
+        if ($scope.file_extension=="cdx" || $scope.file_extension=="cdxml"){
+            $scope.valFiles({});
+            $state.go("projects.project.demo.map.multiple");
+        }else {
+            $state.go("projects.project.demo.map.file");
+        }
+        
+
     }
 
     $scope.isFileExcel = function() {
@@ -402,6 +413,9 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
         //call service to pull out headers from uploaded file
         //service backend detects file type
         //returns object which is populated into the list for map page
+        if ($scope.file_extension=="cdx" || $scope.file_extension=="cdxml"){
+
+        }else{
         $scope.dragmodels.lists.headers = [];
         $scope.setupMapping();
         $scope.file_error = "";
@@ -437,7 +451,7 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
                 console.log(error);
             });
 
-        
+        }
     };
 
 
@@ -446,6 +460,11 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
     //this method also needs to pass the field mapping from the map page
     $scope.processFiles = function() {
         var mapping_obj = $scope.saveCustomFieldMapping();
+        $scope.valFiles(mapping_obj);
+    }
+
+
+    $scope.valFiles = function(mapping_obj){
         CBHCompoundBatch.validateFiles(projectKey,$scope.uploaded_file_name, $scope.struc_col_str, mapping_obj ).then(
                 function(data){
                     $scope.validatedData = data;
@@ -455,7 +474,6 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
                 }
             )
     }
-
     $scope.automap = function() {
         console.log("Automap being called");
         angular.forEach($scope.dropmodels.lists, function(value) {
