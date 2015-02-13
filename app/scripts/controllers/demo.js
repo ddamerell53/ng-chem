@@ -35,7 +35,7 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
 
 //User has pressed cancel or finished a registration - clear out all of the populated data
     $scope.startAgain = function(flowfiles) {
-
+        $scope.struc_col_selected={ name:"", value:"Please select"} ;
         $scope.format_not_detected = false;
         $scope.file_error = "";
         $scope.singleMol = CBHCompoundBatch.getSingleMol(); //
@@ -202,7 +202,8 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
                                   };
 
 
-    $scope.assignFileId = function(id, ext) {
+    $scope.assignFileId = function(id, ext, file) {
+        console.log(file);
         $scope.uploaded_file_name = id;
         $scope.file_extension = ext;
         $scope.headers_not_retrieved = false;
@@ -391,7 +392,10 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
     //these things
 
     $scope.updateStrucCol = function(str){
-        $scope.struc_col_str = str;        
+        if (str != "Please select"){
+        $scope.struc_col_str = str;  
+    }
+        //CBHCompoundBatch.testStructureColumn();      
     }
 
     $scope.parseHeaders = function() {
@@ -409,7 +413,7 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
                 //do something with the returned data
                 angular.forEach(data.data.headers, function(value, key) {
                   $scope.dragmodels.lists.headers.push({label: value});
-                  $scope.struc_col_options.push({ name:key, value:value});
+                  $scope.struc_col_options.push({ name:value, value:value});
                 });
             }, function(error){
                 $scope.headers_not_retrieved = true;
