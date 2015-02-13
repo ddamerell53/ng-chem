@@ -76,7 +76,8 @@ angular.module('ngChemApp', [
 
         .state('projects.list', {
             url: '/list',
-            templateUrl: 'views/projects-list.html',
+            //templateUrl: 'views/projects-list.html',
+            template: '<project-list></project-list><div class="form-views" ui-view></div>',
             controller: function($rootScope) {
               $rootScope.headline = "Projects List";
               $rootScope.subheading = "Click a project title to see more details and add compounds to that project";
