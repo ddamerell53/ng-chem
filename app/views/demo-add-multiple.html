@@ -78,7 +78,7 @@
 						<tr ng-repeat="file in $flow.files">
 					        <!-- <td>{{$index+1}}</td> -->
 					        <td>{{file.name}}</td>
-					        <td class="text-center"><a ng-click="file.cancel()" class="btn btn-sm btn-danger" role="btn">Remove</a></td>
+					        <td class="text-center"><a ng-click="file.cancel();startAgain()" class="btn btn-sm btn-danger" role="btn">Remove</a></td>
 					    </tr>
 					    <tr ng-show="$flow.files.length == 0">
 					    	<td colspan="2">No files uploaded</td>
@@ -102,5 +102,5 @@
 	<div>
 		<a role="button" class="btn btn-danger" ng-click="startAgain($flow.files)" ui-sref="projects.project.demo.intro">Cancel</a>
 
-		<a class="btn btn-primary pull-right" role="button" ui-sref="projects.project.demo.map.file" ng-disabled="headers_not_retrieved" ng-click="parseHeaders()">Process File</a>
+		<a class="btn btn-primary pull-right" role="button" ui-sref="projects.project.demo.map.file" ng-disabled="headers_not_retrieved" ng-click="">Process File</a>
 </div>
