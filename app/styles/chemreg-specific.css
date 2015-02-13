@@ -50,6 +50,10 @@ strong.nexa {
   color: #002147;
 }
 
+.mt-8 {
+   margin-top:8px;
+}
+
 .dimension{
   cursor:pointer; 
   padding:5px;
