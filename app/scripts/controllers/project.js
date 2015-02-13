@@ -13,8 +13,9 @@ angular.module('ngChemApp')
     //$scope.currentProjectKey = $stateParams.projectKey;
 
     $rootScope.headline = "Projects";
-    $rootScope.subheading = "";
+    $rootScope.subheading = "Click 'Show Project List' to see your projects";
     $rootScope.help_lookup = "projects_help"
+    $rootScope.glyphicon = "folder-open";
 
     $scope.getMessage = function(lookup_str){
         return MessageFactory.getMessage(lookup_str);

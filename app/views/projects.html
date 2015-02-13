@@ -1,9 +1,9 @@
 <div class="container">
-	<div class="row" style="margin-top:30px;">
+	<div class="row" style="margin-top:10px;">
 		<div class="col-xs-12">
-			<h2 class="blue nexa">{{headline}} <br><small>{{subheading}} <info-box lookup="{{help_lookup}}"></info-box></small></h2>
+			<h2 class="blue nexa"><span class='glyphicon glyphicon-{{glyphicon}}'></span> &nbsp;{{headline}} <br><small>{{subheading}} <info-box lookup="{{help_lookup}}"></info-box></small></h2>
 		</div>
 	</div>
 
-	<div class="form-views" ui-view></div>
+	<div class="form-views" ui-view><a role="button" class="btn btn-primary" ui-sref="projects.list">Show Project List</a></div>
 </div>

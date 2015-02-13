@@ -30,7 +30,8 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
 
         };
         $rootScope.headline = "Wizard"
-        $rootScope.subheading= "Welcome to the ChemReg wizard"
+        $rootScope.subheading= "Welcome to the ChemReg wizard"        
+        $rootScope.glyphicon = "flash";
 
 
 //User has pressed cancel or finished a registration - clear out all of the populated data

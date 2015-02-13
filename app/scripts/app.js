@@ -83,6 +83,7 @@ angular.module('ngChemApp', [
               $rootScope.subheading = "Click a project title to see more details and add compounds to that project";
               $rootScope.help_lookup = "";
               $rootScope.projectKey = "Projects";
+              $rootScope.glyphicon = "folder-open";
             }
         })
 
@@ -138,6 +139,7 @@ angular.module('ngChemApp', [
               $rootScope.headline = "Add a new Project"
               $rootScope.subheading = ""
               $rootScope.help_lookup = ""
+              $rootScope.glyphicon = "folder-open";
             }
         })
 
