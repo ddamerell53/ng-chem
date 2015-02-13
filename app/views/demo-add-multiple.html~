@@ -76,8 +76,11 @@
 						<tr ng-repeat="file in $flow.files">
 					        <!-- <td>{{$index+1}}</td> -->
 					        <td>{{file.name}}</td>
-				        <td class="text-center"><a ng-click="file.cancel();startAgain()" class="btn btn-sm btn-danger" role="btn">Remove</a></td>
-
+<<<<<<< HEAD
+					        <td class="text-center"><a ng-click="file.cancel();cancelFile()" class="btn btn-sm btn-danger" role="btn">Remove</a></td>
+=======
+					        <td class="text-center"><a ng-click="file.cancel();startAgain()" class="btn btn-sm btn-danger" role="btn">Remove</a></td>
+>>>>>>> 86491e9
 					    </tr>
 					    <tr ng-show="$flow.files.length == 0">
 					    	<td colspan="2">No files uploaded</td>

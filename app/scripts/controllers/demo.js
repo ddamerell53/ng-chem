@@ -36,7 +36,7 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
 
 //User has pressed cancel or finished a registration - clear out all of the populated data
     $scope.startAgain = function(flowfiles) {
-
+        $scope.struc_col_selected={ name:"", value:"Please select"} ;
         $scope.format_not_detected = false;
         $scope.file_error = "";
         $scope.singleMol = CBHCompoundBatch.getSingleMol(); //
@@ -206,10 +206,23 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
                                   };
 
 
-    $scope.assignFileId = function(id, ext) {
+    $scope.assignFileId = function(id, ext, file) {
+        $scope.startAgain();
         $scope.uploaded_file_name = id;
         $scope.file_extension = ext;
         $scope.headers_not_retrieved = false;
+        $scope.parseHeaders();
+    }
+
+    $scope.mapFilePage = function(){
+        if ($scope.file_extension=="cdx" || $scope.file_extension=="cdxml"){
+            $scope.valFiles({});
+            $state.go("projects.project.demo.map.multiple");
+        }else {
+            $state.go("projects.project.demo.map.file");
+        }
+        
+
     }
 
     $scope.isFileExcel = function() {
@@ -394,13 +407,19 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
     //these things
 
     $scope.updateStrucCol = function(str){
-        $scope.struc_col_str = str;        
+        if (str != "Please select"){
+        $scope.struc_col_str = str;  
+    }
+        //CBHCompoundBatch.testStructureColumn();      
     }
 
     $scope.parseHeaders = function() {
         //call service to pull out headers from uploaded file
         //service backend detects file type
         //returns object which is populated into the list for map page
+        if ($scope.file_extension=="cdx" || $scope.file_extension=="cdxml"){
+
+        }else{
         $scope.dragmodels.lists.headers = [];
         $scope.setupMapping();
         $scope.file_error = "";
@@ -412,10 +431,9 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
                 //do something with the returned data
                 angular.forEach(data.data.headers, function(value, key) {
                   $scope.dragmodels.lists.headers.push({label: value});
-                  $scope.struc_col_options.push({ name:key, value:value});
+                  $scope.struc_col_options.push({ name:value, value:value});
                 });
             }, function(error){
-                $state.go('projects.project.demo.add.multiple');
                 $scope.headers_not_retrieved = true;
             });
 
@@ -437,7 +455,7 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
                 console.log(error);
             });
 
-        
+        }
     };
 
 
@@ -446,6 +464,11 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
     //this method also needs to pass the field mapping from the map page
     $scope.processFiles = function() {
         var mapping_obj = $scope.saveCustomFieldMapping();
+        $scope.valFiles(mapping_obj);
+    }
+
+
+    $scope.valFiles = function(mapping_obj){
         CBHCompoundBatch.validateFiles(projectKey,$scope.uploaded_file_name, $scope.struc_col_str, mapping_obj ).then(
                 function(data){
                     $scope.validatedData = data;
@@ -455,7 +478,6 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
                 }
             )
     }
-
     $scope.automap = function() {
         console.log("Automap being called");
         angular.forEach($scope.dropmodels.lists, function(value) {

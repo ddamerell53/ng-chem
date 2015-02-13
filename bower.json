@@ -24,7 +24,7 @@
     "ngScrollTo": "*",
     "angular-ui-router": "~0.2.13",
     "angular-grid": "~2.0.14",
-    "ng-flow": "~2",
+    "ng-flow": "2.5.1",
     "ng-clip": "~0.2.6",
     "zeroclipboard": "~2.2.0"
   },
