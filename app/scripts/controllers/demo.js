@@ -18,7 +18,7 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
           $scope.molecule.metadata.custom_fields.push( { 'name':'', 'value':'', 'id':newItemNo } );
           $scope.cust_fields_count++;
         };
-
+        $scope.filedata = {};
         $scope.removeCustomField = function(number) {
 
           var filteredFields = $scope.molecule.metadata.custom_fields.filter(function(element) {
@@ -230,6 +230,8 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
     }
 
 	$scope.parseInput = function (){
+        $scope.filedata.flow.files=[];
+        $scope.validatedData = {};
         $scope.ids_not_processed = false;
         $scope.format_not_detected = false;
         $scope.input_string.splitted = {}
@@ -243,10 +245,16 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
             }
             
         }
+
 		$scope.input_string.splitted = split;
+        if (split){
+            $scope.processInput();
+        }
+                
     };
 
     $scope.processInput = function(){
+
             CBHCompoundBatch.validateList(projectKey, $scope.input_string.splitted).then(
                 function(data){
                     data.total=data.objects.length;
@@ -345,8 +353,13 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
     };
 
     //for the mapping step of lists of smiles/inchis
-    $scope.mapCustomFieldsToMols = function() {
-        CBHCompoundBatch.saveBatchCustomFields(projectKey,$scope.validatedData.currentBatch, $scope.molecule.metadata.custom_fields).then(
+    $scope.mapCustomFieldsToMols = function(isFile) {
+        var mapping_obj = false;
+        if (isFile){
+            mapping_obj = $scope.saveCustomFieldMapping();
+        }
+        
+        CBHCompoundBatch.saveBatchCustomFields(projectKey,$scope.validatedData.currentBatch, $scope.molecule.metadata.custom_fields, mapping_obj).then(
             function(data){
                 $scope.validatedData = (data.data);
             }, function(error){
@@ -407,9 +420,11 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
     //these things
 
     $scope.updateStrucCol = function(str){
+        //If it is a real structure column then try to process the file
         if (str != "Please select"){
-        $scope.struc_col_str = str;  
-    }
+            $scope.struc_col_str = str;  
+            $scope.processFiles();
+        }
         //CBHCompoundBatch.testStructureColumn();      
     }
 
@@ -456,6 +471,10 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
             });
 
         }
+        if (!$scope.isFileExcel()){
+            $scope.processFiles();
+        }
+        
     };
 
 
@@ -463,21 +482,17 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
     //so they can be used in the validate methods provided for SMILES/InChi lists
     //this method also needs to pass the field mapping from the map page
     $scope.processFiles = function() {
-        var mapping_obj = $scope.saveCustomFieldMapping();
-        $scope.valFiles(mapping_obj);
-    }
-
-
-    $scope.valFiles = function(mapping_obj){
-        CBHCompoundBatch.validateFiles(projectKey,$scope.uploaded_file_name, $scope.struc_col_str, mapping_obj ).then(
+        CBHCompoundBatch.validateFiles(projectKey,$scope.uploaded_file_name, $scope.struc_col_str ).then(
                 function(data){
                     $scope.validatedData = data;
                 }, function(error){
-                    $state.go('projects.project.demo.add.multiple');
                     $scope.file_error = "file_not_processed";
                 }
             )
     }
+
+
+
     $scope.automap = function() {
         console.log("Automap being called");
         angular.forEach($scope.dropmodels.lists, function(value) {

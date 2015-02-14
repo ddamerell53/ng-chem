@@ -47,7 +47,6 @@ angular.module('ngChemApp')
 
     this.initializeGridParams = function(project_key, extra_filters) {
         var defer = $q.defer();
-        console.log('initializeGridParams');
         this.configObject.projectKey = project_key;
         var rslt = this.getPagedDataAsync(this.configObject.pagingOptions.pageSize, this.configObject.pagingOptions.currentPage, extra_filters).then(function(result){          
           return result;
@@ -63,7 +62,6 @@ angular.module('ngChemApp')
       var filters = {'limit': pageSize, 'offset': offset };
 
       angular.extend(filters, extra_filters);
-      console.log(filters);
 
       var rslt = CBHCompoundBatch.query(this.configObject.projectKey, filters).then(function(result) {
         defer.resolve(result);

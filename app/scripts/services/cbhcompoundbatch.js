@@ -79,7 +79,7 @@ angular.module('ngChemApp')
 
     CBHCompoundBatch.saveMultiBatchMolecules = function(projectKey, currentBatch, customFields) {
 
-        return $http.post( myUrl + "multi_batch_save/", {"projectKey": projectKey, "currentBatch":currentBatch, "customFields": customFields});
+        return $http.post( myUrl + "multi_batch_save/", {"projectKey": projectKey, "currentBatch":currentBatch, "customFields": customFields,});
     };
 
     CBHCompoundBatch.validateBatch = function(projectKey,molfiles) {
@@ -135,18 +135,14 @@ angular.module('ngChemApp')
     /*CBHCompoundBatch.downloadURL = function(filters) {
         return myUrl + 
     };*/
-    CBHCompoundBatch.saveBatchCustomFields = function(currentBatch, customFields) {
 
-        return $http.post( myUrl + "multi_batch_custom_fields/", {"currentBatch":currentBatch, "customFields": prepCustomFields(customFields)});
-    };
+    CBHCompoundBatch.saveBatchCustomFields = function(projectKey,currentBatch, customFields, mapping ) {
 
-    CBHCompoundBatch.saveBatchCustomFields = function(projectKey,currentBatch, customFields) {
-
-        return $http.post( myUrl + "multi_batch_custom_fields/", {"projectKey": projectKey, "currentBatch":currentBatch, "customFields": prepCustomFields(customFields)});
+        return $http.post( myUrl + "multi_batch_custom_fields/", {"projectKey": projectKey, "currentBatch":currentBatch, "customFields": prepCustomFields(customFields), "mapping":mapping });
     }
 
-    CBHCompoundBatch.validateFiles = function(projectKey,file_name, struc_col, mapping) {
-        var promise = $http.post( myUrl + "validate_files/" , {"projectKey": projectKey, "file_name":file_name, "struc_col":struc_col, "mapping":mapping }).then(
+    CBHCompoundBatch.validateFiles = function(projectKey,file_name, struc_col) {
+        var promise = $http.post( myUrl + "validate_files/" , {"projectKey": projectKey, "file_name":file_name, "struc_col":struc_col}).then(
             function(data){
                 return data.data;
             }

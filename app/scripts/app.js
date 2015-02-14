@@ -228,6 +228,8 @@ angular.module('ngChemApp', [
             url: '/multiple',
             templateUrl: 'views/demo-add-multiple.html',
             controller: function($scope) {
+              $scope.filedata.flow.files=[];
+              $scope.startAgain();
               $scope.wizard.step = 1;
               $scope.wizard.dynamic = 41;
               $scope.wizard.totalSteps = 4;
