@@ -216,7 +216,6 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
 
     $scope.mapFilePage = function(){
         if ($scope.file_extension=="cdx" || $scope.file_extension=="cdxml"){
-            $scope.valFiles({});
             $state.go("projects.project.demo.map.multiple");
         }else {
             $state.go("projects.project.demo.map.file");
