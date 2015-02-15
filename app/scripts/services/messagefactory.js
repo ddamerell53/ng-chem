@@ -100,9 +100,9 @@ angular.module('ngChemApp')
             batch_reg_total_processed_1: "One substance was processed and:",
             batch_reg_total_processed_other : "substances were processed of which:",
 
-            batch_reg_new_to_chemreg_0: "No substances are new to ChemBio Hub ChemReg.",
-            batch_reg_new_to_chemreg_1 : "One substance is new to ChemBio Hub ChemReg. The first batch of this substance will be registered to this project.", 
-            batch_reg_new_to_chemreg_other : "substances are new to ChemBio Hub ChemReg. Initial batches of these substances will be registered in this project for each of these.",
+            batch_reg_new_to_chemreg_0: "All substances are already registered publicly or in this project.",
+            batch_reg_new_to_chemreg_1 : "One substance is not publically registered in ChemBio Hub ChemReg. The first batch of this substance will be registered to this project.", 
+            batch_reg_new_to_chemreg_other : "substances are not publically registered in ChemBio Hub ChemReg. Initial batches of these substances will be registered in this project for each of these.",
 
 
             batch_prereg_to_project_0: "No substances were already been registered in this project.",
