@@ -37,7 +37,7 @@ angular.module('ngChemApp')
 
     var messages = {
         //"home": {
-            wizard_intro_text: "To upload multiple compounds you will need a list of SMILES; an InChi key or list of InChi keys; or either a SD or Excel file.",
+            wizard_intro_text: "To upload multiple compounds you will need a list of SMILES; an InChi key or list of InChi keys; or either a SD, Chemdraw or Excel file.",
             projects_help: "Clicking Add Compounds will take you to a wizard where you can add single or batches of compounds from files, SMILES, sketches and InChi keys.",
 
         //},
