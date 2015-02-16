@@ -59,7 +59,6 @@ angular.module('ngChemApp')
         return promise;
     }
     CBHCompoundBatch.validate = function(projectKey, data) {
-        data.projectKey = projectKey;
       return $http.post( myUrl + "validate/", {"ctab":data, "projectKey": projectKey});
     };
 
