@@ -1,0 +1,36 @@
+
+<div ng-show="validatedData.total">
+      <p><strong><ng-pluralize count="validatedData.total"
+                 when="{ '0' : '{{messages.batch_reg_total_processed_0}}',  '1': '{{messages.batch_reg_total_processed_1}}', 'other' : '{} {{messages.batch_reg_total_processed_other}}' }">
+          </ng-pluralize></strong></p>
+</div>
+
+
+<div >
+    <div class="alert alert-success" ng-show="validatedData.total">
+      <p><strong><ng-pluralize count="validatedData.new"
+                 when="{ '0' : '{{messages.batch_reg_new_to_chemreg_0}}',  '1': '{{messages.batch_reg_new_to_chemreg_1}}', 'other' : '{} {{messages.batch_reg_new_to_chemreg_other}}' }">
+          </ng-pluralize>
+      </strong></p>
+  </div>
+</div>
+
+
+<div >
+    <div class="alert alert-info" ng-show="validatedData.total">
+      <p><strong><ng-pluralize count="validatedData.linkedproject"
+                 when="{ '0' : '{{messages.batch_prereg_to_project_0}}',  '1': '{{messages.batch_prereg_to_project_1}}', 'other' : '{} {{messages.batch_prereg_to_project_other}}' }">
+          </ng-pluralize>
+      </strong></p>
+    </div>
+</div>
+
+
+<div >
+    <div class="alert alert-warning" ng-show="validatedData.total">
+      <p><strong><ng-pluralize count="validatedData.linkedpublic"
+                 when="{ '0' : '{{messages.batch_prereg_to_public_0}}',  '1': '{{messages.batch_prereg_to_public_1}}', 'other' : '{} {{messages.batch_prereg_to_public_other}}' }">
+          </ng-pluralize>
+      </strong></p>
+  </div>
+</div>

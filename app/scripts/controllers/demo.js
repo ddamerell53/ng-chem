@@ -18,7 +18,7 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
           $scope.molecule.metadata.custom_fields.push( { 'name':'', 'value':'', 'id':newItemNo } );
           $scope.cust_fields_count++;
         };
-
+        $scope.filedata = {};
         $scope.removeCustomField = function(number) {
 
           var filteredFields = $scope.molecule.metadata.custom_fields.filter(function(element) {
@@ -36,7 +36,7 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
 
 //User has pressed cancel or finished a registration - clear out all of the populated data
     $scope.startAgain = function(flowfiles) {
-
+        $scope.struc_col_selected={ name:"", value:"Please select"} ;
         $scope.format_not_detected = false;
         $scope.file_error = "";
         $scope.singleMol = CBHCompoundBatch.getSingleMol(); //
@@ -150,7 +150,10 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
         }
     }
 
-    
+    $scope.cancelFile =function(field){
+        $scope.headers_not_retrieved=false;
+        $scope.file_error=false;
+    }
 
     $scope.startAgain([]);
     $scope.formData = {};
@@ -203,10 +206,22 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
                                   };
 
 
-    $scope.assignFileId = function(id, ext) {
+    $scope.assignFileId = function(id, ext, file) {
+        $scope.startAgain();
         $scope.uploaded_file_name = id;
         $scope.file_extension = ext;
         $scope.headers_not_retrieved = false;
+        $scope.parseHeaders();
+    }
+
+    $scope.mapFilePage = function(){
+        if ($scope.file_extension=="cdx" || $scope.file_extension=="cdxml"){
+            $state.go("projects.project.demo.map.multiple");
+        }else {
+            $state.go("projects.project.demo.map.file");
+        }
+        
+
     }
 
     $scope.isFileExcel = function() {
@@ -214,6 +229,8 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
     }
 
 	$scope.parseInput = function (){
+        $scope.filedata.flow.files=[];
+        $scope.validatedData = {};
         $scope.ids_not_processed = false;
         $scope.format_not_detected = false;
         $scope.input_string.splitted = {}
@@ -227,10 +244,16 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
             }
             
         }
+
 		$scope.input_string.splitted = split;
+        if (split){
+            $scope.processInput();
+        }
+                
     };
 
     $scope.processInput = function(){
+
             CBHCompoundBatch.validateList(projectKey, $scope.input_string.splitted).then(
                 function(data){
                     data.total=data.objects.length;
@@ -329,8 +352,13 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
     };
 
     //for the mapping step of lists of smiles/inchis
-    $scope.mapCustomFieldsToMols = function() {
-        CBHCompoundBatch.saveBatchCustomFields(projectKey,$scope.validatedData.currentBatch, $scope.molecule.metadata.custom_fields).then(
+    $scope.mapCustomFieldsToMols = function(isFile) {
+        var mapping_obj = false;
+        if (isFile){
+            mapping_obj = $scope.saveCustomFieldMapping();
+        }
+        
+        CBHCompoundBatch.saveBatchCustomFields(projectKey,$scope.validatedData.currentBatch, $scope.molecule.metadata.custom_fields, mapping_obj).then(
             function(data){
                 $scope.validatedData = (data.data);
             }, function(error){
@@ -391,13 +419,21 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
     //these things
 
     $scope.updateStrucCol = function(str){
-        $scope.struc_col_str = str;        
+        //If it is a real structure column then try to process the file
+        if (str != "Please select"){
+            $scope.struc_col_str = str;  
+            $scope.processFiles();
+        }
+        //CBHCompoundBatch.testStructureColumn();      
     }
 
     $scope.parseHeaders = function() {
         //call service to pull out headers from uploaded file
         //service backend detects file type
         //returns object which is populated into the list for map page
+        if ($scope.file_extension=="cdx" || $scope.file_extension=="cdxml"){
+
+        }else{
         $scope.dragmodels.lists.headers = [];
         $scope.setupMapping();
         $scope.file_error = "";
@@ -409,10 +445,9 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
                 //do something with the returned data
                 angular.forEach(data.data.headers, function(value, key) {
                   $scope.dragmodels.lists.headers.push({label: value});
-                  $scope.struc_col_options.push({ name:key, value:value});
+                  $scope.struc_col_options.push({ name:value, value:value});
                 });
             }, function(error){
-                $state.go('projects.project.demo.add.multiple');
                 $scope.headers_not_retrieved = true;
             });
 
@@ -434,6 +469,10 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
                 console.log(error);
             });
 
+        }
+        if (!$scope.isFileExcel()){
+            $scope.processFiles();
+        }
         
     };
 
@@ -442,16 +481,16 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
     //so they can be used in the validate methods provided for SMILES/InChi lists
     //this method also needs to pass the field mapping from the map page
     $scope.processFiles = function() {
-        var mapping_obj = $scope.saveCustomFieldMapping();
-        CBHCompoundBatch.validateFiles(projectKey,$scope.uploaded_file_name, $scope.struc_col_str, mapping_obj ).then(
+        CBHCompoundBatch.validateFiles(projectKey,$scope.uploaded_file_name, $scope.struc_col_str ).then(
                 function(data){
                     $scope.validatedData = data;
                 }, function(error){
-                    $state.go('projects.project.demo.add.multiple');
                     $scope.file_error = "file_not_processed";
                 }
             )
     }
+
+
 
     $scope.automap = function() {
         console.log("Automap being called");

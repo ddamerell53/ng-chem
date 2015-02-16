@@ -39,18 +39,7 @@
 
 			<div class="col-lg-6 col-sm-6">
 				<p class="nexa blue"><span class="glyphicon glyphicon-link"></span> Mapping Fields <info-box lookup="mapping_fields_help"></info-box></p>
-				<div class="row" ng-show="isFileExcel()">
-					<div class="col-xs-6">
-						<p class="nexa blue">Structure Column</p>
-					</div>
-					<div class="col-xs-6">
-						<select ng-options="item.value for item in struc_col_options track by item.name" class="form-control" ng-model="struc_col_selected" ng-change="updateStrucCol(struc_col_selected.value)">
-						<!-- <option value="" selected>--Select Structure Column--</option> -->
-						</select>
-						<br>
-					</div>
-					
-				</div>
+				
 				<div style="overflow-y:scroll; overflow-x:hidden; height:400px;">
 					<div class="row" ng-repeat="value in dropmodels.lists">
 						<div class="col-xs-6">
@@ -104,8 +93,8 @@
 		<a role="button" class="btn btn-danger" ng-click="startAgain($flow.files)" ui-sref="projects.project.demo.intro">Cancel</a>
 		<a ng-click="resetMappingForm()"><button class="btn btn-primary" style="margin-right:5px;">Reset form</button></a>
 		<a ui-sref="projects.project.demo.validate">
-			<button class="btn btn-primary" ng-click="processFiles()" ng-show="isFileExcel()" ng-disabled="isStrucColUnspecified()  + (dragmodels.lists.headers.length + dropmodels.lists.length) == 0">Next</button>
-			<button class="btn btn-primary" ng-click="processFiles()" ng-hide="isFileExcel()" ng-disabled="(dragmodels.lists.headers.length + dropmodels.lists.length) == 0">Next</button>
+			<button class="btn btn-primary" ng-click="mapCustomFieldsToMols(true)" ng-show="isFileExcel()" ng-disabled="isStrucColUnspecified()  + (dragmodels.lists.headers.length + dropmodels.lists.length) == 0">Next</button>
+			<button class="btn btn-primary" ng-click="mapCustomFieldsToMols(true)" ng-hide="isFileExcel()" ng-disabled="(dragmodels.lists.headers.length + dropmodels.lists.length) == 0">Next</button>
 		</a>
 
 	</div>

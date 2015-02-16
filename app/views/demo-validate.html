@@ -1,130 +1,16 @@
 
 
 
-<!--  <div  ng-hide="validatedData.objects.errors.length == 0" class="row">
-    <div class="alert alert-danger">
-      <p><strong>{{ validatedData.objects.errors.length  }} molecules </strong></p>
-      <p><strong><ng-pluralize count="validatedData.objects.errors.length"
-                 when="{'0': '',
-                     'one': '1 molecule',
-                     'other': '{} molecules'}">
-          </ng-pluralize> could not be processed</strong></p>
 
-    </div>
-  </div> -->
     <div ng-hide="validatedData.total" class="row">
       <div class="row">
         <div class="alert alert-warning" id="fsdfsd">{{messages.oops}}</div>
       </div>
     </div>
 
-<div ng-show="validatedData.total">
-      <p><strong><ng-pluralize count="validatedData.total"
-                 when="{ '0' : '{{messages.batch_reg_total_processed_0}}',  '1': '{{messages.batch_reg_total_processed_1}}', 'other' : '{} {{messages.batch_reg_total_processed_other}}' }">
-          </ng-pluralize></strong></p>
-</div>
 
 
-<div >
-    <div class="alert alert-success" ng-show="validatedData.total">
-      <p><strong><ng-pluralize count="validatedData.new"
-                 when="{ '0' : '{{messages.batch_reg_new_to_chemreg_0}}',  '1': '{{messages.batch_reg_new_to_chemreg_1}}', 'other' : '{} {{messages.batch_reg_new_to_chemreg_other}}' }">
-          </ng-pluralize>
-      </strong></p>
-  </div>
-</div>
-
-
-<div >
-    <div class="alert alert-info" ng-show="validatedData.total">
-      <p><strong><ng-pluralize count="validatedData.linkedproject"
-                 when="{ '0' : '{{messages.batch_prereg_to_project_0}}',  '1': '{{messages.batch_prereg_to_project_1}}', 'other' : '{} {{messages.batch_prereg_to_project_other}}' }">
-          </ng-pluralize>
-      </strong></p>
-    </div>
-</div>
-
-
-<div >
-    <div class="alert alert-warning" ng-show="validatedData.total">
-      <p><strong><ng-pluralize count="validatedData.linkedpublic"
-                 when="{ '0' : '{{messages.batch_prereg_to_public_0}}',  '1': '{{messages.batch_prereg_to_public_1}}', 'other' : '{} {{messages.batch_prereg_to_public_other}}' }">
-          </ng-pluralize>
-      </strong></p>
-  </div>
-</div>
-
-
-
-
-<!-- 
-  <div ng-show="validatedData.objects.pains.length == 0" class="row">
-    <div class="alert alert-info">
-      <p><strong>No molecules were found to be Pan Assay Interference Compounds.</strong></p>
-    </div>
-  </div>
-
-  <div  ng-hide="validatedData.objects.pains.length == 0" class="row">
-    <div class="alert alert-warning">
-
-      <p><strong>
-          <ng-pluralize count="validatedData.objects.pains.length"
-                 when="{'0': '',
-                     'one': '1 molecule was found to be a Pan Assay Interference Compound.',
-                     'other': '{} molecules were processed succesfully.'}">
-          </ng-pluralize>
- </strong></p>
-    </div>
-  </div>
-  <div  ng-hide="validatedData.objects.pains.length == 0" class="row">
-    <div class="row">
-      <div ng-repeat="val in validatedData.pains">
-        <div class="col-md-2 col-xs-6" style="min-height:180px; " >
-             <chemsvg size="100" smiles="val.originalSmiles" base-url="'/utils/smiles2svg/'"></chemsvg>
-             {{ val.warnings }}
-        </div>
-        
-      </div>
-    </div>
-  </div>
-
-  <div ng-show="validatedData.objects.changed.length == 0" class="row">
-    <div class="alert alert-info">
-      <p><strong>No molecules needed to be redrawn</strong></p>
-    </div>
-  </div>
-
-  <div ng-hide="validatedData.objects.changed.length == 0">
-    <div class="row">
-      <div class="alert alert-warning">
-        <p><strong>
-          <ng-pluralize count="validatedData.objects.changed.length"
-                 when="{'0': '',
-                     'one': 'The following molecule was redrawn due to salts, tautomers or inorganics.',
-                     'other': 'The following {} molecules were redrawn due to salts, tautomers or inorganics.'}">
-          </ng-pluralize>
-
-          </strong></p>
-      </div>
-    </div>
-    <div class="row">
-      <div ng-repeat="val in validatedData.objects.changed">
-          <div class="col-md-2 col-xs-5" style="min-height:180px; " >
-               <chemsvg size="100" smiles="{'canonicalSmiles' : val.originalSmiles} as  mol" base-url="'/utils/smiles2svg/'"></chemsvg>
-          </div>
-          <div class ="col-md-1 col-xs-2">
-          <img src="images/skip_next2.svg"></img>
-          </div>
-          <div class="col-md-2 col-xs-5" style="min-height:180px; " >
-              <chemsvg size="100" smiles="val" base-url="'/utils/smiles2svg'"></chemsvg>
-          </div>
-     </div>
-    </div>
-
-  </div>
-    
-</div> -->
-
+<ng-include src="'views/templates/validation.html'"></ng-include>
 <div class="row">
   <div class="pull-left">
     <a role="button" class="btn btn-danger" ng-click="startAgain($flow.files)" ui-sref="projects.project.demo.intro">Cancel</a>
