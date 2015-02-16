@@ -317,6 +317,17 @@ angular.module('ngChemApp', [
               applyTicks("finish");
 
             }
+        })
+        
+        //creating a stateful modal box to show single compound details as directed at:
+        // http://www.sitepoint.com/creating-stateful-modals-angularjs-angular-ui-router/
+        .state('Compmodal', {
+          views:{
+            "modal": {
+              templateUrl: "views/single-compound.html"
+            }
+          },
+          abstract: true
         });
         
 
