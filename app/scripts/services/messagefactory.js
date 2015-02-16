@@ -113,7 +113,7 @@ angular.module('ngChemApp')
 
             batch_prereg_to_public_single: "This substance is valid and was already registered as public.  A new private batch of this will be registered in this project.",
             batch_prereg_to_project_single: "This substance is valid and was already registered to this project.  A new private batch of this will be registered in this project.",
-            batch_reg_new_to_chemreg_single: "This substance is valid and is new to ChemBio Hub ChemReg. The first batch of this substance will be registered to this project.",
+            batch_reg_new_to_chemreg_single: "This substance is not publically registered in ChemBio Hub ChemReg. The first batch of this substance will be registered to this project.",
 
         //(change)
             batch_prereg_to_public_0: "No substances have already been registered as public.",
