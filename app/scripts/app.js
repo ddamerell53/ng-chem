@@ -314,7 +314,7 @@ angular.module('ngChemApp', [
               else {
                 $scope.wizard.step = 2;
                 //call submit single mol
-                $scope.saveSingleMol();
+                //$scope.saveSingleMol();
               }
               
               $scope.wizard.dynamic = 90.5;
