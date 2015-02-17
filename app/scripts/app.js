@@ -69,9 +69,6 @@ angular.module('ngChemApp', [
               gridconfig: ['CompoundListSetup', function(CompoundListSetup){
                   //return CompoundListSetup.get();
                   return CompoundListSetup;
-              }],
-              modalProvider: ['ModalProvider', function(ModalProvider){
-                return ModalProvider;
               }]
             },
             templateUrl: 'views/projects.html',
