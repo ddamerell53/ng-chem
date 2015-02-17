@@ -59,7 +59,6 @@ angular.module('ngChemApp')
         return promise;
     }
     CBHCompoundBatch.validate = function(projectKey, data) {
-        data.projectKey = projectKey;
       return $http.post( myUrl + "validate/", {"ctab":data, "projectKey": projectKey});
     };
 
@@ -74,7 +73,7 @@ angular.module('ngChemApp')
                 obj[d.name] = d.value;
             }
         })*/
-        return $http.post( myUrl , {"projectKey": projectKey ,ctab:molfile, "customFields":prepCustomFields(customFields) , "stereoSelected" : stereoSelected});
+        return $http.post( myUrl , {"projectKey": projectKey ,ctab:molfile, "customFields":prepCustomFields(customFields) });
     };
 
     CBHCompoundBatch.saveMultiBatchMolecules = function(projectKey, currentBatch, customFields) {
