@@ -29,7 +29,7 @@ angular.module('ngChemApp', [
       
           // catch all route
     // send users to the form page 
-    $urlRouterProvider.otherwise('/404');
+    //$urlRouterProvider.otherwise('/404');
 
     /*$urlRouterProvider.rule(function ($injector, $location) {
        //what this function returns will be set as the $location.url
@@ -40,7 +40,7 @@ angular.module('ngChemApp', [
         }
         // because we've returned nothing, no state change occurs
     });*/
-
+      var modalInstance;
       $stateProvider
           
         // HOME STATES AND NESTED VIEWS ========================================
@@ -58,6 +58,7 @@ angular.module('ngChemApp', [
         
 
         .state('projects', {
+            //parent: 'Default',
             url: '/projects',
             data: {
               login_rule: function($rootScope) {
@@ -69,6 +70,9 @@ angular.module('ngChemApp', [
                   //return CompoundListSetup.get();
                   return CompoundListSetup;
               }],
+              modalProvider: ['ModalProvider', function(ModalProvider){
+                return ModalProvider;
+              }]
             },
             templateUrl: 'views/projects.html',
             controller: 'ProjectCtrl'
@@ -98,7 +102,7 @@ angular.module('ngChemApp', [
             },
             //controller to handle ng-grid paging
             //gridconfig is a service and defined in the projects parent state - cascades
-            controller: function($scope, gridconfig, projectKey){
+            controller: function($scope, $modal, gridconfig, projectKey){
               $scope.projectKey = projectKey;
               $scope.gridconfig = gridconfig;
               $scope.gridconfig.initializeGridParams(projectKey,{}).then(function(result) {
@@ -115,6 +119,32 @@ angular.module('ngChemApp', [
                   });
                 }
               }, true);
+              $scope.modalInstance = {};
+              $scope.mol = {}; 
+
+              $scope.openSingleMol = function(uox_id) {
+                angular.forEach($scope.gridconfig.configObject.compounds, function(item) {
+                  
+                  if (item.chemblId == uox_id) {
+                    $scope.mol = item;
+
+                  }
+                });
+                console.log($scope.mol);
+                $scope.modalInstance = $modal.open({
+                  templateUrl: 'views/single-compound.html',
+                  size: 'lg',
+                  resolve: {
+                    mol: function () {
+                      return $scope.mol;
+                    }
+                  }, 
+                  controller: function($scope, $modalInstance, mol) {
+                    $scope.mol = mol;
+                    $scope.modalInstance = $modalInstance;
+                  }
+                });
+              };
               
             },
         })
@@ -307,6 +337,33 @@ angular.module('ngChemApp', [
                 }
               }, true);
 
+              $scope.modalInstance = {};
+              $scope.mol = {}; 
+
+              $scope.openSingleMol = function(uox_id) {
+                angular.forEach($scope.gridconfig.configObject.compounds, function(item) {
+                  
+                  if (item.chemblId == uox_id) {
+                    $scope.mol = item;
+
+                  }
+                });
+                console.log($scope.mol);
+                $scope.modalInstance = $modal.open({
+                  templateUrl: 'views/single-compound.html',
+                  size: 'lg',
+                  resolve: {
+                    mol: function () {
+                      return $scope.mol;
+                    }
+                  }, 
+                  controller: function($scope, $modalInstance, mol) {
+                    $scope.mol = mol;
+                    $scope.modalInstance = $modalInstance;
+                  }
+                });
+              };
+
               if ($scope.wizard.totalSteps == 4) {
                 $scope.wizard.step = 4;
                 //call whatever method will move past validating the batch  
@@ -323,16 +380,55 @@ angular.module('ngChemApp', [
             }
         })
         
+        .state("Default", {
+          /*url: '/',
+          abstract: true,*/
+        })
+        
         //creating a stateful modal box to show single compound details as directed at:
         // http://www.sitepoint.com/creating-stateful-modals-angularjs-angular-ui-router/
-        .state('Compmodal', {
-          views:{
-            "modal": {
-              templateUrl: "views/single-compound.html"
+        /*.state('Modal', {
+          parent: 'Default',
+          onEnter: ["$state", '$modal', function($state, $modal) {
+            //console.log($state);
+            var modalInstance = $modal.open({
+              template: '<div ui-view="modal"></div>',
+              backdrop: true,
+              windowClass: 'right fade'
+            });
+            $(document).on("keyup", function(e) {
+              if(e.keyCode == 27) {
+                $(document).off("keyup");
+                $state.go("Default");
+              }
+            });
+       
+          }],
+          onExit: function() {
+            if (modalInstance) {
+                modalInstance.close();
             }
           },
           abstract: true
-        });
+        })
+
+        .state('singleCompound', {
+          parent: 'Modal',
+          views: {
+            "modal@": {
+              templateUrl: "views/single-compound.html"
+            }
+          },*/
+          /*resolve:{
+              
+              modalProvider: ['ModalProvider', function(ModalProvider){
+                return ModalProvider;
+              }]
+            },
+            controller: function($scope, $state, modalProvider) {
+              this.parent = modalProvider.getModal('projects.list.project');
+            }*/
+        //});
         
 
   }).run(function($http, $cookies, $rootScope, $state, LoginService, ProjectFactory) {
@@ -351,7 +447,9 @@ angular.module('ngChemApp', [
         });
 
     $rootScope.$on('$stateChangeStart', function(e, to) {
+      console.log(to.name);
       if (to.name == '404') return;
+      if(to.name.lastIndexOf('singleCompound', 0) === 0) return;
       if (!angular.isFunction(to.data.login_rule)) return;
       var result = to.data.login_rule($rootScope);
 
@@ -388,3 +486,6 @@ angular.module('ngChemApp', [
 }]);
 
   ;
+
+
+

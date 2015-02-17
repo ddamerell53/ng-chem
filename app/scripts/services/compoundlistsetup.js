@@ -30,7 +30,7 @@ angular.module('ngChemApp')
                                                       rowHeight: 200,
                                                       columnDefs: [//{ field: "smiles", displayName: "Structure", cellTemplate:"views/img-template.html"  },
                                                                     { field: "properties.svg", displayName: "", width: '30%', cellTemplate:"views/img-template.html", cellClass: 'white-bg' },
-                                                                    { field: "chemblId", displayName: "UOx ID", width: '20%' },                                  
+                                                                    { field: "chemblId", displayName: "UOx ID", width: '20%', cellTemplate:"<a ng-click='openSingleMol(row.getProperty(col.field))'>{{row.getProperty(col.field)}}</a>" },                                  
                                                                     { field: "created", displayName: "Added on", cellFilter: 'date', width: '20%' },
                                                                     { field: "createdBy", displayName: "Added by", width: '20%' },
                                                                     { field: "molecularWeight", displayName: "Mol Weight", visible: false },

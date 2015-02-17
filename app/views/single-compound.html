@@ -1,67 +1,85 @@
-<div class="row">
-	<div class ="col-xs-12 well">
-	<p>
-	 <strong>SMILES: </strong>
-	 <br>{{mol.canonicalSmiles || Loading}} 
-	 <a href="" clip-copy="mol.canonicalSmiles" clip-click="doSomething()"><small>Copy to clipboard</small></a>
-	</p>
-	<p>
-	 <strong>Standard INCHI: </strong>
-	 <br>{{mol.standardInchi || Loading}} 
-	 <a href="" clip-copy="mol.standardInchi" clip-click="doSomething()"><small>Copy to clipboard</small></a>
-	</p>
-	<p>
-		<strong>Standard INCHI Key: </strong>
-	 <br>{{mol.standardInchiKey || Loading}} 
-	 <a href="" clip-copy="mol.standardInchiKey" clip-click="doSomething()"><small>Copy to clipboard</small></a>
-	</p>
-	</div>
-</div>
-<div class="row">
-	<div class="col-xs-4" >
-	  <p>
-	  	<table class="table table-striped table-bordered">
-	  		<tbody>
-	  			<tr>
-		  			<th>UOx ID</th><td>{{ mol.chemblId || Loading}} <a href="" clip-copy="mol.chemblId" clip-click="doSomething()"><small>Copy to clipboard</small></a></td>
-		  		</tr>
-		  		<tr>
-		  			<th>AlogP</th><td>{{ mol.alogp | number:2 || Loading }}</td>
-		  		</tr>
-		  		<tr>
-		  			<th>Created</th><td>{{ mol.created | date:'dd-MM-yyyy' || Loading}}</td>
-		  		</tr>
-		  		<tr>
-		  			<th>Mol Formula</th><td>{{ mol.molecularFormula || Loading}}</td>
-		  		</tr>
-		  		<tr>
-		  			<th>Mol Weight</th><td>{{ mol.molecularWeight | number:2 || Loading}} <a href="" clip-copy="mol.molecularWeight" clip-click="doSomething()"><small>Copy to clipboard</small></a></td>
-		  		</tr>
-		  		<tr>
-		  			<th>Rotatable Bonds</th><td>{{ mol.rotatableBonds}}</td>
-		  		</tr>
-			</tbody>
-	  	</table>
-	  </p>
-	  <p >
-	  	<table ng-show="mol.customFields | notEmpty" class="table table-striped table-bordered"  >
-	  		<tbody>
-	  			<tr>
-		  			<th colspan="2" class="text-center">Custom Fields</th>
-		  		</tr>
-		  		<tr ng-repeat="(name, value) in mol.customFields">
-		  			<th>{{name}}</th><td>{{ value || Loading}}</td>
-		  		</tr>
-		  	</tbody>
-	  	</table>
-	  </p>
-	</div>	
-	<div class="col-xs-8" ng-show="mol.canonicalSmiles.length > 0">
-	<!-- 		<chemsvg class="pull-right" ng-show="mol.canonicalSmiles.length > 0" size="'200'" smiles="mol"  base-url="'/chemblws/cbh_compound_batches/smiles2svg'" ></chemsvg>
-	 -->	
-	 	<div ng-bind-html="mol.properties.svg | toTrusted"></div>
-
-	</div>
-
+<div class="modal-header">
+    <button type="button" class="close pull-right" data-dismiss="alert" aria-label="Close" ng-click="modalInstance.dismiss('cancel');"><span aria-hidden="true" class="glyphicon glyphicon-remove-circle"></span></button>
+    <h2 class="modal-title blue nexa">{{mol.chemblId}}</h2>
+    
 
 </div>
+<div class="modal-body">
+    <div class="row">
+    	<div class="col-xs-6" ng-show="mol.canonicalSmiles.length > 0">
+		<!-- 		<chemsvg class="pull-right" ng-show="mol.canonicalSmiles.length > 0" size="'200'" smiles="mol"  base-url="'/chemblws/cbh_compound_batches/smiles2svg'" ></chemsvg>
+		 -->	
+		 	<div ng-bind-html="mol.properties.svg | toTrusted"></div>
+
+		</div>
+		<div class="col-xs-6">
+			<p>
+			 <strong>SMILES: </strong>
+			 <a href="" clip-copy="mol.canonicalSmiles" clip-click="doSomething()" role="button" class="btn btn-primary pull-right"><small><span class="glyphicon glyphicon-scissors"></span> Copy to clipboard</small></a><br>
+			 {{mol.canonicalSmiles}}
+			</p>
+			<p>
+			 <strong>Standard INCHI: </strong>
+			 <a href="" clip-copy="mol.standardInchi" clip-click="doSomething()" role="button" class="btn btn-primary pull-right"><small><span class="glyphicon glyphicon-scissors"></span> Copy to clipboard</small></small></a><br>
+			 {{mol.standardInchi}}
+			</p>
+			<p>
+				<strong>Standard INCHI Key: </strong>
+			 <a href="" clip-copy="mol.standardInchiKey" clip-click="doSomething()" role="button" class="btn btn-primary pull-right"><small><span class="glyphicon glyphicon-scissors"></span> Copy to clipboard</small></small></a><br>
+			 {{mol.standardInchiKey}}
+			</p>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-xs-12" >
+		  <p>
+		  	<table class="table table-striped table-bordered">
+		  		<tbody>
+		  			<tr>
+			  			<th>UOx ID</th><td>{{ mol.chemblId || Loading}} <a href="" clip-copy="mol.chemblId" clip-click="doSomething()"><small>Copy to clipboard</small></a></td>
+			  		</tr>
+			  		<tr>
+			  			<th>AlogP</th><td>{{ mol.alogp | number:2 || Loading }}</td>
+			  		</tr>
+			  		<tr>
+			  			<th>Created</th><td>{{ mol.created | date:'dd-MM-yyyy' || Loading}}</td>
+			  		</tr>
+			  		<tr>
+			  			<th>Mol Formula</th><td>{{ mol.molecularFormula || Loading}}</td>
+			  		</tr>
+			  		<tr>
+			  			<th>Mol Weight</th><td>{{ mol.molecularWeight | number:2 || Loading}} <a href="" clip-copy="mol.molecularWeight" clip-click="doSomething()"><small>Copy to clipboard</small></a></td>
+			  		</tr>
+			  		<tr>
+			  			<th>Rotatable Bonds</th><td>{{ mol.rotatableBonds}}</td>
+			  		</tr>
+				</tbody>
+		  	</table>
+		  </p>
+		  <p >
+		  	<table ng-show="mol.customFields | notEmpty" class="table table-striped table-bordered"  >
+		  		<tbody>
+		  			<tr>
+			  			<th colspan="2" class="text-center">Custom Fields</th>
+			  		</tr>
+			  		<tr ng-repeat="(name, value) in mol.customFields">
+			  			<th>{{name}}</th><td>{{ value || Loading}}</td>
+			  		</tr>
+			  	</tbody>
+		  	</table>
+		  </p>
+		</div>	
+		
+
+
+	</div>
+
+</div>
+<div class="modal-footer">
+    <button class="btn btn-danger" ng-click="modalInstance.dismiss('cancel');">Close</button>
+</div>
+
+
+
+	
