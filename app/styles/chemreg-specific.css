@@ -135,3 +135,11 @@ strong.nexa {
 .ngPagerLastBar {
   border-left: 2px solid #fff;
 }
+
+.id-overlay {
+  position: absolute;
+  top: 0;
+  background: rgba(0,0,0,0.2);
+  width: 100%;
+  padding: 4px;
+}

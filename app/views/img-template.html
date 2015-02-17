@@ -2,5 +2,6 @@
 
 <!-- <chemsvg size="100" smiles="{'canonicalSmiles' : row.getProperty(col.field)}" base-url="'/utils/smiles2svg/'"></chemsvg> -->
 
-<div class="centered" ng-bind-html="row.getProperty(col.field) | toTrusted"></div>
+<a ng-click='openSingleMol(row.getProperty("chemblId"))'><div class="centered" ng-bind-html="row.getProperty(col.field) | toTrusted"></div>
+<div class="centered id-overlay">{{row.getProperty("chemblId")}}</div></a>
 
