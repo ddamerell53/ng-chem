@@ -466,7 +466,7 @@ angular.module('ngChemApp', [
         //});
         
 
-  }).run(function($http, $cookies, $rootScope, $state, LoginService, ProjectFactory) {
+  }).run(function($http, $cookies, $rootScope, $document, $state, LoginService, ProjectFactory) {
     $http.defaults.headers.post['X-CSRFToken'] = $cookies.csrftoken;
 
     $rootScope.logged_in_user = {};
@@ -498,6 +498,12 @@ angular.module('ngChemApp', [
       else {
         $state.go('404');
       }
+    });
+
+    $rootScope.$on('$stateChangeSuccess', function(e, to) {
+      //$('html,body').animate({ scrollTop: target.offset().top}, 1000);
+      //$animate.
+      $document.scrollTop(0,0);
     });
 
     $rootScope.$on('$stateChangeError', function(event, toState, toParams, fromState, fromParams, error){ 
