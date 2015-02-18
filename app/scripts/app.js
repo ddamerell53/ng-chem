@@ -55,7 +55,45 @@ angular.module('ngChemApp', [
             }
         })
 
-        
+        .state('search', {
+            //parent: 'Default',
+            url: '/search',
+            data: {
+              login_rule: function($rootScope) {
+                return $rootScope.isLoggedIn();
+              }
+            },
+            resolve:{
+              gridconfig: ['CompoundListSetup', function(CompoundListSetup){
+                  //return CompoundListSetup.get();
+                  return CompoundListSetup;
+              }]
+            },
+            templateUrl: 'views/search.html',
+            controller: function($scope) {
+              
+            }
+        })
+
+        .state('help', {
+            //parent: 'Default',
+            url: '/help',
+            data: {
+              login_rule: function($rootScope) {
+                return $rootScope.isLoggedIn();
+              }
+            },
+            resolve:{
+              /*gridconfig: ['CompoundListSetup', function(CompoundListSetup){
+                  //return CompoundListSetup.get();
+                  return CompoundListSetup;
+              }]*/
+            },
+            templateUrl: 'views/help.html',
+            controller: function($scope) {
+
+            }
+        })
 
         .state('projects', {
             //parent: 'Default',
