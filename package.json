@@ -1,7 +1,9 @@
 {
   "name": "ngchem",
   "version": "0.0.0",
-  "dependencies": {},
+  "dependencies": {
+    "angular-raven": "^0.5.11"
+  },
   "devDependencies": {
     "grunt": "^0.4.5",
     "grunt-autoprefixer": "^0.7.3",
