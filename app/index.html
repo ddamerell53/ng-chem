@@ -135,15 +135,10 @@
     <script src="../bower_components/ng-flow/dist/ng-flow-standalone.min.js"></script>    
 
 <script>
-<script>
 Raven.config('http://fc809c4af52d4022abea608aa81f3136@163.1.63.22/3', {
     // we highly recommend restricting exceptions to a domain in order to filter out clutter
-    whitelistUrls: ['staging.chembiohub.ox.ac.uk/*']
-}).setUser({
-      "id": "SERVER_RENDERED_ID",
-      "email": "SERVER_RENDERED_EMAIL"
-    })
-    .install()
+    whitelistUrls: ['staging.chembiohub.ox.ac.uk/']
+}).install()
 </script>
 <script src="../bower_components/angular-raven/angular-raven.js"></script>
 
