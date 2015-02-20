@@ -22,6 +22,7 @@ angular.module('ngChemApp', [
     'dndLists',
     'flow',
     'ngClipboard',
+    'ngRaven',
 
 
   ])
