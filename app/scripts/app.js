@@ -65,14 +65,14 @@ angular.module('ngChemApp', [
             },
             resolve:{
               gridconfig: ['CompoundListSetup', function(CompoundListSetup){
-                  //return CompoundListSetup.get();
                   return CompoundListSetup;
-              }]
+              }],
+              projectFactory: ['ProjectFactory', function(ProjectFactory) {
+                return ProjectFactory;
+              }],
             },
             templateUrl: 'views/search.html',
-            controller: function($scope) {
-              
-            }
+            controller: 'SearchCtrl'
         })
 
         .state('help', {
