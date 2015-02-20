@@ -158,11 +158,14 @@ angular.module('ngChemApp', [
               $scope.modalInstance = {};
               $scope.mol = {}; 
 
-              $scope.openSingleMol = function(uox_id) {
+              $scope.openSingleMol = function(uox_id, batch_id) {
                 angular.forEach($scope.gridconfig.configObject.compounds, function(item) {
                   
                   if (item.chemblId == uox_id) {
-                    $scope.mol = item;
+                    //$scope.mol = item;
+                    if(item.multipleBatchId == batch_id) {
+                      $scope.mol = item;
+                    }
 
                   }
                 });
@@ -376,11 +379,14 @@ angular.module('ngChemApp', [
               $scope.modalInstance = {};
               $scope.mol = {}; 
 
-              $scope.openSingleMol = function(uox_id) {
+              $scope.openSingleMol = function(uox_id, batch_id) {
                 angular.forEach($scope.gridconfig.configObject.compounds, function(item) {
                   
                   if (item.chemblId == uox_id) {
-                    $scope.mol = item;
+                    //$scope.mol = item;
+                    if(item.multipleBatchId == batch_id) {
+                      $scope.mol = item;
+                    }
 
                   }
                 });

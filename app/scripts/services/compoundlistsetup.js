@@ -31,7 +31,7 @@ angular.module('ngChemApp')
                                                       rowHeight: 200,
                                                       columnDefs: [//{ field: "smiles", displayName: "Structure", cellTemplate:"views/img-template.html"  },
                                                                     { field: "properties.svg", displayName: "Structure", width: '30%', cellTemplate:"views/img-template.html", cellClass: 'white-bg' },
-                                                                    { field: "chemblId", displayName: "UOx ID", width: '20%', cellTemplate:"<div class='ngCellText'><a ng-click='openSingleMol(row.getProperty(col.field))'>{{row.getProperty(col.field)}}</a></div>" },                                  
+                                                                    { field: "chemblId", displayName: "UOx ID", width: '20%', cellTemplate:"<div class='ngCellText'><a ng-click='openSingleMol(row.getProperty(col.field), row.getProperty(\"multipleBatchId\"))'>{{row.getProperty(col.field)}}</a></div>" },                                  
                                                                     { field: "created", displayName: "Added on", cellFilter: 'date', width: '20%' },
                                                                     { field: "createdBy", displayName: "Added by", width: '20%' },
                                                                     { field: "molecularWeight", displayName: "Mol Weight", visible: false },
@@ -43,6 +43,7 @@ angular.module('ngChemApp')
                                                                     { field: "molecularFormula", displayName: "Formula", visible: false },
                                                                     { field: "numRo5Violations", displayName: "Ro5 Violations", visible: false },
                                                                     { field: "rotatableBonds", displayName: "Rotatable Bonds", visible: false },
+                                                                    { field: "multipleBatchId", displayName: "Batch ID", visible: false },
                                                                     { field: "acdLogp", displayName: "acdLogp", visible: false }]
                                                 };
 
