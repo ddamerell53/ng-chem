@@ -149,3 +149,7 @@ strong.nexa {
 i {
   margin: 0;
 }
+/* Calendar stuff */
+ul.dropdown-menu.ng-valid-date {
+  width:315px;
+}

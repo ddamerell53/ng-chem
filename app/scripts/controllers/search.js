@@ -9,7 +9,7 @@
  */
 angular.module('ngChemApp')
   .controller('SearchCtrl',['$scope', '$rootScope', 'projectFactory', 'CBHCompoundBatch', function ($scope, $rootScope, projectFactory, CBHCompoundBatch) {
-    $scope.searchForm = {};
+    $scope.searchForm = { molecule: { molfile: "" } };
 
     $scope.results = {};
 

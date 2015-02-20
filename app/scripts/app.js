@@ -56,13 +56,7 @@ angular.module('ngChemApp', [
             }
         })
 
-        .state('_search', {
-          abstract: true,
-          templateUrl: 'views/search.html'
-        })
-
         .state('search', {
-            parent: '_search',
             url: '/search',
             data: {
               login_rule: function($rootScope) {
@@ -76,16 +70,21 @@ angular.module('ngChemApp', [
               projectFactory: ['ProjectFactory', function(ProjectFactory) {
                 return ProjectFactory;
               }],
+              projectKey: ['$stateParams', function($stateParams){
+                  return $stateParams.projectKey;
+              }],
             },
             views: {
-              'form': {
+              '': {
+                templateUrl: 'views/search.html'
+              },
+              'form@search': {
                 controller: 'SearchCtrl',
                 templateUrl: 'views/templates/search-template.html'
               },
-              'results': {
-                controller: function($scope) {
-
-                }
+              'results@search': {
+                templateUrl: 'views/templates/compound-list.html',
+                controller: 'BatchesCtrl'
               }
             }
             
