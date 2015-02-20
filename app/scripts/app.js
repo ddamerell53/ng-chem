@@ -56,8 +56,13 @@ angular.module('ngChemApp', [
             }
         })
 
+        .state('_search', {
+          abstract: true,
+          templateUrl: 'views/search.html'
+        })
+
         .state('search', {
-            //parent: 'Default',
+            parent: '_search',
             url: '/search',
             data: {
               login_rule: function($rootScope) {
@@ -72,8 +77,19 @@ angular.module('ngChemApp', [
                 return ProjectFactory;
               }],
             },
-            templateUrl: 'views/search.html',
-            controller: 'SearchCtrl'
+            views: {
+              'form': {
+                controller: 'SearchCtrl',
+                templateUrl: 'views/templates/search-template.html'
+              },
+              'results': {
+                controller: function($scope) {
+
+                }
+              }
+            }
+            
+            
         })
 
         .state('help', {
@@ -85,10 +101,6 @@ angular.module('ngChemApp', [
               }
             },
             resolve:{
-              /*gridconfig: ['CompoundListSetup', function(CompoundListSetup){
-                  //return CompoundListSetup.get();
-                  return CompoundListSetup;
-              }]*/
             },
             templateUrl: 'views/help.html',
             controller: function($scope) {
@@ -97,7 +109,6 @@ angular.module('ngChemApp', [
         })
 
         .state('projects', {
-            //parent: 'Default',
             url: '/projects',
             data: {
               login_rule: function($rootScope) {
@@ -106,7 +117,6 @@ angular.module('ngChemApp', [
             },
             resolve:{
               gridconfig: ['CompoundListSetup', function(CompoundListSetup){
-                  //return CompoundListSetup.get();
                   return CompoundListSetup;
               }]
             },
@@ -116,8 +126,7 @@ angular.module('ngChemApp', [
 
         .state('projects.list', {
             url: '/list',
-            //templateUrl: 'views/projects-list.html',
-            template: '<project-list></project-list><div class="form-views" ui-view></div>',
+            template: '<project-list></project-list><div class="form-views" ui-view="projectlist"></div>',
             controller: function($rootScope) {
               $rootScope.headline = "Projects List";
               $rootScope.subheading = "Click a project title to see more details and add compounds to that project";
@@ -129,63 +138,18 @@ angular.module('ngChemApp', [
 
         .state('projects.list.project', {
             url: '/:projectKey',
-            templateUrl: 'views/project-summary.html',
-            //controller: 'BatchesCtrl',
             resolve: {
               projectKey: ['$stateParams', function($stateParams){
                   return $stateParams.projectKey;
               }]
             },
-            //controller to handle ng-grid paging
-            //gridconfig is a service and defined in the projects parent state - cascades
-            controller: function($scope, $modal, gridconfig, projectKey){
-              $scope.projectKey = projectKey;
-              $scope.gridconfig = gridconfig;
-              $scope.gridconfig.initializeGridParams(projectKey,{}).then(function(result) {
-                $scope.gridconfig.configObject.totalServerItems = result.meta.totalCount;
-                $scope.gridconfig.configObject.compounds = result.objects;
-              });
-              //watches the paging buttons to pull in new results for the window
-              $scope.$watch('gridconfig.configObject.pagingOptions', function (newVal, oldVal) {
-                if (newVal !== oldVal && (newVal.currentPage !== oldVal.currentPage || newVal.pageSize !== oldVal.pageSize)) {
-                  console.log('paging change');
-                  $scope.gridconfig.initializeGridParams(projectKey,{}).then(function(result) {
-                    $scope.gridconfig.configObject.totalServerItems = result.meta.totalCount;
-                    $scope.gridconfig.configObject.compounds = result.objects;
-                  });
-                }
-              }, true);
-              $scope.modalInstance = {};
-              $scope.mol = {}; 
-
-              $scope.openSingleMol = function(uox_id, batch_id) {
-                angular.forEach($scope.gridconfig.configObject.compounds, function(item) {
-                  
-                  if (item.chemblId == uox_id) {
-                    //$scope.mol = item;
-                    if(item.multipleBatchId == batch_id) {
-                      $scope.mol = item;
-                    }
-
-                  }
-                });
-                console.log($scope.mol);
-                $scope.modalInstance = $modal.open({
-                  templateUrl: 'views/single-compound.html',
-                  size: 'lg',
-                  resolve: {
-                    mol: function () {
-                      return $scope.mol;
-                    }
-                  }, 
-                  controller: function($scope, $modalInstance, mol) {
-                    $scope.mol = mol;
-                    $scope.modalInstance = $modalInstance;
-                  }
-                });
-              };
-              
-            },
+            views: {
+              projectlist: {
+                templateUrl: 'views/project-summary.html',
+                controller: 'BatchesCtrl',
+              }
+            }
+            
         })
 
         .state('projects.project', {
@@ -282,14 +246,10 @@ angular.module('ngChemApp', [
                                             ];
                 //default selection set in the scope molecule object, select box value bound to form.                                           
                 
-
                 $scope.sketchMolfile = "";
      
                 $scope.open_warnings = false;
                 
-
-                
-
             }
         })
 
@@ -350,78 +310,32 @@ angular.module('ngChemApp', [
         // url will be /form/payment
         .state('projects.project.demo.finish', {
             url: '/finish',
-            templateUrl: 'views/demo-finish.html',
-            controller: function($scope, $timeout, gridconfig, projectKey) {
+            views: {
+              '': {
+                templateUrl: 'views/demo-finish.html',
+                controller: function($scope) {
 
-              $scope.projectKey = projectKey;
-              $scope.gridconfig = gridconfig;
-
-              var filters = {multiple_batch_id : $scope.validatedData.currentBatch};
-              //timeout to allow molecules to be saved
-              $timeout(function() {
-                  $scope.gridconfig.initializeGridParams(projectKey, filters).then(function(result) {
-                  $scope.gridconfig.configObject.totalServerItems = result.meta.totalCount;
-                  $scope.gridconfig.configObject.compounds = result.objects;
-                }, 200);
-              });
-              
-              //watches the paging buttons to pull in new results for the window
-              $scope.$watch('gridconfig.configObject.pagingOptions', function (newVal, oldVal) {
-                if (newVal !== oldVal && (newVal.currentPage !== oldVal.currentPage || newVal.pageSize !== oldVal.pageSize)) {
-                  console.log('paging change');
-                  $scope.gridconfig.initializeGridParams(projectKey, filters).then(function(result) {
-                    $scope.gridconfig.configObject.totalServerItems = result.meta.totalCount;
-                    $scope.gridconfig.configObject.compounds = result.objects;
-                  });
-                }
-              }, true);
-
-              $scope.modalInstance = {};
-              $scope.mol = {}; 
-
-              $scope.openSingleMol = function(uox_id, batch_id) {
-                angular.forEach($scope.gridconfig.configObject.compounds, function(item) {
+                  if ($scope.wizard.totalSteps == 4) {
+                    $scope.wizard.step = 4;
+                  }
+                  else {
+                    $scope.wizard.step = 2;
+                  }
                   
-                  if (item.chemblId == uox_id) {
-                    //$scope.mol = item;
-                    if(item.multipleBatchId == batch_id) {
-                      $scope.mol = item;
-                    }
+                  $scope.wizard.dynamic = 90.5;
+                  applyTicks("finish");
 
-                  }
-                });
-                console.log($scope.mol);
-                $scope.modalInstance = $modal.open({
-                  templateUrl: 'views/single-compound.html',
-                  size: 'lg',
-                  resolve: {
-                    mol: function () {
-                      return $scope.mol;
-                    }
-                  }, 
-                  controller: function($scope, $modalInstance, mol) {
-                    $scope.mol = mol;
-                    $scope.modalInstance = $modalInstance;
-                  }
-                });
-              };
-
-              if ($scope.wizard.totalSteps == 4) {
-                $scope.wizard.step = 4;
-                //call whatever method will move past validating the batch  
-              }
-              else {
-                $scope.wizard.step = 2;
-                //call submit single mol
-                //$scope.saveSingleMol();
-              }
-              
-              $scope.wizard.dynamic = 90.5;
-              applyTicks("finish");
+                }
+              },
+              'resultslist@projects.project.demo.finish': {
+                templateUrl: 'views/templates/compound-grid.html',
+                controller: 'BatchesCtrl',
+              },
 
             }
+            
         })
-        
+
         .state("Default", {
           /*url: '/',
           abstract: true,*/
