@@ -308,12 +308,13 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
             $scope.molecule.molfile, 
             $scope.molecule.metadata.custom_fields, 
             $scope.molecule.metadata.stereoSelected
+            
             ).then(
             function(data){
                 $scope.singleMol = data.data;
                 $scope.finalData.objects.push(data.data);
                 $scope.validatedData.currentBatch = data.data.multipleBatchId;
-               
+               $state.go("projects.project.demo.finish");
             }, function(error){
                 $scope.validated = { 'errors': { 'invalidMolecule': true } };
             });

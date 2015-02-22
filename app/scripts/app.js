@@ -10,11 +10,12 @@
  */
 angular.module('ngChemApp')
 
+
   .config(function ($stateProvider, $urlRouterProvider) {
       
           // catch all route
     // send users to the form page 
-    $urlRouterProvider.otherwise('/404');
+    //$urlRouterProvider.otherwise('/404');
 
     /*$urlRouterProvider.rule(function ($injector, $location) {
        //what this function returns will be set as the $location.url
@@ -25,6 +26,8 @@ angular.module('ngChemApp')
         }
         // because we've returned nothing, no state change occurs
     });*/
+
+      var modalInstance;
       $stateProvider
           
         // HOME STATES AND NESTED VIEWS ========================================
@@ -39,7 +42,56 @@ angular.module('ngChemApp')
             }
         })
 
-        
+        .state('search', {
+            url: '/search',
+            data: {
+              login_rule: function($rootScope) {
+                return $rootScope.isLoggedIn();
+              }
+            },
+            resolve:{
+              gridconfig: ['CompoundListSetup', function(CompoundListSetup){
+                  return CompoundListSetup;
+              }],
+              projectFactory: ['ProjectFactory', function(ProjectFactory) {
+                return ProjectFactory;
+              }],
+              projectKey: ['$stateParams', function($stateParams){
+                  return $stateParams.projectKey;
+              }],
+            },
+            views: {
+              '': {
+                templateUrl: 'views/search.html'
+              },
+              'form@search': {
+                controller: 'SearchCtrl',
+                templateUrl: 'views/templates/search-template.html'
+              },
+              'results@search': {
+                templateUrl: 'views/templates/compound-list.html',
+                controller: 'BatchesCtrl'
+              }
+            }
+            
+            
+        })
+
+        .state('help', {
+            //parent: 'Default',
+            url: '/help',
+            data: {
+              login_rule: function($rootScope) {
+                return $rootScope.isLoggedIn();
+              }
+            },
+            resolve:{
+            },
+            templateUrl: 'views/help.html',
+            controller: function($scope) {
+
+            }
+        })
 
         .state('projects', {
             url: '/projects',
@@ -51,9 +103,8 @@ angular.module('ngChemApp')
             resolve:{
 
               gridconfig: ['CompoundListSetup', function(CompoundListSetup){
-                  //return CompoundListSetup.get();
                   return CompoundListSetup;
-              }],
+              }]
             },
             templateUrl: 'views/projects.html',
             controller: 'ProjectCtrl'
@@ -61,8 +112,7 @@ angular.module('ngChemApp')
 
         .state('projects.list', {
             url: '/list',
-            //templateUrl: 'views/projects-list.html',
-            template: '<project-list></project-list><div class="form-views" ui-view></div>',
+            template: '<project-list></project-list><div class="form-views" ui-view="projectlist"></div>',
             controller: function($rootScope) {
               $rootScope.headline = "Projects List";
               $rootScope.subheading = "Click a project title to see more details and add compounds to that project";
@@ -74,34 +124,18 @@ angular.module('ngChemApp')
 
         .state('projects.list.project', {
             url: '/:projectKey',
-            templateUrl: 'views/project-summary.html',
-            //controller: 'BatchesCtrl',
             resolve: {
               projectKey: ['$stateParams', function($stateParams){
                   return $stateParams.projectKey;
               }]
             },
-            //controller to handle ng-grid paging
-            //gridconfig is a service and defined in the projects parent state - cascades
-            controller: function($scope, gridconfig, projectKey){
-              $scope.projectKey = projectKey;
-              $scope.gridconfig = gridconfig;
-              $scope.gridconfig.initializeGridParams(projectKey,{}).then(function(result) {
-                $scope.gridconfig.configObject.totalServerItems = result.meta.totalCount;
-                $scope.gridconfig.configObject.compounds = result.objects;
-              });
-              //watches the paging buttons to pull in new results for the window
-              $scope.$watch('gridconfig.configObject.pagingOptions', function (newVal, oldVal) {
-                if (newVal !== oldVal && (newVal.currentPage !== oldVal.currentPage || newVal.pageSize !== oldVal.pageSize)) {
-                  console.log('paging change');
-                  $scope.gridconfig.initializeGridParams(projectKey,{}).then(function(result) {
-                    $scope.gridconfig.configObject.totalServerItems = result.meta.totalCount;
-                    $scope.gridconfig.configObject.compounds = result.objects;
-                  });
-                }
-              }, true);
-              
-            },
+            views: {
+              projectlist: {
+                templateUrl: 'views/project-summary.html',
+                controller: 'BatchesCtrl',
+              }
+            }
+            
         })
 
         .state('projects.project', {
@@ -198,14 +232,10 @@ angular.module('ngChemApp')
                                             ];
                 //default selection set in the scope molecule object, select box value bound to form.                                           
                 
-
                 $scope.sketchMolfile = "";
      
                 $scope.open_warnings = false;
                 
-
-                
-
             }
         })
 
@@ -264,50 +294,86 @@ angular.module('ngChemApp')
         // url will be /form/payment
         .state('projects.project.demo.finish', {
             url: '/finish',
-            templateUrl: 'views/demo-finish.html',
-            controller: function($scope, $timeout, gridconfig, projectKey) {
+            views: {
+              '': {
+                templateUrl: 'views/demo-finish.html',
+                controller: function($scope) {
 
-              $scope.projectKey = projectKey;
-              $scope.gridconfig = gridconfig;
+                  if ($scope.wizard.totalSteps == 4) {
+                    $scope.wizard.step = 4;
+                  }
+                  else {
+                    $scope.wizard.step = 2;
+                  }
+                  
+                  $scope.wizard.dynamic = 90.5;
+                  applyTicks("finish");
 
-              var filters = {multiple_batch_id : $scope.validatedData.currentBatch};
-              //timeout to allow molecules to be saved
-              $timeout(function() {
-                  $scope.gridconfig.initializeGridParams(projectKey, filters).then(function(result) {
-                  $scope.gridconfig.configObject.totalServerItems = result.meta.totalCount;
-                  $scope.gridconfig.configObject.compounds = result.objects;
-                }, 200);
-              });
-              
-              //watches the paging buttons to pull in new results for the window
-              $scope.$watch('gridconfig.configObject.pagingOptions', function (newVal, oldVal) {
-                if (newVal !== oldVal && (newVal.currentPage !== oldVal.currentPage || newVal.pageSize !== oldVal.pageSize)) {
-                  console.log('paging change');
-                  $scope.gridconfig.initializeGridParams(projectKey, filters).then(function(result) {
-                    $scope.gridconfig.configObject.totalServerItems = result.meta.totalCount;
-                    $scope.gridconfig.configObject.compounds = result.objects;
-                  });
                 }
-              }, true);
-
-              if ($scope.wizard.totalSteps == 4) {
-                $scope.wizard.step = 4;
-                //call whatever method will move past validating the batch  
-              }
-              else {
-                $scope.wizard.step = 2;
-                //call submit single mol
-                $scope.saveSingleMol();
-              }
-              
-              $scope.wizard.dynamic = 90.5;
-              applyTicks("finish");
+              },
+              'resultslist@projects.project.demo.finish': {
+                templateUrl: 'views/templates/compound-grid.html',
+                controller: 'BatchesCtrl',
+              },
 
             }
-        });
+            
+        })
+
+        .state("Default", {
+          /*url: '/',
+          abstract: true,*/
+        })
+        
+        //creating a stateful modal box to show single compound details as directed at:
+        // http://www.sitepoint.com/creating-stateful-modals-angularjs-angular-ui-router/
+        /*.state('Modal', {
+          parent: 'Default',
+          onEnter: ["$state", '$modal', function($state, $modal) {
+            //console.log($state);
+            var modalInstance = $modal.open({
+              template: '<div ui-view="modal"></div>',
+              backdrop: true,
+              windowClass: 'right fade'
+            });
+            $(document).on("keyup", function(e) {
+              if(e.keyCode == 27) {
+                $(document).off("keyup");
+                $state.go("Default");
+              }
+            });
+       
+          }],
+          onExit: function() {
+            if (modalInstance) {
+                modalInstance.close();
+            }
+          },
+          abstract: true
+        })
+
+        .state('singleCompound', {
+          parent: 'Modal',
+          views: {
+            "modal@": {
+              templateUrl: "views/single-compound.html"
+            }
+          },*/
+          /*resolve:{
+              
+              modalProvider: ['ModalProvider', function(ModalProvider){
+                return ModalProvider;
+              }]
+            },
+            controller: function($scope, $state, modalProvider) {
+              this.parent = modalProvider.getModal('projects.list.project');
+            }*/
+        //});
         
 
-  }).run(function($http, $cookies, $rootScope, $state, LoginService, ProjectFactory, urlConfig) {
+
+  }).run(function($http, $cookies, $rootScope, $document, $state, LoginService, ProjectFactory, urlConfig) {
+
     $http.defaults.headers.post['X-CSRFToken'] = $cookies.csrftoken;
        
         console.log(urlConfig);
@@ -326,7 +392,9 @@ angular.module('ngChemApp')
     
 
     $rootScope.$on('$stateChangeStart', function(e, to) {
+      console.log(to.name);
       if (to.name == '404') return;
+      if(to.name.lastIndexOf('singleCompound', 0) === 0) return;
       if (!angular.isFunction(to.data.login_rule)) return;
       var result = to.data.login_rule($rootScope);
 
@@ -340,6 +408,12 @@ angular.module('ngChemApp')
       else {
         $state.go('404');
       }
+    });
+
+    $rootScope.$on('$stateChangeSuccess', function(e, to) {
+      //$('html,body').animate({ scrollTop: target.offset().top}, 1000);
+      //$animate.
+      $document.scrollTop(0,0);
     });
 
     $rootScope.$on('$stateChangeError', function(event, toState, toParams, fromState, fromParams, error){ 
@@ -361,3 +435,6 @@ angular.module('ngChemApp')
     ngClipProvider.setPath("../bower_components/zeroclipboard/dist/ZeroClipboard.swf");
 }])
   ;
+
+
+

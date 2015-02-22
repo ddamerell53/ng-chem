@@ -37,7 +37,7 @@ angular.module('ngChemApp')
 
     var messages = {
         //"home": {
-            wizard_intro_text: "To upload multiple compounds you will need a list of SMILES; an InChi key or list of InChi keys; or either a SD or Excel file.",
+            wizard_intro_text: "To upload multiple compounds you will need a list of SMILES; an InChi key or list of InChi keys; or either a SD, Chemdraw or Excel file.",
             projects_help: "Clicking Add Compounds will take you to a wizard where you can add single or batches of compounds from files, SMILES, sketches and InChi keys.",
 
         //},
@@ -113,7 +113,7 @@ angular.module('ngChemApp')
 
             batch_prereg_to_public_single: "This substance is valid and was already registered as public.  A new private batch of this will be registered in this project.",
             batch_prereg_to_project_single: "This substance is valid and was already registered to this project.  A new private batch of this will be registered in this project.",
-            batch_reg_new_to_chemreg_single: "This substance is valid and is new to ChemBio Hub ChemReg. The first batch of this substance will be registered to this project.",
+            batch_reg_new_to_chemreg_single: "This substance is not publically registered in ChemBio Hub ChemReg. The first batch of this substance will be registered to this project.",
 
         //(change)
             batch_prereg_to_public_0: "No substances have already been registered as public.",

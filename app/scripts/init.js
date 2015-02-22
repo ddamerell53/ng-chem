@@ -15,6 +15,7 @@ angular.module('ngChemApp', [
     'ui.bootstrap',
     'dndLists',
     'flow',
-    'ngClipboard'
+    'ngClipboard',
+    'ngRaven',
 
   ])

@@ -135,3 +135,21 @@ strong.nexa {
 .ngPagerLastBar {
   border-left: 2px solid #fff;
 }
+
+.id-overlay {
+  position: absolute;
+  top: 0;
+  background: rgba(0,0,0,0.7);
+  width: 100%;
+  padding: 4px;
+  font-weight: bold;
+  color:white;
+}
+
+i {
+  margin: 0;
+}
+/* Calendar stuff */
+ul.dropdown-menu.ng-valid-date {
+  width:315px;
+}
