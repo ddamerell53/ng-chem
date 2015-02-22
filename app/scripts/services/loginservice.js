@@ -8,13 +8,20 @@
  * Factory in the ngChemApp.
  */
 angular.module('ngChemApp')
-  .factory('LoginService', ["$rootScope", "$http", function ($rootScope, $http) {
+  .factory('LoginService', ["$rootScope", "$http","urlConfig", function ($rootScope, $http, urlConfig) {
     // Service logic
     // ...
     var LoginService = {}
-    var urlBase = "/chemblws/users";
+    var urlBase =  urlConfig.users.list_endpoint;
+
     var arr = window.location.href.split("/");
-    var myUrl = arr[0] + "//" + arr[2] + urlBase;
+    var myUrl = arr[0] + "//" + arr[2] + urlBase + "/";
+    // AppConfig.then(function (config) {
+    //     conf = config;
+    //     urlBase =  conf.urls.users.list_endpoint;
+    //     myUrl = arr[0] + "//" + arr[2] + urlBase;
+    // });
+
 
 
 

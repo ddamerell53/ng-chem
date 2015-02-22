@@ -9,7 +9,7 @@
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
 <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"> 
 <link rel="alternate" type="application/rss+xml" title="{{ site.name }}" href="/feed.xml">
-    <title>ng-chem</title>
+    <title>{{ site.name }}</title>
 
     <!-- Bootstrap core CSS -->
 
@@ -134,8 +134,9 @@
 
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
+         <script src="scripts/init.js"></script>
 
- 
+         <script src="scripts/config.js"></script>
         <script src="scripts/app.js"></script>
         <script src="scripts/controllers/main.js"></script>
         <script src="scripts/controllers/about.js"></script>
@@ -147,7 +148,6 @@
         <script src="scripts/directives/processstep.js"></script>
 
         <script src="scripts/directives/chemdoodlewindow.js"></script>
-        <script src="scripts/services/cbhcompoundbatch.js"></script>
         <script src="scripts/filters/titlecase.js"></script>
         <script src="scripts/directives/appprogress.js"></script>
         <script src="scripts/services/loginservice.js"></script>
@@ -160,6 +160,8 @@
         <script src="scripts/services/messagefactory.js"></script>
         <script src="scripts/directives/infobox.js"></script>
         <script src="scripts/directives/substancelist.js"></script>
+                <script src="scripts/services/cbhcompoundbatch.js"></script>
+
         <!-- <script src="scripts/controllers/batches.js"></script>  -->
         <script src="scripts/services/compoundlistsetup.js"></script>
         <!-- endbuild -->

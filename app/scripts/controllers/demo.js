@@ -11,8 +11,10 @@ var app = angular.module('ngChemApp');
 
 
 
-app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 'MessageFactory', 'CBHCompoundBatch', '$timeout', '$stateParams', 'projectKey', function ($scope, $rootScope, $state, ChEMBLFactory, MessageFactory, CBHCompoundBatch, $timeout, $stateParams, projectKey) {
-
+app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 'MessageFactory', 'CBHCompoundBatch', '$timeout', '$stateParams', 'projectKey', function ( $scope, $rootScope, $state, ChEMBLFactory, MessageFactory, CBHCompoundBatch, $timeout, $stateParams, projectKey, urlConfig) {
+       $scope.urlBase =  '';
+      var arr = window.location.href.split("/");
+      $scope.myUrl = arr[0] + "//" + arr[2] + $scope.urlBase;
         $scope.addCustomField = function() {
           var newItemNo = $scope.cust_fields_count + 1;
           $scope.molecule.metadata.custom_fields.push( { 'name':'', 'value':'', 'id':newItemNo } );
@@ -114,26 +116,26 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
         $scope.custom_field_choices = [];
 
         //Get the backend defined list of custom fields
-        CBHCompoundBatch.fetchExistingFields(projectKey).then(
-            function(data){
-                //add each of the pinned custom fields
-                angular.forEach(data.data.fieldNames, function(value) {
-                    //Add the pinned custom fields
-                    if (value.id){
-                        $scope.cust_fields_count ++;
-                        value.id = $scope.cust_fields_count ;
-                        value.value = "";
-                        $scope.molecule.metadata.custom_fields.push(value);
-                    } else {
-                        $scope.custom_field_choices.push(value.name);
-                    }
+        // CBHCompoundBatch.fetchExistingFields(projectKey).then(
+        //     function(data){
+        //         //add each of the pinned custom fields
+        //         angular.forEach(data.data.fieldNames, function(value) {
+        //             //Add the pinned custom fields
+        //             if (value.id){
+        //                 $scope.cust_fields_count ++;
+        //                 value.id = $scope.cust_fields_count ;
+        //                 value.value = "";
+        //                 $scope.molecule.metadata.custom_fields.push(value);
+        //             } else {
+        //                 $scope.custom_field_choices.push(value.name);
+        //             }
                     
-                });
+        //         });
                 
 
-            }, function(error){
-                console.log(error);
-            });
+        //     }, function(error){
+        //         console.log(error);
+        //     });
 
 
             
@@ -216,7 +218,6 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
 
     $scope.mapFilePage = function(){
         if ($scope.file_extension=="cdx" || $scope.file_extension=="cdxml"){
-            $scope.valFiles({});
             $state.go("projects.project.demo.map.multiple");
         }else {
             $state.go("projects.project.demo.map.file");

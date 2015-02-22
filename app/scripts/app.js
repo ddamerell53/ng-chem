@@ -8,23 +8,8 @@
  *
  * Main module of the application.
  */
-angular.module('ngChemApp', [
-    'ngAnimate',
-    'ngAria',
-    'ngCookies',
-    'ngMessages',
-    'ngResource',
-    'ngGrid',
-    'ngSanitize',
-    'ngTouch',
-    'ui.router',
-    'ui.bootstrap',
-    'dndLists',
-    'flow',
-    'ngClipboard',
+angular.module('ngChemApp')
 
-
-  ])
   .config(function ($stateProvider, $urlRouterProvider) {
       
           // catch all route
@@ -40,7 +25,6 @@ angular.module('ngChemApp', [
         }
         // because we've returned nothing, no state change occurs
     });*/
-
       $stateProvider
           
         // HOME STATES AND NESTED VIEWS ========================================
@@ -65,6 +49,7 @@ angular.module('ngChemApp', [
               }
             },
             resolve:{
+
               gridconfig: ['CompoundListSetup', function(CompoundListSetup){
                   //return CompoundListSetup.get();
                   return CompoundListSetup;
@@ -233,9 +218,7 @@ angular.module('ngChemApp', [
               $scope.wizard.step = 1;
               $scope.wizard.dynamic = 41;
               $scope.wizard.totalSteps = 4;
-              $scope.urlBase = "/chemblws/cbh_compound_batches/";
-              var arr = window.location.href.split("/");
-              $scope.myUrl = arr[0] + "//" + arr[2] + $scope.urlBase;
+
               
             }
         })
@@ -324,20 +307,23 @@ angular.module('ngChemApp', [
         });
         
 
-  }).run(function($http, $cookies, $rootScope, $state, LoginService, ProjectFactory) {
+  }).run(function($http, $cookies, $rootScope, $state, LoginService, ProjectFactory, urlConfig) {
     $http.defaults.headers.post['X-CSRFToken'] = $cookies.csrftoken;
-
-    $rootScope.logged_in_user = {};
+       
+        console.log(urlConfig);
+        $rootScope.logged_in_user = {};
     $rootScope.projects = {};
 
-    LoginService.setLoggedIn().then(
-                function(data){
-                    $rootScope.logged_in_user = data.objects[0];
-                }
-            );
-    ProjectFactory.get().$promise.then(function(res) {
-          $rootScope.projects = res.objects;
-        });
+          LoginService.setLoggedIn().then(
+                      function(data){
+                          $rootScope.logged_in_user = data.objects[0];
+                      }
+                  );
+          ProjectFactory.get().$promise.then(function(res) {
+                $rootScope.projects = res.objects;
+              });
+        
+    
 
     $rootScope.$on('$stateChangeStart', function(e, to) {
       if (to.name == '404') return;
@@ -369,11 +355,9 @@ angular.module('ngChemApp', [
     }
 
 
-
-
+  
     
 }).config(['ngClipProvider', function(ngClipProvider) {
     ngClipProvider.setPath("../bower_components/zeroclipboard/dist/ZeroClipboard.swf");
-}]);
-
+}])
   ;

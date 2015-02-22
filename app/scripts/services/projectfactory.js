@@ -8,7 +8,7 @@
  * Factory in the ngChemApp.
  */
 angular.module('ngChemApp')
-  .factory('ProjectFactory', function ($resource) {
+  .factory('ProjectFactory' ,function ($resource, urlConfig) {
     // Service logic
     // ...
 
@@ -28,8 +28,9 @@ angular.module('ngChemApp')
     
     //Looking at a single project lists molecules which are associated with that project
     //       /project/:projectId
+    var projUrl = "";
 
-    return $resource('/chemblws/cbh_projects/:projectId', {projectId:'@projectId'}, {
+    return $resource(urlConfig.cbh_projects.list_endpoint + '/:projectId', {projectId:'@projectId'}, {
 
         //define other methods here - name method, define extra params
 
@@ -38,7 +39,6 @@ angular.module('ngChemApp')
         //charge: {method:'POST', params:{charge:true}}
 
         //call from outside (i.e. inside a directive) with Project.$charge({amount:9.99});
-        //POST: /chemblws/cbh_projects?amount=9.99&charge=true {id:456, number:'1234', name:'J. Smith'}
 
       } 
 

@@ -8,7 +8,7 @@
  * Controller of the ngChemApp
  */
 angular.module('ngChemApp')
-  .controller('BatchesCtrl', function ($scope, $rootScope, CBHCompoundBatch, $stateParams, gridconfig) {
+  .controller('BatchesCtrl', function ($scope, $rootScope, CBHCompoundBatch, $stateParams, gridconfig,urlConfig ) {
     $scope.projectKey = $stateParams.projectKey;
     $scope.compounds = [];
     $scope.totalServerItems = 0;
@@ -61,7 +61,7 @@ angular.module('ngChemApp')
     };
 
     //initialis with first page of results
-    $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage);
+    // $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage);
 
     $scope.$watch('pagingOptions', function (newVal, oldVal) {
       if (newVal !== oldVal && (newVal.currentPage !== oldVal.currentPage || newVal.pageSize !== oldVal.pageSize)) {
