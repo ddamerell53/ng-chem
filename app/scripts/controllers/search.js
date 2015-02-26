@@ -8,7 +8,7 @@
  * Controller of the ngChemApp
  */
 angular.module('ngChemApp')
-  .controller('SearchCtrl',['$scope', '$rootScope', 'projectFactory', 'gridconfig', 'CBHCompoundBatch', function ($scope, $rootScope, projectFactory, gridconfig, CBHCompoundBatch) {
+  .controller('SearchCtrl',['$scope', '$rootScope', '$filter', 'projectFactory', 'gridconfig', 'CBHCompoundBatch', function ($scope, $rootScope, $filter, projectFactory, gridconfig, CBHCompoundBatch) {
     $scope.searchForm = { molecule: { molfile: "" } };
 
     $scope.results = {};
@@ -29,7 +29,7 @@ angular.module('ngChemApp')
 		$scope.searchForm.dateStart = new Date();
 		$scope.searchForm.dateEnd = new Date();
 	};
-	$scope.today();
+	//$scope.today();
 
 	$scope.clear = function () {
 		$scope.dateStart = null;
@@ -44,7 +44,8 @@ angular.module('ngChemApp')
 
 	$scope.dateOptions = {
 	  formatYear: 'yy',
-	  startingDay: 1
+	  startingDay: 1,
+      showWeeks: false
 	};
 
 	$scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
@@ -89,6 +90,17 @@ angular.module('ngChemApp')
         if($scope.searchForm.molecule.molfile != "") {
             params[$scope.searchForm.substruc] = $scope.searchForm.molecule.molfile
         }
+        if ($scope.searchForm.dateStart) {
+            var formattedStart = $filter('date')($scope.searchForm.dateStart, 'yyyy-MM-dd');
+        }
+        if($scope.searchForm.dateEnd) {
+            var formattedEnd = $filter('date')($scope.searchForm.dateEnd, 'yyyy-MM-dd');
+        }
+        
+        //params.created__range = "(" +  formattedStart + "," + formattedEnd + ")";
+        params.created__gte = formattedStart;
+        params.created__lte = formattedEnd;
+
         CBHCompoundBatch.search(params).then(function(result){
             
             gridconfig.configObject.totalServerItems = result.meta.totalCount;
