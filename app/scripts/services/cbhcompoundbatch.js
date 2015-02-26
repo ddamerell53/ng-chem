@@ -115,6 +115,21 @@ angular.module('ngChemApp')
         );
         return promise;
     };
+
+    CBHCompoundBatch.search = function(searchForm) {
+        var promise = $http({
+            url:myUrl,
+            method:'GET',
+            params: searchForm,
+            headers: {
+               'Content-Type': 'application/json'
+             }
+        }).then(function(data){
+            return data.data;
+        });
+        return promise;
+    }
+
     CBHCompoundBatch.paginate = function(page_url) {
         /*filters.projectKey = projectKey;
         filters.project__project_key = projectKey;*/

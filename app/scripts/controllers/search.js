@@ -8,7 +8,7 @@
  * Controller of the ngChemApp
  */
 angular.module('ngChemApp')
-  .controller('SearchCtrl',['$scope', '$rootScope', 'projectFactory', 'CBHCompoundBatch', function ($scope, $rootScope, projectFactory, CBHCompoundBatch) {
+  .controller('SearchCtrl',['$scope', '$rootScope', 'projectFactory', 'gridconfig', 'CBHCompoundBatch', function ($scope, $rootScope, projectFactory, gridconfig, CBHCompoundBatch) {
     $scope.searchForm = { molecule: { molfile: "" } };
 
     $scope.results = {};
@@ -75,5 +75,28 @@ angular.module('ngChemApp')
         }, function(error){
             console.log(error);
         });*/
+	$scope.runSearch = function() {
+		//get the form
+		//send to the appropriate CBHCompoundBatch service
+
+        //build a searchObject from the form
+        //use the correct structure search type
+        //construct get parameters in the format required by the web service
+        var params = {}
+        if($scope.searchForm.selectedProject) {
+            params.project__project_key = $scope.searchForm.selectedProject.projectKey;    
+        }
+        if($scope.searchForm.molecule.molfile != "") {
+            params[$scope.searchForm.substruc] = $scope.searchForm.molecule.molfile
+        }
+        CBHCompoundBatch.search(params).then(function(result){
+            
+            gridconfig.configObject.totalServerItems = result.meta.totalCount;
+            gridconfig.configObject.compounds = result.objects;
+            gridconfig.configObject.filters = params;
+
+            
+		});
+	}
 
   }]);
