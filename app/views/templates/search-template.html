@@ -18,6 +18,17 @@
 			</div>
 
 			<div class="col-xs-8">
+				<!-- SMILES box - paste your smiles here to use as structure search -->
+				
+				<div class="form-group">
+					<div class="pull-right col-xs-1"><info-box freetext="Perform a structural search with a SMILES string"></info-box></div>
+					<label for="project" class="col-xs-2 control-label">SMILES</label>
+					<div class="col-xs-9">
+						<input type="text" class="form-control" ng-model="searchForm.smiles" placeholder="Paste SMILES strings here">
+					</div>
+
+									
+				</div>
 				<!-- Project dropdown - preselected if we are in a project summary page -->
 				<div class="form-group">
 					<div class="pull-right col-xs-1"><info-box freetext="Limit your search results to a single project"></info-box></div>

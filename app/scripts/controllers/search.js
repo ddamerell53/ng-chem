@@ -19,6 +19,9 @@ angular.module('ngChemApp')
       $scope.searchForm.projects = res.objects;
     });
 
+    //initialise structure search type as exact 
+    $scope.searchForm.substruc = "flexmatch";
+
     $scope.datepickers = {
     	dateStart: false,
     	dateEnd: false
@@ -87,9 +90,19 @@ angular.module('ngChemApp')
         if($scope.searchForm.selectedProject) {
             params.project__project_key = $scope.searchForm.selectedProject.projectKey;    
         }
-        if($scope.searchForm.molecule.molfile != "") {
+        /*if($scope.searchForm.smiles) {
+            params.smiles = $scope.searchForm.smiles;
+        }*/
+
+        //it would be great to automagically populate a pasted smiles string into the sketcher
+        //for now though, just send the smiles to the web service
+        if ($scope.searchForm.smiles) {
+            params[$scope.searchForm.substruc] = $scope.searchForm.smiles
+        }
+        else if ($scope.searchForm.molecule.molfile != "") {
             params[$scope.searchForm.substruc] = $scope.searchForm.molecule.molfile
         }
+
         if ($scope.searchForm.dateStart) {
             var formattedStart = $filter('date')($scope.searchForm.dateStart, 'yyyy-MM-dd');
         }
