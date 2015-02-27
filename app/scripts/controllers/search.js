@@ -93,7 +93,6 @@ angular.module('ngChemApp')
         /*if($scope.searchForm.smiles) {
             params.smiles = $scope.searchForm.smiles;
         }*/
-        //commit
         //it would be great to automagically populate a pasted smiles string into the sketcher
         //for now though, just send the smiles to the web service
         if ($scope.searchForm.smiles) {

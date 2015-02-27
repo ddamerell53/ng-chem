@@ -20,6 +20,7 @@ angular.module('ngChemApp')
       pageSize: 10,
       currentPage: 1
     };
+    this.configObject.filters = {};
     this.configObject.gridOptions = {    data: 'gridconfig.configObject.compounds',
                                                       showColumnMenu:true,
                                                       enableColumnReordering:true,
@@ -61,11 +62,14 @@ angular.module('ngChemApp')
     this.getPagedDataAsync = function (pageSize, page, extra_filters) {
       var defer = $q.defer();
       var offset = parseInt(page - 1) * parseInt(pageSize);
-      var filters = {'limit': pageSize, 'offset': offset };
+      var coreFilters = {'limit': pageSize, 'offset': offset };
 
-      angular.extend(filters, extra_filters);
+      angular.extend(this.configObject.filters, extra_filters);
+      angular.extend(this.configObject.filters, coreFilters);
+      //this.configObject.filters = coreFilters;
 
-      var rslt = CBHCompoundBatch.query(this.configObject.projectKey, filters).then(function(result) {
+
+      var rslt = CBHCompoundBatch.query(this.configObject.projectKey, this.configObject.filters).then(function(result) {
         defer.resolve(result);
         
       });
