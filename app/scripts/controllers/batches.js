@@ -27,7 +27,7 @@ angular.module('ngChemApp')
     $scope.$watch('gridconfig.configObject.pagingOptions', function (newVal, oldVal) {
       if (newVal !== oldVal && (newVal.currentPage !== oldVal.currentPage || newVal.pageSize !== oldVal.pageSize)) {
         console.log('paging change');
-        $scope.gridconfig.initializeGridParams(projectKey,{}).then(function(result) {
+        $scope.gridconfig.initializeGridParams(projectKey,filters).then(function(result) {
           $scope.gridconfig.configObject.totalServerItems = result.meta.totalCount;
           $scope.gridconfig.configObject.compounds = result.objects;
         });
