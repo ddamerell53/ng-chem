@@ -71,17 +71,27 @@ module.exports = function (grunt) {
         hostname: 'localhost',
         livereload: 35729
       },
+      proxies: [{
+        context: '/devapi/', // the context of the data service
+        host: 'localhost', // wherever the data service is running
+        port: 8000, // the port that the data service is running on
+        rewrite : {
+          '^/devapi/': '/devapi/'
+	}
+      }],
       livereload: {
         options: {
           open: true,
           middleware: function (connect) {
             return [
+              require('grunt-connect-proxy/lib/utils').proxyRequest,
               connect.static('.tmp'),
               connect().use(
                 '/bower_components',
                 connect.static('./bower_components')
               ),
               connect.static(appConfig.app)
+	      
             ];
           }
         }
@@ -343,6 +353,8 @@ module.exports = function (grunt) {
             'images/{,*/}*.{webp}',
             'fonts/{,*/}*.*',
             'bower_components/chembiohub-theme/fonts/{,*/}{,*/}{,*/}*.*',
+            'bower_components/bootstrap/dist/fonts/{,*/}{,*/}{,*/}*.*',
+
             'bower_components/bootstrap-sass-official/assets/fonts/bootstrap/*'
           ]
         }, {
@@ -355,7 +367,14 @@ module.exports = function (grunt) {
           cwd: '.',
           src: 'bower_components/bootstrap-sass-official/assets/fonts/bootstrap/*',
           dest: '<%= yeoman.dist %>'
-        }, {
+        },{
+          expand: true,
+          cwd: '.',
+          src: 'bower_components/bootstrap/dist/fonts/*',
+          dest: '<%= yeoman.dist %>/styles/'
+        },  
+
+        {
           expand: true,
           cwd: '.',
           src: 'bower_components/chembiohub-theme/{,*/}{,*/}{,*/}*.*',
@@ -412,10 +431,15 @@ module.exports = function (grunt) {
       'wiredep',
       'concurrent:server',
       'autoprefixer',
+    'configureProxies:server', // added just before connect
+
       'connect:livereload',
       'watch'
     ]);
   });
+
+
+  grunt.loadNpmTasks('grunt-connect-proxy');
 
   grunt.registerTask('server', 'DEPRECATED TASK. Use the "serve" task instead', function (target) {
     grunt.log.warn('The `server` task has been deprecated. Use `grunt serve` to start a server.');

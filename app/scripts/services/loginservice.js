@@ -13,9 +13,8 @@ angular.module('ngChemApp')
     // ...
     var LoginService = {}
     var urlBase =  urlConfig.users.list_endpoint;
+    var myUrl = urlBase;
 
-    var arr = window.location.href.split("/");
-    var myUrl = arr[0] + "//" + arr[2] + urlBase + "/";
     // AppConfig.then(function (config) {
     //     conf = config;
     //     urlBase =  conf.urls.users.list_endpoint;
@@ -29,6 +28,7 @@ angular.module('ngChemApp')
       //logged in logic
 
       var promise = $http.get( myUrl ).then(
+     
             function(data){
                 return data.data;
             }

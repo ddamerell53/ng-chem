@@ -9,7 +9,7 @@
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
 <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"> 
 <link rel="alternate" type="application/rss+xml" title="{{ site.name }}" href="/feed.xml">
-    <title>{{ site.name }}</title>
+    <title>ChemBioHub ChemReg</title>
 
     <!-- Bootstrap core CSS -->
 
@@ -17,29 +17,28 @@
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
-    <link rel="stylesheet" href="../bower_components/chembiohub-theme/css/main.css" />
-    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css" />
-    <link rel="stylesheet" href="../bower_components/angular-grid/ng-grid.css" />
+    <link rel='stylesheet' href='bower_components/bootstrap/dist/css/bootstrap.css' />
+    <link rel='stylesheet' href='bower_components/angular-grid/ng-grid.css' />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.) styles/main.css -->
-        <link rel='stylesheet' href='../bower_components/chembiohub-theme/css/main.css' />
+        <link rel='stylesheet' href='bower_components/chembiohub-theme/css/main.css' />
 
-    <link rel="stylesheet" href="../bower_components/chembiohub-theme/css/cbh-template-header.css">
-    <link rel="stylesheet" href="../bower_components/chembiohub-theme/css/font.css">
+    <link rel="stylesheet" href="bower_components/chembiohub-theme/css/cbh-template-header.css">
+    <link rel="stylesheet" href="bower_components/chembiohub-theme/css/font.css">
     <link rel="stylesheet" href="styles/chemreg-specific.css">
 
 
-    <link rel="stylesheet" href="../bower_components/chemdoodle/install/ChemDoodleWeb.css">
-    <link rel="stylesheet" href="../bower_components/chemdoodle/install/uis/jquery-ui-1.10.3.custom.css">
+    <link rel="stylesheet" href="bower_components/chemdoodle/install/ChemDoodleWeb.css">
+    <link rel="stylesheet" href="bower_components/chemdoodle/install/uis/jquery-ui-1.10.3.custom.css">
     <!-- endbuild -->    <!-- Chemdoodle sketcher css -->
 
 
 
 
     <!-- Fonts from Google Fonts -->
-  <link href='https://fonts.googleapis.com/css?family=Lato:300,400,900' rel='stylesheet' type='text/css'>
-
+<!--   <link href='https://fonts.googleapis.com/css?family=Lato:300,400,900' rel='stylesheet' type='text/css'>
+ -->
 
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -82,57 +81,46 @@
 <script src="http://cdnjs.cloudflare.com/ajax/libs/raven.js/1.0.8/raven.min.js"></script>
 
    
-    <script src="../bower_components/jquery/dist/jquery.js"></script>
-    <script src="../bower_components/es5-shim/es5-shim.js"></script>
-    <script src="../bower_components/angular/angular.js"></script>
-        <script src="../bower_components/dndLists/index.js"></script>
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/es5-shim/es5-shim.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+        <script src="bower_components/dndLists/index.js"></script>
 
-   <script src="../bower_components/chemdoodle/install/ChemDoodleWeb.js"></script>
-    <script src="../bower_components/chemdoodle/install/uis/ChemDoodleWeb-uis.js"></script>
+   <script src="bower_components/chemdoodle/install/ChemDoodleWeb.js"></script>
+    <script src="bower_components/chemdoodle/install/uis/ChemDoodleWeb-uis.js"></script>
     
-    <script src="../bower_components/ng-clip/src/ngClip.js"></script>
-    <script src="../bower_components/zeroclipboard/dist/ZeroClipboard.min.js"></script>
+    <script src="bower_components/ng-clip/src/ngClip.js"></script>
+    <script src="bower_components/zeroclipboard/dist/ZeroClipboard.min.js"></script>
         <!-- endbuild -->
 
         <!-- build:js(.) scripts/bower.js -->
 
     <!-- bower:js -->
-    <script src="../bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/affix.js"></script>
-    <script src="../bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/alert.js"></script>
-    <script src="../bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/button.js"></script>
-    <script src="../bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/carousel.js"></script>
-    <script src="../bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/collapse.js"></script>
-    <script src="../bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/dropdown.js"></script>
-    <script src="../bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/tab.js"></script>
-    <script src="../bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/transition.js"></script>
-    <script src="../bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/scrollspy.js"></script>
-    <script src="../bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/modal.js"></script>
-    <script src="../bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/tooltip.js"></script>
-    <script src="../bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/popover.js"></script>
-    <script src="../bower_components/angular-animate/angular-animate.js"></script>
-    <script src="../bower_components/angular-aria/angular-aria.js"></script>
-    <script src="../bower_components/angular-cookies/angular-cookies.js"></script>
-    <script src="../bower_components/angular-messages/angular-messages.js"></script>
-    <script src="../bower_components/angular-resource/angular-resource.js"></script>
-    <script src="../bower_components/angular-route/angular-route.js"></script>
-    <script src="../bower_components/angular-sanitize/angular-sanitize.js"></script>
-    <script src="../bower_components/angular-touch/angular-touch.js"></script>
-    <script src="../bower_components/jquery-ui/jquery-ui.js"></script>
-    <script src="../bower_components/d3/d3.js"></script>
-    <script src="../bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-    <script src="../bower_components/FileSaver/FileSaver.js"></script>
-    <script src="../bower_components/bootstrap/dist/js/bootstrap.js"></script>
-    <script src="../bower_components/angular-bootstrap-checkbox/angular-bootstrap-checkbox.js"></script>
-    <script src="../bower_components/ngScrollTo/ng-scrollto.js"></script>
-    <script src="../bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-    <script src="../bower_components/angular-grid/build/ng-grid.js"></script>
-    <script src="../bower_components/zeroclipboard/dist/ZeroClipboard.js"></script>
-    <script src="../bower_components/ng-clip/src/ngClip.js"></script>
-   
-
- <!-- endbower -->
-    <script src="../bower_components/flow.js/dist/flow.js"></script>
-    <script src="../bower_components/ng-flow/dist/ng-flow-standalone.min.js"></script>    
+    <script src="bower_components/json3/lib/json3.js"></script>
+    <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-aria/angular-aria.js"></script>
+    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="bower_components/angular-messages/angular-messages.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="bower_components/angular-touch/angular-touch.js"></script>
+    <script src="bower_components/jquery-ui/jquery-ui.js"></script>
+    <script src="bower_components/d3/d3.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="bower_components/FileSaver/FileSaver.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="bower_components/angular-bootstrap-checkbox/angular-bootstrap-checkbox.js"></script>
+    <script src="bower_components/ngScrollTo/ng-scrollto.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="bower_components/angular-grid/build/ng-grid.js"></script>
+    <script src="bower_components/ng-flow/dist/ng-flow.js"></script>
+    <script src="bower_components/zeroclipboard/dist/ZeroClipboard.js"></script>
+    <script src="bower_components/raven-js/dist/raven.js"></script>
+    <!-- endbower -->
+    <script src="bower_components/flow.js/dist/flow.js"></script>
+    <script src="bower_components/ng-flow/dist/ng-flow-standalone.min.js"></script>    
 
 <script>
 Raven.config('http://fc809c4af52d4022abea608aa81f3136@163.1.63.22/3', {
@@ -140,7 +128,7 @@ Raven.config('http://fc809c4af52d4022abea608aa81f3136@163.1.63.22/3', {
     whitelistUrls: ['staging.chembiohub.ox.ac.uk/']
 }).install()
 </script>
-<script src="../bower_components/angular-raven/angular-raven.js"></script>
+<script src="bower_components/angular-raven/angular-raven.js"></script>
 
 
 <!-- endbuild -->
