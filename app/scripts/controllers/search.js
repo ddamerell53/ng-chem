@@ -8,19 +8,104 @@
  * Controller of the ngChemApp
  */
 angular.module('ngChemApp')
-  .controller('SearchCtrl',['$scope', '$rootScope', '$filter', 'projectFactory', 'gridconfig', 'CBHCompoundBatch', function ($scope, $rootScope, $filter, projectFactory, gridconfig, CBHCompoundBatch) {
+  .controller('SearchCtrl',['$scope', '$rootScope', '$filter', '$stateParams', '$location', 'projectFactory', 'gridconfig', 'CBHCompoundBatch', function ($scope, $rootScope, $filter, $stateParams, $location, projectFactory, gridconfig, CBHCompoundBatch) {
+    
+    $scope.initialiseFromUrl = function(){
+        if ($stateParams.with_substructure) {
+            $scope.searchForm.substruc = "with_substructure";
+            $scope.searchForm.molecule.molfile = $stateParams.with_substructure;
+            $rootScope.sketchMolfile = $stateParams.with_substructure;
+        }
+        else if ($stateParams.flexmatch) {
+            $scope.searchForm.substruc = "flexmatch";
+            $scope.searchForm.molecule.molfile = $stateParams.flexmatch;
+            $rootScope.sketchMolfile  = $stateParams.flexmatch;
+        }
+        else if ($stateParams.similar_to) {
+            $scope.searchForm.substruc = "similar_to";
+            $scope.searchForm.molecule.molfile = $stateParams.similar_to;
+            $rootScope.sketchMolfile  = $stateParams.similar_to;
+        }
+        else {
+            $rootScope.sketchMolfile  = "";
+        }
+        $scope.searchForm.fpValue = $stateParams.fpValue;
+        $scope.searchForm.dateStart = $stateParams.created__gte;
+        $scope.searchForm.dateEnd = $stateParams.created__lte;
+        $scope.searchForm.smiles = $stateParams.smiles;
+
+    };
+
+    $scope.runSearch = function() {
+        //get the form
+        //send to the appropriate CBHCompoundBatch service
+
+        //build a searchObject from the form
+        //use the correct structure search type
+        //construct get parameters in the format required by the web service
+        var params = {}
+        if($scope.searchForm.selectedProject) {
+            params.project__project_key = $scope.searchForm.selectedProject.projectKey;    
+        }
+        /*if($scope.searchForm.smiles) {
+            params.smiles = $scope.searchForm.smiles;
+        }*/
+        //it would be great to automagically populate a pasted smiles string into the sketcher
+        //for now though, just send the smiles to the web service
+        if ($scope.searchForm.smiles) {
+            params[$scope.searchForm.substruc] = $scope.searchForm.smiles
+        }
+        else if ($scope.searchForm.molecule.molfile != "") {
+            params[$scope.searchForm.substruc] = $scope.searchForm.molecule.molfile
+        }
+
+        if ($scope.searchForm.dateStart) {
+            var formattedStart = $filter('date')($scope.searchForm.dateStart, 'yyyy-MM-dd');
+        }
+        if($scope.searchForm.dateEnd) {
+            var formattedEnd = $filter('date')($scope.searchForm.dateEnd, 'yyyy-MM-dd');
+        }
+        
+        //params.created__range = "(" +  formattedStart + "," + formattedEnd + ")";
+        params.created__gte = formattedStart;
+        params.created__lte = formattedEnd;
+
+        CBHCompoundBatch.search(params).then(function(result){
+            
+            gridconfig.configObject.totalServerItems = result.meta.totalCount;
+            gridconfig.configObject.compounds = result.objects;
+            gridconfig.configObject.filters = params;
+
+            
+        });
+        var url = '/search?project__project_key=' + (params.project__project_key || "") + '&flexmatch=' +  (params.flexmatch || "")
+                    + '&with_substructure=' + (params.with_substructure || "") + '&similar_to=' + (params.similar_to || "") 
+                    + '&fpValue=' + (params.fpValue || "") + '&created__gte=' + (params.created__gte || "") + '&created__lte=' + (params.created__lte || "") 
+                    + '&smiles=' + (params.smiles || "") + '&limit=&offset=';
+        $location.url(url);
+    }
+
     $scope.searchForm = { molecule: { molfile: "" } };
+
+    //initialise from URL parameters if present
+    $scope.initialiseFromUrl();
 
     $scope.results = {};
 
     $rootScope.projectKey = "Projects";
 
+    //pull in the list of projects to put into the project selector
     projectFactory.get().$promise.then(function(res) {
       $scope.searchForm.projects = res.objects;
     });
 
-    //initialise structure search type as exact 
-    $scope.searchForm.substruc = "flexmatch";
+    //initialise structure search type as exact if there are no existing search parameters
+    if(!$scope.searchForm.substruc) {
+        $scope.searchForm.substruc = "flexmatch";    
+    }
+
+    //initialise the grid to reflect the search
+    $scope.runSearch();
 
     $scope.datepickers = {
     	dateStart: false,
@@ -79,48 +164,10 @@ angular.module('ngChemApp')
         }, function(error){
             console.log(error);
         });*/
-	$scope.runSearch = function() {
-		//get the form
-		//send to the appropriate CBHCompoundBatch service
 
-        //build a searchObject from the form
-        //use the correct structure search type
-        //construct get parameters in the format required by the web service
-        var params = {}
-        if($scope.searchForm.selectedProject) {
-            params.project__project_key = $scope.searchForm.selectedProject.projectKey;    
-        }
-        /*if($scope.searchForm.smiles) {
-            params.smiles = $scope.searchForm.smiles;
-        }*/
-        //it would be great to automagically populate a pasted smiles string into the sketcher
-        //for now though, just send the smiles to the web service
-        if ($scope.searchForm.smiles) {
-            params[$scope.searchForm.substruc] = $scope.searchForm.smiles
-        }
-        else if ($scope.searchForm.molecule.molfile != "") {
-            params[$scope.searchForm.substruc] = $scope.searchForm.molecule.molfile
-        }
 
-        if ($scope.searchForm.dateStart) {
-            var formattedStart = $filter('date')($scope.searchForm.dateStart, 'yyyy-MM-dd');
-        }
-        if($scope.searchForm.dateEnd) {
-            var formattedEnd = $filter('date')($scope.searchForm.dateEnd, 'yyyy-MM-dd');
-        }
-        
-        //params.created__range = "(" +  formattedStart + "," + formattedEnd + ")";
-        params.created__gte = formattedStart;
-        params.created__lte = formattedEnd;
 
-        CBHCompoundBatch.search(params).then(function(result){
-            
-            gridconfig.configObject.totalServerItems = result.meta.totalCount;
-            gridconfig.configObject.compounds = result.objects;
-            gridconfig.configObject.filters = params;
 
-            
-		});
-	}
+    
 
   }]);

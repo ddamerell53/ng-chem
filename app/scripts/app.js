@@ -57,7 +57,7 @@ angular.module('ngChemApp', [
         })
 
         .state('search', {
-            url: '/search',
+            url: '/search?project__project_key&flexmatch&with_substructure&similar_to&fpValue&created__gte&created__lte&molfile&smiles&limit&offset',
             data: {
               login_rule: function($rootScope) {
                 return $rootScope.isLoggedIn();
@@ -136,7 +136,7 @@ angular.module('ngChemApp', [
         })
 
         .state('projects.list.project', {
-            url: '/:projectKey',
+            url: '/:projectKey&limit&offset',
             resolve: {
               projectKey: ['$stateParams', function($stateParams){
                   return $stateParams.projectKey;
@@ -308,7 +308,7 @@ angular.module('ngChemApp', [
         
         // url will be /form/payment
         .state('projects.project.demo.finish', {
-            url: '/finish',
+            url: '/finish&limit&offset',
             views: {
               '': {
                 templateUrl: 'views/demo-finish.html',

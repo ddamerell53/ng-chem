@@ -8,7 +8,7 @@
  * Factory in the ngChemApp.
  */
 angular.module('ngChemApp')
-  .service('CompoundListSetup', [ 'CBHCompoundBatch', '$rootScope', '$q', function (CBHCompoundBatch, $rootScope, $q) {
+  .service('CompoundListSetup', [ 'CBHCompoundBatch', '$rootScope', '$stateParams', '$q', function (CBHCompoundBatch, $rootScope, $stateParams, $q) {
     
     //var CompoundListSetup = {};
     this.configObject = {};
@@ -51,7 +51,7 @@ angular.module('ngChemApp')
     this.initializeGridParams = function(project_key, extra_filters) {
         var defer = $q.defer();
         this.configObject.projectKey = project_key;
-        var rslt = this.getPagedDataAsync(this.configObject.pagingOptions.pageSize, this.configObject.pagingOptions.currentPage, extra_filters).then(function(result){          
+        var rslt = this.getPagedDataAsync(this.configObject.pagingOptions.pageSize, 1, extra_filters).then(function(result){          
           return result;
         });
 
@@ -66,15 +66,28 @@ angular.module('ngChemApp')
 
       angular.extend(this.configObject.filters, extra_filters);
       angular.extend(this.configObject.filters, coreFilters);
-      //this.configObject.filters = coreFilters;
 
 
       var rslt = CBHCompoundBatch.query(this.configObject.projectKey, this.configObject.filters).then(function(result) {
         defer.resolve(result);
+
         
       });
       return defer.promise;
     };
+
+    this.exportFullResults = function(format) {
+
+      var exportsJson = angular.copy(this.configObject.filters);
+
+      angular.extend(exportsJson, {'format': format, responseType: 'arraybuffer', limit:0, offset: 0});
+
+      var rslt = CBHCompoundBatch.export(exportsJson).then(function(result) {
+        var objectUrl = URL.createObjectURL(result);
+        window.open(objectUrl, '_self');
+        URL.revokeObjectURL(objectURL);
+      });
+    }
     
     
   }]);

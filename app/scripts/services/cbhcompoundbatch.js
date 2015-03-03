@@ -8,7 +8,7 @@
  * Factory in the ngChemApp.
  */
 angular.module('ngChemApp')
-  .factory('CBHCompoundBatch', ['$http', '$q'  ,function ($http) {
+  .factory('CBHCompoundBatch', ['$http', '$q'  ,function ($http, $q) {
     // Service logic
     // ...
 
@@ -121,9 +121,9 @@ angular.module('ngChemApp')
             url:myUrl,
             method:'GET',
             params: searchForm,
-            headers: {
+            /*headers: {
                'Content-Type': 'application/json'
-             }
+             }*/
         }).then(function(data){
             return data.data;
         });
@@ -163,8 +163,40 @@ angular.module('ngChemApp')
         );
         return promise;
     };
-    CBHCompoundBatch.export = function(fileType, currentBatch) {
-        return $http.get( myUrl, { "fileType":fileType, "currentBatch": currentBatch } );
+    CBHCompoundBatch.export = function(format, filters) {
+        var defer = $q.defer();
+        $http.get( myUrl, { params: filters } )
+          .then(function(result) {
+            // this callback will be called asynchronously
+            // when the response is available
+            /*var blob = new Blob([data], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
+            var objectUrl = URL.createObjectURL(blob);
+            window.location = objectUrl;*/
+            defer.resolve(result);
+          },
+          function() {
+            // called asynchronously if an error occurs
+            // or server returns response with an error status.
+            defer.reject();
+          });
+          return defer.promise;
+
+    }
+
+    CBHCompoundBatch.export = function(searchForm) {
+        var promise = $http({
+            url:myUrl,
+            method:'GET',
+            params: searchForm,
+            responseType: 'arraybuffer',
+            /*headers: {
+               'Content-Type': 'application/json'
+             }*/
+        }).then(function(data){
+            var blob = new Blob([data.data], {type: data.headers("Content-Type")});
+            return blob;
+        });
+        return promise;
     }
 
     return CBHCompoundBatch;

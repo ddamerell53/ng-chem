@@ -68,24 +68,24 @@
 		        </div>
 		        </div>
 
-		        <div class="form-group">
+		        <!-- <div class="form-group">
 					<div class="pull-right col-xs-1">
 						<info-box freetext="Limit your search results to a single user's uploads"></info-box>
 					</div>
 					<label for="addedBy" class="col-xs-2 control-label">Added By</label>
 					<div class="col-xs-9">
-						<!-- <select class="form-control" name="addedBy" ng-options="item.name | titlecase for item in searchForm.users track by item.user_name" ng-model="searchForm.addedBy"> -->
+						<select class="form-control" name="addedBy" ng-options="item.name | titlecase for item in searchForm.users track by item.user_name" ng-model="searchForm.addedBy">
 						<select class="form-control" name="addedBy" ng-options="item.name | titlecase for item in searchForm.projects track by item.project_key" ng-model="searchForm.selectedProject"></select>
 					</div>
 									
-				</div>
+				</div> -->
 				<div class="row">
 				</div>
 				<div class="form-group">
 						<div class="col-xs-12">
 							<div class="radio">
 								<label>
-									<input type="radio" name="strucOpt" ng-model="searchForm.substruc" value="flexmatch" checked> Exact Match
+									<input type="radio" name="strucOpt" ng-model="searchForm.substruc" value="flexmatch"> Exact Match
 								</label>
 								<div class="pull-right"><info-box freetext="test"></info-box></div>
 							</div>
@@ -107,7 +107,7 @@
 						<div class="col-xs-6">
 							<div class="radio">
 								<label>
-									<input type="radio" name="strucOpt" ng-model="searchForm.substruc" value="similar_to"> Fingerprint Similarity 
+									<input type="radio" name="strucOpt" ng-model="searchForm.substruc" ng-value="similar_to"> Fingerprint Similarity 
 								</label>
 								
 
