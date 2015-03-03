@@ -8,7 +8,11 @@
  * Controller of the ngChemApp
  */
 angular.module('ngChemApp')
+<<<<<<< HEAD
   .controller('BatchesCtrl',['$scope', '$modal', '$timeout', '$q', '$stateParams','$location', 'gridconfig', 'projectKey', function ($scope, $modal, $timeout, $q, $stateParams, $location, gridconfig, projectKey) {
+=======
+    .controller('BatchesCtrl',['$scope', '$modal', '$timeout', 'gridconfig', 'projectKey', function ($scope, $modal, $timeout, gridconfig, projectKey) {
+>>>>>>> 4b81ee6b3e4fad06d378def1b1c42363caa9882c
     var filters = { };
     if($scope.validatedData) {
       filters = {multiple_batch_id : $scope.validatedData.currentBatch }

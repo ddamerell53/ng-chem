@@ -11,9 +11,9 @@
 		ui-sref="projects.project.demo.intro" 
 		ng-click="startAgain($flow.files)">Register more compounds</a>
 
-			<a class="btn btn-primary" role="button" href="/chemblws/cbh_compound_batches/?format=xls&multiple_batch_id={{validatedData.currentBatch}}">Export to Excel</a>
+			<a class="btn btn-primary" role="button" href="{{ urlBase }}/?format=xls&multiple_batch_id={{validatedData.currentBatch}}">Export to Excel</a>
 		
-			<a class="btn btn-primary" role="button" href="/chemblws/cbh_compound_batches/?format=sdf&multiple_batch_id={{validatedData.currentBatch}}">Export to SD</a>
+			<a class="btn btn-primary" role="button" href="{{ urlBase }}/?format=sdf&multiple_batch_id={{validatedData.currentBatch}}">Export to SD</a>
 
 </div>
 
@@ -28,8 +28,8 @@
 		ui-sref="projects.project.demo.intro" 
 		ng-click="startAgain($flow.files)">Register more compounds</a>
 
-			<a class="btn btn-primary" role="button" href="/chemblws/cbh_compound_batches/?format=xls&multiple_batch_id={{validatedData.currentBatch}}">Export to Excel</a>
+			<a class="btn btn-primary" role="button" href="{{ urlBase }}/?format=xls&multiple_batch_id={{validatedData.currentBatch}}">Export to Excel</a>
 		
-			<a class="btn btn-primary" role="button" href="/chemblws/cbh_compound_batches/?format=sdf&multiple_batch_id={{validatedData.currentBatch}}">Export to SD</a>
+			<a class="btn btn-primary" role="button" href="{{ urlBase }}/?format=sdf&multiple_batch_id={{validatedData.currentBatch}}">Export to SD</a>
 		
 </div>

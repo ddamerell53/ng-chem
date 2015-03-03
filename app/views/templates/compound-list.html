@@ -4,8 +4,13 @@
 		<h2 class="blue pull-left"><span class="glyphicon glyphicon-th-list"></span> Compound List </h2><info-box freetext="Click the image for more details about that molecule"></info-box><div class="dropdown pull-right">
 		<button id="downloadBtn" class="btn btn-primary btn-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-download"></span> <span class="hidden-xs hidden-sm">Download</span> <span class="caret"></span></button>
 		<ul class="dropdown-menu" role="menu" aria-labelledby="downloadBtn">
-			<li><a ng-click="exportSearch('xls')">Export to Excel</a></li>
-			<li><a ng-click="exportSearch('sdf')">Export to SD</a></li>
+
+			<!-- <li><a ng-click="exportSearch('xls')">Export to Excel</a></li>
+			<li><a ng-click="exportSearch('sdf')">Export to SD</a></li> -->
+
+			<li><a href="{{ urlBase }}/?project__project_key={{projectKey}}&format=xls">Export to Excel</a></li>
+			<li><a href="{{ urlBase }}/?project__project_key={{projectKey}}&format=sdf">Export to SD</a></li>
+
 		</ul>
 	</div>
 	</div>
