@@ -108,7 +108,7 @@ angular.module('ngChemApp')
 
     CBHCompoundBatch.search = function(searchForm) {
         var promise = $http({
-            url:myUrl,
+            url:urlConfig.cbh_compound_batches.list_endpoint,
             method:'GET',
             params: searchForm,
             headers: {

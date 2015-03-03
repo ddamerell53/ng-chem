@@ -432,7 +432,7 @@ angular.module('ngChemApp')
   
     
 }).config(['ngClipProvider', function(ngClipProvider) {
-    ngClipProvider.setPath("../bower_components/zeroclipboard/dist/ZeroClipboard.swf");
+    ngClipProvider.setPath("bower_components/zeroclipboard/dist/ZeroClipboard.swf");
 }])
   ;
 
