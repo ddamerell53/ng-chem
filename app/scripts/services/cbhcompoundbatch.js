@@ -154,46 +154,46 @@ angular.module('ngChemApp')
         );
         return promise;
     };
-<<<<<<< HEAD
-    CBHCompoundBatch.export = function(format, filters) {
-        var defer = $q.defer();
-        $http.get( myUrl, { params: filters } )
-          .then(function(result) {
-            // this callback will be called asynchronously
-            // when the response is available
-            /*var blob = new Blob([data], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
-            var objectUrl = URL.createObjectURL(blob);
-            window.location = objectUrl;*/
-            defer.resolve(result);
-          },
-          function() {
-            // called asynchronously if an error occurs
-            // or server returns response with an error status.
-            defer.reject();
-          });
-          return defer.promise;
 
-    }
+//     CBHCompoundBatch.export = function(format, filters) {
+//         var defer = $q.defer();
+//         $http.get( urlConfig.cbh_compound_batches.list_endpoint, { params: filters } )
+//           .then(function(result) {
+//             // this callback will be called asynchronously
+//             // when the response is available
+//             /*var blob = new Blob([data], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
+//             var objectUrl = URL.createObjectURL(blob);
+//             window.location = objectUrl;*/
+//             defer.resolve(result);
+//           },
+//           function() {
+//             // called asynchronously if an error occurs
+//             // or server returns response with an error status.
+//             defer.reject();
+//           });
+//           return defer.promise;
 
-    CBHCompoundBatch.export = function(searchForm) {
-        var promise = $http({
-            url:myUrl,
-            method:'GET',
-            params: searchForm,
-            responseType: 'arraybuffer',
-            /*headers: {
-               'Content-Type': 'application/json'
-             }*/
-        }).then(function(data){
-            var blob = new Blob([data.data], {type: data.headers("Content-Type")});
-            return blob;
-        });
-        return promise;
-=======
-    CBHCompoundBatch.export = function(fileType, currentBatch) {
-        return $http.get( urlConfig.cbh_compound_batches.list_endpoint, { "fileType":fileType, "currentBatch": currentBatch } );
->>>>>>> 4b81ee6b3e4fad06d378def1b1c42363caa9882c
-    }
+//     }
+
+//     CBHCompoundBatch.export = function(searchForm) {
+//         var promise = $http({
+//             url:myUrl,
+//             method:'GET',
+//             params: searchForm,
+//             responseType: 'arraybuffer',
+//             /*headers: {
+//                'Content-Type': 'application/json'
+//              }*/
+//         }).then(function(data){
+//             var blob = new Blob([data.data], {type: data.headers("Content-Type")});
+//             return blob;
+//         });
+//         return promise;
+// =======
+//     CBHCompoundBatch.export = function(fileType, currentBatch) {
+//         return $http.get( urlConfig.cbh_compound_batches.list_endpoint, { "fileType":fileType, "currentBatch": currentBatch } );
+// >>>>>>> 4b81ee6b3e4fad06d378def1b1c42363caa9882c
+//     }
 
     return CBHCompoundBatch;
 
