@@ -428,6 +428,10 @@ angular.module('ngChemApp')
           loggedIn = true;
         }
         return loggedIn;
+    };
+
+    $rootScope.getUrlBase = function() {
+      return urlConfig.instance_path.url_frag;
     }
 
 
