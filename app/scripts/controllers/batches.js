@@ -8,7 +8,7 @@
  * Controller of the ngChemApp
  */
 angular.module('ngChemApp')
-  .controller('BatchesCtrl',['$scope', '$modal', '$timeout', '$q', '$stateParams','$location', 'gridconfig', 'projectKey', function ($scope, $modal, $timeout, $q, $stateParams, $location, gridconfig, projectKey) {
+  .controller('BatchesCtrl',['$scope', '$modal', '$timeout', '$q', '$state', '$stateParams','$location', 'gridconfig', 'projectKey', function ($scope, $modal, $timeout, $q, $state, $stateParams, $location, gridconfig, projectKey) {
     var filters = { };
     if($scope.validatedData) {
       filters = {multiple_batch_id : $scope.validatedData.currentBatch }
@@ -20,9 +20,9 @@ angular.module('ngChemApp')
     $scope.gridconfig = gridconfig;
 
     
-      if($stateParams.offset && $stateParams.limit) {
-          $scope.gridconfig.configObject.pagingOptions.pageSize = ($stateParams.limit || 20);
-          $scope.gridconfig.configObject.pagingOptions.currentPage = parseInt($stateParams.offset) / parseInt($stateParams.limit);
+      if($state.params.offset && $state.params.limit) {
+          $scope.gridconfig.configObject.pagingOptions.pageSize = ($state.params.limit || 20);
+          $scope.gridconfig.configObject.pagingOptions.currentPage = parseInt($state.params.offset) / parseInt($state.params.limit);
         }
         else {
           $scope.gridconfig.configObject.pagingOptions.pageSize = 20;
@@ -31,6 +31,7 @@ angular.module('ngChemApp')
         //empty the compounds?
         $scope.gridconfig.configObject.compounds = [];
         $scope.gridconfig.configObject.filters = filters;
+        $scope.gridconfig.configObject.paramsUrl = ($scope.projectKey) ? "project__project_key=" + $scope.projectKey : "" ;
     
 
     

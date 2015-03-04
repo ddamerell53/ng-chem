@@ -11,7 +11,7 @@
 angular.module('ngChemApp')
 
 
-  .config(function ($stateProvider, $urlRouterProvider) {
+  .config(function ($stateProvider, $urlRouterProvider, $urlMatcherFactoryProvider) {
       
           // catch all route
     // send users to the form page 
@@ -26,7 +26,7 @@ angular.module('ngChemApp')
         }
         // because we've returned nothing, no state change occurs
     });*/
-
+      $urlMatcherFactoryProvider.defaultSquashPolicy("slash");      
       var modalInstance;
       $stateProvider
           
@@ -44,11 +44,13 @@ angular.module('ngChemApp')
 
         .state('search', {
             url: '/search?project__project_key&flexmatch&with_substructure&similar_to&fpValue&created__gte&created__lte&molfile&smiles&limit&offset',
+            //url: '/search',
             data: {
               login_rule: function($rootScope) {
                 return $rootScope.isLoggedIn();
               }
             },
+            //params: ['project__project_key', 'flexmatch', 'with_substructure', 'similar_to', 'fpValue', 'created__gte', 'created__lte', 'molfile', 'smiles', 'limit', 'offset', 'random'],
             resolve:{
               gridconfig: ['CompoundListSetup', function(CompoundListSetup){
                   return CompoundListSetup;
@@ -123,7 +125,7 @@ angular.module('ngChemApp')
         })
 
         .state('projects.list.project', {
-            url: '/:projectKey&limit&offset',
+            url: '/:projectKey?limit&offset',
             resolve: {
               projectKey: ['$stateParams', function($stateParams){
                   return $stateParams.projectKey;
@@ -376,7 +378,7 @@ angular.module('ngChemApp')
 
     $http.defaults.headers.post['X-CSRFToken'] = $cookies.csrftoken;
        
-        console.log(urlConfig);
+        //console.log(urlConfig);
         $rootScope.logged_in_user = {};
     $rootScope.projects = {};
 
@@ -392,14 +394,14 @@ angular.module('ngChemApp')
     
 
     $rootScope.$on('$stateChangeStart', function(e, to) {
-      console.log(to.name);
+      //console.log(to.name);
       if (to.name == '404') return;
       if(to.name.lastIndexOf('singleCompound', 0) === 0) return;
       if (!angular.isFunction(to.data.login_rule)) return;
       var result = to.data.login_rule($rootScope);
 
       if (result && result.to) {
-        console.log("result and result.to is passing");
+        //console.log("result and result.to is passing");
         e.preventDefault();
         // Optionally set option.notify to false if you don't want 
         // to retrigger another $stateChangeStart event

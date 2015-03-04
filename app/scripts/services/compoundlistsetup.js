@@ -8,7 +8,7 @@
  * Factory in the ngChemApp.
  */
 angular.module('ngChemApp')
-  .service('CompoundListSetup', [ 'CBHCompoundBatch', '$rootScope', '$stateParams', '$q', function (CBHCompoundBatch, $rootScope, $stateParams, $q) {
+  .service('CompoundListSetup', [ 'CBHCompoundBatch', '$rootScope', '$stateParams', '$q', 'urlConfig', function (CBHCompoundBatch, $rootScope, $stateParams, $q, urlConfig) {
     
     //var CompoundListSetup = {};
     this.configObject = {};
@@ -21,6 +21,8 @@ angular.module('ngChemApp')
       currentPage: 1
     };
     this.configObject.filters = {};
+    this.configObject.baseUrl = urlConfig.cbh_compound_batches.list_endpoint;
+    this.configObject.paramsUrl = "";
     this.configObject.gridOptions = {    data: 'gridconfig.configObject.compounds',
                                                       showColumnMenu:true,
                                                       enableColumnReordering:true,

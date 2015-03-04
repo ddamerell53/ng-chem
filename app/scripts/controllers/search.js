@@ -8,7 +8,7 @@
  * Controller of the ngChemApp
  */
 angular.module('ngChemApp')
-  .controller('SearchCtrl',['$scope', '$rootScope', '$filter', '$stateParams', '$location', 'projectFactory', 'gridconfig', 'CBHCompoundBatch', function ($scope, $rootScope, $filter, $stateParams, $location, projectFactory, gridconfig, CBHCompoundBatch) {
+  .controller('SearchCtrl',['$scope', '$rootScope', '$filter', '$stateParams', '$location', '$state', 'projectFactory', 'gridconfig', 'CBHCompoundBatch', function ($scope, $rootScope, $filter, $stateParams, $location, $state, projectFactory, gridconfig, CBHCompoundBatch) {
     
     $scope.initialiseFromUrl = function(){
         if ($stateParams.with_substructure) {
@@ -78,11 +78,26 @@ angular.module('ngChemApp')
 
             
         });
-        var url = '/search?project__project_key=' + (params.project__project_key || "") + '&flexmatch=' +  (params.flexmatch || "")
-                    + '&with_substructure=' + (params.with_substructure || "") + '&similar_to=' + (params.similar_to || "") 
-                    + '&fpValue=' + (params.fpValue || "") + '&created__gte=' + (params.created__gte || "") + '&created__lte=' + (params.created__lte || "") 
-                    + '&smiles=' + (params.smiles || "") + '&limit=&offset=';
-        $location.url(url);
+        var stateUrl = "/search?";
+
+        console.log(params.with_substructure);
+        console.log($scope.searchForm.molecule.molfile );
+
+        //we now need to put the parameters we've generated from this search into a string which can be used as filters by the export options.
+        //the export will not tolerate present but empty params so we have to only add them if they are present.
+        var project_frag = (params.project__project_key) ? ("project__project_key=" + params.project__project_key + "&") : "";
+        var flexmatch_frag = (params.flexmatch) ? ("flexmatch=" + encodeURIComponent(params.flexmatch) + "&") : "";
+        var with_substructure_frag = (params.with_substructure) ? ("with_substructure=" + encodeURIComponent(params.with_substructure) + "&") : "";
+        var similar_to_frag = (params.similar_to) ? ("similar_to=" + encodeURIComponent(params.similar_to) + "&") : "";
+        var fpValue_frag = (params.fpValue) ? ("fpValue=" + params.fpValue + "&") : "";
+        var created__gte_frag = (params.created__gte) ? ("created__gte=" + params.created__gte + "&") : "";
+        var created__lte_frag = (params.created__lte) ? ("created__lte=" + params.created__lte + "&") : "";
+        var smiles_frag = (params.smiles) ? ("smiles=" + params.smiles + "&") : "";
+
+        var paramsUrl = project_frag + flexmatch_frag + with_substructure_frag + similar_to_frag + fpValue_frag + created__gte_frag + created__lte_frag + smiles_frag;
+
+        $location.url(stateUrl + paramsUrl + '&limit=&offset=');
+        gridconfig.configObject.paramsUrl = paramsUrl;
     }
 
     $scope.searchForm = { molecule: { molfile: "" } };
