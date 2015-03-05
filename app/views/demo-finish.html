@@ -11,14 +11,10 @@
 		ui-sref="projects.project.demo.intro" 
 		ng-click="startAgain($flow.files)">Register more compounds</a>
 
-		<button id="downloadBtn" class="btn btn-primary btn-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-download"></span> <span class="hidden-xs hidden-sm">Download</span> <span class="caret"></span></button>
-		<ul class="dropdown-menu" role="menu" aria-labelledby="downloadBtn">
+			<a class="btn btn-primary" role="button" href="{{ urlConfig.cbh_compound_batches.list_endpoint  }}/?projectKey={{projectKey}}&project__project_key={{projectKey}}&?format=xls&multiple_batch_id={{validatedData.currentBatch}}">Export to Excel</a>
+		
+			<a class="btn btn-primary" role="button" href="{{ urlConfig.cbh_compound_batches.list_endpoint  }}/?projectKey={{projectKey}}&project__project_key={{projectKey}}&format=sdf&multiple_batch_id={{validatedData.currentBatch}}">Export to SD</a>
 
-			<!-- <li><a ng-click="exportSearch('xls')">Export to Excel</a></li>
-			<li><a ng-click="exportSearch('sdf')">Export to SD</a></li> -->
-				<li><a ng-href="{{  urlConfig.cbh_compound_batches.list_endpoint }}/?projectKey={{projectKey}}&project__project_key={{projectKey}}&format=xls&multiple_batch_id={{validatedData.currentBatch}}">Export to Excel</a></li>
-				<li><a ng-href="{{  urlConfig.cbh_compound_batches.list_endpoint }}/?projectKey={{projectKey}}&project__project_key={{projectKey}}&format=sdf&multiple_batch_id={{validatedData.currentBatch}}">Export to SD</a></li>
-		</ul>
 </div>
 
 <!-- <div class="row">
@@ -32,17 +28,9 @@
 		ui-sref="projects.project.demo.intro" 
 		ng-click="startAgain($flow.files)">Register more compounds</a>
 
+		<a class="btn btn-primary" role="button" href="{{ urlConfig.cbh_compound_batches.list_endpoint  }}/?projectKey={{projectKey}}&project__project_key={{projectKey}}&?format=xls&multiple_batch_id={{validatedData.currentBatch}}">Export to Excel</a>
+		
+			<a class="btn btn-primary" role="button" href="{{ urlConfig.cbh_compound_batches.list_endpoint  }}/?projectKey={{projectKey}}&project__project_key={{projectKey}}&format=sdf&multiple_batch_id={{validatedData.currentBatch}}">Export to SD</a>
 
-		<button id="downloadBtn" class="btn btn-primary btn-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-download"></span> <span class="hidden-xs hidden-sm">Download</span> <span class="caret"></span></button>
-		<ul class="dropdown-menu" role="menu" aria-labelledby="downloadBtn">
-
-			<!-- <li><a ng-click="exportSearch('xls')">Export to Excel</a></li>
-			<li><a ng-click="exportSearch('sdf')">Export to SD</a></li> -->
-				<li><a ng-href="{{  urlConfig.cbh_compound_batches.list_endpoint }}/?projectKey={{projectKey}}&project__project_key={{projectKey}}&format=xls&multiple_batch_id={{validatedData.currentBatch}}">Export to Excel</a></li>
-				<li><a ng-href="{{  urlConfig.cbh_compound_batches.list_endpoint }}/?projectKey={{projectKey}}&project__project_key={{projectKey}}&format=sdf&multiple_batch_id={{validatedData.currentBatch}}">Export to SD</a></li>
-		</ul>
-
+		
 </div>
-<script>
-$('.btn-toggle').dropdown()
-</script>
