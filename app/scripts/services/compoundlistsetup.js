@@ -22,6 +22,7 @@ angular.module('ngChemApp')
     };
     this.configObject.filters = {};
     this.configObject.baseUrl = urlConfig.cbh_compound_batches.list_endpoint;
+    console.log(urlConfig);
     this.configObject.paramsUrl = "";
     this.configObject.gridOptions = {    data: 'gridconfig.configObject.compounds',
                                                       showColumnMenu:true,

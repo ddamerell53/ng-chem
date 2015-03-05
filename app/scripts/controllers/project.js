@@ -8,10 +8,10 @@
  * Controller of the ngChemApp
  */
 angular.module('ngChemApp')
-  .controller('ProjectCtrl', [ '$scope', '$rootScope', '$state', 'ProjectFactory', 'MessageFactory', '$stateParams', function ($scope, $rootScope, $state, ProjectFactory, MessageFactory, $stateParams) {
+  .controller('ProjectCtrl', [ '$scope', '$rootScope', '$state', 'ProjectFactory', 'MessageFactory', '$stateParams','urlConfig', function ($scope, $rootScope, $state, ProjectFactory, MessageFactory, $stateParams, urlConfig) {
     //stuff
     //$scope.currentProjectKey = $stateParams.projectKey;
-
+    $scope.urlConfig =  urlConfig;
     $rootScope.headline = "Projects";
     $rootScope.subheading = "Click 'Show Project List' to see your projects";
     $rootScope.help_lookup = "projects_help"

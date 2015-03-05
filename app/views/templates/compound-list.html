@@ -7,10 +7,8 @@
 
 			<!-- <li><a ng-click="exportSearch('xls')">Export to Excel</a></li>
 			<li><a ng-click="exportSearch('sdf')">Export to SD</a></li> -->
-
-			<li><a href="{{ gridconfig.configObject.baseUrl }}?{{ gridconfig.configObject.paramsUrl }}&format=xls">Export to Excel</a></li>
-			<li><a href="{{ gridconfig.configObject.baseUrl }}?{{ gridconfig.configObject.paramsUrl }}&format=sdf">Export to SD</a></li>
-
+				<li><a ng-href="{{  urlConfig.cbh_compound_batches.list_endpoint }}/?projectKey={{projectKey}}&project__project_key={{projectKey}}&format=xls">Export to Excel</a></li>
+				<li><a ng-href="{{  urlConfig.cbh_compound_batches.list_endpoint }}/?projectKey={{projectKey}}&project__project_key={{projectKey}}&format=sdf">Export to SD</a></li>
 		</ul>
 	</div>
 	</div>
