@@ -15,9 +15,9 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
 
        $scope.urlConfig =  urlConfig;
       var arr = window.location.href.split("/");
-      $scope.myUrl = arr[0] + "//" + arr[2] + $scope.urlBase;
+      $scope.myUrl = arr[0] + "//" + arr[2] ;
 	$scope.csrftoken = $cookies[prefix + "csrftoken"];
-    $scope.flowinit = {target: prefix + '/flow/upload/', headers: { 'X-CSRFToken': $scope.csrftoken } };
+    $scope.flowinit = {target: urlConfig.instance_path.url_frag + '/flow/upload/', headers: { 'X-CSRFToken': $scope.csrftoken } };
         $scope.addCustomField = function() {
           var newItemNo = $scope.cust_fields_count + 1;
           $scope.molecule.metadata.custom_fields.push( { 'name':'', 'value':'', 'id':newItemNo } );
