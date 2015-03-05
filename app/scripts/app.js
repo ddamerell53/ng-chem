@@ -374,9 +374,9 @@ angular.module('ngChemApp')
         
 
 
-  }).run(function($http, $cookies, $rootScope, $document, $state, LoginService, ProjectFactory, urlConfig) {
+  }).run(function($http, $cookies, $rootScope, $document, $state, LoginService, ProjectFactory, urlConfig, prefix) {
 
-    $http.defaults.headers.post['X-CSRFToken'] = $cookies.csrftoken;
+    $http.defaults.headers.post['X-CSRFToken'] = $cookies[prefix + "csrftoken"];
        
         //console.log(urlConfig);
         $rootScope.logged_in_user = {};

@@ -1,6 +1,6 @@
 <app-progress wizard='wizard'></app-progress>
 
-<div class="col-xs-12" flow-init="{target: '/chemblws/flow/upload/', headers: { 'X-CSRFToken': csrftoken } }"
+<div class="col-xs-12" flow-init="flowinit"
 				 flow-name="filedata.flow"
 			     flow-files-submitted="$flow.upload()"
 			     flow-file-success="assignFileId($file.uniqueIdentifier, $file.getExtension())">

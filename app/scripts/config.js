@@ -22,3 +22,6 @@ angular.module('ngChemApp').value('urlConfig',
   configuration
 );
 
+angular.module('ngChemApp').value('prefix',  
+  part
+);

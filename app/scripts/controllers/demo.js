@@ -10,12 +10,14 @@
 var app = angular.module('ngChemApp');
 
 
-app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 'MessageFactory', 'CBHCompoundBatch','$cookies' ,'$timeout', '$stateParams', 'projectKey', function ($scope, $rootScope, $state, ChEMBLFactory, MessageFactory, CBHCompoundBatch, $cookies, $timeout, $stateParams, projectKey) {
+app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 'MessageFactory', 'CBHCompoundBatch','$cookies' ,'$timeout', '$stateParams', 'projectKey', 'prefix', 
+    function ($scope, $rootScope, $state, ChEMBLFactory, MessageFactory, CBHCompoundBatch, $cookies, $timeout, $stateParams, projectKey, prefix) {
 
        $scope.urlBase =  '';
       var arr = window.location.href.split("/");
       $scope.myUrl = arr[0] + "//" + arr[2] + $scope.urlBase;
-	$scope.csrftoken = $cookies.csrftoken;
+	$scope.csrftoken = $cookies[prefix + "csrftoken"];
+    $scope.flowinit = {target: pf + '/flow/upload/', headers: { 'X-CSRFToken': csrftoken } };
         $scope.addCustomField = function() {
           var newItemNo = $scope.cust_fields_count + 1;
           $scope.molecule.metadata.custom_fields.push( { 'name':'', 'value':'', 'id':newItemNo } );
