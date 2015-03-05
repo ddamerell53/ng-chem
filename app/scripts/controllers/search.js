@@ -8,7 +8,7 @@
  * Controller of the ngChemApp
  */
 angular.module('ngChemApp')
-  .controller('SearchCtrl',['$scope', '$rootScope', '$filter', '$stateParams', '$location', '$state', 'projectFactory', 'gridconfig', 'CBHCompoundBatch', function ($scope, $rootScope, $filter, $stateParams, $location, $state, projectFactory, gridconfig, CBHCompoundBatch) {
+  .controller('SearchCtrl',['$scope', '$rootScope', '$filter', '$stateParams', '$location', '$state', '$timeout', 'projectFactory', 'gridconfig', 'CBHCompoundBatch', 'urlConfig', function ($scope, $rootScope, $filter, $stateParams, $location, $state, $timeout, projectFactory, gridconfig, CBHCompoundBatch, urlConfig) {
     
     $scope.initialiseFromUrl = function(){
         if ($stateParams.with_substructure) {
@@ -34,6 +34,20 @@ angular.module('ngChemApp')
         $scope.searchForm.dateEnd = $stateParams.created__lte;
         $scope.searchForm.smiles = $stateParams.smiles;
 
+        projectFactory.get().$promise.then(function(res) {
+          $scope.searchForm.projects = res.objects;
+          angular.forEach($scope.searchForm.projects, function(project) {
+            
+            if($stateParams.project__project_key && project.project_key == $stateParams.project__project_key) {
+
+                $scope.searchForm.selectedProject = project;
+            }
+          });
+          
+        });
+
+        
+
     };
 
     $scope.runSearch = function() {
@@ -45,11 +59,8 @@ angular.module('ngChemApp')
         //construct get parameters in the format required by the web service
         var params = {}
         if($scope.searchForm.selectedProject) {
-            params.project__project_key = $scope.searchForm.selectedProject.projectKey;    
+            params["project__project_key"] = $scope.searchForm.selectedProject.project_key;    
         }
-        /*if($scope.searchForm.smiles) {
-            params.smiles = $scope.searchForm.smiles;
-        }*/
         //it would be great to automagically populate a pasted smiles string into the sketcher
         //for now though, just send the smiles to the web service
         if ($scope.searchForm.smiles) {
@@ -80,11 +91,9 @@ angular.module('ngChemApp')
         });
         var stateUrl = "/search?";
 
-        console.log(params.with_substructure);
-        console.log($scope.searchForm.molecule.molfile );
-
         //we now need to put the parameters we've generated from this search into a string which can be used as filters by the export options.
         //the export will not tolerate present but empty params so we have to only add them if they are present.
+
         var project_frag = (params.project__project_key) ? ("project__project_key=" + params.project__project_key + "&") : "";
         var flexmatch_frag = (params.flexmatch) ? ("flexmatch=" + encodeURIComponent(params.flexmatch) + "&") : "";
         var with_substructure_frag = (params.with_substructure) ? ("with_substructure=" + encodeURIComponent(params.with_substructure) + "&") : "";
@@ -93,6 +102,7 @@ angular.module('ngChemApp')
         var created__gte_frag = (params.created__gte) ? ("created__gte=" + params.created__gte + "&") : "";
         var created__lte_frag = (params.created__lte) ? ("created__lte=" + params.created__lte + "&") : "";
         var smiles_frag = (params.smiles) ? ("smiles=" + params.smiles + "&") : "";
+        console.log(project_frag);
 
         var paramsUrl = project_frag + flexmatch_frag + with_substructure_frag + similar_to_frag + fpValue_frag + created__gte_frag + created__lte_frag + smiles_frag;
 
@@ -102,25 +112,24 @@ angular.module('ngChemApp')
 
     $scope.searchForm = { molecule: { molfile: "" } };
 
-    //initialise from URL parameters if present
-    $scope.initialiseFromUrl();
-
     $scope.results = {};
 
     $rootScope.projectKey = "Projects";
 
+    //initialise from URL parameters if present
+    $scope.initialiseFromUrl();
+
+    
+
     //pull in the list of projects to put into the project selector
-    projectFactory.get().$promise.then(function(res) {
-      $scope.searchForm.projects = res.objects;
-    });
+    
 
     //initialise structure search type as exact if there are no existing search parameters
     if(!$scope.searchForm.substruc) {
         $scope.searchForm.substruc = "flexmatch";    
     }
 
-    //initialise the grid to reflect the search
-    $scope.runSearch();
+    
 
     $scope.datepickers = {
     	dateStart: false,
@@ -180,7 +189,11 @@ angular.module('ngChemApp')
             console.log(error);
         });*/
 
-
+        //initialise the grid to reflect the search
+        $timeout(function() {
+            $scope.runSearch();
+        },200);
+        
 
 
     
