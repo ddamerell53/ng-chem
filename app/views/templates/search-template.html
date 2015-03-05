@@ -42,30 +42,34 @@
 				</div>
 
 				<div class="form-group">
-				<div class="col-xs-6">
-					
-			        	<label for="startDate" class="control-label col-xs-4 ">From</label>
-			            <div class="input-group col-xs-8">
-			              <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="searchForm.dateStart" is-open="datepickers.dateStart" min-date="minDate" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" close-text="Close" name="startDate">
-			              <div class="input-group-btn">
-			                <button type="button" class="btn btn-default" ng-click="openCal($event, 'dateStart')"><i class="glyphicon glyphicon-calendar"></i></button>
-			              </div>
-			            </div>
+				
+						<div class="pull-right col-xs-1"><info-box freetext="Limit your search results by date"></info-box></div>
+			        	<label for="startDate" class="control-label col-xs-2 ">From</label>
+			            <div class="col-xs-4">
+				            <div class="input-group">
+				              <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="searchForm.dateStart" is-open="datepickers.dateStart" min-date="minDate" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" close-text="Close" name="startDate">
+				              <div class="input-group-btn">
+				                <button type="button" class="btn btn-default" ng-click="openCal($event, 'dateStart')"><i class="glyphicon glyphicon-calendar"></i></button>
+				              </div>
+				            </div>
+				        </div>
 			         
-		         </div>
+		         
 		        
 
-		        <div class="col-xs-6">
+		        
 					
-			        	<label for="startDate" class="col-xs-2 control-label">To</label>
-			            <div class="input-group col-xs-8">
-			              <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="searchForm.dateEnd" is-open="datepickers.dateEnd" min-date="minDate" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" close-text="Close" name="endDate">
-			              <div class="input-group-btn">
-			                <button type="button" class="btn btn-default" ng-click="openCal($event, 'dateEnd')"><i class="glyphicon glyphicon-calendar"></i></button>
-			              </div>
+			        	<label for="startDate" class="col-xs-1 control-label">To</label>
+			        	<div class="col-xs-4">
+				            <div class="input-group ">
+				              <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="searchForm.dateEnd" is-open="datepickers.dateEnd" min-date="minDate" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" close-text="Close" name="endDate">
+				              <div class="input-group-btn">
+				                <button type="button" class="btn btn-default" ng-click="openCal($event, 'dateEnd')"><i class="glyphicon glyphicon-calendar"></i></button>
+				              </div>
+			            	</div>
 			            </div>
 			        
-		        </div>
+		        
 		        </div>
 
 		        <!-- <div class="form-group">
@@ -82,23 +86,25 @@
 				<div class="row">
 				</div>
 				<div class="form-group">
-						<div class="col-xs-12">
+					<div class="pull-right col-xs-1"><info-box freetext="Find compounds MATCHING your sketch or SMILES"></info-box></div>
+						<div class="col-xs-9 col-xs-offset-2">
 							<div class="radio">
 								<label>
 									<input type="radio" name="strucOpt" ng-model="searchForm.substruc" value="flexmatch"> Exact Match
 								</label>
-								<div class="pull-right"><info-box freetext="test"></info-box></div>
+								
 							</div>
 
 						</div>
 					</div>
 					<div class="form-group">
-						<div class="col-xs-12">
+						<div class="pull-right col-xs-1"><info-box freetext="Find compounds CONTAINING your sketch or SMILES"></info-box></div>
+						<div class="col-xs-9 col-xs-offset-2">
 							<div class="radio">
 								<label>
 									<input type="radio" name="strucOpt" ng-model="searchForm.substruc" value="with_substructure"> Substructure
 								</label>
-								<div class="pull-right"><info-box freetext="test"></info-box></div>
+								
 							</div>
 
 						</div>
