@@ -107,7 +107,7 @@ angular.module('ngChemApp')
 
             batch_prereg_to_project_0: "No substances were already been registered in this project.",
             batch_prereg_to_project_1: "One substance has already been registered in this project. A new batch will be registered for this.",
-            batch_prereg_to_project_other: "substances have already been registered in this project. New batch will be registered for each of these.",
+            batch_prereg_to_project_other: "substances have already been registered in this project. A new batch will be registered for each of these.",
 
             batch_prereg_project_doesnt_allow: "This substance is valid and was already registered. A new batch cannot be registered due to project restrictions.",
 
@@ -119,6 +119,10 @@ angular.module('ngChemApp')
             batch_prereg_to_public_0: "No substances have already been registered as public.",
             batch_prereg_to_public_1: "One substance was already registered as public. A new private batch of this will be registered in this project.",
             batch_prereg_to_public_other: "substances have already been registered as public. New private batches will be registered in this project for each of these.",
+            batch_duplicates_0: "No duplicates were found",
+            batch_duplicates_1: "One duplicate was found and ignored.",
+            batch_duplicates_other: "duplicates were found and ignored.",
+
 
         //(change)
             batch_reg_recent_registration_error: "You have already registered this batch today. Are you sure you wish to continue?",

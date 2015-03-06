@@ -5,7 +5,7 @@
           </ng-pluralize></strong></p>
 </div>
 
-
+<!-- 
 <div >
     <div class="alert alert-success" ng-show="validatedData.total">
       <p><strong><ng-pluralize count="validatedData.new"
@@ -13,7 +13,7 @@
           </ng-pluralize>
       </strong></p>
   </div>
-</div>
+</div> -->
 
 
 <div >
@@ -30,6 +30,15 @@
     <div class="alert alert-warning" ng-show="validatedData.total">
       <p><strong><ng-pluralize count="validatedData.linkedpublic"
                  when="{ '0' : '{{messages.batch_prereg_to_public_0}}',  '1': '{{messages.batch_prereg_to_public_1}}', 'other' : '{} {{messages.batch_prereg_to_public_other}}' }">
+          </ng-pluralize>
+      </strong></p>
+  </div>
+</div>
+
+<div >
+    <div class="alert alert-danger" ng-show="validatedData.dupes > 0">
+      <p><strong><ng-pluralize count="validatedData.dupes"
+                 when="{ '0' : '{{messages.batch_duplicates_0}}',  '1': '{{messages.batch_duplicates_1}}', 'other' : '{} {{messages.batch_duplicates_other}}' }">
           </ng-pluralize>
       </strong></p>
   </div>
