@@ -34,9 +34,10 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
           
 
         };
-        $rootScope.headline = "Wizard"
+        $rootScope.headline =  "Back to " + projectKey + " project page";
         $rootScope.subheading= "Welcome to the ChemReg wizard"        
-        $rootScope.glyphicon = "flash";
+        $rootScope.glyphicon = "arrow-left";
+        $rootScope.tophref = (urlConfig.instance_path.url_frag + "r/#/projects/list/" + projectKey).replace("/devapi/r/","");
 
 
 //User has pressed cancel or finished a registration - clear out all of the populated data
