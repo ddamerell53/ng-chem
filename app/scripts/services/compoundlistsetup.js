@@ -54,7 +54,7 @@ angular.module('ngChemApp')
     this.initializeGridParams = function(project_key, extra_filters) {
         var defer = $q.defer();
         this.configObject.projectKey = project_key;
-        var rslt = this.getPagedDataAsync(this.configObject.pagingOptions.pageSize, 1, extra_filters).then(function(result){          
+        var rslt = this.getPagedDataAsync(this.configObject.pagingOptions.pageSize, this.configObject.pagingOptions.currentPage, extra_filters).then(function(result){          
           return result;
         });
 
