@@ -451,7 +451,7 @@ angular.module('ngChemApp')
         responseError: function(rejection) {
             if (rejection.status === 401) {
                 console.log("Response Error 401",rejection);
-                window.location = urlConfig.instance_path.url_frag + "login"
+                //window.location = urlConfig.instance_path.url_frag + "login"
                 //$location.path('/login').search('returnTo', $location.path());
             }
             return $q.reject(rejection);
