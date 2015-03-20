@@ -32,8 +32,8 @@ angular.module('ngChemApp')
         $scope.gridconfig.configObject.compounds = [];
         $scope.gridconfig.configObject.filters = filters;
         var projkey_frag = ($scope.projectKey) ? "project__project_key=" + $scope.projectKey + "&" : "" ;
-        var batch_frag = ($scope.validatedData) ? "multiple_batch_id=" + filters.multiple_batch_id : "" ;
-        $scope.gridconfig.configObject.paramsUrl = 
+        var batch_frag = ($scope.validatedData) ? "multiple_batch_id=" + filters.multiple_batch_id + "&" : "" ;
+        $scope.gridconfig.configObject.paramsUrl = projkey_frag + batch_frag;
     
 
     
