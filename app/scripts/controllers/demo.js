@@ -235,6 +235,7 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
     }
 
 	$scope.parseInput = function (){
+        
         $scope.filedata.flow.files=[];
         $scope.validatedData = {};
         $scope.ids_not_processed = false;
@@ -255,15 +256,17 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
         if (split){
             $scope.processInput();
         }
+        
                 
     };
 
     $scope.processInput = function(){
-
+            $scope.inProcessing = true;
             CBHCompoundBatch.validateList(projectKey, $scope.input_string.splitted).then(
                 function(data){
                     data.total=data.objects.length;
                     $scope.validatedData = data;
+                    $scope.inProcessing = false;
                 }, function(error){
                     $state.go('projects.project.demo.add.multiple');
                     $scope.ids_not_processed = true;
@@ -349,13 +352,11 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
     $scope.saveMultiBatchMolecules = function(){
         CBHCompoundBatch.saveMultiBatchMolecules(projectKey,$scope.validatedData.currentBatch, $scope.molecule.metadata.custom_fields).then(
             function(data){
-                /*CBHCompoundBatch.query(projectKey, {multiple_batch_id : $scope.validatedData.currentBatch}).then(function(result){
-                    $scope.finalData.objects = result.objects;
-                    $scope.finalData.meta = result.meta;
-                });*/
-            }, function(error){
+                $state.go("projects.project.demo.finish");
+            }, 
+            function(error){
                 $scope.validated = { 'errors': { 'invalidMolecule': true } };
-        });
+            });
     };
 
     //for the mapping step of lists of smiles/inchis
@@ -444,7 +445,7 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
         $scope.dragmodels.lists.headers = [];
         $scope.setupMapping();
         $scope.file_error = "";
-
+        $scope.filesInProcessing = true;
         CBHCompoundBatch.fetchHeaders(projectKey, $scope.uploaded_file_name).then(
 
             function(data){
@@ -454,6 +455,7 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
                   $scope.dragmodels.lists.headers.push({label: value});
                   $scope.struc_col_options.push({ name:value, value:value});
                 });
+                $scope.filesInProcessing = false;
             }, function(error){
                 $scope.headers_not_retrieved = true;
             });
@@ -471,7 +473,7 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
                     
                 });
                 
-
+                $scope.filesInProcessing = false;
             }, function(error){
                 console.log(error);
             });
@@ -488,13 +490,17 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
     //so they can be used in the validate methods provided for SMILES/InChi lists
     //this method also needs to pass the field mapping from the map page
     $scope.processFiles = function() {
+        $scope.filesInProcessing = true;
         CBHCompoundBatch.validateFiles(projectKey,$scope.uploaded_file_name, $scope.struc_col_str ).then(
                 function(data){
                     $scope.validatedData = data;
+                    $scope.filesInProcessing = false;
                 }, function(error){
+                    $scope.filesInProcessing = false;
                     $scope.file_error = "file_not_processed";
                 }
             )
+
     }
 
 
