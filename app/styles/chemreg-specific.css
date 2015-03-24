@@ -28,6 +28,11 @@ div.reg-nav ul.nav li h2 {
 strong.nexa {
   font-family:NexaLight;
 }
+.col-centered{
+    float: none;
+    margin: 0 auto;
+    
+}
 
 .gridStyle {
     border: 1px solid rgb(212,212,212);

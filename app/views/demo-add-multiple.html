@@ -32,12 +32,20 @@
 </div>
 
 <ng-include ng-show="input_string.inputstring" src="'views/templates/validation.html'"></ng-include>
-
+	<div ng-show="idsInProcessing" class="col-centered bubblingG">
+              <span id="bubblingG_1">
+              </span>
+              <span id="bubblingG_2">
+              </span>
+              <span id="bubblingG_3">
+              </span>
+	</div>
 <div class="row">
 	<div>
 		<a class="btn btn-primary pull-right" ng-disabled="idsInProcessing || ids_not_processed + format_not_detected" role="button" ui-sref="projects.project.demo.map.multiple" ng-click="">Process Ids</a> <!--ui-sref="projects.project.demo.map"-->
 	</div>
 </div>
+
 <div class="row">
 	<div class="alert alert-info">
 		<p><strong>...alternatively upload SD, Chemdraw or Excel file.</p>
@@ -110,7 +118,14 @@
 		<div class="alert alert-danger" id="file_error">{{messages.file_error}}</div>
 	</div>
 		<ng-include ng-hide="$flow.files.length == 0" src="'views/templates/validation.html'"></ng-include>
-	
+	<div ng-show="filesInProcessing" class="col-centered bubblingG">
+              <span id="bubblingG_1">
+              </span>
+              <span id="bubblingG_2">
+              </span>
+              <span id="bubblingG_3">
+              </span>
+	</div>
 		
 <div class="row">
 	<div>

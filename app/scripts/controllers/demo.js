@@ -38,10 +38,13 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
         $rootScope.subheading= "Welcome to the ChemReg wizard"        
         $rootScope.glyphicon = "arrow-left";
         $rootScope.tophref = (urlConfig.instance_path.url_frag + "r/#/projects/list/" + projectKey).replace("/devapi/r/","");
-
+        $scope.processingSingle = false;
+        $scope.processingMultiBatch = false;
 
 //User has pressed cancel or finished a registration - clear out all of the populated data
     $scope.startAgain = function(flowfiles) {
+        $scope.processingMultiBatch = false;
+        $scope.processingSingle = false;
         $scope.struc_col_selected={ name:"", value:"Please select"} ;
         $scope.format_not_detected = false;
         $scope.file_error = "";
@@ -309,6 +312,8 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
         //this may be performed during the transition to the finish page - any results to be shown need a promise for that page.
 
         //submit
+        $scope.processingSingle = true;
+
         $scope.finalData.objects = [];
         $scope.singleMol = CBHCompoundBatch.getSingleMol(projectKey);
          CBHCompoundBatch.saveSingleCompound(projectKey, 
@@ -318,11 +323,15 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
             
             ).then(
             function(data){
+                $scope.processingSingle = false;
+
                 $scope.singleMol = data.data;
                 $scope.finalData.objects.push(data.data);
                 $scope.validatedData.currentBatch = data.data.multipleBatchId;
                $state.go("projects.project.demo.finish");
             }, function(error){
+                $scope.processingSingle = false;
+
                 $scope.validated = { 'errors': { 'invalidMolecule': true } };
             });
 
@@ -350,12 +359,15 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
     $scope.messages = MessageFactory.getMessages();
 
     $scope.saveMultiBatchMolecules = function(){
+        $scope.processingMultiBatch = true;
         CBHCompoundBatch.saveMultiBatchMolecules(projectKey,$scope.validatedData.currentBatch, $scope.molecule.metadata.custom_fields).then(
             function(data){
                 $state.go("projects.project.demo.finish");
+                $scope.processingMultiBatch = false;
             }, 
             function(error){
                 $scope.validated = { 'errors': { 'invalidMolecule': true } };
+                $scope.processingMultiBatch = false;
             });
     };
 

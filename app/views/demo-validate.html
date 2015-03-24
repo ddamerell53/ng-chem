@@ -15,8 +15,18 @@
   <div class="pull-left">
     <a role="button" class="btn btn-danger" ng-click="startAgain($flow.files)" ui-sref="projects.project.demo.intro">Cancel</a>
   </div>
+  <div class="row">
+  <div ng-show="processingMultiBatch" class="col-centered bubblingG">
+              <span id="bubblingG_1">
+              </span>
+              <span id="bubblingG_2">
+              </span>
+              <span id="bubblingG_3">
+              </span>
+  </div>
+</div>
   <div class="pull-right">
-    <input type="submit" class="btn btn-primary pull-right" id="submit"  ng-click="saveMultiBatchMolecules()" value="Save" ng-disable="validatedData.objects.errors.length > 0" ng-disabled="!validatedData.total"/>
+    <input type="submit" class="btn btn-primary pull-right" id="submit"  ng-click="saveMultiBatchMolecules()" value="Save"  ng-disabled="!validatedData.total || validatedData.objects.errors.length > 0"/>
   </div>
       
 </div>
