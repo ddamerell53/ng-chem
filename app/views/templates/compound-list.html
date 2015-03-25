@@ -1,19 +1,14 @@
 
 <div class="row">
 	<div class="col-xs-12">
-		<h2 class="blue pull-left"><a ng-href=""><span class="glyphicon glyphicon-th-list"></span> Compound List </h2><info-box freetext="Click the image for more details about that molecule"></info-box><div class="dropdown pull-right">
-		<button id="downloadBtn" class="btn btn-primary btn-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-download"></span> <span class="hidden-xs hidden-sm">Download</span> <span class="caret"></span></button>
-		<ul class="dropdown-menu" role="menu" aria-labelledby="downloadBtn">
-
-			<!-- <li><a ng-click="exportSearch('xls')">Export to Excel</a></li>
-			<li><a ng-click="exportSearch('sdf')">Export to SD</a></li> -->
-				<li><a ng-href="{{  urlConfig.cbh_compound_batches.list_endpoint }}/?projectKey={{projectKey}}&project__project_key={{projectKey}}&{{ gridconfig.configObject.paramsUrl }}format=xls&limit=10000">Export All to Excel</a></li>
-				<li><a ng-href="{{  urlConfig.cbh_compound_batches.list_endpoint }}/?projectKey={{projectKey}}&project__project_key={{projectKey}}&{{ gridconfig.configObject.paramsUrl }}format=sdf&limit=10000">Export All to SD</a></li>
-
-				<!-- <li><a href="{{ gridconfig.configObject.baseUrl }}?{{ gridconfig.configObject.paramsUrl }}&format=xls">Export to Excel</a></li>
-	+			<li><a href="{{ gridconfig.configObject.baseUrl }}?{{ gridconfig.configObject.paramsUrl }}&format=sdf">Export to SD</a></li> -->
-		</ul>
-	</div>
+		<h2 class="blue pull-left"><span class="glyphicon glyphicon-th-list"></span> Compound List </h2><info-box freetext="Click the image for more details about that molecule"></info-box>
+		<h2><div class="dropdown pull-right">
+					<button id="downloadBtnCmpd" class="btn btn-primary btn-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-download"></span> <span class="hidden-xs hidden-sm">Download</span> <span class="caret"></span></button>
+					<ul class="dropdown-menu" role="menu" aria-labelledby="downloadBtnCmpd">
+						<li><a ng-href="{{  urlConfig.cbh_compound_batches.list_endpoint }}/?projectKey={{projectKey}}&project__project_key={{projectKey}}&{{ gridconfig.configObject.paramsUrl }}format=xls&limit=10000">Export All to Excel</a></li>
+						<li><a ng-href="{{  urlConfig.cbh_compound_batches.list_endpoint }}/?projectKey={{projectKey}}&project__project_key={{projectKey}}&{{ gridconfig.configObject.paramsUrl }}format=sdf&limit=10000">Export All to SD</a></li>
+					</ul>
+				</div></h2>
 	</div>
 
 	

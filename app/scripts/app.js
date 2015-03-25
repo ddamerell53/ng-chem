@@ -308,7 +308,8 @@ angular.module('ngChemApp')
                     $scope.wizard.step = 2;
                   }
                   
-                  $scope.wizard.dynamic = 90.5;
+                  //$scope.wizard.dynamic = 90.5;
+                  $scope.wizard.dynamic = 100;
                   applyTicks("finish");
 
                 }

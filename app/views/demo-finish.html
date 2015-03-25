@@ -5,16 +5,27 @@
 </div>
 <div class="row">
 
-	
-		<a class="btn btn-primary pull-right" 
-		role="button" 
-		ui-sref="projects.project.demo.intro" 
-		ng-click="startAgain($flow.files)">Register more compounds</a>
-		<a class="btn btn-warning pull-right" ng-href="{{tophref}}">{{headline}}</a>
+		<div class="dropdown pull-left">
+			<button id="downloadBtnTop" class="btn btn-primary btn-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-download"></span> <span class="hidden-xs hidden-sm">Export</span> <span class="caret"></span></button>
+			<ul class="dropdown-menu" role="menu" aria-labelledby="downloadBtnTop">
 
-			<a class="btn btn-primary" role="button" href="{{ urlConfig.cbh_compound_batches.list_endpoint  }}/?projectKey={{projectKey}}&project__project_key={{projectKey}}&format=xls&multiple_batch_id={{validatedData.currentBatch}}">Export to Excel</a>
+					<li><a ng-href="{{  urlConfig.cbh_compound_batches.list_endpoint }}/?projectKey={{projectKey}}&project__project_key={{projectKey}}&{{ gridconfig.configObject.paramsUrl }}format=xls&limit=10000&multiple_batch_id={{validatedData.currentBatch}}">Export All to Excel</a></li>
+					<li><a ng-href="{{  urlConfig.cbh_compound_batches.list_endpoint }}/?projectKey={{projectKey}}&project__project_key={{projectKey}}&{{ gridconfig.configObject.paramsUrl }}format=sdf&limit=10000&multiple_batch_id={{validatedData.currentBatch}}">Export All to SD</a></li>
+
+			</ul>
+
+
+		</div>
+		<div class="pull-right">
+			<a class="btn btn-primary" 
+				role="button" 
+				ui-sref="projects.project.demo.intro" 
+				ng-click="startAgain($flow.files)">Register more compounds</a>
+			<a class="btn btn-warning" role="button" ng-href="{{tophref}}">{{headline}}</a>
+		</div>
 		
-			<a class="btn btn-primary" role="button" href="{{ urlConfig.cbh_compound_batches.list_endpoint  }}/?projectKey={{projectKey}}&project__project_key={{projectKey}}&format=sdf&multiple_batch_id={{validatedData.currentBatch}}">Export to SD</a>
+
+		
 
 </div>
 
@@ -24,14 +35,24 @@
 <div class="form-views" ui-view="resultslist"></div>
 <div class="row">
 	
-		<a class="btn btn-primary pull-right" 
-		role="button" 
-		ui-sref="projects.project.demo.intro" 
-		ng-click="startAgain($flow.files)">Register more compounds</a>
-		<a class="btn btn-warning pull-right" ng-href="{{tophref}}">{{headline}}</a>
-		<a class="btn btn-primary" role="button" href="{{ urlConfig.cbh_compound_batches.list_endpoint  }}/?projectKey={{projectKey}}&project__project_key={{projectKey}}&format=xls&multiple_batch_id={{validatedData.currentBatch}}">Export to Excel</a>
-		
-		<a class="btn btn-primary" role="button" href="{{ urlConfig.cbh_compound_batches.list_endpoint  }}/?projectKey={{projectKey}}&project__project_key={{projectKey}}&format=sdf&multiple_batch_id={{validatedData.currentBatch}}">Export to SD</a>
+		<div class="dropdown pull-left">
+			<button id="downloadBtnBtm" class="btn btn-primary btn-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-download"></span> <span class="hidden-xs hidden-sm">Export</span> <span class="caret"></span></button>
+			<ul class="dropdown-menu" role="menu" aria-labelledby="downloadBtnBtm">
+
+					<li><a ng-href="{{  urlConfig.cbh_compound_batches.list_endpoint }}/?projectKey={{projectKey}}&project__project_key={{projectKey}}&{{ gridconfig.configObject.paramsUrl }}format=xls&limit=10000&multiple_batch_id={{validatedData.currentBatch}}">Export All to Excel</a></li>
+					<li><a ng-href="{{  urlConfig.cbh_compound_batches.list_endpoint }}/?projectKey={{projectKey}}&project__project_key={{projectKey}}&{{ gridconfig.configObject.paramsUrl }}format=sdf&limit=10000&multiple_batch_id={{validatedData.currentBatch}}">Export All to SD</a></li>
+
+			</ul>
+
+
+		</div>
+		<div class="pull-right">
+			<a class="btn btn-primary" 
+				role="button" 
+				ui-sref="projects.project.demo.intro" 
+				ng-click="startAgain($flow.files)">Register more compounds</a>
+			<a class="btn btn-warning" role="button" ng-href="{{tophref}}">{{headline}}</a>
+		</div>
 
 		
 </div>
