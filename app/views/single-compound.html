@@ -6,10 +6,10 @@
 </div>
 <div class="modal-body">
     <div class="row">
-    	<div class="col-xs-6" ng-show="mol.canonicalSmiles.length > 0">
+    	<div class="col-xs-6" ng-show="mol.ctab.length > 0">
 		<!-- 		<chemsvg class="pull-right" ng-show="mol.canonicalSmiles.length > 0" size="'200'" smiles="mol"  base-url="'/chemblws/cbh_compound_batches/smiles2svg'" ></chemsvg>
 		 -->	
-		 	<div ng-bind-html="mol.properties.svg | toTrusted"></div>
+<chemsvg  size="'200'" smiles="mol.ctab"  base-url="'http://staging.chembiohub.ox.ac.uk/utils/ctab2image/'" ></chemsvg>
 
 		</div>
 		<div class="col-xs-6">
