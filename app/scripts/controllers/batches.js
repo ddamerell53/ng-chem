@@ -13,6 +13,9 @@ angular.module('ngChemApp')
     if($scope.validatedData) {
       filters = {multiple_batch_id : $scope.validatedData.currentBatch }
     }
+    else if($stateParams.multiple_batch_id) {
+      filters = {multiple_batch_id : $stateParams.multiple_batch_id }
+    }
 
     //initialise from URL parameters - page size and filters
 

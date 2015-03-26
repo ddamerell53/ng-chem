@@ -328,7 +328,7 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
                 $scope.singleMol = data.data;
                 $scope.finalData.objects.push(data.data);
                 $scope.validatedData.currentBatch = data.data.multipleBatchId;
-               $state.go("projects.project.demo.finish");
+               $state.go("projects.project.demo.finish", { 'multiple_batch_id': $scope.validatedData.currentBatch });
             }, function(error){
                 $scope.processingSingle = false;
 
@@ -362,7 +362,7 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
         $scope.processingMultiBatch = true;
         CBHCompoundBatch.saveMultiBatchMolecules(projectKey,$scope.validatedData.currentBatch, $scope.molecule.metadata.custom_fields).then(
             function(data){
-                $state.go("projects.project.demo.finish");
+                $state.go("projects.project.demo.finish", { 'multiple_batch_id': $scope.validatedData.currentBatch } );
                 $scope.processingMultiBatch = false;
             }, 
             function(error){

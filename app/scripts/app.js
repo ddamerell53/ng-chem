@@ -295,7 +295,12 @@ angular.module('ngChemApp')
         
         // url will be /form/payment
         .state('projects.project.demo.finish', {
-            url: '/finish&limit&offset',
+            url: '/finish/:multiple_batch_id&limit&offset',
+            resolve: {
+              multiple_batch_id: ['$stateParams', function($stateParams){
+                  return $stateParams.multiple_batch_id;
+              }]
+            },
             views: {
               '': {
                 templateUrl: 'views/demo-finish.html',
