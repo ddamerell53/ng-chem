@@ -9,8 +9,8 @@
 			<button id="downloadBtnTop" class="btn btn-primary btn-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-download"></span> <span class="hidden-xs hidden-sm">Export</span> <span class="caret"></span></button>
 			<ul class="dropdown-menu" role="menu" aria-labelledby="downloadBtnTop">
 
-					<li><a ng-href="{{  urlConfig.cbh_compound_batches.list_endpoint }}/?projectKey={{projectKey}}&project__project_key={{projectKey}}&{{ gridconfig.configObject.paramsUrl }}format=xls&limit=10000&multiple_batch_id={{validatedData.currentBatch}}">Export All to Excel</a></li>
-					<li><a ng-href="{{  urlConfig.cbh_compound_batches.list_endpoint }}/?projectKey={{projectKey}}&project__project_key={{projectKey}}&{{ gridconfig.configObject.paramsUrl }}format=sdf&limit=10000&multiple_batch_id={{validatedData.currentBatch}}">Export All to SD</a></li>
+					<li><a ng-href="{{  urlConfig.cbh_compound_batches.list_endpoint }}/?projectKey={{projectKey}}&project__project_key={{projectKey}}&{{ gridconfig.configObject.paramsUrl }}format=xls&limit=10000&multiple_batch_id={{multiple_batch_id}}">Export All to Excel</a></li>
+					<li><a ng-href="{{  urlConfig.cbh_compound_batches.list_endpoint }}/?projectKey={{projectKey}}&project__project_key={{projectKey}}&{{ gridconfig.configObject.paramsUrl }}format=sdf&limit=10000&multiple_batch_id={{multiple_batch_id}}">Export All to SD</a></li>
 
 			</ul>
 

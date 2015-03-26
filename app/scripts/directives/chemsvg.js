@@ -24,7 +24,7 @@ angular.module('ngChemApp')
             $scope.getSmiles = function() {
               
                 $scope.encSmiles = btoa($scope.smiles.replace("Molecule from ChemDoodle Web Components", ""));
-                console.log($scope.encSmiles);
+                //console.log($scope.encSmiles);
             };
             $scope.checkLocal = function() {
                 // if (window.location.hostname == "localhost"){

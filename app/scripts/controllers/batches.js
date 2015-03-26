@@ -10,11 +10,21 @@
 angular.module('ngChemApp')
   .controller('BatchesCtrl',['$scope', '$modal', '$timeout', '$q', '$state', '$stateParams','$location', 'gridconfig', 'projectKey', function ($scope, $modal, $timeout, $q, $state, $stateParams, $location, gridconfig, projectKey) {
     var filters = { };
-    if($scope.validatedData) {
-      filters = {multiple_batch_id : $scope.validatedData.currentBatch }
+    //console.log(multiple_batch_id);
+    //console.log($stateParams);
+    var multiple_batch_id = $stateParams.multiple_batch_id;
+    console.log($stateParams);
+    console.log(multiple_batch_id)
+    //..
+    $scope.state = $state.current
+    $scope.params = $stateParams; 
+
+    if(multiple_batch_id) {
+      filters = { 'multiple_batch_id' : multiple_batch_id }
     }
-    else if($stateParams.multiple_batch_id) {
-      filters = {multiple_batch_id : $stateParams.multiple_batch_id }
+
+    else if($scope.validatedData) {
+      filters = { 'multiple_batch_id' : $scope.validatedData.currentBatch }
     }
 
     //initialise from URL parameters - page size and filters

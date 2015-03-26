@@ -295,16 +295,18 @@ angular.module('ngChemApp')
         
         // url will be /form/payment
         .state('projects.project.demo.finish', {
-            url: '/finish/:multiple_batch_id&limit&offset',
+            url: '/finish/:multiple_batch_id',
             resolve: {
               multiple_batch_id: ['$stateParams', function($stateParams){
+                  console.log($stateParams)
                   return $stateParams.multiple_batch_id;
-              }]
+              }],
             },
+            
             views: {
               '': {
                 templateUrl: 'views/demo-finish.html',
-                controller: function($scope) {
+                controller: function($scope, $stateParams) {
 
                   if ($scope.wizard.totalSteps == 4) {
                     $scope.wizard.step = 4;
@@ -316,6 +318,7 @@ angular.module('ngChemApp')
                   //$scope.wizard.dynamic = 90.5;
                   $scope.wizard.dynamic = 100;
                   applyTicks("finish");
+                  $scope.multiple_batch_id = $stateParams.multiple_batch_id;
 
                 }
               },
