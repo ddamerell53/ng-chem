@@ -8,13 +8,11 @@
  * Controller of the ngChemApp
  */
 angular.module('ngChemApp')
-  .controller('BatchesCtrl',['$scope', '$modal', '$timeout', '$q', '$state', '$stateParams','$location', 'gridconfig', 'projectKey', function ($scope, $modal, $timeout, $q, $state, $stateParams, $location, gridconfig, projectKey) {
+  .controller('BatchesCtrl',['$scope', '$modal', '$timeout', '$q', '$state', '$stateParams','$location', 'gridconfig', 'projectKey', 'projectFactory', function ($scope, $modal, $timeout, $q, $state, $stateParams, $location, gridconfig, projectKey, projectFactory) {
     var filters = { };
     //console.log(multiple_batch_id);
     //console.log($stateParams);
     var multiple_batch_id = $stateParams.multiple_batch_id;
-    console.log($stateParams);
-    console.log(multiple_batch_id)
     //..
     $scope.state = $state.current
     $scope.params = $stateParams; 
@@ -27,6 +25,19 @@ angular.module('ngChemApp')
       filters = { 'multiple_batch_id' : $scope.validatedData.currentBatch }
     }
 
+    //$scope.proj = $rootScope.getProjectObj(projectKey);
+
+    projectFactory.get().$promise.then(function(res) {
+                $scope.projects = res.objects;
+                angular.forEach(res.objects, function(proj) {
+                  if(proj.project_key == projectKey) {
+                    $scope.proj = proj;
+                  }
+                });
+              });
+
+
+    $scope.dummyproj = "$scope.state.data.dummyproj";
     //initialise from URL parameters - page size and filters
 
     $scope.projectKey = projectKey;

@@ -10,8 +10,19 @@
 var app = angular.module('ngChemApp');
 
 
-app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 'MessageFactory', 'CBHCompoundBatch','$cookies' ,'$timeout', '$stateParams', 'projectKey', 'prefix', 'urlConfig',
-    function ($scope, $rootScope, $state, ChEMBLFactory, MessageFactory, CBHCompoundBatch, $cookies, $timeout, $stateParams, projectKey, prefix, urlConfig) {
+app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 'MessageFactory', 'CBHCompoundBatch','$cookies' ,'$timeout', '$stateParams', 'projectKey', 'prefix', 'urlConfig', 'projectFactory',
+    function ($scope, $rootScope, $state, ChEMBLFactory, MessageFactory, CBHCompoundBatch, $cookies, $timeout, $stateParams, projectKey, prefix, urlConfig, projectFactory) {
+        $scope.proj = {}
+        projectFactory.get().$promise.then(function(res) {
+                $scope.projects = res.objects;
+                angular.forEach(res.objects, function(proj) {
+                  if(proj.project_key == projectKey) {
+                    $scope.proj = proj;
+                    $rootScope.projName = proj.name;
+                    $rootScope.headline =  "Back to " + $scope.proj.name + " project page";
+                  }
+                });
+              });
 
        $scope.urlConfig =  urlConfig;
       var arr = window.location.href.split("/");
@@ -34,7 +45,7 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
           
 
         };
-        $rootScope.headline =  "Back to " + projectKey + " project page";
+        $rootScope.headline =  "Back to " + $scope.proj.name + " project page";
         $rootScope.subheading= "Welcome to the ChemReg wizard"        
         $rootScope.glyphicon = "arrow-left";
         $rootScope.tophref = (urlConfig.instance_path.url_frag + "r/#/projects/list/" + projectKey).replace("/devapi/r/","");

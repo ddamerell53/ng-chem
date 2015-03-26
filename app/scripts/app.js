@@ -45,11 +45,6 @@ angular.module('ngChemApp')
         .state('search', {
             url: '/search?project__project_key&flexmatch&with_substructure&similar_to&fpValue&created__gte&created__lte&molfile&smiles&limit&offset',
             //url: '/search',
-            data: {
-              login_rule: function($rootScope) {
-                return $rootScope.isLoggedIn();
-              }
-            },
             //params: ['project__project_key', 'flexmatch', 'with_substructure', 'similar_to', 'fpValue', 'created__gte', 'created__lte', 'molfile', 'smiles', 'limit', 'offset', 'random'],
             resolve:{
               gridconfig: ['CompoundListSetup', function(CompoundListSetup){
@@ -61,6 +56,11 @@ angular.module('ngChemApp')
               projectKey: ['$stateParams', function($stateParams){
                   return $stateParams.projectKey;
               }],
+            },
+            data: {
+              login_rule: function($rootScope) {
+                return $rootScope.isLoggedIn();
+              }
             },
             views: {
               '': {
@@ -100,13 +100,18 @@ angular.module('ngChemApp')
             data: {
               login_rule: function($rootScope) {
                 return $rootScope.isLoggedIn();
-              }
+              },
             },
             resolve:{
-
               gridconfig: ['CompoundListSetup', function(CompoundListSetup){
                   return CompoundListSetup;
-              }]
+              }],
+              projList: ['$rootScope', function($rootScope) {
+                  return $rootScope.projects;
+              }],
+              projectFactory: ['ProjectFactory', function(ProjectFactory) {
+                return ProjectFactory;
+              }],
             },
             templateUrl: 'views/projects.html',
             controller: 'ProjectCtrl'
@@ -120,6 +125,7 @@ angular.module('ngChemApp')
               $rootScope.subheading = "Click a project title to see more details and add compounds to that project";
               $rootScope.help_lookup = "";
               $rootScope.projectKey = "Projects";
+              $rootScope.projName = "Projects";
               $rootScope.glyphicon = "folder-open";
             }
         })
@@ -129,8 +135,9 @@ angular.module('ngChemApp')
             resolve: {
               projectKey: ['$stateParams', function($stateParams){
                   return $stateParams.projectKey;
-              }]
+              }],
             },
+            
             views: {
               projectlist: {
                 templateUrl: 'views/project-summary.html',
@@ -172,6 +179,11 @@ angular.module('ngChemApp')
               login_rule: function($rootScope) {
                 return $rootScope.isLoggedIn();
               }
+            },
+            resolve:{
+              projectFactory: ['ProjectFactory', function(ProjectFactory) {
+                return ProjectFactory;
+              }],
             },
             url: '/demo',
             templateUrl: 'views/start.html',
@@ -302,7 +314,6 @@ angular.module('ngChemApp')
                   return $stateParams.multiple_batch_id;
               }],
             },
-            
             views: {
               '': {
                 templateUrl: 'views/demo-finish.html',
@@ -441,7 +452,15 @@ angular.module('ngChemApp')
 
     $rootScope.getUrlBase = function() {
       return urlConfig.instance_path.url_frag;
-    }
+    };
+
+    $rootScope.getProjectObj = function(projectKey){
+      angular.forEach($rootScope.projects, function(proj){
+        if (projectKey = proj.project_key) {
+          return proj;
+        }
+      });
+    };
 
 
   
