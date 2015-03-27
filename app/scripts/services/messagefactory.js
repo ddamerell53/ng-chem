@@ -31,6 +31,9 @@ angular.module('ngChemApp')
     MessageFactory.getMessages = function(){
         return messages;
     }
+    MessageFactory.getLegends = function() {
+        return legends;
+    }
 
     //we can maybe use this factory in the future for amdinistrering / editing messages?
     //move the message text to a backend service?
@@ -133,11 +136,32 @@ angular.module('ngChemApp')
             registration_none_success: "No molecules were registered",
             registration_error: "An unknown error occurred when registering compounds, the chembiohub team have been notified and will contact you when the issue has been investigated"
         //}:
+            
 
-        
+    }
 
-
-
+    var legends = {
+        legend_uox_id: {
+            name: "UOx ID",
+            explanation: "Legend text for UOx ID"
+        },
+        legend_alogp: {
+            name: "alogP",
+            explanation: "Legend text for alogp"
+        },
+        legend_rotatable_bonds: {
+            name: "Rotatable Bonds",
+            explanation: "Legend text for Rotatable BondsLegend text for Rotatable BondsLegend text for Rotatable BondsLegend text for Rotatable BondsLegend text for Rotatable Bonds"
+        },
+        legend_batch_id: {
+            name: "Batch ID",
+            explanation: "Legend text for Batch ID"
+        },
+        legend_medchem_friendly: {
+            name: "MedChem Friendly",
+            explanation: "Legend text for MedChem Friendly"
+        },
+        //create more in this format here
     }
 
     return MessageFactory;

@@ -8,7 +8,7 @@
  * Controller of the ngChemApp
  */
 angular.module('ngChemApp')
-  .controller('BatchesCtrl',['$scope', '$modal', '$timeout', '$q', '$state', '$stateParams','$location', 'gridconfig', 'projectKey', 'projectFactory', function ($scope, $modal, $timeout, $q, $state, $stateParams, $location, gridconfig, projectKey, projectFactory) {
+  .controller('BatchesCtrl',['$scope', '$modal', '$timeout', '$q', '$state', '$stateParams','$location', 'gridconfig', 'projectKey', 'projectFactory', 'MessageFactory', function ($scope, $modal, $timeout, $q, $state, $stateParams, $location, gridconfig, projectKey, projectFactory, MessageFactory) {
     var filters = { };
     //console.log(multiple_batch_id);
     //console.log($stateParams);
@@ -16,6 +16,7 @@ angular.module('ngChemApp')
     //..
     $scope.state = $state.current
     $scope.params = $stateParams; 
+    $scope.legends = MessageFactory.getLegends();
 
     if(multiple_batch_id) {
       filters = { 'multiple_batch_id' : multiple_batch_id }
@@ -116,6 +117,18 @@ angular.module('ngChemApp')
         }
       });
     };
+
+    $scope.openHeadersLegend = function(){
+      $scope.modalInstance = $modal.open({
+        templateUrl: 'views/legend.html',
+        size: 'md',
+        controller: function($scope, $modalInstance, MessageFactory) {
+          $scope.modalInstance = $modalInstance;
+          $scope.legends = MessageFactory.getLegends();
+          console.log($scope.legends);
+        }
+      });
+    }
 
     $scope.exportSearch = function(format) {
       $scope.gridconfig.exportFullResults(format);
