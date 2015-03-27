@@ -115,7 +115,7 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
                             },
                         'metadata': { 
                             'stereoSelected': {
-                                                name:'1', 
+                                                name:'-1', 
                                                 value:'as drawn'
                                                },
                             'labbook_id':'',
