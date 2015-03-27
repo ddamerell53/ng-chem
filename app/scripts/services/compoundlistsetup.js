@@ -32,6 +32,8 @@ angular.module('ngChemApp')
                                                       pagingOptions: this.configObject.pagingOptions,
                                                       showFooter: true,
                                                       enableRowSelection: false,
+                                                      enableColumnResize: true,
+                                                      enableCellSelection: true,
                                                       rowHeight: 200,
                                                       columnDefs: [//{ field: "smiles", displayName: "Structure", cellTemplate:"views/img-template.html"  },
                                                                     { field: "ctab", displayName: "Structure", width: '20%', cellTemplate:"views/img-template.html", cellClass: 'white-bg' },
