@@ -219,6 +219,8 @@ angular.module('ngChemApp')
             url: '/single',
             templateUrl: 'views/demo-add-single.html',
             controller: function($scope) {
+             
+
 
                 $scope.wizard.step = 1;
                 $scope.wizard.dynamic = 49.5;

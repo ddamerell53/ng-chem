@@ -10,8 +10,8 @@
 var app = angular.module('ngChemApp');
 
 
-app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 'MessageFactory', 'CBHCompoundBatch','$cookies' ,'$timeout', '$stateParams', 'projectKey', 'prefix', 'urlConfig', 'projectFactory',
-    function ($scope, $rootScope, $state, ChEMBLFactory, MessageFactory, CBHCompoundBatch, $cookies, $timeout, $stateParams, projectKey, prefix, urlConfig, projectFactory) {
+app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 'MessageFactory', 'CBHCompoundBatch','$cookies' ,'$timeout', '$stateParams', 'projectKey', 'prefix', 'urlConfig', 'projectFactory','ProjectCustomFields',
+    function ($scope, $rootScope, $state, ChEMBLFactory, MessageFactory, CBHCompoundBatch, $cookies, $timeout, $stateParams, projectKey, prefix, urlConfig, projectFactory, ProjectCustomFields) {
         $scope.proj = {}
         projectFactory.get().$promise.then(function(res) {
                 $scope.projects = res.objects;
@@ -51,6 +51,55 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
         $rootScope.tophref = (urlConfig.instance_path.url_frag + "r/#/projects/list/" + projectKey).replace("/devapi/r/","");
         $scope.processingSingle = false;
         $scope.processingMultiBatch = false;
+        $scope.tagFunction = function(content){
+    var item = {
+      value: content,
+      label: content,
+      description : '',
+      group: ''
+    }
+    return item;
+  };
+
+   // $scope.myschema = {type: "object", properties:
+   //              {tagging :{
+   //                      title: 'Tagging',
+   //                      type: 'array',
+   //                      format: 'uiselect',
+   //                      description: 'Hit enter or comma to create a new iootem in the dropdown',
+                        
+   //                      items: [
+   //                        { value: 'one', label: 'label1'},
+   //                        { value: 'two', label: 'label2'},
+   //                        { value: 'three', label: 'label3'},
+   //                        { value: 'four', label: 'label4'},
+   //                        { value: 'five', label: 'label5'}
+   //                      ]
+   //                    }}
+
+   //          };
+   //                $scope.myform = [{
+   //                   key: 'tagging',
+   //                   options: {
+   //                      tagging: $scope.tagFunction ,
+   //                      taggingLabel: '(adding new)',
+   //                      taggingTokens: 'ENTER|,',
+   //                   }
+   //                 }];
+         ProjectCustomFields.query(projectKey, {}, $scope.tagFunction).then(function(data){
+                 $scope.myschema = data.schemaform.schema;
+                 $scope.myform = data.schemaform.form;
+        });
+        //         console.log($scope.projectCustomFields);
+
+        // });
+
+
+
+
+
+        $scope.testData = {};
+        
 
 //User has pressed cancel or finished a registration - clear out all of the populated data
     $scope.startAgain = function(flowfiles) {
@@ -121,7 +170,8 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
                             'labbook_id':'',
                             'custom_fields':  [
 
-                                              ]
+                                              ],
+                            'projectFields' :{}
 
 
                                               

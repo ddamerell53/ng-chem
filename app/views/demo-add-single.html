@@ -50,15 +50,11 @@
 		</div>
 
 		<div class="col-xs-6">
-			
+			<form>
 			<!-- Stereochem selector -->
 			<div class="form-group" id="stereochem-group">
-				<div class="col-xs-3">
 					<label for="stereochem" class="nexa">Stereochem options</label>
-				</div>
-				<div class="col-xs-9">
 					<select ng-options="item.value | titlecase for item in stereochem_options track by item.name" class="form-control" ng-model="molecule.metadata.stereoSelected"></select>
-				</div>
 				
 			</div>
 
@@ -76,10 +72,11 @@
 			</div>
 
 
-			<div class="row" ng-include="'views/templates/custom_fields.html'"></div>
-
-
-			
+<!-- 			<div class="row" ng-include="'views/templates/custom_fields.html'"></div>
+ -->
+ 			<div class="box-body" >
+          		<div class="myform form-group" sf-schema="myschema" sf-form="myform" sf-model="molecule.metadata.projectFields"></div>
+        	</div>
 			
 
 			<!-- <a class="btn btn-primary pull-right" role="button" ui-sref="projects.project.demo.finish" id="submit" name="submit">Save</a> -->

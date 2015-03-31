@@ -17,5 +17,9 @@ angular.module('ngChemApp', [
     'flow',
     'ngClipboard',
     'ngRaven',
-
+    'angular-underscore/filters', 
+    'schemaForm', 
+    'pascalprecht.translate', 
+    'ui.select', 
+    'ui.sortable'
   ])
