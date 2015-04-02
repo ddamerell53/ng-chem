@@ -10,7 +10,7 @@
 angular.module('ngChemApp')
   .directive('chemsvg', function ($compile) {
     return {
-      template: '<img ng-if="encSmiles" ng-show="encSmiles" ng-src="{{finalUrl}}{{encSmiles}}/{{size}}"></img>',
+      template: '<img ng-if="encSmiles" ng-show="encSmiles" ng-src="{{finalUrl}}/{{encSmiles}}/{{size}}"></img>',
       restrict: 'E',
       link: function postLink(scope, element, attrs) {
         //element.html('this is the chemsvg directive');
@@ -30,7 +30,7 @@ angular.module('ngChemApp')
                 // if (window.location.hostname == "localhost"){
                 //   $scope.finalUrl = "http://localhost:2201/utils/smiles2svg";
                 // }else{
-                  $scope.finalUrl = $scope.baseUrl;
+                  $scope.finalUrl = $scope.baseUrl + 'raw';
                 //}
             };
 

@@ -48,43 +48,23 @@
 			<chemdoodle-window sketch-molfile="sketchMolfile" fetch-data="fetchData()" molecule="molecule"></chemdoodle-window>
 			<div id="sketcher_output"></div>
 		</div>
-
+		<form>
 		<div class="col-xs-6">
-			<form>
 			<!-- Stereochem selector -->
 			<div class="form-group" id="stereochem-group">
 					<label for="stereochem" class="nexa">Stereochem options</label>
 					<select ng-options="item.value | titlecase for item in stereochem_options track by item.name" class="form-control" ng-model="molecule.metadata.stereoSelected"></select>
 				
 			</div>
+			<div  ng-include="'views/templates/custom_fields.html'"></div>
 
-			<!-- Mandatory fields -->
-			<div class="form-group mandatory-group">
-				<!-- dropdown -->
-				<!-- freetext -->
-				<!-- <div class="col-xs-3">
-					<label for="labbook_id" class="nexa">Labbook ID</label>
-				</div>
-				<div class="col-xs-9">
-					<input type="text" name="labbook_id" id="labbook_id" class="form-control" ng-model="molecule.metadata.labbook_id">
-				</div> -->
+ 			
 
-			</div>
-
-
-<!-- 			<div class="row" ng-include="'views/templates/custom_fields.html'"></div>
- -->
- 			<div class="box-body" >
-          		<div class="myform form-group" sf-schema="myschema" sf-form="myform" sf-model="molecule.metadata.projectFields"></div>
-        	</div>
-			
-
-			<!-- <a class="btn btn-primary pull-right" role="button" ui-sref="projects.project.demo.finish" id="submit" name="submit">Save</a> -->
-
+			{{molecule}}
 			
 
 		</div>
-
+	</form>
 		
 		
 	</div>

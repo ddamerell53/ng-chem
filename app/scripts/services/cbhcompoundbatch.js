@@ -62,7 +62,7 @@ angular.module('ngChemApp')
 
     CBHCompoundBatch.saveSingleCompound = function(projectKey, molfile, customFields, stereoSelected) {
 
-        return $http.post( urlConfig.cbh_compound_batches.list_endpoint +"/" , {"projectKey": projectKey ,ctab:molfile, "customFields":prepCustomFields(customFields) , "stereoSelected" : stereoSelected});
+        return $http.post( urlConfig.cbh_compound_batches.list_endpoint +"/" , {"projectKey": projectKey ,ctab:molfile, "customFields":customFields , "stereoSelected" : stereoSelected});
 
     };
 
@@ -143,7 +143,7 @@ angular.module('ngChemApp')
 
     CBHCompoundBatch.saveBatchCustomFields = function(projectKey,currentBatch, customFields, mapping ) {
 
-        return $http.post( urlConfig.cbh_compound_batches.list_endpoint + "/multi_batch_custom_fields/", {"projectKey": projectKey, "currentBatch":currentBatch, "customFields": prepCustomFields(customFields), "mapping":mapping });
+        return $http.post( urlConfig.cbh_compound_batches.list_endpoint + "/multi_batch_custom_fields/", {"projectKey": projectKey, "currentBatch":currentBatch, "customFields": customFields, "mapping":mapping });
     }
 
     CBHCompoundBatch.validateFiles = function(projectKey,file_name, struc_col) {

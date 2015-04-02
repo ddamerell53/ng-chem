@@ -379,7 +379,7 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
         $scope.singleMol = CBHCompoundBatch.getSingleMol(projectKey);
          CBHCompoundBatch.saveSingleCompound(projectKey, 
             $scope.molecule.molfile, 
-            $scope.molecule.metadata.custom_fields, 
+            $scope.molecule.metadata.projectFields, 
             $scope.molecule.metadata.stereoSelected
             
             ).then(
@@ -421,7 +421,7 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
 
     $scope.saveMultiBatchMolecules = function(){
         $scope.processingMultiBatch = true;
-        CBHCompoundBatch.saveMultiBatchMolecules(projectKey,$scope.validatedData.currentBatch, $scope.molecule.metadata.custom_fields).then(
+        CBHCompoundBatch.saveMultiBatchMolecules(projectKey,$scope.validatedData.currentBatch, $scope.molecule.metadata.projectFields).then(
             function(data){
                 $state.go("projects.project.demo.finish", { 'multiple_batch_id': $scope.validatedData.currentBatch, limit:10000, offset: 0 } );
                 $scope.processingMultiBatch = false;
@@ -439,7 +439,7 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
             mapping_obj = $scope.saveCustomFieldMapping();
         }
         
-        CBHCompoundBatch.saveBatchCustomFields(projectKey,$scope.validatedData.currentBatch, $scope.molecule.metadata.custom_fields, mapping_obj).then(
+        CBHCompoundBatch.saveBatchCustomFields(projectKey,$scope.validatedData.currentBatch, $scope.molecule.metadata.projectFields, mapping_obj).then(
             function(data){
                 $scope.validatedData = (data.data);
             }, function(error){
