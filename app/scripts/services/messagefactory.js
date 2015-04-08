@@ -125,7 +125,9 @@ angular.module('ngChemApp')
             batch_duplicates_0: "No duplicates were found",
             batch_duplicates_1: "One duplicate was found and ignored.",
             batch_duplicates_other: "duplicates were found and ignored.",
-
+            batch_errors_0: "No errors were found",
+            batch_errors_1: "1 of the molecules could not be processed and will be ignored. It is located at position ",
+            batch_errors_other: "{} of the molecules in could not be processed and will be ignored. They are located at positions ",
 
         //(change)
             batch_reg_recent_registration_error: "You have already registered this batch today. Are you sure you wish to continue?",

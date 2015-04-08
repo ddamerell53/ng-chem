@@ -56,13 +56,7 @@
 					<select ng-options="item.value | titlecase for item in stereochem_options track by item.name" class="form-control" ng-model="molecule.metadata.stereoSelected"></select>
 				
 			</div>
-			<div  ng-include="'views/templates/custom_fields.html'"></div>
-
- 			
-
-			{{molecule}}
-			
-
+			<div  ng-include="'views/templates/custom_fields.html'"></div>			
 		</div>
 	</form>
 		

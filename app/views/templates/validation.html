@@ -1,6 +1,6 @@
 
-<div ng-show="validatedData.total">
-      <p><strong><ng-pluralize count="validatedData.total"
+<div ng-show="validatedData.total + validatedData.errors">
+      <p><strong><ng-pluralize count="validatedData.total + validatedData.errors"
                  when="{ '0' : '{{messages.batch_reg_total_processed_0}}',  '1': '{{messages.batch_reg_total_processed_1}}', 'other' : '{} {{messages.batch_reg_total_processed_other}}' }">
           </ng-pluralize></strong></p>
 </div>
@@ -40,6 +40,15 @@
       <p><strong><ng-pluralize count="validatedData.dupes"
                  when="{ '0' : '{{messages.batch_duplicates_0}}',  '1': '{{messages.batch_duplicates_1}}', 'other' : '{} {{messages.batch_duplicates_other}}' }">
           </ng-pluralize>
+      </strong></p>
+  </div>
+</div>
+<div >
+    <div class="alert alert-danger" ng-show="validatedData.errors > 0">
+      <p><strong><ng-pluralize count="validatedData.errors"
+                 when="{ '0' : '{{messages.batch_errors_0}}',  '1': '{{messages.batch_errors_1}}', 'other' : '{} {{messages.batch_errors_other}}' }">
+          </ng-pluralize>
+          <span ng-repeat="error in validatedData.fileerrors" >{{error.index}}<span ng-show="!$last">, </span></span> when counting from the top.
       </strong></p>
   </div>
 </div>

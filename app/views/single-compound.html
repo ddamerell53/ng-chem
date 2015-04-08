@@ -9,69 +9,44 @@
     	<div class="col-xs-6" ng-show="mol.ctab.length > 0">
 <chemsvg  size="'200'" smiles="mol.ctab"  base-url="'http://staging.chembiohub.ox.ac.uk/utils/ctab2image'" ></chemsvg>
 
+
+<!-- <bootstrap-decorator>
+<div class="form-group " ng-class="" ng-init="">
+<label class="control-label ng-binding" >SMILES</label>
+<div class="form-group ng-scope" >
+	<div class="input-group">
+<input class="form-control" type="text" disabled ng-model="mol.canonicalSmiles"></input>
+<a href="" clip-copy="mol.canonicalSmiles" clip-click="doSomething()" role="button" class="input-group-addon"><span class="glyphicon glyphicon-copy"> Copy</span></a>
+</div>
+</div>
+</div>
+</bootstrap-decorator> -->
+<button-input model="mol.canonicalSmiles" disabled="true" label="'SMILES'"></button-input>
+<button-input model="mol.standardInchi" disabled="true" label="'Standard INCHI'"></button-input>
+<button-input model="mol.standardInchiKey" disabled="true" label="'Standard INCHI key'"></button-input>
+<button-input model="mol.chemblId" disabled="true" label="'UOx ID'"></button-input>
+<!-- <button-input model="mol.alogp | number:2" disabled="true" label="'AlogP'"></button-input>
+ --><button-input model="mol.created | date:'dd-MM-yyyy'" disabled="true" label="'Created'"></button-input>
+<button-input model="mol.molecularWeight | number:2" disabled="true" label="'Mol Weight'"></button-input>
+<!-- <button-input model="mol.rotatableBonds" disabled="true" label="'Rotatable Bonds'"></button-input>
+ -->
+
 		</div>
 		<div class="col-xs-6">
-			<p>
-			 <strong>SMILES: </strong>
-			 <a href="" clip-copy="mol.canonicalSmiles" clip-click="doSomething()" role="button" class="btn btn-primary pull-right"><small><span class="glyphicon glyphicon-scissors"></span> Copy to clipboard</small></a><br>
-			 <span style="word-wrap: break-word;">{{mol.canonicalSmiles}}</span>
-			</p>
-			<p>
-			 <strong>Standard INCHI: </strong>
-			 <a href="" clip-copy="mol.standardInchi" clip-click="doSomething()" role="button" class="btn btn-primary pull-right"><small><span class="glyphicon glyphicon-scissors"></span> Copy to clipboard</small></small></a><br>
-			 <span style="word-wrap: break-word;">{{mol.standardInchi}}</span>
-			</p>
-			<p>
-				<strong>Standard INCHI Key: </strong>
-			 <a href="" clip-copy="mol.standardInchiKey" clip-click="doSomething()" role="button" class="btn btn-primary pull-right"><small><span class="glyphicon glyphicon-scissors"></span> Copy to clipboard</small></small></a><br>
-			 <span style="word-wrap: break-word;">{{mol.standardInchiKey}}</span>
-			</p>
+			<h3 class="nexa blue">Custom Fields</h3>
+			<button class="btn btn-warning" ng-model="mol.editMode" btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0">Toggle Edit Mode</button>
+
+			<div ng-hide="mol.editMode" ng-repeat="(name, value) in mol.customFields">
+			<button-input model="value" disabled="true" label="name"></button-input>
+
+		</div>
+		<div ng-show="mol.editMode">
+			This feature is under construction but is here for feedback purposes
+		<div  class=" form-group" sf-schema="myschema" sf-form="myform" sf-model="mol.customFields"></div>
+		</div>
 		</div>
 	</div>
 	
-	<div class="row">
-		<div class="col-xs-12" >
-		  <p>
-		  	<table class="table table-striped table-bordered">
-		  		<tbody>
-		  			<tr>
-			  			<th>UOx ID</th><td>{{ mol.chemblId || Loading}} <a href="" clip-copy="mol.chemblId" clip-click="doSomething()" role="button" class="btn btn-primary pull-right"><small><span class="glyphicon glyphicon-scissors"></span> Copy to clipboard</small></small></a></td>
-			  		</tr>
-			  		<tr>
-			  			<th>AlogP</th><td>{{ mol.alogp | number:2 || Loading }}</td>
-			  		</tr>
-			  		<tr>
-			  			<th>Created</th><td>{{ mol.created | date:'dd-MM-yyyy' || Loading}}</td>
-			  		</tr>
-			  		<tr>
-			  			<th>Mol Formula</th><td>{{ mol.molecularFormula || Loading}}</td>
-			  		</tr>
-			  		<tr>
-			  			<th>Mol Weight</th><td>{{ mol.molecularWeight | number:2 || Loading}} <a href="" clip-copy="mol.molecularWeight" clip-click="doSomething()" role="button" class="btn btn-primary pull-right"><small><span class="glyphicon glyphicon-scissors"></span> Copy to clipboard</small></small></a></td>
-			  		</tr>
-			  		<tr>
-			  			<th>Rotatable Bonds</th><td>{{ mol.rotatableBonds}}</td>
-			  		</tr>
-				</tbody>
-		  	</table>
-		  </p>
-		  <p >
-		  	<table ng-show="mol.customFields | notEmpty" class="table table-striped table-bordered"  >
-		  		<tbody>
-		  			<tr>
-			  			<th colspan="2" class="text-center">Custom Fields</th>
-			  		</tr>
-			  		<tr ng-repeat="(name, value) in mol.customFields">
-			  			<th>{{name}}</th><td>{{ value || Loading}}</td>
-			  		</tr>
-			  	</tbody>
-		  	</table>
-		  </p>
-		</div>	
-		
-
-
-	</div>
 
 </div>
 <div class="modal-footer">

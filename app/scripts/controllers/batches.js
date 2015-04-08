@@ -8,7 +8,7 @@
  * Controller of the ngChemApp
  */
 angular.module('ngChemApp')
-  .controller('BatchesCtrl',['$scope', '$modal', '$timeout', '$q', '$state', '$stateParams','$location', 'gridconfig', 'projectKey', 'projectFactory', 'MessageFactory', function ($scope, $modal, $timeout, $q, $state, $stateParams, $location, gridconfig, projectKey, projectFactory, MessageFactory) {
+  .controller('BatchesCtrl',['$scope', '$modal', '$timeout', '$q', '$state', '$stateParams','$location', 'gridconfig', 'projectKey', 'projectFactory', 'MessageFactory', 'ProjectCustomFields', function ($scope, $modal, $timeout, $q, $state, $stateParams, $location, gridconfig, projectKey, projectFactory, MessageFactory, ProjectCustomFields) {
     var filters = { };
     //console.log(multiple_batch_id);
     //console.log($stateParams);
@@ -27,6 +27,12 @@ angular.module('ngChemApp')
     }
 
     //$scope.proj = $rootScope.getProjectObj(projectKey);
+
+ProjectCustomFields.query(projectKey, {}, $scope.tagFunction).then(function(data){
+                 $scope.myschema = data.schemaform.schema;
+                 $scope.myform = data.schemaform.form;
+        });
+
 
     projectFactory.get().$promise.then(function(res) {
                 $scope.projects = res.objects;
@@ -91,12 +97,12 @@ angular.module('ngChemApp')
     $scope.modalInstance = {};
     $scope.mol = {}; 
 
-    $scope.openSingleMol = function(uox_id, batch_id) {
+    $scope.openSingleMol = function(uox_id, cbh_compound_batch_id) {
       angular.forEach($scope.gridconfig.configObject.compounds, function(item) {
         
         if (item.chemblId == uox_id) {
           //$scope.mol = item;
-          if(item.multipleBatchId == batch_id) {
+          if(item.id == cbh_compound_batch_id) {
             $scope.mol = item;
           }
 
@@ -109,10 +115,18 @@ angular.module('ngChemApp')
         resolve: {
           mol: function () {
             return $scope.mol;
+          },
+          myform: function(){
+            return $scope.myform;
+          }          ,
+          myschema: function(){
+            return $scope.myschema;
           }
         }, 
-        controller: function($scope, $modalInstance, mol) {
+        controller: function($scope, $modalInstance, mol, myform, myschema) {
           $scope.mol = mol;
+          $scope.myform = myform;
+          $scope.myschema = myschema;
           $scope.modalInstance = $modalInstance;
         }
       });

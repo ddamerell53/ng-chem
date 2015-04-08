@@ -87,6 +87,7 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
    //                   }
    //                 }];
          ProjectCustomFields.query(projectKey, {}, $scope.tagFunction).then(function(data){
+                console.log(data);
                  $scope.myschema = data.schemaform.schema;
                  $scope.myform = data.schemaform.form;
         });
@@ -114,6 +115,7 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
         $scope.warningNumber = 0; //
         $scope.uploaded_file_name = ""; //
         $scope.file_extension = "";
+        // $scope.filesInProcessing = false;
 
         $scope.struc_col_options = [ { name:"", value:"Please select"} ]; //
         $scope.struc_col_str = ""; //
@@ -223,6 +225,7 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
     $scope.cancelFile =function(field){
         $scope.headers_not_retrieved=false;
         $scope.file_error=false;
+        $scope.filesInProcessing=false;
     }
 
     $scope.startAgain([]);
@@ -512,13 +515,12 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
         //call service to pull out headers from uploaded file
         //service backend detects file type
         //returns object which is populated into the list for map page
+        $scope.filesInProcessing = true;
         if ($scope.file_extension=="cdx" || $scope.file_extension=="cdxml"){
-
         }else{
         $scope.dragmodels.lists.headers = [];
         $scope.setupMapping();
         $scope.file_error = "";
-        $scope.filesInProcessing = true;
         CBHCompoundBatch.fetchHeaders(projectKey, $scope.uploaded_file_name).then(
 
             function(data){
@@ -528,9 +530,9 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
                   $scope.dragmodels.lists.headers.push({label: value});
                   $scope.struc_col_options.push({ name:value, value:value});
                 });
-                $scope.filesInProcessing = false;
             }, function(error){
                 $scope.headers_not_retrieved = true;
+                $scope.filesInProcessing = false;
             });
 
         //call to populate droppable fields
@@ -546,9 +548,9 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
                     
                 });
                 
-                $scope.filesInProcessing = false;
             }, function(error){
                 console.log(error);
+                $scope.filesInProcessing = false;
             });
 
         }
@@ -563,7 +565,6 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
     //so they can be used in the validate methods provided for SMILES/InChi lists
     //this method also needs to pass the field mapping from the map page
     $scope.processFiles = function() {
-        $scope.filesInProcessing = true;
         CBHCompoundBatch.validateFiles(projectKey,$scope.uploaded_file_name, $scope.struc_col_str ).then(
                 function(data){
                     $scope.validatedData = data;
