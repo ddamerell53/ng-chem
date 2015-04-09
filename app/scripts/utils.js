@@ -76,7 +76,9 @@ function splitInput(in_str) {
             return false;
         }
     }
+    splitted = $.map(splitted, $.trim);
 
+    splitted.clean("");
     splitted.clean(undefined);
     //return some json
     var isSingleType=true;

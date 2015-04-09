@@ -109,6 +109,7 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
         $scope.struc_col_selected={ name:"", value:"Please select"} ;
         $scope.format_not_detected = false;
         $scope.file_error = "";
+        $scope.file_format_not_detected = "";
         $scope.singleMol = CBHCompoundBatch.getSingleMol(); //
         $scope.finalData = {"objects" :[]}; //
         $scope.custom_field_mapping = { }; //
@@ -225,6 +226,7 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
     $scope.cancelFile =function(field){
         $scope.headers_not_retrieved=false;
         $scope.file_error=false;
+        $scope.file_format_not_detected=false;
         $scope.filesInProcessing=false;
     }
 
@@ -521,6 +523,7 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
         $scope.dragmodels.lists.headers = [];
         $scope.setupMapping();
         $scope.file_error = "";
+        $scope.file_format_not_detected = "";
         CBHCompoundBatch.fetchHeaders(projectKey, $scope.uploaded_file_name).then(
 
             function(data){
@@ -570,8 +573,14 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
                     $scope.validatedData = data;
                     $scope.filesInProcessing = false;
                 }, function(error){
-                    $scope.filesInProcessing = false;
-                    $scope.file_error = "file_not_processed";
+                    if (error.data.error == "Invalid File Format"){
+                        $scope.file_format_not_detected = "Invalid File Format";
+                        $scope.filesInProcessing = false;
+
+                    }else{
+                        $scope.filesInProcessing = false;
+                        $scope.file_error = "file_not_processed";
+                    }
                 }
             )
 

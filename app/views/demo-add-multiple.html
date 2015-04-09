@@ -59,12 +59,13 @@
 	<!-- File upload here -->
 	<div class="col-sm-12">
 		<div class="col-sm-6">
-			<label for="file_input" class="blue text-center"><strong class="nexa">Upload your SD, Chemdraw or Excel files here</strong></label>
+			<label for="file_input" class="blue text-center"><strong class="nexa">Upload your SD, Chemdraw or Excel files here.</strong></label>
 			<!-- <input name="file_input" type="file" flow-btn /> -->
 			<div class="row">
 				<div class="col-xs-12">
 					<span flow-btn name="file_input" role="btn" class="btn btn-primary align-center" ng-disabled="$flow.files.length > 0">Upload File</span> 
 				</div>
+				
 			</div>
 			<!-- <input type="file" flow-btn flow-directory />
 			  Input OR Other element as upload button
@@ -110,15 +111,22 @@
 	</div>
 	
 </div>
-
+<div class="row help-block">
+					If drawing salts in ChemDraw, they must be grouped and then saved in SDF format or they will not be recognised as single entities by the system.
+				</div>
 	<div class="row" data-ng-show="headers_not_retrieved">
 		<div class="alert alert-danger" id="headers_not_retrieved">{{messages.headers_not_retrieved}}</div>
 	</div>
 	<div class="row" data-ng-show="file_error">
 		<div class="alert alert-danger" id="file_error">{{messages.file_error}}</div>
 	</div>
+	<div class="row" data-ng-show="file_format_not_detected">
+		<div class="alert alert-danger" id="file_format_not_detected">{{messages.file_format_not_detected}}</div>
+	</div>
+	
 		<ng-include ng-hide="$flow.files.length == 0" src="'views/templates/validation.html'"></ng-include>
 	<div  ng-show="filesUploading" class="col-centered bubblingG">
+				Uploading
               <span id="bubblingG_1">
               </span>
               <span id="bubblingG_2">
@@ -127,6 +135,7 @@
               </span>
 	</div>
 		<div  ng-show="filesInProcessing" class="col-centered bubblingG">
+				Processing
               <span id="bubblingG_1">
               </span>
               <span id="bubblingG_2">
