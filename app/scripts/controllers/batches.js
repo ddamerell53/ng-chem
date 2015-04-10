@@ -147,7 +147,7 @@ ProjectCustomFields.query(projectKey, {}, $scope.tagFunction).then(function(data
                 function(data){
                   $scope.mol=data;
                   $scope.update_success = true;
-                  $timeout(removeAlert, 5000);
+                  $timeout($scope.removeAlert, 5000);
                 }
               );
           }

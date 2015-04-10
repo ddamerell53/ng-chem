@@ -34,8 +34,11 @@ angular.module('ngChemApp')
             $scope.setCopyModel = function() {
                 var mymodel = $scope.model;
                 if (angular.isDefined($scope.key)){
-                  console.log("yes");
-                  mymodel = $scope.model[$scope.key];
+                  if (angular.isDefined($scope.model[$scope.key])){
+                      mymodel = $scope.model[$scope.key];
+                  }else{
+                    mymodel="";
+                  }
 
                 }
                 if (mymodel.constructor === Array){
