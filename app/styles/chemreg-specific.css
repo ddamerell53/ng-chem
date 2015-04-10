@@ -158,3 +158,29 @@ i {
 ul.dropdown-menu.ng-valid-date {
   width:270px;
 }
+
+/* live update validation box stuff */
+.validate-report-box {
+  
+  
+
+}
+.alert-success {
+  margin:0;
+}
+.validate-report-box .report {
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  margin-top:20px;
+}
+
+.validate-report-box .report-value {
+  
+  min-height:150px;
+}
+.report-type  {
+
+}
+.report-value {
+  font-size:6em;
+}

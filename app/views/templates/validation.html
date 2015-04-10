@@ -1,4 +1,61 @@
 
+<div class="row">
+
+  <div class="col-xs-12">
+    
+      <div class="validate-report-box first col-xs-12">
+        <div class="report text-center">
+          <div style="margin-right:5px; " class="pull-right"><info-box lookup="batch_reg_new_to_chemreg_other"></info-box></div>
+          <div class="report-type alert-success"><strong class="nexa">New compounds</strong></div>
+          <div class="report-value alert-success"><strong class="nexa">{{validatedData.new}}</strong></div>
+        </div>
+      </div>
+    
+  </div>
+  <div class="col-xs-12">
+    
+      <div class="validate-report-box overlap col-xs-12">
+        <div class="report text-center">
+          <div style="margin-right:5px; " class="pull-right"><info-box lookup="batch_prereg_to_project_other"></info-box></div>
+          <div class="report-type alert-info"><strong class="nexa">Overlaps</strong></div>
+          <div class="report-value alert-info"><strong class="nexa">{{validatedData.linkedproject}}</strong></div>
+        </div>
+      </div>
+    
+  </div>
+  <div class="col-xs-12">
+    
+      <div class="validate-report-box dupe col-xs-12">
+        <div class="report text-center">
+          <div style="margin-right:5px; " class="pull-right"><info-box lookup="batch_prereg_to_public_other"></info-box></div>
+          <div class="report-type alert-warning"><strong class="nexa">Duplicates</strong></div>
+          <div class="report-value alert-warning"><strong class="nexa">{{validatedData.dupes}}</strong></div>
+        </div>
+      </div>
+    
+  </div>
+  <div class="col-xs-12">
+    
+      <div class="validate-report-box error col-xs-12">
+        <div class="report text-center">
+          <div style="margin-right:5px; " class="pull-right"><info-box lookup="batch_errors_other"></info-box></div>
+          <div class="report-type alert-danger"><strong class="nexa">Errors</strong></div>
+          <div class="report-value alert-danger"><strong class="nexa">{{validatedData.errors}}</strong></div>
+          <div ng-show="validatedData.fileerrors > 0">
+            <span ng-repeat="error in validatedData.fileerrors" >{{error.index}}<span ng-show="!$last">, </span></span> when counting from the top.
+          </div>
+        </div>
+      </div>
+    
+  </div>
+
+
+</div>
+
+
+
+<!-- 
+
 <div ng-show="validatedData.total + validatedData.errors">
       <p><strong><ng-pluralize count="validatedData.total + validatedData.errors"
                  when="{ '0' : '{{messages.batch_reg_total_processed_0}}',  '1': '{{messages.batch_reg_total_processed_1}}', 'other' : '{} {{messages.batch_reg_total_processed_other}}' }">
@@ -52,3 +109,4 @@
       </strong></p>
   </div>
 </div>
+ -->
