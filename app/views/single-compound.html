@@ -1,54 +1,70 @@
 <div class="modal-header">
     <button type="button" class="close pull-right" data-dismiss="alert" aria-label="Close" ng-click="modalInstance.dismiss('cancel');"><span aria-hidden="true" class="glyphicon glyphicon-remove-circle"></span></button>
-    <h2 class="modal-title blue nexa">{{mol.chemblId}}</h2>
+    <h2 class="modal-title blue nexa">Batch {{mol.id}} - {{mol.chemblId}} <a href="" clip-copy="mol.chemblId" clip-click="" role="button" class="btn btn-default"><span class="glyphicon glyphicon-copy"> Copy</span></a> </h2>
     
 
 </div>
 <div class="modal-body">
     <div class="row">
-    	<div class="col-xs-6" ng-show="mol.ctab.length > 0">
+    	<div class="col-xs-6 col-md-4" ng-show="mol.ctab.length > 0">
 <chemsvg  size="'200'" smiles="mol.ctab"  base-url="'http://staging.chembiohub.ox.ac.uk/utils/ctab2image'" ></chemsvg>
 
+        </div>
 
-<!-- <bootstrap-decorator>
-<div class="form-group " ng-class="" ng-init="">
-<label class="control-label ng-binding" >SMILES</label>
-<div class="form-group ng-scope" >
-	<div class="input-group">
-<input class="form-control" type="text" disabled ng-model="mol.canonicalSmiles"></input>
-<a href="" clip-copy="mol.canonicalSmiles" clip-click="doSomething()" role="button" class="input-group-addon"><span class="glyphicon glyphicon-copy"> Copy</span></a>
+<div class="col-xs-6 col-md-8 " >
+    <div class="col-xs-12 " >
+<h2 class="nexa blue ">Compound Information</h2>
 </div>
-</div>
-</div>
-</bootstrap-decorator> -->
+<div class="col-xs-12 col-md-6" >
 <button-input model="mol.canonicalSmiles" disabled="true" label="'SMILES'"></button-input>
 <button-input model="mol.standardInchi" disabled="true" label="'Standard INCHI'"></button-input>
 <button-input model="mol.standardInchiKey" disabled="true" label="'Standard INCHI key'"></button-input>
-<button-input model="mol.chemblId" disabled="true" label="'UOx ID'"></button-input>
-<!-- <button-input model="mol.alogp | number:2" disabled="true" label="'AlogP'"></button-input>
- --><button-input model="mol.created | date:'dd-MM-yyyy'" disabled="true" label="'Created'"></button-input>
+</div>
+<div class="col-xs-12 col-md-6" >
+ <button-input model="mol.alogp | number:2" disabled="true" label="'AlogP'"></button-input>
+ <button-input model="mol.created | date:'dd-MM-yyyy'" disabled="true" label="'Created'"></button-input>
 <button-input model="mol.molecularWeight | number:2" disabled="true" label="'Mol Weight'"></button-input>
+</div>
+</div>
+        </div>
+<div class="divider spacer"></div>
+<div class="row">
 <!-- <button-input model="mol.rotatableBonds" disabled="true" label="'Rotatable Bonds'"></button-input>
  -->
+<div class="col-xs-12 ">
+<h2 class="nexa blue ">Custom Fields          <button class="btn btn-warning" ng-model="mol.editMode" btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0">Toggle Edit Mode</button>
+ <button class="btn btn-primary"  ng-show="mol.editMode" ng-click="updateBatch()">Update Batch Custom Fields</button>
+ <div class="alert alert-success" ng-show="update_success">Custom Fields Updated Successfully</div>
+</h2>
 
+		<div class="col-xs-12 col-md-6"  ng-hide="mol.editMode" >
+			<div ng-repeat="item in firstList">
+                <button-input key="(item.key || item)" model="mol.customFields" disabled="true" label="(item.key || item)"></button-input>
+            </div>
 		</div>
-		<div class="col-xs-6">
-			<h3 class="nexa blue">Custom Fields</h3>
-			<button class="btn btn-warning" ng-model="mol.editMode" btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0">Toggle Edit Mode</button>
+        <div class="col-xs-12 col-md-6"  ng-hide="mol.editMode">
+            <div ng-repeat="item in secondList">
+                <button-input key="(item.key || item)" model="mol.customFields" disabled="true" label="(item.key || item)"></button-input>
+            </div>
+        </div>
+		<div ng-show="mol.editMode" class="col-xs-12 col-md-6">
+		<div  class=" form-group" sf-schema="myschema" sf-form="firstForm" sf-model="mol.customFields "></div>
+		</div>
+        <div ng-show="mol.editMode" class="col-xs-12 col-md-6">
+        <div  class=" form-group" sf-schema="myschema" sf-form="secondForm" sf-model="mol.customFields "></div>
+        </div>
+		</div>
+        <div class="spacer"></div>
+<div class="col-xs-12" ng-show="mol.uncuratedFields | notEmpty">
+            <h2 class="nexa blue">Uncurated Fields</h2>
+            <div class="col-xs-6" ng-repeat="(name, value) in mol.uncuratedFields">
+            <button-input model="value" disabled="true" label="name"></button-input>
 
-			<div ng-hide="mol.editMode" ng-repeat="(name, value) in mol.customFields">
-			<button-input model="value" disabled="true" label="name"></button-input>
+        </div>
+        
+        </div>
+    </div>
 
-		</div>
-		<div ng-show="mol.editMode">
-			This feature is under construction but is here for feedback purposes
-		<div  class=" form-group" sf-schema="myschema" sf-form="myform" sf-model="mol.customFields"></div>
-		</div>
-		</div>
-	</div>
-	
-
-</div>
 <div class="modal-footer">
     <button class="btn btn-danger" ng-click="modalInstance.dismiss('cancel');">Close</button>
 </div>

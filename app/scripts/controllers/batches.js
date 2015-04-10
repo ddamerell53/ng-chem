@@ -8,7 +8,7 @@
  * Controller of the ngChemApp
  */
 angular.module('ngChemApp')
-  .controller('BatchesCtrl',['$scope', '$modal', '$timeout', '$q', '$state', '$stateParams','$location', 'gridconfig', 'projectKey', 'projectFactory', 'MessageFactory', 'ProjectCustomFields', function ($scope, $modal, $timeout, $q, $state, $stateParams, $location, gridconfig, projectKey, projectFactory, MessageFactory, ProjectCustomFields) {
+  .controller('BatchesCtrl',['$scope', '$modal', '$timeout', '$q', '$state', '$stateParams','$location', 'gridconfig', 'projectKey', 'projectFactory', 'MessageFactory', 'ProjectCustomFields', 'CBHCompoundBatch', function ($scope, $modal, $timeout, $q, $state, $stateParams, $location, gridconfig, projectKey, projectFactory, MessageFactory, ProjectCustomFields, CBHCompoundBatch) {
     var filters = { };
     //console.log(multiple_batch_id);
     //console.log($stateParams);
@@ -25,7 +25,15 @@ angular.module('ngChemApp')
     else if($scope.validatedData) {
       filters = { 'multiple_batch_id' : $scope.validatedData.currentBatch }
     }
-
+$scope.tagFunction = function(content){
+    var item = {
+      value: content,
+      label: content,
+      description : '',
+      group: ''
+    }
+    return item;
+  };
     //$scope.proj = $rootScope.getProjectObj(projectKey);
 
 ProjectCustomFields.query(projectKey, {}, $scope.tagFunction).then(function(data){
@@ -123,11 +131,31 @@ ProjectCustomFields.query(projectKey, {}, $scope.tagFunction).then(function(data
             return $scope.myschema;
           }
         }, 
-        controller: function($scope, $modalInstance, mol, myform, myschema) {
+        controller: function($scope, $modalInstance, mol, myform, myschema, $timeout) {
           $scope.mol = mol;
           $scope.myform = myform;
+          var len = Math.ceil( myform.length/2);
+          $scope.firstForm = angular.copy(myform).splice(0, len);
+          $scope.secondForm = angular.copy(myform).splice(len);
+          $scope.firstList = angular.copy(myform).splice(0, len);
+          $scope.secondList = angular.copy(myform).splice(len);
+          $scope.removeAlert = function(){
+            $scope.update_success = false;
+          }
+          $scope.updateBatch = function(){
+            CBHCompoundBatch.patch({"customFields" : mol.customFields, "projectKey": projectKey, "id": mol.id}).then(
+                function(data){
+                  $scope.mol=data;
+                  $scope.update_success = true;
+                  $timeout(removeAlert, 5000);
+                }
+              );
+          }
           $scope.myschema = myschema;
           $scope.modalInstance = $modalInstance;
+// $scope.$watch('mol', function(n,o), true){
+//   $scope.pointers = n;
+// });
         }
       });
     };

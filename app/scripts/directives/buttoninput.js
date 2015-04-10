@@ -14,7 +14,7 @@ angular.module('ngChemApp')
                         <label class="control-label " >{{label}}</label>\
                             <div class="form-group " >\
                               <div class="input-group">\
-                                <input class="form-control" type="text" ng-disabled="disabled" ng-model="model"></input>\
+                                <input class="form-control" type="text" ng-disabled="disabled" ng-model="copyModel"></input>\
                                 <a href="" clip-copy="copyModel" clip-click="" role="button" class="input-group-addon"><span class="glyphicon glyphicon-copy"> Copy</span></a>\
                             </div>\
                             </div>\
@@ -24,19 +24,29 @@ angular.module('ngChemApp')
       link: function postLink(scope, element, attrs) {
         //element.html('this is the chemsvg directive');
         scope.setCopyModel();
+        scope.$watch('model', function(){
+               scope.setCopyModel();
+          }, true);
       
       },
        controller: ['$scope', function($scope) {
          
             $scope.setCopyModel = function() {
-                if ($scope.model.constructor === Array){
-                    $scope.copyModel = $scope.model.join(", ");
+                var mymodel = $scope.model;
+                if (angular.isDefined($scope.key)){
+                  console.log("yes");
+                  mymodel = $scope.model[$scope.key];
+
+                }
+                if (mymodel.constructor === Array){
+                    $scope.copyModel = mymodel.join(", ");
                 }else{
-                    $scope.copyModel = $scope.model;
+                    $scope.copyModel = mymodel;
                 }
             }
        }],
       scope: {
+        key: '=',
         model:'=',
         disabled: '=',
         label: '=',

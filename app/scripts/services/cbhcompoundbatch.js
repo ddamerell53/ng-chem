@@ -90,7 +90,6 @@ angular.module('ngChemApp')
         return $http.post ( urlConfig.cbh_compound_batches.list_endpoint + "/existing/", {"projectKey" :projectKey});
     };
     CBHCompoundBatch.query = function(projectKey,filters) {
-        console.log(urlConfig);
         filters.projectKey = projectKey;
         filters.project__project_key = projectKey;
          var promise = $http( 
@@ -106,6 +105,17 @@ angular.module('ngChemApp')
         );
         return promise;
     };
+
+    CBHCompoundBatch.patch = function(data, projectKey){
+        var promise = $http.patch(  urlConfig.cbh_compound_batches.list_endpoint + '/' + data.id + '/' ,       
+                data
+            ).then(
+            function(data){
+                return data.data;
+            }
+        );
+        return promise;
+    }
 
     CBHCompoundBatch.search = function(searchForm) {
         var promise = $http({
