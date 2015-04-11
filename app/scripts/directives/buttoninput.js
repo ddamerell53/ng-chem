@@ -23,34 +23,15 @@ angular.module('ngChemApp')
       restrict: 'E',
       link: function postLink(scope, element, attrs) {
         //element.html('this is the chemsvg directive');
-        scope.setCopyModel();
-        scope.$watch('model', function(){
-               scope.setCopyModel();
-          }, true);
+        
       
       },
        controller: ['$scope', function($scope) {
          
-            $scope.setCopyModel = function() {
-                var mymodel = $scope.model;
-                if (angular.isDefined($scope.key)){
-                  if (angular.isDefined($scope.model[$scope.key])){
-                      mymodel = $scope.model[$scope.key];
-                  }else{
-                    mymodel="";
-                  }
-
-                }
-                if (mymodel.constructor === Array){
-                    $scope.copyModel = mymodel.join(", ");
-                }else{
-                    $scope.copyModel = mymodel;
-                }
-            }
+           
        }],
       scope: {
-        key: '=',
-        model:'=',
+        copyModel:'=',
         disabled: '=',
         label: '=',
 

@@ -10,8 +10,7 @@
 angular.module('ngChemApp')
   .controller('BatchesCtrl',['$scope', '$modal', '$timeout', '$q', '$state', '$stateParams','$location', 'gridconfig', 'projectKey', 'projectFactory', 'MessageFactory', 'ProjectCustomFields', 'CBHCompoundBatch', function ($scope, $modal, $timeout, $q, $state, $stateParams, $location, gridconfig, projectKey, projectFactory, MessageFactory, ProjectCustomFields, CBHCompoundBatch) {
     var filters = { };
-    //console.log(multiple_batch_id);
-    //console.log($stateParams);
+    
     var multiple_batch_id = $stateParams.multiple_batch_id;
     //..
     $scope.state = $state.current
@@ -83,7 +82,6 @@ ProjectCustomFields.query(projectKey, {}, $scope.tagFunction).then(function(data
     //$scope.gridconfig.configObject.pagingOptions
 
     $timeout(function() {
-        console.log(filters);
         $scope.gridconfig.initializeGridParams(projectKey, filters).then(function(result) {
         $scope.gridconfig.configObject.totalServerItems = result.meta.totalCount;
         $scope.gridconfig.configObject.compounds = result.objects;
@@ -92,7 +90,6 @@ ProjectCustomFields.query(projectKey, {}, $scope.tagFunction).then(function(data
     //watches the paging buttons to pull in new results for the window
     $scope.$watch('gridconfig.configObject.pagingOptions', function (newVal, oldVal) {
       if (newVal !== oldVal && (newVal.currentPage !== oldVal.currentPage || newVal.pageSize !== oldVal.pageSize)) {
-        console.log('paging change');
         $scope.gridconfig.initializeGridParams(projectKey,filters).then(function(result) {
           $scope.gridconfig.configObject.totalServerItems = result.meta.totalCount;
           $scope.gridconfig.configObject.compounds = result.objects;
@@ -116,7 +113,6 @@ ProjectCustomFields.query(projectKey, {}, $scope.tagFunction).then(function(data
 
         }
       });
-      console.log($scope.mol);
       $scope.modalInstance = $modal.open({
         templateUrl: 'views/single-compound.html',
         size: 'lg',
@@ -137,8 +133,38 @@ ProjectCustomFields.query(projectKey, {}, $scope.tagFunction).then(function(data
           var len = Math.ceil( myform.length/2);
           $scope.firstForm = angular.copy(myform).splice(0, len);
           $scope.secondForm = angular.copy(myform).splice(len);
-          $scope.firstList = angular.copy(myform).splice(0, len);
-          $scope.secondList = angular.copy(myform).splice(len);
+          
+          $scope.init = function(){
+             $scope.keyValues = angular.copy(myform).map(
+
+                function(item){
+                  var key = item;
+                  if(angular.isDefined(item.key)){
+                    key =item.key
+                  };
+                  var value = "";
+                  if (angular.isDefined($scope.mol.customFields[key])){
+
+
+                      value = $scope.mol.customFields[key]
+
+                  }
+                  if (value.constructor === Array){
+                    value = value.join(", ");
+                  }
+                  return {'key':key, 'value':value };
+                }
+              );
+
+          $scope.firstList = $scope.keyValues.splice(0, len);
+          $scope.secondList = $scope.keyValues;
+                    console.debug($scope.firstList);
+
+
+          };
+          $scope.init();
+         
+
           $scope.removeAlert = function(){
             $scope.update_success = false;
           }
@@ -146,8 +172,10 @@ ProjectCustomFields.query(projectKey, {}, $scope.tagFunction).then(function(data
             CBHCompoundBatch.patch({"customFields" : mol.customFields, "projectKey": projectKey, "id": mol.id}).then(
                 function(data){
                   $scope.mol=data;
+                  console.debug($scope.mol.customFields["Analytical Datasets"]);
                   $scope.update_success = true;
                   $timeout($scope.removeAlert, 5000);
+                  $scope.init();
                 }
               );
           }
@@ -167,7 +195,6 @@ ProjectCustomFields.query(projectKey, {}, $scope.tagFunction).then(function(data
         controller: function($scope, $modalInstance, MessageFactory) {
           $scope.modalInstance = $modalInstance;
           $scope.legends = MessageFactory.getLegends();
-          console.log($scope.legends);
         }
       });
     }

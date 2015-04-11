@@ -16,35 +16,36 @@
 <h2 class="nexa blue ">Compound Information</h2>
 </div>
 <div class="col-xs-12 col-md-6" >
-<button-input model="mol.canonicalSmiles" disabled="true" label="'SMILES'"></button-input>
-<button-input model="mol.standardInchi" disabled="true" label="'Standard INCHI'"></button-input>
-<button-input model="mol.standardInchiKey" disabled="true" label="'Standard INCHI key'"></button-input>
+<button-input copy-model="mol.canonicalSmiles" disabled="true" label="'SMILES'"></button-input>
+<button-input copy-model="mol.standardInchi" disabled="true" label="'Standard INCHI'"></button-input>
+<button-input copy-model="mol.standardInchiKey" disabled="true" label="'Standard INCHI key'"></button-input>
 </div>
 <div class="col-xs-12 col-md-6" >
- <button-input model="mol.alogp | number:2" disabled="true" label="'AlogP'"></button-input>
- <button-input model="mol.created | date:'dd-MM-yyyy'" disabled="true" label="'Created'"></button-input>
-<button-input model="mol.molecularWeight | number:2" disabled="true" label="'Mol Weight'"></button-input>
+ <button-input copy-model="mol.alogp | number:2" disabled="true" label="'AlogP'"></button-input>
+ <button-input copy-model="mol.created | date:'dd-MM-yyyy'" disabled="true" label="'Created'"></button-input>
+<button-input copy-model="mol.molecularWeight | number:2" disabled="true" label="'Mol Weight'"></button-input>
 </div>
 </div>
         </div>
 <div class="divider spacer"></div>
 <div class="row">
-<!-- <button-input model="mol.rotatableBonds" disabled="true" label="'Rotatable Bonds'"></button-input>
+<!-- <button-input copy-model="mol.rotatableBonds" disabled="true" label="'Rotatable Bonds'"></button-input>
  -->
 <div class="col-xs-12 ">
 <h2 class="nexa blue ">Custom Fields          <button class="btn btn-warning" ng-model="mol.editMode" btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0">Toggle Edit Mode</button>
  <button class="btn btn-primary"  ng-show="mol.editMode" ng-click="updateBatch()">Update Batch Custom Fields</button>
- <div class="alert alert-success" ng-show="update_success">Custom Fields Updated Successfully</div>
 </h2>
+ <div class="alert alert-success" ng-show="update_success">Custom Fields Updated Successfully</div>
+
 
 		<div class="col-xs-12 col-md-6"  ng-hide="mol.editMode" >
-			<div ng-repeat="item in firstList">
-                <button-input key="(item.key || item)" model="mol.customFields" disabled="true" label="(item.key || item)"></button-input>
+			<div ng-repeat="item in firstList track by item.key">
+                <button-input  copy-model="item.value" disabled="true" label="item.key"></button-input>
             </div>
 		</div>
         <div class="col-xs-12 col-md-6"  ng-hide="mol.editMode">
-            <div ng-repeat="item in secondList">
-                <button-input key="(item.key || item)" model="mol.customFields" disabled="true" label="(item.key || item)"></button-input>
+            <div ng-repeat="item in secondList track by item.key">
+                <button-input  copy-model="item.value" disabled="true" label="item.key"></button-input>
             </div>
         </div>
 		<div ng-show="mol.editMode" class="col-xs-12 col-md-6">
@@ -58,7 +59,7 @@
 <div class="col-xs-12" ng-show="mol.uncuratedFields | notEmpty">
             <h2 class="nexa blue">Uncurated Fields</h2>
             <div class="col-xs-6" ng-repeat="(name, value) in mol.uncuratedFields">
-            <button-input model="value" disabled="true" label="name"></button-input>
+            <button-input copy-model="value" disabled="true" label="name"></button-input>
 
         </div>
         
