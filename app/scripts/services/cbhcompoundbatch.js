@@ -61,7 +61,8 @@ angular.module('ngChemApp')
 
 
     CBHCompoundBatch.saveSingleCompound = function(projectKey, molfile, customFields, stereoSelected) {
-
+        //Add a property to the molfile to say that this molecule has been hand drawn
+        molfile += '\n>  <_drawingBondsWedged>\nTrue\n\n$$$$';
         return $http.post( urlConfig.cbh_compound_batches.list_endpoint +"/" , {"projectKey": projectKey ,ctab:molfile, "customFields":customFields , "stereoSelected" : stereoSelected});
 
     };

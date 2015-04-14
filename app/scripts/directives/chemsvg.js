@@ -30,7 +30,7 @@ angular.module('ngChemApp')
                 // if (window.location.hostname == "localhost"){
                 //   $scope.finalUrl = "http://localhost:2201/utils/smiles2svg";
                 // }else{
-                  $scope.finalUrl = $scope.baseUrl + 'raw';
+                  $scope.finalUrl = $scope.baseUrl;
                 //}
             };
 
