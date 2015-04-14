@@ -17,7 +17,7 @@ angular.module('ngChemApp')
       }*/
       controller: ['$scope', 'MessageFactory', function($scope, MessageFactory) {
       	//$scope.tooltext = "test here";
-      	$('[data-toggle="popover"]').popover( {trigger: 'click focus'} );
+      	$('[data-toggle="popover"]').popover( {trigger: 'focus'} );
       	if($scope.freetext) {
       		$scope.displaytext = $scope.freetext;
       	}
