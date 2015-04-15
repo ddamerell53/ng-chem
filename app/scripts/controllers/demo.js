@@ -333,7 +333,6 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
             $scope.inProcessing = true;
             CBHCompoundBatch.validateList(projectKey, $scope.input_string.splitted).then(
                 function(data){
-                    data.total=data.objects.length;
                     $scope.validatedData = data;
                     $scope.inProcessing = false;
                 }, function(error){
