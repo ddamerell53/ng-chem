@@ -133,9 +133,9 @@ ProjectCustomFields.query(projectKey, {}, $scope.tagFunction).then(function(data
           var len = Math.ceil( myform.length/2);
           $scope.firstForm = angular.copy(myform).splice(0, len);
           $scope.secondForm = angular.copy(myform).splice(len);
-          
+          $scope.myform2 = angular.copy(myform);
           $scope.init = function(){
-             $scope.keyValues = angular.copy(myform).map(
+             $scope.keyValues = $scope.myform2.map(
 
                 function(item){
                   var key = item;
@@ -169,13 +169,13 @@ ProjectCustomFields.query(projectKey, {}, $scope.tagFunction).then(function(data
             $scope.update_success = false;
           }
           $scope.updateBatch = function(){
-            CBHCompoundBatch.patch({"customFields" : mol.customFields, "projectKey": projectKey, "id": mol.id}).then(
+            CBHCompoundBatch.patch({"customFields" : $scope.mol.customFields, "projectKey": projectKey, "id": $scope.mol.id}).then(
                 function(data){
                   $scope.mol=data;
-                  console.debug($scope.mol.customFields["Analytical Datasets"]);
+                  mol=data;
                   $scope.update_success = true;
-                  $timeout($scope.removeAlert, 5000);
                   $scope.init();
+                  $timeout($scope.removeAlert, 5000);
                 }
               );
           }

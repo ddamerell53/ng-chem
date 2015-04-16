@@ -32,11 +32,10 @@
 <!-- <button-input copy-model="mol.rotatableBonds" disabled="true" label="'Rotatable Bonds'"></button-input>
  -->
 <div class="col-xs-12 ">
-<h2 class="nexa blue ">Custom Fields          <button class="btn btn-warning" ng-model="mol.editMode" btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0">Toggle Edit Mode</button>
+<h2 class="nexa blue ">Custom Fields          <button class="btn btn-warning" ng-model="mol.editMode" btn-checkbox btn-checkbox-true="1" ng-click="init()" btn-checkbox-false="0">Toggle Edit Mode</button>
  <button class="btn btn-primary"  ng-show="mol.editMode" ng-click="updateBatch()">Update Batch Custom Fields</button>
 </h2>
  <div class="alert alert-success" ng-show="update_success">Custom Fields Updated Successfully</div>
-
 
 		<div class="col-xs-12 col-md-6"  ng-hide="mol.editMode" >
 			<div ng-repeat="item in firstList track by item.key">
@@ -49,10 +48,10 @@
             </div>
         </div>
 		<div ng-show="mol.editMode" class="col-xs-12 col-md-6">
-		<div  class=" form-group" sf-schema="myschema" sf-form="firstForm" sf-model="mol.customFields "></div>
+		<div  class=" form-group" sf-schema="myschema" sf-form="firstForm" sf-model="mol.customFields"></div>
 		</div>
         <div ng-show="mol.editMode" class="col-xs-12 col-md-6">
-        <div  class=" form-group" sf-schema="myschema" sf-form="secondForm" sf-model="mol.customFields "></div>
+        <div  class=" form-group" sf-schema="myschema" sf-form="secondForm" sf-model="mol.customFields"></div>
         </div>
 		</div>
         <div class="spacer"></div>
