@@ -2,7 +2,17 @@
 
 //http://bahmutov.calepin.co/inject-valid-constants-into-angular.html
 
-angular.module('ngChemApp', [
+
+var lightApp = angular.module('lightApp', [
+        'angular-underscore/filters', 
+    'schemaForm', 
+    'pascalprecht.translate', 
+    'ui.select', 
+    'ui.sortable'
+  ]);
+
+var ngChemApp =  angular.module('ngChemApp', [
+    'lightApp',
     'ngAnimate',
     'ngAria',
     'ngCookies',
@@ -22,4 +32,5 @@ angular.module('ngChemApp', [
     'pascalprecht.translate', 
     'ui.select', 
     'ui.sortable'
-  ])
+  ]);
+

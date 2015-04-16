@@ -61,47 +61,16 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
     return item;
   };
 
-   // $scope.myschema = {type: "object", properties:
-   //              {tagging :{
-   //                      title: 'Tagging',
-   //                      type: 'array',
-   //                      format: 'uiselect',
-   //                      description: 'Hit enter or comma to create a new iootem in the dropdown',
-                        
-   //                      items: [
-   //                        { value: 'one', label: 'label1'},
-   //                        { value: 'two', label: 'label2'},
-   //                        { value: 'three', label: 'label3'},
-   //                        { value: 'four', label: 'label4'},
-   //                        { value: 'five', label: 'label5'}
-   //                      ]
-   //                    }}
-
-   //          };
-   //                $scope.myform = [{
-   //                   key: 'tagging',
-   //                   options: {
-   //                      tagging: $scope.tagFunction ,
-   //                      taggingLabel: '(adding new)',
-   //                      taggingTokens: 'ENTER|,',
-   //                   }
-   //                 }];
          ProjectCustomFields.query(projectKey, {}, $scope.tagFunction).then(function(data){
-                console.log(data);
                  $scope.myschema = data.schemaform.schema;
                  $scope.myform = data.schemaform.form;
+                  // var len = Math.ceil( $scope.myform.length/2);
+                  // $scope.firstForm = angular.copy($scope.myform).splice(0, len);
+                  // $scope.secondForm = angular.copy($scope.myform).splice(len);
         });
-        //         console.log($scope.projectCustomFields);
-
-        // });
-
-
-
-
 
         $scope.testData = {};
         
-
 //User has pressed cancel or finished a registration - clear out all of the populated data
     $scope.startAgain = function(flowfiles) {
         $scope.processingMultiBatch = false;

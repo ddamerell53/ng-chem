@@ -23,35 +23,43 @@ angular.module('ngChemApp')
                 params: filters
             }
             ).then(
-            function(data){
-                var customFields = {}
-                if (data.data.objects.length==1){
-                    customFields = data.data.objects[0];
-                    var formData = customFields.schemaform.form.map(function(key){
-                          if (angular.isDefined(customFields.schemaform.schema.properties[key].options)){
-                              if (angular.isDefined(customFields.schemaform.schema.properties[key].options.tagging)){
-                                  return {
-                                    "options": {   "tagging" : tagFunction,
-                                              "taggingLabel": "(adding new)",
-                                              "taggingTokens": ",|ENTER"
+                function(data){
+                    // var customFields = {"schemaform": {"form": ["Analytical Datasets", "Location", "Compound Handling Information", "Custom ID", "Yield"], "schema": {"required": ["Analytical Datasets", "Location"], "type": "object", "properties": {"Custom ID": {"placeholder": "The user's custom identifier", "type": "string", "title": "Custom ID"}, "Analytical Datasets": {"title": "Analytical Datasets", "items": [{"value": "H1 nmr", "label": "H1 nmr"}, {"value": "C13 nmr", "label": "C13 nmr"}, {"value": "HDMS", "label": "HDMS"}, {"value": "HPLC", "label": "HPLC"}, {"value": "Optical Rotation", "label": "Optical Rotation"}, {"value": "IR", "label": "IR"}, {"value": "MP", "label": "MP"}, {"value": "BP", "label": "BP"}], "format": "uiselect", "type": "array", "placeholder": "Check the boxes to say which data have been collected and annotated for this compound.", "options": {"taggingTokens": ",|ENTER", "taggingLabel": "(adding new)", "tagging": tagFunction}}, "Location": {"title": "Location", "items": [{"value": "", "label": ""}], "format": "uiselect", "type": "array", "placeholder": "Add tags to describe where the molecule is kept", "options": {"taggingTokens": ",|ENTER", "taggingLabel": "(adding new)", "tagging": tagFunction}}, "Yield": {"placeholder": "TEst", "minimum": 0.0, "type": "number", "maximum": 100.0, "title": "Yield"}, "Compound Handling Information": {"title": "Compound Handling Information", "items": [{"value": "", "label": ""}], "format": "uiselect", "type": "array", "placeholder": "Add tag to describe how to handle the compound", "options": {"taggingTokens": ",|ENTER", "taggingLabel": "(adding new)", "tagging": tagFunction}}}}}};
+                     
+                     var customFields = {};
 
-                                            },
-                                        "key": key,
-                                        "description" : customFields.schemaform.schema.properties[key].description
-                                         }
-                                      } 
-                                }
+
+                     if (data.data.objects.length==1){
+                         customFields = data.data.objects[0];
+                    //TODO tidy this up in the other repo!!!
+                     var formData = customFields.schemaform.form.map(function(key){
+                            if (typeof(key)=="string" || key instanceof String){
+                                if (angular.isDefined(customFields.schemaform.schema.properties[key].options)){
+                              
+                                  if (angular.isDefined(customFields.schemaform.schema.properties[key].options.tagging)){
+                                      var data = {
+                                        "options": angular.copy(customFields.schemaform.schema.properties[key].options),
+                                            "key": key,
+                                            "description" : customFields.schemaform.schema.properties[key].description
+                                             };
+                                            data.options.tagging=tagFunction;
+
+                                          }
+                                          console.log(data);
+                                          return data;
+
+                                    }
+                                  }
                                 return key;
-                            }
-                  );
-                  customFields.schemaform.form = formData;
+                            });
+
+
+                     customFields.schemaform.form = formData;
+                    }
+                    return customFields;
                 }
-                return customFields;
-            }
         );
         return promise;
     };
-
-
     return ProjectCustomFields;
-  });
+});
