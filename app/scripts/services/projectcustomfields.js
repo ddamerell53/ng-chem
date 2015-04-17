@@ -32,28 +32,14 @@ angular.module('ngChemApp')
                      if (data.data.objects.length==1){
                          customFields = data.data.objects[0];
                     //TODO tidy this up in the other repo!!!
-                     var formData = customFields.schemaform.form.map(function(key){
-                            if (typeof(key)=="string" || key instanceof String){
-                                if (angular.isDefined(customFields.schemaform.schema.properties[key].options)){
-                              
-                                  if (angular.isDefined(customFields.schemaform.schema.properties[key].options.tagging)){
-                                      var data = {
-                                        "options": angular.copy(customFields.schemaform.schema.properties[key].options),
-                                            "key": key,
-                                            "description" : customFields.schemaform.schema.properties[key].description
-                                             };
-                                            data.options.tagging=tagFunction;
-
-                                          }
-                                          console.log(data);
-                                          return data;
-
+                     var formData = customFields.schemaform.form.map(function(key){                 
+                              if (angular.isDefined(key.options)){               
+                                  if (angular.isDefined(key.options.tagging)){
+                                      key.options.tagging=tagFunction;
                                     }
-                                  }
-                                return key;
+                              }
+                              return key;
                             });
-
-
                      customFields.schemaform.form = formData;
                     }
                     return customFields;
