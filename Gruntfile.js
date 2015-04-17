@@ -381,7 +381,12 @@ module.exports = function (grunt) {
           src: 'bower_components/bootstrap/dist/fonts/*',
           dest: '<%= yeoman.dist %>/styles/'
         },  
-
+        {
+         expand: true,
+         cwd: '.',
+         src: 'bootstrap-sass-official/assets/fonts/bootstrap/glyphicons-halflings-regular.woff2',
+         dest: '<%= yeoman.dist %>/styles/fonts/'
+	 },
         {
           expand: true,
           cwd: '.',

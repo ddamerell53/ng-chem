@@ -14,7 +14,7 @@ angular.module('ngChemApp')
                         <label class="control-label " >{{label}}</label>\
                             <div class="form-group " >\
                               <div class="input-group">\
-                                <input class="form-control" type="text" ng-disabled="disabled" ng-model="copyModel"></input>\
+                                <input class="form-control" type="text" disabled ng-model="copyModel"></input>\
                                 <a href="" clip-copy="copyModel" clip-click="" role="button" class="input-group-addon"><span class="glyphicon glyphicon-copy"> Copy</span></a>\
                             </div>\
                             </div>\
