@@ -146,24 +146,24 @@ angular.module('ngChemApp')
     var legends = {
         legend_uox_id: {
             name: "UOx ID",
-            explanation: "Legend text for UOx ID"
+            explanation: "A unique identifier for this compound in this project. For each UOx ID there can be multiple batches."
         },
-        legend_alogp: {
-            name: "alogP",
-            explanation: "Legend text for alogp"
-        },
-        legend_rotatable_bonds: {
-            name: "Rotatable Bonds",
-            explanation: "Legend text for Rotatable BondsLegend text for Rotatable BondsLegend text for Rotatable BondsLegend text for Rotatable BondsLegend text for Rotatable Bonds"
-        },
+        // legend_alogp: {
+        //     name: "alogP",
+        //     explanation: "Legend text for alogp"
+        // },
+        // legend_rotatable_bonds: {
+        //     name: "Rotatable Bonds",
+        //     explanation: "Legend text for Rotatable BondsLegend text for Rotatable BondsLegend text for Rotatable BondsLegend text for Rotatable BondsLegend text for Rotatable Bonds"
+        // },
         legend_batch_id: {
             name: "Batch ID",
-            explanation: "Legend text for Batch ID"
+            explanation: "A sample of this compound - each time you re-register a compound you get a new batch. Batch IDs will soon be sequential per UOx ID. For each UOx ID there can be multiple batches"
         },
-        legend_medchem_friendly: {
-            name: "MedChem Friendly",
-            explanation: "Legend text for MedChem Friendly"
-        },
+        // legend_medchem_friendly: {
+        //     name: "MedChem Friendly",
+        //     explanation: "Legend text for MedChem Friendly"
+        // },
         //create more in this format here
     }
 
