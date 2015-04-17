@@ -384,9 +384,9 @@ module.exports = function (grunt) {
 
         {
           expand: true,
-          cwd: '.',
-          src: 'bower_components/bootstrap/dist/fonts/*',
-          dest: '<%= yeoman.dist %>/fonts'
+          cwd: 'bower_components/bootstrap/dist/fonts/',
+          src: '*',
+          dest: '<%= yeoman.dist %>/fonts/'
         },  
         {
           expand: true,
@@ -394,12 +394,12 @@ module.exports = function (grunt) {
           src: 'bower_components/chembiohub-theme/{,*/}{,*/}{,*/}*.*',
           dest: '<%= yeoman.dist %>'
         }
-     //,{                                                   
-     //           expand: true,
-     //   cwd: './bower_components/chembiohub-theme/fonts/',
-     //   dest: '<%= yeoman.dist %>/fonts/',
-     //   src: '*.*'
-   // }
+     ,{                                                   
+               expand: true,
+        cwd: './bower_components/chembiohub-theme/fonts/',
+        dest: '<%= yeoman.dist %>/fonts/',
+        src: '*.*'
+    }
 
 
         ]
