@@ -384,8 +384,8 @@ module.exports = function (grunt) {
         {
          expand: true,
          cwd: '.',
-         src: 'bootstrap-sass-official/assets/fonts/bootstrap/glyphicons-halflings-regular.woff2',
-         dest: '<%= yeoman.dist %>/styles/fonts/'
+         src: 'bootstrap-sass-official/assets/fonts/bootstrap/*',
+         dest: '<%= yeoman.dist %>/fonts/'
 	 },
         {
           expand: true,
