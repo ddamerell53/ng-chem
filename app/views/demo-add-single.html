@@ -1,85 +1,50 @@
-<div class="row">
-	<div class="alert alert-info">
-		<p><strong>{{getMessage('drawing_label')}}</strong><br/>{{getMessage('drawing_label_suppl')}}</p>
-	</div>
-</div>
-
-
-<form novalidate name="inputForm" role="form" ng-submit="">
-	
-
 
 	<div class="row">
 		<div class="pull-right">
 			<a role="button" class="btn btn-danger" ng-click="startAgain()" ui-sref="projects.project.demo.intro">Cancel</a>
-			<input type="submit" class="btn btn-primary" ng-click="saveSingleMol()" id="submit" ng-disabled="validated.errors.invalidMolecule || processingSingle"  value="Save">
+			<input type="submit" class="btn btn-primary" ng-click="saveSingleMol()" id="submit" ng-disabled="validated.errors.invalidMolecule || processingSingle"  value="Save Molecule to ChemReg">
 		</div>
-<!-- 		<div class="col-xs-1 centered">
-			<div class="row"><h3 class="nexa blue">Properties</h3></div>
-			<div ng-hide="validated.errors.invalidMolecule">
-				<div class="row">
-					<div class="col-xs-12 chemprop">
-						<strong class="nexa">alogp</strong><br/>
-						<span class="badge">{{ validated.properties.alogp || 0 | number:2 }}</span><br/>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-xs-12 chemprop">
-						<strong class="nexa">H-bond acceptors</strong><br/>
-						<span class="badge">{{ validated.properties.hba || 0 }}</span><br/>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-xs-12 chemprop">
-						<strong class="nexa">H-bond donors</strong><br/>
-						<span class="badge">{{ validated.properties.hbd || 0 }}</span><br/>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-xs-12 chemprop">
-						<strong class="nexa">PSA</strong><br/>
-						<span class="badge">{{ validated.properties.psa || 0 | number:2 }}</span><br/>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-xs-12 chemprop">
-						<strong class="nexa">Rotatable bonds</strong><br/>
-						<span class="badge">{{ validated.properties.rtb || 0 }}</span><br/>
-					</div>
-				</div>
-			</div>
-			<div ng-show="validated.errors.invalidMolecule" style="vertical-align:center;">
-				Invalid molecule
-			</div>
-		</div> -->
+	</div>
+
+
+
+	<div class="row">
+		<div class="col-xs-9">
+			<div class="row">
+	<div class="alert alert-info">
+		<div style="margin-right:5px; " class="pull-right"><info-box lookup="drawing_label_suppl"></info-box></div>
+		<p><strong>{{getMessage('drawing_label')}}</strong></p>
+		
+	</div>
+</div>
 		<div class="col-xs-8">
+			
+
 			<chemdoodle-window sketch-molfile="sketchMolfile" fetch-data="fetchData()" molecule="molecule"></chemdoodle-window>
 			<div id="sketcher_output"></div>
 		</div>
-		<!-- 
-			<div class="row">
-			<div class="col-xs-12">
-			<div class="col-xs-12">
-			<div class=" form-group" id="stereochem-group">
-					<label for="stereochem" class="nexa">Stereochem options</label>
-					<select ng-options="item.value | titlecase for item in stereochem_options track by item.name" class="form-control" ng-model="molecule.metadata.stereoSelected"></select>
-				
-			</div>
-		</div> -->
 		<div class="col-xs-4">
+			<div class="spacer"></div>
         <div  class=" form-group" sf-schema="myschema" sf-form="myform" sf-model="molecule.metadata.projectFields"></div>
 		</div>
+	</div>
+		<div class="col-xs-3">
+				
+	<ng-include src="'views/templates/validation.html'"></ng-include>
+</div>
+
+
 
 		</div>
 		
 
 	<!-- Errors and warnings -->
 
-	<div class="row" data-ng-show="validated.errors.invalidMolecule">
+<!-- 	<div class="row" data-ng-show="validated.errors.invalidMolecule">
 		<div class="alert alert-danger" id="validation-invalid-error">Invalid valency of sketched molecule - this cannot be registered at this time.</div>
-	</div>
+	</div> -->
 
-	
+<!-- 	
 	<div class="row" ng-show="validated.warnings.linkedpublic > 0">
 		<div class="alert alert-warning" id="validation-success1">{{messages.batch_prereg_to_public_single}}</div>
 	</div>
@@ -95,18 +60,17 @@
 		 <div class="alert alert-warning" id="validation-errors">{{ validated.warnings.painsCount }} pan-assay interference (PAINS) <ng-pluralize count="validated.warnings.painsCount" when="{'0': 'hits',
                        'one': 'hit',
                        'other': 'hits'}"></ng-pluralize> found <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': open_warnings, 'glyphicon-chevron-right': !open_warnings}" ng-click="open_warnings = !open_warnings"></i></div>
-		 <div ng-show="open_warnings" ng-animate=" 'animate' ">
+		 <div ng-show="open_warnings" ng-animate=" 'animate' ">-->
 		 	<!-- In here is your template per error found -->
 
-		 	<div class="row">
+<!-- 		 	<div class="row">
 		 		<div class="col-xs-3" ng-repeat="(key, value) in validated.warnings " ng-if="key != 'painsCount' && key.indexOf('pains') == 0">
 		 			<div class="well">{{key}}</div>
 		 		</div>
-		 	</div>
+		 	</div> -->
 
 		 </div>
-	</div>
-	<div class="row">
+	</div> 	<div class="row">
 	<div ng-show="processingSingle" class="col-centered bubblingG">
               <span id="bubblingG_1">
               </span>
@@ -120,7 +84,7 @@
 	<div class="row">
 		<div class="pull-right">
 			<a role="button" class="btn btn-danger" ng-click="startAgain()" ui-sref="projects.project.demo.intro">Cancel</a>
-			<input type="submit" class="btn btn-primary" ng-click="saveSingleMol()" id="submit" ng-disabled="validated.errors.invalidMolecule || processingSingle"  value="Save">
+			<input type="submit" class="btn btn-primary" ng-click="saveSingleMol()" id="submit" ng-disabled="validated.errors.invalidMolecule || processingSingle"  value="Save Molecule to ChemReg">
 		</div>
 	</div>
 
@@ -129,4 +93,3 @@
 		<div style="height:300px;"></div>
 	</div>
 
-</form>

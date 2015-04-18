@@ -1,48 +1,49 @@
 
 <div class="row">
-
-  <div class="col-xs-12">
+  <div ng-class="fullPage" class="col-xs-12">
     
       <div class="validate-report-box first col-xs-12">
         <div class="report text-center">
-          <div style="margin-right:5px; " class="pull-right"><info-box lookup="batch_reg_new_to_chemreg_other"></info-box></div>
+          <div style="margin-right:5px; " class="pull-right"><info-box left="true" lookup="batch_reg_new_to_chemreg_other"></info-box></div>
           <div class="report-type alert-success"><strong class="nexa">New compounds</strong></div>
           <div class="report-value alert-success"><strong class="nexa">{{validatedData.new}}</strong></div>
         </div>
       </div>
     
   </div>
-  <div class="col-xs-12">
+  <div ng-class="fullPage" class="col-xs-12">
     
       <div class="validate-report-box overlap col-xs-12">
         <div class="report text-center">
-          <div style="margin-right:5px; " class="pull-right"><info-box lookup="batch_prereg_to_project_other"></info-box></div>
+          <div style="margin-right:5px; " class="pull-right"><info-box left="true" lookup="batch_prereg_to_project_other"></info-box></div>
           <div class="report-type alert-info"><strong class="nexa">Overlaps</strong></div>
           <div class="report-value alert-info"><strong class="nexa">{{validatedData.linkedproject}}</strong></div>
         </div>
       </div>
     
   </div>
-  <div class="col-xs-12">
+  <div ng-class="fullPage" ng-hide="single" class="col-xs-12">
     
       <div class="validate-report-box dupe col-xs-12">
         <div class="report text-center">
-          <div style="margin-right:5px; " class="pull-right"><info-box lookup="batch_prereg_to_public_other"></info-box></div>
+          <div style="margin-right:5px; " class="pull-right"><info-box left="true" lookup="batch_prereg_to_public_other"></info-box></div>
           <div class="report-type alert-warning"><strong class="nexa">Duplicates</strong></div>
           <div class="report-value alert-warning"><strong class="nexa">{{validatedData.dupes}}</strong></div>
         </div>
       </div>
     
   </div>
-  <div class="col-xs-12">
+  <div ng-class="fullPage" class="col-xs-12">
     
       <div class="validate-report-box error col-xs-12">
         <div class="report text-center">
-          <div style="margin-right:5px; " class="pull-right"><info-box lookup="batch_errors_other"></info-box></div>
+          <div style="margin-right:5px; " ng-show="single" class="pull-right"><info-box left="true" lookup="batch_errors_single"></info-box></div>
+
+          <div style="margin-right:5px; " ng-hide="single" class="pull-right"><info-box left="true" lookup="batch_errors_other"></info-box></div>
           <div class="report-type alert-danger"><strong class="nexa">Errors</strong></div>
           <div class="report-value alert-danger"><strong class="nexa">{{validatedData.errors}}</strong></div>
-          <div ng-show="validatedData.fileerrors > 0">
-            <span ng-repeat="error in validatedData.fileerrors" >{{error.index}}<span ng-show="!$last">, </span></span> when counting from the top.
+          <div  ng-show="validatedData.errors > 0 && !single">
+            <span ng-repeat="error in validatedData.fileerrors" >{{error.index}}<span ng-show="!$last">, </span> when counting from the top.</span>
           </div>
         </div>
       </div>
@@ -54,59 +55,3 @@
 
 
 
-<!-- 
-
-<div ng-show="validatedData.total + validatedData.errors">
-      <p><strong><ng-pluralize count="validatedData.total + validatedData.errors"
-                 when="{ '0' : '{{messages.batch_reg_total_processed_0}}',  '1': '{{messages.batch_reg_total_processed_1}}', 'other' : '{} {{messages.batch_reg_total_processed_other}}' }">
-          </ng-pluralize></strong></p>
-</div>
-
-
-<div >
-    <div class="alert alert-success" ng-show="validatedData.new > 0">
-      <p><strong><ng-pluralize count="validatedData.new"
-                 when="{ '0' : '{{messages.batch_reg_new_to_chemreg_0}}',  '1': '{{messages.batch_reg_new_to_chemreg_1}}', 'other' : '{} {{messages.batch_reg_new_to_chemreg_other}}' }">
-          </ng-pluralize>
-      </strong></p>
-  </div>
-</div>
-
-
-<div >
-    <div class="alert alert-info" ng-show="validatedData.linkedproject > 0">
-      <p><strong><ng-pluralize count="validatedData.linkedproject"
-                 when="{ '0' : '{{messages.batch_prereg_to_project_0}}',  '1': '{{messages.batch_prereg_to_project_1}}', 'other' : '{} {{messages.batch_prereg_to_project_other}}' }">
-          </ng-pluralize>
-      </strong></p>
-    </div>
-</div>
-
-
-<div >
-    <div class="alert alert-warning" ng-show="validatedData.linkedpublic > 0">
-      <p><strong><ng-pluralize count="validatedData.linkedpublic"
-                 when="{ '0' : '{{messages.batch_prereg_to_public_0}}',  '1': '{{messages.batch_prereg_to_public_1}}', 'other' : '{} {{messages.batch_prereg_to_public_other}}' }">
-          </ng-pluralize>
-      </strong></p>
-  </div>
-</div>
-
-<div >
-    <div class="alert alert-danger" ng-show="validatedData.dupes > 0">
-      <p><strong><ng-pluralize count="validatedData.dupes"
-                 when="{ '0' : '{{messages.batch_duplicates_0}}',  '1': '{{messages.batch_duplicates_1}}', 'other' : '{} {{messages.batch_duplicates_other}}' }">
-          </ng-pluralize>
-      </strong></p>
-  </div>
-</div>
-<div >
-    <div class="alert alert-danger" ng-show="validatedData.errors > 0">
-      <p><strong><ng-pluralize count="validatedData.errors"
-                 when="{ '0' : '{{messages.batch_errors_0}}',  '1': '{{messages.batch_errors_1}}', 'other' : '{} {{messages.batch_errors_other}}' }">
-          </ng-pluralize>
-          <span ng-repeat="error in validatedData.fileerrors" >{{error.index}}<span ng-show="!$last">, </span></span> when counting from the top.
-      </strong></p>
-  </div>
-</div>
- -->

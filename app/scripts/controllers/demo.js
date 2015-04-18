@@ -64,15 +64,16 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
          ProjectCustomFields.query(projectKey, {}, $scope.tagFunction).then(function(data){
                  $scope.myschema = data.schemaform.schema;
                  $scope.myform = data.schemaform.form;
-                  // var len = Math.ceil( $scope.myform.length/2);
-                  // $scope.firstForm = angular.copy($scope.myform).splice(0, len);
-                  // $scope.secondForm = angular.copy($scope.myform).splice(len);
+                  var len = Math.ceil( $scope.myform.length/2);
+                  $scope.firstForm = angular.copy($scope.myform).splice(0, len);
+                  $scope.secondForm = angular.copy($scope.myform).splice(len);
         });
 
         $scope.testData = {};
         
 //User has pressed cancel or finished a registration - clear out all of the populated data
     $scope.startAgain = function(flowfiles) {
+        $scope.justSaved = false;
         $scope.processingMultiBatch = false;
         $scope.processingSingle = false;
         $scope.struc_col_selected={ name:"", value:"Please select"} ;
@@ -123,15 +124,12 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
                             CBHCompoundBatch.validate(projectKey ,$scope.molecule.molfile
                                                         ).then(
                                                         function(data){
+                                                            $scope.validatedData = { 'errors': 0, 'linkedproject' : data.data.warnings.linkedproject, 'new': 1-data.data.warnings.linkedproject };
+
                                                             $scope.validated = data.data;
                                                         }, function(error){
-                                                            $scope.validated = { 
-                                                                'warnings': {
-                                                                    'inorganicCount':"0"
-                                                                }, 'errors': { 
-                                                                    'invalidMolecule': true 
-                                                                } 
-                                                            } 
+                                          $scope.validatedData = {'singleerror' : 'Invalid valency of sketched molecule - this cannot be registered at this time','errors': 1, 'linkedproject': 0, 'new' : 0 };
+
                             }); 
                             },
                         'metadata': { 
@@ -259,15 +257,19 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
     }
 
     $scope.mapFilePage = function(){
-        if ($scope.file_extension=="cdx" || $scope.file_extension=="cdxml"){
-            $state.go("projects.project.demo.map.multiple");
+        if ($scope.file_extension=="cdx" || $scope.file_extension=="cdxml" || $scope.file_extension==""){
+            $state.go("projects.project.demo.map.multiple", { 'multiple_batch_id': $scope.validatedData.currentBatch});
         }else {
-            $state.go("projects.project.demo.map.file");
+            $state.go("projects.project.demo.map.file",  { 'multiple_batch_id': $scope.validatedData.currentBatch});
         }
         
 
     }
+    $scope.validatePage = function(){
 
+        $state.go("projects.project.demo.validate", { 'multiple_batch_id': $scope.validatedData.currentBatch});
+
+    }
     $scope.isFileExcel = function() {
         return ($scope.file_extension == 'xls' || $scope.file_extension == 'xlsx');
     }
@@ -348,6 +350,7 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
         //submit
         $scope.processingSingle = true;
 
+
         $scope.finalData.objects = [];
         $scope.singleMol = CBHCompoundBatch.getSingleMol(projectKey);
          CBHCompoundBatch.saveSingleCompound(projectKey, 
@@ -358,15 +361,13 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
             ).then(
             function(data){
                 $scope.processingSingle = false;
-
                 $scope.singleMol = data.data;
                 $scope.finalData.objects.push(data.data);
                 $scope.validatedData.currentBatch = data.data.multipleBatchId;
-               $state.go("projects.project.demo.finish", { 'multiple_batch_id': $scope.validatedData.currentBatch, limit:10000, offset: 0 });
+               $state.go("projects.project.demo.map.finish", { 'multiple_batch_id': $scope.validatedData.currentBatch, limit:10000, offset: 0 });
             }, function(error){
                 $scope.processingSingle = false;
 
-                $scope.validated = { 'errors': { 'invalidMolecule': true } };
             });
 
     };
@@ -393,11 +394,12 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
     $scope.messages = MessageFactory.getMessages();
 
     $scope.saveMultiBatchMolecules = function(){
-        $scope.processingMultiBatch = true;
+        
         CBHCompoundBatch.saveMultiBatchMolecules(projectKey,$scope.validatedData.currentBatch, $scope.molecule.metadata.projectFields).then(
             function(data){
-                $state.go("projects.project.demo.finish", { 'multiple_batch_id': $scope.validatedData.currentBatch, limit:10000, offset: 0 } );
+                $state.go("projects.project.demo.map.finish", { 'multiple_batch_id': $scope.validatedData.currentBatch, limit:10000, offset: 0 } );
                 $scope.processingMultiBatch = false;
+                $scope.justSaved = true;
             }, 
             function(error){
                 $scope.validated = { 'errors': { 'invalidMolecule': true } };
@@ -411,12 +413,14 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
         if (isFile){
             mapping_obj = $scope.saveCustomFieldMapping();
         }
-        
+        $scope.processingMultiBatch = true;
         CBHCompoundBatch.saveBatchCustomFields(projectKey,$scope.validatedData.currentBatch, $scope.molecule.metadata.projectFields, mapping_obj).then(
             function(data){
-                $scope.validatedData = (data.data);
+                //$scope.validatedData = (data.data);
+                $scope.saveMultiBatchMolecules();
             }, function(error){
                 console.log(error);
+                $scope.processingMultiBatch = false;
             }
         );
         

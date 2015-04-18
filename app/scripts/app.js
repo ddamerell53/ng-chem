@@ -211,6 +211,8 @@ angular.module('ngChemApp')
               $scope.wizard.step = 1;
               $scope.wizard.dynamic = 41;
               applyTicks("add");
+              $scope.single=true;
+
 
             }
         })
@@ -231,21 +233,6 @@ angular.module('ngChemApp')
 
                 $scope.errors = [];
 
-                $scope.stereochem_options = [{ name:'-1', value:'as drawn'},
-                                            { name:'6', value:'achiral',}, 
-                                            { name:'7', value:'racemic',}, 
-                                            { name:'8', value:'single enantiomer of known absolute configuration'},
-                                            { name:'9', value:'single enantiomer of unknown absolute configuration'},
-                                            { name:'10', value:'single diastereoisomer of known absolute configuration'},
-                                            { name:'11', value:'single diastereoisomer of unknown absolute configuration'},
-                                            { name:'12', value:'meso'},
-                                            { name:'13', value:'E'},
-                                            { name:'14', value:'Z'},
-                                            { name:'15', value:'mixture E/Z'},
-                                            { name:'16', value:'cis'},
-                                            { name:'17', value:'trans'},
-                                            { name:'18', value:'mixture of diastereoisomers'}
-                                            ];
                 //default selection set in the scope molecule object, select box value bound to form.                                           
                 
                 $scope.sketchMolfile = "";
@@ -269,12 +256,35 @@ angular.module('ngChemApp')
             }
         })
 
+
+        // url will be /form/interests
+        .state('projects.project.demo.validate', {
+            url: '/validate/:multiple_batch_id',
+            resolve: {
+              multiple_batch_id: ['$stateParams', function($stateParams){
+                  return $stateParams.multiple_batch_id;
+              }],
+            },
+            templateUrl: 'views/demo-validate.html',
+            controller: function($scope) {
+              $scope.fullPage="col-md-3";
+              $scope.wizard.step = 2;
+              $scope.wizard.dynamic =  58;
+              applyTicks("validate");
+            }
+        })
+
         .state('projects.project.demo.map', {
-            url: '/map',
+            url: '/map/:multiple_batch_id',
+            resolve: {
+              multiple_batch_id: ['$stateParams', function($stateParams){
+                  return $stateParams.multiple_batch_id;
+              }],
+            },
             templateUrl: 'views/demo-map.html',
             controller: function($scope) {
-              $scope.wizard.step = 2;
-              $scope.wizard.dynamic = 58;
+              $scope.wizard.step = 3;
+              $scope.wizard.dynamic = 74;
 
               applyTicks("map");
             }
@@ -294,22 +304,10 @@ angular.module('ngChemApp')
 
             }
         })
-        // url will be /form/interests
-        .state('projects.project.demo.validate', {
-            url: '/validate',
-            templateUrl: 'views/demo-validate.html',
-            controller: function($scope) {
-              $scope.wizard.step = 3;
-              $scope.wizard.dynamic = 74;
-              applyTicks("validate");
-            }
-        })
-
-
         
         // url will be /form/payment
-        .state('projects.project.demo.finish', {
-            url: '/finish/:multiple_batch_id',
+        .state('projects.project.demo.map.finish', {
+            url: '/finish/',
             resolve: {
               multiple_batch_id: ['$stateParams', function($stateParams){
                   console.log($stateParams)
@@ -328,14 +326,13 @@ angular.module('ngChemApp')
                     $scope.wizard.step = 2;
                   }
                   
-                  //$scope.wizard.dynamic = 90.5;
                   $scope.wizard.dynamic = 100;
                   applyTicks("finish");
                   $scope.multiple_batch_id = $stateParams.multiple_batch_id;
 
                 }
               },
-              'resultslist@projects.project.demo.finish': {
+              'resultslist@projects.project.demo.map.finish': {
                 templateUrl: 'views/templates/compound-grid.html',
                 controller: 'BatchesCtrl',
               },

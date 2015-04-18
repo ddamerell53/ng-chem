@@ -48,15 +48,16 @@ function applyTicks(current_step) {
         $('span.glyphicon.map').addClass('hidden');
         $('span.glyphicon.validate').addClass('hidden');
     }
-    else if(current_step == "map") {
-        $('span.glyphicon.add').removeClass('hidden');
-        $('span.glyphicon.map').addClass('hidden');
-        $('span.glyphicon.validate').addClass('hidden');
-    }
+
     else if (current_step == "validate") {
         $('span.glyphicon.add').removeClass('hidden');
-        $('span.glyphicon.map').removeClass('hidden');
         $('span.glyphicon.validate').addClass('hidden');
+        $('span.glyphicon.map').addClass('hidden');
+    }
+     else if(current_step == "map") {
+        $('span.glyphicon.add').removeClass('hidden');
+        $('span.glyphicon.validate').removeClass('hidden');
+        $('span.glyphicon.map').addClass('hidden');
     }
     else if(current_step == "finish") {
         $('span.glyphicon.add').removeClass('hidden');

@@ -17,14 +17,16 @@ angular.module('ngChemApp')
       }*/
       controller: ['$scope', 'MessageFactory', function($scope, MessageFactory) {
       	//$scope.tooltext = "test here";
-      	$('[data-toggle="popover"]').popover( {trigger: 'focus'} );
+      	
+
+        $('[data-toggle="popover"]').popover( {trigger: 'focus'} );
       	if($scope.freetext) {
       		$scope.displaytext = $scope.freetext;
       	}
       	else {
       		$scope.displaytext = MessageFactory.getMessage($scope.lookup);
       	}
-
+        
       	
       }],
       scope: {
@@ -32,6 +34,7 @@ angular.module('ngChemApp')
         lookup:'@',
         //use direct if you want to enter ad hoc text
         freetext:'@',
+        left:'@',
 
       }
     };

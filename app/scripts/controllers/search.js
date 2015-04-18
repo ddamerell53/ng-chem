@@ -29,6 +29,7 @@ angular.module('ngChemApp')
         else {
             $rootScope.sketchMolfile  = "";
         }
+        $scope.searchForm.molecule.molfileChanged = function(){};
         $scope.searchForm.fpValue = $stateParams.fpValue;
         $scope.searchForm.dateStart = $stateParams.created__gte;
         $scope.searchForm.dateEnd = $stateParams.created__lte;
@@ -124,9 +125,9 @@ angular.module('ngChemApp')
     //pull in the list of projects to put into the project selector
     
 
-    //initialise structure search type as exact if there are no existing search parameters
+    //initialise structure search type as flexmatch if there are no existing search parameters
     if(!$scope.searchForm.substruc) {
-        $scope.searchForm.substruc = "flexmatch";    
+        $scope.searchForm.substruc = "with_substructure";    
     }
 
     

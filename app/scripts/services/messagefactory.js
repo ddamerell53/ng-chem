@@ -47,8 +47,8 @@ angular.module('ngChemApp')
         //"add": {
             smiles_or_id_label: "Paste your SMILES or IDs here",
             file_upload_label: "Or upload a file here",
-            drawing_label_suppl: "Use the sketcher window to draw your compound. Sketcher window provided by ChemDoodle.",
-            drawing_label: "Draw a molecule here",
+            drawing_label_suppl: "Sketcher window provided by ChemDoodle.",
+            drawing_label: "Draw your molecule here",
             smiles_or_id_help_text: "IDs can be any of the following formats: InCHI, InCHI key, SMILES, CAS numbers, Sigma aldrich catalogue numbers",
             file_upload_help_text: "Chemdraw XML or SD files only",
             drawing_help_text: "Draw the molecule you would like to register. If salts or hydrates are required, draw these as neutral molecules alongside",
@@ -66,7 +66,7 @@ angular.module('ngChemApp')
             format_not_detected: "Id type cannot be automatically determined, please check the ids or select the id type manually",
             file_format_not_detected: "This file format is not recognised, please ensure that you have uploaded a CDX, CDXML, SDF, XLS or XLSX file and that the file extension (the part of the name after the dot) is correct.",
             file_error: "File cannot be processed, some records or the format is invalid. For excel files, the structure column must be correctly specified and all rows valid.",
-            oops: "You have either pressed back a number of times, gone to an outdated bookmark or lost your data by refreshing. Click cancel to restart.",
+            oops: "Oops, should not have got here, if you have not pressed back on the browser, gone to an outdated bookmark or lost your data by refreshing please let the ChemReg team know. Click cancel to restart.",
 
         //},
         //"map": {
@@ -127,6 +127,8 @@ angular.module('ngChemApp')
             batch_duplicates_1: "One duplicate was found and ignored.",
             batch_duplicates_other: "duplicates were found and ignored.",
             batch_errors_0: "No errors were found",
+                        batch_errors_single: "Number of errors in processing the molecule, possibly due to invalid valency",
+
             batch_errors_1: "1 of the molecules could not be processed and will be ignored. It is located at position ",
             batch_errors_other: "Number of molecules could not be processed and will be ignored. They are located at positions ",
 
@@ -137,9 +139,9 @@ angular.module('ngChemApp')
         //"finish": {
             registration_success: "No batches were registered with the ids and properties shown below",
             registration_none_success: "No molecules were registered",
-            registration_error: "An unknown error occurred when registering compounds, the chembiohub team have been notified and will contact you when the issue has been investigated"
+            registration_error: "An unknown error occurred when registering compounds, the chembiohub team have been notified and will contact you when the issue has been investigated.",
         //}:
-            
+            justSaved: "This data was recently saved, click start again or go back to the project page."
 
     }
 
