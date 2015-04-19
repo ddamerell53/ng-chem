@@ -10,7 +10,11 @@
 angular.module('ngChemApp')
   .controller('BatchesCtrl',['$scope', '$modal', '$timeout', '$q', '$state', '$stateParams','$location', 'gridconfig', 'projectKey', 'projectFactory', 'MessageFactory', 'ProjectCustomFields', 'CBHCompoundBatch', function ($scope, $modal, $timeout, $q, $state, $stateParams, $location, gridconfig, projectKey, projectFactory, MessageFactory, ProjectCustomFields, CBHCompoundBatch) {
     var filters = { };
-    
+    $scope.chemadder = false;
+    var compadder = function(){
+        $scope.chemadder = true;
+    }
+    $timeout(compadder, 1000);
     var multiple_batch_id = $stateParams.multiple_batch_id;
     //..
     $scope.state = $state.current;

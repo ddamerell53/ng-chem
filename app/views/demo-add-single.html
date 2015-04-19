@@ -2,7 +2,7 @@
 	<div class="row">
 		<div class="pull-right">
 			<a role="button" class="btn btn-danger" ng-click="startAgain()" ui-sref="projects.project.demo.intro">Cancel</a>
-			<input type="submit" class="btn btn-primary" ng-click="saveSingleMol()" id="submit" ng-disabled="validated.errors.invalidMolecule || processingSingle"  value="Save Molecule to ChemReg">
+			<input type="submit" class="btn btn-primary" ng-click="saveSingleMol()" id="submit" ng-disabled="validatedData.errors > 0 || processingSingle"  value="Save Molecule to ChemReg">
 		</div>
 	</div>
 
@@ -84,7 +84,7 @@
 	<div class="row">
 		<div class="pull-right">
 			<a role="button" class="btn btn-danger" ng-click="startAgain()" ui-sref="projects.project.demo.intro">Cancel</a>
-			<input type="submit" class="btn btn-primary" ng-click="saveSingleMol()" id="submit" ng-disabled="validated.errors.invalidMolecule || processingSingle"  value="Save Molecule to ChemReg">
+			<input type="submit" class="btn btn-primary" ng-click="saveSingleMol()" id="submit" ng-disabled="validatedData.errors > 0 || processingSingle"  value="Save Molecule to ChemReg">
 		</div>
 	</div>
 
