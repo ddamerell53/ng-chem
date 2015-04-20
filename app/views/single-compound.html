@@ -16,14 +16,17 @@
 <h2 class="nexa blue ">Compound Information</h2>
 </div>
 <div class="col-xs-12 col-md-6" >
+<button-input copy-model="mol.createdBy" disabled="true" label="'Added By'"></button-input>
+
 <button-input copy-model="mol.canonicalSmiles" disabled="true" label="'SMILES'"></button-input>
 <button-input copy-model="mol.standardInchi" disabled="true" label="'Standard INCHI'"></button-input>
 <button-input copy-model="mol.standardInchiKey" disabled="true" label="'Standard INCHI key'"></button-input>
 </div>
 <div class="col-xs-12 col-md-6" >
  <button-input copy-model="mol.alogp | number:2" disabled="true" label="'AlogP'"></button-input>
- <button-input copy-model="mol.created | date:'dd-MM-yyyy'" disabled="true" label="'Created'"></button-input>
+ <button-input copy-model="mol.created | date:'dd-MM-yyyy'" disabled="true" label="'Registered on'"></button-input>
 <button-input copy-model="mol.molecularWeight | number:2" disabled="true" label="'Mol Weight'"></button-input>
+
 </div>
 </div>
         </div>
