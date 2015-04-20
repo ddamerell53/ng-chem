@@ -26,6 +26,7 @@ angular.module('ngChemApp')
         }
         // because we've returned nothing, no state change occurs
     });*/
+      //$rootScopeProvider.digestTtl(15); 
       $urlMatcherFactoryProvider.defaultSquashPolicy("slash");      
       var modalInstance;
       $stateProvider
@@ -52,6 +53,9 @@ angular.module('ngChemApp')
               }],
               projectFactory: ['ProjectFactory', function(ProjectFactory) {
                 return ProjectFactory;
+              }],
+              projectCustomFields: ['ProjectCustomFields', function(ProjectCustomFields) {
+                return ProjectCustomFields;
               }],
               projectKey: ['$stateParams', function($stateParams){
                   return $stateParams.projectKey;
@@ -108,6 +112,9 @@ angular.module('ngChemApp')
               }],
               projList: ['$rootScope', function($rootScope) {
                   return $rootScope.projects;
+              }],
+              projectCustomFields: ['ProjectCustomFields', function(ProjectCustomFields) {
+                return ProjectCustomFields;
               }],
               projectFactory: ['ProjectFactory', function(ProjectFactory) {
                 return ProjectFactory;

@@ -8,7 +8,7 @@
  * Controller of the ngChemApp
  */
 angular.module('ngChemApp')
-  .controller('BatchesCtrl',['$scope', '$modal', '$timeout', '$q', '$state', '$stateParams','$location', 'gridconfig', 'projectKey', 'projectFactory', 'MessageFactory', 'ProjectCustomFields', 'CBHCompoundBatch', function ($scope, $modal, $timeout, $q, $state, $stateParams, $location, gridconfig, projectKey, projectFactory, MessageFactory, ProjectCustomFields, CBHCompoundBatch) {
+  .controller('BatchesCtrl',['$scope', '$modal', '$timeout', '$q', '$state', '$stateParams','$location', 'gridconfig', 'projectKey', 'projectFactory', 'MessageFactory', 'projectCustomFields', 'CBHCompoundBatch', function ($scope, $modal, $timeout, $q, $state, $stateParams, $location, gridconfig, projectKey, projectFactory, MessageFactory, projectCustomFields, CBHCompoundBatch) {
     var filters = { };
     $scope.chemadder = false;
     var compadder = function(){
@@ -41,7 +41,7 @@ $scope.tagFunction = function(content){
   };
     //$scope.proj = $rootScope.getProjectObj(projectKey);
 
-ProjectCustomFields.query(projectKey, {}, $scope.tagFunction).then(function(data){
+        projectCustomFields.query(projectKey, {}, $scope.tagFunction).then(function(data){
                  $scope.myschema = data.schemaform.schema;
                  $scope.myform = data.schemaform.form;
         });

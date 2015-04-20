@@ -8,8 +8,15 @@
  * Controller of the ngChemApp
  */
 angular.module('ngChemApp')
-  .controller('SearchCtrl',['$scope', '$rootScope', '$filter', '$stateParams', '$location', '$state', '$timeout', 'projectFactory', 'gridconfig', 'CBHCompoundBatch', 'urlConfig', function ($scope, $rootScope, $filter, $stateParams, $location, $state, $timeout, projectFactory, gridconfig, CBHCompoundBatch, urlConfig) {
+  .controller('SearchCtrl',['$scope', '$rootScope', '$filter', '$stateParams', '$location', '$state', '$timeout', 'projectFactory', 'gridconfig', 'CBHCompoundBatch', 'urlConfig', 'ProjectCustomFields', function ($scope, $rootScope, $filter, $stateParams, $location, $state, $timeout, projectFactory, gridconfig, CBHCompoundBatch, urlConfig, ProjectCustomFields) {
     
+    $scope.myschema = {};
+    $scope.myform = {};
+
+    //need to change these to vars and return the same object to avoid the watch digest alert
+
+    
+
     $scope.initialiseFromUrl = function(){
         if ($stateParams.with_substructure) {
             $scope.searchForm.substruc = "with_substructure";
@@ -50,6 +57,14 @@ angular.module('ngChemApp')
         
 
     };
+
+    $scope.getSearchCustomFields = function() {
+
+        ProjectCustomFields.query($scope.searchForm.selectedProject, {}, $scope.tagFunction).then(function(data){
+             $scope.myschema = data.searchform.schema;
+             $scope.myform = data.searchform.form;
+        });
+    }
 
     $scope.runSearch = function() {
         //get the form
@@ -111,7 +126,7 @@ angular.module('ngChemApp')
         gridconfig.configObject.paramsUrl = paramsUrl;
     }
 
-    $scope.searchForm = { molecule: { molfile: "" } };
+    $scope.searchForm = { molecule: { molfile: "" }, custom_fields: {} };
 
     $scope.results = {};
 
