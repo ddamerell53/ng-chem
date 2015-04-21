@@ -42,6 +42,7 @@ angular.module('ngChemApp')
                             });
                      customFields.schemaform.form = formData;
                     }
+                    console.log(data.data.objects.length);
                     return customFields;
                 }
         );

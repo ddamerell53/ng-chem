@@ -86,17 +86,15 @@ $scope.tagFunction = function(content){
     
     
     //$scope.gridconfig.configObject.pagingOptions
-    console.log(filters);
     if($scope.state.name!=="search"){
-    $timeout(function() {
-      console.log("runn");
+     $timeout(function() {
          
         $scope.gridconfig.initializeGridParams(projectKey, filters).then(function(result) {
         $scope.gridconfig.configObject.totalServerItems = result.meta.totalCount;
         $scope.gridconfig.configObject.compounds = result.objects;
-      }, 200);
-      }
-    );
+       }, 10);
+       }
+     );
     //watches the paging buttons to pull in new results for the window
     $scope.$watch('gridconfig.configObject.pagingOptions', function (newVal, oldVal) {
       if (newVal !== oldVal && (newVal.currentPage !== oldVal.currentPage || newVal.pageSize !== oldVal.pageSize)) {
