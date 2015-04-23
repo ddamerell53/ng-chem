@@ -44,7 +44,7 @@ angular.module('ngChemApp')
         })
 
         .state('search', {
-            url: '/search?project__project_key&flexmatch&with_substructure&similar_to&fpValue&created__gte&created__lte&molfile&smiles&limit&offset',
+            url: '/search?project__project_key&flexmatch&with_substructure&similar_to&fpValue&created__gte&created__lte&molfile&smiles&custom_fields&limit&offset',
             //url: '/search',
             //params: ['project__project_key', 'flexmatch', 'with_substructure', 'similar_to', 'fpValue', 'created__gte', 'created__lte', 'molfile', 'smiles', 'limit', 'offset', 'random'],
             resolve:{

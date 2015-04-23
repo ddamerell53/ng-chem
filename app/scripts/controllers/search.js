@@ -8,16 +8,21 @@
  * Controller of the ngChemApp
  */
 angular.module('ngChemApp')
-  .controller('SearchCtrl',['$scope', '$rootScope', '$filter', '$stateParams', '$location', '$state', '$timeout', 'projectFactory', 'gridconfig', 'CBHCompoundBatch', 'urlConfig', 'ProjectCustomFields', function ($scope, $rootScope, $filter, $stateParams, $location, $state, $timeout, projectFactory, gridconfig, CBHCompoundBatch, urlConfig, ProjectCustomFields) {
+  .controller('SearchCtrl',['$scope', '$rootScope', '$filter', '$stateParams', '$location', '$state', '$timeout', 'projectFactory', 'gridconfig', 'CBHCompoundBatch', 'urlConfig', 'ProjectCustomFields', 'SearchFormSchema', function ($scope, $rootScope, $filter, $stateParams, $location, $state, $timeout, projectFactory, gridconfig, CBHCompoundBatch, urlConfig, ProjectCustomFields, SearchFormSchema) {
     
     $scope.myschema = {};
     $scope.myform = {};
-
-    //need to change these to vars and return the same object to avoid the watch digest alert
-
-    
+  
 
     $scope.initialiseFromUrl = function(){
+
+        $scope.searchFormSchema = SearchFormSchema.getMainSearch();
+
+        /*SearchFormSchema.getMainSearch().$promise.then(function(res){
+            $scope.searchFormSchema = res;
+        });*/
+
+
         if ($stateParams.with_substructure) {
             $scope.searchForm.substruc = "with_substructure";
             $scope.searchForm.molecule.molfile = $stateParams.with_substructure;
@@ -41,7 +46,8 @@ angular.module('ngChemApp')
         $scope.searchForm.dateStart = $stateParams.created__gte;
         $scope.searchForm.dateEnd = $stateParams.created__lte;
         $scope.searchForm.smiles = $stateParams.smiles;
-
+        
+        
         projectFactory.get().$promise.then(function(res) {
           $scope.searchForm.projects = res.objects;
           angular.forEach($scope.searchForm.projects, function(project) {
@@ -49,6 +55,12 @@ angular.module('ngChemApp')
             if($stateParams.project__project_key && project.project_key == $stateParams.project__project_key) {
 
                 $scope.searchForm.selectedProject = project;
+
+                //we need to put the custom fields population in only if there is a project, and after that project has been selected.
+                if($stateParams.custom_fields) {
+                    //$scope.searchForm.custom_fields = JSON.parse(atob($stateParams.custom_fields));    
+                    $scope.searchForm.custom_fields = $stateParams.custom_fields;
+                }
             }
           });
           
@@ -86,6 +98,11 @@ angular.module('ngChemApp')
             params[$scope.searchForm.substruc] = $scope.searchForm.molecule.molfile
         }
 
+        if(!angular.equals({}, $scope.searchForm.custom_fields)) {
+            //var encodedCustFields = btoa(JSON.stringify($scope.searchForm.custom_fields));
+            var encodedCustFields = $scope.searchForm.custom_fields;
+        }
+
         if ($scope.searchForm.dateStart) {
             var formattedStart = $filter('date')($scope.searchForm.dateStart, 'yyyy-MM-dd');
         }
@@ -96,6 +113,8 @@ angular.module('ngChemApp')
         //params.created__range = "(" +  formattedStart + "," + formattedEnd + ")";
         params.created__gte = formattedStart;
         params.created__lte = formattedEnd;
+
+        params.custom_fields = encodedCustFields;
 
         CBHCompoundBatch.search(params).then(function(result){
             
@@ -118,9 +137,10 @@ angular.module('ngChemApp')
         var created__gte_frag = (params.created__gte) ? ("created__gte=" + params.created__gte + "&") : "";
         var created__lte_frag = (params.created__lte) ? ("created__lte=" + params.created__lte + "&") : "";
         var smiles_frag = (params.smiles) ? ("smiles=" + params.smiles + "&") : "";
+        var cust_field_frag = (params.custom_fields) ? ("custom_fields=" + params.custom_fields + "&") : "";
         console.log(project_frag);
 
-        var paramsUrl = project_frag + flexmatch_frag + with_substructure_frag + similar_to_frag + fpValue_frag + created__gte_frag + created__lte_frag + smiles_frag;
+        var paramsUrl = project_frag + flexmatch_frag + with_substructure_frag + similar_to_frag + fpValue_frag + created__gte_frag + created__lte_frag + smiles_frag + cust_field_frag;
 
         $location.url(stateUrl + paramsUrl + '&limit=&offset=');
         gridconfig.configObject.paramsUrl = paramsUrl;
