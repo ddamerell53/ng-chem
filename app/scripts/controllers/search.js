@@ -8,7 +8,7 @@
  * Controller of the ngChemApp
  */
 angular.module('ngChemApp')
-  .controller('SearchCtrl',['$scope', '$rootScope', '$filter', '$stateParams', '$location', '$state', '$timeout', 'projectFactory', 'gridconfig', 'CBHCompoundBatch', 'urlConfig', 'ProjectCustomFields', 'SearchFormSchema', function ($scope, $rootScope, $filter, $stateParams, $location, $state, $timeout, projectFactory, gridconfig, CBHCompoundBatch, urlConfig, ProjectCustomFields, SearchFormSchema) {
+  .controller('SearchCtrl',['$scope', '$rootScope', '$filter', '$stateParams', '$location', '$state', '$timeout', 'projectFactory', 'gridconfig', 'CBHCompoundBatch', 'urlConfig', 'ProjectCustomFields', 'searchFormSchema', function ($scope, $rootScope, $filter, $stateParams, $location, $state, $timeout, projectFactory, gridconfig, CBHCompoundBatch, urlConfig, ProjectCustomFields, searchFormSchema) {
     
     $scope.myschema = {};
     $scope.myform = {};
@@ -16,12 +16,10 @@ angular.module('ngChemApp')
 
     $scope.initialiseFromUrl = function(){
 
-        $scope.searchFormSchema = SearchFormSchema.getMainSearch();
-
-        /*SearchFormSchema.getMainSearch().$promise.then(function(res){
+        $scope.searchFormSchema = {};
+        searchFormSchema.getMainSearch().then(function(res){
             $scope.searchFormSchema = res;
-        });*/
-
+        });
 
         if ($stateParams.with_substructure) {
             $scope.searchForm.substruc = "with_substructure";

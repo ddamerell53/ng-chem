@@ -60,6 +60,9 @@ angular.module('ngChemApp')
               projectKey: ['$stateParams', function($stateParams){
                   return $stateParams.projectKey;
               }],
+              searchFormSchema: ['SearchFormSchema', function(SearchFormSchema){
+                  return SearchFormSchema;
+              }],
             },
             data: {
               login_rule: function($rootScope) {

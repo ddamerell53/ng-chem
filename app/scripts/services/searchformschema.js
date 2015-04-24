@@ -8,17 +8,26 @@
  * Factory in the ngChemApp.
  */
 angular.module('ngChemApp')
-  .factory('SearchFormSchema', function () {
+  .factory('SearchFormSchema', [ 'ProjectFactory', '$q', function (ProjectFactory, $q) {
     // Service logic
     // ...
+    function getProjects() {
+      var defer = $q.defer();
 
-    
+      ProjectFactory.get().$promise.then(function(res) {
+        
+        defer.resolve(res.objects);
+            
+      });
+      return defer.promise;
+    }
 
     // Public API here
     return {
 
       //this returns the form schema for the main search page. We can use this factory for other search forms schemas?
       getMainSearch: function () {
+        var defer = $q.defer();
         var schemaform = {
                                 "form": [
                                     {
@@ -27,6 +36,9 @@ angular.module('ngChemApp')
                                       "onChange": "getSearchCustomFields()",
                                       //"feedback": "{'glyphicon': true, 'glyphicon-ok': hasSuccess(), 'glyphicon-star': !hasSuccess() }"
                                       "feedback": false,
+                                      "titleMap": {
+                                        
+                                      }
                                     },
                                     {
                                       "key": "dateStart",
@@ -38,7 +50,9 @@ angular.module('ngChemApp')
                                     },
                                     {
                                       "key": "smiles",
-                                      "placeholder": "Search SMILES string"
+                                      "placeholder": "Search SMILES string",
+                                      "append": "today",
+                                      "feedback": false,
                                     },
                                     {
                                       "key": "strucOpt",
@@ -51,7 +65,6 @@ angular.module('ngChemApp')
                                         {
                                           "value": "with_substructure",
                                           "name": "Substructure",
-                                          "selected": true
                                         },
                                         {
                                           "value": "flexmatch",
@@ -70,9 +83,7 @@ angular.module('ngChemApp')
                                                       "title": "Project",
                                                       "type": "string",
                                                       "enum": [
-                                                        "undefined",
-                                                        "null",
-                                                        "NaN"
+                                                        
                                                       ]
                                                     },
 
@@ -102,16 +113,6 @@ angular.module('ngChemApp')
                                                       ]
                                                     },
 
-
-
-                                                    /*
-                                                    "Yield": {
-                                                        "placeholder": "TEst",
-                                                        "minimum": 0.0,
-                                                        "type": "number",
-                                                        "maximum": 100.0,
-                                                        "title": "Yield"
-                                                    },*/
                                                     /*"Compound Handling Information": {
                                                         "title": "Compound Handling Information",
                                                         "items": [
@@ -133,7 +134,33 @@ angular.module('ngChemApp')
                                 }
                             
                         }
-        return schemaform;
+
+        getProjects().then(function(projects){
+          
+               angular.forEach(projects, function(project) {
+                
+                //add the key to the schema enum for project
+                //console.log(project);
+                schemaform.schema.properties.project.enum.push(project.project_key)
+
+
+                //add the key and the label to the form titlemap for project
+                angular.forEach(schemaform.form, function(obj){
+                  if (obj['key'] == "project") {
+                    obj.titleMap[project.project_key] = project.name;
+                  }
+                }); 
+
+                //defer.resolve(schemaform);
+                
+              });
+
+              defer.resolve(schemaform);
+
+        });
+
+        return defer.promise;
+        
       }
     };
-  });
+  }]);
