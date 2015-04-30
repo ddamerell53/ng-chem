@@ -32,27 +32,35 @@ angular.module('ngChemApp')
                                 "form": [
                                     {
                                       "key": "project",
+                                      "type": "checkboxes",
+                                      "description": "<info-box freetext='Limit your search results to items tagged with project-specific information'></info-box>",
                                       "placeholder": "Check the console",
+                                      "htmlClass": "col-xs-12",
                                       "onChange": "getSearchCustomFields()",
-                                      //"feedback": "{'glyphicon': true, 'glyphicon-ok': hasSuccess(), 'glyphicon-star': !hasSuccess() }"
-                                      "feedback": false,
                                       "titleMap": {
                                         
-                                      }
+                                      },
+                                      "disableSuccessState": true,
                                     },
                                     {
                                       "key": "dateStart",
-                                      "minDate": "2004-01-01"
+                                      "minDate": "2004-01-01",
+                                      "htmlClass": "col-xs-5",
+                                      "disableSuccessState": true,
                                     },
                                     {
                                       "key": "dateEnd",
-                                      "minDate": "2004-01-01"
+                                      "minDate": "2004-01-01",
+                                      "htmlClass": "col-xs-5 marg-left",
+                                      "disableSuccessState": true,
                                     },
                                     {
                                       "key": "smiles",
                                       "placeholder": "Search SMILES string",
                                       "append": "today",
                                       "feedback": false,
+                                      "htmlClass": "col-xs-12",
+                                      "disableSuccessState": true,
                                     },
                                     {
                                       "key": "strucOpt",
@@ -60,7 +68,9 @@ angular.module('ngChemApp')
                                         "selected": "btn-success",
                                         "unselected": "btn-default"
                                       },
+                                      "htmlClass": "col-xs-12",
                                       "type": "radiobuttons",
+                                      "disableSuccessState": true,
                                       "titleMap": [
                                         {
                                           "value": "with_substructure",
@@ -90,13 +100,16 @@ angular.module('ngChemApp')
                                                     "dateStart": {
                                                       "title": "From",
                                                       "type": "string",
-                                                      "format": "date"
-                                                    },
+                                                      "format": "date",
+                                                      "style": {
+                                                        "margin-right": "30px;"
+                                                      }, 
+                                                    }, 
 
                                                     "dateEnd": {
                                                       "title": "To",
                                                       "type": "string",
-                                                      "format": "date"
+                                                      "format": "date",
                                                     },
 
                                                     "smiles": {
@@ -110,7 +123,8 @@ angular.module('ngChemApp')
                                                       "enum": [
                                                         "with_substructure",
                                                         "flexmatch"
-                                                      ]
+                                                      ],
+                                                      "default": "with_substructure",
                                                     },
 
                                                     /*"Compound Handling Information": {

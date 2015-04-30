@@ -73,6 +73,12 @@ angular.module('ngChemApp')
         ProjectCustomFields.query($scope.searchForm.selectedProject, {}, $scope.tagFunction).then(function(data){
              $scope.myschema = data.searchform.schema;
              $scope.myform = data.searchform.form;
+
+             //put this into searchformschema instead, then we can use the same form for everything
+             $scope.searchFormSchema.form.push(data.searchform.form[0]);
+             var newProps = angular.extend({}, $scope.searchFormSchema.schema.properties, data.searchform.schema.properties.search_custom_fields);
+             $scope.searchFormSchema.schema.properties = newProps;
+             
         });
     }
 

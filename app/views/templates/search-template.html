@@ -4,7 +4,7 @@
 			<h2 class="blue pull-left"><span class="glyphicon glyphicon-search"></span> Search </h2>
 		</div>
 	</div>
-	<form novalidate name="inputForm" class="form-horizontal" role="form" ng-submit="runSearch()" >
+	<form novalidate name="inputForm" role="form" ng-submit="runSearch()" >
 		<div class="row">
 			<div class="col-xs-4">
 				<div class="row">
@@ -24,109 +24,10 @@
 
 				<div sf-schema="searchFormSchema.schema" sf-form="searchFormSchema.form" sf-model="searchForm"></div>
 
-
-
-				<!-- <div class="form-group">
-					<div class="pull-right col-xs-1"><info-box freetext="Limit your search results to a single project. You also need to select a project to use the custom fields form"></info-box></div>
-					<label for="project" class="col-xs-2 control-label">Project</label>
-					<div class="col-xs-9">
-						<select class="form-control" name="project" ng-options="item.name | titlecase for item in searchForm.projects track by item.project_key" ng-model="searchForm.selectedProject" ng-change="getSearchCustomFields()"></select>
-							
-					</div>
-
-									
-				</div>
-
-				<div class="form-group">
-					<div class="pull-right col-xs-1"><info-box freetext="Perform a structural search with a SMILES string"></info-box></div>
-					<label for="project" class="col-xs-2 control-label">SMILES</label>
-					<div class="col-xs-9">
-						<input type="text" class="form-control" ng-model="searchForm.smiles" placeholder="Paste SMILES strings here">
-					</div>
-
-									
-				</div> -->
-				
-
-				<!-- <div class="form-group">
-				
-						<div class="pull-right col-xs-1"><info-box freetext="Limit your search results by date"></info-box></div>
-			        	<label for="startDate" class="control-label col-xs-2 ">From</label>
-			            <div class="col-xs-4">
-				            <div class="input-group">
-				              <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="searchForm.dateStart" is-open="datepickers.dateStart" min-date="minDate" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" close-text="Close" name="startDate">
-				              <div class="input-group-btn">
-				                <button type="button" class="btn btn-default" ng-click="openCal($event, 'dateStart')"><i class="glyphicon glyphicon-calendar"></i></button>
-				              </div>
-				            </div>
-				        </div>
-			         
-		         
-		        
-
-		        
-					
-			        	<label for="startDate" class="col-xs-1 control-label">To</label>
-			        	<div class="col-xs-4">
-				            <div class="input-group ">
-				              <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="searchForm.dateEnd" is-open="datepickers.dateEnd" min-date="minDate" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" close-text="Close" name="endDate">
-				              <div class="input-group-btn">
-				                <button type="button" class="btn btn-default" ng-click="openCal($event, 'dateEnd')"><i class="glyphicon glyphicon-calendar"></i></button>
-				              </div>
-			            	</div>
-			            </div>
-			        
-		        
-		        </div> -->
-
-		        <!-- <div class="form-group">
-					<div class="pull-right col-xs-1">
-						<info-box freetext="Limit your search results to a single user's uploads"></info-box>
-					</div>
-					<label for="addedBy" class="col-xs-2 control-label">Added By</label>
-					<div class="col-xs-9">
-						<select class="form-control" name="addedBy" ng-options="item.name | titlecase for item in searchForm.users track by item.user_name" ng-model="searchForm.addedBy">
-						<select class="form-control" name="addedBy" ng-options="item.name | titlecase for item in searchForm.projects track by item.project_key" ng-model="searchForm.selectedProject"></select>
-					</div>
-									
-				</div> -->
-				<!-- <div class="row">
-				</div>
-				<div class="form-group">
-						<div class="pull-right col-xs-1"><info-box freetext="Find compounds CONTAINING your sketch or SMILES"></info-box></div>
-						<div class="col-xs-9 col-xs-offset-2">
-							<div class="radio">
-								<label>
-									<input type="radio" name="strucOpt" ng-model="searchForm.substruc" value="with_substructure"> Substructure
-								</label>
-								
-							</div>
-
-						</div>
-					</div>
-				<div class="form-group">
-					<div class="pull-right col-xs-1"><info-box freetext="Find compounds MATCHING your sketch or SMILES"></info-box></div>
-						<div class="col-xs-9 col-xs-offset-2">
-							<div class="radio">
-								<label>
-									<input type="radio" name="strucOpt" ng-model="searchForm.substruc" value="flexmatch"> Exact Match
-								</label>
-								
-							</div>
-
-						</div>
-					</div> -->
+				<div ng-include="'views/search_custom_fields.html'"></div>
 					
 					<!-- <div class="form-group">
-						<div class="col-xs-6">
-							<div class="radio">
-								<label>
-									<input type="radio" name="strucOpt" ng-model="searchForm.substruc" ng-value="similar_to"> Fingerprint Similarity 
-								</label>
-								
-
-							</div>
-						</div>
+						
 						<div class="col-xs-6">
 							<div class="pull-right"><info-box freetext="Fingerprint Similarity defaults to 90% similarity"></info-box></div>
 							<div class="form-group"  ng-hide="searchForm.substruc != 'similar_to'">
@@ -141,7 +42,7 @@
 						</div>
 					</div> -->
 				<!-- We will eventually put custom field searching in when it gets refactored but for now commented out -->
-				<div class="form-group">
+				<!-- <div class="form-group">
 					<div class="pull-right col-xs-1"><info-box freetext="Limit your search results to items tagged with project-specific information"></info-box></div>
 					<label for="project" class="col-xs-2 control-label">Project Tags</label>
 					<div class="col-xs-9">
@@ -151,7 +52,7 @@
 					</div>
 
 									
-				</div>
+				</div> -->
 
 				
 
