@@ -258,7 +258,7 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
     }
 
     $scope.mapFilePage = function(){
-        if ($scope.file_extension=="cdx" || $scope.file_extension=="cdxml" || $scope.file_extension==""){
+        if ($scope.file_extension=="cdx" || $scope.file_extension=="cdxml" || $scope.file_extension=="" || $scope.dragmodels.lists.headers.length==0){
             $state.go("projects.project.demo.map.multiple", { 'multiple_batch_id': $scope.validatedData.currentBatch});
         }else {
             $state.go("projects.project.demo.map.file",  { 'multiple_batch_id': $scope.validatedData.currentBatch});

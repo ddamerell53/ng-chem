@@ -3,7 +3,7 @@
 var arr = window.location.href.split("/");
 var part = "devapi"
 if (arr[2] != 'localhost:9000'){
-	part = arr[3];
+	part = arr[3] + "/api";
 }
 
 var path = arr[0] + "//" + arr[2] + "/" + part +"/";
