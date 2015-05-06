@@ -161,6 +161,8 @@ angular.module('ngChemApp')
             url: '/:projectKey',
             templateUrl: 'views/project-full.html',
             controller: function($rootScope, projectKey) {
+              //need to check here thaat project is valid
+              //we already have a list of allowed projects - if none of these, redirect to project list?
               $rootScope.projectKey = projectKey;
             },
             resolve: {
@@ -424,13 +426,37 @@ angular.module('ngChemApp')
         
     
 
-    $rootScope.$on('$stateChangeStart', function(e, to) {
+    $rootScope.$on('$stateChangeStart', function(e, to, toParams, from, fromParams) {
       //console.log(to.name);
       if (to.name == '404') return;
       if(to.name.lastIndexOf('singleCompound', 0) === 0) return;
       if (!angular.isFunction(to.data.login_rule)) return;
       var result = to.data.login_rule($rootScope);
-
+      //need to stop people navigating to a nonsense/nonexistent project
+      if (toParams.projectKey) {
+          var flag = false;
+          ProjectFactory.get().$promise.then(function(res) {
+                
+                angular.forEach(res.objects, function(proj) {
+                  if (toParams.projectKey == proj.project_key) {
+                    //return proj;
+                    /*e.preventDefault();
+                    $state.go(result.to, result.params, {notify: false});*/
+                    flag = true;
+                  }
+                });
+                //still here? redirect to the projects page
+                if(flag) {
+                  $state.go(to, toParams, {notify: false});
+                }
+                else{
+                  $state.go('projects');
+                }
+                
+              });
+          
+      }
+      
       if (result && result.to) {
         //console.log("result and result.to is passing");
         e.preventDefault();
@@ -467,7 +493,7 @@ angular.module('ngChemApp')
 
     $rootScope.getProjectObj = function(projectKey){
       angular.forEach($rootScope.projects, function(proj){
-        if (projectKey = proj.project_key) {
+        if (projectKey == proj.project_key) {
           return proj;
         }
       });
