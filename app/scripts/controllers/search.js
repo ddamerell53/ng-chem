@@ -8,33 +8,44 @@
  * Controller of the ngChemApp
  */
 angular.module('ngChemApp')
-  .controller('SearchCtrl',['$scope', '$rootScope', '$filter', '$stateParams', '$location', '$state', '$timeout', 'projectFactory', 'gridconfig', 'CBHCompoundBatch', 'urlConfig', 'ProjectCustomFields', 'searchFormSchema', function ($scope, $rootScope, $filter, $stateParams, $location, $state, $timeout, projectFactory, gridconfig, CBHCompoundBatch, urlConfig, ProjectCustomFields, searchFormSchema) {
+  .controller('SearchCtrl',['$scope', '$rootScope', '$filter', '$stateParams', '$location', '$state', '$timeout', 'projectFactory', 'gridconfig', 'CBHCompoundBatch', 'urlConfig', function ($scope, $rootScope, $filter, $stateParams, $location, $state, $timeout, projectFactory, gridconfig, CBHCompoundBatch, urlConfig) {
     
     $scope.myschema = {};
     $scope.myform = {};
   
-
+    $scope.setStructure = function(key){
+        $scope.searchForm.molecule.molfile = $stateParams[key];
+        $rootScope.sketchMolfile = $stateParams[key];
+        if ($stateParams[key].indexOf("ChemDoodle") < 0 ){
+            $scope.searchForm.smiles = $stateParams[key];
+        }
+    };
     $scope.initialiseFromUrl = function(){
 
         $scope.searchFormSchema = {};
-        searchFormSchema.getMainSearch().then(function(res){
-            $scope.searchFormSchema = res;
+        projectFactory.get({"schemaform": true}).$promise.then(function(res) {
+            $scope.searchFormSchema = res.searchform; 
+            console.log(res );
+            if($stateParams.search_custom_fields__kv_any) {
+                    $scope.searchForm.search_custom_fields__kv_any = $stateParams.search_custom_fields__kv_any.split(",");;
+            }else{
+                $scope.searchForm.search_custom_fields__kv_any = [];
+            }
         });
-
         if ($stateParams.with_substructure) {
             $scope.searchForm.substruc = "with_substructure";
-            $scope.searchForm.molecule.molfile = $stateParams.with_substructure;
-            $rootScope.sketchMolfile = $stateParams.with_substructure;
+            $scope.setStructure("with_substructure");
+            
         }
         else if ($stateParams.flexmatch) {
             $scope.searchForm.substruc = "flexmatch";
-            $scope.searchForm.molecule.molfile = $stateParams.flexmatch;
-            $rootScope.sketchMolfile  = $stateParams.flexmatch;
+            $scope.setStructure("flexmatch");
+
         }
         else if ($stateParams.similar_to) {
             $scope.searchForm.substruc = "similar_to";
-            $scope.searchForm.molecule.molfile = $stateParams.similar_to;
-            $rootScope.sketchMolfile  = $stateParams.similar_to;
+            $scope.setStructure("flexmatch");
+
         }
         else {
             $rootScope.sketchMolfile  = "";
@@ -43,43 +54,20 @@ angular.module('ngChemApp')
         $scope.searchForm.fpValue = $stateParams.fpValue;
         $scope.searchForm.dateStart = $stateParams.created__gte;
         $scope.searchForm.dateEnd = $stateParams.created__lte;
-        $scope.searchForm.smiles = $stateParams.smiles;
+        if (angular.isDefined($stateParams.project)){
+            $scope.searchForm.project = $stateParams.project.split(",");
+        }
         
-        
-        projectFactory.get().$promise.then(function(res) {
-          $scope.searchForm.projects = res.objects;
-          angular.forEach($scope.searchForm.projects, function(project) {
-            
-            if($stateParams.project__project_key && project.project_key == $stateParams.project__project_key) {
-
-                $scope.searchForm.selectedProject = project;
-
-                //we need to put the custom fields population in only if there is a project, and after that project has been selected.
-                if($stateParams.custom_fields) {
-                    //$scope.searchForm.custom_fields = JSON.parse(atob($stateParams.custom_fields));    
-                    $scope.searchForm.custom_fields = $stateParams.custom_fields;
-                }
-            }
-          });
-          
-        });
-
-        
-
     };
 
     $scope.getSearchCustomFields = function() {
 
-        ProjectCustomFields.query($scope.searchForm.selectedProject, {}, $scope.tagFunction).then(function(data){
-             $scope.myschema = data.searchform.schema;
-             $scope.myform = data.searchform.form;
+       
+    }
 
-             //put this into searchformschema instead, then we can use the same form for everything
-             $scope.searchFormSchema.form.push(data.searchform.form[0]);
-             var newProps = angular.extend({}, $scope.searchFormSchema.schema.properties, data.searchform.schema.properties.search_custom_fields);
-             $scope.searchFormSchema.schema.properties = newProps;
-             
-        });
+    $scope.cancel = function(){
+        $location.url('/search?limit=&offset=');
+
     }
 
     $scope.runSearch = function() {
@@ -90,8 +78,8 @@ angular.module('ngChemApp')
         //use the correct structure search type
         //construct get parameters in the format required by the web service
         var params = {}
-        if($scope.searchForm.selectedProject) {
-            params["project__project_key"] = $scope.searchForm.selectedProject.project_key;    
+        if($scope.searchForm.project) {
+            params["project__project_key__in"] = $scope.searchForm.project;    
         }
         //it would be great to automagically populate a pasted smiles string into the sketcher
         //for now though, just send the smiles to the web service
@@ -102,9 +90,10 @@ angular.module('ngChemApp')
             params[$scope.searchForm.substruc] = $scope.searchForm.molecule.molfile
         }
 
-        if(!angular.equals({}, $scope.searchForm.custom_fields)) {
+        if(!angular.equals([], $scope.searchForm.search_custom_fields__kv_any)) {
             //var encodedCustFields = btoa(JSON.stringify($scope.searchForm.custom_fields));
-            var encodedCustFields = $scope.searchForm.custom_fields;
+            var encodedCustFields = $scope.searchForm.search_custom_fields__kv_any.join(",");
+            params.search_custom_fields__kv_any = encodedCustFields;
         }
 
         if ($scope.searchForm.dateStart) {
@@ -118,39 +107,43 @@ angular.module('ngChemApp')
         params.created__gte = formattedStart;
         params.created__lte = formattedEnd;
 
-        params.custom_fields = encodedCustFields;
+        
 
-        CBHCompoundBatch.search(params).then(function(result){
-            
-            gridconfig.configObject.totalServerItems = result.meta.totalCount;
-            gridconfig.configObject.compounds = result.objects;
-            gridconfig.configObject.filters = params;
-
-            
-        });
+       
         var stateUrl = "/search?";
 
         //we now need to put the parameters we've generated from this search into a string which can be used as filters by the export options.
         //the export will not tolerate present but empty params so we have to only add them if they are present.
 
-        var project_frag = (params.project__project_key) ? ("project__project_key=" + params.project__project_key + "&") : "";
+        var project_frag = ($scope.searchForm.project) ? ("project=" + $scope.searchForm.project.join(",") + "&") : "";
         var flexmatch_frag = (params.flexmatch) ? ("flexmatch=" + encodeURIComponent(params.flexmatch) + "&") : "";
         var with_substructure_frag = (params.with_substructure) ? ("with_substructure=" + encodeURIComponent(params.with_substructure) + "&") : "";
         var similar_to_frag = (params.similar_to) ? ("similar_to=" + encodeURIComponent(params.similar_to) + "&") : "";
         var fpValue_frag = (params.fpValue) ? ("fpValue=" + params.fpValue + "&") : "";
         var created__gte_frag = (params.created__gte) ? ("created__gte=" + params.created__gte + "&") : "";
         var created__lte_frag = (params.created__lte) ? ("created__lte=" + params.created__lte + "&") : "";
-        var smiles_frag = (params.smiles) ? ("smiles=" + params.smiles + "&") : "";
-        var cust_field_frag = (params.custom_fields) ? ("custom_fields=" + params.custom_fields + "&") : "";
-        console.log(project_frag);
+        // var smiles_frag = (params.smiles) ? ("smiles=" + params.smiles + "&") : "";
+        var cust_field_frag = (encodedCustFields) ? ("search_custom_fields__kv_any=" + encodedCustFields + "&") : "";
 
-        var paramsUrl = project_frag + flexmatch_frag + with_substructure_frag + similar_to_frag + fpValue_frag + created__gte_frag + created__lte_frag + smiles_frag + cust_field_frag;
+        var paramsUrl = project_frag + flexmatch_frag + with_substructure_frag + similar_to_frag + fpValue_frag + created__gte_frag + created__lte_frag  + cust_field_frag;
+
+
 
         $location.url(stateUrl + paramsUrl + '&limit=&offset=');
         gridconfig.configObject.paramsUrl = paramsUrl;
+
+        CBHCompoundBatch.search(params).then(function(result){   
+            gridconfig.configObject.totalServerItems = result.meta.totalCount;
+            gridconfig.configObject.compounds = result.objects;
+            gridconfig.configObject.filters = params;
+        });
+
     }
 
-    $scope.searchForm = { molecule: { molfile: "" }, custom_fields: {} };
+
+
+
+    $scope.searchForm = { molecule: { molfile: "" } };
 
     $scope.results = {};
 
@@ -203,31 +196,7 @@ angular.module('ngChemApp')
 	$scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
 	$scope.format = $scope.formats[0];
 
-	/*$scope.cust_fields_count = 0
-    $scope.custom_fields = [];
-    $scope.custom_field_choices = [];
-
-    //Get the backend defined list of custom fields
-    CBHCompoundBatch.fetchExistingFields(projectKey).then(
-        function(data){
-            //add each of the pinned custom fields
-            angular.forEach(data.data.fieldNames, function(value) {
-                //Add the pinned custom fields
-                if (value.id){
-                    $scope.cust_fields_count ++;
-                    value.id = $scope.cust_fields_count ;
-                    value.value = "";
-                    $scope.searchForm.custom_fields.push(value);
-                } else {
-                    $scope.custom_field_choices.push(value.name);
-                }
-                
-            });
-            
-
-        }, function(error){
-            console.log(error);
-        });*/
+	
 
         //initialise the grid to reflect the search
         $timeout(function() {

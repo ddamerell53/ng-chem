@@ -8,7 +8,7 @@
  * Controller of the ngChemApp
  */
 angular.module('ngChemApp')
-  .controller('BatchesCtrl',['$scope', '$modal', '$timeout', '$q', '$state', '$stateParams','$location', 'gridconfig', 'projectKey', 'projectFactory', 'MessageFactory', 'projectCustomFields', 'CBHCompoundBatch', function ($scope, $modal, $timeout, $q, $state, $stateParams, $location, gridconfig, projectKey, projectFactory, MessageFactory, projectCustomFields, CBHCompoundBatch) {
+  .controller('BatchesCtrl',['$scope', '$modal', '$timeout', '$q', '$state', '$stateParams','$location', 'gridconfig', 'projectKey', 'projectFactory', 'MessageFactory', 'CBHCompoundBatch', function ($scope, $modal, $timeout, $q, $state, $stateParams, $location, gridconfig, projectKey, projectFactory, MessageFactory, CBHCompoundBatch) {
     var filters = { };
     $scope.chemadder = false;
     var compadder = function(){
@@ -18,11 +18,8 @@ angular.module('ngChemApp')
     var multiple_batch_id = $stateParams.multiple_batch_id;
     //..
     $scope.state = $state.current;
-    console.log($scope.state);
-
     $scope.params = $stateParams; 
     $scope.legends = MessageFactory.getLegends();
-
     if(multiple_batch_id) {
       filters = { 'multiple_batch_id' : multiple_batch_id }
     }
@@ -41,11 +38,7 @@ $scope.tagFunction = function(content){
   };
     //$scope.proj = $rootScope.getProjectObj(projectKey);
 
-        projectCustomFields.query(projectKey, {}, $scope.tagFunction).then(function(data){
-                 $scope.myschema = data.schemaform.schema;
-                 $scope.myform = data.schemaform.form;
-        });
-
+      
 
     projectFactory.get().$promise.then(function(res) {
                 $scope.projects = res.objects;
@@ -75,14 +68,10 @@ $scope.tagFunction = function(content){
         //empty the compounds?
         $scope.gridconfig.configObject.compounds = [];
         $scope.gridconfig.configObject.filters = filters;
+
         var projkey_frag = ($scope.projectKey) ? "project__project_key=" + $scope.projectKey + "&" : "" ;
         var batch_frag = ($scope.validatedData) ? "multiple_batch_id=" + filters.multiple_batch_id + "&" : "" ;
         $scope.gridconfig.configObject.paramsUrl = projkey_frag + batch_frag;
-    
-
-    
-    
-    
     
     
     //$scope.gridconfig.configObject.pagingOptions
@@ -129,16 +118,31 @@ $scope.tagFunction = function(content){
           mol: function () {
             return $scope.mol;
           },
-          myform: function(){
-            return $scope.myform;
-          }          ,
-          myschema: function(){
-            return $scope.myschema;
-          }
+
+          projectsWithCustomFieldData: ['ProjectFactory', function(ProjectFactory){
+                 return ProjectFactory.get({"id": $scope.mol.project_id, "schemaform" : true}).$promise;
+          }],
+
+          // myform: function(projectsWithCustomFieldData){
+          //   angular.forEach(projectsWithCustomFieldData.objects, function(proj){
+          //     if(proj.id === $scope.mol.project_id){
+          //       console.log(proj);
+          //       return proj.schemaform.form;
+          //     }
+          //   });
+          // },
+          // myschema: function(projectsWithCustomFieldData){
+          //   angular.forEach(projectsWithCustomFieldData.objects, function(proj){
+          //     if(proj.id === $scope.mol.project_id){
+          //       return proj.schemaform.schema;
+          //     }
+          //   });
+          // }]
         }, 
-        controller: function($scope, $modalInstance, mol, myform, myschema, $timeout) {
+        controller: function($scope, $modalInstance, mol, projectsWithCustomFieldData, $timeout) {
           $scope.mol = mol;
-          $scope.myform = myform;
+          $scope.myform = projectsWithCustomFieldData.objects[0].schemaform.form;
+          var myform = projectsWithCustomFieldData.objects[0].schemaform.form;
           var len = Math.ceil( myform.length/2);
           $scope.firstForm = angular.copy(myform).splice(0, len);
           $scope.secondForm = angular.copy(myform).splice(len);
@@ -188,7 +192,7 @@ $scope.tagFunction = function(content){
                 }
               );
           }
-          $scope.myschema = myschema;
+          $scope.myschema = projectsWithCustomFieldData.objects[0].schemaform.schema;
           $scope.modalInstance = $modalInstance;
 // $scope.$watch('mol', function(n,o), true){
 //   $scope.pointers = n;
