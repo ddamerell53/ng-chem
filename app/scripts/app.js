@@ -44,7 +44,7 @@ angular.module('ngChemApp')
         })
 
         .state('search', {
-            url: '/search?project__project_key&flexmatch&with_substructure&similar_to&fpValue&created__gte&created__lte&molfile&smiles&custom_fields&limit&offset',
+            url: '/search?project&flexmatch&with_substructure&similar_to&fpValue&created__gte&created__lte&molfile&smiles&search_custom_fields__kv_any&limit&offset',
             //url: '/search',
             //params: ['project__project_key', 'flexmatch', 'with_substructure', 'similar_to', 'fpValue', 'created__gte', 'created__lte', 'molfile', 'smiles', 'limit', 'offset', 'random'],
             resolve:{
@@ -54,15 +54,14 @@ angular.module('ngChemApp')
               projectFactory: ['ProjectFactory', function(ProjectFactory) {
                 return ProjectFactory;
               }],
-              projectCustomFields: ['ProjectCustomFields', function(ProjectCustomFields) {
-                return ProjectCustomFields;
-              }],
+             
               projectKey: ['$stateParams', function($stateParams){
-                  return $stateParams.projectKey;
+                  //There is no project key but this needs to be here to stop us breaking the batch controller
+                  return "";
               }],
-              searchFormSchema: ['SearchFormSchema', function(SearchFormSchema){
-                  return SearchFormSchema;
-              }],
+              
+              
+              
             },
             data: {
               login_rule: function($rootScope) {
@@ -116,12 +115,11 @@ angular.module('ngChemApp')
               projList: ['$rootScope', function($rootScope) {
                   return $rootScope.projects;
               }],
-              projectCustomFields: ['ProjectCustomFields', function(ProjectCustomFields) {
-                return ProjectCustomFields;
-              }],
+              
               projectFactory: ['ProjectFactory', function(ProjectFactory) {
                 return ProjectFactory;
               }],
+              
             },
             templateUrl: 'views/projects.html',
             controller: 'ProjectCtrl'
@@ -146,6 +144,7 @@ angular.module('ngChemApp')
               projectKey: ['$stateParams', function($stateParams){
                   return $stateParams.projectKey;
               }],
+
             },
             
             views: {
@@ -196,6 +195,7 @@ angular.module('ngChemApp')
               projectFactory: ['ProjectFactory', function(ProjectFactory) {
                 return ProjectFactory;
               }],
+              
             },
             url: '/demo',
             templateUrl: 'views/start.html',
@@ -408,8 +408,8 @@ angular.module('ngChemApp')
   }).run(function($http, $cookies, $rootScope, $document, $state, LoginService, ProjectFactory, urlConfig, prefix) {
 
     $http.defaults.headers.post['X-CSRFToken'] = $cookies[prefix + "csrftoken"];
-        $http.defaults.headers.patch['X-CSRFToken'] = $cookies[prefix + "csrftoken"];
-        $http.defaults.headers.put['X-CSRFToken'] = $cookies[prefix + "csrftoken"];
+    $http.defaults.headers.patch['X-CSRFToken'] = $cookies[prefix + "csrftoken"];
+    $http.defaults.headers.put['X-CSRFToken'] = $cookies[prefix + "csrftoken"];
 
         //console.log(urlConfig);
         $rootScope.logged_in_user = {};

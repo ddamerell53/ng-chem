@@ -10,8 +10,8 @@
 var app = angular.module('ngChemApp');
 
 
-app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 'MessageFactory', 'CBHCompoundBatch','$cookies' ,'$timeout', '$stateParams', 'projectKey', 'prefix', 'urlConfig', 'projectFactory','ProjectCustomFields',
-    function ($scope, $rootScope, $state, ChEMBLFactory, MessageFactory, CBHCompoundBatch, $cookies, $timeout, $stateParams, projectKey, prefix, urlConfig, projectFactory, ProjectCustomFields) {
+app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 'MessageFactory', 'CBHCompoundBatch','$cookies' ,'$timeout', '$stateParams', 'projectKey', 'prefix', 'urlConfig', 'projectFactory',
+    function ($scope, $rootScope, $state, ChEMBLFactory, MessageFactory, CBHCompoundBatch, $cookies, $timeout, $stateParams, projectKey, prefix, urlConfig, projectFactory) {
         $scope.proj = {}
         projectFactory.get().$promise.then(function(res) {
                 $scope.projects = res.objects;
@@ -20,6 +20,11 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
                     $scope.proj = proj;
                     $rootScope.projName = proj.name;
                     $rootScope.headline =  "Back to " + $scope.proj.name + " project page";
+                    $scope.myschema = proj.schemaform.schema;
+                 // $scope.myform = proj.schemaform.form;
+                 //  var len = Math.ceil( $scope.myform.length/2);
+                 //  $scope.firstForm = angular.copy($scope.myform).splice(0, len);
+                 //  $scope.secondForm = angular.copy($scope.myform).splice(len);
                   }
                 });
               });
@@ -62,13 +67,7 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
     return item;
   };
 
-         ProjectCustomFields.query(projectKey, {}, $scope.tagFunction).then(function(data){
-                 $scope.myschema = data.schemaform.schema;
-                 $scope.myform = data.schemaform.form;
-                  var len = Math.ceil( $scope.myform.length/2);
-                  $scope.firstForm = angular.copy($scope.myform).splice(0, len);
-                  $scope.secondForm = angular.copy($scope.myform).splice(len);
-        });
+         
 
         $scope.testData = {};
         
@@ -153,28 +152,6 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
         $scope.cust_fields_count = 0
         $scope.custom_fields = [];
         $scope.custom_field_choices = [];
-
-        //Get the backend defined list of custom fields
-        // CBHCompoundBatch.fetchExistingFields(projectKey).then(
-        //     function(data){
-        //         //add each of the pinned custom fields
-        //         angular.forEach(data.data.fieldNames, function(value) {
-        //             //Add the pinned custom fields
-        //             if (value.id){
-        //                 $scope.cust_fields_count ++;
-        //                 value.id = $scope.cust_fields_count ;
-        //                 value.value = "";
-        //                 $scope.molecule.metadata.custom_fields.push(value);
-        //             } else {
-        //                 $scope.custom_field_choices.push(value.name);
-        //             }
-                    
-        //         });
-                
-
-        //     }, function(error){
-        //         console.log(error);
-        //     });
 
 
             
