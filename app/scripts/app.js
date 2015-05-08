@@ -436,24 +436,24 @@ angular.module('ngChemApp')
       if (toParams.projectKey) {
           var flag = false;
           ProjectFactory.get().$promise.then(function(res) {
-                
-                angular.forEach(res.objects, function(proj) {
-                  if (toParams.projectKey == proj.project_key) {
-                    //return proj;
-                    /*e.preventDefault();
-                    $state.go(result.to, result.params, {notify: false});*/
-                    flag = true;
-                  }
-                });
-                //still here? redirect to the projects page
-                if(flag) {
-                  $state.go(to, toParams, {notify: false});
-                }
-                else{
-                  $state.go('projects');
-                }
-                
-              });
+            
+            angular.forEach(res.objects, function(proj) {
+              if (toParams.projectKey == proj.project_key) {
+                //the project key in the url is an accessible project! Have a biscuit.
+                flag = true;
+              }
+            });
+            
+            if(flag) {
+              $state.go(to, toParams, {notify: false});
+            }
+            else{
+              //project key not recognised - redirect to the project list for the logged in user
+              //this doesn't contain a projectKey param so you won't infinitely loop
+              $state.go('projects.list');
+            }
+            
+          });
           
       }
       
