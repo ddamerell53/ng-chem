@@ -406,23 +406,23 @@ angular.module('ngChemApp')
 
 
   }).run(function($http, $cookies, $rootScope, $document, $state, LoginService, ProjectFactory, urlConfig, prefix) {
-
-    $http.defaults.headers.post['X-CSRFToken'] = $cookies[prefix + "csrftoken"];
-    $http.defaults.headers.patch['X-CSRFToken'] = $cookies[prefix + "csrftoken"];
-    $http.defaults.headers.put['X-CSRFToken'] = $cookies[prefix + "csrftoken"];
+    var pref = prefix.split("/")[0];
+    $http.defaults.headers.post['X-CSRFToken'] = $cookies[pref + "csrftoken"];
+    $http.defaults.headers.patch['X-CSRFToken'] = $cookies[pref + "csrftoken"];
+    $http.defaults.headers.put['X-CSRFToken'] = $cookies[pref + "csrftoken"];
 
         //console.log(urlConfig);
-        $rootScope.logged_in_user = {};
+    $rootScope.logged_in_user = {};
     $rootScope.projects = {};
 
-          LoginService.setLoggedIn().then(
-                      function(data){
-                          $rootScope.logged_in_user = data.objects[0];
-                      }
-                  );
-          ProjectFactory.get().$promise.then(function(res) {
-                $rootScope.projects = res.objects;
-              });
+    LoginService.setLoggedIn().then(
+              function(data){
+                $rootScope.logged_in_user = data.objects[0];
+                }
+    );
+     ProjectFactory.get().$promise.then(function(res) {
+        $rootScope.projects = res.objects;
+    });
         
     
 
@@ -514,11 +514,11 @@ angular.module('ngChemApp')
             return response || $q.when(response);
         },
         responseError: function(rejection) {
-            if (rejection.status === 401) {
-                console.log("Response Error 401",rejection);
-                window.location = urlConfig.instance_path.url_frag + "login"
-                //$location.path('/login').search('returnTo', $location.path());
-            }
+            // if (rejection.status === 401) {
+            //     console.log("Response Error 401",rejection);
+            //     window.location = urlConfig.instance_path.url_frag + "login"
+            //     //$location.path('/login').search('returnTo', $location.path());
+            // }
             return $q.reject(rejection);
         }
     }

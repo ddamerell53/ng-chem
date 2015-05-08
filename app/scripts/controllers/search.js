@@ -67,7 +67,6 @@ angular.module('ngChemApp')
 
     $scope.cancel = function(){
         $location.url('/search?limit=&offset=');
-
     }
 
     $scope.runSearch = function() {
