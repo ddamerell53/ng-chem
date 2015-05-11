@@ -13,7 +13,7 @@ var app = angular.module('ngChemApp');
 app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 'MessageFactory', 'CBHCompoundBatch','$cookies' ,'$timeout', '$stateParams', 'projectKey', 'prefix', 'urlConfig', 'projectFactory',
     function ($scope, $rootScope, $state, ChEMBLFactory, MessageFactory, CBHCompoundBatch, $cookies, $timeout, $stateParams, projectKey, prefix, urlConfig, projectFactory) {
         $scope.proj = {}
-        projectFactory.get().$promise.then(function(res) {
+        projectFactory.get({"schemaform" : true}).$promise.then(function(res) {
                 $scope.projects = res.objects;
                 angular.forEach(res.objects, function(proj) {
                   if(proj.project_key == projectKey) {
@@ -21,10 +21,10 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
                     $rootScope.projName = proj.name;
                     $rootScope.headline =  "Back to " + $scope.proj.name + " project page";
                     $scope.myschema = proj.schemaform.schema;
-                 // $scope.myform = proj.schemaform.form;
-                 //  var len = Math.ceil( $scope.myform.length/2);
-                 //  $scope.firstForm = angular.copy($scope.myform).splice(0, len);
-                 //  $scope.secondForm = angular.copy($scope.myform).splice(len);
+                 $scope.myform = proj.schemaform.form;
+                  var len = Math.ceil( $scope.myform.length/2);
+                  $scope.firstForm = angular.copy($scope.myform).splice(0, len);
+                  $scope.secondForm = angular.copy($scope.myform).splice(len);
                   }
                 });
               });
