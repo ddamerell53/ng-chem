@@ -135,7 +135,23 @@ angular.module('ngChemApp')
               $rootScope.projectKey = "Projects";
               $rootScope.projName = "Projects";
               $rootScope.glyphicon = "folder-open";
+
+              //if a new user has no projects associated, refdirect them to a default view with supplementary info
+              if($rootScope.projects == {}) {
+
+                state.go('projects.empty');
+
+              }
             }
+        })
+
+        .state('projects.empty', {
+          url: '/newuser',
+          templateUrl: 'views/no-projects.html',
+          controller: function($scope) {
+
+          }
+
         })
 
         .state('projects.list.project', {
