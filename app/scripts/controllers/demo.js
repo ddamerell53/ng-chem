@@ -54,7 +54,7 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
         $rootScope.headline =  "Back to " + $scope.proj.name + " project page";
         $rootScope.subheading= "Welcome to the ChemReg wizard"        
         $rootScope.glyphicon = "arrow-left";
-        $rootScope.tophref = (urlConfig.instance_path.url_frag + "#/projects/list/" + projectKey).replace("/dev/","");
+        $rootScope.tophref = (urlConfig.instance_path.url_frag.split("/")[0] + "/#/projects/list/" + projectKey).replace("/dev/","");
         $scope.processingSingle = false;
         $scope.processingMultiBatch = false;
         $scope.tagFunction = function(content){
