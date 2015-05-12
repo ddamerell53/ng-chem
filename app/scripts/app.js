@@ -139,14 +139,13 @@ angular.module('ngChemApp')
               //if a new user has no projects associated, refdirect them to a default view with supplementary info
               if(angular.equals({}, $rootScope.projects)) {
                 $state.go('projects.empty');
-
               }
               $scope.isDefault = true;
               $rootScope.projects.map(function(proj){
                   if (!proj.is_default){
                     $scope.isDefault = false;
                   }
-              })
+              });
             }
         })
 
