@@ -128,7 +128,7 @@ angular.module('ngChemApp')
         .state('projects.list', {
             url: '/list',
             template: '<project-list></project-list><div class="form-views" ui-view="projectlist"></div>',
-            controller: function($rootScope) {
+            controller: function($rootScope, $state) {
               $rootScope.headline = "Projects List";
               $rootScope.subheading = "Click a project title to see more details and add compounds to that project";
               $rootScope.help_lookup = "";
@@ -137,9 +137,9 @@ angular.module('ngChemApp')
               $rootScope.glyphicon = "folder-open";
 
               //if a new user has no projects associated, refdirect them to a default view with supplementary info
-              if($rootScope.projects == {}) {
-
-                state.go('projects.empty');
+              console.log($rootScope.projects);
+              if(angular.equals({}, $rootScope.projects)) {
+                $state.go('projects.empty');
 
               }
             }
@@ -462,6 +462,9 @@ angular.module('ngChemApp')
             
             if(flag) {
               $state.go(to, toParams, {notify: false});
+            }
+            else if(angular.equals({}, $rootScope.projects)) {
+              $state.go('projects.empty');
             }
             else{
               //project key not recognised - redirect to the project list for the logged in user
