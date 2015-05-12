@@ -341,6 +341,7 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
             
             ).then(
             function(data){
+                $scope.molecule.metadata.projectFields = {};
                 $scope.processingSingle = false;
                 $scope.singleMol = data.data;
                 $scope.finalData.objects.push(data.data);
@@ -378,11 +379,13 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
         
         CBHCompoundBatch.saveMultiBatchMolecules(projectKey,$scope.validatedData.currentBatch, $scope.molecule.metadata.projectFields).then(
             function(data){
+                $scope.molecule.metadata.projectFields = {};
                 $state.go("projects.project.demo.map.finish", { 'multiple_batch_id': $scope.validatedData.currentBatch, limit:10000, offset: 0 } );
                 $scope.processingMultiBatch = false;
                 $scope.justSaved = true;
             }, 
             function(error){
+                $scope.molecule.metadata.projectFields = {};
                 $scope.validated = { 'errors': { 'invalidMolecule': true } };
                 $scope.processingMultiBatch = false;
             });

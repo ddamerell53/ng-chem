@@ -127,8 +127,8 @@ angular.module('ngChemApp')
 
         .state('projects.list', {
             url: '/list',
-            template: '<project-list></project-list><div class="form-views" ui-view="projectlist"></div>',
-            controller: function($rootScope, $state) {
+            templateUrl: 'views/projects-list.html',
+            controller: function($rootScope, $state, $scope) {
               $rootScope.headline = "Projects List";
               $rootScope.subheading = "Click a project title to see more details and add compounds to that project";
               $rootScope.help_lookup = "";
@@ -137,11 +137,15 @@ angular.module('ngChemApp')
               $rootScope.glyphicon = "folder-open";
 
               //if a new user has no projects associated, refdirect them to a default view with supplementary info
-              console.log($rootScope.projects);
               if(angular.equals({}, $rootScope.projects)) {
                 $state.go('projects.empty');
-
               }
+              $scope.isDefault = true;
+              $rootScope.projects.map(function(proj){
+                  if (!proj.is_default){
+                    $scope.isDefault = false;
+                  }
+              });
             }
         })
 
