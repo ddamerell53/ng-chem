@@ -37,18 +37,21 @@ angular.module('ngChemApp')
         if(scope.localMolfile != '') {
           element.loadMolecule(ChemDoodle.readMOL(scope.localMolfile));
         }
+        if (scope.molecule.molfile != '' && scope.molecule.molfile !== undefined){
+          element.loadMolecule(ChemDoodle.readMOL(scope.molecule.molfile ));
+        }
         //call repaint to display either the retained or default molecule
         element.repaint();
         
       },
       controller: ['$scope', '$rootScope', function($scope, $rootScope) {
         //initialise the root scope variable, from empty if not present
-      	if ($rootScope.sketchMolfile == undefined) {
-          $rootScope.sketchMolfile = "";
+      	if ($scope.localMolfile == undefined) {
+          $scope.localMolfile = "";
         }
 
         //set the local variable to match the root scope
-        $scope.localMolfile = $rootScope.sketchMolfile;
+        // $scope.localMolfile = $rootScope.sketchMolfile;
 
       }]
     };

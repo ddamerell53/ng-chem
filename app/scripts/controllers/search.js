@@ -15,7 +15,7 @@ angular.module('ngChemApp')
   
     $scope.setStructure = function(key){
         $scope.searchForm.molecule.molfile = $stateParams[key];
-        $rootScope.sketchMolfile = $stateParams[key];
+        // $rootScope.searchMolfile = $stateParams[key];
         if ($stateParams[key].indexOf("ChemDoodle") < 0 ){
             $scope.searchForm.smiles = $stateParams[key];
         }
@@ -48,7 +48,7 @@ angular.module('ngChemApp')
 
         }
         else {
-            $rootScope.sketchMolfile  = "";
+            // $rootScope.searchMolfile  = "";
         }
         $scope.searchForm.molecule.molfileChanged = function(){};
         $scope.searchForm.fpValue = $stateParams.fpValue;
@@ -105,6 +105,7 @@ angular.module('ngChemApp')
         //params.created__range = "(" +  formattedStart + "," + formattedEnd + ")";
         params.created__gte = formattedStart;
         params.created__lte = formattedEnd;
+        console.log(params);
 
         
 
