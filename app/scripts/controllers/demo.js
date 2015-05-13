@@ -489,6 +489,10 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
                   $scope.dragmodels.lists.headers.push({label: value});
                   $scope.struc_col_options.push({ name:value, value:value});
                 });
+                //Now try to prcess the fiel to avoid concurrency issues
+                if (!$scope.isFileExcel()){
+                    $scope.processFiles();
+                }
             }, function(error){
                 $scope.headers_not_retrieved = true;
                 $scope.filesInProcessing = false;
@@ -513,9 +517,7 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
             });
 
         }
-        if (!$scope.isFileExcel()){
-            $scope.processFiles();
-        }
+        
         
     };
 
