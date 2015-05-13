@@ -3,7 +3,7 @@
 <div class="col-xs-12" flow-init="flowinit"
 				 flow-name="filedata.flow"
 			     flow-files-submitted="$flow.upload()"
-			     flow-file-success="assignFileId($file.uniqueIdentifier, $file.getExtension())" flow-upload-started="filesUploading=true" flow-complete="filesUploading=false">
+			     flow-file-success="" flow-upload-started="filesUploading=true" flow-complete="filesUploading=false; assignFileId($file.uniqueIdentifier, $file.getExtension())">
 
     <div class="form-views" ui-view></div>
 
