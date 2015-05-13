@@ -463,13 +463,13 @@ angular.module('ngChemApp')
           
       // }
       
-      if (result && result.to) {
-        //console.log("result and result.to is passing");
-        e.preventDefault();
-        // Optionally set option.notify to false if you don't want 
-        // to retrigger another $stateChangeStart event
-        $state.go(result.to, result.params, {notify: false});
-      }
+      // if (result && result.to) {
+      //   //console.log("result and result.to is passing");
+      //   e.preventDefault();
+      //   // Optionally set option.notify to false if you don't want 
+      //   // to retrigger another $stateChangeStart event
+      //   $state.go(result.to, result.params, {notify: false});
+      // }
       else {
         $state.go('404');
       }
