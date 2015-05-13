@@ -430,50 +430,50 @@ angular.module('ngChemApp')
         
     
 
-    $rootScope.$on('$stateChangeStart', function(e, to, toParams, from, fromParams) {
-      //console.log(to.name);
-      if (to.name == '404') return;
-      if(to.name.lastIndexOf('singleCompound', 0) === 0) return;
+    // $rootScope.$on('$stateChangeStart', function(e, to, toParams, from, fromParams) {
+    //   //console.log(to.name);
+    //   if (to.name == '404') return;
+    //   if(to.name.lastIndexOf('singleCompound', 0) === 0) return;
       
-      //need to stop people navigating to a nonsense/nonexistent project
-      // if (toParams.projectKey) {
-      //     var flag = false;
-      //     ProjectFactory.get().$promise.then(function(res) {
+    //   //need to stop people navigating to a nonsense/nonexistent project
+    //   // if (toParams.projectKey) {
+    //   //     var flag = false;
+    //   //     ProjectFactory.get().$promise.then(function(res) {
             
-      //       angular.forEach(res.objects, function(proj) {
-      //         if (toParams.projectKey == proj.project_key) {
-      //           //the project key in the url is an accessible project! Have a biscuit.
-      //           flag = true;
-      //         }
-      //       });
+    //   //       angular.forEach(res.objects, function(proj) {
+    //   //         if (toParams.projectKey == proj.project_key) {
+    //   //           //the project key in the url is an accessible project! Have a biscuit.
+    //   //           flag = true;
+    //   //         }
+    //   //       });
             
-      //       if(flag) {
-      //         $state.go(to, toParams, {notify: false});
-      //       }
-      //       else if(angular.equals({}, $rootScope.projects)) {
-      //         $state.go('projects.empty');
-      //       }
-      //       else{
-      //         //project key not recognised - redirect to the project list for the logged in user
-      //         //this doesn't contain a projectKey param so you won't infinitely loop
-      //         $state.go('projects.list');
-      //       }
+    //   //       if(flag) {
+    //   //         $state.go(to, toParams, {notify: false});
+    //   //       }
+    //   //       else if(angular.equals({}, $rootScope.projects)) {
+    //   //         $state.go('projects.empty');
+    //   //       }
+    //   //       else{
+    //   //         //project key not recognised - redirect to the project list for the logged in user
+    //   //         //this doesn't contain a projectKey param so you won't infinitely loop
+    //   //         $state.go('projects.list');
+    //   //       }
             
-      //     });
+    //   //     });
           
-      // }
+    //   // }
       
-      // if (result && result.to) {
-      //   //console.log("result and result.to is passing");
-      //   e.preventDefault();
-      //   // Optionally set option.notify to false if you don't want 
-      //   // to retrigger another $stateChangeStart event
-      //   $state.go(result.to, result.params, {notify: false});
-      // }
-      else {
-        $state.go('404');
-      }
-    });
+    //   // if (result && result.to) {
+    //   //   //console.log("result and result.to is passing");
+    //   //   e.preventDefault();
+    //   //   // Optionally set option.notify to false if you don't want 
+    //   //   // to retrigger another $stateChangeStart event
+    //   //   $state.go(result.to, result.params, {notify: false});
+    //   // }
+    //   else {
+    //     $state.go('404');
+    //   }
+    // });
 
     $rootScope.$on('$stateChangeSuccess', function(e, to) {
       //$('html,body').animate({ scrollTop: target.offset().top}, 1000);
