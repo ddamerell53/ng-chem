@@ -234,7 +234,7 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
         $scope.uploaded_file_name = id;
         $scope.file_extension = ext;
         $scope.headers_not_retrieved = false;
-        $scope.parseHeaders();
+        $timeout($scope.parseHeaders, 100);
     }
 
     $scope.mapFilePage = function(){
