@@ -125,9 +125,9 @@ angular.module('ngChemApp')
               $rootScope.glyphicon = "folder-open";
 
               //if a new user has no projects associated, refdirect them to a default view with supplementary info
-              if(angular.equals({}, $rootScope.projects)) {
-                $state.go('projects.empty');
-              }
+              // if(angular.equals({}, $rootScope.projects)) {
+              //   $state.go('projects.empty');
+              // }
               $scope.isDefault = true;
               $rootScope.projects.map(function(proj){
                   if (!proj.is_default){
@@ -137,14 +137,14 @@ angular.module('ngChemApp')
             }
         })
 
-        .state('projects.empty', {
-          url: '/newuser',
-          templateUrl: 'views/no-projects.html',
-          controller: function($scope) {
+        // .state('projects.empty', {
+        //   url: '/newuser',
+        //   templateUrl: 'views/no-projects.html',
+        //   controller: function($scope) {
 
-          }
+        //   }
 
-        })
+        // })
 
         .state('projects.list.project', {
             url: '/:projectKey?limit&offset',
