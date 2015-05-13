@@ -63,11 +63,7 @@ angular.module('ngChemApp')
               
               
             },
-            data: {
-              login_rule: function($rootScope) {
-                return $rootScope.isLoggedIn();
-              }
-            },
+            
             views: {
               '': {
                 templateUrl: 'views/search.html'
@@ -88,11 +84,7 @@ angular.module('ngChemApp')
         .state('help', {
             //parent: 'Default',
             url: '/help',
-            data: {
-              login_rule: function($rootScope) {
-                return $rootScope.isLoggedIn();
-              }
-            },
+            
             resolve:{
             },
             templateUrl: 'views/help.html',
@@ -103,11 +95,7 @@ angular.module('ngChemApp')
 
         .state('projects', {
             url: '/projects',
-            data: {
-              login_rule: function($rootScope) {
-                return $rootScope.isLoggedIn();
-              },
-            },
+            
             resolve:{
               gridconfig: ['CompoundListSetup', function(CompoundListSetup){
                   return CompoundListSetup;
@@ -206,11 +194,7 @@ angular.module('ngChemApp')
 
 
         .state('projects.project.demo', {
-            data: {
-              login_rule: function($rootScope) {
-                return $rootScope.isLoggedIn();
-              }
-            },
+            
             resolve:{
               projectFactory: ['ProjectFactory', function(ProjectFactory) {
                 return ProjectFactory;
@@ -450,8 +434,7 @@ angular.module('ngChemApp')
       //console.log(to.name);
       if (to.name == '404') return;
       if(to.name.lastIndexOf('singleCompound', 0) === 0) return;
-      if (!angular.isFunction(to.data.login_rule)) return;
-      var result = to.data.login_rule($rootScope);
+      
       //need to stop people navigating to a nonsense/nonexistent project
       // if (toParams.projectKey) {
       //     var flag = false;
