@@ -7,7 +7,7 @@
  * # projectList
  */
 angular.module('ngChemApp')
-  .directive('projectList', [ "ProjectFactory", function (ProjectFactory) {
+  .directive('projectList',  function () {
     return {
       templateUrl: 'views/templates/project-list.html',
       restrict: 'E',
@@ -16,11 +16,10 @@ angular.module('ngChemApp')
       },*/
       controller: ['$scope', function($scope) {
 
-      	$scope.projects = []
-      	ProjectFactory.get().$promise.then(function(res) {
-      		$scope.projects = res.objects;
-      	});
+      	
+      		$scope.projects = $scope.cbh.projects.objects;
+      	
       	
       }]
     };
-  } ]);
+  } );

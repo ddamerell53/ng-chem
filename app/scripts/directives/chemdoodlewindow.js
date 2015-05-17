@@ -19,13 +19,20 @@ angular.module('ngChemApp')
         element.bind({
           'click': function() {
             scope.localMolfile = ChemDoodle.writeMOL(element.getMolecule());
-            scope.molecule.molfile = scope.localMolfile;
-            scope.molecule.molfileChanged();
+            if (scope.localMolfile !== "Molecule from ChemDoodle Web Components\n\nhttp://www.ichemlabs.com\n  1  0  0  0  0  0            999 V2000\n    0.0000    0.0000    0.0000 C   0  0  0  0  0  0\nM  END"){
+              //Check if the molecule is the standard methane and ignore
+              scope.molecule.molfile = scope.localMolfile;
+              scope.molecule.molfileChanged();
+            }
+            
           },
           'keyup' : function() {
             scope.localMolfile = ChemDoodle.writeMOL(element.getMolecule());
-            scope.molecule.molfile = scope.localMolfile;
-            scope.molecule.molfileChanged();
+            //Check if the molecule is the standard methane and ignore
+            if (scope.localMolfile !== "Molecule from ChemDoodle Web Components\n\nhttp://www.ichemlabs.com\n  1  0  0  0  0  0            999 V2000\n    0.0000    0.0000    0.0000 C   0  0  0  0  0  0\nM  END"){
+              scope.molecule.molfile = scope.localMolfile;
+              scope.molecule.molfileChanged();
+            }
           }
         });        
 

@@ -8,31 +8,28 @@
  * Controller of the ngChemApp
  */
 angular.module('ngChemApp')
-  .controller('SearchCtrl',['$scope', '$rootScope', '$filter', '$stateParams', '$location', '$state', '$timeout', 'projectFactory', 'gridconfig', 'CBHCompoundBatch', 'urlConfig', function ($scope, $rootScope, $filter, $stateParams, $location, $state, $timeout, projectFactory, gridconfig, CBHCompoundBatch, urlConfig) {
-    
+  .controller('SearchCtrl',['$scope','$http', '$rootScope', '$filter', '$stateParams', '$location', '$state', '$timeout', 'projectFactory', 'gridconfig', 'CBHCompoundBatch', 'urlConfig', 
+    function ($scope,$http, $rootScope, $filter, $stateParams, $location, $state, $timeout, projectFactory, gridconfig, CBHCompoundBatch, urlConfig) {
+    var searchform = $scope.cbh.projects.searchform;
+    $scope.searchForm = {molecule: {}};
+    searchform.form[0].items[0].options.async.call = $scope.refresh;
+    if($stateParams.search_custom_fields__kv_any) {
+            $scope.searchForm.search_custom_fields__kv_any = $stateParams.search_custom_fields__kv_any.split(",");;
+    }else{
+        $scope.searchForm.search_custom_fields__kv_any = [];
+    }
+    if($stateParams.related_molregno__chembl__chembl_id__in) {
+        var items = $stateParams.related_molregno__chembl__chembl_id__in.split(",");
+        searchform.schema.properties.related_molregno__chembl__chembl_id__in.items = items.map(function(i){return {value : i, label : i}});
+        searchform.form[0].items[0].options.async.call = $scope.refresh;
+
+        $scope.searchForm.related_molregno__chembl__chembl_id__in = $stateParams.related_molregno__chembl__chembl_id__in.split(",");    
+    }
+    $scope.searchFormSchema = searchform; 
+            
     $scope.myschema = {};
     $scope.myform = {};
-  
-    $scope.setStructure = function(key){
-        $scope.searchForm.molecule.molfile = $stateParams[key];
-        // $rootScope.searchMolfile = $stateParams[key];
-        if ($stateParams[key].indexOf("ChemDoodle") < 0 ){
-            $scope.searchForm.smiles = $stateParams[key];
-        }
-    };
-    $scope.initialiseFromUrl = function(){
-
-        $scope.searchFormSchema = {};
-        projectFactory.get({"schemaform": true}).$promise.then(function(res) {
-            $scope.searchFormSchema = res.searchform; 
-            console.log(res );
-            if($stateParams.search_custom_fields__kv_any) {
-                    $scope.searchForm.search_custom_fields__kv_any = $stateParams.search_custom_fields__kv_any.split(",");;
-            }else{
-                $scope.searchForm.search_custom_fields__kv_any = [];
-            }
-        });
-        if ($stateParams.with_substructure) {
+     if ($stateParams.with_substructure) {
             $scope.searchForm.substruc = "with_substructure";
             $scope.setStructure("with_substructure");
             
@@ -50,6 +47,7 @@ angular.module('ngChemApp')
         else {
             // $rootScope.searchMolfile  = "";
         }
+
         $scope.searchForm.molecule.molfileChanged = function(){};
         $scope.searchForm.fpValue = $stateParams.fpValue;
         $scope.searchForm.dateStart = $stateParams.created__gte;
@@ -58,6 +56,24 @@ angular.module('ngChemApp')
             $scope.searchForm.project = $stateParams.project.split(",");
         }
         
+
+    $scope.setStructure = function(key){
+        $scope.searchForm.molecule.molfile = $stateParams[key];
+        // $rootScope.searchMolfile = $stateParams[key];
+        if ($stateParams[key].indexOf("ChemDoodle") < 0 ){
+            $scope.searchForm.smiles = $stateParams[key];
+        }
+    };
+    $scope.refresh = function(schema, options, search){
+        return $http.get(options.async.url + "?chembl_id__chembl_id__startswith=" + search);
+    }
+    $scope.initialiseFromUrl = function(){
+
+            
+
+
+
+     
     };
 
     $scope.getSearchCustomFields = function() {
@@ -80,6 +96,11 @@ angular.module('ngChemApp')
         if($scope.searchForm.project) {
             params["project__project_key__in"] = $scope.searchForm.project;    
         }
+        if($scope.searchForm.related_molregno__chembl__chembl_id__in) {
+            console.log("test");
+            params["related_molregno__chembl__chembl_id__in"] = $scope.searchForm.related_molregno__chembl__chembl_id__in.join(",");    
+        }
+
         //it would be great to automagically populate a pasted smiles string into the sketcher
         //for now though, just send the smiles to the web service
         if ($scope.searchForm.smiles) {
@@ -89,7 +110,7 @@ angular.module('ngChemApp')
             params[$scope.searchForm.substruc] = $scope.searchForm.molecule.molfile
         }
 
-        if(!angular.equals([], $scope.searchForm.search_custom_fields__kv_any)) {
+        if(!angular.equals([], $scope.searchForm.search_custom_fields__kv_any) && angular.isDefined($scope.searchForm.search_custom_fields__kv_any)) {
             //var encodedCustFields = btoa(JSON.stringify($scope.searchForm.custom_fields));
             var encodedCustFields = $scope.searchForm.search_custom_fields__kv_any.join(",");
             params.search_custom_fields__kv_any = encodedCustFields;
@@ -105,7 +126,6 @@ angular.module('ngChemApp')
         //params.created__range = "(" +  formattedStart + "," + formattedEnd + ")";
         params.created__gte = formattedStart;
         params.created__lte = formattedEnd;
-        console.log(params);
 
         
 
@@ -124,8 +144,8 @@ angular.module('ngChemApp')
         var created__lte_frag = (params.created__lte) ? ("created__lte=" + params.created__lte + "&") : "";
         // var smiles_frag = (params.smiles) ? ("smiles=" + params.smiles + "&") : "";
         var cust_field_frag = (encodedCustFields) ? ("search_custom_fields__kv_any=" + encodedCustFields + "&") : "";
-
-        var paramsUrl = project_frag + flexmatch_frag + with_substructure_frag + similar_to_frag + fpValue_frag + created__gte_frag + created__lte_frag  + cust_field_frag;
+        var related_molregno__chembl__chembl_id__in_frag = (params.related_molregno__chembl__chembl_id__in) ? ("related_molregno__chembl__chembl_id__in=" + params.related_molregno__chembl__chembl_id__in + "&") : "";
+        var paramsUrl = project_frag + flexmatch_frag + related_molregno__chembl__chembl_id__in_frag + with_substructure_frag + similar_to_frag + fpValue_frag + created__gte_frag + created__lte_frag  + cust_field_frag;
 
 
 

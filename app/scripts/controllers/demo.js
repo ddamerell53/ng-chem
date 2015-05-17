@@ -13,21 +13,20 @@ var app = angular.module('ngChemApp');
 app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 'MessageFactory', 'CBHCompoundBatch','$cookies' ,'$timeout', '$stateParams', 'projectKey', 'prefix', 'urlConfig', 'projectFactory',
     function ($scope, $rootScope, $state, ChEMBLFactory, MessageFactory, CBHCompoundBatch, $cookies, $timeout, $stateParams, projectKey, prefix, urlConfig, projectFactory) {
         $scope.proj = {}
-        projectFactory.get({"schemaform" : true}).$promise.then(function(res) {
-                $scope.projects = res.objects;
-                angular.forEach(res.objects, function(proj) {
-                  if(proj.project_key == projectKey) {
-                    $scope.proj = proj;
-                    $rootScope.projName = proj.name;
-                    $rootScope.headline =  "Back to " + $scope.proj.name + " project page";
-                    $scope.myschema = proj.schemaform.schema;
-                 $scope.myform = proj.schemaform.form;
-                  var len = Math.ceil( $scope.myform.length/2);
-                  $scope.firstForm = angular.copy($scope.myform).splice(0, len);
-                  $scope.secondForm = angular.copy($scope.myform).splice(len);
-                  }
-                });
-              });
+
+        $scope.projects = $scope.cbh.projects.objects;
+        angular.forEach($scope.projects, function(proj) {
+          if(proj.project_key == projectKey) {
+            $scope.proj = proj;
+            $rootScope.projName = proj.name;
+            $rootScope.headline =  "Back to " + $scope.proj.name + " project page";
+            $scope.myschema = proj.schemaform.schema;
+         $scope.myform = proj.schemaform.form;
+          var len = Math.ceil( $scope.myform.length/2);
+          $scope.firstForm = angular.copy($scope.myform).splice(0, len);
+          $scope.secondForm = angular.copy($scope.myform).splice(len);
+          }
+        });
 
        $scope.urlConfig =  urlConfig;
       var arr = window.location.href.split("/");
@@ -56,7 +55,7 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
         $rootScope.glyphicon = "arrow-left";
         // $rootScope.tophref = (urlConfig.instance_path.url_frag.split("/")[0] + "/#/projects/list/" + projectKey).replace("/dev/","");
         $rootScope.topLink = function(){
-            $state.go("projects.list.project", {"projectKey": projectKey} );
+            $state.go("cbh.projects.list.project", {"projectKey": projectKey} );
         }
         $scope.processingSingle = false;
         $scope.processingMultiBatch = false;
@@ -239,16 +238,16 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
 
     $scope.mapFilePage = function(){
         if ($scope.file_extension=="cdx" || $scope.file_extension=="cdxml" || $scope.file_extension=="" || $scope.dragmodels.lists.headers.length==0){
-            $state.go("projects.project.demo.map.multiple", { 'multiple_batch_id': $scope.validatedData.currentBatch});
+            $state.go("cbh.projects.project.demo.map.multiple", { 'multiple_batch_id': $scope.validatedData.currentBatch});
         }else {
-            $state.go("projects.project.demo.map.file",  { 'multiple_batch_id': $scope.validatedData.currentBatch});
+            $state.go("cbh.projects.project.demo.map.file",  { 'multiple_batch_id': $scope.validatedData.currentBatch});
         }
         
 
     }
     $scope.validatePage = function(){
 
-        $state.go("projects.project.demo.validate", { 'multiple_batch_id': $scope.validatedData.currentBatch});
+        $state.go("cbh.projects.project.demo.validate", { 'multiple_batch_id': $scope.validatedData.currentBatch});
 
     }
     $scope.isFileExcel = function() {
@@ -288,7 +287,7 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
                     $scope.validatedData = data;
                     $scope.inProcessing = false;
                 }, function(error){
-                    $state.go('projects.project.demo.add.multiple');
+                    $state.go('cbh.projects.project.demo.add.multiple');
                     $scope.ids_not_processed = true;
                 });
             
@@ -346,7 +345,7 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
                 $scope.singleMol = data.data;
                 $scope.finalData.objects.push(data.data);
                 $scope.validatedData.currentBatch = data.data.multipleBatchId;
-               $state.go("projects.project.demo.map.finish", { 'multiple_batch_id': $scope.validatedData.currentBatch, limit:10000, offset: 0 });
+               $state.go("cbh.projects.project.demo.map.finish", { 'multiple_batch_id': $scope.validatedData.currentBatch, limit:10000, offset: 0 });
             }, function(error){
                 $scope.processingSingle = false;
 
@@ -380,7 +379,7 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
         CBHCompoundBatch.saveMultiBatchMolecules(projectKey,$scope.validatedData.currentBatch, $scope.molecule.metadata.projectFields).then(
             function(data){
                 $scope.molecule.metadata.projectFields = {};
-                $state.go("projects.project.demo.map.finish", { 'multiple_batch_id': $scope.validatedData.currentBatch, limit:10000, offset: 0 } );
+                $state.go("cbh.projects.project.demo.map.finish", { 'multiple_batch_id': $scope.validatedData.currentBatch, limit:10000, offset: 0 } );
                 $scope.processingMultiBatch = false;
                 $scope.justSaved = true;
             }, 
@@ -475,6 +474,7 @@ app.controller('DemoCtrl', [ '$scope', '$rootScope', '$state', 'ChEMBLFactory', 
         //returns object which is populated into the list for map page
         $scope.filesInProcessing = true;
         if ($scope.file_extension=="cdx" || $scope.file_extension=="cdxml"){
+            $scope.processFiles();
         }else{
         $scope.dragmodels.lists.headers = [];
         $scope.setupMapping();

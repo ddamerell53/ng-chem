@@ -8,7 +8,7 @@
  * Controller of the ngChemApp
  */
 angular.module('ngChemApp')
-  .controller('BatchesCtrl',['$scope', '$modal', '$timeout', '$q', '$state', '$stateParams','$location', 'gridconfig', 'projectKey', 'projectFactory', 'MessageFactory', 'CBHCompoundBatch', function ($scope, $modal, $timeout, $q, $state, $stateParams, $location, gridconfig, projectKey, projectFactory, MessageFactory, CBHCompoundBatch) {
+  .controller('BatchesCtrl',['$scope', '$modal', '$timeout', '$q', '$state', '$stateParams','$location', 'gridconfig', 'projectKey', 'MessageFactory', 'CBHCompoundBatch', function ($scope, $modal, $timeout, $q, $state, $stateParams, $location, gridconfig, projectKey, MessageFactory, CBHCompoundBatch) {
     var filters = { };
     $scope.chemadder = false;
     var compadder = function(){
@@ -40,14 +40,14 @@ $scope.tagFunction = function(content){
 
       
 
-    projectFactory.get().$promise.then(function(res) {
-                $scope.projects = res.objects;
-                angular.forEach(res.objects, function(proj) {
+    // projectFactory.get().$promise.then(function(res) {
+                $scope.projects = $scope.cbh.projects.objects;
+                angular.forEach($scope.projects, function(proj) {
                   if(proj.project_key == projectKey) {
                     $scope.proj = proj;
                   }
                 });
-              });
+              // });
 
 
     $scope.dummyproj = "$scope.state.data.dummyproj";
@@ -75,7 +75,7 @@ $scope.tagFunction = function(content){
     
     
     //$scope.gridconfig.configObject.pagingOptions
-    if($scope.state.name!=="search"){
+    if($scope.state.name!=="cbh.search"){
      $timeout(function() {
          
         $scope.gridconfig.initializeGridParams(projectKey, filters).then(function(result) {
@@ -123,21 +123,8 @@ $scope.tagFunction = function(content){
                  return ProjectFactory.get({"id": $scope.mol.project_id, "schemaform" : true}).$promise;
           }],
 
-          // myform: function(projectsWithCustomFieldData){
-          //   angular.forEach(projectsWithCustomFieldData.objects, function(proj){
-          //     if(proj.id === $scope.mol.project_id){
-          //       console.log(proj);
-          //       return proj.schemaform.form;
-          //     }
-          //   });
-          // },
-          // myschema: function(projectsWithCustomFieldData){
-          //   angular.forEach(projectsWithCustomFieldData.objects, function(proj){
-          //     if(proj.id === $scope.mol.project_id){
-          //       return proj.schemaform.schema;
-          //     }
-          //   });
-          // }]
+
+
         }, 
         controller: function($scope, $modalInstance, mol, projectsWithCustomFieldData, $timeout) {
           $scope.mol = mol;

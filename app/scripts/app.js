@@ -15,7 +15,7 @@ angular.module('ngChemApp')
       
           // catch all route
     // send users to the form page 
-    //$urlRouterProvider.otherwise('/404');
+    $urlRouterProvider.otherwise('/projects/list');
 
     /*$urlRouterProvider.rule(function ($injector, $location) {
        //what this function returns will be set as the $location.url
@@ -30,9 +30,65 @@ angular.module('ngChemApp')
       $urlMatcherFactoryProvider.defaultSquashPolicy("slash");      
       var modalInstance;
       $stateProvider
-          
+         .state('cbh', {
+          url: '',
+            /*data: {
+              login_rule: ""
+            },*/
+            templateUrl: 'views/cbh.html',
+            abstract : true,
+            resolve: {
+
+              projects: ['ProjectFactory', function(ProjectFactory){
+                   return ProjectFactory.get({ "schemaform" : true}).$promise;
+               }],
+              
+               loggedIn : ['LoginService', function(LoginService){
+                  //   console.log("test");
+                  // var login = ;
+                   return LoginService.get().$promise;
+
+               }],
+              
+            
+            },
+            controller:  function($scope, $rootScope, $state, urlConfig, loggedIn, projects) {
+                var cbh = this;
+                cbh.logged_in_user = loggedIn.objects[0];
+                cbh.projects = projects;
+                $scope.projects = projects.objects;
+                 $scope.projects.map(function(proj){
+                  if (!proj.is_default){
+                    $scope.isDefault = false;
+                  }
+              });
+                $scope.isLoggedIn = function() {
+                var loggedIn = false;
+                    if(cbh.logged_in_user.id > 0) {
+                      loggedIn = true;
+                    }
+                    return loggedIn;
+                };
+
+                $rootScope.getUrlBase = function() {
+                  return urlConfig.instance_path.url_frag;
+                };
+
+                $scope.getProjectObj = function(projectKey){
+                  angular.forEach($scope.projects, function(proj){
+                    if (projectKey == proj.project_key) {
+                      return proj;
+                    }
+                  });
+                };
+
+            },
+            controllerAs : "cbh",
+            
+         })
+
         // HOME STATES AND NESTED VIEWS ========================================
-        .state('404', {
+        .state('cbh.404', {
             url: '/404',
             /*data: {
               login_rule: ""
@@ -43,8 +99,8 @@ angular.module('ngChemApp')
             }
         })
 
-        .state('search', {
-            url: '/search?project&flexmatch&with_substructure&similar_to&fpValue&created__gte&created__lte&molfile&smiles&search_custom_fields__kv_any&limit&offset',
+        .state('cbh.search', {
+            url: '/search?project&flexmatch&related_molregno__chembl__chembl_id__in&with_substructure&similar_to&fpValue&created__gte&created__lte&molfile&smiles&search_custom_fields__kv_any&limit&offset',
             //url: '/search',
             //params: ['project__project_key', 'flexmatch', 'with_substructure', 'similar_to', 'fpValue', 'created__gte', 'created__lte', 'molfile', 'smiles', 'limit', 'offset', 'random'],
             resolve:{
@@ -68,11 +124,11 @@ angular.module('ngChemApp')
               '': {
                 templateUrl: 'views/search.html'
               },
-              'form@search': {
+              'form@cbh.search': {
                 controller: 'SearchCtrl',
                 templateUrl: 'views/templates/search-template.html'
               },
-              'results@search': {
+              'results@cbh.search': {
                 templateUrl: 'views/templates/compound-list.html',
                 controller: 'BatchesCtrl'
               }
@@ -81,7 +137,7 @@ angular.module('ngChemApp')
             
         })
 
-        .state('help', {
+        .state('cbh.help', {
             //parent: 'Default',
             url: '/help',
             
@@ -93,27 +149,22 @@ angular.module('ngChemApp')
             }
         })
 
-        .state('projects', {
+        .state('cbh.projects', {
             url: '/projects',
             
             resolve:{
               gridconfig: ['CompoundListSetup', function(CompoundListSetup){
                   return CompoundListSetup;
               }],
-              projList: ['$rootScope', function($rootScope) {
-                  return $rootScope.projects;
-              }],
-              
-              projectFactory: ['ProjectFactory', function(ProjectFactory) {
-                return ProjectFactory;
-              }],
+         
+             
               
             },
             templateUrl: 'views/projects.html',
             controller: 'ProjectCtrl'
         })
 
-        .state('projects.list', {
+        .state('cbh.projects.list', {
             url: '/list',
             templateUrl: 'views/projects-list.html',
             controller: function($rootScope, $state, $scope) {
@@ -126,18 +177,14 @@ angular.module('ngChemApp')
 
               //if a new user has no projects associated, refdirect them to a default view with supplementary info
               // if(angular.equals({}, $rootScope.projects)) {
-              //   $state.go('projects.empty');
+              //   $state.go('cbh.projects.empty');
               // }
               $scope.isDefault = true;
-              $rootScope.projects.map(function(proj){
-                  if (!proj.is_default){
-                    $scope.isDefault = false;
-                  }
-              });
+              
             }
         })
 
-        // .state('projects.empty', {
+        // .state('cbh.projects.empty', {
         //   url: '/newuser',
         //   templateUrl: 'views/no-projects.html',
         //   controller: function($scope) {
@@ -146,7 +193,7 @@ angular.module('ngChemApp')
 
         // })
 
-        .state('projects.list.project', {
+        .state('cbh.projects.list.project', {
             url: '/:projectKey?limit&offset',
             resolve: {
               projectKey: ['$stateParams', function($stateParams){
@@ -164,7 +211,7 @@ angular.module('ngChemApp')
             
         })
 
-        .state('projects.project', {
+        .state('cbh.projects.project', {
             url: '/:projectKey',
             templateUrl: 'views/project-full.html',
             controller: function($rootScope, projectKey) {
@@ -179,7 +226,7 @@ angular.module('ngChemApp')
             }
         })
 
-        .state('projects.add', {
+        .state('cbh.projects.add', {
             url: '/add',
             templateUrl: 'views/projects-add.html',
             controller: function($rootScope){
@@ -193,7 +240,7 @@ angular.module('ngChemApp')
 
 
 
-        .state('projects.project.demo', {
+        .state('cbh.projects.project.demo', {
             
             resolve:{
               projectFactory: ['ProjectFactory', function(ProjectFactory) {
@@ -209,7 +256,7 @@ angular.module('ngChemApp')
         // nested states 
         // each of these sections will have their own view
         // url will be nested (/form/profile)
-        .state('projects.project.demo.intro', {
+        .state('cbh.projects.project.demo.intro', {
             url: '/intro',
             templateUrl: 'views/demo-intro.html',
             controller: function($scope) {
@@ -220,7 +267,7 @@ angular.module('ngChemApp')
             }
         })
 
-        .state('projects.project.demo.add', {
+        .state('cbh.projects.project.demo.add', {
             url: '/add',
             templateUrl: 'views/demo-add.html',
             controller: function($scope) {
@@ -233,7 +280,7 @@ angular.module('ngChemApp')
             }
         })
 
-        .state('projects.project.demo.add.single', {
+        .state('cbh.projects.project.demo.add.single', {
             url: '/single',
             templateUrl: 'views/demo-add-single.html',
             controller: function($scope) {
@@ -258,7 +305,7 @@ angular.module('ngChemApp')
             }
         })
 
-        .state('projects.project.demo.add.multiple', {
+        .state('cbh.projects.project.demo.add.multiple', {
             url: '/multiple',
             templateUrl: 'views/demo-add-multiple.html',
             controller: function($scope) {
@@ -274,7 +321,7 @@ angular.module('ngChemApp')
 
 
         // url will be /form/interests
-        .state('projects.project.demo.validate', {
+        .state('cbh.projects.project.demo.validate', {
             url: '/validate/:multiple_batch_id',
             resolve: {
               multiple_batch_id: ['$stateParams', function($stateParams){
@@ -290,7 +337,7 @@ angular.module('ngChemApp')
             }
         })
 
-        .state('projects.project.demo.map', {
+        .state('cbh.projects.project.demo.map', {
             url: '/map/:multiple_batch_id',
             resolve: {
               multiple_batch_id: ['$stateParams', function($stateParams){
@@ -306,14 +353,14 @@ angular.module('ngChemApp')
             }
         })
 
-        .state('projects.project.demo.map.file', {
+        .state('cbh.projects.project.demo.map.file', {
             url: '/map-file',
             templateUrl: 'views/demo-map-file.html',
             controller: function($scope) {
               
             }
         })
-        .state('projects.project.demo.map.multiple', {
+        .state('cbh.projects.project.demo.map.multiple', {
             url: '/map-multiple',
             templateUrl: 'views/demo-map-multiple.html',
             controller: function($scope) {
@@ -322,11 +369,10 @@ angular.module('ngChemApp')
         })
         
         // url will be /form/payment
-        .state('projects.project.demo.map.finish', {
+        .state('cbh.projects.project.demo.map.finish', {
             url: '/finish/',
             resolve: {
               multiple_batch_id: ['$stateParams', function($stateParams){
-                  console.log($stateParams)
                   return $stateParams.multiple_batch_id;
               }],
             },
@@ -348,7 +394,7 @@ angular.module('ngChemApp')
 
                 }
               },
-              'resultslist@projects.project.demo.map.finish': {
+              'resultslist@cbh.projects.project.demo.map.finish': {
                 templateUrl: 'views/templates/compound-grid.html',
                 controller: 'BatchesCtrl',
               },
@@ -357,10 +403,10 @@ angular.module('ngChemApp')
             
         })
 
-        .state("Default", {
-          /*url: '/',
-          abstract: true,*/
-        })
+        // .state("Default", {
+        //   url: '/',
+        //   abstract: true,
+        // })
         
         //creating a stateful modal box to show single compound details as directed at:
         // http://www.sitepoint.com/creating-stateful-modals-angularjs-angular-ui-router/
@@ -403,7 +449,7 @@ angular.module('ngChemApp')
               }]
             },
             controller: function($scope, $state, modalProvider) {
-              this.parent = modalProvider.getModal('projects.list.project');
+              this.parent = modalProvider.getModal('cbh.projects.list.project');
             }*/
         //});
         
@@ -414,21 +460,6 @@ angular.module('ngChemApp')
     $http.defaults.headers.post['X-CSRFToken'] = $cookies[pref + "csrftoken"];
     $http.defaults.headers.patch['X-CSRFToken'] = $cookies[pref + "csrftoken"];
     $http.defaults.headers.put['X-CSRFToken'] = $cookies[pref + "csrftoken"];
-
-        //console.log(urlConfig);
-    $rootScope.logged_in_user = {};
-    $rootScope.projects = {};
-
-    LoginService.setLoggedIn().then(
-              function(data){
-                $rootScope.logged_in_user = data.objects[0];
-                }
-    );
-     ProjectFactory.get().$promise.then(function(res) {
-        $rootScope.projects = res.objects;
-    });
-        
-    
 
     // $rootScope.$on('$stateChangeStart', function(e, to, toParams, from, fromParams) {
     //   //console.log(to.name);
@@ -451,12 +482,12 @@ angular.module('ngChemApp')
     //   //         $state.go(to, toParams, {notify: false});
     //   //       }
     //   //       else if(angular.equals({}, $rootScope.projects)) {
-    //   //         $state.go('projects.empty');
+    //   //         $state.go('cbh.projects.empty');
     //   //       }
     //   //       else{
     //   //         //project key not recognised - redirect to the project list for the logged in user
     //   //         //this doesn't contain a projectKey param so you won't infinitely loop
-    //   //         $state.go('projects.list');
+    //   //         $state.go('cbh.projects.list');
     //   //       }
             
     //   //     });
@@ -485,25 +516,7 @@ angular.module('ngChemApp')
         console.log(error);
     });
 
-    $rootScope.isLoggedIn = function() {
-        var loggedIn = false;
-        if($rootScope.logged_in_user.id > 0) {
-          loggedIn = true;
-        }
-        return loggedIn;
-    };
-
-    $rootScope.getUrlBase = function() {
-      return urlConfig.instance_path.url_frag;
-    };
-
-    $rootScope.getProjectObj = function(projectKey){
-      angular.forEach($rootScope.projects, function(proj){
-        if (projectKey == proj.project_key) {
-          return proj;
-        }
-      });
-    };
+    
 
 
   

@@ -12,7 +12,12 @@ li a.active svg.svg {
 li a.active small {
   color: #002147;
 }
-
+#chemdoodle_button_open {
+  display: none;
+}
+#chemdoodle_button_save {
+  display: none;
+}
 .ui-button {
 
   cursor: pointer;
