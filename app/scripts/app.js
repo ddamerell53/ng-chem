@@ -56,6 +56,7 @@ angular.module('ngChemApp')
                 var cbh = this;
                 cbh.logged_in_user = loggedIn.objects[0];
                 cbh.projects = projects;
+                cbh.prefix = urlConfig.instance_path.url_frag.split("/")[0];
                 cbh.searchPage =   function(){
                   $location.url('/search?limit=&offset=');
                 }

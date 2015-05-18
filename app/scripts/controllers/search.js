@@ -229,7 +229,6 @@ angular.module('ngChemApp')
 
         //initialise the grid to reflect the search
         $timeout(function() {
-            console.log("testdsjkadsa");
             $scope.runSearch();
         },200);
         
