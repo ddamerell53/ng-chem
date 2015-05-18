@@ -12,7 +12,11 @@ angular.module('ngChemApp')
     function ($scope,$http, $rootScope, $filter, $stateParams, $location, $state, $timeout, projectFactory, gridconfig, CBHCompoundBatch, urlConfig) {
     var searchform = $scope.cbh.projects.searchform;
     $scope.searchForm = {molecule: {}};
+    $scope.refresh = function(schema, options, search){
+        return $http.get(options.async.url + "?chembl_id__chembl_id__startswith=" + search);
+    }
     searchform.form[0].items[0].options.async.call = $scope.refresh;
+
     if($stateParams.search_custom_fields__kv_any) {
             $scope.searchForm.search_custom_fields__kv_any = $stateParams.search_custom_fields__kv_any.split(",");;
     }else{
@@ -21,7 +25,6 @@ angular.module('ngChemApp')
     if($stateParams.related_molregno__chembl__chembl_id__in) {
         var items = $stateParams.related_molregno__chembl__chembl_id__in.split(",");
         searchform.schema.properties.related_molregno__chembl__chembl_id__in.items = items.map(function(i){return {value : i, label : i}});
-        searchform.form[0].items[0].options.async.call = $scope.refresh;
 
         $scope.searchForm.related_molregno__chembl__chembl_id__in = $stateParams.related_molregno__chembl__chembl_id__in.split(",");    
     }
@@ -64,9 +67,7 @@ angular.module('ngChemApp')
             $scope.searchForm.smiles = $stateParams[key];
         }
     };
-    $scope.refresh = function(schema, options, search){
-        return $http.get(options.async.url + "?chembl_id__chembl_id__startswith=" + search);
-    }
+    
     $scope.initialiseFromUrl = function(){
 
             
