@@ -100,7 +100,7 @@ angular.module('ngChemApp')
         })
 
         .state('cbh.search', {
-            url: '/search?project&flexmatch&related_molregno__chembl__chembl_id__in&with_substructure&similar_to&fpValue&created__gte&created__lte&molfile&smiles&search_custom_fields__kv_any&limit&offset',
+            url: '/search?project&functional_group&flexmatch&related_molregno__chembl__chembl_id__in&with_substructure&similar_to&fpValue&created__gte&created__lte&molfile&smiles&search_custom_fields__kv_any&limit&offset',
             //url: '/search',
             //params: ['project__project_key', 'flexmatch', 'with_substructure', 'similar_to', 'fpValue', 'created__gte', 'created__lte', 'molfile', 'smiles', 'limit', 'offset', 'random'],
             resolve:{
@@ -459,7 +459,7 @@ angular.module('ngChemApp')
     var pref = prefix.split("/")[0];
     $http.defaults.headers.post['X-CSRFToken'] = $cookies[pref + "csrftoken"];
     $http.defaults.headers.patch['X-CSRFToken'] = $cookies[pref + "csrftoken"];
-    $http.defaults.headers.put['X-CSRFToken'] = $cookies[pref + "csrftoken"];
+    $http.defaults.headers.put['X-CSRFToken'] = $cookies[pref + "csrftoken"];4
 
     // $rootScope.$on('$stateChangeStart', function(e, to, toParams, from, fromParams) {
     //   //console.log(to.name);

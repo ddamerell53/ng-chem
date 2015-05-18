@@ -15,7 +15,28 @@ angular.module('ngChemApp')
     $scope.refresh = function(schema, options, search){
         return $http.get(options.async.url + "?chembl_id__chembl_id__startswith=" + search);
     }
-    searchform.form[0].items[0].options.async.call = $scope.refresh;
+
+
+        $scope.searchForm.molecule.molfileChanged = function(){};
+        $scope.searchForm.fpValue = $stateParams.fpValue;
+        $scope.searchForm.dateStart = $stateParams.created__gte;
+        $scope.searchForm.dateEnd = $stateParams.created__lte;
+        if (angular.isDefined($stateParams.project)){
+            $scope.searchForm.project = $stateParams.project.split(",");
+        }
+        
+
+    $scope.setStructure = function(key){
+        $scope.searchForm.molecule.molfile = $stateParams[key];
+        // $rootScope.searchMolfile = $stateParams[key];
+        if ($stateParams[key].indexOf("ChemDoodle") < 0 ){
+            $scope.searchForm.smiles = $stateParams[key];
+        }
+    };
+    
+    $scope.initialiseFromUrl = function(){
+
+            searchform.form[0].items[0].options.async.call = $scope.refresh;
 
     if($stateParams.search_custom_fields__kv_any) {
             $scope.searchForm.search_custom_fields__kv_any = $stateParams.search_custom_fields__kv_any.split(",");;
@@ -29,7 +50,9 @@ angular.module('ngChemApp')
         $scope.searchForm.related_molregno__chembl__chembl_id__in = $stateParams.related_molregno__chembl__chembl_id__in.split(",");    
     }
     $scope.searchFormSchema = searchform; 
-            
+    if ($stateParams.functional_group){
+        $scope.searchForm.functional_group = atob($stateParams.functional_group);
+    }
     $scope.myschema = {};
     $scope.myform = {};
      if ($stateParams.with_substructure) {
@@ -51,26 +74,7 @@ angular.module('ngChemApp')
             // $rootScope.searchMolfile  = "";
         }
 
-        $scope.searchForm.molecule.molfileChanged = function(){};
-        $scope.searchForm.fpValue = $stateParams.fpValue;
-        $scope.searchForm.dateStart = $stateParams.created__gte;
-        $scope.searchForm.dateEnd = $stateParams.created__lte;
-        if (angular.isDefined($stateParams.project)){
-            $scope.searchForm.project = $stateParams.project.split(",");
-        }
-        
-
-    $scope.setStructure = function(key){
-        $scope.searchForm.molecule.molfile = $stateParams[key];
-        // $rootScope.searchMolfile = $stateParams[key];
-        if ($stateParams[key].indexOf("ChemDoodle") < 0 ){
-            $scope.searchForm.smiles = $stateParams[key];
-        }
-    };
     
-    $scope.initialiseFromUrl = function(){
-
-            
 
 
 
@@ -98,14 +102,17 @@ angular.module('ngChemApp')
             params["project__project_key__in"] = $scope.searchForm.project;    
         }
         if($scope.searchForm.related_molregno__chembl__chembl_id__in) {
-            console.log("test");
             params["related_molregno__chembl__chembl_id__in"] = $scope.searchForm.related_molregno__chembl__chembl_id__in.join(",");    
         }
 
         //it would be great to automagically populate a pasted smiles string into the sketcher
         //for now though, just send the smiles to the web service
+        if($scope.searchForm.functional_group){
+            params["functional_group"] = $scope.searchForm.functional_group;
+        }
+
         if ($scope.searchForm.smiles) {
-            params[$scope.searchForm.substruc] = $scope.searchForm.smiles
+            params[$scope.searchForm.substruc] = $scope.searchForm.smiles;
         }
         else if ($scope.searchForm.molecule.molfile != "") {
             params[$scope.searchForm.substruc] = $scope.searchForm.molecule.molfile
@@ -135,7 +142,7 @@ angular.module('ngChemApp')
 
         //we now need to put the parameters we've generated from this search into a string which can be used as filters by the export options.
         //the export will not tolerate present but empty params so we have to only add them if they are present.
-
+        var func_group_frag = ($scope.searchForm.functional_group) ? ("functional_group=" + btoa($scope.searchForm.functional_group) + "&") : "";
         var project_frag = ($scope.searchForm.project) ? ("project=" + $scope.searchForm.project.join(",") + "&") : "";
         var flexmatch_frag = (params.flexmatch) ? ("flexmatch=" + encodeURIComponent(params.flexmatch) + "&") : "";
         var with_substructure_frag = (params.with_substructure) ? ("with_substructure=" + encodeURIComponent(params.with_substructure) + "&") : "";
@@ -146,12 +153,13 @@ angular.module('ngChemApp')
         // var smiles_frag = (params.smiles) ? ("smiles=" + params.smiles + "&") : "";
         var cust_field_frag = (encodedCustFields) ? ("search_custom_fields__kv_any=" + encodedCustFields + "&") : "";
         var related_molregno__chembl__chembl_id__in_frag = (params.related_molregno__chembl__chembl_id__in) ? ("related_molregno__chembl__chembl_id__in=" + params.related_molregno__chembl__chembl_id__in + "&") : "";
-        var paramsUrl = project_frag + flexmatch_frag + related_molregno__chembl__chembl_id__in_frag + with_substructure_frag + similar_to_frag + fpValue_frag + created__gte_frag + created__lte_frag  + cust_field_frag;
+        var paramsUrl = project_frag + func_group_frag + flexmatch_frag + related_molregno__chembl__chembl_id__in_frag + with_substructure_frag + similar_to_frag + fpValue_frag + created__gte_frag + created__lte_frag  + cust_field_frag;
 
 
 
         $location.url(stateUrl + paramsUrl + '&limit=&offset=');
         gridconfig.configObject.paramsUrl = paramsUrl;
+
 
         CBHCompoundBatch.search(params).then(function(result){   
             gridconfig.configObject.totalServerItems = result.meta.totalCount;
@@ -164,14 +172,14 @@ angular.module('ngChemApp')
 
 
 
-    $scope.searchForm = { molecule: { molfile: "" } };
+    // $scope.searchForm = { molecule: { molfile: "" } };
 
     $scope.results = {};
 
     $rootScope.projectKey = "Projects";
 
     //initialise from URL parameters if present
-    $scope.initialiseFromUrl();
+ $scope.initialiseFromUrl();
 
     
 
@@ -221,6 +229,7 @@ angular.module('ngChemApp')
 
         //initialise the grid to reflect the search
         $timeout(function() {
+            console.log("testdsjkadsa");
             $scope.runSearch();
         },200);
         

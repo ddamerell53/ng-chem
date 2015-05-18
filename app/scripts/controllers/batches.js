@@ -77,7 +77,7 @@ $scope.tagFunction = function(content){
     //$scope.gridconfig.configObject.pagingOptions
     if($scope.state.name!=="cbh.search"){
      $timeout(function() {
-         
+         console.log("shouldnt");
         $scope.gridconfig.initializeGridParams(projectKey, filters).then(function(result) {
         $scope.gridconfig.configObject.totalServerItems = result.meta.totalCount;
         $scope.gridconfig.configObject.compounds = result.objects;
