@@ -52,10 +52,13 @@ angular.module('ngChemApp')
               
             
             },
-            controller:  function($scope, $rootScope, $state, urlConfig, loggedIn, projects) {
+            controller:  function($scope, $rootScope, $state, $location, urlConfig, loggedIn, projects) {
                 var cbh = this;
                 cbh.logged_in_user = loggedIn.objects[0];
                 cbh.projects = projects;
+                cbh.searchPage =   function(){
+                  $location.url('/search?limit=&offset=');
+                }
                 $scope.projects = projects.objects;
                  $scope.projects.map(function(proj){
                   if (!proj.is_default){
