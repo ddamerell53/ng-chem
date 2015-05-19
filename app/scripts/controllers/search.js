@@ -113,8 +113,6 @@ angular.module('ngChemApp')
         //for now though, just send the smiles to the web service
         if($scope.searchForm.functional_group){
             params["functional_group"] = $scope.searchForm.functional_group;
-        }else{
-             params.pop("functional_group") ;
         }
 
         if ($scope.searchForm.smiles) {
