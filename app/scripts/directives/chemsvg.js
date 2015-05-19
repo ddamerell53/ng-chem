@@ -10,7 +10,8 @@
 angular.module('ngChemApp')
   .directive('chemsvg', function ($compile) {
     return {
-      template: '<img ng-if="encSmiles" ng-show="encSmiles" ng-src="{{finalUrl}}/{{encSmiles}}/{{size}}"></img>',
+      //template: '<img ng-if="encSmiles" ng-show="encSmiles" ng-src="{{finalUrl}}/{{encSmiles}}/{{size}}"></img>',
+      templateUrl: 'views/templates/chemsvg.html',
       restrict: 'E',
       link: function postLink(scope, element, attrs) {
         //element.html('this is the chemsvg directive');
@@ -31,6 +32,12 @@ angular.module('ngChemApp')
                 //   $scope.finalUrl = "http://localhost:2201/utils/smiles2svg";
                 // }else{
                   $scope.finalUrl = $scope.baseUrl;
+                  if($scope.properties) {
+                    $scope.cdxml = $scope.properties.cdxml;
+                  }
+                  else {
+                    $scope.cdxml = "";
+                  }
                 //}
             };
 
@@ -40,6 +47,7 @@ angular.module('ngChemApp')
         smiles: '=',
         dataType: '=',
         baseUrl: '=',
+        properties: '=',
 
       }
     };
