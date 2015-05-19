@@ -37,30 +37,18 @@ angular.module('ngChemApp')
             },*/
             templateUrl: 'views/cbh.html',
             abstract : true,
-            resolve: {
-
-              projects: ['ProjectFactory', function(ProjectFactory){
-                   return ProjectFactory.get({ "schemaform" : true}).$promise;
-               }],
-              
-               loggedIn : ['LoginService', function(LoginService){
-                  //   console.log("test");
-                  // var login = ;
-                   return LoginService.get().$promise;
-
-               }],
-              
             
-            },
-            controller:  function($scope, $rootScope, $state, $location, urlConfig, loggedIn, projects) {
+            controller: function($scope, $rootScope, $state, $location, urlConfig, loggedInUser, projectList) {
                 var cbh = this;
-                cbh.logged_in_user = loggedIn.objects[0];
-                cbh.projects = projects;
-                cbh.prefix = urlConfig.instance_path.url_frag.split("/")[0];
+                cbh.logged_in_user = loggedInUser;
+                cbh.projects = projectList;
+                cbh.prefix = urlConfig.instance_path.base;
                 cbh.searchPage =   function(){
                   $location.url('/search?limit=&offset=');
                 }
-                $scope.projects = projects.objects;
+                $scope.projects = projectList.objects;
+
+                $rootScope.projects = projectList.objects;
                  $scope.projects.map(function(proj){
                   if (!proj.is_default){
                     $scope.isDefault = false;
@@ -198,7 +186,7 @@ angular.module('ngChemApp')
         // })
 
         .state('cbh.projects.list.project', {
-            url: '/:projectKey?limit&offset',
+            url: window.projectUrlMatcher,
             resolve: {
               projectKey: ['$stateParams', function($stateParams){
                   return $stateParams.projectKey;
@@ -216,7 +204,7 @@ angular.module('ngChemApp')
         })
 
         .state('cbh.projects.project', {
-            url: '/:projectKey',
+            url: window.projectUrlMatcher,
             templateUrl: 'views/project-full.html',
             controller: function($rootScope, projectKey) {
               //need to check here thaat project is valid
@@ -231,7 +219,7 @@ angular.module('ngChemApp')
         })
 
         .state('cbh.projects.add', {
-            url: '/add',
+            url: 'add',
             templateUrl: 'views/projects-add.html',
             controller: function($rootScope){
               $rootScope.headline = "Add a new Project"
@@ -252,7 +240,7 @@ angular.module('ngChemApp')
               }],
               
             },
-            url: '/demo',
+            url: 'demo',
             templateUrl: 'views/start.html',
             controller: 'DemoCtrl'
         })
@@ -407,112 +395,61 @@ angular.module('ngChemApp')
             
         })
 
-        // .state("Default", {
-        //   url: '/',
-        //   abstract: true,
-        // })
-        
-        //creating a stateful modal box to show single compound details as directed at:
-        // http://www.sitepoint.com/creating-stateful-modals-angularjs-angular-ui-router/
-        /*.state('Modal', {
-          parent: 'Default',
-          onEnter: ["$state", '$modal', function($state, $modal) {
-            //console.log($state);
-            var modalInstance = $modal.open({
-              template: '<div ui-view="modal"></div>',
-              backdrop: true,
-              windowClass: 'right fade'
-            });
-            $(document).on("keyup", function(e) {
-              if(e.keyCode == 27) {
-                $(document).off("keyup");
-                $state.go("Default");
-              }
-            });
-       
-          }],
-          onExit: function() {
-            if (modalInstance) {
-                modalInstance.close();
-            }
-          },
-          abstract: true
-        })
-
-        .state('singleCompound', {
-          parent: 'Modal',
-          views: {
-            "modal@": {
-              templateUrl: "views/single-compound.html"
-            }
-          },*/
-          /*resolve:{
-              
-              modalProvider: ['ModalProvider', function(ModalProvider){
-                return ModalProvider;
-              }]
-            },
-            controller: function($scope, $state, modalProvider) {
-              this.parent = modalProvider.getModal('cbh.projects.list.project');
-            }*/
-        //});
-        
+ 
 
 
-  }).run(function($http, $cookies, $rootScope, $document, $state, LoginService, ProjectFactory, urlConfig, prefix) {
+  }).run(function($http, $cookies, $rootScope, $document, $state, $urlMatcherFactory, LoginService, ProjectFactory, urlConfig, prefix) {
     var pref = prefix.split("/")[0];
     $http.defaults.headers.post['X-CSRFToken'] = $cookies[pref + "csrftoken"];
     $http.defaults.headers.patch['X-CSRFToken'] = $cookies[pref + "csrftoken"];
     $http.defaults.headers.put['X-CSRFToken'] = $cookies[pref + "csrftoken"];4
+
+
+   var projs = ProjectFactory.get().$promise;
+   projs.then(function(data){
+    var projectList= data.objects.map(function(item){
+      return item.project_key;
+    });
+    $rootScope.urlMatcher = $urlMatcherFactory.compile("/{projectKey:" + projectList.join('|') + "}/?limit&offset");
+   });
 
     // $rootScope.$on('$stateChangeStart', function(e, to, toParams, from, fromParams) {
     //   //console.log(to.name);
     //   if (to.name == '404') return;
     //   if(to.name.lastIndexOf('singleCompound', 0) === 0) return;
       
-    //   //need to stop people navigating to a nonsense/nonexistent project
-    //   // if (toParams.projectKey) {
-    //   //     var flag = false;
-    //   //     ProjectFactory.get().$promise.then(function(res) {
-            
-    //   //       angular.forEach(res.objects, function(proj) {
-    //   //         if (toParams.projectKey == proj.project_key) {
-    //   //           //the project key in the url is an accessible project! Have a biscuit.
-    //   //           flag = true;
-    //   //         }
-    //   //       });
-            
-    //   //       if(flag) {
-    //   //         $state.go(to, toParams, {notify: false});
-    //   //       }
-    //   //       else if(angular.equals({}, $rootScope.projects)) {
-    //   //         $state.go('cbh.projects.empty');
-    //   //       }
-    //   //       else{
-    //   //         //project key not recognised - redirect to the project list for the logged in user
-    //   //         //this doesn't contain a projectKey param so you won't infinitely loop
-    //   //         $state.go('cbh.projects.list');
-    //   //       }
-            
-    //   //     });
+    //   // need to stop people navigating to a nonsense/nonexistent project
+    //   if (toParams.projectKey) {
+    //       var flag = false;
           
-    //   // }
+            
+    //         angular.forEach($rootScope.projects, function(proj) {
+    //           if (toParams.projectKey == proj.project_key) {
+    //             //the project key in the url is an accessible project! Have a biscuit.
+    //             flag = true;
+    //           }
+    //         });
+
+           
+            
+    //         if(flag) {
+    //           $state.go(to, toParams, {notify: false});
+    //         }
+    //         else{
+
+    //             e.preventDefault(); // stop current execution
+
+    //           $state.go('cbh.projects.list', {});
+    //         }
+            
+    //       }
+          
       
-    //   // if (result && result.to) {
-    //   //   //console.log("result and result.to is passing");
-    //   //   e.preventDefault();
-    //   //   // Optionally set option.notify to false if you don't want 
-    //   //   // to retrigger another $stateChangeStart event
-    //   //   $state.go(result.to, result.params, {notify: false});
-    //   // }
-    //   else {
-    //     $state.go('404');
-    //   }
-    // });
+
+    //  });
 
     $rootScope.$on('$stateChangeSuccess', function(e, to) {
-      //$('html,body').animate({ scrollTop: target.offset().top}, 1000);
-      //$animate.
+
       $document.scrollTop(0,0);
     });
 

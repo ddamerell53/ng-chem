@@ -51,7 +51,7 @@ angular.module('ngChemApp')
     }
     $scope.searchFormSchema = searchform; 
     if ($stateParams.functional_group){
-        $scope.searchForm.functional_group = atob($stateParams.functional_group);
+        $scope.searchForm.functional_group = $stateParams.functional_group;
     }
     $scope.myschema = {};
     $scope.myform = {};
@@ -103,7 +103,11 @@ angular.module('ngChemApp')
         }
         if($scope.searchForm.related_molregno__chembl__chembl_id__in) {
             params["related_molregno__chembl__chembl_id__in"] = $scope.searchForm.related_molregno__chembl__chembl_id__in.join(",");    
+        }else{
+            params.pop("related_molregno__chembl__chembl_id__in") ;
         }
+
+        
 
         //it would be great to automagically populate a pasted smiles string into the sketcher
         //for now though, just send the smiles to the web service
@@ -142,7 +146,7 @@ angular.module('ngChemApp')
 
         //we now need to put the parameters we've generated from this search into a string which can be used as filters by the export options.
         //the export will not tolerate present but empty params so we have to only add them if they are present.
-        var func_group_frag = ($scope.searchForm.functional_group) ? ("functional_group=" + btoa($scope.searchForm.functional_group) + "&") : "";
+        var func_group_frag = ($scope.searchForm.functional_group) ? ("functional_group=" + encodeURIComponent($scope.searchForm.functional_group) + "&") : "";
         var project_frag = ($scope.searchForm.project) ? ("project=" + $scope.searchForm.project.join(",") + "&") : "";
         var flexmatch_frag = (params.flexmatch) ? ("flexmatch=" + encodeURIComponent(params.flexmatch) + "&") : "";
         var with_substructure_frag = (params.with_substructure) ? ("with_substructure=" + encodeURIComponent(params.with_substructure) + "&") : "";
