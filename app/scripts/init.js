@@ -33,4 +33,3 @@ var ngChemApp =  angular.module('ngChemApp', [
     'ui.select', 
     'ui.sortable'
   ]);
-

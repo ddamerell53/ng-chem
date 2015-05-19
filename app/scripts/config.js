@@ -32,3 +32,39 @@ angular.module('ngChemApp').value('urlConfig',
 angular.module('ngChemApp').value('prefix',  
   part
 );
+
+
+var initInjector = angular.injector(["ng"]);
+
+var $http = initInjector.get("$http");
+
+
+$http.get(configuration.users.list_endpoint).then(function(users){
+    angular.module('ngChemApp').value('loggedInUser',  
+        users.data.objects[0]
+    );
+    var req = $http({  method: "get",
+                        url: configuration.cbh_projects.list_endpoint,
+                        params: {"schemaform": true}, });
+    req.then(function(projData){
+        console.log(projData.data);
+        angular.module('ngChemApp').value('projectList',  
+              projData.data
+        );
+
+         var projectKeys= projData.data.objects.map(function(item){
+            return item.project_key;
+        });
+        window.projectUrlMatcher = "/{projectKey:" + projectKeys.join('|') + "}/";
+        angular.element(document).ready(function() {
+            angular.bootstrap(angular.element( document.querySelector( '#bodytest' ) ), ["ngChemApp"]);
+        });
+    });
+});
+
+
+
+
+ 
+
+
