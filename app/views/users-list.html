@@ -7,7 +7,7 @@
 <div class="row">
 	<div class="col-xs-6 col-sm-3" ng-repeat="user in users">
 		<div class="well projectbox">
-			<p class="nexa"><strong><a ui-sref="cbh.users.user({username: user.username})">{{ user.first_name }} {{ user.last_name }}</a></strong><br/>
+			<p class="nexa"><strong><a ui-sref="cbh.user({username: user.username})">{{ user.first_name }} {{ user.last_name }}</a></strong><br/>
 				<span class="glyphicon glyphicon-time"></span> <small>Last login: {{ user.last_login | date }}</small><br/>
 				<span class="glyphicon glyphicon-check"></span> <small>Member Since: {{ user.date_joined | date }}</small>
 				<!-- <a ui-sref="cbh.projects.project.demo.intro({projectKey: project.project_key})" role="button" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-plus-sign"></span> Add Compounds</a> -->

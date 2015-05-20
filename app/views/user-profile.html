@@ -1,1 +1,12 @@
-<p>This is the user-profile view.</p>
+<div class="row mt">
+	<div class="col-xs-12">
+		<h2 class="blue"> <span class="glyphicon glyphicon-user "></span> {{userFromList.first_name}} {{userFromList.last_name}}<br>
+			<small>Member since {{ userFromList.date_joined | date }}</small> <small ng-if="userFromList.is_superuser"><span class="glyphicon glyphicon-star"></span> Admin User</small></h2>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-xs-12">
+		
+	</div>
+</div>

@@ -15,5 +15,5 @@ angular.module('ngChemApp')
     
 
     // Public API here
-    return $resource(urlConfig.users.list_endpoint + '/:username', {username:'@username'}, { });
+    return $resource(urlConfig.users.list_endpoint, {username:'@username'}, { });
   });

@@ -170,11 +170,16 @@ angular.module('ngChemApp')
             },
         })
 
-        .state('cbh.users.user', {
-            url: '/:username',
+        .state('cbh.user', {
+            url: '/user/:username',
             templateUrl: 'views/user-profile.html',
-            controller: function($scope, userList) {
-
+            resolve: {
+              userFromList: ['UserFactory', '$stateParams', function(UserFactory, $stateParams) {
+                return UserFactory.get({'username': $stateParams.username }).$promise;
+              }],
+            },
+            controller: function($scope, userFromList) {
+              $scope.userFromList = userFromList.objects[0];
             },
         })
 
