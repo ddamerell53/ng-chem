@@ -38,11 +38,12 @@ angular.module('ngChemApp')
             templateUrl: 'views/cbh.html',
             abstract : true,
             
-            controller: function($scope, $rootScope, $state, $location, urlConfig, loggedInUser, projectList) {
+            controller: function($scope, $rootScope, $state, $location, urlConfig, loggedInUser, projectList, prefix) {
                 var cbh = this;
                 cbh.logged_in_user = loggedInUser;
                 cbh.projects = projectList;
                 cbh.prefix = urlConfig.instance_path.base;
+                cbh.api_base = urlConfig.admin.list_endpoint;
                 cbh.searchPage =   function(){
                   $location.url('/search?limit=&offset=');
                 }
@@ -154,6 +155,27 @@ angular.module('ngChemApp')
             },
             templateUrl: 'views/projects.html',
             controller: 'ProjectCtrl'
+        })
+
+        .state('cbh.users', {
+            url: '/users',
+            templateUrl: 'views/users-list.html',
+            resolve: {
+              userList: ['UserFactory', function(UserFactory) {
+                return UserFactory.get().$promise;
+              }],
+            },
+            controller: function($scope, userList) {
+              $scope.users = userList.objects;
+            },
+        })
+
+        .state('cbh.users.user', {
+            url: '/:username',
+            templateUrl: 'views/user-profile.html',
+            controller: function($scope, userList) {
+
+            },
         })
 
         .state('cbh.projects.list', {
