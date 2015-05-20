@@ -15,7 +15,7 @@ angular.module('ngChemApp')
       
           // catch all route
     // send users to the form page 
-    $urlRouterProvider.otherwise('/projects/list');
+    $urlRouterProvider.otherwise('/404');
 
     /*$urlRouterProvider.rule(function ($injector, $location) {
        //what this function returns will be set as the $location.url
@@ -81,7 +81,7 @@ angular.module('ngChemApp')
          })
 
         // HOME STATES AND NESTED VIEWS ========================================
-        .state('cbh.404', {
+        .state('404', {
             url: '/404',
             /*data: {
               login_rule: ""
@@ -208,7 +208,7 @@ angular.module('ngChemApp')
         // })
 
         .state('cbh.projects.list.project', {
-            url: window.projectUrlMatcher,
+            url: window.projectUrlMatcher + "?limit=&offset=",
             resolve: {
               projectKey: ['$stateParams', function($stateParams){
                   return $stateParams.projectKey;
