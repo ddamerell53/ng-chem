@@ -15,17 +15,29 @@ angular.module('ngChemApp')
       restrict: 'E',
       link: function postLink(scope, element, attrs) {
         //element.html('this is the chemsvg directive');
-        scope.getSmiles();
         scope.checkLocal();
+
+        scope.getSmiles();
         scope.$watch('smiles', function(){
                scope.getSmiles();
           });
       },
-      controller: ['$scope', function($scope) {
+      controller: ['$scope','$http', function($scope) {
             $scope.getSmiles = function() {
-              
-                $scope.encSmiles = btoa($scope.smiles.replace("Molecule from ChemDoodle Web Components", ""));
-                //console.log($scope.encSmiles);
+                $scope.src="";
+                // $scope.encSmiles = btoa($scope.smiles.replace("Molecule from ChemDoodle Web Components", ""));
+                // //console.log($scope.encSmiles);
+                var params = {
+                  size: $scope.size,
+                  ctab: $scope.smiles,
+                }
+
+                params.smarts = $scope.properties.substructureMatch;
+                
+                $http.post($scope.finalUrl, params).then(function(data){
+                  $scope.src=data.data;
+                });
+
             };
             $scope.checkLocal = function() {
                 // if (window.location.hostname == "localhost"){
@@ -48,7 +60,6 @@ angular.module('ngChemApp')
         dataType: '=',
         baseUrl: '=',
         properties: '=',
-
-      }
+     }
     };
   });
