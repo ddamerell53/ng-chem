@@ -104,7 +104,7 @@ app.controller('DemoCtrl', ['$scope', '$rootScope', '$state', 'ChEMBLFactory', '
             $scope.warningNumber = 0; //
             $scope.uploaded_file_name = ""; //
             $scope.file_extension = "";
-            // $scope.filesInProcessing = false;
+            $scope.filesInProcessing = false;
 
             $scope.struc_col_options = [{
                 name: "",
@@ -367,10 +367,14 @@ app.controller('DemoCtrl', ['$scope', '$rootScope', '$state', 'ChEMBLFactory', '
 
         }
         $scope.validatePage = function() {
-
-            $state.go("cbh.projects.project.demo.validate", {
-                'multiple_batch_id': $scope.validatedData.currentBatch
-            });
+            if($scope.isFileExcel() && $scope.isStrucColUnspecified()){
+                $scope.processFiles()
+            }else{
+                $state.go("cbh.projects.project.demo.validate", {
+                    'multiple_batch_id': $scope.validatedData.currentBatch
+                });
+            }
+            
 
         }
         $scope.isFileExcel = function() {
@@ -647,6 +651,8 @@ app.controller('DemoCtrl', ['$scope', '$rootScope', '$state', 'ChEMBLFactory', '
                         //Now try to prcess the fiel to avoid concurrency issues
                         if (!$scope.isFileExcel()) {
                             $scope.processFiles();
+                        }else{
+                            $scope.filesInProcessing = false;
                         }
                     },
                     function(error) {
@@ -687,6 +693,12 @@ app.controller('DemoCtrl', ['$scope', '$rootScope', '$state', 'ChEMBLFactory', '
                 function(data) {
                     $scope.validatedData = data;
                     $scope.filesInProcessing = false;
+                    if($scope.isFileExcel() && $scope.isStrucColUnspecified()){
+                    
+                        $state.go("cbh.projects.project.demo.validate", {
+                            'multiple_batch_id': $scope.validatedData.currentBatch
+                        });
+                    }
                 },
                 function(error) {
                     if (error.data.error == "Invalid File Format") {

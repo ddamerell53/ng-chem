@@ -5,13 +5,13 @@
 
 </div>
 <div class="modal-body">
-    <div class="row">
-    	<div class="col-xs-6 col-md-4" ng-show="mol.ctab.length > 0">
+    <div class="row" ng-hide="mol.blindedBatchId">
+    	<div class="col-xs-12 col-md-6" ng-show="mol.ctab.length > 0">
 <chemsvg  properties="mol.properties" size="'200'" smiles="mol.ctab"  base-url="'https://chembiohub.ox.ac.uk/utils/ctab2image'" ></chemsvg>
 
         </div>
 
-<div class="col-xs-6 col-md-8 " >
+<div class="col-xs-12 col-md-6 " >
     <div class="col-xs-12 " >
 <h2 class="nexa blue ">Compound Information</h2>
 </div>

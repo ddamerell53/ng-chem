@@ -1,7 +1,9 @@
-<a ng-click='openSingleMol(row.getProperty("chemblId"),row.getProperty("id"))'>
+<div  class="centered id-overlay"><a style="color:white;" ng-click='openSingleMol(row.getProperty("chemblId"),row.getProperty("id"))'>{{row.getProperty("chemblId")}}</a></div>
+
+
+<a >
     <div class="centered"  >
 <chemsvg properties="row.getProperty('properties')" size="'200'" smiles="row.getProperty('ctab')"  base-url="'https://chembiohub.ox.ac.uk/utils/ctab2image'" substructure-match="row.getProperty('substructureMatch')" ></chemsvg>
     </div>
 </a>
-<div class="centered id-overlay">{{row.getProperty("chemblId")}}</div>
 

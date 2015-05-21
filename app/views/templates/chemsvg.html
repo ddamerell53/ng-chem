@@ -1,4 +1,3 @@
-<img ng-if="src" ng-show="src" ng-src="data:image/png;base64,{{src}}"></img>
-<!-- <button copy-model="{{cdxml}}" ng-show="cdxml" label="'Copy CDXML'" >Copy CDXML</button> -->
+<img ng-if="src" style="width:100%; height:auto;" ng-show="src" ng-src="data:image/png;base64,{{src}}"></img>
 
-<a href="#" clip-copy="cdxml" clip-click="e.preventDefault()" role="button" class="btn btn-xs btn-primary" style="position: absolute;  top: 170px;  left: 0; font-size:0.7em; margin-left:10px">Copy CDXML</a> <a href="#" clip-copy="cdxml" clip-click="e.preventDefault()" role="button" class="btn btn-xs btn-primary" style="position: absolute;  top: 170px;  left: 0; font-size:0.7em; margin-left:10px">Copy CDXML</a>
+<a href="#" ng-if="cdxml" clip-copy="cdxml" clip-click="e.preventDefault()" role="button" class="btn btn-xs btn-primary" style="position: absolute;  top: 170px;  left: 0; font-size:0.7em; margin-left:10px">Copy CDXML</a>
