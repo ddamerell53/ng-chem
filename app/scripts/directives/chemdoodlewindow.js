@@ -23,6 +23,10 @@ angular.module('ngChemApp')
               //Check if the molecule is the standard methane and ignore
               scope.molecule.molfile = scope.localMolfile;
               scope.molecule.molfileChanged();
+            }else{
+                scope.molecule.molfile = "";
+              scope.molecule.molfileChanged();
+
             }
             
           },
@@ -32,6 +36,10 @@ angular.module('ngChemApp')
             if (scope.localMolfile !== "Molecule from ChemDoodle Web Components\n\nhttp://www.ichemlabs.com\n  1  0  0  0  0  0            999 V2000\n    0.0000    0.0000    0.0000 C   0  0  0  0  0  0\nM  END"){
               scope.molecule.molfile = scope.localMolfile;
               scope.molecule.molfileChanged();
+            }else{
+                scope.molecule.molfile = "";
+              scope.molecule.molfileChanged();
+
             }
           }
         });        
