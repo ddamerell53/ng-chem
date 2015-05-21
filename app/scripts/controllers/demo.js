@@ -108,8 +108,10 @@ app.controller('DemoCtrl', ['$scope', '$rootScope', '$state', 'ChEMBLFactory', '
 
             $scope.struc_col_options = [{
                 name: "",
-                value: "Please select"
-            }]; //
+                value: "No structure"
+            },
+
+            ]; //
             $scope.struc_col_str = ""; //
             $scope.validated = {
                 "warnings": {
@@ -607,9 +609,11 @@ app.controller('DemoCtrl', ['$scope', '$rootScope', '$state', 'ChEMBLFactory', '
 
         $scope.updateStrucCol = function(str) {
             //If it is a real structure column then try to process the file
-            if (str != "Please select") {
+            if (str != "No Structure") {
                 $scope.struc_col_str = str;
                 $scope.processFiles();
+            }else{
+                
             }
             //CBHCompoundBatch.testStructureColumn();      
         }

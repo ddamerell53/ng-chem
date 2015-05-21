@@ -4,58 +4,11 @@
 
 <div class="row">
 	<div class="alert alert-info">
-		<p><strong>Add your compounds to be registered. </strong><br/>Paste a list of SMILES, Standard InChis</p>
+		<p><strong>Add your compounds to be registered. </strong><br/>Upload SD, Chemdraw or Excel file.</p>
 	</div>
 </div>
 
 <!-- TODO - implement better l&f to file upload result - alert to say it's completed etc? Should be examples in flowjs docs -->
-
-
-<div class="row">
-
-	<div class="col-sm-6">
-		<div class="form-group">
-			<label for="text_input" class="blue text-center"><strong class="nexa">Paste your SMILES or IDs here</strong></label>
-			<textarea id="text_input" name="text_input" ng-change="parseInput()" class="form-control" rows="5" ng-model="input_string.inputstring" ng-model-options="{ debounce:700 }"></textarea>
-		</div>
-	</div>
-	<div class="col-sm-6">
-		<label for="file_input" class="blue text-center"><strong class="nexa">Select which type of Ids you have:</strong></label>
-		<div class="form-group">
-		<select ng-options="dt for dt in input_string.dataTypes" class="form-control" ng-model="input_string.dataTypeSelected"></select>
-		</div>
-		<!-- <div ng-show="input_string.dataTypeSelected=='Auto-detect' && input_string.splitted.type != 'unknown'" class="alert alert-info">
-			<p><strong>[][]type detected].</p>
-		</div> -->
-	</div>
-</div>
-<div class="row" data-ng-show="format_not_detected">
-		<div class="alert alert-danger" id="format_not_detected">{{messages.format_not_detected}}</div>
-</div>
-<div class="row" data-ng-show="ids_not_processed">
-		<div class="alert alert-danger" id="ids_not_processed">{{messages.ids_not_processed}}</div>
-</div>
-
-<!-- <ng-include ng-show="input_string.inputstring" src="'views/templates/validation.html'"></ng-include> -->
-	<div ng-show="idsInProcessing" class="col-centered bubblingG">
-              <span id="bubblingG_1">
-              </span>
-              <span id="bubblingG_2">
-              </span>
-              <span id="bubblingG_3">
-              </span>
-	</div>
-<div class="row">
-	<div>
-		<a class="btn btn-primary pull-right" ng-disabled="idsInProcessing || ids_not_processed + format_not_detected || input_string.inputstring == '' " role="button" ng-click="validatePage()">Process Ids</a> <!--ui-sref="cbh.projects.project.demo.map"-->
-	</div>
-</div>
-
-<div class="row">
-	<div class="alert alert-info">
-		<p><strong>...alternatively upload SD, Chemdraw or Excel file.</p>
-	</div>
-</div>
 
 <div class="row">
 	<form name="inputForm">
@@ -156,6 +109,53 @@
 </div>
 
 </div>
+<div class="row">
+	<div class="alert alert-info">
+		<p><strong>...alternatively paste a list of SMILES, Standard InChis </p>
+	</div>
+</div>
+<div class="row">
+
+	<div class="col-sm-6">
+		<div class="form-group">
+			<label for="text_input" class="blue text-center"><strong class="nexa">Paste your SMILES or IDs here</strong></label>
+			<textarea id="text_input" name="text_input" ng-change="parseInput()" class="form-control" rows="5" ng-model="input_string.inputstring" ng-model-options="{ debounce:700 }"></textarea>
+		</div>
+	</div>
+	<div class="col-sm-6">
+		<label for="file_input" class="blue text-center"><strong class="nexa">Select which type of Ids you have:</strong></label>
+		<div class="form-group">
+		<select ng-options="dt for dt in input_string.dataTypes" class="form-control" ng-model="input_string.dataTypeSelected"></select>
+		</div>
+		<!-- <div ng-show="input_string.dataTypeSelected=='Auto-detect' && input_string.splitted.type != 'unknown'" class="alert alert-info">
+			<p><strong>[][]type detected].</p>
+		</div> -->
+	</div>
+</div>
+<div class="row" data-ng-show="format_not_detected">
+		<div class="alert alert-danger" id="format_not_detected">{{messages.format_not_detected}}</div>
+</div>
+<div class="row" data-ng-show="ids_not_processed">
+		<div class="alert alert-danger" id="ids_not_processed">{{messages.ids_not_processed}}</div>
+</div>
+
+<!-- <ng-include ng-show="input_string.inputstring" src="'views/templates/validation.html'"></ng-include> -->
+	<div ng-show="idsInProcessing" class="col-centered bubblingG">
+              <span id="bubblingG_1">
+              </span>
+              <span id="bubblingG_2">
+              </span>
+              <span id="bubblingG_3">
+              </span>
+	</div>
+<div class="row">
+	<div>
+		<a class="btn btn-primary pull-right" ng-disabled="idsInProcessing || ids_not_processed + format_not_detected || input_string.inputstring == '' " role="button" ng-click="validatePage()">Process Ids</a> <!--ui-sref="cbh.projects.project.demo.map"-->
+	</div>
+</div>
+
+
+
 
 </div>
 
