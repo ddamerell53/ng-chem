@@ -8,7 +8,7 @@
  * Controller of the ngChemApp
  */
 angular.module('ngChemApp')
-  .controller('BatchesCtrl',['$scope', '$modal', '$timeout', '$q', '$state', '$stateParams','$location', 'gridconfig', 'projectKey', 'MessageFactory', 'CBHCompoundBatch', function ($scope, $modal, $timeout, $q, $state, $stateParams, $location, gridconfig, projectKey, MessageFactory, CBHCompoundBatch) {
+  .controller('BatchesCtrl',['$scope', '$modal', '$timeout', '$q', '$state', '$stateParams','$location', 'gridconfig', 'projectKey', 'MessageFactory', 'CBHCompoundBatch', 'paramsAndForm', function ($scope, $modal, $timeout, $q, $state, $stateParams, $location, gridconfig, projectKey, MessageFactory, CBHCompoundBatch, paramsAndForm) {
     var filters = { };
     $scope.chemadder = false;
     var compadder = function(){
@@ -20,13 +20,27 @@ angular.module('ngChemApp')
     $scope.state = $state.current;
     $scope.params = $stateParams; 
     $scope.legends = MessageFactory.getLegends();
-    if(multiple_batch_id) {
-      filters = { 'multiple_batch_id' : multiple_batch_id }
-    }
 
-    else if($scope.validatedData) {
-      filters = { 'multiple_batch_id' : $scope.validatedData.currentBatch }
-    }
+    if($scope.state.name!=="cbh.search"){
+        if(multiple_batch_id) {
+          filters = { 'multiple_batch_id' : multiple_batch_id,
+                      'project__project_key' : projectKey}
+        }
+
+        else if($scope.validatedData) {
+          filters = { 'multiple_batch_id' : $scope.validatedData.currentBatch,
+                            'project__project_key' : projectKey}
+        }
+        else{
+    filters = {
+                 'project__project_key' : projectKey}
+        }
+      }else{
+        filters = paramsAndForm.params;
+      }
+
+
+
 $scope.tagFunction = function(content){
     var item = {
       value: content,
@@ -71,13 +85,18 @@ $scope.tagFunction = function(content){
 
         var projkey_frag = ($scope.projectKey) ? "project__project_key=" + $scope.projectKey + "&" : "" ;
         var batch_frag = ($scope.validatedData) ? "multiple_batch_id=" + filters.multiple_batch_id + "&" : "" ;
+    if($scope.state.name==="cbh.search"){
+        $scope.gridconfig.configObject.paramsUrl = paramsAndForm.paramsUrl;
+
+    }else{
         $scope.gridconfig.configObject.paramsUrl = projkey_frag + batch_frag;
-    
+
+    }
     
     //$scope.gridconfig.configObject.pagingOptions
-    if($scope.state.name!=="cbh.search"){
+    // if($scope.state.name!=="cbh.search"){
      $timeout(function() {
-        $scope.gridconfig.initializeGridParams(projectKey, filters).then(function(result) {
+        $scope.gridconfig.initializeGridParams( ).then(function(result) {
         $scope.gridconfig.configObject.totalServerItems = result.meta.totalCount;
         $scope.gridconfig.configObject.compounds = result.objects;
        }, 10);
@@ -86,7 +105,7 @@ $scope.tagFunction = function(content){
     //watches the paging buttons to pull in new results for the window
     $scope.$watch('gridconfig.configObject.pagingOptions', function (newVal, oldVal) {
       if (newVal !== oldVal && (newVal.currentPage !== oldVal.currentPage || newVal.pageSize !== oldVal.pageSize)) {
-        $scope.gridconfig.initializeGridParams(projectKey,filters).then(function(result) {
+        $scope.gridconfig.initializeGridParams().then(function(result) {
           $scope.gridconfig.configObject.totalServerItems = result.meta.totalCount;
           $scope.gridconfig.configObject.compounds = result.objects;
           //this.configObject.filters = coreFilters;
@@ -95,7 +114,7 @@ $scope.tagFunction = function(content){
         });
       }
     }, true);
-  }
+  
     $scope.modalInstance = {};
     $scope.mol = {}; 
 

@@ -90,9 +90,7 @@ angular.module('ngChemApp')
     CBHCompoundBatch.fetchExistingFields = function(projectKey) {
         return $http.post ( urlConfig.cbh_compound_batches.list_endpoint + "/existing/", {"projectKey" :projectKey});
     };
-    CBHCompoundBatch.query = function(projectKey,filters) {
-        filters.projectKey = projectKey;
-        filters.project__project_key = projectKey;
+    CBHCompoundBatch.query = function(filters) {
          var promise = $http( 
             {
                 url: urlConfig.cbh_compound_batches.list_endpoint,

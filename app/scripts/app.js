@@ -93,7 +93,7 @@ angular.module('ngChemApp')
         })
 
         .state('cbh.search', {
-            url: '/search?project&functional_group&flexmatch&related_molregno__chembl__chembl_id__in&with_substructure&similar_to&fpValue&created__gte&created__lte&molfile&smiles&search_custom_fields__kv_any&limit&offset',
+            url: '/search?project__project_key__in&functional_group&flexmatch&related_molregno__chembl__chembl_id__in&with_substructure&similar_to&fpValue&created__gte&created__lte&molfile&smiles&search_custom_fields__kv_any&limit&offset',
             //url: '/search',
             //params: ['project__project_key', 'flexmatch', 'with_substructure', 'similar_to', 'fpValue', 'created__gte', 'created__lte', 'molfile', 'smiles', 'limit', 'offset', 'random'],
             resolve:{
@@ -108,8 +108,13 @@ angular.module('ngChemApp')
                   //There is no project key but this needs to be here to stop us breaking the batch controller
                   return "";
               }],
-              
-              
+             
+
+              paramsAndForm: ['$stateParams', 'searchUrlParams', 
+                  function($stateParams, searchUrlParams){
+                      
+                      return searchUrlParams.setup($stateParams, {molecule: {}});
+                  }]
               
             },
             
@@ -218,9 +223,12 @@ angular.module('ngChemApp')
               projectKey: ['$stateParams', function($stateParams){
                   return $stateParams.projectKey;
               }],
-
+              paramsAndForm: function(){
+                      return ;
+                  }
+              
             },
-            
+           
             views: {
               projectlist: {
                 templateUrl: 'views/project-summary.html',

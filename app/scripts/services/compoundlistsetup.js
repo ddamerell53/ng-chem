@@ -52,10 +52,9 @@ angular.module('ngChemApp')
                                                                     { field: "acdLogp", displayName: "acdLogp", visible: false }]
                                                 };
 
-    this.initializeGridParams = function(project_key, extra_filters) {
+    this.initializeGridParams = function( ) {
         var defer = $q.defer();
-        this.configObject.projectKey = project_key;
-        var rslt = this.getPagedDataAsync(this.configObject.pagingOptions.pageSize, this.configObject.pagingOptions.currentPage, extra_filters).then(function(result){          
+        var rslt = this.getPagedDataAsync(this.configObject.pagingOptions.pageSize, this.configObject.pagingOptions.currentPage).then(function(result){          
           return result;
         });
 
@@ -63,16 +62,15 @@ angular.module('ngChemApp')
         return defer.promise;
     };
 
-    this.getPagedDataAsync = function (pageSize, page, extra_filters) {
+    this.getPagedDataAsync = function (pageSize, page ) {
       var defer = $q.defer();
       var offset = parseInt(page - 1) * parseInt(pageSize);
       var coreFilters = {'limit': pageSize, 'offset': offset };
 
-      angular.extend(this.configObject.filters, extra_filters);
       angular.extend(this.configObject.filters, coreFilters);
 
 
-      var rslt = CBHCompoundBatch.query(this.configObject.projectKey, this.configObject.filters).then(function(result) {
+      var rslt = CBHCompoundBatch.query( this.configObject.filters).then(function(result) {
         defer.resolve(result);
 
         
@@ -93,5 +91,5 @@ angular.module('ngChemApp')
       });
     }
     
-    
+
   }]);
