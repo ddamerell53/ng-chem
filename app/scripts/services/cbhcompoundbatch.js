@@ -8,7 +8,7 @@
  * Factory in the ngChemApp.
  */
 angular.module('ngChemApp')
-  .factory('CBHCompoundBatch', ['$http', '$q','urlConfig'  ,function ($http, $q  ,urlConfig, cbh_compound_batches) {
+  .factory('CBHCompoundBatch', ['$compile', '$http', '$q','urlConfig'  ,function ($compile, $http, $q  ,urlConfig, cbh_compound_batches) {
 
     // Service logic
     // ...
@@ -104,6 +104,36 @@ angular.module('ngChemApp')
         );
         return promise;
     };
+
+
+    CBHCompoundBatch.getImages = function(objects){
+         var defer = $q.defer();
+        var promises = [];
+
+        angular.forEach(objects, function(obj){
+            var params = {
+                  size: 100,
+                  ctab: obj.ctab,
+                }
+            params.smarts = obj.properties.substructureMatch;
+            promises.push($http({method:"POST", 
+                url: "http://staging.chembiohub.ox.ac.uk/utils/ctab2image",
+                data: params, 
+                headers: {}}));
+
+        });
+        $q.all(promises).then(function(data){
+          var index = 0;
+          angular.forEach(data, function(d){
+            objects[index].imageSrc = "data:image/png;base64," + d.data;
+            index ++;
+          });
+          return data
+
+          
+        });
+        return defer.promise;
+    }
 
     CBHCompoundBatch.patch = function(data, projectKey){
         var promise = $http.patch(  urlConfig.cbh_compound_batches.list_endpoint + '/' + data.id + '/' ,       

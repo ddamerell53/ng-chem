@@ -8,10 +8,10 @@
  * Controller of the ngChemApp
  */
 angular.module('ngChemApp')
-  .controller('CompoundbatchCtrl', ['$scope','$stateParams','$state','CBHCompoundBatch', 'paramsAndForm', function ($scope, $state,$stateParams, CBHCompoundBatch, paramsAndForm) {
-    $scope.compoundBatches = [];
+  .controller('CompoundbatchCtrl', ['$scope','$rootScope','$compile','$stateParams','$timeout','$state','CBHCompoundBatch', 'paramsAndForm', function ($scope, $rootScope,$compile, $state,$stateParams,$timeout, CBHCompoundBatch, paramsAndForm) {
+    $scope.compoundBatches = {data:[]};
     $scope.totalCompoundBatches = 0;
-    $scope.compoundBatchesPerPage = 20; // this should match however many results your API puts on one page
+    $scope.compoundBatchesPerPage = 3; // this should match however many results your API puts on one page
 
     $scope.pagination = {
         current: 1
@@ -43,15 +43,29 @@ angular.module('ngChemApp')
 
 
     $scope.pageChanged = function(newPage) {
+        console.log("test");
         getResultsPage(newPage);
     };
+    var childScope;
 
+    
     function getResultsPage(pageNumber) {
+
         filters.limit = $scope.compoundBatchesPerPage;
         filters.offset = (pageNumber -1) * $scope.compoundBatchesPerPage;
-        CBHCompoundBatch.query( filters).then(function(result) {
+        CBHCompoundBatch.query(filters).then(function(result) {
             $scope.totalCompoundBatches = result.meta.totalCount;
-            $scope.compoundBatches = result.objects;
+            console.log(result);
+            $scope.compoundBatches.data =result.objects;
+
+            CBHCompoundBatch.getImages( result.objects).then(
+                function(){
+                    console.log(result);
+                }
+                );
+            
+            
+            // $rootScope.redrawCompounds();
         });        
     }
     getResultsPage(1);

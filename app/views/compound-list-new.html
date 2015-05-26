@@ -1,13 +1,20 @@
-    <handsoncompoundtable></handsoncompoundtable>
+<!--     <handsoncompoundtable></handsoncompoundtable>
+ -->
+<!--                 <div id="hotplaceholder"></div>
+ -->
 
 
 <div >
     <dir-pagination-controls on-page-change="pageChanged(newPageNumber)"></dir-pagination-controls>
+<handsoncompoundtable compounds="compoundBatches.data"></handsoncompoundtable>
 
-    <table>
-        <tr dir-paginate="compoundBatch in compoundBatches | itemsPerPage: 25" total-items="totalCompoundBatches" current-page="pagination.current">
+
+<!--     <handsoncompoundtable  compounds="compoundBatches"></handsoncompoundtable>
+ -->    
+ <table ng-show="">
+        <tr dir-paginate="compoundBatch in compoundBatches.data | itemsPerPage: compoundBatchesPerPage" total-items="totalCompoundBatches" current-page="pagination.current">
+
             <td>{{ compoundBatch }}</td>
         </tr>
     </table>
-    <dir-pagination-controls on-page-change="pageChanged(newPageNumber)"></dir-pagination-controls>
 </div>

@@ -18,6 +18,7 @@ li a.active small {
 #chemdoodle_button_save {
   display: none;
 }
+html {overflow-y: scroll;}
 .ui-button {
 
   cursor: pointer;

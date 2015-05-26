@@ -444,7 +444,7 @@ angular.module('ngChemApp')
 
   }).run(function($http, $cookies, $rootScope, $document, $state, $urlMatcherFactory, LoginService, ProjectFactory, urlConfig, prefix) {
     var pref = prefix.split("/")[0];
-    $http.defaults.headers.post['X-CSRFToken'] = $cookies[pref + "csrftoken"];
+    // $http.defaults.headers.post['X-CSRFToken'] = $cookies[pref + "csrftoken"];
     $http.defaults.headers.patch['X-CSRFToken'] = $cookies[pref + "csrftoken"];
     $http.defaults.headers.put['X-CSRFToken'] = $cookies[pref + "csrftoken"];4
 
