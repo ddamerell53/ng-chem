@@ -1,0 +1,13 @@
+    <handsoncompoundtable></handsoncompoundtable>
+
+
+<div >
+    <dir-pagination-controls on-page-change="pageChanged(newPageNumber)"></dir-pagination-controls>
+
+    <table>
+        <tr dir-paginate="compoundBatch in compoundBatches | itemsPerPage: 25" total-items="totalCompoundBatches" current-page="pagination.current">
+            <td>{{ compoundBatch }}</td>
+        </tr>
+    </table>
+    <dir-pagination-controls on-page-change="pageChanged(newPageNumber)"></dir-pagination-controls>
+</div>

@@ -126,10 +126,15 @@ angular.module('ngChemApp')
                 controller: 'SearchCtrl',
                 templateUrl: 'views/templates/search-template.html'
               },
-              'results@cbh.search': {
-                templateUrl: 'views/templates/compound-list.html',
-                controller: 'BatchesCtrl'
+              // 'results@cbh.search': {
+              //   templateUrl: 'views/templates/compound-list.html',
+              //   controller: 'BatchesCtrl'
+              // },
+              'newresults@cbh.search' :{
+                templateUrl: 'views/compound-list-new.html',
+                controller: 'CompoundbatchCtrl'
               }
+
             }
             
             
@@ -230,9 +235,13 @@ angular.module('ngChemApp')
             },
            
             views: {
-              projectlist: {
-                templateUrl: 'views/project-summary.html',
-                controller: 'BatchesCtrl',
+              // projectlist: {
+              //   templateUrl: 'views/project-summary.html',
+              //   controller: 'BatchesCtrl',
+              // },
+              'newresults' :{
+                templateUrl: 'views/compound-list-new.html',
+                controller: 'CompoundbatchCtrl'
               }
             }
             
