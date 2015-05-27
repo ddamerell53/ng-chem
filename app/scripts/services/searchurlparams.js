@@ -29,6 +29,7 @@ angular.module('ngChemApp')
                     searchForm.smiles = stateParams[key];
                 }
             };
+
             searchForm.molecule.molfileChanged = function() {};
             searchForm.fpValue = stateParams.fpValue;
             searchForm.dateStart = stateParams.created__gte;
@@ -88,7 +89,7 @@ angular.module('ngChemApp')
 
             if (searchForm.smiles) {
                 params[searchForm.substruc] = searchForm.smiles;
-            } else if (searchForm.molecule.molfile != "") {
+            } else if (searchForm.molecule && searchForm.molecule.molfile != "") {
                 params[searchForm.substruc] = searchForm.molecule.molfile
             }
 

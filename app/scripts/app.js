@@ -38,7 +38,7 @@ angular.module('ngChemApp')
             templateUrl: 'views/cbh.html',
             abstract : true,
             
-            controller: function($scope, $rootScope, $state, $location, urlConfig, loggedInUser, projectList, prefix) {
+            controller: function($scope, $rootScope, $state, $location, $modal, urlConfig, loggedInUser, projectList, prefix) {
                 var cbh = this;
                 cbh.logged_in_user = loggedInUser;
                 cbh.projects = projectList;
@@ -74,6 +74,88 @@ angular.module('ngChemApp')
                     }
                   });
                 };
+
+              cbh.openSingleMol = function(mol) {
+                $scope.mol = mol;
+                  $scope.modalInstance = $modal.open({
+                    templateUrl: 'views/single-compound.html',
+                    size: 'lg',
+                    resolve: {
+                      mol: function () {
+                        return $scope.mol;
+                      },
+
+                      projectsWithCustomFieldData: ['ProjectFactory', function(ProjectFactory){
+                             return ProjectFactory.get({"id": $scope.mol.project_id, "schemaform" : true}).$promise;
+                      }],
+
+
+
+                    }, 
+                    controller: function($scope, $modalInstance, mol, projectsWithCustomFieldData, $timeout) {
+                      $scope.mol = mol;
+                      $scope.myform = projectsWithCustomFieldData.objects[0].schemaform.form;
+                      var myform = projectsWithCustomFieldData.objects[0].schemaform.form;
+                      var len = Math.ceil( myform.length/2);
+                      $scope.firstForm = angular.copy(myform).splice(0, len);
+                      $scope.secondForm = angular.copy(myform).splice(len);
+                      $scope.myform2 = angular.copy(myform);
+                      $scope.init = function(){
+                         $scope.keyValues = $scope.myform2.map(
+
+                            function(item){
+                              var key = item;
+                              if(angular.isDefined(item.key)){
+                                key =item.key
+                              };
+                              var value = "";
+                              if (angular.isDefined($scope.mol.customFields[key])){
+
+
+                                  value = $scope.mol.customFields[key]
+
+                              }
+                              if (value.constructor === Array){
+                                value = value.join(", ");
+                              }
+                              return {'key':key, 'value':value };
+                            }
+                          );
+
+                      $scope.firstList = $scope.keyValues.splice(0, len);
+                      $scope.secondList = $scope.keyValues;
+                                console.debug($scope.firstList);
+
+
+                      };
+                      $scope.init();
+                     
+
+                      $scope.removeAlert = function(){
+                        $scope.update_success = false;
+                      }
+                      $scope.updateBatch = function(){
+                        CBHCompoundBatch.patch({"customFields" : $scope.mol.customFields, "projectKey": projectKey, "id": $scope.mol.id}).then(
+                            function(data){
+                              $scope.mol=data;
+                              mol=data;
+                              $scope.update_success = true;
+                              $scope.init();
+                              $timeout($scope.removeAlert, 5000);
+                            }
+                          );
+                      }
+                      $scope.myschema = projectsWithCustomFieldData.objects[0].schemaform.schema;
+                      $scope.modalInstance = $modalInstance;
+            // $scope.$watch('mol', function(n,o), true){
+            //   $scope.pointers = n;
+            // });
+                    }
+                  });
+                };
+
+
+
 
             },
             controllerAs : "cbh",
@@ -238,19 +320,30 @@ angular.module('ngChemApp')
         // })
 
         .state('cbh.projects.list.project', {
-            url: window.projectUrlMatcher + "?limit=&offset=",
+            url: window.projectUrlMatcher + "?page=&compoundBatchesPerPage=",
             resolve: {
               projectKey: ['$stateParams', function($stateParams){
                   return $stateParams.projectKey;
               }],
+              paramsAndForm: ['$stateParams', 'searchUrlParams', 
+                  function($stateParams, searchUrlParams){     
+                      return searchUrlParams.fromForm({"project__project_key__in" : [$stateParams.projectKey,]});
+              }]
               
             },
            
             views: {
-              // projectlist: {
-              //   templateUrl: 'views/project-summary.html',
-              //   controller: 'BatchesCtrl',
-              // },
+              projectsummary: {
+                templateUrl: 'views/project-summary.html',
+                controller: function($scope, projectKey){
+                   $scope.projects = $scope.cbh.projects.objects;
+                      angular.forEach($scope.projects, function(proj) {
+                        if(proj.project_key == projectKey) {
+                          $scope.proj = proj;
+                        }
+                      });
+                },
+              },
               'newresults' :{
                 templateUrl: 'views/compound-list-new.html',
                 controller: 'CompoundbatchCtrl'

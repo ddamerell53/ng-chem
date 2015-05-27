@@ -4,7 +4,13 @@ button, a.btn {
 li a svg.svg {
   fill: #ddd;
 }
+.pagination {
+  margin:0;
+}
 
+ul.pagination li a {
+  padding: 6px 15px;
+}
 li a.active svg.svg {
   fill: #002147;
 }
