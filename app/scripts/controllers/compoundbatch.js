@@ -30,24 +30,9 @@ angular.module('ngChemApp')
     $scope.baseDownloadUrl = paramsAndForm.paramsUrl;
     //..
 
-    if($state.current.name!=="cbh.search"){
-        if(multiple_batch_id) {
-            filters = { 'multiple_batch_id' : multiple_batch_id,
-                      'project__project_key' : $stateParams.projectKey}
-        }
-
-        else if($scope.validatedData) {
-            filters = { 'multiple_batch_id' : $scope.validatedData.currentBatch,
-                            'project__project_key' : $stateParams.projectKey}
-        }
-        else{
-            filters = {
-                 'project__project_key' : $stateParams.projectKey
-             }
-        }
-      }else{
-            filters = paramsAndForm.params;
-      }
+    
+    filters = paramsAndForm.params;
+      
 
 
     $scope.pageChanged = function(newPage) {
