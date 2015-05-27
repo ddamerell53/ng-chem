@@ -25,6 +25,8 @@
     <link rel='stylesheet' href='bower_components/pickadate/lib/themes/default.date.css' />
     <link rel='stylesheet' href='bower_components/pickadate/lib/themes/default.time.css' />
     <link rel='stylesheet' href='bower_components/angular-ui-select/dist/select.css' />
+    <link rel='stylesheet' href='bower_components/pikaday/css/pikaday.css' />
+    <link rel='stylesheet' href='bower_components/handsontable/dist/handsontable.full.css' />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.) styles/main.css -->
@@ -150,8 +152,12 @@
     <script src="bower_components/pickadate/lib/picker.time.js"></script>
     <script src="bower_components/angular-schema-form-datepicker/bootstrap-datepicker.min.js"></script>
     <script src="bower_components/angular-schema-form-ui-select/bootstrap-ui-select.min.js"></script>
+    <script src="bower_components/moment/moment.js"></script>
+    <script src="bower_components/pikaday/pikaday.js"></script>
+    <script src="bower_components/handsontable/dist/handsontable.full.js"></script>
     <!-- endbower -->
-       
+    <script src="bower_components/angular-utils-pagination/dirPagination.js"></script>
+
     <script src="bower_components/flow.js/dist/flow.js"></script>
     <script src="bower_components/ng-flow/dist/ng-flow-standalone.min.js"></script>    
 
@@ -205,6 +211,8 @@ Raven.config('http://fc809c4af52d4022abea608aa81f3136@163.1.63.22/3', {
 
         <script src="scripts/services/userfactory.js"></script>
         <script src="scripts/services/searchurlparams.js"></script>
+        <script src="scripts/controllers/compoundbatch.js"></script>
+        <script src="scripts/directives/handsoncompoundtable.js"></script>
         <!-- endbuild -->
 </body>
 </html>

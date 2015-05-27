@@ -31,5 +31,6 @@ var ngChemApp =  angular.module('ngChemApp', [
     'schemaForm', 
     'pascalprecht.translate', 
     'ui.select', 
-    'ui.sortable'
+    'ui.sortable',
+    'angularUtils.directives.dirPagination',
   ]);
