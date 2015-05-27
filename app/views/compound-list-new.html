@@ -1,20 +1,50 @@
-<!--     <handsoncompoundtable></handsoncompoundtable>
- -->
-<!--                 <div id="hotplaceholder"></div>
- -->
+<div class="row">
+        <div class="col-xs-10">
+<dir-pagination-controls on-page-change="pageChanged(newPageNumber)">
+</dir-pagination-controls>
+
+</div>
+    <div class="col-xs-2">
+        <h2><div class="dropdown " >
+           <div ng-include="'views/templates/download-buttons.html'"></div>
+ 
+        </div></h2>
+    </div>
+</div>
+<div class="row" >
+    <div class ="col-xs-12" style=" overflow-x:auto; overflow-y:visible">
+
+    
+<handsoncompoundtable cbh="cbh" compounds="compoundBatches.data"></handsoncompoundtable>
 
 
-<div >
-    <dir-pagination-controls on-page-change="pageChanged(newPageNumber)"></dir-pagination-controls>
-<handsoncompoundtable compounds="compoundBatches.data"></handsoncompoundtable>
-
-
-<!--     <handsoncompoundtable  compounds="compoundBatches"></handsoncompoundtable>
- -->    
  <table ng-show="">
         <tr dir-paginate="compoundBatch in compoundBatches.data | itemsPerPage: compoundBatchesPerPage" total-items="totalCompoundBatches" current-page="pagination.current">
 
             <td>{{ compoundBatch }}</td>
         </tr>
     </table>
+
+
+
+
 </div>
+
+</div>
+<div class="spacer"></div>
+
+<div class="row" ng-if="compoundBatches.data.length > 0 && compoundBatches.data[0].imageSrc">
+        <div class="col-xs-10">
+<dir-pagination-controls  on-page-change="pageChanged2(newPageNumber)">
+</dir-pagination-controls>
+
+</div>
+    <div class="col-xs-2">
+        <h2><div class="dropup " >
+           <div ng-include="'views/templates/download-buttons.html'"></div>
+ 
+        </div></h2>
+    </div>
+</div>
+
+

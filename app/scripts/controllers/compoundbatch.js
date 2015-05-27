@@ -8,21 +8,29 @@
  * Controller of the ngChemApp
  */
 angular.module('ngChemApp')
-  .controller('CompoundbatchCtrl', ['$scope','$rootScope','$compile','$stateParams','$timeout','$state','CBHCompoundBatch', 'paramsAndForm', function ($scope, $rootScope,$compile, $state,$stateParams,$timeout, CBHCompoundBatch, paramsAndForm) {
+  .controller('CompoundbatchCtrl', ['$scope','$rootScope','$state','$stateParams','$timeout','CBHCompoundBatch', 'paramsAndForm', 'urlConfig', 
+    function ($scope, $rootScope,$state, $stateParams,$timeout,  CBHCompoundBatch, paramsAndForm, urlConfig) {
     $scope.compoundBatches = {data:[]};
+    $scope.urlConfig = urlConfig;
     $scope.totalCompoundBatches = 0;
-    $scope.compoundBatchesPerPage = 3; // this should match however many results your API puts on one page
-
+    $scope.compoundBatchesPerPage = 10; // this should match however many results your API puts on one page
+    if(angular.isDefined($stateParams.compoundBatchesPerPage)){
+       $scope.compoundBatchesPerPage = $stateParams.compoundBatchesPerPage;    
+    }
     $scope.pagination = {
         current: 1
     };
-
+    if(angular.isDefined($stateParams.page)){
+       $scope.pagination.current = $stateParams.page;    
+    }
+    
     var filters = { };
 
     var multiple_batch_id = $stateParams.multiple_batch_id;
+    $scope.baseDownloadUrl = paramsAndForm.paramsUrl;
     //..
 
-    if($state.name!=="cbh.search"){
+    if($state.current.name!=="cbh.search"){
         if(multiple_batch_id) {
             filters = { 'multiple_batch_id' : multiple_batch_id,
                       'project__project_key' : $stateParams.projectKey}
@@ -43,8 +51,16 @@ angular.module('ngChemApp')
 
 
     $scope.pageChanged = function(newPage) {
-        console.log("test");
-        getResultsPage(newPage);
+        var newParams = angular.copy($stateParams);
+        newParams.page = newPage;
+        newParams.compoundBatchesPerPage = $scope.compoundBatchesPerPage;
+        $state.go($state.current.name,newParams);
+    };
+    $scope.pageChanged2 = function(newPage) {
+        var newParams = angular.copy($stateParams);
+        newParams.page = newPage;
+        newParams.compoundBatchesPerPage = $scope.compoundBatchesPerPage;
+        $state.go($state.current.name,newParams);
     };
     var childScope;
 
@@ -55,19 +71,10 @@ angular.module('ngChemApp')
         filters.offset = (pageNumber -1) * $scope.compoundBatchesPerPage;
         CBHCompoundBatch.query(filters).then(function(result) {
             $scope.totalCompoundBatches = result.meta.totalCount;
-            console.log(result);
             $scope.compoundBatches.data =result.objects;
-
-            CBHCompoundBatch.getImages( result.objects).then(
-                function(){
-                    console.log(result);
-                }
-                );
-            
-            
-            // $rootScope.redrawCompounds();
-        });        
+            CBHCompoundBatch.getImages( result.objects); 
+       });        
     }
-    getResultsPage(1);
+    getResultsPage($scope.pagination.current);
 
   }]);

@@ -112,7 +112,7 @@ angular.module('ngChemApp')
 
         angular.forEach(objects, function(obj){
             var params = {
-                  size: 100,
+                  size: 75,
                   ctab: obj.ctab,
                 }
             params.smarts = obj.properties.substructureMatch;

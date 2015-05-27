@@ -1,0 +1,7 @@
+
+
+<button id="downloadBtnProj" class="btn btn-primary btn-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-download"></span> <span class="hidden-xs hidden-sm">Download</span> <span class="caret"></span></button>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="downloadBtnProj">
+                <li><a ng-href="{{  urlConfig.cbh_compound_batches.list_endpoint }}/?{{baseDownloadUrl}}format=xls&limit=10000">Export All to Excel</a></li>
+                <li><a ng-href="{{  urlConfig.cbh_compound_batches.list_endpoint }}/?{{baseDownloadUrl}}format=sdf&limit=10000">Export All to SD</a></li>
+            </ul>

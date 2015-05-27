@@ -52,7 +52,6 @@ var req = $http({  method: "get",
                     url: configuration.cbh_projects.list_endpoint,
                     params: {"schemaform": true}, });
 req.then(function(projData){
-  console.log(projData.data)
     angular.module('ngChemApp').value('loggedInUser',  
         projData.data.user
     );
