@@ -130,6 +130,20 @@ angular.module('ngChemApp')
         return promise;
     }
 
+    CBHCompoundBatch.multiBatchForUser = function(username) {
+        var promise = $http({
+            url:urlConfig.cbh_multiple_batches.list_endpoint,
+            method:'GET',
+            params: {
+                'created_by': username,
+                'limit': 1000,
+            },
+        }).then(function(data){
+            return data.data;
+        });
+        return promise;
+    }
+
     CBHCompoundBatch.paginate = function(page_url) {
         /*filters.projectKey = projectKey;
         filters.project__project_key = projectKey;*/

@@ -114,7 +114,7 @@ angular.module('ngChemApp')
                   function($stateParams, searchUrlParams){
                       
                       return searchUrlParams.setup($stateParams, {molecule: {}});
-                  }]
+                  }],
               
             },
             
@@ -170,8 +170,9 @@ angular.module('ngChemApp')
                 return UserFactory.get().$promise;
               }],
             },
-            controller: function($scope, userList) {
+            controller: function($scope, $rootScope, userList) {
               $scope.users = userList.objects;
+              $rootScope.projName = "Projects";
             },
         })
 
@@ -179,12 +180,26 @@ angular.module('ngChemApp')
             url: '/user/:username',
             templateUrl: 'views/user-profile.html',
             resolve: {
-              userFromList: ['UserFactory', '$stateParams', function(UserFactory, $stateParams) {
-                return UserFactory.get({'username': $stateParams.username }).$promise;
+              userFromList: ['UserFactory', '$stateParams', '$q', function(UserFactory, $stateParams, $q) {
+                var deferred = $q.defer();
+                UserFactory.get({'username': $stateParams.username }, function(r){
+                  deferred.resolve(r);
+                });
+                return deferred.promise;
+              }],
+              batchesForUser: ['CBHCompoundBatch', 'userFromList', '$q', function(CBHCompoundBatch, userFromList, $q) {
+                var deferred = $q.defer();
+                CBHCompoundBatch.multiBatchForUser(userFromList.objects[0].username).then(function(m){
+                  deferred.resolve(m);
+                });
+                return deferred.promise;
               }],
             },
-            controller: function($scope, userFromList) {
+            controller: function($scope, $rootScope, userFromList, batchesForUser) {
               $scope.userFromList = userFromList.objects[0];
+              $scope.batchesForUser = batchesForUser.objects;
+              $rootScope.projName = "Projects";
+              
             },
         })
 
@@ -223,9 +238,6 @@ angular.module('ngChemApp')
               projectKey: ['$stateParams', function($stateParams){
                   return $stateParams.projectKey;
               }],
-              paramsAndForm: function(){
-                      return ;
-                  }
               
             },
            

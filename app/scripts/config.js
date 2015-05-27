@@ -25,6 +25,7 @@ var configuration = {"cbh_batch_upload":
     "cbh_compound_batches": {"list_endpoint": path + 
     "cbh_compound_batches", "schema": path + "cbh_compound_batches/schema"}, 
     "users": {"list_endpoint": path + "users", "schema": path + "users/schema"},
+    "cbh_multiple_batches": {"list_endpoint": path + "cbh_multiple_batches", "schema": path + "cbh_multiple_batches/schema"},
 	"instance_path" : {"url_frag": path, "base" : base} ,
   "cbh_custom_field_configs": {"list_endpoint":path + "cbh_custom_field_configs", "schema": path + "cbh_custom_field_configs/schema"
 },

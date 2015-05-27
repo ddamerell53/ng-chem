@@ -8,7 +8,7 @@
  * Controller of the ngChemApp
  */
 angular.module('ngChemApp')
-  .controller('BatchesCtrl',['$scope', '$modal', '$timeout', '$q', '$state', '$stateParams','$location', 'gridconfig', 'projectKey', 'MessageFactory', 'CBHCompoundBatch', 'paramsAndForm', function ($scope, $modal, $timeout, $q, $state, $stateParams, $location, gridconfig, projectKey, MessageFactory, CBHCompoundBatch, paramsAndForm) {
+  .controller('BatchesCtrl',['$scope', '$modal', '$timeout', '$q', '$state', '$stateParams','$location', 'gridconfig', 'projectKey', 'MessageFactory', 'CBHCompoundBatch', function ($scope, $modal, $timeout, $q, $state, $stateParams, $location, gridconfig, projectKey, MessageFactory, CBHCompoundBatch) {
     var filters = { };
     $scope.chemadder = false;
     var compadder = function(){
