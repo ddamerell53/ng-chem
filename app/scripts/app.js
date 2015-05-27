@@ -92,7 +92,8 @@ angular.module('ngChemApp')
 
 
                     }, 
-                    controller: function($scope, $modalInstance, mol, projectsWithCustomFieldData, $timeout) {
+                    controller: ['$scope', '$modalInstance', 'mol', 'projectsWithCustomFieldData', '$timeout', 'CBHCompoundBatch',
+                    function($scope, $modalInstance, mol, projectsWithCustomFieldData, $timeout, CBHCompoundBatch) {
                       $scope.mol = mol;
                       $scope.myform = projectsWithCustomFieldData.objects[0].schemaform.form;
                       var myform = projectsWithCustomFieldData.objects[0].schemaform.form;
@@ -150,7 +151,7 @@ angular.module('ngChemApp')
             // $scope.$watch('mol', function(n,o), true){
             //   $scope.pointers = n;
             // });
-                    }
+                    }]
                   });
                 };
 
@@ -175,7 +176,7 @@ angular.module('ngChemApp')
         })
 
         .state('cbh.search', {
-            url: '/search?project__project_key__in&functional_group&flexmatch&related_molregno__chembl__chembl_id__in&with_substructure&similar_to&fpValue&created__gte&created__lte&molfile&smiles&search_custom_fields__kv_any&limit&offset',
+            url: '/search?page=&compoundBatchesPerPage=&project__project_key__in&functional_group&flexmatch&related_molregno__chembl__chembl_id__in&with_substructure&similar_to&fpValue&created__gte&created__lte&molfile&smiles&search_custom_fields__kv_any&limit&offset',
             //url: '/search',
             //params: ['project__project_key', 'flexmatch', 'with_substructure', 'similar_to', 'fpValue', 'created__gte', 'created__lte', 'molfile', 'smiles', 'limit', 'offset', 'random'],
             resolve:{
@@ -208,14 +209,12 @@ angular.module('ngChemApp')
                 controller: 'SearchCtrl',
                 templateUrl: 'views/templates/search-template.html'
               },
-              // 'results@cbh.search': {
-              //   templateUrl: 'views/templates/compound-list.html',
-              //   controller: 'BatchesCtrl'
-              // },
+             
               'newresults@cbh.search' :{
                 templateUrl: 'views/compound-list-new.html',
                 controller: 'CompoundbatchCtrl'
-              }
+              },
+
 
             }
             
@@ -496,12 +495,18 @@ angular.module('ngChemApp')
         
         // url will be /form/payment
         .state('cbh.projects.project.demo.map.finish', {
-            url: '/finish/',
+            url: '/finish/?page=&compoundBatchesPerPage=',
             resolve: {
               multiple_batch_id: ['$stateParams', function($stateParams){
                   return $stateParams.multiple_batch_id;
               }],
+              paramsAndForm: ['$stateParams', 'searchUrlParams', 
+                  function($stateParams, searchUrlParams){     
+                      return searchUrlParams.fromForm({'multiple_batch_id' : $stateParams.multiple_batch_id
+                        ,"project__project_key__in" : [$stateParams.projectKey,]});
+              }]
             },
+              
             views: {
               '': {
                 templateUrl: 'views/demo-finish.html',
@@ -520,10 +525,11 @@ angular.module('ngChemApp')
 
                 }
               },
-              'resultslist@cbh.projects.project.demo.map.finish': {
-                templateUrl: 'views/templates/compound-grid.html',
-                controller: 'BatchesCtrl',
-              },
+              'newresults@cbh.projects.project.demo.map.finish' :{
+                templateUrl: 'views/compound-list-new.html',
+                controller: 'CompoundbatchCtrl'
+              }
+              
 
             }
             
@@ -534,7 +540,7 @@ angular.module('ngChemApp')
 
   }).run(function($http, $cookies, $rootScope, $document, $state, $urlMatcherFactory, LoginService, ProjectFactory, urlConfig, prefix) {
     var pref = prefix.split("/")[0];
-    // $http.defaults.headers.post['X-CSRFToken'] = $cookies[pref + "csrftoken"];
+    $http.defaults.headers.post['X-CSRFToken'] = $cookies[pref + "csrftoken"];
     $http.defaults.headers.patch['X-CSRFToken'] = $cookies[pref + "csrftoken"];
     $http.defaults.headers.put['X-CSRFToken'] = $cookies[pref + "csrftoken"];4
 

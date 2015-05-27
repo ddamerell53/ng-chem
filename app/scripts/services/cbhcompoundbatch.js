@@ -8,14 +8,12 @@
  * Factory in the ngChemApp.
  */
 angular.module('ngChemApp')
-  .factory('CBHCompoundBatch', ['$compile', '$http', '$q','urlConfig'  ,function ($compile, $http, $q  ,urlConfig, cbh_compound_batches) {
+  .factory('CBHCompoundBatch', ['$compile', '$http', '$q','$cookies','urlConfig'  ,function ($compile, $http, $q , $cookies ,urlConfig, cbh_compound_batches) {
 
     // Service logic
     // ...
 
     var CBHCompoundBatch = {};
-
-
     CBHCompoundBatch.getSingleMol = function(){
         return { acdAcidicPka: null,
                          acdBasicPka: null,
@@ -119,7 +117,7 @@ angular.module('ngChemApp')
             promises.push($http({method:"POST", 
                 url: "http://staging.chembiohub.ox.ac.uk/utils/ctab2image",
                 data: params, 
-                headers: {}}));
+                headers: {'X-CSRFToken': undefined}}));
 
         });
         $q.all(promises).then(function(data){
@@ -151,9 +149,7 @@ angular.module('ngChemApp')
             url:urlConfig.cbh_compound_batches.list_endpoint,
             method:'GET',
             params: searchForm,
-            /*headers: {
-               'Content-Type': 'application/json'
-             }*/
+            
         }).then(function(data){
             return data.data;
         });

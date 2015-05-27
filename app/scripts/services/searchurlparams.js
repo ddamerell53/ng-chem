@@ -76,6 +76,9 @@ angular.module('ngChemApp')
             if (searchForm.project__project_key__in) {
                 params["project__project_key__in"] = searchForm.project__project_key__in.join(",");
             }
+            if (searchForm.multiple_batch_id) {
+                params["multiple_batch_id"] = searchForm.multiple_batch_id;
+            }
             if (searchForm.related_molregno__chembl__chembl_id__in) {
                 params["related_molregno__chembl__chembl_id__in"] = searchForm.related_molregno__chembl__chembl_id__in.join(",");
             } else {
@@ -114,6 +117,7 @@ angular.module('ngChemApp')
 
             //we now need to put the parameters we've generated from this search into a string which can be used as filters by the export options.
             //the export will not tolerate present but empty params so we have to only add them if they are present.
+            var multiple_batch_frag = (params.multiple_batch_id) ? ("multiple_batch_id=" + params.multiple_batch_id + "&") : "";
             var func_group_frag = (searchForm.functional_group) ? ("functional_group=" + encodeURIComponent(searchForm.functional_group) + "&") : "";
             var project_frag = (searchForm.project__project_key__in) ? ("project__project_key__in=" + searchForm.project__project_key__in.join(",") + "&") : "";
             var flexmatch_frag = (params.flexmatch) ? ("flexmatch=" + encodeURIComponent(params.flexmatch) + "&") : "";
@@ -125,7 +129,7 @@ angular.module('ngChemApp')
             // var smiles_frag = (params.smiles) ? ("smiles=" + params.smiles + "&") : "";
             var cust_field_frag = (encodedCustFields) ? ("search_custom_fields__kv_any=" + encodedCustFields + "&") : "";
             var related_molregno__chembl__chembl_id__in_frag = (params.related_molregno__chembl__chembl_id__in) ? ("related_molregno__chembl__chembl_id__in=" + params.related_molregno__chembl__chembl_id__in + "&") : "";
-            var paramsUrl = project_frag + func_group_frag + flexmatch_frag + related_molregno__chembl__chembl_id__in_frag + with_substructure_frag + similar_to_frag + fpValue_frag + created__gte_frag + created__lte_frag + cust_field_frag;
+            var paramsUrl = multiple_batch_frag + project_frag + func_group_frag + flexmatch_frag + related_molregno__chembl__chembl_id__in_frag + with_substructure_frag + similar_to_frag + fpValue_frag + created__gte_frag + created__lte_frag + cust_field_frag;
 
 
 

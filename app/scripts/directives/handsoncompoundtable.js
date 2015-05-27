@@ -38,16 +38,20 @@ angular.module('ngChemApp')
                       
                   });
                 var customCols = columnNames.map(function(cn){
-                  return {data: "customFields." + cn, readOnly:true}
+                  return {data: "customFields." + cn, readOnly:true, className: "htCenter htMiddle "}
                 })
                 var allCols = [
-                      {data: "imageSrc", renderer: coverRenderer, readOnly: true},
-                      {data: "chemblId", renderer: modalLinkRenderer, readOnly: true},
+                      {data: "imageSrc", renderer: coverRenderer, readOnly: true,  className: "htCenter htMiddle "},
+                      {data: "chemblId", renderer: modalLinkRenderer, readOnly: true, className: "htCenter htMiddle "},
+                      {data: "createdBy", readOnly: true, className: "htCenter htMiddle "},
+                      {data: "timestamp", readOnly: true,className: "htCenter htMiddle "},
+                      {data: "molecularWeight", readOnly: true, className: "htCenter htMiddle "},
+
 
                     ].concat(customCols);
                 var widths = customCols.map(function(){return 100});
                 var allWidths = [75, 120, ].concat(widths);
-                var columnHeaders = [ "Image","ID",  ].concat(columnNames);
+                var columnHeaders = [ "Image","ID","Added By", "Date", "Mol Weight" ].concat(columnNames);
                 var container1,
                     hot1;
                 var container = document.createElement('DIV');
@@ -58,7 +62,7 @@ angular.module('ngChemApp')
                 element[0].appendChild(container);
                 
                   scope.hot1 = new Handsontable(container, {
-                    width: 1000,
+                    width: 2000,
                     data: scope.compounds,
                    // colWidths: widths,
                     colHeaders: columnHeaders,
@@ -117,7 +121,7 @@ angular.module('ngChemApp')
                     scope.cbh.openSingleMol(mol);
                 });
                 Handsontable.Dom.empty(td);
-
+                td.className  += "htCenter htMiddle ";
                 td.appendChild(a);
               
                 return td;
@@ -138,6 +142,8 @@ angular.module('ngChemApp')
                   });
               
                   Handsontable.Dom.empty(td);
+                  td.className  += "htCenter htMiddle ";
+
                   td.appendChild(img);
                 
                 return td;
