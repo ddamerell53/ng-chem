@@ -12,23 +12,23 @@
     </div>
 </div>
 <div class="row" >
-    <div class ="col-xs-12" style=" overflow-x:auto; overflow-y:visible">
+    <div class ="col-xs-12">
 
     
-<handsoncompoundtable cbh="cbh" compounds="compoundBatches.data"></handsoncompoundtable>
+        <handsoncompoundtable cbh="cbh" compounds="compoundBatches.data"></handsoncompoundtable>
 
 
- <table ng-show="">
-        <tr dir-paginate="compoundBatch in compoundBatches.data | itemsPerPage: compoundBatchesPerPage" total-items="totalCompoundBatches" current-page="pagination.current">
+        <table ng-show="">
+            <tr dir-paginate="compoundBatch in compoundBatches.data | itemsPerPage: compoundBatchesPerPage" total-items="totalCompoundBatches" current-page="pagination.current">
 
-            <td>{{ compoundBatch }}</td>
-        </tr>
-    </table>
-
-
+                <td>{{ compoundBatch }}</td>
+            </tr>
+        </table>
 
 
-</div>
+
+
+    </div>
 
 </div>
 <div class="spacer"></div>

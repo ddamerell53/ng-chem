@@ -9,7 +9,7 @@
 angular.module('ngChemApp')
   .directive('handsoncompoundtable',["$timeout", function ($timeout) {
     return {
-      template: '<div style=""></div>',
+      template: '<div style="width:100%, overflow:hidden;"></div>',
       restrict: 'E',
       link: function postLink(scope, element, attrs) {
                 function redraw(){
@@ -51,6 +51,8 @@ angular.module('ngChemApp')
                 var container1,
                     hot1;
                 var container = document.createElement('DIV');
+                container.style.overflow = 'hidden';
+                container.style.width = '100%';
                 while (element[0].firstChild) {
                     element[0].removeChild(element[0].firstChild);
                 }
@@ -58,7 +60,7 @@ angular.module('ngChemApp')
                 element[0].appendChild(container);
                 
                   scope.hot1 = new Handsontable(container, {
-                    width: 1000,
+                    width: '100%',
                     data: scope.compounds,
                    // colWidths: widths,
                     colHeaders: columnHeaders,
