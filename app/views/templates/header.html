@@ -9,8 +9,8 @@
 						<button id="projectsBtn" class="btn btn-primary btn-toggle mt-8" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-folder-open"></span> <span class="hidden-xs hidden-sm">{{projName || Projects}}</span> <span class="caret"></span></button>
 						<ul class="dropdown-menu" role="menu" aria-labelledby="projectsBtn" >
 							<li role="presentation" ng-repeat="prj in projects"><a ui-sref="cbh.projects.list.project({projectKey: prj.project_key})">{{prj.name}}</a></li>
-							<li ng-hide="cbh.projects.length"><a href="#" style="color: #ddd">No projects</a></li>
-							<li ng-show="cbh.projects.length" style="background-color:#ddd;"><a ui-sref="cbh.projects.list">Go to list...</a></li>
+							<li ng-hide="projects.length"><a href="#" style="color: #ddd">No projects</a></li>
+							<li ng-show="projects.length" style="background-color:#ddd;"><a ui-sref="cbh.projects.list">Go to list...</a></li>
 						</ul>
 					</div>
 					
