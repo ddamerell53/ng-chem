@@ -461,7 +461,7 @@ ul.dropdown-menu.ng-valid-date {
 td, th {
   font-size:14px;
 }
-
+/* Small changes to make the app look less gigantic on smaller screens */
 @media (max-width: 991px) {
   p.nexa, p, strong.nexa, .help-block, .form-group, .form-control {
     font-size:0.85em;
@@ -485,5 +485,12 @@ td, th {
     margin-top: 10px;
     margin-bottom: 10px;
     padding:10px;
+  }
+  .input-group a {
+    font-size: 10px;
+    padding: 4px 10px;
+  }
+  .ui-button {
+    padding: 0 2px 1px !important;
   }
 }
