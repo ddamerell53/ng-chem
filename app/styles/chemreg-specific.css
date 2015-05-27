@@ -458,3 +458,32 @@ ul.dropdown-menu.ng-valid-date {
 .report-value {
   font-size:6em;
 }
+td, th {
+  font-size:14px;
+}
+
+@media (max-width: 991px) {
+  p.nexa, p, strong.nexa, .help-block, .form-group, .form-control {
+    font-size:0.85em;
+    line-height: 20px;
+    padding:0 5px;
+  }
+  td, th {
+    font-size:12px;
+  }
+  ul.pagination {
+    font-size:12px;
+  }
+  #quicklinks small a{
+    font-size:0.9em;
+  }
+  .report-value  {
+    font-size: 3em;
+    padding-top: 20px;
+  }
+  .alert {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding:10px;
+  }
+}
