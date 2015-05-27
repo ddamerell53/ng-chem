@@ -115,7 +115,7 @@ angular.module('ngChemApp')
                 }
             params.smarts = obj.properties.substructureMatch;
             promises.push($http({method:"POST", 
-                url: "http://staging.chembiohub.ox.ac.uk/utils/ctab2image",
+                url: "https://chembiohub.ox.ac.uk/utils/ctab2image",
                 data: params, 
                 headers: {'X-CSRFToken': undefined}}));
 
