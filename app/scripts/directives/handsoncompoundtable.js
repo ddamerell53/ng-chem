@@ -13,23 +13,29 @@ angular.module('ngChemApp')
       restrict: 'E',
       link: function postLink(scope, element, attrs) {
                 function redraw(){
-                  var pids = [];
-                  var columnNames = [];
+                  var pids = {};
+                  var cNames = [];
+
                   angular.forEach(scope.compounds, function(comp){
                     var split = comp.project.split("/");
-                    var projid = parseInt(split[split.length-1]); 
-                    if (pids.indexOf(projid)< 0){
-                      pids.push(projid);
-                    }
+                    var projid = split[split.length-1]; 
+                    pids[projid] = true;
+                    
                   });
 
-                  var projects = angular.copy(scope.cbh.projects.objects);
+                  var projects = scope.cbh.projects.objects;
 
-                  angular.forEach(projects,function(proj){
-                    if ( $.inArray(pids,proj.id)){
-                        angular.forEach(proj.schemaform.form, function(item){
-                          if(columnNames.indexOf(item.key) < 0){
-                            columnNames.push(item.key);
+                  angular.forEach(projects,function(myproj){
+
+                    console.log(myproj.id.toString())
+                    
+                    if ( pids.hasOwnProperty(myproj.id.toString())){
+                        angular.forEach(myproj.schemaform.form, function(i){
+                          console.log(i)
+                          if(cNames.indexOf( i.key) < 0){
+
+                            cNames.push(i.key);
+                            console.log(i.key);
                           }
                         }
                       );
@@ -37,7 +43,7 @@ angular.module('ngChemApp')
                       }
                       
                   });
-                var customCols = columnNames.map(function(cn){
+                var customCols = cNames.map(function(cn){
                   return {data: "customFields." + cn, readOnly:true, className: "htCenter htMiddle "}
                 })
                 var allCols = [
@@ -51,7 +57,7 @@ angular.module('ngChemApp')
                     ].concat(customCols);
                 var widths = customCols.map(function(){return 100});
                 var allWidths = [75, 120, ].concat(widths);
-                var columnHeaders = [ "Image","ID","Added By", "Date", "Mol Weight" ].concat(columnNames);
+                var columnHeaders = [ "Image","ID","Added By", "Date", "Mol Weight" ].concat(cNames);
                 var container1,
                     hot1;
                 var container = document.createElement('DIV');
