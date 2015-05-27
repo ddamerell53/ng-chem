@@ -13,8 +13,8 @@
 <div class="row">
 	<div class="col-xs-6 col-sm-3" ng-repeat="batch in batchesForUser">
 		<div class="well projectbox">
-			<!-- <p class="nexa"><strong><a ui-sref="cbh.search({multiple_batch_id:batch.id})"><span class="glyphicon glyphicon-time"></span> {{ batch.created | date }}</strong></a><br/> -->
-			<p class="nexa"><strong><a href="/#/search?multiple_batch_id={{batch.id}}"><span class="glyphicon glyphicon-time"></span> {{ batch.created | date }}</strong></a><br/>
+			<!-- <p class="nexa"><strong><a ><span class="glyphicon glyphicon-time"></span> {{ batch.created | date }}</strong></a><br/> -->
+			<p class="nexa"><strong><a ui-sref="cbh.search({multiple_batch_id:batch.id})"><span class="glyphicon glyphicon-time"></span> {{ batch.created | date }}</strong></a><br/>
 				<em>{{batch.project.name}}</em><br>
 				<!-- <em>{{ batch.uploaded_data.length }}</em> -->
 				<!-- <span class="glyphicon glyphicon-check"></span> <small>Member Since: {{ user.date_joined | date }}</small> -->
