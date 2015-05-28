@@ -124,7 +124,7 @@ angular.module('ngChemApp')
         $q.all(promises).then(function(data){
           var index = 0;
           angular.forEach(data, function(d){
-            objects[index].imageSrc = "data:image/png;base64," + d.data;
+            objects[index].properties.imageSrc = "data:image/png;base64," + d.data;
             index ++;
           });
           return data
