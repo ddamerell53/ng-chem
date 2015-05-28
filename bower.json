@@ -32,7 +32,7 @@
     "bootstrap-vertical-tabs": "~1.2.1",
     "angular-schema-form": "~0.8.0",
     "angular-schema-form-datepicker": "~0.3.0",
-    "angular-schema-form-ui-select": "git@github.com:strets123/angular-schema-form-ui-select.git#master",
+    "angular-schema-form-ui-select": "git@github.com:strets123/angular-schema-form-ui-select.git#0.1.1",
     "angular-utils-pagination": "~0.7.0",
     "handsontable": "~0.14.1"
   },
@@ -45,8 +45,6 @@
   "appPath": "app",
   "resolutions": {
     "angular": "^1.0.8",
-    "angular-schema-form": "~0.8.0",
-    "underscore": "~1.8.2",
-    "angular-schema-form-uiselect": "master"
+    "underscore": "~1.8.2"
   }
 }
