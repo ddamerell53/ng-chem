@@ -80,23 +80,24 @@ angular.module('ngChemApp')
                   $scope.modalInstance = $modal.open({
                     templateUrl: 'views/single-compound.html',
                     size: 'lg',
-                    resolve: {
-                      mol: function () {
-                        return $scope.mol;
-                      },
-
-                      projectsWithCustomFieldData: ['ProjectFactory', function(ProjectFactory){
-                             return ProjectFactory.get({"id": $scope.mol.project_id, "schemaform" : true}).$promise;
-                      }],
-
-
-
-                    }, 
-                    controller: ['$scope', '$modalInstance', 'mol', 'projectsWithCustomFieldData', '$timeout', 'CBHCompoundBatch',
-                    function($scope, $modalInstance, mol, projectsWithCustomFieldData, $timeout, CBHCompoundBatch) {
+                    
+                    controller: ['$scope','$rootScope', '$modalInstance', '$timeout', 'CBHCompoundBatch',
+                    function($scope, $rootScope, $modalInstance,  $timeout, CBHCompoundBatch) {
                       $scope.mol = mol;
-                      $scope.myform = projectsWithCustomFieldData.objects[0].schemaform.form;
-                      var myform = projectsWithCustomFieldData.objects[0].schemaform.form;
+                      var split = mol.project.split("/");
+                      var projid = split[split.length-1];
+                      $scope.projectWithCustomFieldData;
+                      angular.forEach($rootScope.projects,function(myproj){
+                        console.log(projid);
+                        console.log(myproj);
+                        if(myproj.id.toString() == projid){
+                          $scope.projectWithCustomFieldData = myproj
+                        }
+                      });
+                      
+                 
+                      $scope.myform = $scope.projectWithCustomFieldData.schemaform.form;
+                      var myform = $scope.projectWithCustomFieldData.schemaform.form;
                       var len = Math.ceil( myform.length/2);
                       $scope.firstForm = angular.copy(myform).splice(0, len);
                       $scope.secondForm = angular.copy(myform).splice(len);
@@ -136,7 +137,9 @@ angular.module('ngChemApp')
                         $scope.update_success = false;
                       }
                       $scope.updateBatch = function(){
-                        CBHCompoundBatch.patch({"customFields" : $scope.mol.customFields, "projectKey": projectKey, "id": $scope.mol.id}).then(
+                        CBHCompoundBatch.patch({"customFields" : $scope.mol.customFields,
+                                                "projectKey" : $scope.projectWithCustomFieldData.project_key,
+                                                "id": $scope.mol.id}).then(
                             function(data){
                               $scope.mol=data;
                               mol=data;
@@ -146,7 +149,7 @@ angular.module('ngChemApp')
                             }
                           );
                       }
-                      $scope.myschema = projectsWithCustomFieldData.objects[0].schemaform.schema;
+                      $scope.myschema = $scope.projectWithCustomFieldData.schemaform.schema;
                       $scope.modalInstance = $modalInstance;
             // $scope.$watch('mol', function(n,o), true){
             //   $scope.pointers = n;

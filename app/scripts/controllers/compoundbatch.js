@@ -72,7 +72,16 @@ angular.module('ngChemApp')
         CBHCompoundBatch.query(filters).then(function(result) {
             $scope.totalCompoundBatches = result.meta.totalCount;
             $scope.compoundBatches.data =result.objects;
-            CBHCompoundBatch.getImages( result.objects); 
+            if(result.objects.length > 0){
+                CBHCompoundBatch.getImages( result.objects); 
+            }else{
+                if($state.current.name==="cbh.search"){
+                    $scope.noData = "No Compounds Found. Why not try ammending your search.";
+                }else{
+                     $scope.noData = "No Compounds Found. To add compounds use the link above.";
+                }
+            }
+            
        });        
     }
     getResultsPage($scope.pagination.current);
