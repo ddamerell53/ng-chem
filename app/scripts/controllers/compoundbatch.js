@@ -73,7 +73,8 @@ angular.module('ngChemApp')
             $scope.totalCompoundBatches = result.meta.totalCount;
             $scope.compoundBatches.data =result.objects;
             if(result.objects.length > 0){
-                CBHCompoundBatch.getImages( result.objects); 
+                var size = ($scope.listOrGallery.choice=="gallery") ? 100 : 75;
+                CBHCompoundBatch.getImages( result.objects, size); 
             }else{
                 if($state.current.name==="cbh.search"){
                     $scope.noData = "No Compounds Found. Why not try ammending your search.";
