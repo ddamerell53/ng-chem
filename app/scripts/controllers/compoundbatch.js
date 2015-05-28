@@ -46,22 +46,29 @@ angular.module('ngChemApp')
     $scope.changeNumberPerPage = function(viewType) {
         var newParams = angular.copy($stateParams);
         newParams.page = 1;
-        var w = angular.element($window);
-        console.log(w);
-        if(w.width() > 1200) {
-            newParams.compoundBatchesPerPage = 32;
+        if(viewType == 'list') {
+            newParams.compoundBatchesPerPage = 10;
         }
         else {
-            newParams.compoundBatchesPerPage = 30;
+            var w = angular.element($window);
+            console.log(w);
+            if(w.width() > 1200) {
+                newParams.compoundBatchesPerPage = 30;
+            }
+            else {
+                newParams.compoundBatchesPerPage = 30;
+            }
         }
-        //newParams.compoundBatchesPerPage = number;
+        
         newParams.viewType = viewType;
+        newParams.doScroll = 'true';
         $state.go($state.current.name,newParams);
     };
     $scope.pageChanged = function(newPage) {
         var newParams = angular.copy($stateParams);
         newParams.page = newPage;
         newParams.compoundBatchesPerPage = $scope.compoundBatchesPerPage;
+        newParams.doScroll = 'true';
         $state.go($state.current.name,newParams);
     };
     $scope.pageChanged2 = function(newPage) {
@@ -85,7 +92,7 @@ angular.module('ngChemApp')
                 CBHCompoundBatch.getImages( result.objects, size); 
             }else{
                 if($state.current.name==="cbh.search"){
-                    $scope.noData = "No Compounds Found. Why not try amending your search?";
+                    $scope.noData = "No Compounds Found. Why not try ammending your search.";
                 }else{
                      $scope.noData = "No Compounds Found. To add compounds use the link above.";
                 }
@@ -94,5 +101,7 @@ angular.module('ngChemApp')
        });        
     }
     getResultsPage($scope.pagination.current);
+    
+
 
   }]);
