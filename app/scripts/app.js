@@ -176,7 +176,7 @@ angular.module('ngChemApp')
         })
 
         .state('cbh.search', {
-            url: '/search?page=&compoundBatchesPerPage=&project__project_key__in&functional_group&flexmatch&related_molregno__chembl__chembl_id__in&with_substructure&similar_to&fpValue&created__gte&created__lte&molfile&smiles&search_custom_fields__kv_any&multiple_batch_id=&limit&offset',
+            url: '/search?page=&compoundBatchesPerPage=&project__project_key__in&functional_group&flexmatch&related_molregno__chembl__chembl_id__in&with_substructure&similar_to&fpValue&created__gte&created__lte&molfile&smiles&search_custom_fields__kv_any&multiple_batch_id=&viewType=&limit&offset',
             //url: '/search',
             //params: ['project__project_key', 'flexmatch', 'with_substructure', 'similar_to', 'fpValue', 'created__gte', 'created__lte', 'molfile', 'smiles', 'limit', 'offset', 'random'],
             resolve:{
@@ -203,7 +203,7 @@ angular.module('ngChemApp')
             
             views: {
               '': {
-                templateUrl: 'views/search.html'
+                templateUrl: 'views/search.html',
               },
               'form@cbh.search': {
                 controller: 'SearchCtrl',
@@ -214,7 +214,6 @@ angular.module('ngChemApp')
                 templateUrl: 'views/compound-list-new.html',
                 controller: 'CompoundbatchCtrl'
               },
-
 
             }
             
@@ -292,7 +291,7 @@ angular.module('ngChemApp')
         .state('cbh.projects.list', {
             url: '/list',
             templateUrl: 'views/projects-list.html',
-            controller: function($rootScope, $state, $scope) {
+            controller: function($rootScope, $state, $stateParams, $scope) {
               $rootScope.headline = "Projects List";
               $rootScope.subheading = "Click a project title to see more details and add compounds to that project";
               $rootScope.help_lookup = "";
@@ -319,7 +318,7 @@ angular.module('ngChemApp')
         // })
 
         .state('cbh.projects.list.project', {
-            url: window.projectUrlMatcher + "?page=&compoundBatchesPerPage=",
+            url: window.projectUrlMatcher + "?page=&compoundBatchesPerPage=&viewType=",
             resolve: {
               projectKey: ['$stateParams', function($stateParams){
                   return $stateParams.projectKey;
@@ -346,7 +345,7 @@ angular.module('ngChemApp')
               'newresults' :{
                 templateUrl: 'views/compound-list-new.html',
                 controller: 'CompoundbatchCtrl'
-              }
+              },
             }
             
         })

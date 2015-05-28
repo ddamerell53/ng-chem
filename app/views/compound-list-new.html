@@ -1,9 +1,15 @@
 <div class="row">
         <div class="col-xs-10">
-<dir-pagination-controls on-page-change="pageChanged(newPageNumber)">
-</dir-pagination-controls>
+            <label class="btn btn-default" ng-class="{ active: listOrGallery.choice === 'list' }" >
+                <input type="radio" ng-model="listOrGallery.choice" value="list" id="list-btn" name="listOrGallery" style="display:none;" ng-change="changeNumberPerPage(10, 'list')"><span class="glyphicon glyphicon-list-alt"></span> List View
+            </label>
+            <label class="btn btn-default" ng-class="{ active: listOrGallery.choice === 'gallery' }" >
+                <input type="radio" ng-model="listOrGallery.choice" value="gallery" id="gallery-btn" name="listOrGallery" style="display:none;" ng-change="changeNumberPerPage(42, 'gallery')"><span class="glyphicon glyphicon-picture"></span> Gallery View
+            </label>
+            <dir-pagination-controls on-page-change="pageChanged(newPageNumber)">
+            </dir-pagination-controls>
 
-</div>
+        </div>
     <div class="col-xs-2">
         <h2><div class="dropdown " >
            <div ng-include="'views/templates/download-buttons.html'"></div>
@@ -14,16 +20,28 @@
 <div class="row" >
     <div class ="col-xs-12">
 
-    
-        <handsoncompoundtable cbh="cbh" compounds="compoundBatches.data"></handsoncompoundtable>
+        <div ng-if="listOrGallery.choice == 'list'">
+            <handsoncompoundtable cbh="cbh" compounds="compoundBatches.data"></handsoncompoundtable>
 
 
-        <table ng-show="">
-            <tr dir-paginate="compoundBatch in compoundBatches.data | itemsPerPage: compoundBatchesPerPage" total-items="totalCompoundBatches" current-page="pagination.current">
+            <table ng-show="">
+                <tr dir-paginate="compoundBatch in compoundBatches.data | itemsPerPage: compoundBatchesPerPage" total-items="totalCompoundBatches" current-page="pagination.current">
 
-                <td>{{ compoundBatch }}</td>
-            </tr>
-        </table>
+                    <td>{{ compoundBatch }}</td>
+                </tr>
+            </table>
+        </div>
+        <div ng-if="listOrGallery.choice == 'gallery'">
+            <div class="row">
+                <div class="col-xs-4 col-sm-2" dir-paginate="compoundBatch in compoundBatches.data | itemsPerPage: compoundBatchesPerPage" total-items="totalCompoundBatches" current-page="pagination.current">
+                    <div class="text-center gallery-item" ng-click="cbh.openSingleMol(compoundBatch)">
+                        <img src="{{compoundBatch.imageSrc}}"><br>
+                        <p class="nexa"><small>{{compoundBatch.chemblId}}</small></p>
+                    </div>
+                </div>
+            </div>
+        </div> 
+        
 
 
 

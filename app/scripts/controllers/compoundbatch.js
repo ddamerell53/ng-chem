@@ -13,9 +13,12 @@ angular.module('ngChemApp')
     $scope.compoundBatches = {data:[]};
     $scope.urlConfig = urlConfig;
     $scope.totalCompoundBatches = 0;
-    $scope.compoundBatchesPerPage = 10; // this should match however many results your API puts on one page
+    //$scope.compoundBatchesPerPage = 10; // this should match however many results your API puts on one page
     if(angular.isDefined($stateParams.compoundBatchesPerPage)){
        $scope.compoundBatchesPerPage = $stateParams.compoundBatchesPerPage;    
+    }
+    else {
+        $scope.compoundBatchesPerPage = 10;
     }
     $scope.pagination = {
         current: 1
@@ -34,7 +37,19 @@ angular.module('ngChemApp')
     filters = paramsAndForm.params;
       
 
-
+    $scope.listOrGallery = {
+        choice: "list",
+    };
+    if($stateParams.viewType) {
+        $scope.listOrGallery.choice = $stateParams.viewType;
+    }
+    $scope.changeNumberPerPage = function(number, viewType) {
+        var newParams = angular.copy($stateParams);
+        newParams.page = 1;
+        newParams.compoundBatchesPerPage = number;
+        newParams.viewType = viewType;
+        $state.go($state.current.name,newParams);
+    };
     $scope.pageChanged = function(newPage) {
         var newParams = angular.copy($stateParams);
         newParams.page = newPage;
