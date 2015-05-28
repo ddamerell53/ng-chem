@@ -85,7 +85,7 @@ angular.module('ngChemApp')
                 CBHCompoundBatch.getImages( result.objects, size); 
             }else{
                 if($state.current.name==="cbh.search"){
-                    $scope.noData = "No Compounds Found. Why not try ammending your search.";
+                    $scope.noData = "No Compounds Found. Why not try amending your search?";
                 }else{
                      $scope.noData = "No Compounds Found. To add compounds use the link above.";
                 }
