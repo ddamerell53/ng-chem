@@ -7,7 +7,7 @@
  * # chemdoodleWindow
  */
 angular.module('ngChemApp')
-  .directive('chemdoodleWindow', [ '$rootScope', function ($rootScope) {
+  .directive('chemdoodleWindow', [ '$rootScope','$window', function ($rootScope, $window) {
     return {
       template: '<div class="col-xs-12" id="chemdoodle-holder"><canvas id="chemdoodle" tabindex="1"></canvas></div>',
       restrict: 'E',
@@ -16,6 +16,33 @@ angular.module('ngChemApp')
       	
         //jquery watching for a click event to trigger the change in scope value.
         //also bind a button press for the canvas - keyup
+        var w = angular.element($window);
+        scope.$watch(function () {
+            return {
+                'h': w.height(), 
+                'w': w.width()
+            };
+        }, function (newValue, oldValue) {
+            scope.windowHeight = newValue.h;
+            scope.windowWidth = newValue.w;
+            console.log("test");
+            // scope.resizeWithOffset = function (offsetH) {
+
+            //     scope.$eval(attr.notifier);
+
+            //     return { 
+            //         'height': (newValue.h - offsetH) + 'px'
+            //         //,'width': (newValue.w - 100) + 'px' 
+            //     };
+            // };
+
+        }, true);
+
+        w.bind('resize', function () {
+            redraw();
+        });
+
+
         element.bind({
           'click': function() {
             scope.localMolfile = ChemDoodle.writeMOL(element.getMolecule());
@@ -42,9 +69,11 @@ angular.module('ngChemApp')
 
             }
           }
-        });        
-
-        var cd_width = jQuery('#chemdoodle-holder').width();
+        });      
+        redraw();  
+        function redraw(){
+          var cd_width = jQuery('#chemdoodle-holder').width();
+          jQuery('#chemdoodle-holder').html('<canvas id="chemdoodle" tabindex="1"></canvas>');
         element = new ChemDoodle.SketcherCanvas('chemdoodle', cd_width, 300, {isMobile: true,oneMolecule:true});
         
         //if we have a retained molecule, load that into the canvas
@@ -57,6 +86,9 @@ angular.module('ngChemApp')
         }
         //call repaint to display either the retained or default molecule
         element.repaint();
+        }
+        
+
         
       },
       controller: ['$scope', '$rootScope', function($scope, $rootScope) {

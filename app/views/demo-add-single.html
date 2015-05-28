@@ -9,7 +9,7 @@
 
 
 	<div class="row">
-		<div class="col-xs-9">
+		<div class="col-sm-9">
 			<div class="row">
 	<div class="alert alert-info">
 		<div style="margin-right:5px; " class="pull-right"><info-box lookup="drawing_label_suppl"></info-box></div>
@@ -17,20 +17,20 @@
 		
 	</div>
 </div>
-		<div class="col-xs-8">
+		<div class="col-sm-6">
 			
 
 			<chemdoodle-window sketch-molfile="sketchMolfile" fetch-data="fetchData()" molecule="molecule"></chemdoodle-window>
 			<div id="sketcher_output"></div>
 		</div>
-		<div class="col-xs-4">
+		<div class="col-sm-6">
 			<div class="spacer"></div>
         <div  class=" form-group" sf-schema="myschema" sf-form="myform" sf-model="molecule.metadata.projectFields"></div>
 		</div>
 	</div>
-		<div class="col-xs-3">
+		<div class="col-sm-3">
 				
-	<ng-include src="'views/templates/validation.html'"></ng-include>
+	<div  class="hidden-xs" ng-include="'views/templates/validation.html'"></div>
 </div>
 
 
@@ -64,7 +64,7 @@
 		 	<!-- In here is your template per error found -->
 
 <!-- 		 	<div class="row">
-		 		<div class="col-xs-3" ng-repeat="(key, value) in validated.warnings " ng-if="key != 'painsCount' && key.indexOf('pains') == 0">
+		 		<div class="col-sm-3" ng-repeat="(key, value) in validated.warnings " ng-if="key != 'painsCount' && key.indexOf('pains') == 0">
 		 			<div class="well">{{key}}</div>
 		 		</div>
 		 	</div> -->
@@ -82,6 +82,7 @@
 </div>
 
 	<div class="row">
+		<div class="spacer"></div>
 		<div class="pull-right">
 			<a role="button" class="btn btn-danger" ng-click="startAgain()" ui-sref="cbh.projects.project.demo.intro">Cancel</a>
 			<input type="submit" class="btn btn-primary" ng-click="saveSingleMol()" id="submit" ng-disabled="validatedData.errors > 0 || processingSingle  || molecule.molfile===''"  value="Save Molecule to ChemReg">

@@ -104,13 +104,14 @@ angular.module('ngChemApp')
     };
 
 
-    CBHCompoundBatch.getImages = function(objects){
+    CBHCompoundBatch.getImages = function(objects, imageSize){
          var defer = $q.defer();
         var promises = [];
 
+
         angular.forEach(objects, function(obj){
             var params = {
-                  size: 75,
+                  size: imageSize,
                   ctab: obj.ctab,
                 }
             params.smarts = obj.properties.substructureMatch;
