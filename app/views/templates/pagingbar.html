@@ -1,4 +1,4 @@
-<div class="row" ng-if="compoundBatches.data.length > 0 && compoundBatches.data[0].imageSrc" >
+<div class="row" ng-if="compoundBatches.data.length > 0 && compoundBatches.data[0].properties.imageSrc" >
     <div class="col-xs-3 pull-left">
         <label class="btn btn-default" ng-class="{ active: listOrGallery.choice === 'list' }" >
             <input type="radio" ng-model="listOrGallery.choice" value="list" id="list-btn" name="listOrGallery" style="display:none;" ng-change="changeNumberPerPage('list')"><span class="glyphicon glyphicon-list-alt"></span><span class="hidden-xs hidden-sm"> List</span>

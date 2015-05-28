@@ -47,7 +47,7 @@ angular.module('ngChemApp')
                   return {data: "customFields." + cn, readOnly:true, className: "htCenter htMiddle "}
                 })
                 var allCols = [
-                      {data: "imageSrc", renderer: coverRenderer, readOnly: true,  className: "htCenter htMiddle "},
+                      {data: "properties.imageSrc", renderer: coverRenderer, readOnly: true,  className: "htCenter htMiddle "},
                       {data: "chemblId", renderer: modalLinkRenderer, readOnly: true, className: "htCenter htMiddle "},
                       {data: "createdBy", readOnly: true, className: "htCenter htMiddle "},
                       {data: "timestamp", readOnly: true,className: "htCenter htMiddle "},
@@ -81,7 +81,7 @@ angular.module('ngChemApp')
               
               scope.$watch("compounds", function(){
                 if (scope.compounds.length >0){
-                    if (angular.isDefined(scope.compounds[0].imageSrc)){
+                    if (angular.isDefined(scope.compounds[0].properties.imageSrc)){
                       redraw();
                     }
                 }
