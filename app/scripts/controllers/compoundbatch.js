@@ -8,8 +8,8 @@
  * Controller of the ngChemApp
  */
 angular.module('ngChemApp')
-  .controller('CompoundbatchCtrl', ['$scope','$rootScope','$state','$stateParams','$timeout','CBHCompoundBatch', 'paramsAndForm', 'urlConfig', 
-    function ($scope, $rootScope,$state, $stateParams,$timeout,  CBHCompoundBatch, paramsAndForm, urlConfig) {
+  .controller('CompoundbatchCtrl', ['$scope','$rootScope','$state','$stateParams','$timeout','CBHCompoundBatch', 'paramsAndForm', 'urlConfig', '$window', 
+    function ($scope, $rootScope,$state, $stateParams,$timeout,  CBHCompoundBatch, paramsAndForm, urlConfig, $window) {
     $scope.compoundBatches = {data:[]};
     $scope.urlConfig = urlConfig;
     $scope.totalCompoundBatches = 0;
@@ -43,10 +43,18 @@ angular.module('ngChemApp')
     if($stateParams.viewType) {
         $scope.listOrGallery.choice = $stateParams.viewType;
     }
-    $scope.changeNumberPerPage = function(number, viewType) {
+    $scope.changeNumberPerPage = function(viewType) {
         var newParams = angular.copy($stateParams);
         newParams.page = 1;
-        newParams.compoundBatchesPerPage = number;
+        var w = angular.element($window);
+        console.log(w);
+        if(w.width() > 1200) {
+            newParams.compoundBatchesPerPage = 32;
+        }
+        else {
+            newParams.compoundBatchesPerPage = 30;
+        }
+        //newParams.compoundBatchesPerPage = number;
         newParams.viewType = viewType;
         $state.go($state.current.name,newParams);
     };

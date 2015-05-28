@@ -1,10 +1,10 @@
 <div class="row" ng-if="compoundBatches.data.length > 0 && compoundBatches.data[0].imageSrc" >
     <div class="col-xs-3 pull-left">
         <label class="btn btn-default" ng-class="{ active: listOrGallery.choice === 'list' }" >
-            <input type="radio" ng-model="listOrGallery.choice" value="list" id="list-btn" name="listOrGallery" style="display:none;" ng-change="changeNumberPerPage(10, 'list')"><span class="glyphicon glyphicon-list-alt"></span> List View
+            <input type="radio" ng-model="listOrGallery.choice" value="list" id="list-btn" name="listOrGallery" style="display:none;" ng-change="changeNumberPerPage('list')"><span class="glyphicon glyphicon-list-alt"></span><span class="hidden-xs hidden-sm"> List</span>
         </label>
         <label class="btn btn-default" ng-class="{ active: listOrGallery.choice === 'gallery' }" >
-            <input type="radio" ng-model="listOrGallery.choice" value="gallery" id="gallery-btn" name="listOrGallery" style="display:none;" ng-change="changeNumberPerPage(30, 'gallery')"><span class="glyphicon glyphicon-picture"></span> Gallery View
+            <input type="radio" ng-model="listOrGallery.choice" value="gallery" id="gallery-btn" name="listOrGallery" style="display:none;" ng-change="changeNumberPerPage('gallery')"><span class="glyphicon glyphicon-picture"></span><span class="hidden-xs hidden-sm"> Gallery</span>
         </label>
     </div>
     <div class="col-xs-7">

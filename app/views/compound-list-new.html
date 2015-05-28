@@ -22,7 +22,7 @@
         </div>
         <div ng-if="listOrGallery.choice == 'gallery'">
             <div class="row">
-                <div class="col-xs-4 col-sm-2" dir-paginate="compoundBatch in compoundBatches.data | itemsPerPage: compoundBatchesPerPage" total-items="totalCompoundBatches" current-page="pagination.current">
+                <div class="col-xs-4 col-sm-2 col16-lg-2" dir-paginate="compoundBatch in compoundBatches.data | itemsPerPage: compoundBatchesPerPage" total-items="totalCompoundBatches" current-page="pagination.current">
                     <div class="text-center gallery-item" ng-click="cbh.openSingleMol(compoundBatch)">
                         <img src="{{compoundBatch.imageSrc}}">
                         <p class="nexa"><small>{{compoundBatch.chemblId}}</small></p>
@@ -41,3 +41,4 @@
 <div class="spacer"></div>
 
 <div ng-show="!noData" ng-include="'views/templates/pagingbar.html'"></div>
+
