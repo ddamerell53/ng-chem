@@ -223,6 +223,7 @@ app.controller('DemoCtrl', ['$scope', '$rootScope', '$state', 'ChEMBLFactory', '
             $scope.file_error = false;
             $scope.file_format_not_detected = false;
             $scope.filesInProcessing = false;
+            $scope.validatedData = {};
         }
 
         $scope.startAgain([]);
@@ -613,11 +614,13 @@ app.controller('DemoCtrl', ['$scope', '$rootScope', '$state', 'ChEMBLFactory', '
 
         $scope.updateStrucCol = function(str) {
             //If it is a real structure column then try to process the file
-            if (str != "No Structure") {
+            if (str != "No structure") {
                 $scope.struc_col_str = str;
                 $scope.processFiles();
             }else{
-                
+
+            console.log("tried");
+                $scope.cancelFile();
             }
             //CBHCompoundBatch.testStructureColumn();      
         }

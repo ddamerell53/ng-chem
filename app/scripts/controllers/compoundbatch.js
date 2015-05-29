@@ -51,7 +51,6 @@ angular.module('ngChemApp')
         }
         else {
             var w = angular.element($window);
-            console.log(w);
             if(w.width() > 1200) {
                 newParams.compoundBatchesPerPage = 30;
             }
@@ -89,10 +88,12 @@ angular.module('ngChemApp')
             $scope.compoundBatches.data =result.objects;
             if(result.objects.length > 0){
                 var size = ($scope.listOrGallery.choice=="gallery") ? 100 : 75;
-                CBHCompoundBatch.getImages( result.objects, size); 
+                CBHCompoundBatch.getImages(result.objects, 400, "bigImageSrc");
+                CBHCompoundBatch.getImages( result.objects, size, "imageSrc"); 
+
             }else{
                 if($state.current.name==="cbh.search"){
-                    $scope.noData = "No Compounds Found. Why not try ammending your search.";
+                    $scope.noData = "No Compounds Found. Why not try amending your search?";
                 }else{
                      $scope.noData = "No Compounds Found. To add compounds use the link above.";
                 }
