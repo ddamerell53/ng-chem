@@ -15,11 +15,13 @@ angular.module('ngChemApp')
                 function redraw(){
                   var pids = {};
                   var cNames = [];
+                  var count = 0;
 
                   angular.forEach(scope.compounds, function(comp){
                     var split = comp.project.split("/");
                     var projid = split[split.length-1]; 
                     pids[projid] = true;
+                    
                     
                   });
 
@@ -35,7 +37,6 @@ angular.module('ngChemApp')
                           if(cNames.indexOf( i.key) < 0){
 
                             cNames.push(i.key);
-                            console.log(i.key);
                           }
                         }
                       );
@@ -43,8 +44,9 @@ angular.module('ngChemApp')
                       }
                       
                   });
+                
                 var customCols = cNames.map(function(cn){
-                  return {data: "customFields." + cn, readOnly:true, className: "htCenter htMiddle "}
+                  return {data: "customFields." + cn, readOnly:true, className: "htCenter htMiddle ", renderer: linkRenderer}
                 })
                 var allCols = [
                       {data: "properties.imageSrc", renderer: coverRenderer, readOnly: true,  className: "htCenter htMiddle "},
@@ -99,17 +101,7 @@ angular.module('ngChemApp')
                   return allowed.indexOf('<' + $1.toLowerCase() + '>') > -1 ? $0 : '';
                 });
               }
-              function customFieldRenderer(instance, td, row, col, prop, value, cellProperties) {
-                var mol = instance.getSourceDataAtRow(row);
-
-
-                var escaped = Handsontable.helper.stringify(mol.customFields[prop]);
-                value = mol.customFields[prop];
-                escaped = strip_tags(escaped, '<em><b><strong><a><big>'); //be sure you only allow certain HTML tags to avoid XSS threats (you should also remove unwanted HTML attributes)
-                td.innerHTML = escaped;
-          
-                return td;
-              }
+              
               function safeHtmlRenderer(instance, td, row, col, prop, value, cellProperties) {
                 var escaped = Handsontable.helper.stringify(value);
                 escaped = strip_tags(escaped, '<em><b><strong><a><big>'); //be sure you only allow certain HTML tags to avoid XSS threats (you should also remove unwanted HTML attributes)
@@ -131,6 +123,28 @@ angular.module('ngChemApp')
                 Handsontable.Dom.empty(td);
                 td.className  += "htCenter htMiddle ";
                 td.appendChild(a);
+              
+                return td;
+              }
+  
+              function linkRenderer(instance, td, row, col, prop, value, cellProperties) {
+               var escaped = Handsontable.helper.stringify(value);
+                escaped = strip_tags(escaped, '');
+                if (escaped.indexOf("http") == 0 && escaped.indexOf("//") > 0){
+
+                  var a = document.createElement('a');
+                  var afterHttp = escaped.split("//")[1];
+                  a.innerHTML = afterHttp;
+                  if (afterHttp.length>30){
+                      a.innerHTML = afterHttp.substring(0,29) +"...";
+                  }
+                  a.href = escaped;
+                  Handsontable.Dom.empty(td);
+                  td.className  += "htCenter htMiddle ";
+                  td.appendChild(a);
+                }else{
+                  td.innerHTML = escaped;
+                }
               
                 return td;
               }

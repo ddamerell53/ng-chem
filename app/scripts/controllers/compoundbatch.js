@@ -51,7 +51,6 @@ angular.module('ngChemApp')
         }
         else {
             var w = angular.element($window);
-            console.log(w);
             if(w.width() > 1200) {
                 newParams.compoundBatchesPerPage = 30;
             }
