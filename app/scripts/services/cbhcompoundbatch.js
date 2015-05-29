@@ -104,7 +104,7 @@ angular.module('ngChemApp')
     };
 
 
-    CBHCompoundBatch.getImages = function(objects, imageSize){
+    CBHCompoundBatch.getImages = function(objects, imageSize, name){
          var defer = $q.defer();
         var promises = [];
 
@@ -124,9 +124,11 @@ angular.module('ngChemApp')
         $q.all(promises).then(function(data){
           var index = 0;
           angular.forEach(data, function(d){
-            objects[index].properties.imageSrc = "data:image/png;base64," + d.data;
+            objects[index].properties[name] = "data:image/png;base64," + d.data;
             index ++;
           });
+          
+          
           return data
 
           

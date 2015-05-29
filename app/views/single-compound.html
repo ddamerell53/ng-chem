@@ -7,8 +7,9 @@
 <div class="modal-body">
     <div class="row" ng-hide="mol.blindedBatchId">
     	<div class="col-xs-12 col-md-6" ng-show="mol.ctab.length > 0">
-<chemsvg  properties="mol.properties" size="'230'" smiles="mol.ctab"  base-url="'https://chembiohub.ox.ac.uk/utils/ctab2image'" ></chemsvg>
+<img ng-if="mol.properties.bigImageSrc" class="col-xs-10 col-xs-offset-1"  ng-src="{{mol.properties.bigImageSrc}}"></img>
 
+<a href="#" ng-if="mol.cdxml && mol.properties.bigImageSrc" clip-copy="mol.cdxml" clip-click="e.preventDefault()" role="button" class="btn btn-xs btn-primary pull-right" >Copy CDXML</a>
         </div>
 
 <div class="col-xs-12 col-md-6 " >
