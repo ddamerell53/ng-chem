@@ -50,6 +50,9 @@ angular.module('ngChemApp')
             if (stateParams.functional_group) {
                 searchForm.functional_group = stateParams.functional_group;
             }
+            if (stateParams.multiple_batch_id) {
+                searchForm.multiple_batch_id = stateParams.multiple_batch_id;   
+            }
             var myschema = {};
             var myform = {};
             if (stateParams.with_substructure) {
