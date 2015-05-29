@@ -8,8 +8,8 @@
  * Controller of the ngChemApp
  */
 angular.module('ngChemApp')
-  .controller('CompoundbatchCtrl', ['$scope','$rootScope','$state','$stateParams','$timeout','CBHCompoundBatch', 'paramsAndForm', 'urlConfig', '$window', 
-    function ($scope, $rootScope,$state, $stateParams,$timeout,  CBHCompoundBatch, paramsAndForm, urlConfig, $window) {
+  .controller('CompoundbatchCtrl', ['$scope','$rootScope','$state','$stateParams','$timeout','CBHCompoundBatch','paramsAndForm','urlConfig','$window','$location','$anchorScroll', 
+    function ($scope, $rootScope,$state, $stateParams,$timeout, CBHCompoundBatch, paramsAndForm, urlConfig, $window, $location, $anchorScroll) {
     $scope.compoundBatches = {data:[]};
     $scope.urlConfig = urlConfig;
     $scope.totalCompoundBatches = 0;
@@ -102,6 +102,14 @@ angular.module('ngChemApp')
        });        
     }
     getResultsPage($scope.pagination.current);
+    $timeout(function() {
+        $location.hash('search-bottom');
+
+        // call $anchorScroll()
+        if($stateParams.doScroll == true){
+            $anchorScroll();
+        }
+    }, 2000)
     
 
 
