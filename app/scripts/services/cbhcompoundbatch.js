@@ -110,8 +110,14 @@ angular.module('ngChemApp')
 
 
         angular.forEach(objects, function(obj){
+            var siz = imageSize;
+            if(name=="bigImageSrc"){
+              if(obj.molecularWeight< 300){
+                siz = 200;
+              }
+            }
             var params = {
-                  size: imageSize,
+                  size: siz,
                   ctab: obj.ctab,
                 }
             params.smarts = obj.properties.substructureMatch;
