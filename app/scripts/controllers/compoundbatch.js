@@ -77,6 +77,15 @@ angular.module('ngChemApp')
         $state.go($state.current.name,newParams);
     };
     var childScope;
+    
+    $scope.imageCallback = function() {
+        $location.hash('search-bottom');
+
+        // call $anchorScroll()
+        if($stateParams.doScroll == true){
+            $anchorScroll();
+        }
+    }
 
     
     function getResultsPage(pageNumber) {
@@ -89,7 +98,7 @@ angular.module('ngChemApp')
             if(result.objects.length > 0){
                 var size = ($scope.listOrGallery.choice=="gallery") ? 100 : 75;
                 CBHCompoundBatch.getImages(result.objects, 400, "bigImageSrc");
-                CBHCompoundBatch.getImages( result.objects, size, "imageSrc"); 
+                CBHCompoundBatch.getImages( result.objects, size, "imageSrc", $scope.imageCallback); 
 
             }else{
                 if($state.current.name==="cbh.search"){
@@ -102,14 +111,15 @@ angular.module('ngChemApp')
        });        
     }
     getResultsPage($scope.pagination.current);
-    $timeout(function() {
+    /*$timeout(function() {
         $location.hash('search-bottom');
 
         // call $anchorScroll()
         if($stateParams.doScroll == true){
             $anchorScroll();
         }
-    }, 2000)
+    }, 500)*/
+
     
 
 

@@ -3,7 +3,7 @@
             <small>{{noData}}</small>
         </h2>
 </div>
-<a id="search-bottom"></a>
+
 <div ng-show="!noData" ng-include="'views/templates/pagingbar.html'"></div>
 
 <div class="row" >
@@ -11,7 +11,7 @@
 
         <div ng-if="listOrGallery.choice == 'list'">
             <handsoncompoundtable cbh="cbh" compounds="compoundBatches.data"></handsoncompoundtable>
-
+            <div style="min-height:500px;" ng-show="noData"><img src="images/loader.gif"></div>
 
             <table ng-show="">
                 <tr dir-paginate="compoundBatch in compoundBatches.data | itemsPerPage: compoundBatchesPerPage" total-items="totalCompoundBatches" current-page="pagination.current">
@@ -34,6 +34,7 @@
 
 </div>
 <div class="spacer"></div>
-<a id="search-bottom"></a>
+
 <div ng-show="!noData" ng-include="'views/templates/pagingbar.html'" ></div>
 
+<a id="search-bottom"></a>
