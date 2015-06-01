@@ -154,9 +154,15 @@ angular.module('ngChemApp')
               function coverRenderer (instance, td, row, col, prop, value, cellProperties) {
                 var escaped = Handsontable.helper.stringify(value),
                   img;
-              
+                  console.log("I am getting here");
                   img = document.createElement('IMG');
-                  img.src = value;
+                  if(value != "") {
+                    img.src = value;  
+                  }
+                  else {
+                    img.src = "images/no-structure.png";
+                  }
+                  //img.src = value;
               
                   Handsontable.Dom.addEvent(img, 'mousedown', function (e){
                     // e.preventDefault(); // prevent selection quirk
