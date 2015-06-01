@@ -29,7 +29,6 @@ angular.module('ngChemApp')
 
                   angular.forEach(projects,function(myproj){
 
-                    console.log(myproj.id.toString())
                     
                     if ( pids.hasOwnProperty(myproj.id.toString())){
                         angular.forEach(myproj.schemaform.form, function(i){
@@ -50,7 +49,7 @@ angular.module('ngChemApp')
                 })
                 var allCols = [
                       {data: "properties.imageSrc", renderer: coverRenderer, readOnly: true,  className: "htCenter htMiddle "},
-                      {data: "chemblId", renderer: modalLinkRenderer, readOnly: true, className: "htCenter htMiddle "},
+                      {data: "chemblId", renderer: modalLinkRenderer, readOnly: true, className: " htCenter htMiddle "},
                       {data: "createdBy", readOnly: true, className: "htCenter htMiddle "},
                       {data: "timestamp", readOnly: true,className: "htCenter htMiddle "},
                       {data: "molecularWeight", readOnly: true, className: "htCenter htMiddle "},
@@ -115,13 +114,13 @@ angular.module('ngChemApp')
                 escaped = strip_tags(escaped, ''); //be sure you only allow certain HTML tags to avoid XSS threats (you should also remove unwanted HTML attributes)
                 var a = document.createElement('a');
                 a.innerHTML = escaped;
-                Handsontable.Dom.addEvent(td, 'mousedown', function (e){
+                Handsontable.Dom.addEvent(a, 'mousedown', function (e){
                     // e.preventDefault(); // prevent selection quirk
                     var mol = instance.getSourceDataAtRow(row);
                     scope.cbh.openSingleMol(mol);
                 });
                 Handsontable.Dom.empty(td);
-                td.className  += "htCenter htMiddle ";
+                td.className  += "htCenter htMiddle courier";
                 td.appendChild(a);
               
                 return td;
