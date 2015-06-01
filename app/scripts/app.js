@@ -65,13 +65,13 @@ angular.module('ngChemApp')
                 };
 
               cbh.openSingleMol = function(mol) {
-                $scope.mol = mol;
                   $scope.modalInstance = $modal.open({
                     templateUrl: 'views/single-compound.html',
                     size: 'lg',
                     
                     controller: ['$scope','$rootScope', '$modalInstance', '$timeout', 'CBHCompoundBatch',
                     function($scope, $rootScope, $modalInstance,  $timeout, CBHCompoundBatch) {
+                      $scope.editMode = false;
                       $scope.mol = angular.copy(mol);
                       var split = mol.project.split("/");
                       var projid = split[split.length-1];
@@ -130,9 +130,10 @@ angular.module('ngChemApp')
                                                 "projectKey" : $scope.projectWithCustomFieldData.project_key,
                                                 "id": $scope.mol.id}).then(
                             function(data){
-                              $scope.mol=data;
-                              mol=data;
+                              $scope.mol.customFields=data.customFields;
+                              mol.customFields=data.customFields;
                               $scope.update_success = true;
+                              $scope.editMode = false;
                               $scope.init();
                               $timeout($scope.removeAlert, 5000);
                             }
