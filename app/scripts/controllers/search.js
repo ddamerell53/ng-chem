@@ -15,7 +15,7 @@ angular.module('ngChemApp')
     $scope.refresh = function(schema, options, search){
         return $http.get(options.async.url + "?chembl_id__chembl_id__startswith=" + search);
     }
-    $scope.searchForm = paramsAndForm.searchForm;
+    $scope.searchForm = angular.copy(paramsAndForm.searchForm);
     $scope.searchFormSchema.form[0].items[0].options.async.call = $scope.refresh;
 
     
@@ -24,7 +24,8 @@ angular.module('ngChemApp')
     }
 
     $scope.cancel = function(){
-        $location.url('/search?limit=&offset=');
+        //$location.url('/search?limit=&offset=');
+        $scope.cbh.searchPage();
     }
 
     $scope.runSearch = function(){

@@ -10,7 +10,7 @@
 
 
 angular.module('ngChemApp')
-    .factory('searchUrlParams', function($filter) {
+    .factory('searchUrlParams', function($filter, $rootScope) {
 
         // Private variables
 
@@ -36,6 +36,9 @@ angular.module('ngChemApp')
             searchForm.dateEnd = stateParams.created__lte;
             if (angular.isDefined(stateParams.project__project_key__in)) {
                 searchForm.project__project_key__in = stateParams.project__project_key__in.split(",");
+            }
+            else {
+                searchForm.project__project_key__in = window.projectKeys;
             }
             if (stateParams.search_custom_fields__kv_any) {
                 searchForm.search_custom_fields__kv_any = stateParams.search_custom_fields__kv_any.split(",");;

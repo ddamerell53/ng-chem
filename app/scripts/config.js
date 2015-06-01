@@ -64,6 +64,7 @@ req.then(function(projData){
      var projectKeys= projData.data.objects.map(function(item){
         return item.project_key;
     });
+     window.projectKeys = projectKeys;
     window.projectUrlMatcher = "/{projectKey:" + projectKeys.join('|') + "}/";
     angular.element(document).ready(function() {
         angular.bootstrap(angular.element( document.querySelector( '#bodytest' ) ), ["ngChemApp"]);

@@ -45,7 +45,7 @@ angular.module('ngChemApp')
                 cbh.prefix = urlConfig.instance_path.base;
                 cbh.api_base = urlConfig.admin.list_endpoint;
                 cbh.searchPage =   function(){
-                  $location.url('/search?limit=&offset=');
+                  $state.go('cbh.search', {project__project_key__in: window.projectKeys.join(",")} );
                 }
                 $scope.projects = projectList.objects;
 
@@ -198,7 +198,6 @@ angular.module('ngChemApp')
 
               paramsAndForm: ['$stateParams', 'searchUrlParams', 
                   function($stateParams, searchUrlParams){
-                      
                       return searchUrlParams.setup($stateParams, {molecule: {}});
                   }],
               
