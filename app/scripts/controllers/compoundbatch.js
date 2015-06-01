@@ -77,12 +77,14 @@ angular.module('ngChemApp')
         $state.go($state.current.name,newParams);
     };
     var childScope;
-    
+
     $scope.imageCallback = function() {
-        $location.hash('search-bottom');
+        
 
         // call $anchorScroll()
-        if($stateParams.doScroll == true){
+        if($stateParams.doScroll){
+            $location.hash('search-bottom');
+            console.log($stateParams);
             $anchorScroll();
         }
     }
