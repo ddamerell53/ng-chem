@@ -1,6 +1,9 @@
 <div class="modal-header">
-    <button type="button" class="close pull-right" data-dismiss="alert" aria-label="Close" ng-click="modalInstance.dismiss('cancel');"><span aria-hidden="true" class="glyphicon glyphicon-remove-circle"></span></button>
-    <h2 class="modal-title blue nexa">Batch {{mol.id}} - {{mol.chemblId}} <a href="" clip-copy="mol.chemblId" clip-click="" role="button" class="btn btn-default"><span class="glyphicon glyphicon-file"></span> Copy</a> <a href="" clip-copy="mol.properties.cdxml" clip-click="" role="button" class="btn btn-default"><span class="glyphicon glyphicon-file"></span> Copy CDXML</a> </h2>
+    <button ng-if="!mol.editMode" type="button" class="close pull-right" data-dismiss="alert" aria-label="Close" ng-click="modalInstance.dismiss('cancel');"><span aria-hidden="true" class="glyphicon glyphicon-remove-circle"></span></button>
+    <button ng-if="mol.editMode" type="button" class="close pull-right" data-dismiss="alert" aria-label="Close and cancel changes" ng-click="modalInstance.dismiss('cancel');"><span aria-hidden="true" class="glyphicon glyphicon-remove-circle"></span></button>
+    <h2 class="modal-title blue nexa">Batch {{mol.id}} - {{mol.chemblId}} <a href="" clip-copy="mol.chemblId" clip-click="" role="button" class="btn btn-default"><span class="glyphicon glyphicon-file"></span> Copy</a> 
+
+<a href="" clip-copy="mol.properties.cdxml" clip-click="" role="button" class="btn btn-default"><span class="glyphicon glyphicon-file"></span> Copy CDXML</a> </h2>
     
 
 </div>
@@ -8,9 +11,9 @@
     <div class="row" ng-hide="mol.blindedBatchId">
     	<div class="col-xs-12 col-md-6" ng-show="mol.ctab.length > 0">
 <img ng-if="mol.properties.bigImageSrc" class="col-xs-12"  ng-src="{{mol.properties.bigImageSrc}}"></img>
-
-<a href="#" ng-show="mol.cdxml && mol.properties.bigImageSrc" clip-copy="mol.cdxml" clip-click="e.preventDefault()" role="button" class="btn btn-xs btn-primary pull-right" >Copy CDXML</a>
+<a href="#"  clip-copy="mol.properties.cdxml" clip-click="" role="button" class="btn btn-xs btn-primary pull-right" >Copy CDXML</a>
         </div>
+
 
 <div class="col-xs-12 col-md-6 " >
     <div class="col-xs-12 " >
@@ -70,7 +73,8 @@
     </div>
 
 <div class="modal-footer">
-    <button class="btn btn-danger" ng-click="modalInstance.dismiss('cancel');">Close</button>
+    <button class="btn btn-primary"  ng-show="mol.editMode" ng-click="updateBatch();modalInstance.dismiss('cancel');">Update and Close</button>
+    <button class="btn btn-danger" ng-click="modalInstance.dismiss('cancel');">Close <span ng-show="editMode">and Cancel Changes</span></button>
 </div>
 
 

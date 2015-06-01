@@ -25,16 +25,6 @@ angular.module('ngChemApp')
         }, function (newValue, oldValue) {
             scope.windowHeight = newValue.h;
             scope.windowWidth = newValue.w;
-            // scope.resizeWithOffset = function (offsetH) {
-
-            //     scope.$eval(attr.notifier);
-
-            //     return { 
-            //         'height': (newValue.h - offsetH) + 'px'
-            //         //,'width': (newValue.w - 100) + 'px' 
-            //     };
-            // };
-
         }, true);
 
         w.bind('resize', function () {
@@ -76,7 +66,6 @@ angular.module('ngChemApp')
               var cd_width = jQuery('#chemdoodle-holder').width();
               jQuery('#chemdoodle-holder').html('<canvas id="chemdoodle" tabindex="1"></canvas>');
               element = new ChemDoodle.SketcherCanvas('chemdoodle', cd_width, 300, {isMobile: true,oneMolecule:true});
-        
               //if we have a retained molecule, load that into the canvas
               //otherwise let the Canvas initialise with its default methane molecule
               if(scope.localMolfile != '') {
