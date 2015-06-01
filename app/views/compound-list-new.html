@@ -11,7 +11,7 @@
 
         <div ng-if="listOrGallery.choice == 'list'">
             <handsoncompoundtable cbh="cbh" compounds="compoundBatches.data"></handsoncompoundtable>
-            <div style="min-height:500px;" ng-show="noData" class="text-center"><img src="images/loader.gif"></div>
+            <div style="min-height:500px;" ng-show="noData" class="text-center"><img ng-show="!noData" src="images/loader.gif"></div>
 
             <table ng-show="">
                 <tr dir-paginate="compoundBatch in compoundBatches.data | itemsPerPage: compoundBatchesPerPage" total-items="totalCompoundBatches" current-page="pagination.current">
