@@ -20,21 +20,45 @@ angular.module('ngChemApp')
     if($stateParams.viewType) {
         $scope.listOrGallery.choice = $stateParams.viewType;
     }
-
-    $scope.itemsPerPage = [
-        {
-            label: "10",
-            value: 10,       
-        },
-        {
-            label:"20",
-            value: 20,       
-        },
-        {
-            label:"50",
-            value: 50,       
-        },
+    var listPerPage = [
+        { label: "10", value: 10 },
+        { label: "20", value: 20 },
+        { label: "50", value: 50 },
     ];
+
+    var galleryPerPage = {
+        largeScreen : [
+            { label: "40", value: 40 },
+            { label: "80", value: 80 },
+            { label: "120", value: 120 },
+        ],
+        smallScreen: [
+            { label: "30", value: 30 },
+            { label: "60", value: 60 },
+            { label: "90", value: 90 },
+        ],
+    } 
+    //initialise this as list first
+    if(angular.isDefined($stateParams.viewType)) {
+        if($stateParams.viewType == 'list') {
+            $scope.itemsPerPage = angular.copy(listPerPage);
+        }
+        else if($stateParams.viewType == 'gallery'){
+            
+            var w = angular.element($window);
+            if(w.width() > 1200) {
+                console.log(galleryPerPage.largeScreen);
+                $scope.itemsPerPage = angular.copy(galleryPerPage.largeScreen);
+            }
+            else {
+                console.log("wide window");
+                $scope.itemsPerPage = angular.copy(galleryPerPage.smallScreen);
+            }
+        }
+    }
+    else {
+        $scope.itemsPerPage = angular.copy(listPerPage);
+    }
     $scope.pagination = {
         current: 1,
         compoundBatchesPerPage: $scope.itemsPerPage[0],
@@ -43,7 +67,12 @@ angular.module('ngChemApp')
     if(angular.isDefined($stateParams.compoundBatchesPerPage)){
        //$scope.compoundBatchesPerPage = $stateParams.compoundBatchesPerPage;    
        var filtered = $filter("filter")($scope.itemsPerPage, $stateParams.compoundBatchesPerPage, true);
-       $scope.pagination.compoundBatchesPerPage = filtered[0];
+       if(filtered[0]) {
+        $scope.pagination.compoundBatchesPerPage = filtered[0]; 
+       }
+       else {
+        $scope.pagination.compoundBatchesPerPage = $scope.itemsPerPage[0];
+       }
     }
     else {
         $scope.pagination.compoundBatchesPerPage = $scope.itemsPerPage[0];
@@ -65,7 +94,9 @@ angular.module('ngChemApp')
     $scope.changeNumberPerPage = function(viewType) {
         var newParams = angular.copy($stateParams);
         newParams.page = 1;
-        if(viewType == 'list') {         
+        newParams.compoundBatchesPerPage = $scope.pagination.compoundBatchesPerPage.value;
+        newParams.viewType = viewType;
+        /*if(viewType == 'list') {         
             newParams.compoundBatchesPerPage = $scope.pagination.compoundBatchesPerPage.value;
         }
         else {
@@ -76,8 +107,8 @@ angular.module('ngChemApp')
             else {
                 newParams.compoundBatchesPerPage = $scope.pagination.compoundBatchesPerPage.value;
             }
-        }
-        newParams.viewType = viewType;
+        }*/
+        
         newParams.doScroll = 'true';
         $state.go($state.current.name,newParams);
     };
@@ -108,7 +139,6 @@ angular.module('ngChemApp')
 
     
     function getResultsPage(pageNumber) {
-        console.log($scope.pagination.compoundBatchesPerPage);
         filters.limit = $scope.pagination.compoundBatchesPerPage.value;
         filters.offset = (pageNumber -1) * $scope.pagination.compoundBatchesPerPage.value;
         CBHCompoundBatch.query(filters).then(function(result) {

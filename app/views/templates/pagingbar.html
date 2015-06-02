@@ -7,7 +7,7 @@
             <input type="radio" ng-model="listOrGallery.choice" value="gallery" id="gallery-btn" name="listOrGallery" style="display:none;" ng-change="changeNumberPerPage('gallery')"><span class="glyphicon glyphicon-picture"></span><span class="hidden-xs hidden-sm"> Gallery</span>
         </label>
         <!-- <select ng-model="compoundBatchesPerPage" ng-change="changeNumberPerPage(listOrGallery.choice)" > -->
-        <small><select ng-options="item.value for item in itemsPerPage track by item.value" ng-model="pagination.compoundBatchesPerPage" ng-change="changeNumberPerPage(listOrGallery.choice)"></select> per page</small>
+        <small><select ng-options="item.value for item in itemsPerPage track by item.value" ng-model="pagination.compoundBatchesPerPage" ng-change="changeNumberPerPage(listOrGallery.choice)"></select> <span style="font-size:0.7em;">per page</span></small>
     </div>
     <div class="col-xs-8 col-sm-7 ">
         
