@@ -23,6 +23,7 @@ var ngChemApp =  angular.module('ngChemApp', [
     'ngTouch',
     'ui.router',
     'ui.bootstrap',
+    'ui.ace',
     'dndLists',
     'flow',
     'ngClipboard',

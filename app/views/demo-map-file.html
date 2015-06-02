@@ -8,7 +8,6 @@
 			</div>
 		</div>
 		<div ng-include="'views/templates/map-file-buttons.html'"></div>
-
    <div ng-show="processingMultiBatch" class="col-centered bubblingG">
               <span id="bubblingG_1">
               </span>
@@ -40,7 +39,7 @@
 						
 							<button class="btn btn-default" ng-click="automap()">Automap</button>
 						
-						<ul class="list-unstyled dimensions-list" dnd-list="list" style="min-height:60px;">
+						<ul class="list-unstyled dimensions-list" dnd-list="list"  style="min-height:60px;">
 							
 							<li class="dimension alert-success" 
 							ng-repeat="item in list"
@@ -68,10 +67,11 @@
 							</p>
 						</div>
 						<div class="col-xs-6">
-							<ul class=" list-unstyled well dimensions-container" dnd-list="value.list" style="">
+							<ul class=" list-unstyled well dimensions-container" dnd-list="value.list" dnd-disable-if="value.list.length >= 1" style="">
 								<li class=" draggable alert-success dimension" style=""
 								ng-repeat="item in value.list"
 						        dnd-draggable="item"
+
 						        dnd-moved="value.list.splice($index, 1)"
 						        dnd-effect-allowed="move"
 						        dnd-selected="dropmodels.selected = item"

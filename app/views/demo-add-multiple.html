@@ -119,7 +119,7 @@
 	<div class="col-sm-6">
 		<div class="form-group">
 			<label for="text_input" class="blue text-center"><strong class="nexa">Paste your SMILES or IDs here</strong></label>
-			<textarea id="text_input" name="text_input" ng-change="parseInput()" class="form-control" rows="5" ng-model="input_string.inputstring" ng-model-options="{ debounce:700 }"></textarea>
+			<div ui-ace ng-change="parseInput()" ng-model="input_string.inputstring" class="form-control" style="height:100px"></div>
 		</div>
 	</div>
 	<div class="col-sm-6">
@@ -135,9 +135,9 @@
 <div class="row" data-ng-show="format_not_detected">
 		<div class="alert alert-danger" id="format_not_detected">{{messages.format_not_detected}}</div>
 </div>
-<div class="row" data-ng-show="ids_not_processed">
+<!-- <div class="row" data-ng-show="ids_not_processed">
 		<div class="alert alert-danger" id="ids_not_processed">{{messages.ids_not_processed}}</div>
-</div>
+</div> -->
 
 <!-- <ng-include ng-show="input_string.inputstring" src="'views/templates/validation.html'"></ng-include> -->
 	<div ng-show="idsInProcessing" class="col-centered bubblingG">
@@ -153,7 +153,6 @@
 		<a class="btn btn-primary pull-right" ng-disabled="idsInProcessing || ids_not_processed + format_not_detected || input_string.inputstring == '' " role="button" ng-click="validatePage()">Process Ids</a> <!--ui-sref="cbh.projects.project.demo.map"-->
 	</div>
 </div>
-
 
 
 

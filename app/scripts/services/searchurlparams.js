@@ -47,8 +47,8 @@ angular.module('ngChemApp')
             }
             if (stateParams.related_molregno__chembl__chembl_id__in) {
                 var items = stateParams.related_molregno__chembl__chembl_id__in.split(",");
-
                 searchForm.related_molregno__chembl__chembl_id__in = stateParams.related_molregno__chembl__chembl_id__in.split(",");
+            
             }
             if (stateParams.functional_group) {
                 searchForm.functional_group = stateParams.functional_group;
@@ -94,6 +94,8 @@ angular.module('ngChemApp')
             //for now though, just send the smiles to the web service
             if (searchForm.functional_group) {
                 params["functional_group"] = searchForm.functional_group;
+            }else {
+                params["functional_group"] = undefined;
             }
 
             if (searchForm.smiles) {

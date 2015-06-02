@@ -43,7 +43,14 @@
           <div class="report-type alert-danger"><strong class="nexa">Errors</strong></div>
           <div class="report-value alert-danger"><strong class="nexa">{{validatedData.errors}}</strong></div>
           <div  ng-show="validatedData.errors > 0 && !single">
-            <span ng-repeat="error in validatedData.fileerrors" >{{error.index}}<span ng-show="!$last">, </span> when counting from the top.</span>
+            at positions 
+            <span ng-repeat="error in validatedData.fileerrors" > 
+            <span ng-show="$first">{{error.index}} </span>
+            <span ng-show="!$last && !$first">, {{error.index}}</span>
+            <span ng-show="$last && !$first"> and {{error.index}} </span>
+            <span ng-show="$last">
+            when counting from the top.</span>
+          </span>
           </div>
         </div>
       </div>
