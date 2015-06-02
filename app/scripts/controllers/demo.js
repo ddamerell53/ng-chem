@@ -127,23 +127,7 @@ app.controller('DemoCtrl', ['$scope', '$rootScope', '$state', 'ChEMBLFactory', '
                 "dataTypes": ["Auto-detect", "Smiles", "INCHI"],
                 "dataTypeSelected": "Auto-detect"
             };
-            $scope.dragmodels = {
-                selected: null,
-                lists: {
-                    "headers": []
-                }
-            };
-            $scope.dropmodels = {
-                selected: null,
-                lists: [] //will be replaced by database fields
-            }
-            $scope.binmodels = {
-                selected: null,
-                lists: {
-                    "ignored": []
-                } //will be replaced by database fields
-            }
-
+            
             angular.forEach(flowfiles, function(file) {
                 file.cancel();
             });
@@ -489,26 +473,7 @@ app.controller('DemoCtrl', ['$scope', '$rootScope', '$state', 'ChEMBLFactory', '
 
         };
 
-        $scope.setupMapping = function() {
-            //set up test lists of droppables here
-            $scope.dragmodels = {
-                selected: null,
-                lists: {
-                    "headers": []
-                }
-            };
-            $scope.dropmodels = {
-                selected: null,
-                lists: [] //will be replaced by database fields
-            }
-            $scope.binmodels = {
-                selected: null,
-                lists: {
-                    "ignored": []
-                } //will be replaced by database fields
-            }
-        }
-        $scope.setupMapping();
+
 
 
 
@@ -558,27 +523,67 @@ app.controller('DemoCtrl', ['$scope', '$rootScope', '$state', 'ChEMBLFactory', '
 
         };
 
-        $scope.paginateNext = function() {
-            CBHCompoundBatch.paginate($scope.finalData.meta.next).then(
-                function(data) {
-                    $scope.finalData.objects = result.objects;
-                    $scope.finalData.meta = result.meta;
+
+
+        $scope.automap = function() {
+            angular.forEach($scope.dropmodels.lists, function(value) {
+                angular.forEach($scope.dragmodels.lists.headers, function(hdr, k) {
+                    if (hdr.label == value.name) {
+                        $scope.dragmodels.lists.headers.splice(k, 1);
+                        value.list.push(hdr);
+                    }
+                });
+            });
+        };
+
+
+            // $scope.dragmodels = {
+            //     selected: null,
+            //     lists: {
+            //         "headers": []
+            //     }
+            // };
+            // $scope.dropmodels = {
+            //     selected: null,
+            //     lists: [] //will be replaced by database fields
+            // }
+            // $scope.binmodels = {
+            //     selected: null,
+            //     lists: {
+            //         "ignored": []
+            //     } //will be replaced by database fields
+            // }
+
+
+        $scope.setupMapping = function() {
+            //set up test lists of droppables here
+            $scope.dragmodels = {
+                selected: null,
+                lists: {
+                    "headers": []
                 }
-            );
+            };
+            $scope.dropmodels = {
+                selected: null,
+                lists: [] //will be replaced by database fields
+            }
+            $scope.binmodels = {
+                selected: null,
+                lists: {
+                    "ignored": []
+                } //will be replaced by database fields
+            }
+            angular.copy($scope.myform).map(function(i){
+                i.name=i.key; 
+                i.list = [];
+                if(i.name != $scope.struc_col_str){
+                   $scope.dropmodels.lists.push(i); 
+               }else{
+                    $scope.binmodels.lists.ignored.push(i);
+               }                   
+            });
         }
-
-        $scope.paginatePrev = function() {
-            CBHCompoundBatch.paginate($scope.finalData.meta.previous).then(
-                function(data) {
-                    $scope.finalData.objects = result.objects;
-                    $scope.finalData.meta = result.meta;
-                }
-            );
-        }
-
-
-
-
+        $scope.setupMapping();
         $scope.saveCustomFieldMapping = function() {
             //create a new json object containing the drag, drop and bin models as they are
             //pass to the backend to rationalise when reading the file
@@ -606,6 +611,25 @@ app.controller('DemoCtrl', ['$scope', '$rootScope', '$state', 'ChEMBLFactory', '
 
         };
 
+
+        $scope.resetMappingForm = function() {
+            //put all the draggable fields back to where they came from (assuming no automapping is displayed)
+            //loop through binmodels and put back into dragmodels
+            // angular.forEach($scope.binmodels.lists.ignored, function(value) {
+            //     $scope.dragmodels.lists.headers.push(value);
+            // });
+            // $scope.binmodels.lists.ignored = [];
+            // //loop through dropmodels and put into dragmodels
+            // angular.forEach($scope.dropmodels.lists, function(value) {
+            //     if (value.list.length == 1) {
+            //         $scope.dragmodels.lists.headers.push(value.list[0]);
+            //         value.list = [];
+            //     }
+            //     value.list = [];
+            // });
+            $scope.setupMapping();
+
+        };
         //these things
 
         $scope.updateStrucCol = function(str) {
@@ -658,11 +682,7 @@ app.controller('DemoCtrl', ['$scope', '$rootScope', '$state', 'ChEMBLFactory', '
                         $scope.headers_not_retrieved = true;
                         $scope.filesInProcessing = false;
                     });
-                    angular.copy($scope.myform).map(function(i){
-                        i.name=i.key; 
-                        i.list = [];
-                        $scope.dropmodels.lists.push(i);
-                    });
+                    
             }
         };
         //convert our molfile or excel file containing smiles into CBHCompoundBatch objects 
@@ -696,35 +716,9 @@ app.controller('DemoCtrl', ['$scope', '$rootScope', '$state', 'ChEMBLFactory', '
 
 
 
-        $scope.automap = function() {
-            angular.forEach($scope.dropmodels.lists, function(value) {
-                angular.forEach($scope.dragmodels.lists.headers, function(hdr, k) {
-                    if (hdr.label == value.name) {
-                        $scope.dragmodels.lists.headers.splice(k, 1);
-                        value.list.push(hdr);
-                    }
-                });
-            });
-        };
+        
 
-
-        $scope.resetMappingForm = function() {
-            //put all the draggable fields back to where they came from (assuming no automapping is displayed)
-            //loop through binmodels and put back into dragmodels
-            angular.forEach($scope.binmodels.lists.ignored, function(value) {
-                $scope.dragmodels.lists.headers.push(value);
-            });
-            $scope.binmodels.lists.ignored = [];
-            //loop through dropmodels and put into dragmodels
-            angular.forEach($scope.dropmodels.lists, function(value) {
-                if (value.list.length == 1) {
-                    $scope.dragmodels.lists.headers.push(value.list[0]);
-                    value.list = [];
-                }
-                value.list = [];
-            });
-
-        };
+       
 
         $scope.getMessage = function(lookup_str) {
             return MessageFactory.getMessage(lookup_str);
