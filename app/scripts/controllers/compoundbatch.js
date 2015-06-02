@@ -84,7 +84,6 @@ angular.module('ngChemApp')
         // call $anchorScroll()
         if($stateParams.doScroll){
             $location.hash('search-bottom');
-            console.log($stateParams);
             $anchorScroll();
         }
     }

@@ -202,10 +202,6 @@ app.controller('DemoCtrl', ['$scope', '$rootScope', '$state', 'ChEMBLFactory', '
             $scope.cust_fields_count = 0
             $scope.custom_fields = [];
             $scope.custom_field_choices = [];
-
-
-
-
             //do we need any back-end resetting here?
 
         };
@@ -662,32 +658,13 @@ app.controller('DemoCtrl', ['$scope', '$rootScope', '$state', 'ChEMBLFactory', '
                         $scope.headers_not_retrieved = true;
                         $scope.filesInProcessing = false;
                     });
-
-                //call to populate droppable fields
-                CBHCompoundBatch.fetchExistingFields(projectKey).then(
-                    function(data) {
-                        //do something with the returned data
-                        angular.forEach(data.data.fieldNames, function(value) {
-                            //create a blank list for that custom field
-                            //"BW_ID", "Formula", "Mass_mg", "MolWeight"
-                            value.list = [];
-                            $scope.dropmodels.lists.push(value);
-                            //now try to automap the headers to the fields
-
-                        });
-
-                    },
-                    function(error) {
-                        console.log(error);
-                        $scope.filesInProcessing = false;
+                    angular.copy($scope.myform).map(function(i){
+                        i.name=i.key; 
+                        i.list = [];
+                        $scope.dropmodels.lists.push(i);
                     });
-
             }
-
-
         };
-
-
         //convert our molfile or excel file containing smiles into CBHCompoundBatch objects 
         //so they can be used in the validate methods provided for SMILES/InChi lists
         //this method also needs to pass the field mapping from the map page
@@ -720,21 +697,14 @@ app.controller('DemoCtrl', ['$scope', '$rootScope', '$state', 'ChEMBLFactory', '
 
 
         $scope.automap = function() {
-            console.log("Automap being called");
             angular.forEach($scope.dropmodels.lists, function(value) {
-                //console.log(key);
                 angular.forEach($scope.dragmodels.lists.headers, function(hdr, k) {
                     if (hdr.label == value.name) {
                         $scope.dragmodels.lists.headers.splice(k, 1);
                         value.list.push(hdr);
                     }
                 });
-
             });
-
-
-
-
         };
 
 

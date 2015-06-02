@@ -85,9 +85,6 @@ angular.module('ngChemApp')
         return $http.post( urlConfig.cbh_batch_upload.list_endpoint + "/headers/", {"projectKey" :projectKey, file_name:file_name });
     };
 
-    CBHCompoundBatch.fetchExistingFields = function(projectKey) {
-        return $http.post ( urlConfig.cbh_compound_batches.list_endpoint + "/existing/", {"projectKey" :projectKey});
-    };
     CBHCompoundBatch.query = function(filters) {
          var promise = $http( 
             {

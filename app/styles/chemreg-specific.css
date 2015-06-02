@@ -11,6 +11,9 @@ li a svg.svg {
   font-family: 'Courier New', Courier, 'Lucida Sans Typewriter', 'Lucida Typewriter', monospace;
 
 }
+.form-group {
+  margin-bottom: 10px;
+}
 ul.pagination li a {
   padding: 6px 15px;
 }

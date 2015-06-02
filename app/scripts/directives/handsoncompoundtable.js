@@ -32,7 +32,6 @@ angular.module('ngChemApp')
                     
                     if ( pids.hasOwnProperty(myproj.id.toString())){
                         angular.forEach(myproj.schemaform.form, function(i){
-                          console.log(i)
                           if(cNames.indexOf( i.key) < 0){
 
                             cNames.push(i.key);
@@ -153,7 +152,6 @@ angular.module('ngChemApp')
               function coverRenderer (instance, td, row, col, prop, value, cellProperties) {
                 var escaped = Handsontable.helper.stringify(value),
                   img;
-                  console.log("I am getting here");
                   img = document.createElement('IMG');
                   //if(value != "") {
                     img.src = value;  
