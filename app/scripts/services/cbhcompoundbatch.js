@@ -130,9 +130,9 @@ angular.module('ngChemApp')
         $q.all(promises).then(function(data){
           var index = 0;
           angular.forEach(data, function(d){
-            objects[index].properties[name] = "data:image/png;base64," + d.data;
-            //console.log(objects[index].properties[name]);
-            if(objects[index].properties[name] == "data:image/png;base64,") {
+            if(d.data.toString()){
+              objects[index].properties[name] = "data:image/png;base64," + d.data;
+            }else{
               objects[index].properties[name] = "images/no-structure.png";
             }
 

@@ -47,8 +47,9 @@ angular.module('ngChemApp')
             }
             if (stateParams.related_molregno__chembl__chembl_id__in) {
                 var items = stateParams.related_molregno__chembl__chembl_id__in.split(",");
-
+                console.log(items);
                 searchForm.related_molregno__chembl__chembl_id__in = stateParams.related_molregno__chembl__chembl_id__in.split(",");
+            
             }
             if (stateParams.functional_group) {
                 searchForm.functional_group = stateParams.functional_group;

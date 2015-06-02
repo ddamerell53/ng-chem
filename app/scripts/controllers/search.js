@@ -11,7 +11,7 @@ angular.module('ngChemApp')
   .controller('SearchCtrl',['$scope','$http', '$rootScope', '$filter', '$stateParams', '$location', '$state', '$timeout', 'projectFactory', 'gridconfig', 'CBHCompoundBatch', 'urlConfig', 'paramsAndForm', 'searchUrlParams',
     function ($scope,$http, $rootScope, $filter, $stateParams, $location, $state, $timeout, projectFactory, gridconfig, CBHCompoundBatch, urlConfig, paramsAndForm, searchUrlParams) {
 
-    $scope.searchFormSchema= $scope.cbh.projects.searchform;
+    $scope.searchFormSchema= angular.copy($scope.cbh.projects.searchform);
     $scope.refresh = function(schema, options, search){
         return $http.get(options.async.url + "?chembl_id__chembl_id__startswith=" + search);
     }
@@ -19,8 +19,8 @@ angular.module('ngChemApp')
     $scope.searchFormSchema.form[0].items[0].options.async.call = $scope.refresh;
 
     
-    if($stateParams.related_molregno__chembl__chembl_id__in) {
-        $scope.searchFormSchema.schema.properties.related_molregno__chembl__chembl_id__in.items = items.map(function(i){return {value : i, label : i}});
+    if($scope.searchForm.related_molregno__chembl__chembl_id__in) {
+        $scope.searchFormSchema.schema.properties.related_molregno__chembl__chembl_id__in.items = $scope.searchForm.related_molregno__chembl__chembl_id__in.map(function(i){return {value : i, label : i}});
     }
 
     $scope.cancel = function(){
