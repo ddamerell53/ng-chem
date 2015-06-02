@@ -17,24 +17,13 @@ angular.module('ngChemApp')
     // send users to the form page 
     $urlRouterProvider.otherwise('/404');
 
-    /*$urlRouterProvider.rule(function ($injector, $location) {
-       //what this function returns will be set as the $location.url
-        var path = $location.path(), normalized = path.toLowerCase();
-        if (path != normalized) {
-            //instead of returning a new url string, I'll just change the $location.path directly so I don't have to worry about constructing a new url string and so a new state change is not triggered
-            $location.replace().path(normalized);
-        }
-        // because we've returned nothing, no state change occurs
-    });*/
-      //$rootScopeProvider.digestTtl(15); 
+
       $urlMatcherFactoryProvider.defaultSquashPolicy("slash");      
       var modalInstance;
       $stateProvider
          .state('cbh', {
           url: '',
-            /*data: {
-              login_rule: ""
-            },*/
+
             templateUrl: 'views/cbh.html',
             abstract : true,
             
@@ -76,14 +65,14 @@ angular.module('ngChemApp')
                 };
 
               cbh.openSingleMol = function(mol) {
-                $scope.mol = mol;
                   $scope.modalInstance = $modal.open({
                     templateUrl: 'views/single-compound.html',
                     size: 'lg',
                     
                     controller: ['$scope','$rootScope', '$modalInstance', '$timeout', 'CBHCompoundBatch',
                     function($scope, $rootScope, $modalInstance,  $timeout, CBHCompoundBatch) {
-                      $scope.mol = mol;
+                      $scope.editMode = false;
+                      $scope.mol = angular.copy(mol);
                       var split = mol.project.split("/");
                       var projid = split[split.length-1];
                       $scope.projectWithCustomFieldData;
@@ -141,9 +130,10 @@ angular.module('ngChemApp')
                                                 "projectKey" : $scope.projectWithCustomFieldData.project_key,
                                                 "id": $scope.mol.id}).then(
                             function(data){
-                              $scope.mol=data;
-                              mol=data;
+                              $scope.mol.customFields=data.customFields;
+                              mol.customFields=data.customFields;
                               $scope.update_success = true;
+                              $scope.editMode = false;
                               $scope.init();
                               $timeout($scope.removeAlert, 5000);
                             }

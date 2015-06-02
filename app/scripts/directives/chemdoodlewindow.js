@@ -25,17 +25,6 @@ angular.module('ngChemApp')
         }, function (newValue, oldValue) {
             scope.windowHeight = newValue.h;
             scope.windowWidth = newValue.w;
-            console.log("test");
-            // scope.resizeWithOffset = function (offsetH) {
-
-            //     scope.$eval(attr.notifier);
-
-            //     return { 
-            //         'height': (newValue.h - offsetH) + 'px'
-            //         //,'width': (newValue.w - 100) + 'px' 
-            //     };
-            // };
-
         }, true);
 
         w.bind('resize', function () {
@@ -72,20 +61,25 @@ angular.module('ngChemApp')
         });      
         redraw();  
         function redraw(){
-          var cd_width = jQuery('#chemdoodle-holder').width();
-          jQuery('#chemdoodle-holder').html('<canvas id="chemdoodle" tabindex="1"></canvas>');
-        element = new ChemDoodle.SketcherCanvas('chemdoodle', cd_width, 300, {isMobile: true,oneMolecule:true});
+
+          if (jQuery('#chemdoodle-holder').is(":visible")){
+              var cd_width = jQuery('#chemdoodle-holder').width();
+              jQuery('#chemdoodle-holder').html('<canvas id="chemdoodle" tabindex="1"></canvas>');
+              element = new ChemDoodle.SketcherCanvas('chemdoodle', cd_width, 300, {isMobile: true,oneMolecule:true});
+              //if we have a retained molecule, load that into the canvas
+              //otherwise let the Canvas initialise with its default methane molecule
+              if(scope.localMolfile != '') {
+                element.loadMolecule(ChemDoodle.readMOL(scope.localMolfile));
+              }
+              if (scope.molecule.molfile != '' && scope.molecule.molfile !== undefined){
+                element.loadMolecule(ChemDoodle.readMOL(scope.molecule.molfile ));
+              }
+              //call repaint to display either the retained or default molecule
+              element.repaint();
+          }else{
+            console.log("notredraw");
+          }
         
-        //if we have a retained molecule, load that into the canvas
-        //otherwise let the Canvas initialise with its default methane molecule
-        if(scope.localMolfile != '') {
-          element.loadMolecule(ChemDoodle.readMOL(scope.localMolfile));
-        }
-        if (scope.molecule.molfile != '' && scope.molecule.molfile !== undefined){
-          element.loadMolecule(ChemDoodle.readMOL(scope.molecule.molfile ));
-        }
-        //call repaint to display either the retained or default molecule
-        element.repaint();
         }
         
 
