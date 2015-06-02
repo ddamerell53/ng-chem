@@ -156,12 +156,9 @@ angular.module('ngChemApp')
                   img;
                   console.log("I am getting here");
                   img = document.createElement('IMG');
-                  if(value != "") {
+                  //if(value != "") {
                     img.src = value;  
-                  }
-                  else {
-                    img.src = "images/no-structure.png";
-                  }
+                  //}
                   //img.src = value;
               
                   Handsontable.Dom.addEvent(img, 'mousedown', function (e){

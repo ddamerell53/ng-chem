@@ -131,6 +131,11 @@ angular.module('ngChemApp')
           var index = 0;
           angular.forEach(data, function(d){
             objects[index].properties[name] = "data:image/png;base64," + d.data;
+            //console.log(objects[index].properties[name]);
+            if(objects[index].properties[name] == "data:image/png;base64,") {
+              objects[index].properties[name] = "images/no-structure.png";
+            }
+
             index ++;
           });
           if(angular.isDefined(callback)) {
