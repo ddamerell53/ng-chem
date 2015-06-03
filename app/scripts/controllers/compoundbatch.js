@@ -21,21 +21,21 @@ angular.module('ngChemApp')
         $scope.listOrGallery.choice = $stateParams.viewType;
     }
     var listPerPage = [
-        { label: "10", value: 10 },
-        { label: "20", value: 20 },
-        { label: "50", value: 50 },
+        { label: "10/page", value: 10 },
+        { label: "20/page", value: 20 },
+        { label: "50/page", value: 50 },
     ];
 
     var galleryPerPage = {
         largeScreen : [
-            { label: "40", value: 40 },
-            { label: "80", value: 80 },
-            { label: "120", value: 120 },
+            { label: "40/page", value: 40 },
+            { label: "80/page", value: 80 },
+            { label: "120/page", value: 120 },
         ],
         smallScreen: [
-            { label: "30", value: 30 },
-            { label: "60", value: 60 },
-            { label: "90", value: 90 },
+            { label: "30/page", value: 30 },
+            { label: "60/page", value: 60 },
+            { label: "90/page", value: 90 },
         ],
     } 
     //initialise this as list first
