@@ -154,7 +154,8 @@ angular.module('ngChemApp')
                   img;
                   img = document.createElement('IMG');
                   //if(value != "") {
-                    img.src = value;  
+                    img.src = value;
+                    img.style.cursor = "pointer";
                   //}
                   //img.src = value;
               

@@ -467,6 +467,14 @@ ul.dropdown-menu.ng-valid-date {
 td, th {
   font-size:14px;
 }
+.gallery-item {
+  cursor: pointer;
+  padding-top:15px;
+}
+.gallery-item:hover {
+  background-color: #eee;
+  border-radius: 5px;
+}
 /* Small changes to make the app look less gigantic on smaller screens */
 @media (max-width: 991px) {
   p.nexa, p, strong.nexa, .help-block, .form-group, .form-control {
