@@ -33,21 +33,21 @@
 
 			<div class="col-lg-3 col-sm-3">
 
-				<div class="row" ng-repeat="list in dragmodels.lists">
+				<div class="row" >
 					<div class="col-xs-12 centered">
 						<p class="nexa blue"><span class="glyphicon glyphicon-list-alt"></span> Fields to create</p>
 						
 							<button class="btn btn-default" ng-click="automap()">Automap</button>
 						
-						<ul class="list-unstyled dimensions-list" dnd-list="list"  style="min-height:60px;">
+						<ul class="list-unstyled dimensions-list" dnd-list="dragmodels.lists.headers"  style="min-height:60px;">
 							
 							<li class="dimension alert-success" 
-							ng-repeat="item in list"
+							ng-repeat="item in dragmodels.lists.headers"
 					        dnd-draggable="item"
-					        dnd-moved="list.splice($index, 1)"
+					        dnd-moved="dragmodels.lists.headers.splice($index, 1)"
 					        dnd-effect-allowed="move"
 					        dnd-selected="dragmodels.selected = item"
-					        ng-class="{'selected': dragmodels.selected === item}"><div>{{item.label}}</div></li>
+					        ng-class="{'selected': dragmodels.selected === item}"><div>{{item.name}}</div></li>
 						</ul>
 					</div>
 				</div>
@@ -75,7 +75,7 @@
 						        dnd-moved="value.list.splice($index, 1)"
 						        dnd-effect-allowed="move"
 						        dnd-selected="dropmodels.selected = item"
-						        ng-class="{'selected': dropmodels.selected === item}"><div>{{item.label}}</div></li>
+						        ng-class="{'selected': dropmodels.selected === item}"><div>{{item.name}}</div></li>
 							</ul>
 						</div>
 					</div>
@@ -95,7 +95,7 @@
 					        dnd-moved="list.splice($index, 1)"
 					        dnd-effect-allowed="move"
 					        dnd-selected="binmodels.selected = item"
-					        ng-class="{'selected': binmodels.selected === item}"><div>{{item.label}}</div></li>
+					        ng-class="{'selected': binmodels.selected === item}"><div>{{item.name}}</div></li>
 						</ul>
 					</div>
 				</div>

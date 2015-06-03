@@ -190,13 +190,6 @@ app.controller('DemoCtrl', ['$scope', '$rootScope', '$state', 'ChEMBLFactory', '
 
         };
 
-        $scope.getValueTypeAhead = function(field) {
-            if (field.allowedValues) {
-                return field.allowedValues.split(",");
-            } else {
-                return [];
-            }
-        }
 
         $scope.cancelFile = function(field) {
             $scope.headers_not_retrieved = false;
@@ -272,59 +265,7 @@ app.controller('DemoCtrl', ['$scope', '$rootScope', '$state', 'ChEMBLFactory', '
             d.smiles = btoa(d.smiles)
         });
 
-        $scope.gridOptionsSingle = {
-            data: 'molecule',
-            showColumnMenu: false,
-            enableColumnReordering: false,
-            columnDefs: [ //{ field: "smiles", displayName: "Structure", cellTemplate:"img-template.html" },
-                {
-                    field: "metadata.labbook_id",
-                    displayName: "Labbook ID"
-                }, {
-                    field: "metedata.stereoSelected.value",
-                    displayName: "Stereochem"
-                }, {
-                    field: "molecularWeight",
-                    displayName: "Mol Weight"
-                }, {
-                    field: "knownDrug",
-                    displayName: "Known Drug"
-                }, {
-                    field: "stdInChiKey",
-                    displayName: "Std InChi Key"
-                }, {
-                    field: "acdLogp",
-                    displayName: "acdLogp"
-                }
-            ]
-        };
-        $scope.gridOptionsBatch = {
-            data: 'parsed_input',
-            showColumnMenu: true,
-            enableColumnReordering: true,
-            columnDefs: [ //{ field: "smiles", displayName: "Structure", cellTemplate:"img-template.html" },
-                {
-                    field: "metadata.labbook_id",
-                    displayName: "Labbook ID"
-                }, {
-                    field: "chemblId",
-                    displayName: "Chembl ID"
-                }, {
-                    field: "molecularWeight",
-                    displayName: "Mol Weight"
-                }, {
-                    field: "knownDrug",
-                    displayName: "Known Drug"
-                }, {
-                    field: "stdInChiKey",
-                    displayName: "Std InChi Key"
-                }, {
-                    field: "acdLogp",
-                    displayName: "acdLogp"
-                }
-            ]
-        };
-
+      
 
         $scope.assignFileId = function(id, ext, file) {
             $scope.startAgain();
@@ -334,7 +275,19 @@ app.controller('DemoCtrl', ['$scope', '$rootScope', '$state', 'ChEMBLFactory', '
             $timeout($scope.parseHeaders, 100);
         }
 
+        $scope.setDragModels = function(){
+            $scope.dragmodels.lists.headers = [];
+                angular.copy($scope.struc_col_options).slice(1).map(function(d){
+                    if($scope.struc_col_str === d.name){
+                        $scope.binmodels.lists.ignored.push(d);
+                    }else{
+                        $scope.dragmodels.lists.headers.push(d);
+                    }
+            });
+        }
         $scope.mapFilePage = function() {
+            $scope.setDragModels();
+
             if ($scope.file_extension == "cdx" || $scope.file_extension == "cdxml" || $scope.file_extension == "" || $scope.dragmodels.lists.headers.length == 0) {
                 $state.go("cbh.projects.project.demo.map.multiple", {
                     'multiple_batch_id': $scope.validatedData.currentBatch
@@ -344,8 +297,6 @@ app.controller('DemoCtrl', ['$scope', '$rootScope', '$state', 'ChEMBLFactory', '
                     'multiple_batch_id': $scope.validatedData.currentBatch
                 });
             }
-
-
         }
         $scope.validatePage = function() {
             if($scope.isFileExcel() && $scope.isStrucColUnspecified()){
@@ -537,24 +488,6 @@ app.controller('DemoCtrl', ['$scope', '$rootScope', '$state', 'ChEMBLFactory', '
         };
 
 
-            // $scope.dragmodels = {
-            //     selected: null,
-            //     lists: {
-            //         "headers": []
-            //     }
-            // };
-            // $scope.dropmodels = {
-            //     selected: null,
-            //     lists: [] //will be replaced by database fields
-            // }
-            // $scope.binmodels = {
-            //     selected: null,
-            //     lists: {
-            //         "ignored": []
-            //     } //will be replaced by database fields
-            // }
-
-
         $scope.setupMapping = function() {
             //set up test lists of droppables here
             $scope.dragmodels = {
@@ -576,11 +509,8 @@ app.controller('DemoCtrl', ['$scope', '$rootScope', '$state', 'ChEMBLFactory', '
             angular.copy($scope.myform).map(function(i){
                 i.name=i.key; 
                 i.list = [];
-                if(i.name != $scope.struc_col_str){
-                   $scope.dropmodels.lists.push(i); 
-               }else{
-                    $scope.binmodels.lists.ignored.push(i);
-               }                   
+                $scope.dropmodels.lists.push(i); 
+                                
             });
         }
         $scope.setupMapping();
@@ -592,16 +522,12 @@ app.controller('DemoCtrl', ['$scope', '$rootScope', '$state', 'ChEMBLFactory', '
             //and do not add the rest (binmodels)
             var mapping_obj = {};
             mapping_obj.new_fields = []
-            mapping_obj.remapped_fields = {}
+            mapping_obj.remapped_fields = []
             angular.forEach($scope.dragmodels.lists.headers, function(value, key) {
-                mapping_obj.new_fields.push(value.label);
+                mapping_obj.new_fields.push(value);
             });
             angular.forEach($scope.dropmodels.lists, function(value) {
-                mapping_obj.remapped_fields[value.name] = []
-                angular.forEach(value.list, function(i_key) {
-                    mapping_obj.remapped_fields[value.name].push(i_key.label);
-                });
-
+                mapping_obj.remapped_fields.push(value)
             });
 
             //mapping_obj.remapped_fields = $scope.dropmodels.lists
@@ -614,35 +540,20 @@ app.controller('DemoCtrl', ['$scope', '$rootScope', '$state', 'ChEMBLFactory', '
 
         $scope.resetMappingForm = function() {
             //put all the draggable fields back to where they came from (assuming no automapping is displayed)
-            //loop through binmodels and put back into dragmodels
-            // angular.forEach($scope.binmodels.lists.ignored, function(value) {
-            //     $scope.dragmodels.lists.headers.push(value);
-            // });
-            // $scope.binmodels.lists.ignored = [];
-            // //loop through dropmodels and put into dragmodels
-            // angular.forEach($scope.dropmodels.lists, function(value) {
-            //     if (value.list.length == 1) {
-            //         $scope.dragmodels.lists.headers.push(value.list[0]);
-            //         value.list = [];
-            //     }
-            //     value.list = [];
-            // });
             $scope.setupMapping();
+            $scope.setDragModels();
 
         };
-        //these things
 
         $scope.updateStrucCol = function(str) {
             //If it is a real structure column then try to process the file
             if (str != "No structure") {
                 $scope.struc_col_str = str;
                 $scope.processFiles();
+                
             }else{
-
-            console.log("tried");
                 $scope.cancelFile();
             }
-            //CBHCompoundBatch.testStructureColumn();      
         }
 
         $scope.parseHeaders = function() {
@@ -663,9 +574,9 @@ app.controller('DemoCtrl', ['$scope', '$rootScope', '$state', 'ChEMBLFactory', '
 
                         //do something with the returned data
                         angular.forEach(data.data.headers, function(value, key) {
-                            $scope.dragmodels.lists.headers.push({
-                                label: value
-                            });
+                            // $scope.dragmodels.lists.headers.push({
+                            //     label: value
+                            // });
                             $scope.struc_col_options.push({
                                 name: value,
                                 value: value
