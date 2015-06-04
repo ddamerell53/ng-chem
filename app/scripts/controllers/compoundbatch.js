@@ -49,6 +49,7 @@ angular.module('ngChemApp')
             if(w.width() > 1200) {
                 console.log(galleryPerPage.largeScreen);
                 $scope.itemsPerPage = angular.copy(galleryPerPage.largeScreen);
+
             }
             else {
                 console.log("wide window");
@@ -63,9 +64,7 @@ angular.module('ngChemApp')
         current: 1,
         compoundBatchesPerPage: $scope.itemsPerPage[0],
     };
-    //$scope.pagination.compoundBatchesPerPage = 10; // this should match however many results your API puts on one page
     if(angular.isDefined($stateParams.compoundBatchesPerPage)){
-       //$scope.compoundBatchesPerPage = $stateParams.compoundBatchesPerPage;    
        var filtered = $filter("filter")($scope.itemsPerPage, $stateParams.compoundBatchesPerPage, true);
        if(filtered[0]) {
         $scope.pagination.compoundBatchesPerPage = filtered[0]; 
@@ -78,7 +77,8 @@ angular.module('ngChemApp')
         $scope.pagination.compoundBatchesPerPage = $scope.itemsPerPage[0];
     }
     if(angular.isDefined($stateParams.page)){
-       $scope.pagination.current = $stateParams.page;    
+       $scope.pagination.current = $stateParams.page;  
+
     }
     
     var filters = { };
@@ -96,19 +96,6 @@ angular.module('ngChemApp')
         newParams.page = 1;
         newParams.compoundBatchesPerPage = $scope.pagination.compoundBatchesPerPage.value;
         newParams.viewType = viewType;
-        /*if(viewType == 'list') {         
-            newParams.compoundBatchesPerPage = $scope.pagination.compoundBatchesPerPage.value;
-        }
-        else {
-            var w = angular.element($window);
-            if(w.width() > 1200) {
-                newParams.compoundBatchesPerPage = $scope.pagination.compoundBatchesPerPage.value;
-            }
-            else {
-                newParams.compoundBatchesPerPage = $scope.pagination.compoundBatchesPerPage.value;
-            }
-        }*/
-        
         newParams.doScroll = 'true';
         $state.go($state.current.name,newParams);
     };
@@ -149,7 +136,10 @@ angular.module('ngChemApp')
                 CBHCompoundBatch.getImages(result.objects, 400, "bigImageSrc");
                 CBHCompoundBatch.getImages( result.objects, size, "imageSrc", $scope.imageCallback); 
 
-            }else{
+            }else if( ( $scope.pagination.current * parseInt($scope.pagination.compoundBatchesPerPage.value)) > $scope.totalCompoundBatches){
+                $scope.pageChanged(1);
+            }
+            else{
                 if($state.current.name==="cbh.search"){
                     $scope.noData = "No Compounds Found. Why not try amending your search?";
                 }else{
@@ -160,16 +150,6 @@ angular.module('ngChemApp')
        });        
     }
     getResultsPage($scope.pagination.current);
-    /*$timeout(function() {
-        $location.hash('search-bottom');
-
-        // call $anchorScroll()
-        if($stateParams.doScroll == true){
-            $anchorScroll();
-        }
-    }, 500)*/
-
-    
 
 
   }]);
