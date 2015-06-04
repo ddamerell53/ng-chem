@@ -21,10 +21,12 @@ app.controller('DemoCtrl', ['$scope', '$rootScope', '$state', 'ChEMBLFactory', '
                 $rootScope.projName = proj.name;
                 $rootScope.headline = "Back to " + $scope.proj.name + " project page";
                 $scope.myschema = proj.schemaform.schema;
-                $scope.myform = proj.schemaform.form;
-                var len = Math.ceil($scope.myform.length / 2);
-                $scope.firstForm = angular.copy($scope.myform).splice(0, len);
-                $scope.secondForm = angular.copy($scope.myform).splice(len);
+                $scope.myform = angular.copy(proj.schemaform.form);
+                $scope.myformmappingpage = angular.copy(proj.schemaform.form);
+
+                var len = Math.ceil(proj.schemaform.form.length / 2);
+                $scope.firstForm = angular.copy(proj.schemaform.form).splice(0, len);
+                $scope.secondForm = angular.copy(proj.schemaform.form).splice(len);
             }
         });
 
@@ -300,7 +302,7 @@ app.controller('DemoCtrl', ['$scope', '$rootScope', '$state', 'ChEMBLFactory', '
         }
         $scope.validatePage = function() {
             if($scope.isFileExcel() && $scope.isStrucColUnspecified()){
-                $scope.processFiles()
+                $scope.processFiles();
             }else{
                 $state.go("cbh.projects.project.demo.validate", {
                     'multiple_batch_id': $scope.validatedData.currentBatch
@@ -479,7 +481,7 @@ app.controller('DemoCtrl', ['$scope', '$rootScope', '$state', 'ChEMBLFactory', '
         $scope.automap = function() {
             angular.forEach($scope.dropmodels.lists, function(value) {
                 angular.forEach($scope.dragmodels.lists.headers, function(hdr, k) {
-                    if (hdr.label == value.name) {
+                    if (hdr.name == value.name) {
                         $scope.dragmodels.lists.headers.splice(k, 1);
                         value.list.push(hdr);
                     }
@@ -506,7 +508,7 @@ app.controller('DemoCtrl', ['$scope', '$rootScope', '$state', 'ChEMBLFactory', '
                     "ignored": []
                 } //will be replaced by database fields
             }
-            angular.copy($scope.myform).map(function(i){
+            angular.copy($scope.myformmappingpage).map(function(i){
                 i.name=i.key; 
                 i.list = [];
                 $scope.dropmodels.lists.push(i); 
@@ -552,6 +554,7 @@ app.controller('DemoCtrl', ['$scope', '$rootScope', '$state', 'ChEMBLFactory', '
                 $scope.processFiles();
                 
             }else{
+                $scope.struc_col_str = "";
                 $scope.cancelFile();
             }
         }
