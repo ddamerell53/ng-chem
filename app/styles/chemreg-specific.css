@@ -475,6 +475,9 @@ td, th {
   background-color: #eee;
   border-radius: 5px;
 }
+.picker__header select {
+  padding: 0 0 0 .5em;
+}
 /* Small changes to make the app look less gigantic on smaller screens */
 @media (max-width: 991px) {
   p.nexa, p, strong.nexa, .help-block, .form-group, .form-control {
