@@ -77,8 +77,6 @@ angular.module('ngChemApp')
                       var projid = split[split.length-1];
                       $scope.projectWithCustomFieldData;
                       angular.forEach($rootScope.projects,function(myproj){
-                        console.log(projid);
-                        console.log(myproj);
                         if(myproj.id.toString() == projid){
                           $scope.projectWithCustomFieldData = myproj
                         }
@@ -115,8 +113,6 @@ angular.module('ngChemApp')
 
                       $scope.firstList = $scope.keyValues.splice(0, len);
                       $scope.secondList = $scope.keyValues;
-                                console.debug($scope.firstList);
-
 
                       };
                       $scope.init();
