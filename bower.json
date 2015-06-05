@@ -19,7 +19,7 @@
     "ui-bootstrap": "~0.11.2",
     "angular-bootstrap": "~0.11.2",
     "FileSaver": "*",
-    "chembiohub-theme": "chembiohub-theme#master",
+    "chembiohub-theme": "thesgc/chembiohub-theme#ie-fonts",
     "angular-bootstrap-checkbox": "*",
     "ngScrollTo": "*",
     "angular-ui-router": "~0.2.13",
