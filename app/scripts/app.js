@@ -164,6 +164,8 @@ angular.module('ngChemApp')
             }
         })
 
+
+
         .state('cbh.search', {
             url: '/search?page=&compoundBatchesPerPage=&project__project_key__in&functional_group&flexmatch&related_molregno__chembl__chembl_id__in&with_substructure&similar_to&fpValue&created__gte&created__lte&molfile&smiles&search_custom_fields__kv_any&multiple_batch_id=&viewType=&doScroll=&limit&offset',
             //url: '/search',
@@ -356,6 +358,11 @@ angular.module('ngChemApp')
                   return $stateParams.projectKey;
               }]
             }
+        })
+        .state('cbh.projects.project.addcompounds',{
+          url: 'addcompounds',
+          templateUrl : 'views/add-compounds.html',
+          controller : 'AddCompoundsCtrl'
         })
 
         .state('cbh.projects.add', {

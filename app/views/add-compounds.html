@@ -1,0 +1,71 @@
+<div class="col-xs-12" flow-init="flowinit"
+        flow-name="filedata.flow"
+        flow-files-submitted="$flow.upload()"
+        flow-file-success="assignFileId($file.uniqueIdentifier, $file.getExtension())" 
+        flow-upload-started="filesUploading=true" 
+        flow-complete="filesUploading=false">
+
+<div class="row">
+    <form name="inputForm">
+    <!-- Paste list here -->
+
+    <!-- File upload here -->
+    <div class="col-sm-12">
+        <div class="col-sm-6">
+            <label for="file_input" class="blue text-center"><strong class="nexa">Upload your SD, Chemdraw or Excel files here.</strong></label>
+            <!-- <input name="file_input" type="file" flow-btn /> -->
+
+
+            
+            <div class="row">
+                <div class="col-xs-12">
+                    <span flow-btn name="file_input" role="btn" class="btn btn-primary align-center" ng-disabled="$flow.files.length > 0">Upload File</span> 
+                </div>
+                
+            </div>
+            <!-- <input type="file" flow-btn flow-directory />
+              Input OR Other element as upload button
+            <span flow-btn>Upload File</span> -->
+            <div class="row mt">
+                <div class="col-xs-12" ng-hide="$flow.files.length > 0">
+                    <div flow-drop flow-drag-enter="style={border:'4px dashed green', padding: '20px'}" flow-drag-leave="style={border:'4px dashed #ddd', padding: '20px'}" ng-style="style={border:'4px dashed #ddd', padding: '20px'}">
+                        <strong class="nexa blue">Or Drag And Drop your file here</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="row">
+                        <label  class="blue text-center"><strong class="nexa">Files added:</strong></label>
+
+                <table class="table table-striped">
+
+                    <tbody>
+                        <tr ng-repeat="file in $flow.files">
+                            <!-- <td>{{$index+1}}</td> -->
+                            <td>{{file.name}}</td>
+                        <td class="text-center"><a ng-click="file.cancel();startAgain()" class="btn btn-sm btn-danger" role="btn">Remove</a></td>
+
+                        </tr>
+                        <tr ng-show="$flow.files.length == 0">
+                            <td colspan="2">No files uploaded</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row" ng-show="isFileExcel()">
+            <label  class="blue text-center"><strong class="nexa">Smiles Column:</strong></label>
+                                <div class="form-group">
+
+                        <select ng-options="item.value for item in struc_col_options track by item.name" class="form-control" ng-model="struc_col_selected" ng-change="updateStrucCol(struc_col_selected.value)">
+                        <!-- <option value="" selected>--Select Structure Column--</option> -->
+                        </select>
+                        </div>
+            </div>
+        </div>
+
+    </div>
+    
+</div>
+
+</div>
