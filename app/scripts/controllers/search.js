@@ -16,7 +16,7 @@ angular.module('ngChemApp')
         return $http.get(options.async.url + "?chembl_id__chembl_id__startswith=" + search);
     }
     $scope.searchForm = angular.copy(paramsAndForm.searchForm);
-    $scope.searchFormSchema.form[0].items[0].options.async.call = $scope.refresh;
+    $scope.searchFormSchema.form[0].options.async.call = $scope.refresh;
 
     
     if($scope.searchForm.related_molregno__chembl__chembl_id__in) {
