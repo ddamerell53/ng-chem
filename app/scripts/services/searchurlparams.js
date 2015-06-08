@@ -78,7 +78,17 @@ angular.module('ngChemApp')
 
       SearchUrlParams.fromForm = function(searchForm){
 
+
             var params = {}
+            function resetStructure(key) {
+                //remove struc data from everything which is not the structure search type in key
+                var struc_search_types = ['with_substructure', 'flexmatch', 'similar_to'];
+                angular.forEach(struc_search_types, function(s_type) {
+                    if (s_type!=key){
+                        params[s_type] = "";
+                    }
+                });
+            };
             if (searchForm.project__project_key__in) {
                 params["project__project_key__in"] = searchForm.project__project_key__in.join(",");
             }
@@ -101,7 +111,9 @@ angular.module('ngChemApp')
             if (searchForm.smiles) {
                 params[searchForm.substruc] = searchForm.smiles;
             } else if (searchForm.molecule && searchForm.molecule.molfile != "") {
-                params[searchForm.substruc] = searchForm.molecule.molfile
+                params[searchForm.substruc] = searchForm.molecule.molfile;
+                //now need to reset the other structure search types so they do not contain molecular data
+                resetStructure(searchForm.substruc);
             }
 
             if (!angular.equals([], searchForm.search_custom_fields__kv_any) && angular.isDefined(searchForm.search_custom_fields__kv_any)) {
