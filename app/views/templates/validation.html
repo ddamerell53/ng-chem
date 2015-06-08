@@ -5,8 +5,8 @@
       <div class="validate-report-box first col-xs-12">
         <div class="report text-center">
           <div style="margin-right:5px; " class="pull-right"><info-box left="true" lookup="batch_reg_new_to_chemreg_other"></info-box></div>
-          <div class="report-type alert-success"><strong class="nexa">New compounds</strong></div>
-          <div class="report-value alert-success"><strong class="nexa">{{validatedData.new}}</strong></div>
+          <div class="report-type alert-success"><strong class="nexa">New  structures</strong></div>
+          <div class="report-value alert-success"><strong class="nexa">{{datasets[current_dataset_id].validated.new}}</strong></div>
         </div>
       </div>
     
@@ -15,9 +15,9 @@
     
       <div class="validate-report-box overlap col-xs-12">
         <div class="report text-center">
-          <div style="margin-right:5px; " class="pull-right"><info-box left="true" lookup="batch_prereg_to_project_other"></info-box></div>
-          <div class="report-type alert-info"><strong class="nexa">Overlaps</strong></div>
-          <div class="report-value alert-info"><strong class="nexa">{{validatedData.linkedproject}}</strong></div>
+          <div style="margin-right:5px; " class="pull-right"><info-box left="true" lookup="batch_without_structure"></info-box></div>
+          <div class="report-type alert-info"><strong class="nexa">Without structures</strong></div>
+          <div class="report-value alert-info"><strong class="nexa">{{datasets[current_dataset_id].validated.blinded}}</strong></div>
         </div>
       </div>
     
@@ -26,9 +26,20 @@
     
       <div class="validate-report-box dupe col-xs-12">
         <div class="report text-center">
-          <div style="margin-right:5px; " class="pull-right"><info-box left="true" lookup="batch_prereg_to_public_other"></info-box></div>
-          <div class="report-type alert-warning"><strong class="nexa">Duplicates</strong></div>
-          <div class="report-value alert-warning"><strong class="nexa">{{validatedData.dupes}}</strong></div>
+          <div style="margin-right:5px; " class="pull-right"><info-box left="true" lookup="batch_overlaps"></info-box></div>
+          <div class="report-type alert-warning"><strong class="nexa">Overlaps</strong></div>
+          <div class="report-value alert-warning"><strong class="nexa">{{datasets[current_dataset_id].validated.dupes}}</strong></div>
+        </div>
+      </div>
+    
+  </div>
+  <div ng-class="fullPage" ng-hide="single" class="col-xs-12">
+    
+      <div class="validate-report-box dupe col-xs-12">
+        <div class="report text-center">
+          <div style="margin-right:5px; " class="pull-right"><info-box left="true" lookup="batch_duplicates"></info-box></div>
+          <div class="report-type alert-warning"><strong class="nexa">Duplicate structures</strong></div>
+          <div class="report-value alert-warning"><strong class="nexa">{{datasets[current_dataset_id].validated.dupes}}</strong></div>
         </div>
       </div>
     
@@ -40,11 +51,11 @@
           <div style="margin-right:5px; " ng-show="single" class="pull-right"><info-box left="true" lookup="batch_errors_single"></info-box></div>
 
           <div style="margin-right:5px; " ng-hide="single" class="pull-right"><info-box left="true" lookup="batch_errors_other"></info-box></div>
-          <div class="report-type alert-danger"><strong class="nexa">Errors</strong></div>
-          <div class="report-value alert-danger"><strong class="nexa">{{validatedData.errors}}</strong></div>
+          <div class="report-type alert-danger"><strong class="nexa">Structure Errors</strong></div>
+          <div class="report-value alert-danger"><strong class="nexa">{{datasets[current_dataset_id].validated.errors}}</strong></div>
           <div  ng-show="validatedData.errors > 0 && !single">
             at positions 
-            <span ng-repeat="error in validatedData.fileerrors" > 
+            <span ng-repeat="error in datasets[current_dataset_id].validated.fileerrors" > 
             <span ng-show="$first">{{error.index}} </span>
             <span ng-show="!$last && !$first">, {{error.index}}</span>
             <span ng-show="$last && !$first"> and {{error.index}} </span>
@@ -56,7 +67,6 @@
       </div>
     
   </div>
-
 
 </div>
 

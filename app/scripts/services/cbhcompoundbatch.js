@@ -57,6 +57,24 @@ angular.module('ngChemApp')
     };
 
 
+    CBHCompoundBatch.createMultiBatch = function(currentDataset) {
+        var canceller = $q.defer();
+        var cancel = function(reason){
+            canceller.resolve(reason);
+        };
+        var promise = $http(urlConfig.cbh_compound_batches.list_endpoint + "/validate_files/",
+                            {
+                              "method" : "post",
+                              timeout: canceller.promise,
+                              data: currentDataset.config             
+                            });
+        return { 
+                  promise: promise,
+                  cancel: cancel 
+                }
+  
+    }
+
 
     CBHCompoundBatch.saveSingleCompound = function(projectKey, molfile, customFields, stereoSelected) {
         //Add a property to the molfile to say that this molecule has been hand drawn

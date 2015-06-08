@@ -104,14 +104,8 @@ angular.module('ngChemApp')
             batch_reg_total_processed_1: "One substance was processed and:",
             batch_reg_total_processed_other : "substances were processed of which:",
 
-            batch_reg_new_to_chemreg_0: "All substances are already registered publicly or in this project.",
-            batch_reg_new_to_chemreg_1 : "One substance is not publically registered in ChemBio Hub ChemReg. The first batch of this substance will be registered to this project.", 
-            batch_reg_new_to_chemreg_other : "Number of substances which are not publically registered in ChemBio Hub ChemReg. Initial batches of these substances will be registered in this project for each of these.",
-
-
-            batch_prereg_to_project_0: "No substances were already been registered in this project.",
-            batch_prereg_to_project_1: "One substance has already been registered in this project. A new batch will be registered for this.",
-            batch_prereg_to_project_other: "Number of substances which have already been registered in this project. A new batch will be registered for each of these.",
+            batch_reg_new_to_chemreg_other : "Number of substances which are not publically registered in ChemBio Hub ChemReg. Initial batches of these substances will be registered in this project for each of these.",           
+            batch_without_structure: "Number of substances which do not have a chemical structure against them.",
 
             batch_prereg_project_doesnt_allow: "This substance is valid and was already registered. A new batch cannot be registered due to project restrictions.",
 
@@ -120,12 +114,11 @@ angular.module('ngChemApp')
             batch_reg_new_to_chemreg_single: "This substance is not publically registered in ChemBio Hub ChemReg. The first batch of this substance will be registered to this project.",
 
         //(change)
-            batch_prereg_to_public_0: "No substances have already been registered as public.",
-            batch_prereg_to_public_1: "One substance was already registered as public. A new private batch of this will be registered in this project.",
-            batch_prereg_to_public_other: "Number of substances which have already been registered as public. New private batches will be registered in this project for each of these.",
-            batch_duplicates_0: "No duplicates were found",
-            batch_duplicates_1: "One duplicate was found and ignored.",
-            batch_duplicates_other: "duplicates were found and ignored.",
+            batch_overlaps: "Number of substances which have already been registered. New private batches will be registered in this project for each of these.",
+
+            batch_duplicates: "Duplicate structures (with identical INCHI keys).",
+          
+
             batch_errors_0: "No errors were found",
                         batch_errors_single: "Number of errors in processing the molecule, possibly due to invalid valency",
 
