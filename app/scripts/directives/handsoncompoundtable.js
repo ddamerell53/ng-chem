@@ -52,12 +52,13 @@ angular.module('ngChemApp')
                       {data: "createdBy", readOnly: true, className: "htCenter htMiddle "},
                       {data: "timestamp", readOnly: true,className: "htCenter htMiddle "},
                       {data: "molecularWeight", readOnly: true, className: "htCenter htMiddle "},
+                      {data: "multipleBatchId", readOnly: true, className: "htCenter htMiddle "},
 
 
                     ].concat(customCols);
                 var widths = customCols.map(function(){return 100});
                 var allWidths = [75, 120, ].concat(widths);
-                var columnHeaders = [ "Image","ID","Added By", "Date", "Mol Weight" ].concat(cNames);
+                var columnHeaders = [ "Image","ID","Added By", "Date", "Mol Weight", "Batch ID" ].concat(cNames);
                 var container1,
                     hot1;
                 var container = document.createElement('DIV');
