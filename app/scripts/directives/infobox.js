@@ -10,7 +10,7 @@ angular.module('ngChemApp')
   .directive('infoBox', function () {
     return {
       templateUrl: 'views/templates/info-template.html',
-      restrict: 'E',
+      restrict: 'AEC',
       transclude: true,
       /*link: function postLink(scope, element, attrs) {
         element.text('this is the infoBox directive');
@@ -26,6 +26,7 @@ angular.module('ngChemApp')
       	else {
       		$scope.displaytext = MessageFactory.getMessage($scope.lookup);
       	}
+
         
       	
       }],
@@ -36,6 +37,15 @@ angular.module('ngChemApp')
         freetext:'@',
         left:'@',
 
-      }
+      },
+      /*link: function(scope, element, attr, $compile) {
+        var html = element.html();
+        //debugger;
+        html = html.replace(/\[\[(\w+)\]\]/g, function(_, text) {
+          return '<span translate="' + text + '"></span>';
+        });
+        element.html(html);
+        $compile(element.contents())(scope); //<---- recompilation 
+      }*/
     };
   });

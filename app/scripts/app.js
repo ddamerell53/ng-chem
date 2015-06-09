@@ -27,7 +27,7 @@ angular.module('ngChemApp')
             templateUrl: 'views/cbh.html',
             abstract : true,
             
-            controller: function($scope, $rootScope, $state, $location, $modal, urlConfig, loggedInUser, projectList, prefix) {
+            controller: function($scope, $rootScope, $state, $location, $modal, urlConfig, loggedInUser, projectList, prefix, $compile) {
                 var cbh = this;
                 cbh.logged_in_user = loggedInUser;
                 cbh.projects = projectList;
@@ -43,7 +43,13 @@ angular.module('ngChemApp')
                   if (!proj.is_default){
                     $scope.isDefault = false;
                   }
-              });
+                });
+                angular.element(document).ready(function() {
+
+                  angular.element("info-box", function() {
+                    console.log("happening");
+                  });
+                });
                 $scope.isLoggedIn = function() {
                 var loggedIn = false;
                     if(cbh.logged_in_user.id > 0) {
@@ -139,7 +145,8 @@ angular.module('ngChemApp')
                       $scope.modalInstance = $modalInstance;
             // $scope.$watch('mol', function(n,o), true){
             //   $scope.pointers = n;
-            // });
+            // });    
+
                     }]
                   });
                 };
