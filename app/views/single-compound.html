@@ -1,9 +1,9 @@
 <div class="modal-header">
     <button  type="button" class="close pull-right" data-dismiss="alert" aria-label="Close" ng-click="modalInstance.dismiss('cancel');"><span  class="glyphicon glyphicon-remove-circle"></span></button>
    
-    <h2 class="modal-title blue nexa">Batch {{::mol.id}} - {{::mol.chemblId}} <a href="" clip-copy="::mol.chemblId" clip-click="" role="button" class="btn btn-default"><span class="glyphicon glyphicon-file"></span> Copy</a> 
+    <h2 class="modal-title blue nexa">Batch {{::mol.id}} - {{::mol.chemblId}} <a href="" clip-copy="::mol.chemblId" clip-click="" role="button" class="btn btn-default"><span class="glyphicon glyphicon-file"></span> Copy ID</a> 
 
-<a href="" clip-copy="::mol.properties.cdxml" clip-click="" role="button" class="btn btn-default"><span class="glyphicon glyphicon-file"></span> Copy CDXML</a> </h2>
+<a href="" clip-copy="::mol.properties.cdxml" clip-click="" role="button" class="btn btn-default"><span class="glyphicon glyphicon-file"></span> Copy CDXML</a> <small><a role="button" class="btn btn-primary" ui-sref="cbh.projects.list.project({projectId: projectObj.id})"><span class="glyphicon glyphicon-folder-open"></span> {{projectObj.name}}</a></small> </h2>
     
 
 </div>

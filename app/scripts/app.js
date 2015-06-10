@@ -75,8 +75,8 @@ angular.module('ngChemApp')
                     templateUrl: 'views/single-compound.html',
                     size: 'lg',
                     
-                    controller: ['$scope','$rootScope', '$modalInstance', '$timeout', 'CBHCompoundBatch',
-                    function($scope, $rootScope, $modalInstance,  $timeout, CBHCompoundBatch) {
+                    controller: ['$scope','$rootScope', '$modalInstance', '$timeout', 'CBHCompoundBatch', 'ProjectFactory',
+                    function($scope, $rootScope, $modalInstance,  $timeout, CBHCompoundBatch, ProjectFactory) {
                       $scope.editMode = false;
                       $scope.mol = angular.copy(mol);
                       var split = mol.project.split("/");
@@ -86,6 +86,9 @@ angular.module('ngChemApp')
                         if(myproj.id.toString() == projid){
                           $scope.projectWithCustomFieldData = myproj
                         }
+                      });
+                      ProjectFactory.get({projectId: projid}).$promise.then(function(data){
+                        $scope.projectObj = data;
                       });
                       
                  
