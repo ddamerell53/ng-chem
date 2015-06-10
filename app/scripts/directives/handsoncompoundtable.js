@@ -53,12 +53,14 @@ angular.module('ngChemApp')
                       {data: "timestamp", readOnly: true,className: "htCenter htMiddle "},
                       {data: "molecularWeight", readOnly: true, className: "htCenter htMiddle "},
                       {data: "multipleBatchId", readOnly: true, className: "htCenter htMiddle "},
+                      {data: "project", readOnly: true, className: "htCenter htMiddle ", renderer: projectRenderer},
+
 
 
                     ].concat(customCols);
                 var widths = customCols.map(function(){return 100});
                 var allWidths = [75, 120, ].concat(widths);
-                var columnHeaders = [ "Image","ID","Added By", "Date", "Mol Weight", "Batch ID" ].concat(cNames);
+                var columnHeaders = [ "Image","ID","Added By", "Date", "Mol Weight", "Batch ID", "Project", ].concat(cNames);
                 var container1,
                     hot1;
                 var container = document.createElement('DIV');
@@ -109,6 +111,34 @@ angular.module('ngChemApp')
                 return td;
               }
 
+              function projectRenderer(instance, td, row, col, prop, value, cellProperties){
+                var mol = instance.getSourceDataAtRow(row);
+                //we have a list of projects - find the right one and render the name
+
+                  //angular.forEach(scope.compounds, function(comp){
+                    var split = mol.project.split("/");
+                    var projid = split[split.length-1]; 
+                    
+                    
+                    
+                  //});
+
+                  var projects = scope.cbh.projects.objects;
+
+                  angular.forEach(projects,function(myproj){
+
+                    
+                    if(myproj.id == projid){
+                      Handsontable.Dom.empty(td);
+                      td.innerHTML = myproj.name;
+                      td.className  += "htCenter htMiddle";
+                      return td
+                    }
+                      
+                  });
+
+              }
+
               function modalLinkRenderer(instance, td, row, col, prop, value, cellProperties) {
                 var escaped = Handsontable.helper.stringify(value);
                 escaped = strip_tags(escaped, ''); //be sure you only allow certain HTML tags to avoid XSS threats (you should also remove unwanted HTML attributes)
@@ -140,12 +170,11 @@ angular.module('ngChemApp')
                   a.href = escaped;
                   a.target = "_blank";
                   Handsontable.Dom.empty(td);
-                  td.className  += "htCenter htMiddle ";
                   td.appendChild(a);
                 }else{
                   td.innerHTML = escaped;
                 }
-              
+                td.className  += "htCenter htMiddle ";
                 return td;
               }
   
