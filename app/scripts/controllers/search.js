@@ -30,8 +30,7 @@ angular.module('ngChemApp')
 
     $scope.runSearch = function(){
         var newParams = searchUrlParams.fromForm($scope.searchForm);
-        console.log(newParams);
-        $state.go("cbh.search", newParams.params);
+        $state.go('cbh.search', newParams.params, {reload:true});
     }
 
     $rootScope.projectKey = "Projects";

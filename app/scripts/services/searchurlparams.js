@@ -78,7 +78,6 @@ angular.module('ngChemApp')
 
       SearchUrlParams.fromForm = function(searchForm){
 
-
             var params = {}
             function resetStructure(key) {
                 //remove struc data from everything which is not the structure search type in key
@@ -118,8 +117,13 @@ angular.module('ngChemApp')
 
             if (!angular.equals([], searchForm.search_custom_fields__kv_any) && angular.isDefined(searchForm.search_custom_fields__kv_any)) {
                 //var encodedCustFields = btoa(JSON.stringify(searchForm.custom_fields));
-                var encodedCustFields = searchForm.search_custom_fields__kv_any.join(",");
+                var encodedCustFields = "";
+                encodedCustFields = searchForm.search_custom_fields__kv_any.join(",");
                 params.search_custom_fields__kv_any = encodedCustFields;
+            }
+            else {
+                delete searchForm.search_custom_fields__kv_any; 
+                params.search_custom_fields__kv_any = "";
             }
 
             if (searchForm.dateStart) {
@@ -147,7 +151,7 @@ angular.module('ngChemApp')
             var created__gte_frag = (params.created__gte) ? ("created__gte=" + params.created__gte + "&") : "";
             var created__lte_frag = (params.created__lte) ? ("created__lte=" + params.created__lte + "&") : "";
             // var smiles_frag = (params.smiles) ? ("smiles=" + params.smiles + "&") : "";
-            var cust_field_frag = (encodedCustFields) ? ("search_custom_fields__kv_any=" + encodedCustFields + "&") : "";
+            var cust_field_frag = (params.search_custom_fields__kv_any) ? ("search_custom_fields__kv_any=" + params.search_custom_fields__kv_any + "&") : "";
             var related_molregno__chembl__chembl_id__in_frag = (params.related_molregno__chembl__chembl_id__in) ? ("related_molregno__chembl__chembl_id__in=" + params.related_molregno__chembl__chembl_id__in + "&") : "";
             var paramsUrl = multiple_batch_frag + project_frag + func_group_frag + flexmatch_frag + related_molregno__chembl__chembl_id__in_frag + with_substructure_frag + similar_to_frag + fpValue_frag + created__gte_frag + created__lte_frag + cust_field_frag;
 
