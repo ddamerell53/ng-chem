@@ -34,7 +34,7 @@ angular.module('ngChemApp')
                 cbh.prefix = urlConfig.instance_path.base;
                 cbh.api_base = urlConfig.admin.list_endpoint;
                 cbh.searchPage =   function(){
-                  $state.go('cbh.search', {project__project_key__in: window.projectKeys.join(",")} );
+                  $state.go('cbh.search', {project__project_key__in: window.projectKeys.join(",")}, {reload:true} );
                 }
                 $scope.projects = projectList.objects;
 

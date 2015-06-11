@@ -8,14 +8,15 @@
  * Controller of the ngChemApp
  */
 angular.module('ngChemApp')
-  .controller('SearchCtrl',['$scope','$http', '$rootScope', '$filter', '$stateParams', '$location', '$state', '$timeout', 'projectFactory', 'gridconfig', 'CBHCompoundBatch', 'urlConfig', 'paramsAndForm', 'searchUrlParams',
-    function ($scope,$http, $rootScope, $filter, $stateParams, $location, $state, $timeout, projectFactory, gridconfig, CBHCompoundBatch, urlConfig, paramsAndForm, searchUrlParams) {
+  .controller('SearchCtrl',['$scope','$http', '$rootScope', '$filter', '$stateParams', '$location', '$state', '$timeout', 'projectFactory', 'gridconfig', 'CBHCompoundBatch', 'urlConfig', 'searchUrlParams',
+    function ($scope,$http, $rootScope, $filter, $stateParams, $location, $state, $timeout, projectFactory, gridconfig, CBHCompoundBatch, urlConfig, searchUrlParams) {
 
     $scope.searchFormSchema= angular.copy($scope.cbh.projects.searchform);
     $scope.refresh = function(schema, options, search){
         return $http.get(options.async.url + "?chembl_id__chembl_id__startswith=" + search);
     }
-    $scope.searchForm = angular.copy(paramsAndForm.searchForm);
+    var pf = searchUrlParams.setup($stateParams, {molecule: {}});
+    $scope.searchForm = angular.copy(pf.searchForm);
     $scope.searchFormSchema.form[0].options.async.call = $scope.refresh;
 
     
@@ -25,7 +26,10 @@ angular.module('ngChemApp')
 
     $scope.cancel = function(){
         //$location.url('/search?limit=&offset=');
-        $scope.cbh.searchPage();
+        //$scope.cbh.searchPage();
+        console.log("cancel is being called");
+        $scope.searchForm = {};
+        $state.go('cbh.search', {doScroll: false});
     }
 
     $scope.runSearch = function(){
