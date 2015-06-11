@@ -9,6 +9,7 @@ li a svg.svg {
 }
 .courier {
   font-family: 'BitstreamMono', 'Courier New', Courier, 'Lucida Sans Typewriter', 'Lucida Typewriter', monospace;
+  font-size:0.75em;
 
 }
 .form-group {
@@ -305,8 +306,8 @@ div.reg-nav ul.nav li h2 {
 .progress-bar {
   background-color:#002147;
 }
-strong.nexa {
-  font-family:NexaLight;
+strong.nexa, p.nexa strong {
+  font-family:NexaBold;
 }
 .col-centered{
     float: none;
