@@ -475,6 +475,9 @@ td, th {
   background-color: #eee;
   border-radius: 5px;
 }
+.picker__header {
+  font-size:0.8em;
+}
 .picker__header select {
   padding: 0 0 0 .5em;
 }
