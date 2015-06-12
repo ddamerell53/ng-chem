@@ -370,9 +370,11 @@ angular.module('ngChemApp')
             }
         })
         .state('cbh.projects.project.addcompounds',{
-          url: 'addcompounds',
-          templateUrl : 'views/add-compounds.html',
-          controller : 'AddCompoundsCtrl'
+          url: 'addcompounds/?mb_id=&page=&compoundBatchesPerPage=',
+          templateUrl : 'views/add-compounds2.html',
+          controller : 'AddCompoundsCtrl',
+          // reloadOnSearch: false
+
         })
 
         .state('cbh.projects.add', {

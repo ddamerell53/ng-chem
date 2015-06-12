@@ -59,11 +59,15 @@ angular.module('ngChemApp')
             }
           }
         });      
-        redraw();  
-        function redraw(){
+        redraw(500);  
+        function redraw(doIt){
 
-          if (jQuery('#chemdoodle-holder').is(":visible")){
+          if (jQuery('#chemdoodle-holder').is(":visible") || doIt){
+
               var cd_width = jQuery('#chemdoodle-holder').width();
+              if(doIt){
+                cd_width = doIt;
+              }
               jQuery('#chemdoodle-holder').html('<canvas id="chemdoodle" tabindex="1"></canvas>');
               element = new ChemDoodle.SketcherCanvas('chemdoodle', cd_width, 300, {isMobile: true,oneMolecule:true});
               //if we have a retained molecule, load that into the canvas

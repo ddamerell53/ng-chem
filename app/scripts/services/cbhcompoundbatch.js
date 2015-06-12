@@ -14,6 +14,7 @@ angular.module('ngChemApp')
     // ...
 
     var CBHCompoundBatch = {};
+
     CBHCompoundBatch.getSingleMol = function(){
         return { acdAcidicPka: null,
                          acdBasicPka: null,
@@ -42,6 +43,44 @@ angular.module('ngChemApp')
                      };
     }
 
+
+
+
+    CBHCompoundBatch.getSearchResults = function(currentDataset, limit, offset, filter, sort){
+        if(currentDataset.config.multipleBatch){
+            var query_object = {
+                          search: {
+                                    bool:{
+                                          must: [{
+                                            "term" : {"multiple_batch" : str(currentDataset.config.multipleBatch)}
+                                          }]
+                                      }
+                                    },
+                          "sort": { "_id": { "order": "asc" }},
+                          from: offset, 
+                          size: limit
+            }
+            var canceller = $q.defer();
+            var cancel = function(reason){
+                canceller.resolve(reason);
+            };
+            currentDataset.cancellers.push(cancel);
+            var promise = $http.get(urlConfig.cbh_compound_batches.list_endpoint + "/search/"
+                                ,{"es_query" : es_query}  ,
+                                {
+                                  
+                                  timeout: canceller.promise,
+                                             
+                                });
+            return  promise;  
+        }
+        
+
+    }
+
+
+
+
     CBHCompoundBatch.validateList = function(projectKey, values){
         values.projectKey = projectKey;
         var promise = $http.post( urlConfig.cbh_compound_batches.list_endpoint  + "/validate_list/" , values).then(
@@ -62,16 +101,16 @@ angular.module('ngChemApp')
         var cancel = function(reason){
             canceller.resolve(reason);
         };
-        var promise = $http(urlConfig.cbh_compound_batches.list_endpoint + "/validate_files/",
+        currentDataset.cancellers.push(cancel);
+        var promise = $http.post(urlConfig.cbh_compound_batches.list_endpoint + "/validate_files/"
+                            ,currentDataset.config  ,
                             {
-                              "method" : "post",
+                              
                               timeout: canceller.promise,
-                              data: currentDataset.config             
+                                         
                             });
-        return { 
-                  promise: promise,
-                  cancel: cancel 
-                }
+        return  promise;
+                  
   
     }
 
@@ -131,11 +170,24 @@ angular.module('ngChemApp')
                 siz = 200;
               }
             }
-            var params = {
+            if(angular.isDefined(obj.ctab)){
+              var params = {
                   size: siz,
                   ctab: obj.ctab,
                 }
-            params.smarts = obj.properties.substructureMatch;
+              }else{
+                var params = {
+                  size: siz,
+                  ctab: "",
+                }
+              }
+            
+            if(angular.isDefined(obj.properties)){
+              if(angular.isDefined(obj.properties.substructureMatch)){
+                params.smarts = obj.properties.substructureMatch;
+              }
+            }
+            
             promises.push($http({method:"POST", 
                 url: "https://chembiohub.ox.ac.uk/utils/ctab2image",
                 data: params, 

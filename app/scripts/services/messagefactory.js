@@ -63,9 +63,9 @@ angular.module('ngChemApp')
             mol_pains_hits_tooltip: null,
             headers_not_retrieved: "Headers could not be retrieved from the uploaded file, please check the format and try again.",
             ids_not_processed: "Smiles or Inchi identifiers could not be processed, please check the format, remove spaces and try again.",
-            format_not_detected: "Id type cannot be automatically determined, please check the ids or select the id type manually",
-            file_format_not_detected: "This file format is not recognised, please ensure that you have uploaded a CDX, CDXML, SDF, XLS or XLSX file and that the file extension (the part of the name after the dot) is correct.",
-            file_error: "File cannot be processed, some records or the format is invalid. For excel files, the structure column must be correctly specified and all rows valid.",
+            file_error: "File cannot be processed even though the format apears valid, if you have questions please contact the chembiohub team.",
+            file_format_error: "File cannot be processed, the format is invalid. Files must be XLSX, cdxml, cdx or sdf format and labelled as such.",
+            total_batches: "The total numer of records added in this file or dataset",
             oops: "Oops, should not have got here, if you have not pressed back on the browser, gone to an outdated bookmark or lost your data by refreshing please let the ChemReg team know. Click cancel to restart.",
 
         //},
@@ -115,7 +115,8 @@ angular.module('ngChemApp')
 
         //(change)
             batch_overlaps: "Number of substances which have already been registered. New private batches will be registered in this project for each of these.",
-
+            file_types : ".xlsx, .sdf, .cdx and .cdxml files are currently supported by chemreg. In Excel files the structure column should be in SMILES and the headers should be at the top of the dataset. Data should be on the first worksheet of the workbook. When registering salts via chemdraw it is importeant to use the \"group\" feature to ensure the salt is interpretted as a single record. If you would like to be able to register a different file type, please let the chembiohub team know.",
+            smiles_field: "Each line of data will be interpretted as a separate SMILES or INCHI identifier. If you would like to be able to register compounds with a different type of identifier, please let the chembiohub team know.",
             batch_duplicates: "Duplicate structures (with identical INCHI keys).",
           
 
@@ -124,7 +125,7 @@ angular.module('ngChemApp')
 
             batch_errors_1: "1 of the molecules could not be processed and will be ignored. It is located at position ",
             batch_errors_other: "Number of molecules could not be processed and will be ignored. They are located at positions ",
-
+            field_errors_other: "Number of errors when attempting to map the fields in your uploaded data to the fields in chemreg.",
         //(change)
             batch_reg_recent_registration_error: "You have already registered this batch today. Are you sure you wish to continue?",
         //make "conintue" the button icon?

@@ -1,10 +1,14 @@
-<div class="container">
+<div ng-class="(stateName=='cbh.projects.project.addcompounds') ? 'container-flex' : 'container'">
 <div ng-if="!noData" class="row">
-    <div class="col-xs-12"><h2 class="blue"> <ng-pluralize count="totalCompoundBatches"
-                                                             when="{'0': '0 results',
-                                                                 'one': '1 result',
-                                                                 'other': '{} results'}">
-                                            </ng-pluralize></h2></div>
+    <div class="col-xs-12">
+        <h2 class="blue"> 
+            <ng-pluralize count="totalCompoundBatches"
+            when="{'0': '0 results',
+             'one': '1 result',
+              'other': '{} results'}">
+            </ng-pluralize>
+        </h2>
+    </div>
 </div>
 <div ng-if="noData">
 <h2 class="blue nexa">
