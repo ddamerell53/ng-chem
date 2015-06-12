@@ -29,6 +29,7 @@ app.controller('DemoCtrl', ['$scope', '$rootScope', '$state', 'ChEMBLFactory', '
                 $scope.secondForm = angular.copy(proj.schemaform.form).splice(len);
             }
         });
+        //$scope.messages = MessageFactory.getMessages();
 
         $scope.urlConfig = urlConfig;
         var arr = window.location.href.split("/");

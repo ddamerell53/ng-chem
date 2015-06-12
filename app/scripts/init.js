@@ -34,4 +34,5 @@ var ngChemApp =  angular.module('ngChemApp', [
     'ui.select', 
     'ui.sortable',
     'angularUtils.directives.dirPagination',
+    'angular-info-box',
   ]);

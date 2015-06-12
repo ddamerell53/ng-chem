@@ -196,6 +196,9 @@ angular.module('ngChemApp')
                   function($stateParams, searchUrlParams){
                       return searchUrlParams.setup($stateParams, {molecule: {}});
                   }],
+              messages: ['MessageFactory', function(MessageFactory){
+                return MessageFactory.getMessages();
+              }],
               
             },
             
@@ -223,6 +226,9 @@ angular.module('ngChemApp')
             url: '/help',
             
             resolve:{
+              messages: ['MessageFactory', function(MessageFactory){
+                return MessageFactory.getMessages();
+              }],
             },
             templateUrl: 'views/help.html',
             controller: function($scope) {
@@ -242,6 +248,9 @@ angular.module('ngChemApp')
               gridconfig: ['CompoundListSetup', function(CompoundListSetup){
                   return CompoundListSetup;
               }],
+              messages: ['MessageFactory', function(MessageFactory){
+                return MessageFactory.getMessages();
+              }],
          
              
               
@@ -256,6 +265,9 @@ angular.module('ngChemApp')
             resolve: {
               userList: ['UserFactory', function(UserFactory) {
                 return UserFactory.get().$promise;
+              }],
+              messages: ['MessageFactory', function(MessageFactory){
+                return MessageFactory.getMessages();
               }],
             },
             controller: function($scope, $rootScope, userList) {
@@ -281,6 +293,9 @@ angular.module('ngChemApp')
                   deferred.resolve(m);
                 });
                 return deferred.promise;
+              }],
+              messages: ['MessageFactory', function(MessageFactory){
+                return MessageFactory.getMessages();
               }],
             },
             controller: function($scope, $rootScope, userFromList, batchesForUser) {
