@@ -8,6 +8,7 @@
  * Controller of the ngChemApp
  */
 angular.module('ngChemApp')
+<<<<<<< HEAD
   .controller('AddCompoundsCtrl',['$scope', 
     '$state', 
     '$stateParams', 

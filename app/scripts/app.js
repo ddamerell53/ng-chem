@@ -375,6 +375,7 @@ angular.module('ngChemApp')
           controller : 'AddCompoundsCtrl',
           // reloadOnSearch: false
 
+
         })
 
         .state('cbh.projects.add', {
