@@ -44,7 +44,7 @@ angular.module('ngChemApp')
                   });
                 
                 var customCols = cNames.map(function(cn){
-                  return {data: "customFields." + cn, readOnly:true, className: "htCenter htMiddle ", renderer: linkRenderer}
+                  return {data: "customFields." + cn, readOnly:true, className: "custom ", renderer: customFieldRenderer}
                 })
                 var allCols = [
                       {data: "properties.imageSrc", renderer: coverRenderer, readOnly: true,  className: "htCenter htMiddle "},
@@ -175,6 +175,28 @@ angular.module('ngChemApp')
                   td.innerHTML = escaped;
                 }
                 td.className  += "htCenter htMiddle ";
+                return td;
+              }
+
+              function customFieldRenderer(instance, td, row, col, prop, value, cellProperties) {
+               var escaped = Handsontable.helper.stringify(value);
+                escaped = strip_tags(escaped, '');
+                if (escaped.indexOf("http") == 0 && escaped.indexOf("//") > 0){
+
+                  var a = document.createElement('a');
+                  var afterHttp = escaped.split("//")[1];
+                  a.innerHTML = afterHttp;
+                  if (afterHttp.length>30){
+                      a.innerHTML = afterHttp.substring(0,29) +"...";
+                  }
+                  a.href = escaped;
+                  a.target = "_blank";
+                  Handsontable.Dom.empty(td);
+                  td.appendChild(a);
+                }else{
+                  td.innerHTML = escaped;
+                }
+                td.className  += "htMiddle ";
                 return td;
               }
   
