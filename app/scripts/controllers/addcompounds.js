@@ -8,7 +8,6 @@
  * Controller of the ngChemApp
  */
 angular.module('ngChemApp')
-<<<<<<< HEAD
   .controller('AddCompoundsCtrl',['$scope', 
     '$state', 
     '$stateParams', 
@@ -72,11 +71,93 @@ angular.module('ngChemApp')
 
         $scope.setNull = function(){
             $scope.current_dataset_id = "none";
+            $scope.setup();
+        }
+
+        $scope.setup = function(){
             $scope.filedata = {};
             $scope.filesUploading = false;
+            $scope.dataReady = false;
+            $scope.stateName = $state.current.name;
+            $scope.urlConfig = urlConfig;
+            $scope.totalCompoundBatches = 0;
+            $scope.listOrGallery = {
+                    choice: "list",
+            };
+
+             $scope.listPerPage = [
+                    { label: "10/page", value: "10" },
+                    { label: "20/page", value: "20" },
+                    { label: "50/page", value: "50" },
+            ];
+
+            $scope.compoundBatches = {data:[], 
+                sorts:[],
+                excluded: []};
+            $scope.itemsPerPage = angular.copy($scope.listPerPage);
+            $scope.pagination = {
+                    current: 1,
+                    compoundBatchesPerPage: $scope.itemsPerPage[2],
+                };
+            
+            var filters = { };
+            
+
         }
+
+        $scope.cbh.addSort =  function(sortColumn){
+                console.log(sortColumn);
+                var index=0
+                var order = "asc";
+                var toPop = [];
+                angular.forEach($scope.compoundBatches.sorts, function(sort){
+                    if(angular.isDefined(sort[sortColumn])){
+                        order = angular.copy(sort[sortColumn].order);
+                        toPop.push(angular.copy(index));
+                        if(order == "desc"){
+                            //do nothing - remove from sort and let the compounds be recieved without a sort
+                            order = "none";
+                            console.log("test");
+                        }
+                        if(order == "asc"){
+                            order = "desc";
+                        }
+                    }
+                    index ++;
+                });
+                console.log(toPop);
+                angular.forEach(toPop,function(p){
+                    $scope.compoundBatches.sorts.pop(p);
+                })
+                var dirObj = {};
+                if(order != "none"){
+                     dirObj[sortColumn] = {"order": order, "missing" : "_last"};
+                    $scope.compoundBatches.sorts.unshift(dirObj);
+                }else{
+                    console.log("test2");
+
+                }
+                console.log( $scope.compoundBatches.sorts);
+                 var newParams = angular.copy($stateParams);
+                newParams.page = 1;
+                if($scope.compoundBatches.sorts.length > 0){
+                    newParams.sorts = JSON.stringify($scope.compoundBatches.sorts);
+                }else{
+                    newParams.sorts = undefined;
+                }
+                $state.transitionTo($state.current.name, 
+                                        newParams,
+                                        { location: true, 
+                                            inherit: false, 
+                                            relative: $state.$current, 
+                                            notify: false });
+                $stateParams = newParams;
+                $scope.initialise();
+            };
         $scope.setNull();
         $scope.assignFile = function(id, ext, file) {
+            $scope.setNull();
+
             $scope.current_dataset_id = id;
             var conf =  {
                     "file_name": id,
@@ -98,12 +179,12 @@ angular.module('ngChemApp')
                 "config": conf,
                 "cancellers" : []
             }
-            $timeout($scope.createMultiBatch,100);
+            $timeout($scope.createMultiBatch,200);
         };
             
-           
-        $scope.dataReady = false;
-        
+        $scope.sketchMolfile={"molecule":{}};
+                $scope.molecule={"molfile":""};
+
         $scope.createMultiBatch = function(){
             CBHCompoundBatch.createMultiBatch(
                 $scope.datasets[$scope.current_dataset_id]).then(
@@ -111,14 +192,17 @@ angular.module('ngChemApp')
                         $scope.filesInProcessing = false;
                         $scope.datasets[$scope.current_dataset_id].config = data.data;
                         $scope.dataReady = true;
+                        $scope.compoundBatches.uncuratedHeaders = data.data.headers;
+                        $scope.compoundBatches.excluded = data.data.excluded;
                         CBHCompoundBatch.getImages( data.data.objects, 75, "imageSrc", $scope.imageCallback); 
                         $scope.compoundBatches.data =data.data.objects;
                         $scope.totalCompoundBatches = data.data.batchStats.total;
                         //Here we change the URL without changing the state
                          $state.transitionTo ($state.current.name, 
-                                {"mb_id" : $scope.datasets[$scope.current_dataset_id].config.multipleBatch}, 
+                                {"mb_id" : $scope.datasets[$scope.current_dataset_id].config.multipleBatch,
+                                "projectKey": $stateParams.projectKey}, 
                                 { location: true, 
-                                    inherit: true, 
+                                    inherit: false, 
                                     relative: $state.$current, 
                                     notify: false });
                         $stateParams.mb_id = $scope.datasets[$scope.current_dataset_id].config.multipleBatch;
@@ -144,37 +228,16 @@ angular.module('ngChemApp')
 
 // the other controller
 
-    $scope.stateName = $state.current.name;
-    $scope.urlConfig = urlConfig;
-    $scope.totalCompoundBatches = 0;
-$scope.listOrGallery = {
-        choice: "list",
-    };
-
- $scope.listPerPage = [
-        { label: "10/page", value: "10" },
-        { label: "20/page", value: "20" },
-        { label: "50/page", value: "50" },
-    ];
-
-  $scope.compoundBatches = {data:[]};
-      $scope.itemsPerPage = angular.copy($scope.listPerPage);
-
-    $scope.pagination = {
-        current: 1,
-        compoundBatchesPerPage: $scope.itemsPerPage[2],
-    };
-    var filters = { };
-
-   
-
 //Make a function from all the scope setup items that need to change when the paging etc changes
 
     $scope.initialise = function(){
         if($stateParams.viewType) {
                 $scope.listOrGallery.choice = $stateParams.viewType;
             }
-          
+          if($stateParams.mb_id) {
+                $scope.current_dataset_id = $stateParams.mb_id;
+                $scope.datasets[$scope.current_dataset_id] = {multipleBatch : $scope.current_dataset_id}
+            }
           
             
             if(angular.isDefined($stateParams.compoundBatchesPerPage)){
@@ -192,15 +255,19 @@ $scope.listOrGallery = {
             if(angular.isDefined($stateParams.page)){
                $scope.pagination.current = $stateParams.page;  
             }
+             if (angular.isDefined($stateParams.sorts)){
+                $scope.compoundBatches.sorts = JSON.parse($stateParams.sorts);
+            }
+
              if (angular.isDefined($stateParams.mb_id)){
                 getResultsPage($scope.pagination.current);
             }
-        getResultsPage($scope.pagination.current);
+            
+        // getResultsPage($scope.pagination.current);
 
 
     }   
     
-
           
 
     $scope.changeNumberPerPage = function(viewType) {
@@ -212,7 +279,7 @@ $scope.listOrGallery = {
         $state.transitionTo($state.current.name, 
                                 newParams,
                                 { location: true, 
-                                    inherit: true, 
+                                    inherit: false, 
                                     relative: $state.$current, 
                                     notify: false });
         $stateParams = newParams;
@@ -226,7 +293,7 @@ $scope.listOrGallery = {
         $state.transitionTo($state.current.name, 
                                 newParams,
                                 { location: true, 
-                                    inherit: true, 
+                                    inherit: false, 
                                     relative: $state.$current, 
                                     notify: false });
         $stateParams = newParams;
@@ -249,51 +316,52 @@ $scope.listOrGallery = {
     }
 
     
-    function getResultsPage(pageNumber) {
-       //  filters.limit = $scope.pagination.compoundBatchesPerPage.value;
-       //  filters.offset = (pageNumber -1) * $scope.pagination.compoundBatchesPerPage.value;
-       //  CBHCompoundBatch.query(filters).then(function(result) {
-       //      $scope.totalCompoundBatches = result.meta.totalCount;
-       //      $scope.compoundBatches.data =result.objects;
-       //      if(result.objects.length > 0){
-       //          var size = ($scope.listOrGallery.choice=="gallery") ? 100 : 75;
-       //          CBHCompoundBatch.getImages(result.objects, 400, "bigImageSrc");
-       //          CBHCompoundBatch.getImages( result.objects, size, "imageSrc", $scope.imageCallback); 
+    var  getResultsPage = function(pageNumber) {
+        var limit = $scope.pagination.compoundBatchesPerPage.value;
+        var offset = (pageNumber -1) * $scope.pagination.compoundBatchesPerPage.value;
+        var filter; 
+        
+        $scope.compoundBatches.data = [];
+        CBHCompoundBatch.getSearchResults($stateParams.mb_id, 
+            limit, 
+            offset, 
+            filter, 
+            $stateParams.sorts).then(function(result){
+                $scope.totalCompoundBatches = result.data.meta.totalCount;
+                $scope.compoundBatches.data =result.data.objects;
+                $scope.compoundBatches.uncuratedHeaders = result.data.headers;
+                $scope.compoundBatches.excluded = result.data.excluded;
 
-       //      }else if( ( $scope.pagination.current * parseInt($scope.pagination.compoundBatchesPerPage.value)) > $scope.totalCompoundBatches){
-       //          $scope.pageChanged(1);
-       //      }
-       //      else{
-       //          if($state.current.name==="cbh.search"){
-       //              $scope.noData = "No Compounds Found. Why not try amending your search?";
-       //          }else{
-       //               $scope.noData = "No Compounds Found. To add compounds use the link above.";
-       //          }
-       //      }
+                $scope.current_dataset_id = $stateParams.mb_id;
+                $scope.datasets[$scope.current_dataset_id] = {
+                    "config": result.data,
+                    "cancellers" : []
+                }
+             $scope.dataReady = true;
+
+                if(result.data.objects.length > 0){
+                    var size = ($scope.listOrGallery.choice=="gallery") ? 100 : 75;
+                    CBHCompoundBatch.getImages(result.data.objects, 400, "bigImageSrc");
+                    CBHCompoundBatch.getImages( result.data.objects, size, "imageSrc", $scope.imageCallback); 
+
+                }else if( ( $scope.pagination.current * parseInt($scope.pagination.compoundBatchesPerPage.value)) > $scope.totalCompoundBatches){
+                    $scope.pageChanged(1);
+                }
+                else{
+                    if($state.current.name==="cbh.search"){
+                        $scope.noData = "No Compounds Found. Why not try amending your search?";
+                    }else{
+                         $scope.noData = "No Compounds Found. To add compounds use the link above.";
+                    }
+                }
             
-       // });        
+       });    
+
+       
     }
 
 
         $scope.initialise();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

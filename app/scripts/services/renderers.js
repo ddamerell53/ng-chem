@@ -98,7 +98,12 @@ angular.module('ngChemApp')
                   td.className  += "htCenter htMiddle ";
                   td.appendChild(a);
                 }else{
-                  td.innerHTML = escaped;
+                  td.className  += "htCenter htMiddle ";
+                  if(prop == "standardInchiKey"){
+                    td.innerHTML = escaped.substring(0,10) +"...";
+                  }else{
+                     td.innerHTML = escaped;
+                  }
                 }
               
                 return td;
@@ -149,14 +154,17 @@ angular.module('ngChemApp')
         var container1,
             hot1;
         var container = document.createElement('DIV');
-        container.style.overflow = 'hidden';
-        container.style.width = '100%';
+
+        // container.style.overflow = 'hidden';
+        // container.style.width = '100%';
         while (element[0].firstChild) {
             element[0].removeChild(element[0].firstChild);
         }
        
         element[0].appendChild(container);
         scope.hot1 = new Handsontable(container, hotObj);
+        var id = element[0].firstChild.id;
+        $("#" + id).doubleScroll();
       }
     };
     return data;

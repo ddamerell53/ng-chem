@@ -17,7 +17,8 @@ else {
 }
 var path = arr[0] + "//" + arr[2] + "/" + part +"/";
 var admin_url = admin_base + part;
-var configuration = {"cbh_batch_upload": 
+var configuration = {
+    "cbh_batch_upload": 
     {"list_endpoint": path + "cbh_batch_upload", 
     "schema": path + "cbh_batch_upload/schema"}, 
     "cbh_projects": {"list_endpoint": path + 

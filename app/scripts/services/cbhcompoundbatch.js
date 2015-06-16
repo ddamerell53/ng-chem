@@ -41,42 +41,34 @@ angular.module('ngChemApp')
                          stdCtab: "",
                          stdInChiKey: "",
                      };
-    }
+    };
 
 
 
 
-    CBHCompoundBatch.getSearchResults = function(currentDataset, limit, offset, filter, sort){
-        if(currentDataset.config.multipleBatch){
-            var query_object = {
-                          search: {
-                                    bool:{
-                                          must: [{
-                                            "term" : {"multiple_batch" : str(currentDataset.config.multipleBatch)}
-                                          }]
-                                      }
-                                    },
-                          "sort": { "_id": { "order": "asc" }},
-                          from: offset, 
-                          size: limit
-            }
-            var canceller = $q.defer();
-            var cancel = function(reason){
-                canceller.resolve(reason);
-            };
-            currentDataset.cancellers.push(cancel);
-            var promise = $http.get(urlConfig.cbh_compound_batches.list_endpoint + "/search/"
-                                ,{"es_query" : es_query}  ,
-                                {
-                                  
-                                  timeout: canceller.promise,
-                                             
-                                });
+    CBHCompoundBatch.getSearchResults = function(mb_id, limit, offset, filter, sorts){
+            // var query_object = {
+            //               query: {
+            //                         bool:{
+            //                               must: [{
+            //                                 "term" : {"multiple_batch" : str(mb_id)}
+            //                               }]
+            //                           }
+            //                         }
+            //                     }
+            
+            var promise = $http.get(urlConfig.cbh_compound_batches.list_endpoint + "/get_part_processed_multiple_batch/"
+                                ,{ params:{
+                                    "limit" : limit,
+                                    "offset" : offset,
+                                    "current_batch" : mb_id, 
+                                    "sorts" : sorts} }  //JSON sorts string
+                                );
             return  promise;  
         }
         
 
-    }
+    
 
 
 
