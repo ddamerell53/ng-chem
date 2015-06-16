@@ -6,9 +6,123 @@
 </div>
 
 <div class="row">
+	<div class="col-xs-12">
+		<h2 class="subheading">File Submission - What ChemReg can and can’t accept currently</h2>
+	</div>
+
+	<div class="col-sm-8">
+
+		<div class="row">
+			
+
+			<div class="col-xs-12">
+				<h2 class="blue"><span class="glyphicon glyphicon-ok-circle" style="color:#3c763d;"></span> ChemReg can accept Excel .XLSX files (newer Office versions)</h2>
+			</div>
+
+			<div class="col-xs-12">
+				<div class="well">
+					<p class="nexa">Column headers must be in the top row, and all data must be organised in the relevant columns underneath. Figures and/or images cannot currently be accepted.</p>
+
+					<p class="nexa">On submission of an excel file, a column may contain structural information (e.g. SMILES). Using the dropdown menu, select this column heading as containing structural information. This will ensure a compound structure is drawn in the system following submission.</p>
+
+					<p class="nexa">An excel file may be submitted containing no structural information. In this case submit the file as the default “No structural information” using the available dropdown menu. This will assign each record with a unique ID as normal but with no structure information.</p>
+
+					<p class="nexa"><a role="button" class="btn btn-default" href="/files/faq/example-excel-file-with-structures.xlsx"><span class="glyphicon glyphicon-floppy-disk"></span> Download</a> an example of an excel file that could be registered in the system <strong>containing structural information</strong> </p>
+
+					<p class="nexa"> <a role="button" class="btn btn-default" href="/files/faq/example-excel-file-without-structures.xlsx"><span class="glyphicon glyphicon-floppy-disk"></span> Download</a> an example of an excel file that could be registered in the system <strong>containing NO structural information</strong></p>
+				</div>
+			</div>
+
+			<div class="col-xs-12">
+				<h2 class="blue"><span class="glyphicon glyphicon-ok-circle"  style="color:#3c763d;"></span> ChemReg can accept .SDF files</h2>
+			</div>
+
+			<div class="col-xs-12">
+				<div class="well">
+					<p class="nexa">Most SDF files can be uploaded without issue. Please note that SDF files in which data fields contain square brackets are currently not accepted.</p>
+
+					<p class="nexa"><a role="button" class="btn btn-default" href="/files/faq/example-SDF-file.sdf"><span class="glyphicon glyphicon-floppy-disk"></span> Download</a> an example of an SDF file that could be registered in the system</p>
+				</div>
+
+				
+			</div>
+
+			<div class="col-xs-12">
+				<h2 class="blue"><span class="glyphicon glyphicon-ok-circle" style="color:#3c763d;"></span> ChemReg can accept ChemDraw .CDXML files</h2>
+			</div>
+
+			<div class="col-xs-12">
+				<div class="well">
+					<p class="nexa"><em>Note that .CDXML files containing multiple compounds can be registered.</em></p>
+				
+					<p class="nexa">ChemDraw files should be drawn with no descriptive linkers or arrows between molecules. Note that any entity in a file that is not explicitly bonded to another compound will also be registered as a separate entity. </p>
+	
+					<p class="nexa"><a role="button" class="btn btn-default" href="/files/faq/example-ChemDraw-file-correct-format.cdx"><span class="glyphicon glyphicon-floppy-disk"></span> Download</a> an example of a CDXML file with <strong>compounds organised in the correct format </strong></p>
+	
+					<p class="nexa"><a role="button" class="btn btn-default" href="/files/faq/example-ChemDraw-file-Incorrect-Format.cdx"><span class="glyphicon glyphicon-floppy-disk"></span> Download</a> an example of a CDXML file with <strong>compounds NOT organised in the correct format </strong></p>
+	
+					<p class="nexa">If you wish for associated structures that are not bonded to be registered as the same entity (such as a salt) please follow these steps:<br>
+						<ol style="font-family:NexaLight">
+							<li class="nexa">In ChemDraw, please group the associated molecules using “Ctrl+G” or the equivalent Mac command</li>
+							<li class="nexa">Save the ChemDraw file as an SDF</li>
+							<li class="nexa">Upload the SDF file into ChemReg as normal. Note that you can still submit multiple compounds, (grouped or not) in the same file by following this process.</li>
+						</ol>
+					</p>
+	
+					<p class="nexa">Here are examples of a <strong>grouped compound (a salt) in a ChemDraw file</strong>, and the associated SDF that could be registered in the system.<br> <a role="button" class="btn btn-default" href="/files/faq/example-salt.cdx"><span class="glyphicon glyphicon-floppy-disk"></span> Download ChemDraw file</a> <a role="button" class="btn btn-default" href="/files/faq/examplesalt.sdf"><span class="glyphicon glyphicon-floppy-disk"></span> Download SDF file</a></p>
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+
+
+
+	<div class="col-sm-4">
+
+		<div class="row">
+			<div class="col-xs-12">
+				<h2 class="blue"><span class="glyphicon glyphicon-remove-circle"  style="color:#a94442"></span> What ChemReg can’t do (yet):</h2>
+			</div>
+
+			<div class="col-xs-12">
+				<div class="well">
+					<p class="nexa">ChemReg can’t register compounds containing R-groups.</p>
+	
+					<p class="nexa">ChemReg cannot currently register files containing images e.g. spectra data. This does not include structural information e.g. .SDF file structures are fine).</p>
+	
+					<p class="nexa">Reaction pathways cannot currently be accepted.</p>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+
+
+	
+
+	
+
+
+
+</div>
+
+<div class="row">
+	<div class="col-xs-12">
+		<h2 class="subheading">Supported Browsers</h2>
+	</div>
+	<div class="col-xs-12 text-center">
+		<img src="/images/accepted-browsers.png">
+	</div>
+</div>
+
+<div class="row">
 
 	<div class="col-xs-12">
-		<h2 class="blue">Example Searches<br><small>These links will take you direct to the search page with the appropriate results</small></h2>
+		<h2 class="subheading">Example Searches<br><small style="color:white">These links will take you direct to the search page with the appropriate results</small></h2>
 	</div>
 
 	<div class="col-xs-11 col-xs-offset-1">
@@ -102,7 +216,7 @@
 
 	</div> -->
 	<div class="col-xs-12">
-		<h2 class="blue"><span class="glyphicon glyphicon-play-circle"></span> Video demos<br><small>Short animations to demonstrate some of the things you can do with ChemReg</small></h2>
+		<h2 class="subheading"><span class="glyphicon glyphicon-play-circle"></span> Video demos<br><small style="color:white">Short animations to demonstrate some of the things you can do with ChemReg</small></h2>
 
 	</div>
 
