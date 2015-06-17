@@ -231,13 +231,14 @@ angular.module('ngChemApp')
               }],
             },
             templateUrl: 'views/help.html',
-            controller: function($scope) {
+            controller: function($scope, $rootScope) {
               $scope.slides = [
                 { image: "images/reg-single.gif", text: "Adding One Compound" },
                 { image: "images/reg-multiple.gif", text: "Adding Multiple Compounds" },
                 { image: "images/edit-custom-fields.gif", text: "Editing Tagged Fields" },
                 { image: "images/search-by-tag.gif", text: "Searching By Tag" },
               ];
+              $rootScope.projName = "";
             }
         })
 
