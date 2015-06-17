@@ -8,7 +8,7 @@
  * Factory in the ngChemApp.
  */
 angular.module('ngChemApp')
-  .factory('renderers', function () {
+  .factory('renderers', function ($timeout) {
     // Service logic
     // ...
     function strip_tags(input, allowed) {
@@ -23,8 +23,18 @@ angular.module('ngChemApp')
                 });
     };
 
+    function renderFilter(warningsFilter, fieldKey, title){
+              var className = "lightgrey";
+            if(warningsFilter == fieldKey){
+              className = "blue";
+            }
+            return '<a class="btn btn-sm btn-default" title="' + title + '" onclick="angular.element(this).scope().cbh.toggleWarningsFilter(&quot;' + fieldKey + '&quot;)" ><span class="glyphicon glyphicon-filter ' + className + ' " ></span></a>';
+    }
+
     function getRenderers(sco){
         var scope;
+        
+        
         var renderers = {
 
 
@@ -38,6 +48,9 @@ angular.module('ngChemApp')
               },
 
               modalLinkRenderer : function(instance, td, row, col, prop, value, cellProperties) {
+                if(value==null){
+                  return td;
+                }
                 var escaped = Handsontable.helper.stringify(value);
                 escaped = strip_tags(escaped, ''); //be sure you only allow certain HTML tags to avoid XSS threats (you should also remove unwanted HTML attributes)
                 var a = document.createElement('a');
@@ -98,19 +111,34 @@ angular.module('ngChemApp')
                   td.className  += "htCenter htMiddle ";
                   td.appendChild(a);
                 }else{
-                  td.className  += "htCenter htMiddle ";
+                  td.className  += " htMiddle ";
                   if(prop == "standardInchiKey"){
                     td.innerHTML = escaped.substring(0,10) +"...";
+                    cellProperties.readOnly = true;
                   }else{
                      td.innerHTML = escaped;
                   }
                 }
-              
+                
                 return td;
               },
   
-             
+              bulletRenderer:  function(instance, td, row, col, prop, value, cellProperties) {
+                var classN = "glyphicon glyphicon-unchecked";
+                
+                if(value=="true"){
+                  classN = "glyphicon glyphicon-check";
+                }
+                td.className = "htCenter htMiddle htDimmed";
+                td.innerHTML = "<h2 class='blue'><span class='"+ classN + "'></span></h2>";
+                 cellProperties.readOnly = true;
+                return td
+              },
+
                coverRenderer : function(instance, td, row, col, prop, value, cellProperties) {
+                if(value==null){
+                  return td;
+                }
                 var escaped = Handsontable.helper.stringify(value),
                   img;
                   img = document.createElement('IMG');
@@ -140,6 +168,46 @@ angular.module('ngChemApp')
 
     // Public API here
     var data = {
+      getColumnLabel : function(c, scope){
+        if(c.noSort){
+            return "<label>"+ c.knownBy + "</label>";
+        }
+        var warningFilterHTML = "";
+        if(c.warningsFilter){
+          warningFilterHTML = renderFilter(scope.warningsFilter, c.data, "");
+        }
+
+        //Return a piece of html including an onclick event that
+        //will pass to the appropriate function that mujst be implemented in the above controller
+        var className = "glyphicon glyphicon-sort";
+        var greySort = "lightgrey";
+        angular.forEach(scope.sorts, function(item){
+          if(angular.isDefined(item[c.data])){
+            //If an item is in the sorted columns list
+              if(item[c.data].order == "asc"){
+                className += '-by-alphabet';
+                greySort = "blue";
+              }else{
+                className += '-by-alphabet-alt';
+                greySort = "blue";
+              }
+          };
+
+        });
+        var html = "<label>" + warningFilterHTML + c.knownBy + 
+        " <a class='btn btn-sm btn-default " + 
+        greySort + "' onclick='angular.element(this).scope().cbh.addSort(\"" 
+         + c.data + "\")'><span class='"
+          + className + "'></span></a></label>";
+        if(angular.isDefined(c.extra)){
+          html += c.extra;
+        }
+        return html
+        
+      },
+      renderFilterLink : function(warningsFilter, fieldKey, title){
+        return renderFilter(warningsFilter, fieldKey, title);
+      },
       renderHandsOnTable : function(scope, hotObj, element ){
          var rend = getRenderers(scope);
   
@@ -162,9 +230,14 @@ angular.module('ngChemApp')
         }
        
         element[0].appendChild(container);
-        scope.hot1 = new Handsontable(container, hotObj);
+        var hot1 = new Handsontable(container, hotObj);
         var id = element[0].firstChild.id;
-        $("#" + id).doubleScroll();
+        scope.hotId = "#" + id;
+        var elem = $(scope.hotId);
+        elem.doubleScroll();
+       
+        scope.hot1 = hot1;
+        
       }
     };
     return data;

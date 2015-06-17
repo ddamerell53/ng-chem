@@ -22,11 +22,11 @@
 <div class="row">
 
 <div class="col-xs-12">
-    <tabset class="col-xs-12" justified="true">
+    <tabset class="col-xs-12" >
     <h2 class="nexa blue"><span class="glyphicon glyphicon-plus"></span>&nbsp;Add compounds to {{proj.name}} project</h2>
 
     <tab heading="Add Multiple">
-        <div class="row">
+        <div class="row" ng-hide="dataReady">
          <div class="col-xs-6">
             <info-box class="pull-right" style="margin-top:-5px; margin-right:5px" left="false" lookup="file_types"></info-box>
             <label for="file_input" class="blue"><strong class="nexa">Drag and drop your files here.</strong></label>
@@ -70,7 +70,9 @@
             </div>
         </div>
 <div class="row" ng-if="dataReady">
-    <h2 class="nexa blue"><span class="glyphicon glyphicon-list"></span>&nbsp;Data summary</h2>
+    <h2 class="nexa blue"><span class="glyphicon glyphicon-list"></span>&nbsp;Data summary <button ng-click="cancelFile()" class="btn btn-danger pull-right">Start Again<span class="glyphicon glyphicon-remove"></span></button></h2>
+
+    <div ng-show="undoDataMappingId"  class="col-xs-12 alert alert-warning">You have just set the structure column, if you are not happy with the outcome <button class="btn btn-default" ng-click="undoDataMapping()">Undo</button></div>
 <div class="col-xs-12" ng-include="'views/templates/validation_table.html'">
 </div>
 <h2 class="nexa blue"><span class="glyphicon glyphicon-pencil"></span>&nbsp;Edit and save your data below</h2>
@@ -80,7 +82,7 @@
     
 
     </tab>
-    <tab heading="Add Single (draw)">
+   <!--  <tab ng-disabled="true" heading="">
                 <div class="col-xs-5">
                 <div class ="pull-left">
                     <label for="text_input" class="blue text-center"><strong class="nexa">Draw a molecule here >>></strong></label>
@@ -91,7 +93,7 @@
         <chemdoodle-window sketch-molfile="sketchMolfile" fetch-data="fetchData()" molecule="molecule"></chemdoodle-window>
     </div>
     </div>
-    </tab>
+    </tab> -->
   </tabset>
   </div>
 

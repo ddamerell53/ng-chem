@@ -20,6 +20,7 @@ angular.module('ngChemApp')
     'urlConfig', 
     'CBHCompoundBatch', 
     'MessageFactory',
+    'renderers',
     function ($scope, 
         $state, 
         $stateParams,
@@ -31,7 +32,8 @@ angular.module('ngChemApp')
         prefix, 
         urlConfig, 
         CBHCompoundBatch,
-         MessageFactory) {
+        MessageFactory,
+        renderers) {
 
         $scope.csrftoken = $cookies[prefix.split("/")[0] + "csrftoken"];
        $scope.flowinit = {
@@ -57,8 +59,64 @@ angular.module('ngChemApp')
 
         }
 
+        $scope.cbh.toggleWarningsFilter = function(filterName){
+            
+
+            var wf = filterName;
+            if ($scope.warningsFilter == filterName){
+                wf = '';
+            }
+             var newParams = angular.copy($stateParams);
+            newParams.page = 1;
+            newParams.warningsFilter = wf;
+            $state.transitionTo($state.current.name, 
+                                        newParams,
+                                        { location: true, 
+                                            inherit: false, 
+                                            relative: $state.$current, 
+                                            notify: false });
+            $stateParams = newParams;
+            $scope.initialise();
+        }
+
+        $scope.undoDataMapping = function(){
+            var newParams = { projectKey: $stateParams.projectKey, mb_id: $scope.undoDataMappingId };
+            $state.transitionTo($state.current.name, 
+                                        newParams,
+                                        { location: true, 
+                                            inherit: false, 
+                                            relative: $state.$current, 
+                                            notify: true });
+        }
+
+        $scope.cbh.setMappedField = function(newFieldName, unCuratedFieldName){
+            if(newFieldName == "SMILES for chemical structures"){
+                $scope.datasets[$scope.current_dataset_id].config.struc_col = unCuratedFieldName;
+                $scope.undoDataMappingId = angular.copy($scope.datasets[$scope.current_dataset_id].config.multipleBatch);
+                $scope.createMultiBatch();
+            }else{
+                angular.forEach($scope.compoundBatches.uncuratedHeaders,
+                function(hdr){
+                    if(hdr.name == unCuratedFieldName){
+                        hdr.copyTo = newFieldName;
+                    }
+                });
+            $scope.datasets[$scope.current_dataset_id].config.headers = $scope.compoundBatches.uncuratedHeaders;
+            
+            }
+            
+            
+
+        };
+
         $scope.cancelFile = function(field) {
-            $scope.setNull();
+            var newParams = { projectKey: $stateParams.projectKey }
+            $state.transitionTo($state.current.name, 
+                                        newParams,
+                                        { location: true, 
+                                            inherit: false, 
+                                            relative: $state.$current, 
+                                            notify: true });
         }
         $scope.datasets = {"none": {"config":{"state": "add",
                                                 "new": 0,
@@ -75,6 +133,7 @@ angular.module('ngChemApp')
         }
 
         $scope.setup = function(){
+
             $scope.filedata = {};
             $scope.filesUploading = false;
             $scope.dataReady = false;
@@ -97,16 +156,30 @@ angular.module('ngChemApp')
             $scope.itemsPerPage = angular.copy($scope.listPerPage);
             $scope.pagination = {
                     current: 1,
-                    compoundBatchesPerPage: $scope.itemsPerPage[2],
+                    compoundBatchesPerPage: $scope.itemsPerPage[0],
                 };
             
             var filters = { };
             
 
         }
+        $scope.nullSorts = function(){
+            $scope.compoundBatches.sorts =[];
+             var newParams = angular.copy($stateParams);
+            newParams.page = 1;
+            newParams.sorts = undefined;
+            $state.transitionTo($state.current.name, 
+                                        newParams,
+                                        { location: true, 
+                                            inherit: false, 
+                                            relative: $state.$current, 
+                                            notify: false });
+            $stateParams = newParams;
+            $scope.initialise();
+        }
 
+        $scope.cbh.renderFilterLink = renderers.renderFilterLink;
         $scope.cbh.addSort =  function(sortColumn){
-                console.log(sortColumn);
                 var index=0
                 var order = "asc";
                 var toPop = [];
@@ -125,7 +198,6 @@ angular.module('ngChemApp')
                     }
                     index ++;
                 });
-                console.log(toPop);
                 angular.forEach(toPop,function(p){
                     $scope.compoundBatches.sorts.pop(p);
                 })
@@ -137,7 +209,6 @@ angular.module('ngChemApp')
                     console.log("test2");
 
                 }
-                console.log( $scope.compoundBatches.sorts);
                  var newParams = angular.copy($stateParams);
                 newParams.page = 1;
                 if($scope.compoundBatches.sorts.length > 0){
@@ -156,7 +227,6 @@ angular.module('ngChemApp')
             };
         $scope.setNull();
         $scope.assignFile = function(id, ext, file) {
-            $scope.setNull();
 
             $scope.current_dataset_id = id;
             var conf =  {
@@ -186,6 +256,7 @@ angular.module('ngChemApp')
                 $scope.molecule={"molfile":""};
 
         $scope.createMultiBatch = function(){
+
             CBHCompoundBatch.createMultiBatch(
                 $scope.datasets[$scope.current_dataset_id]).then(
                     function(data){
@@ -238,7 +309,12 @@ angular.module('ngChemApp')
                 $scope.current_dataset_id = $stateParams.mb_id;
                 $scope.datasets[$scope.current_dataset_id] = {multipleBatch : $scope.current_dataset_id}
             }
-          
+          if($stateParams.warningsFilter) {
+                $scope.warningsFilter = $stateParams.warningsFilter;
+            }else{
+                $scope.warningsFilter = "";
+
+            }
             
             if(angular.isDefined($stateParams.compoundBatchesPerPage)){
                var filtered = $filter("filter")($scope.itemsPerPage, $stateParams.compoundBatchesPerPage, true);
@@ -246,11 +322,11 @@ angular.module('ngChemApp')
                 $scope.pagination.compoundBatchesPerPage = filtered[0]; 
                }
                else {
-                $scope.pagination.compoundBatchesPerPage = $scope.itemsPerPage[2];
+                $scope.pagination.compoundBatchesPerPage = $scope.itemsPerPage[0];
                }
             }
             else {
-                $scope.pagination.compoundBatchesPerPage = $scope.itemsPerPage[2];
+                $scope.pagination.compoundBatchesPerPage = $scope.itemsPerPage[0];
             }
             if(angular.isDefined($stateParams.page)){
                $scope.pagination.current = $stateParams.page;  
@@ -319,9 +395,32 @@ angular.module('ngChemApp')
     var  getResultsPage = function(pageNumber) {
         var limit = $scope.pagination.compoundBatchesPerPage.value;
         var offset = (pageNumber -1) * $scope.pagination.compoundBatchesPerPage.value;
-        var filter; 
-        
+        var filter = {"bool" : {"must":[],
+                                "should": [],
+                                "must_not": []}};
+        if($scope.warningsFilter != ""){
+            var filterBy = "true";
+            var field = $scope.warningsFilter;
+            if($scope.warningsFilter.indexOf("properties") > -1){
+                field = $scope.warningsFilter.split("|")[0];
+                filterBy = $scope.warningsFilter.split("|")[1];
+            }
+            if($scope.warningsFilter == "warnings.withStructure"){
+;                filter.bool.must_not.push({"term": {"warnings.withoutStructure": "true"}});
+                filter.bool.must_not.push({"term": {"warnings.parseError": "true"}});
+            }else{
+                var term = {"term": {}};
+
+                term["term"][field] = filterBy;
+                filter.bool.must.push(term);
+            }
+            
+        }else{
+            console.log($scope.warningsFilter);
+        }
+
         $scope.compoundBatches.data = [];
+        
         CBHCompoundBatch.getSearchResults($stateParams.mb_id, 
             limit, 
             offset, 
@@ -345,7 +444,10 @@ angular.module('ngChemApp')
                     CBHCompoundBatch.getImages( result.data.objects, size, "imageSrc", $scope.imageCallback); 
 
                 }else if( ( $scope.pagination.current * parseInt($scope.pagination.compoundBatchesPerPage.value)) > $scope.totalCompoundBatches){
-                    $scope.pageChanged(1);
+                    if($scope.pagination.current != 1){
+                        $scope.pageChanged(1);
+                    }
+                    
                 }
                 else{
                     if($state.current.name==="cbh.search"){
@@ -362,7 +464,6 @@ angular.module('ngChemApp')
 
 
         $scope.initialise();
-
 
 
 

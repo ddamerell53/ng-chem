@@ -7,7 +7,7 @@
  * # HandsOnCompoundTable
  */
 angular.module('ngChemApp')
-  .directive('handsoncompoundtable',["$timeout","renderers", function ($timeout, renderers) {
+  .directive('handsoncompoundtable',["$timeout","$compile","renderers", function ($timeout,$compile, renderers) {
     return {
       template: '<div  ></div>',
       restrict: 'E',
@@ -16,15 +16,14 @@ angular.module('ngChemApp')
               var redraw;
               redraw = function(){
                   var pids = {};
-                  var cNames = [];
+                  var cNames = [];       //DO  NOT CHANGE SMILES TITLE without checking in addcompounds controller and the compounds.py file
+                  var jsonSchemaColDefs = [{"title": "SMILES for chemical structures", "type": "chemical"}];
                   var count = 0;
 
                   angular.forEach(scope.compounds, function(comp){
                     var split = comp.project.split("/");
                     var projid = split[split.length-1]; 
-                    pids[projid] = true;
-                    
-                    
+                    pids[projid] = true;   
                   });
 
                   var projects = scope.cbh.projects.objects;
@@ -37,6 +36,7 @@ angular.module('ngChemApp')
                           if(cNames.indexOf( i.key) < 0){
 
                             cNames.push(i.key);
+                            jsonSchemaColDefs.push(angular.copy(myproj.schemaform.schema.properties[i.key]));
                           }
                         }
                       );
@@ -55,42 +55,57 @@ angular.module('ngChemApp')
 
                 if(angular.isDefined(scope.uncuratedHeaders)){
                   var uncuratedColumns = scope.uncuratedHeaders.map(function(un, index, array){
-                      var optList = angular.copy(cNames).map(function(cName){
+                      var disableSel = "";
+                      var optList = angular.copy(jsonSchemaColDefs).map(function(cName){
+                          var errorName = cName.type;
+                            if(cName.format == "date"){
+                              errorName = "stringdate";
+                              
+                            }
+                            if(un.fieldErrors[errorName] === true){
+                                return "<option disabled value='" + cName.title + "'>" +  cName.title + " (Invalid data for " + cName.friendly_field_type + ")</option>";
+                            }  
+                            var disabledOrSelected = "";
                           var weird = array.map(function(uncur){
+                            
                             if(uncur.name != un.name){
-                                if(cName.toLowerCase()==uncur.copyTo){
-                                    return "<option disabled value='" + cName + "'>" +  cname + "</option>";
+                              
+                                if(cName.title.toLowerCase()==uncur.copyTo.toLowerCase()){
+                                    disabledOrSelected = "<option disabled value='" + cName.title + "'>" +  cName.title + " <br>(Already mapped for " + uncur.name + ")</option>";
                                 }
                             }else{
-                                if(cName.toLowerCase()==uncur.copyTo){
-                                    return "<option selected value='" + cName + "'>" +  cname + "</option>";
+                                if(cName.title.toLowerCase()==uncur.copyTo.toLowerCase()){
+                                    disabledOrSelected = "<option selected value='" + cName.title + "'>" +  cName.title + "</option>";
+                                    if(cName.title == "SMILES for chemical structures"){
+                                      disableSel = "disabled"
+                                    }
                                 }
                             }
                           });
-                          if(weird.length == 1){
-                            return weird[0]
+                          if(disabledOrSelected){
+                            return disabledOrSelected;
                           }else{
-                            return "<option value='" + cName + "'>" +  cName + "</option>";
+                            return "<option value='" + cName.title + "'>" +  cName.title + "</option>";
                           }
 
                       });
 
-                      var extraHtml = "<br><div class='form-group'><select class='form-control'><option value=''>Map column to:</option>" + optList.join("") + "</select></div>";
+                      var extraHtml = "<div class='form-group '  style='margin-top:10px'><select onchange='angular.element(this).scope().cbh.setMappedField(this.value, &quot;" + un.name + "&quot;)' class='form-control input-small '  " +  disableSel +" ><option value=''>Map column to:</option>" + optList.join("") + "</select>";
                       return {extra: extraHtml, knownBy: un.name, data: "uncuratedFields." + un.name, readOnly:true, className: "htCenter htMiddle ", renderer: "linkRenderer"}
                   });
 
                   allCols = [
-                      { knownBy: "Original Row",data: "id",  readOnly: true,  className: "htCenter htMiddle "} ,
                       {noSort:true, knownBy: "Image",data: "properties.imageSrc", renderer: "coverRenderer", readOnly: true,  className: "htCenter htMiddle "} ,
-                      { knownBy: "Action",data: "properties.action", type:"dropdown", source: ["New batch","Ignore"], className: "htCenter htMiddle "} ,
-                      {knownBy:"No Struc", data: "warnings.noStructure", type:"checkbox", readonly:true},
-                      {knownBy:"Error", data: "warnings.parseError", type:"checkbox", readonly:true},
-                      {knownBy:"New", data: "warnings.new", type:"checkbox", readonly:true},
-                      {knownBy:"Overlap", data: "warnings.overlap", type:"checkbox", readonly:true},
-                      {knownBy:"Duplicated", data: "warnings.duplicate", type:"checkbox", readonly:true},
-                      {knownBy:"Inchi Key", data: "standardInchiKey",  readonly:true, renderer: "linkRenderer"}
 
-                    ].concat(uncuratedColumns).concat(customCols);
+                      { knownBy: "Row",data: "id",  readOnly: true,  className: "htCenter htMiddle "} ,
+                      { knownBy: "Action",data: "properties.action", type:"dropdown", source: ["New batch","Ignore"], className: "htCenter htMiddle "} ,
+                      { warningsFilter : true, knownBy:"Without Structure", data: "warnings.noStructure", renderer:"bulletRenderer", readonly:true},
+                      { warningsFilter : true, knownBy:"Can't Process", data: "warnings.parseError", renderer:"bulletRenderer", readonly:true},
+                      {warningsFilter : true, knownBy:"New to ChemReg", data: "warnings.new", renderer:"bulletRenderer", readonly:true},
+                      {warningsFilter : true, knownBy:"Overlap", data: "warnings.overlap", renderer:"bulletRenderer", readonly:true},
+                      {warningsFilter : true, knownBy:"Duplicated", data: "warnings.duplicate", renderer:"bulletRenderer", readonly:true},
+                      {knownBy:"Inchi Key", data: "standardInchiKey",  readonly:true, renderer: "linkRenderer"}
+                    ].concat(uncuratedColumns);
                 }else{
                   allCols = [
                       {noSort:true, knownBy: "Image",data: "properties.imageSrc", renderer: "coverRenderer", readOnly: true,  className: "htCenter htMiddle "},
@@ -107,8 +122,8 @@ angular.module('ngChemApp')
                   angular.forEach(allCols, function(c){
                     var keep = true;
                     angular.forEach(scope.excluded, function(ex){
-                      console.log(ex);
-                      console.log(c);
+                      // console.log(ex);
+                      // console.log(c);
                       if(ex == c.data){
                         keep = false;
                       }
@@ -122,35 +137,16 @@ angular.module('ngChemApp')
 
 
                 var columnHeaders = allCols.map(function(c){
-                    if(c.noSort){
-                        return c.knownBy;
-                    }else{
-                      //Return a piece of html including an onclick event that
-                      //will pass to the appropriate function that mujst be implemented in the above controller
-                      var className = "glyphicon glyphicon-sort";
-                      angular.forEach(scope.sorts, function(item){
-                        if(angular.isDefined(item[c.data])){
-                          //If an item is in the sorted columns list
-                            if(item[c.data].order == "asc"){
-                              className += '-by-alphabet';
-                            }else{
-                             className += '-by-alphabet-alt';
-                            }
-                        };
-
-                      });
-                      var html = "<label><a onclick='angular.element(this).scope().cbh.addSort(\""  + c.data + "\")'>" + c.knownBy + "<span class='" + className + "'></span></a></label>";
-                      if(angular.isDefined(c.extra)){
-                        html += c.extra;
-                      }
-                      return html
-                    }
+                    return renderers.getColumnLabel(c, scope);
                 });
                 var hotObj = {
                     width: '100%',
                     data: scope.compounds,
                     colHeaders: columnHeaders,
-                    columns: allCols
+                    columns: allCols,       
+                    afterChange: function(data,d){
+                      console.log(data);
+                    }             
                   }
 
                 renderers.renderHandsOnTable(scope, hotObj, element );
@@ -187,13 +183,16 @@ angular.module('ngChemApp')
               
 
       },
+      
+
       scope: {
         "compounds" : "=",
         "cbh" : "=",
         "sorts" : "=",
         "uncuratedHeaders" : "=",
         "columns" : "=",
-        "excluded" : "="
+        "excluded" : "=",
+        "warningsFilter" : "="
       }
     };
   }]);

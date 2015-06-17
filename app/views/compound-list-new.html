@@ -7,6 +7,7 @@
              'one': '1 result',
               'other': '{} results'}">
             </ng-pluralize>
+            <span ng-if="warningsFilter"> (filtered)</span>
         </h2>
     </div>
 </div>
@@ -23,7 +24,10 @@
     <div class ="col-xs-12">
 
         <div ng-if="listOrGallery.choice == 'list'">
-            <handsoncompoundtable class="myhot" uncurated-headers="compoundBatches.uncuratedHeaders" sorts="compoundBatches.sorts" cbh="cbh" compounds="compoundBatches.data", excluded="compoundBatches.excluded"></handsoncompoundtable>
+            <div id="myhot">
+
+                <handsoncompoundtable  uncurated-headers="compoundBatches.uncuratedHeaders" sorts="compoundBatches.sorts" cbh="cbh" compounds="compoundBatches.data", excluded="compoundBatches.excluded" warnings-filter="warningsFilter"></handsoncompoundtable>
+            </div>
             <div style="min-height:500px;" ng-show="noData" class="text-center"><img ng-show="!noData" src="images/loader.gif"></div>
 
             <table ng-show="">

@@ -47,22 +47,18 @@ angular.module('ngChemApp')
 
 
     CBHCompoundBatch.getSearchResults = function(mb_id, limit, offset, filter, sorts){
-            // var query_object = {
-            //               query: {
-            //                         bool:{
-            //                               must: [{
-            //                                 "term" : {"multiple_batch" : str(mb_id)}
-            //                               }]
-            //                           }
-            //                         }
-            //                     }
-            
-            var promise = $http.get(urlConfig.cbh_compound_batches.list_endpoint + "/get_part_processed_multiple_batch/"
-                                ,{ params:{
+            var params = {
                                     "limit" : limit,
                                     "offset" : offset,
                                     "current_batch" : mb_id, 
-                                    "sorts" : sorts} }  //JSON sorts string
+                                    "sorts" : sorts}
+            if((filter.bool.must.length + filter.bool.must_not.length + filter.bool.should.length ) > 0){
+              params.query = JSON.stringify(filter);
+            }else{
+              console.log(filter.bool);
+            }
+            var promise = $http.get(urlConfig.cbh_compound_batches.list_endpoint + "/get_part_processed_multiple_batch/"
+                                ,{ params:params }  //JSON sorts string
                                 );
             return  promise;  
         }
