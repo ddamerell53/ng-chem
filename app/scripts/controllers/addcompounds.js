@@ -55,9 +55,33 @@ angular.module('ngChemApp')
             });
         }
 
-        $scope.filterItems = function(reference){
+        $scope.saveTemporaryCompoundData = function(){
+            console.log($scope.datasets[$scope.current_dataset_id].config);
+            CBHCompoundBatch.saveMultiBatchMolecules($scope.datasets[$scope.current_dataset_id].config).then(
+                    function(data){
+                        $state.go("cbh.search",{multiple_batch_id: $scope.datasets[$scope.current_dataset_id].config.multipleBatch, 
+                            projectKey: projectKey});
+                    }
+                );        
+        }
+
+        $scope.cbh.saveChangesToTemporaryDataInController = function(changes, sourceOfChange){
+            if(changes){
+                 $scope.disableButtons = true;
+                    var itemsToChange = changes.map(function(item){
+                        return $scope.compoundBatches.data[item[0]]
+                    });
+                    var patchData = angular.copy($scope.datasets[$scope.current_dataset_id].config);
+                    patchData.objects = itemsToChange;
+                    CBHCompoundBatch.patchTempList(patchData);
+            }
+           
 
         }
+
+
+
+
 
         $scope.cbh.toggleWarningsFilter = function(filterName){
             
@@ -89,23 +113,17 @@ angular.module('ngChemApp')
                                             notify: true });
         }
 
-        $scope.cbh.setMappedField = function(newFieldName, unCuratedFieldName){
+        $scope.cbh.setMappedFieldInController = function(newFieldName, unCuratedFieldName){
+            console.log("got")
             if(newFieldName == "SMILES for chemical structures"){
                 $scope.datasets[$scope.current_dataset_id].config.struc_col = unCuratedFieldName;
                 $scope.undoDataMappingId = angular.copy($scope.datasets[$scope.current_dataset_id].config.multipleBatch);
                 $scope.createMultiBatch();
             }else{
-                angular.forEach($scope.compoundBatches.uncuratedHeaders,
-                function(hdr){
-                    if(hdr.name == unCuratedFieldName){
-                        hdr.copyTo = newFieldName;
-                    }
-                });
-            $scope.datasets[$scope.current_dataset_id].config.headers = $scope.compoundBatches.uncuratedHeaders;
-            
+                
+                $scope.datasets[$scope.current_dataset_id].config.headers = $scope.compoundBatches.uncuratedHeaders;
+                CBHCompoundBatch.saveBatchCustomFields($scope.datasets[$scope.current_dataset_id].config)
             }
-            
-            
 
         };
 

@@ -3,7 +3,11 @@
 		<div class="col-sm-12">
 			<h2 class="blue pull-left"><span class="glyphicon glyphicon-search"></span> Search </h2>
 		</div>
+		<div ng-if="projectFrom" class="col-sm-12 alert alert-success">
+			Your saved compounds are listed below <button ui-sref="cbh.projects.project.addcompounds({projectKey: projectFrom})" class=" pull-right btn btn-primary add more compounds">Add more Compounds</button>
+		</div>
 	</div>
+
 	<form novalidate name="inputForm" role="form" ng-submit="runSearch()" >
 		<div class="row">
 			<div class="col-sm-5">

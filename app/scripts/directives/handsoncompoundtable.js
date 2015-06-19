@@ -12,8 +12,23 @@ angular.module('ngChemApp')
       template: '<div  ></div>',
       restrict: 'E',
       link: function postLink(scope, element, attrs) {
- 
               var redraw;
+
+              scope.cbh.setMappedFieldInDirective = function(newFieldName, unCuratedFieldName){
+                angular.forEach(scope.uncuratedHeaders,
+                function(hdr){
+                    if(hdr.name == unCuratedFieldName){
+                        hdr.copyTo = newFieldName;
+                        
+                    }
+                });
+                if(newFieldName != "SMILES for chemical structures"){
+                  //Smiles will get redrawn anyway as there is a call to the backend
+                  redraw();
+                }
+                scope.cbh.setMappedFieldInController(newFieldName, unCuratedFieldName);
+              }
+
               redraw = function(){
                   var pids = {};
                   var cNames = [];       //DO  NOT CHANGE SMILES TITLE without checking in addcompounds controller and the compounds.py file
@@ -47,9 +62,12 @@ angular.module('ngChemApp')
                 
                 var customCols = cNames.map(function(cn){
                   
-                  return {knownBy: cn, data: "customFields." + cn, readOnly:true, className: "htCenter htMiddle ", renderer: "linkRenderer"}
+                  return {noSort:true,
+                    knownBy: cn, 
+                    data: "customFields." + cn, readOnly:true, 
+                    className: "htCenter htMiddle ", 
+                    renderer: "linkRenderer"}
                 });
-
 
                 var allCols;
 
@@ -90,7 +108,7 @@ angular.module('ngChemApp')
 
                       });
 
-                      var extraHtml = "<div class='form-group '  style='margin-top:10px'><select onchange='angular.element(this).scope().cbh.setMappedField(this.value, &quot;" + un.name + "&quot;)' class='form-control input-small '  " +  disableSel +" ><option value=''>Map column to:</option>" + optList.join("") + "</select>";
+                      var extraHtml = "<div class='form-group '  style='margin-top:10px'><select onchange='angular.element(this).scope().cbh.setMappedFieldInDirective(this.value, &quot;" + un.name + "&quot;)' class='form-control input-small '  " +  disableSel +" ><option value=''>Map column to:</option>" + optList.join("") + "</select>";
                       return {extra: extraHtml, knownBy: un.name, data: "uncuratedFields." + un.name, readOnly:true, className: "htCenter htMiddle ", renderer: "linkRenderer"}
                   });
 
@@ -98,7 +116,7 @@ angular.module('ngChemApp')
                       {noSort:true, knownBy: "Image",data: "properties.imageSrc", renderer: "coverRenderer", readOnly: true,  className: "htCenter htMiddle "} ,
 
                       { knownBy: "Row",data: "id",  readOnly: true,  className: "htCenter htMiddle "} ,
-                      { knownBy: "Action",data: "properties.action", type:"dropdown", source: ["New batch","Ignore"], className: "htCenter htMiddle "} ,
+                      { knownBy: "Action",data: "properties.action", type:"dropdown", source: ["New Batch","Ignore"], className: "htCenter htMiddle "} ,
                       { warningsFilter : true, knownBy:"Without Structure", data: "warnings.noStructure", renderer:"bulletRenderer", readonly:true},
                       { warningsFilter : true, knownBy:"Can't Process", data: "warnings.parseError", renderer:"bulletRenderer", readonly:true},
                       {warningsFilter : true, knownBy:"New to ChemReg", data: "warnings.new", renderer:"bulletRenderer", readonly:true},
@@ -110,11 +128,11 @@ angular.module('ngChemApp')
                   allCols = [
                       {noSort:true, knownBy: "Image",data: "properties.imageSrc", renderer: "coverRenderer", readOnly: true,  className: "htCenter htMiddle "},
                       {noSort:true, knownBy: "UOx ID",data: "chemblId", renderer: "modalLinkRenderer", readOnly: true, className: " htCenter htMiddle "},
-                      {knownBy: "Added By",data: "createdBy", readOnly: true, className: "htCenter htMiddle "},
-                      {knownBy: "Date",data: "timestamp", readOnly: true,className: "htCenter htMiddle "},
-                      {knownBy: "Mol Weight",data: "molecularWeight", readOnly: true, className: "htCenter htMiddle "},
-                      {knownBy: "Batch ID",data: "multipleBatchId", readOnly: true, className: "htCenter htMiddle "},
-                      {knownBy: "Project",data: "project", readOnly: true, className: "htCenter htMiddle ", renderer: "projectRenderer"},
+                      {noSort:true,knownBy: "Added By",data: "createdBy", readOnly: true, className: "htCenter htMiddle "},
+                      {noSort:true,knownBy: "Date",data: "timestamp", readOnly: true,className: "htCenter htMiddle "},
+                      {noSort:true,knownBy: "Mol Weight",data: "molecularWeight", readOnly: true, className: "htCenter htMiddle "},
+                      {noSort:true,knownBy: "Batch ID",data: "multipleBatchId", readOnly: true, className: "htCenter htMiddle "},
+                      {noSort:true,knownBy: "Project",data: "project", readOnly: true, className: "htCenter htMiddle ", renderer: "projectRenderer"},
                     ].concat(customCols);
                 }
                 if(angular.isDefined(scope.excluded)){
@@ -144,11 +162,13 @@ angular.module('ngChemApp')
                     data: scope.compounds,
                     colHeaders: columnHeaders,
                     columns: allCols,       
-                    afterChange: function(data,d){
-                      console.log(data);
-                    }             
+                               
                   }
-
+                if(angular.isDefined(scope.uncuratedHeaders)){
+                  hotObj.afterChange = function(data,sourceOfChange){
+                      scope.cbh.saveChangesToTemporaryDataInController(data, sourceOfChange);
+                  }  
+                }
                 renderers.renderHandsOnTable(scope, hotObj, element );
                 var index=0;
                 angular.forEach(allCols,function(item){

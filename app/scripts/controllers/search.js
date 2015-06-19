@@ -18,7 +18,7 @@ angular.module('ngChemApp')
     var pf = searchUrlParams.setup($stateParams, {molecule: {}});
     $scope.searchForm = angular.copy(pf.searchForm);
     $scope.searchFormSchema.form[0].options.async.call = $scope.refresh;
-
+    $scope.projectFrom = $stateParams.projectFrom;
     
     if($scope.searchForm.related_molregno__chembl__chembl_id__in) {
         $scope.searchFormSchema.schema.properties.related_molregno__chembl__chembl_id__in.items = $scope.searchForm.related_molregno__chembl__chembl_id__in.map(function(i){return {value : i, label : i}});
