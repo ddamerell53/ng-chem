@@ -1,6 +1,15 @@
+<div class="container">
+
+<div class="row" style="margin-top:10px;">
+        <div class="col-xs-12">
+            <h2 class="blue nexa"><a ng-click="topLink()"><span class='glyphicon glyphicon-{{glyphicon}}'></span> &nbsp;{{headline}}</a> <br><small>{{subheading}} <info-box lookup="{{help_lookup}}"></info-box></small></h2>
+        </div>
+    </div>
+
 <project-list></project-list>
 <div ng-if="" ng-include="'views/no-projects.html'"></div>
 <div class="form-views" ui-view="projectsummary">     </div>
 
 <div class="form-views" ui-view="newresults">     </div>
 
+</div>

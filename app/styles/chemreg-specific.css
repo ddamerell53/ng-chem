@@ -12,6 +12,42 @@ li a svg.svg {
   font-size:0.75em;
 
 }
+.input-small { max-width: 200px; } 
+.handsontable th:first-child,  {
+height: auto !important;
+}
+
+.wtHolder {
+  overflow-x: visible !important;
+}
+.lightgrey {
+  color: lightgrey;
+}
+.handsontable .htAutocompleteArrow {
+  float: right;
+  font-size: 14px;
+  color: black;
+  cursor: default;
+  width: 20px;
+  text-align: center;
+}
+/*::-webkit-scrollbar {
+      width: 12px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: none;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: -webkit-linear-gradient(left, #547c90, #002640);
+      border: 1px solid #333333;
+      box-shadow: inset 1px 0 0 rgba(255, 255, 255, 0.4);
+    }*/
+.spacer {
+  margin-top: 2px;
+  margin-bottom: 2px;
+}
 .form-group {
   margin-bottom: 10px;
 }
@@ -449,29 +485,32 @@ ul.dropdown-menu.ng-valid-date {
 .alert-success {
   margin:0;
 }
-.validate-report-box .report {
+.validate-report-box  {
   border: 1px solid #ddd;
   border-radius: 6px;
-  margin-top:20px;
+  margin-bottom:15px;
+  margin-left:15px;
 }
 
 .validate-report-box .report-value {
   
-  min-height:150px;
+  min-height:40px;
 }
 .report-type  {
-
+font-size:1vw;
 }
 .report-value {
-  font-size:6em;
+  margin-top:-10px;
+  font-size: 6em;
+  font-size:2.2vw;
 }
 td, th {
   font-size:14px;
 }
 .gallery-item {
   cursor: pointer;
-  padding-top:15px;
-}
+/*  padding-top:15px;
+*/}
 .gallery-item:hover {
   background-color: #eee;
   border-radius: 5px;

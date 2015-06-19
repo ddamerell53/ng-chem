@@ -1,40 +1,86 @@
 
-<div class="row">
-  <div ng-class="fullPage" class="col-xs-12">
+<div class="col-xs-12">
+  <div class="col-xs-4 col-sm-4">
+  <div ng-class="fullPage" class="col-xs-6">
     
+<<<<<<< HEAD
       <div class="validate-report-box first col-xs-12">
         <div class="report text-center">
           <div style="margin-right:5px; " class="pull-right"><info-box left="true" lookup="batch_reg_new_to_chemreg_other"  lookupitems="messages"></info-box></div>
           <div class="report-type alert-success"><strong class="nexa">New compounds</strong></div>
           <div class="report-value alert-success"><strong class="nexa">{{validatedData.new}}</strong></div>
+=======
+      <div class="validate-report-box first col-xs-12 alert-success">
+        <div class="report ">
+          <div style="margin-right:-10px; " class="pull-right"><info-box left="true" lookup="batch_reg_new_to_chemreg_other"></info-box></div>
+          <div class="col-xs-5 report-value "><strong class="nexa">{{datasets[current_dataset_id].validated.new}}</strong></div>
+          <div class="col-xs-7 report-type text-center "><strong class="nexa">New <br> structures</strong></div>
+          
+>>>>>>> e4589367d6f95679f8007f6ecc4e31693fc082a7
         </div>
       </div>
     
   </div>
-  <div ng-class="fullPage" class="col-xs-12">
+  <div ng-class="fullPage" class="col-xs-6">
     
+<<<<<<< HEAD
       <div class="validate-report-box overlap col-xs-12">
         <div class="report text-center">
           <div style="margin-right:5px; " class="pull-right"><info-box left="true" lookup="batch_prereg_to_project_other"  lookupitems="messages"></info-box></div>
           <div class="report-type alert-info"><strong class="nexa">Overlaps</strong></div>
           <div class="report-value alert-info"><strong class="nexa">{{validatedData.linkedproject}}</strong></div>
+=======
+      <div class="validate-report-box overlap col-xs-12 alert-info">
+        <div class="report ">
+          <div style="margin-right:-10px; " class="pull-right"><info-box left="true" lookup="batch_without_structure"></info-box></div>
+          <div class="col-xs-5 report-value "><strong class="nexa">{{datasets[current_dataset_id].validated.blinded}}</strong></div>
+          <div class="col-xs-7 report-type text-center "><strong class="nexa">Without <br>structures</strong></div>
+          
+>>>>>>> e4589367d6f95679f8007f6ecc4e31693fc082a7
         </div>
       </div>
     
   </div>
-  <div ng-class="fullPage" ng-hide="single" class="col-xs-12">
+</div>
+<div class="col-xs-4 col-sm-4">
+  <div ng-class="fullPage" ng-hide="single" class="col-xs-6">
     
+      <div class="validate-report-box dupe col-xs-12 alert-warning">
+        <div class="report ">
+          <div style="margin-right:-10px; " class="pull-right"><info-box left="true" lookup="batch_overlaps"></info-box></div>
+          <div class="col-xs-5 report-value "><strong class="nexa">{{datasets[current_dataset_id].validated.dupes}}</strong></div>
+          <div class="col-xs-7 report-type text-center "><strong class="nexa">Already<br>registered</strong></div>
+        </div>
+      </div>
+    
+<<<<<<< HEAD
       <div class="validate-report-box dupe col-xs-12">
         <div class="report text-center">
           <div style="margin-right:5px; " class="pull-right"><info-box left="true" lookup="batch_prereg_to_public_other"  lookupitems="messages"></info-box></div>
           <div class="report-type alert-warning"><strong class="nexa">Duplicates</strong></div>
           <div class="report-value alert-warning"><strong class="nexa">{{validatedData.dupes}}</strong></div>
+=======
+  </div>
+
+  <div ng-class="fullPage" ng-hide="single" class="col-xs-6">
+    
+      <div class="validate-report-box dupe col-xs-12 alert-warning">
+        <div class="report ">
+          <div style="margin-right:-10px; " class="pull-right"><info-box left="true" lookup="batch_duplicates"></info-box></div>
+          <div class="col-xs-5 report-value "><strong class="nexa">{{datasets[current_dataset_id].validated.dupes}}</strong></div>
+          <div class="col-xs-7 report-type text-center "><strong class="nexa">Duplicate structures</strong></div>
+          
+>>>>>>> e4589367d6f95679f8007f6ecc4e31693fc082a7
         </div>
       </div>
     
   </div>
-  <div ng-class="fullPage" class="col-xs-12">
+</div>
+<div class="col-xs-4 col-sm-4">
+
+  <div ng-class="fullPage" class="col-xs-6">
     
+<<<<<<< HEAD
       <div class="validate-report-box error col-xs-12">
         <div class="report text-center">
           <div style="margin-right:5px; " ng-show="single" class="pull-right"><info-box left="true" lookup="batch_errors_single" lookupitems="messages"></info-box></div>
@@ -42,9 +88,19 @@
           <div style="margin-right:5px; " ng-hide="single" class="pull-right"><info-box left="true" lookup="batch_errors_other" lookupitems="messages"></info-box></div>
           <div class="report-type alert-danger"><strong class="nexa">Errors</strong></div>
           <div class="report-value alert-danger"><strong class="nexa">{{validatedData.errors}}</strong></div>
+=======
+      <div class="validate-report-box error col-xs-12 alert-danger">
+        <div class="report  ">
+          <div style="margin-right:-10px; " ng-show="single" class="pull-right"><info-box left="true" lookup="batch_errors_single"></info-box></div>
+
+          <div style="margin-right:-10px; " ng-hide="single" class="pull-right"><info-box left="true" lookup="batch_errors_other"></info-box></div>
+          
+          <div class="col-xs-5 report-value "><strong class="nexa">{{datasets[current_dataset_id].validated.errors}}</strong></div>
+          <div class="col-xs-7 report-type text-center "><strong class="nexa">Structure <br> Errors</strong></div>
+>>>>>>> e4589367d6f95679f8007f6ecc4e31693fc082a7
           <div  ng-show="validatedData.errors > 0 && !single">
             at positions 
-            <span ng-repeat="error in validatedData.fileerrors" > 
+            <span ng-repeat="error in datasets[current_dataset_id].validated.fileerrors" > 
             <span ng-show="$first">{{error.index}} </span>
             <span ng-show="!$last && !$first">, {{error.index}}</span>
             <span ng-show="$last && !$first"> and {{error.index}} </span>
@@ -56,8 +112,21 @@
       </div>
     
   </div>
+ <div ng-class="fullPage" class="col-xs-6">
+    
+      <div class="validate-report-box error col-xs-12 alert-danger">
+        <div class="report  ">
+          
 
-
+          <div style="margin-right:-10px; "  class="pull-right"><info-box left="true" lookup="field_errors_other"></info-box></div>
+          
+          <div class="col-xs-5 report-value "><strong class="nexa">{{datasets[current_dataset_id].validated.field_errors}}</strong></div>
+          <div class="col-xs-7 report-type text-center "><strong class="nexa">Field <br>Errors</strong></div>          
+        </div>
+      </div>
+    
+  </div>
+</div>
 </div>
 
 

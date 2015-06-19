@@ -7,22 +7,38 @@
  * # HandsOnCompoundTable
  */
 angular.module('ngChemApp')
-  .directive('handsoncompoundtable',["$timeout", function ($timeout) {
+  .directive('handsoncompoundtable',["$timeout","$compile","renderers", function ($timeout,$compile, renderers) {
     return {
-      template: '<div style="width:100%, overflow:hidden;"></div>',
+      template: '<div  ></div>',
       restrict: 'E',
       link: function postLink(scope, element, attrs) {
-                function redraw(){
+              var redraw;
+
+              scope.cbh.setMappedFieldInDirective = function(newFieldName, unCuratedFieldName){
+                angular.forEach(scope.uncuratedHeaders,
+                function(hdr){
+                    if(hdr.name == unCuratedFieldName){
+                        hdr.copyTo = newFieldName;
+                        
+                    }
+                });
+                if(newFieldName != "SMILES for chemical structures"){
+                  //Smiles will get redrawn anyway as there is a call to the backend
+                  redraw();
+                }
+                scope.cbh.setMappedFieldInController(newFieldName, unCuratedFieldName);
+              }
+
+              redraw = function(){
                   var pids = {};
-                  var cNames = [];
+                  var cNames = [];       //DO  NOT CHANGE SMILES TITLE without checking in addcompounds controller and the compounds.py file
+                  var jsonSchemaColDefs = [{"title": "SMILES for chemical structures", "type": "chemical"}];
                   var count = 0;
 
                   angular.forEach(scope.compounds, function(comp){
                     var split = comp.project.split("/");
                     var projid = split[split.length-1]; 
-                    pids[projid] = true;
-                    
-                    
+                    pids[projid] = true;   
                   });
 
                   var projects = scope.cbh.projects.objects;
@@ -35,6 +51,7 @@ angular.module('ngChemApp')
                           if(cNames.indexOf( i.key) < 0){
 
                             cNames.push(i.key);
+                            jsonSchemaColDefs.push(angular.copy(myproj.schemaform.schema.properties[i.key]));
                           }
                         }
                       );
@@ -44,191 +61,158 @@ angular.module('ngChemApp')
                   });
                 
                 var customCols = cNames.map(function(cn){
-                  return {data: "customFields." + cn, readOnly:true, className: "custom ", renderer: customFieldRenderer}
-                })
-                var allCols = [
-                      {data: "properties.imageSrc", renderer: coverRenderer, readOnly: true,  className: "htCenter htMiddle "},
-                      {data: "chemblId", renderer: modalLinkRenderer, readOnly: true, className: " htCenter htMiddle "},
-                      {data: "createdBy", readOnly: true, className: "htCenter htMiddle "},
-                      {data: "timestamp", readOnly: true,className: "htCenter htMiddle "},
-                      {data: "molecularWeight", readOnly: true, className: "htCenter htMiddle "},
-                      {data: "multipleBatchId", readOnly: true, className: "htCenter htMiddle "},
-                      {data: "project", readOnly: true, className: "htCenter htMiddle ", renderer: projectRenderer},
+                  
+                  return {noSort:true,
+                    knownBy: cn, 
+                    data: "customFields." + cn, readOnly:true, 
+                    className: "htCenter htMiddle ", 
+                    renderer: "linkRenderer"}
+                });
 
+                var allCols;
 
+                if(angular.isDefined(scope.uncuratedHeaders)){
+                  var uncuratedColumns = scope.uncuratedHeaders.map(function(un, index, array){
+                      var disableSel = "";
+                      var optList = angular.copy(jsonSchemaColDefs).map(function(cName){
+                          var errorName = cName.type;
+                            if(cName.format == "date"){
+                              errorName = "stringdate";
+                              
+                            }
+                            if(un.fieldErrors[errorName] === true){
+                                return "<option disabled value='" + cName.title + "'>" +  cName.title + " (Invalid data for " + cName.friendly_field_type + ")</option>";
+                            }  
+                            var disabledOrSelected = "";
+                          var weird = array.map(function(uncur){
+                            
+                            if(uncur.name != un.name){
+                              
+                                if(cName.title.toLowerCase()==uncur.copyTo.toLowerCase()){
+                                    disabledOrSelected = "<option disabled value='" + cName.title + "'>" +  cName.title + " <br>(Already mapped for " + uncur.name + ")</option>";
+                                }
+                            }else{
+                                if(cName.title.toLowerCase()==uncur.copyTo.toLowerCase()){
+                                    disabledOrSelected = "<option selected value='" + cName.title + "'>" +  cName.title + "</option>";
+                                    if(cName.title == "SMILES for chemical structures"){
+                                      disableSel = "disabled"
+                                    }
+                                }
+                            }
+                          });
+                          if(disabledOrSelected){
+                            return disabledOrSelected;
+                          }else{
+                            return "<option value='" + cName.title + "'>" +  cName.title + "</option>";
+                          }
 
-                    ].concat(customCols);
-                var widths = customCols.map(function(){return 100});
-                var allWidths = [75, 120, ].concat(widths);
-                var columnHeaders = [ "Image","ID","Added By", "Date", "Mol Weight", "Batch ID", "Project", ].concat(cNames);
-                var container1,
-                    hot1;
-                var container = document.createElement('DIV');
-                container.style.overflow = 'hidden';
-                container.style.width = '100%';
-                while (element[0].firstChild) {
-                    element[0].removeChild(element[0].firstChild);
-                }
-               
-                element[0].appendChild(container);
-                
-                  scope.hot1 = new Handsontable(container, {
-                    width: '100%',
-                    data: scope.compounds,
-                   // colWidths: widths,
-                    colHeaders: columnHeaders,
-                    columns: allCols
+                      });
+
+                      var extraHtml = "<div class='form-group '  style='margin-top:10px'><select onchange='angular.element(this).scope().cbh.setMappedFieldInDirective(this.value, &quot;" + un.name + "&quot;)' class='form-control input-small '  " +  disableSel +" ><option value=''>Map column to:</option>" + optList.join("") + "</select>";
+                      return {extra: extraHtml, knownBy: un.name, data: "uncuratedFields." + un.name, readOnly:true, className: "htCenter htMiddle ", renderer: "linkRenderer"}
                   });
 
+                  allCols = [
+                      {noSort:true, knownBy: "Image",data: "properties.imageSrc", renderer: "coverRenderer", readOnly: true,  className: "htCenter htMiddle "} ,
+
+                      { knownBy: "Row",data: "id",  readOnly: true,  className: "htCenter htMiddle "} ,
+                      { knownBy: "Action",data: "properties.action", type:"dropdown", source: ["New Batch","Ignore"], className: "htCenter htMiddle "} ,
+                      { warningsFilter : true, knownBy:"Without Structure", data: "warnings.noStructure", renderer:"bulletRenderer", readonly:true},
+                      { warningsFilter : true, knownBy:"Can't Process", data: "warnings.parseError", renderer:"bulletRenderer", readonly:true},
+                      {warningsFilter : true, knownBy:"New to ChemReg", data: "warnings.new", renderer:"bulletRenderer", readonly:true},
+                      {warningsFilter : true, knownBy:"Overlap", data: "warnings.overlap", renderer:"bulletRenderer", readonly:true},
+                      {warningsFilter : true, knownBy:"Duplicated", data: "warnings.duplicate", renderer:"bulletRenderer", readonly:true},
+                      {knownBy:"Inchi Key", data: "standardInchiKey",  readonly:true, renderer: "linkRenderer"}
+                    ].concat(uncuratedColumns);
+                }else{
+                  allCols = [
+                      {noSort:true, knownBy: "Image",data: "properties.imageSrc", renderer: "coverRenderer", readOnly: true,  className: "htCenter htMiddle "},
+                      {noSort:true, knownBy: "UOx ID",data: "chemblId", renderer: "modalLinkRenderer", readOnly: true, className: " htCenter htMiddle "},
+                      {noSort:true,knownBy: "Added By",data: "createdBy", readOnly: true, className: "htCenter htMiddle "},
+                      {noSort:true,knownBy: "Date",data: "timestamp", readOnly: true,className: "htCenter htMiddle "},
+                      {noSort:true,knownBy: "Mol Weight",data: "molecularWeight", readOnly: true, className: "htCenter htMiddle "},
+                      {noSort:true,knownBy: "Batch ID",data: "multipleBatchId", readOnly: true, className: "htCenter htMiddle "},
+                      {noSort:true,knownBy: "Project",data: "project", readOnly: true, className: "htCenter htMiddle ", renderer: "projectRenderer"},
+                    ].concat(customCols);
+                }
+                if(angular.isDefined(scope.excluded)){
+                  var theCols = [];
+                  angular.forEach(allCols, function(c){
+                    var keep = true;
+                    angular.forEach(scope.excluded, function(ex){
+                      // console.log(ex);
+                      // console.log(c);
+                      if(ex == c.data){
+                        keep = false;
+                      }
+                    });
+                    if(keep){
+                      theCols.push(c);
+                    }
+                  });
+                  allCols = theCols;
+                }
+
+
+                var columnHeaders = allCols.map(function(c){
+                    return renderers.getColumnLabel(c, scope);
+                });
+                var hotObj = {
+                    width: '100%',
+                    data: scope.compounds,
+                    colHeaders: columnHeaders,
+                    columns: allCols,       
+                               
+                  }
+                if(angular.isDefined(scope.uncuratedHeaders)){
+                  hotObj.afterChange = function(data,sourceOfChange){
+                      scope.cbh.saveChangesToTemporaryDataInController(data, sourceOfChange);
+                  }  
+                }
+                renderers.renderHandsOnTable(scope, hotObj, element );
+                var index=0;
+                angular.forEach(allCols,function(item){
+                  item.foundWidth = scope.hot1.getColWidth(index);
+                  index += 1;
+                });
+
+
+
+
+
               }
+              window.redraw = redraw;
               
-              scope.$watch("compounds", function(){
+              scope.$watch("compounds", function(newValue, oldValue){
                 if (scope.compounds.length >0){
                     if (angular.isDefined(scope.compounds[0].properties.imageSrc)){
+                      redraw();
+                    }
+                }else{
+                    if(newValue.length < oldValue.length){
+                      //check for emptying
                       redraw();
                     }
                 }
               }, true);
 
                             // original by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
-              function strip_tags(input, allowed) {
-                var tags = /<\/?([a-z][a-z0-9]*)\b[^>]*>/gi,
-                  commentsAndPhpTags = /<!--[\s\S]*?-->|<\?(?:php)?[\s\S]*?\?>/gi;
-              
-                // making sure the allowed arg is a string containing only tags in lowercase (<a><b><c>)
-                allowed = (((allowed || "") + "").toLowerCase().match(/<[a-z][a-z0-9]*>/g) || []).join('');
-              
-                return input.replace(commentsAndPhpTags, '').replace(tags, function ($0, $1) {
-                  return allowed.indexOf('<' + $1.toLowerCase() + '>') > -1 ? $0 : '';
-                });
-              }
-              
-              function safeHtmlRenderer(instance, td, row, col, prop, value, cellProperties) {
-                var escaped = Handsontable.helper.stringify(value);
-                escaped = strip_tags(escaped, '<em><b><strong><a><big>'); //be sure you only allow certain HTML tags to avoid XSS threats (you should also remove unwanted HTML attributes)
-                td.innerHTML = escaped;
-              
-                return td;
-              }
 
-              function projectRenderer(instance, td, row, col, prop, value, cellProperties){
-                var mol = instance.getSourceDataAtRow(row);
-                //we have a list of projects - find the right one and render the name
 
-                  //angular.forEach(scope.compounds, function(comp){
-                    var split = mol.project.split("/");
-                    var projid = split[split.length-1]; 
-                    
-                    
-                    
-                  //});
-
-                  var projects = scope.cbh.projects.objects;
-
-                  angular.forEach(projects,function(myproj){
-
-                    
-                    if(myproj.id == projid){
-                      Handsontable.Dom.empty(td);
-                      td.innerHTML = myproj.name;
-                      td.className  += "htCenter htMiddle";
-                      return td
-                    }
-                      
-                  });
-
-              }
-
-              function modalLinkRenderer(instance, td, row, col, prop, value, cellProperties) {
-                var escaped = Handsontable.helper.stringify(value);
-                escaped = strip_tags(escaped, ''); //be sure you only allow certain HTML tags to avoid XSS threats (you should also remove unwanted HTML attributes)
-                var a = document.createElement('a');
-                a.innerHTML = escaped;
-                Handsontable.Dom.addEvent(a, 'mousedown', function (e){
-                    // e.preventDefault(); // prevent selection quirk
-                    var mol = instance.getSourceDataAtRow(row);
-                    scope.cbh.openSingleMol(mol);
-                });
-                Handsontable.Dom.empty(td);
-                td.className  += "htCenter htMiddle courier";
-                td.appendChild(a);
-              
-                return td;
-              }
-  
-              function linkRenderer(instance, td, row, col, prop, value, cellProperties) {
-               var escaped = Handsontable.helper.stringify(value);
-                escaped = strip_tags(escaped, '');
-                if (escaped.indexOf("http") == 0 && escaped.indexOf("//") > 0){
-
-                  var a = document.createElement('a');
-                  var afterHttp = escaped.split("//")[1];
-                  a.innerHTML = afterHttp;
-                  if (afterHttp.length>30){
-                      a.innerHTML = afterHttp.substring(0,29) +"...";
-                  }
-                  a.href = escaped;
-                  a.target = "_blank";
-                  Handsontable.Dom.empty(td);
-                  td.appendChild(a);
-                }else{
-                  td.innerHTML = escaped;
-                }
-                td.className  += "htCenter htMiddle ";
-                return td;
-              }
-
-              function customFieldRenderer(instance, td, row, col, prop, value, cellProperties) {
-               var escaped = Handsontable.helper.stringify(value);
-                escaped = strip_tags(escaped, '');
-                if (escaped.indexOf("http") == 0 && escaped.indexOf("//") > 0){
-
-                  var a = document.createElement('a');
-                  var afterHttp = escaped.split("//")[1];
-                  a.innerHTML = afterHttp;
-                  if (afterHttp.length>30){
-                      a.innerHTML = afterHttp.substring(0,29) +"...";
-                  }
-                  a.href = escaped;
-                  a.target = "_blank";
-                  Handsontable.Dom.empty(td);
-                  td.appendChild(a);
-                }else{
-                  td.innerHTML = escaped;
-                }
-                td.className  += "htMiddle ";
-                return td;
-              }
-  
              
-              function coverRenderer (instance, td, row, col, prop, value, cellProperties) {
-                var escaped = Handsontable.helper.stringify(value),
-                  img;
-                  img = document.createElement('IMG');
-                  //if(value != "") {
-                    img.src = value;
-                    img.style.cursor = "pointer";
-                  //}
-                  //img.src = value;
               
-                  Handsontable.Dom.addEvent(img, 'mousedown', function (e){
-                    // e.preventDefault(); // prevent selection quirk
-                    var mol = instance.getSourceDataAtRow(row);
-                    scope.cbh.openSingleMol(mol);
-                  });
-              
-                  Handsontable.Dom.empty(td);
-                  td.className  += "htCenter htMiddle ";
-
-                  td.appendChild(img);
-                
-                return td;
-              }
 
       },
+      
+
       scope: {
         "compounds" : "=",
         "cbh" : "=",
+        "sorts" : "=",
+        "uncuratedHeaders" : "=",
+        "columns" : "=",
+        "excluded" : "=",
+        "warningsFilter" : "="
       }
     };
   }]);

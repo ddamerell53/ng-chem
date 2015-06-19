@@ -14,6 +14,7 @@ angular.module('ngChemApp')
     // ...
 
     var CBHCompoundBatch = {};
+
     CBHCompoundBatch.getSingleMol = function(){
         return { acdAcidicPka: null,
                          acdBasicPka: null,
@@ -40,7 +41,33 @@ angular.module('ngChemApp')
                          stdCtab: "",
                          stdInChiKey: "",
                      };
-    }
+    };
+
+
+
+
+    CBHCompoundBatch.getSearchResults = function(mb_id, limit, offset, filter, sorts){
+            var params = {
+                                    "limit" : limit,
+                                    "offset" : offset,
+                                    "current_batch" : mb_id, 
+                                    "sorts" : sorts}
+            if((filter.bool.must.length + filter.bool.must_not.length + filter.bool.should.length ) > 0){
+              params.query = JSON.stringify(filter);
+            }else{
+              console.log(filter.bool);
+            }
+            var promise = $http.get(urlConfig.cbh_compound_batches.list_endpoint + "/get_part_processed_multiple_batch/"
+                                ,{ params:params }  //JSON sorts string
+                                );
+            return  promise;  
+        }
+        
+
+    
+
+
+
 
     CBHCompoundBatch.validateList = function(projectKey, values){
         values.projectKey = projectKey;
@@ -57,6 +84,24 @@ angular.module('ngChemApp')
     };
 
 
+    CBHCompoundBatch.createMultiBatch = function(currentDataset) {
+        var canceller = $q.defer();
+        var cancel = function(reason){
+            canceller.resolve(reason);
+        };
+        currentDataset.cancellers.push(cancel);
+        var promise = $http.post(urlConfig.cbh_compound_batches.list_endpoint + "/validate_files/"
+                            ,currentDataset.config  ,
+                            {
+                              
+                              timeout: canceller.promise,
+                                         
+                            });
+        return  promise;
+                  
+  
+    }
+
 
     CBHCompoundBatch.saveSingleCompound = function(projectKey, molfile, customFields, stereoSelected) {
         //Add a property to the molfile to say that this molecule has been hand drawn
@@ -65,9 +110,8 @@ angular.module('ngChemApp')
 
     };
 
-    CBHCompoundBatch.saveMultiBatchMolecules = function(projectKey, currentBatch, customFields) {
-
-        return $http.post( urlConfig.cbh_compound_batches.list_endpoint + "/multi_batch_save/", {"projectKey": projectKey, "currentBatch":currentBatch, "customFields": customFields,});
+    CBHCompoundBatch.saveMultiBatchMolecules = function(config) {
+        return $http.post( urlConfig.cbh_compound_batches.list_endpoint + "/multi_batch_save/", config);
     };
 
     CBHCompoundBatch.validateBatch = function(projectKey,molfiles) {
@@ -113,11 +157,24 @@ angular.module('ngChemApp')
                 siz = 200;
               }
             }
-            var params = {
+            if(angular.isDefined(obj.ctab)){
+              var params = {
                   size: siz,
                   ctab: obj.ctab,
                 }
-            params.smarts = obj.properties.substructureMatch;
+              }else{
+                var params = {
+                  size: siz,
+                  ctab: "",
+                }
+              }
+            
+            if(angular.isDefined(obj.properties)){
+              if(angular.isDefined(obj.properties.substructureMatch)){
+                params.smarts = obj.properties.substructureMatch;
+              }
+            }
+            
             promises.push($http({method:"POST", 
                 url: "https://chembiohub.ox.ac.uk/utils/ctab2image",
                 data: params, 
@@ -156,6 +213,20 @@ angular.module('ngChemApp')
         );
         return promise;
     }
+
+    CBHCompoundBatch.patchTempList = function(data){
+        var promise = $http.post(  urlConfig.cbh_compound_batches.list_endpoint + '/update_temp_batches/' ,       
+                data
+            ).then(
+            function(data){
+                return data.data;
+            }
+        );
+        return promise;
+    }
+
+
+
 
     CBHCompoundBatch.search = function(searchForm) {
         var promise = $http({
@@ -203,9 +274,9 @@ angular.module('ngChemApp')
         return urlConfig.cbh_compound_batches.list_endpoint + 
     };*/
 
-    CBHCompoundBatch.saveBatchCustomFields = function(projectKey,currentBatch, customFields, mapping ) {
+    CBHCompoundBatch.saveBatchCustomFields = function(config) {
 
-        return $http.post( urlConfig.cbh_compound_batches.list_endpoint + "/multi_batch_custom_fields/", {"projectKey": projectKey, "currentBatch":currentBatch, "customFields": customFields, "mapping":mapping });
+        return $http.post( urlConfig.cbh_compound_batches.list_endpoint + "/multi_batch_custom_fields/", config );
     }
 
     CBHCompoundBatch.validateFiles = function(projectKey,file_name, struc_col) {

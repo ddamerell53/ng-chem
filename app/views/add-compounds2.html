@@ -1,0 +1,108 @@
+<div flow-init="flowinit"
+        flow-name="filedata.flow"
+        flow-files-submitted="$flow.upload()"
+        flow-file-success="assignFile($file.uniqueIdentifier, $file.getExtension())" 
+        flow-upload-started="filesUploading=true" 
+        flow-complete="filesUploading=false"> 
+<div class="row">
+        <div class="col-xs-12 reg-nav">
+          <ul class="nav navbar-nav align-center text-center col-xs-12">
+            <a ng-click="topLink()" class=""><li class="col-xs-2 active"><h2><small>{{proj.name}} project home</small></h2><img src="images/home.svg" class="svg" alt="home" title="home"></li></a>
+            <li class="col-xs-2 col-xs-offset-2 active" ><h2><small>add <span class="glyphicon glyphicon-ok add text-success hidden"></span> </small></h2><img src="images/add.svg" class="svg" alt="add" title="add"></li>
+            <li class="col-xs-2" ng-class="{active:(datasets[current_dataset_id].config.state==='validate')}"><h2><small>validate and save<span class="glyphicon glyphicon-ok validate text-success hidden"></span></small></h2><img src="images/validate.svg" class="svg" alt="validate" title="validate"></li>
+             <li class="col-xs-2 pull-right" ng-class="{active: false}"><h2><small>saved <span class="glyphicon glyphicon-ok text-success finish hidden"></span></small></h2>
+                <h2 class="blue"><sup>6</sup>/<sub>7</sub></h2>
+             </li>
+              
+          </ul>
+        </div>
+</div>
+  <progressbar max="wizard.max" value="wizard.dynamic"><span class="pull-right" style="color:white; white-space:nowrap; margin-right:20px;">{{ wizard.step }} of {{ wizard.totalSteps }}</span></progressbar>
+
+<div class="row">
+
+<div class="col-xs-12">
+    <tabset class="col-xs-12" >
+    <h2 class="nexa blue"><span class="glyphicon glyphicon-plus"></span>&nbsp;Add compounds to {{proj.name}} project</h2>
+
+    <tab heading="Add Multiple">
+        <div class="row" ng-hide="dataReady">
+         <div class="col-xs-6">
+            <info-box class="pull-right" style="margin-top:-5px; margin-right:5px" left="false" lookup="file_types"></info-box>
+            <label for="file_input" class="blue"><strong class="nexa">Drag and drop your files here.</strong></label>
+
+                    <div flow-drop flow-drag-enter="style={border:'4px dashed green', padding: '10px'}" flow-drag-leave="style={border:'4px dashed #ddd', padding: '10px'}" ng-style="style={border:'4px dashed #ddd', padding: '10px'}">
+                            
+                       
+
+                        <div class="row">
+                            
+                             <div class="col-xs-12" style="min-height:50px">
+                                    <div class=" well" ng-repeat="file in $flow.files" style="margin-bottom:0px; min-height:40px">
+                                        <!-- <td>{{$index+1}}</td> -->
+                                        {{file.name | limitTo : 40}}
+                                    <a ng-click="file.cancel(); cancelFile()"   class="btn btn-sm btn-danger pull-right" role="btn">Remove</a>
+                                    </div>
+                                    
+                                    <div class="well" style="margin-bottom:0px; min-height:40px" ng-show="$flow.files.length == 0">
+                                        No files uploaded
+                                    <span flow-btn name="file_input" role="btn" class="btn btn-primary btn-sm pull-right" ng-show="$flow.files.length < 1">Upload</span> 
+
+                                    </div>
+                                    <div ng-if="(datasets[current_dataset_id].config.type==='file')" class="alert alert-danger" ng-repeat="error in datasets[current_dataset_id].config.errors">
+                                        {{error}}
+                                    </div>
+                            </div>
+                            
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class ="col-xs-6" >
+                    <info-box class="pull-right" style="margin-top:-5px; margin-right:5px" left="false" lookup="smiles_field"></info-box>
+                <div class="form-group">
+                    <label for="text_input" class="blue text-center"><strong class="nexa">Paste your SMILES or Standard Inchis here</strong></label>
+                    <div ui-ace  ng-change="parseInput()" ng-model="input_string.inputstring" class="form-control" style="height:78px"></div>
+                </div>
+                <div class="row" data-ng-show="format_not_detected">
+                    <div class="alert alert-danger" id="format_not_detected">{{messages.format_not_detected}}</div>
+                </div>
+            </div>
+        </div>
+<div class="row" ng-if="dataReady">
+    <h2 class="nexa blue"><span class="glyphicon glyphicon-list"></span>&nbsp;Data summary <button ng-click="cancelFile()" class="btn btn-danger pull-right">Start Again<span class="glyphicon glyphicon-remove"></span></button></h2>
+
+    <div ng-show="undoDataMappingId"  class="col-xs-12 alert alert-warning">You have just set the structure column, if you are not happy with the outcome <button class="btn btn-default" ng-click="undoDataMapping()">Undo</button></div>
+<div class="col-xs-12" ng-include="'views/templates/validation_table.html'">
+</div>
+<h2 class="nexa blue"><span class="glyphicon glyphicon-pencil"></span>&nbsp;Edit and save your data below</h2>
+<div class="col-xs-12" ng-include="'views/compound-list-new.html'">
+</div>
+</div>
+    
+
+    </tab>
+   <!--  <tab ng-disabled="true" heading="">
+                <div class="col-xs-5">
+                <div class ="pull-left">
+                    <label for="text_input" class="blue text-center"><strong class="nexa">Draw a molecule here >>></strong></label>
+                </div>
+                </div>
+                <div class="col-xs-7 col-md-5">
+        <div class="pull-right">
+        <chemdoodle-window sketch-molfile="sketchMolfile" fetch-data="fetchData()" molecule="molecule"></chemdoodle-window>
+    </div>
+    </div>
+    </tab> -->
+  </tabset>
+  </div>
+
+</div>
+
+
+
+
+
+  
+
+</div>

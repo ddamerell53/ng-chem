@@ -174,8 +174,10 @@ angular.module('ngChemApp')
             }
         })
 
+
+
         .state('cbh.search', {
-            url: '/search?page=&compoundBatchesPerPage=&project__project_key__in&functional_group&flexmatch&related_molregno__chembl__chembl_id__in&with_substructure&similar_to&fpValue&created__gte&created__lte&molfile&smiles&search_custom_fields__kv_any&multiple_batch_id=&viewType=&doScroll=&limit&offset',
+            url: '/search?&projectFrom=page=&compoundBatchesPerPage=&project__project_key__in&functional_group&flexmatch&related_molregno__chembl__chembl_id__in&with_substructure&similar_to&fpValue&created__gte&created__lte&molfile&smiles&search_custom_fields__kv_any&multiple_batch_id=&viewType=&doScroll=&limit&offset',
             //url: '/search',
             //params: ['project__project_key', 'flexmatch', 'with_substructure', 'similar_to', 'fpValue', 'created__gte', 'created__lte', 'molfile', 'smiles', 'limit', 'offset', 'random'],
             resolve:{
@@ -382,6 +384,12 @@ angular.module('ngChemApp')
                   return $stateParams.projectKey;
               }]
             }
+        })
+        .state('cbh.projects.project.addcompounds',{
+          url: 'addcompounds/?mb_id=&warningsFilter=&page=&compoundBatchesPerPage=&sorts=',
+          templateUrl : 'views/add-compounds2.html',
+          controller : 'AddCompoundsCtrl',
+          // reloadOnSearch: false
         })
 
         .state('cbh.projects.add', {

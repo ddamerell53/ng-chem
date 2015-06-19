@@ -1,0 +1,138 @@
+<div class="col-xs-2">
+<button class="btn  btn-default" style="width:100% ;padding:2px; font-size:1.5vw;"  >
+   
+    <div class="col-xs-12 " ng-hide="filesInProcessing">
+        
+        <strong>
+
+            {{datasets[current_dataset_id].config.batchStats["total"]}}
+<span ng-show="warningsFilter" ng-bind-html="cbh.renderFilterLink(warningsFilter, '', 'Remove filters and show all records')"></span>
+        </strong>
+    </div>
+        <div class="col-xs-12"><td>Records </td>     
+</div>
+        
+</button>
+</div>
+
+<div class="col-xs-4">
+<div class="col-xs-2 text-center">
+
+    <h2 class="blue"><br><span class="glyphicon glyphicon-arrow-right"></span></h2>
+</div>
+<div class="col-xs-8">
+<table style="width:100%" class="table">
+    
+    <tbody>
+        <tr>
+            <td style="border:none">&nbsp;</td>
+            <th class="table-bordered" rowspan="2">
+                With Structures
+            </th>
+            <td class="table-bordered" rowspan="2">
+                {{datasets[current_dataset_id].config.batchStats["withStructure"]}}
+                
+                    <a ng-show="datasets[current_dataset_id].config.batchStats['withStructure'] > 0" ng-click ="cbh.toggleWarningsFilter('warnings.withStructure')" class="btn btn-sm btn-default" ng-class="warningsFilter =='warnings.withStructure' ? 'blue' : 'lightgrey'" title="Filter only records where there is a valid structure"><span class="glyphicon glyphicon-filter "></span></a>
+            </td>
+        </tr>
+        <tr>
+            <td style="border:none">&nbsp;</td>
+            
+        </tr>
+        <tr>
+             <td style="border:none">&nbsp;</td>
+            <th class="table-bordered">
+                Without Structures
+            </th>
+            <td class="table-bordered">
+                {{datasets[current_dataset_id].config.batchStats["withoutStructure"]}}
+                <a ng-show="datasets[current_dataset_id].config.batchStats['withoutStructure'] > 0" ng-click ="cbh.toggleWarningsFilter('warnings.withoutStructure')" class="btn btn-sm btn-default" ng-class="warningsFilter =='warnings.withoutStructure' ? 'blue' : 'lightgrey'" title="Filter only records where there is no structure"><span class="glyphicon glyphicon-filter "></span></a>
+            </td>
+
+        </tr>
+        <tr>
+             <td style="border:none">&nbsp;</td>
+            <th class="table-bordered">
+                Can't Process Structure
+            </th>
+            <td class="table-bordered">
+                {{datasets[current_dataset_id].config.batchStats["parseErrors"]}}
+                <a ng-show="datasets[current_dataset_id].config.batchStats['parseErrors'] > 0" ng-click ="cbh.toggleWarningsFilter('warnings.parseError')" class="btn btn-sm btn-default" ng-class="warningsFilter =='warnings.parseError' ? 'blue' : 'lightgrey'" title="Filter only records where the structure cannot be processed"><span class="glyphicon glyphicon-filter "></span></a>
+                
+            </td>
+        </tr>
+        
+    </tbody>
+</table>
+</div>
+<div class="col-xs-2 text-center">
+    <h2 class="blue"><br><span class="glyphicon glyphicon-arrow-right"></span></h2>
+</div>
+</div>
+
+
+<div class="col-xs-2">
+<button style="width:100% ;  padding:2px ; font-size:1.5vw;" class="btn btn-default"  >
+    
+    
+    <div class="col-xs-12" ng-hide="filesInProcessing">
+        
+        <strong>
+
+            {{datasets[current_dataset_id].config.compoundStats["total"]}}
+
+        </strong>
+    </div>
+    <div class="col-xs-12"><td>Compounds  </td>  
+    </div>
+        
+    </div>
+</button>
+</div>
+
+
+
+
+<div class="col-xs-4">
+<div class="col-xs-2 text-center">
+    <h2 class="blue"><br><span class="glyphicon glyphicon-arrow-right"></span></h2>
+</div>
+<div class="col-xs-8">
+<table style="width:100%" class="table table-bordered">
+    <tbody>
+        <tr>
+            <th>
+                New to chemreg
+            </th>
+            <td>
+                {{datasets[current_dataset_id].config.compoundStats["new"]}} 
+                <a ng-show="datasets[current_dataset_id].config.compoundStats['new'] > 0" ng-click ="cbh.toggleWarningsFilter('warnings.new')" class="btn btn-sm btn-default" ng-class="warningsFilter =='warnings.new' ? 'blue' : 'lightgrey'" title="Filter only records new to ChemReg"><span class="glyphicon glyphicon-filter "></span></a>
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Overlaps {{warningFilter}}
+            </th>
+            <td>
+                {{datasets[current_dataset_id].config.compoundStats["overlaps"]}} 
+                <a ng-show="datasets[current_dataset_id].config.compoundStats['overlaps'] > 0" ng-click ="cbh.toggleWarningsFilter('warnings.overlap')" class="btn btn-sm btn-default" ng-class="warningsFilter =='warnings.overlap' ? 'blue' : 'lightgrey'" title="Filter only records where the structure overlaps with existing ChemReg records"><span class="glyphicon glyphicon-filter "></span></a>
+            </td>
+        </tr>
+       <tr>
+            <th>
+                Duplicates
+            </th>
+            <td class="alert-warning" ng-show='(datasets[current_dataset_id].config.compoundStats["duplicateOverlaps"] + datasets[current_dataset_id].config.compoundStats["duplicateNew"]) > 0'>
+                Yes 
+                <a  ng-click ="cbh.toggleWarningsFilter('warnings.duplicate')" class="btn btn-sm btn-default" ng-class="warningsFilter =='warnings.duplicate' ? 'blue' : 'lightgrey'" title="Filter only records that are duplicated in the uploaded data"><span class="glyphicon glyphicon-filter "></span></a>
+            </td>
+            <td ng-show='(datasets[current_dataset_id].config.compoundStats["duplicateOverlaps"] + datasets[current_dataset_id].config.compoundStats["duplicateNew"]) == 0'>
+                No 
+            </td>
+        </tr>
+
+       
+    </tbody>
+</table>
+</div>
+</div>
