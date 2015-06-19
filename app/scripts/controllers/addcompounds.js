@@ -55,7 +55,9 @@ angular.module('ngChemApp')
             });
         }
 
+
         $scope.saveTemporaryCompoundData = function(){
+            $scope.currentlyLoading = true;
             CBHCompoundBatch.saveMultiBatchMolecules($scope.datasets[$scope.current_dataset_id].config).then(
                     function(data){
                         $state.transitionTo("cbh.search", 
@@ -65,8 +67,12 @@ angular.module('ngChemApp')
                                             inherit: false, 
                                             relative: $state.$current, 
                                             notify: true });
+                        $scope.currentlyLoading = false;
+
                     }
-                );        
+                ).error(function(error){
+                    $scope.currentlyLoading = false;
+                })       
         }
 
         $scope.cbh.saveChangesToTemporaryDataInController = function(changes, sourceOfChange){
@@ -118,7 +124,6 @@ angular.module('ngChemApp')
         }
 
         $scope.cbh.setMappedFieldInController = function(newFieldName, unCuratedFieldName){
-            console.log("got")
             if(newFieldName == "SMILES for chemical structures"){
                 $scope.datasets[$scope.current_dataset_id].config.struc_col = unCuratedFieldName;
                 $scope.undoDataMappingId = angular.copy($scope.datasets[$scope.current_dataset_id].config.multipleBatch);
@@ -174,7 +179,8 @@ angular.module('ngChemApp')
 
             $scope.compoundBatches = {data:[], 
                 sorts:[],
-                excluded: []};
+                excluded: [],
+                redraw: 0};
             $scope.itemsPerPage = angular.copy($scope.listPerPage);
             $scope.pagination = {
                     current: 1,
@@ -278,10 +284,12 @@ angular.module('ngChemApp')
                 $scope.molecule={"molfile":""};
 
         $scope.createMultiBatch = function(){
+            $scope.currentlyLoading = true;
 
             CBHCompoundBatch.createMultiBatch(
                 $scope.datasets[$scope.current_dataset_id]).then(
                     function(data){
+                        $scope.currentlyLoading = false;
                         $scope.filesInProcessing = false;
                         $scope.datasets[$scope.current_dataset_id].config = data.data;
                         $scope.dataReady = true;
@@ -411,6 +419,7 @@ angular.module('ngChemApp')
             $location.hash('search-bottom');
             $anchorScroll();
         }
+        $scope.compoundBatches.redraw ++;
     }
 
     

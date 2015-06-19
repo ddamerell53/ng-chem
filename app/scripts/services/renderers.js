@@ -210,33 +210,60 @@ angular.module('ngChemApp')
       },
       renderHandsOnTable : function(scope, hotObj, element ){
          var rend = getRenderers(scope);
-  
+         if(angular.isDefined(scope.elem)){
+            var scroll = scope.elem.scrollLeft();
+            var scrollTop = $(window).scrollTop();
+
+         }
         angular.forEach(hotObj.columns, function(c){
           if(angular.isDefined(c.renderer)){
 
             c.renderer = rend[c.renderer];
           }
         });
-
-
-        var container1,
+        // if(angular.isDefined(scope.hot1)){
+        //     scope.hot1.updateSettings({
+        //                 data: scope.compounds,
+        //                 colHeaders: hotObj.colHeaders,
+        //                 columns: hotObj.columns
+        //     });
+        // }else{
+            var container1,
             hot1;
-        var container = document.createElement('DIV');
+            var container = document.createElement('DIV');
 
-        // container.style.overflow = 'hidden';
-        // container.style.width = '100%';
-        while (element[0].firstChild) {
-            element[0].removeChild(element[0].firstChild);
-        }
-       
-        element[0].appendChild(container);
-        var hot1 = new Handsontable(container, hotObj);
-        var id = element[0].firstChild.id;
-        scope.hotId = "#" + id;
-        var elem = $(scope.hotId);
-        elem.doubleScroll();
-       
-        scope.hot1 = hot1;
+            // container.style.overflow = 'hidden';
+            // container.style.width = '100%';
+            // var ide = element[0].firstChild.id;
+            // var myelem = $("#" + ide);
+            // console.log();
+
+            while (element[0].firstChild) {
+                element[0].removeChild(element[0].firstChild);
+            }
+           
+            element[0].appendChild(container);
+            var hot1 = new Handsontable(container, hotObj);
+            var id = element[0].firstChild.id;
+            scope.hotId = "#" + id;
+            var elem = $(scope.hotId);
+            $timeout(function(){
+              elem.doubleScroll();
+              scope.elem = elem;
+              if(scroll){
+                scope.elem.scrollLeft(scroll);
+              }
+              if(scrollTop){
+                $(window).scrollTop(scrollTop);
+              }
+            });
+           
+            scope.hot1 = hot1;
+
+        //}
+
+
+      
         
       }
     };

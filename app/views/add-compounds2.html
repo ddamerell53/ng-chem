@@ -1,6 +1,9 @@
+<div ng-show="currentlyLoading" id="loading-overlay"></div>
+<div ng-show="currentlyLoading" id="loading-message"><img src="images/loader.gif"></img></div>
+
 <div flow-init="flowinit"
         flow-name="filedata.flow"
-        flow-files-submitted="$flow.upload()"
+        flow-files-submitted="currentlyLoading = true; $flow.upload()"
         flow-file-success="assignFile($file.uniqueIdentifier, $file.getExtension())" 
         flow-upload-started="filesUploading=true" 
         flow-complete="filesUploading=false"> 

@@ -164,36 +164,26 @@ angular.module('ngChemApp')
                     columns: allCols,       
                                
                   }
-                if(angular.isDefined(scope.uncuratedHeaders)){
+                
+                  if(angular.isDefined(scope.uncuratedHeaders)){
                   hotObj.afterChange = function(data,sourceOfChange){
                       scope.cbh.saveChangesToTemporaryDataInController(data, sourceOfChange);
                   }  
+                  renderers.renderHandsOnTable(scope, hotObj, element );
+
+                
+                
+
                 }
-                renderers.renderHandsOnTable(scope, hotObj, element );
-                var index=0;
-                angular.forEach(allCols,function(item){
-                  item.foundWidth = scope.hot1.getColWidth(index);
-                  index += 1;
-                });
+
 
 
 
 
 
               }
-              window.redraw = redraw;
-              
-              scope.$watch("compounds", function(newValue, oldValue){
-                if (scope.compounds.length >0){
-                    if (angular.isDefined(scope.compounds[0].properties.imageSrc)){
-                      redraw();
-                    }
-                }else{
-                    if(newValue.length < oldValue.length){
-                      //check for emptying
-                      redraw();
-                    }
-                }
+              scope.$watch("redraw", function(newValue, oldValue){
+                redraw();
               }, true);
 
                             // original by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
@@ -206,6 +196,7 @@ angular.module('ngChemApp')
       
 
       scope: {
+        "redraw": "=",
         "compounds" : "=",
         "cbh" : "=",
         "sorts" : "=",
