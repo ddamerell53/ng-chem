@@ -56,11 +56,15 @@ angular.module('ngChemApp')
         }
 
         $scope.saveTemporaryCompoundData = function(){
-            console.log($scope.datasets[$scope.current_dataset_id].config);
             CBHCompoundBatch.saveMultiBatchMolecules($scope.datasets[$scope.current_dataset_id].config).then(
                     function(data){
-                        $state.go("cbh.search",{multiple_batch_id: $scope.datasets[$scope.current_dataset_id].config.multipleBatch, 
-                            projectKey: projectKey});
+                        $state.transitionTo("cbh.search", 
+                                        {multiple_batch_id: $scope.datasets[$scope.current_dataset_id].config.multipleBatch, 
+                            projectFrom: projectKey},
+                                        { location: true, 
+                                            inherit: false, 
+                                            relative: $state.$current, 
+                                            notify: true });
                     }
                 );        
         }
