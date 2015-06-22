@@ -86,19 +86,21 @@
 <div class="col-xs-12" ng-include="'views/templates/validation_table.html'">
 </div>
 <div class="row">
-    <div class="col-xs-12 alert-info text-center" style="padding-top:10px;">
-            <div class="pull-right">
-
-                <button ng-show="stateName == 'cbh.projects.project.addcompounds'"  ng-click="saveTemporaryCompoundData()" class="btn btn-primary">
-                    Save These Records
-                </button>
-                <button ng-click="cancelFile()" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> Start Again</button>
+    <div class="col-xs-12">
+            <div class="alert alert-info text-center">
+                <div class="pull-right" style="margin-top:-6px;">
+            
+                    <button ng-show="stateName == 'cbh.projects.project.addcompounds'"  ng-click="saveTemporaryCompoundData()" class="btn btn-primary">
+                        Save These Records
+                    </button>
+                    <button ng-click="cancelFile()" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> Start Again</button>
+                </div>
+                   
+                <div><strong class="nexa"><ng-pluralize count="totalCompoundBatches"
+                                when="{'0': '0 new batches',
+                                 'one': '1 new batch',
+                                  'other': '{} new batches'}"></ng-pluralize> will be saved to the database</strong></div>
             </div>
-                
-            <p class="nexa" ><strong><ng-pluralize count="totalCompoundBatches"
-            when="{'0': '0 compounds',
-             'one': '1 compound',
-              'other': '{} compounds'}"></ng-pluralize> will be saved to the database</strong></p>
 
     </div>
 </div>

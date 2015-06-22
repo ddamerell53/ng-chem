@@ -1,6 +1,6 @@
-<div class="row animate-show" id="compound-data-breakdown" ng-show="toggleDataSummary.showFlag">
+<div class="row animate-show" id="compound-data-breakdown" ng-show="toggleDataSummary.showFlag" >
 
-    <div class="col-sm-5">
+    <div class="col-sm-5 col-sm-offset-1 data-summary-holder" style="margin-right:20px;">
 
         <div class="row">
             <div class="col-xs-4">
@@ -9,7 +9,8 @@
                     <span class="date-number" style="display:inherit; line-height: 160px;">{{datasets[current_dataset_id].config.batchStats["total"]}}</span>
 
                 </div>
-                <h2 class="blue text-center">Records <info-box freetext="some help here"></info-box></h2><!-- info-box here -->
+                <div class="pull-left"><info-box freetext="some help here"></info-box></div>
+                <h2 class="blue text-center">Uploaded Records</h2><!-- info-box here -->
             </div>
             <div class="col-xs-8">
                 
@@ -62,7 +63,7 @@
 
     </div>
 
-    <div class="col-sm-5 col-sm-offset-1">
+    <div class="col-sm-5 data-summary-holder" style="margin-right:20px;">
 
         <div class="col-xs-4">
             <div class="img-circle blue-bg text-center" style="background-color:rgb(207,122,48)">
@@ -70,7 +71,8 @@
                 <span class="date-number" style="display:inherit; line-height: 160px;">{{datasets[current_dataset_id].config.compoundStats["total"]}}</span>
 
             </div>
-            <h2 class="blue text-center">unique compounds <info-box freetext="by unique compounds, we mean blah"></info-box></h2><!-- info-box here -->
+            <div class="pull-left"><info-box freetext="by unique compounds, we mean blah"></info-box></div>
+            <h2 class="blue text-center">Unique Compounds</h2><!-- info-box here -->
         </div>
         <div class="col-xs-8">
             <div class="row">

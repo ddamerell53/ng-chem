@@ -586,6 +586,7 @@ span.date-number {
 .animate-show {
   line-height: 20px;
   opacity: 1;
+  margin-bottom:20px;
 }
 
 .animate-show.ng-hide-add.ng-hide-add-active,
@@ -597,6 +598,12 @@ span.date-number {
 .animate-show.ng-hide {
   line-height: 20px;
   opacity: 0;
+}
+
+.data-summary-holder {
+  border: 2px solid #ddd; 
+  padding-top:20px;
+  border-radius: 8px;
 }
 
 /* 16-column bootstrap grid classes */
