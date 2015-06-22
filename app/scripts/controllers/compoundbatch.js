@@ -10,7 +10,7 @@
 angular.module('ngChemApp')
   .controller('CompoundbatchCtrl', ['$scope','$rootScope','$state','$stateParams','$timeout','CBHCompoundBatch','paramsAndForm','urlConfig','$window','$location','$anchorScroll', '$filter', 
     function ($scope, $rootScope,$state, $stateParams,$timeout, CBHCompoundBatch, paramsAndForm, urlConfig, $window, $location, $anchorScroll, $filter) {
-    $scope.compoundBatches = {data:[]};
+    $scope.compoundBatches = {data:[], redraw:0};
     $scope.urlConfig = urlConfig;
     $scope.totalCompoundBatches = 0;
     
@@ -52,7 +52,6 @@ angular.module('ngChemApp')
 
             }
             else {
-                console.log("wide window");
                 $scope.itemsPerPage = angular.copy(galleryPerPage.smallScreen);
             }
         }
@@ -122,6 +121,8 @@ angular.module('ngChemApp')
             $location.hash('search-bottom');
             $anchorScroll();
         }
+        $scope.compoundBatches.redraw ++;
+
     }
 
     

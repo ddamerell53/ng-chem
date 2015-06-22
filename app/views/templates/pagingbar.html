@@ -1,9 +1,9 @@
 <div class="row"  >
-    <div class="col-xs-3"  >
+    <div class="col-xs-3" ng-show="stateName == 'cbh.projects.project.addcompounds'" >
         <button ng-disabled="compoundBatches.sorts.length ==0" ng-click="nullSorts()" class="btn btn-primary ">
             Remove Sorts
         </button>
-        <button ng-show="stateName == 'cbh.projects.project.addcompounds'" ng-disabled="warningsFilter==''" ng-click="cbh.toggleWarningsFilter('')" class="btn btn-primary ">
+        <button  ng-disabled="warningsFilter==''" ng-click="cbh.toggleWarningsFilter('')" class="btn btn-primary ">
             Remove Filters
         </button>
     </div>
