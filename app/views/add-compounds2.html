@@ -79,17 +79,27 @@
             </div>
         </div>
 <div class="row" ng-if="dataReady">
-    <h2 class="nexa blue"><span class="glyphicon glyphicon-list"></span>&nbsp;Data summary <span ng-show="">Show</span><span ng-show="">Hide</span> <button ng-click="cancelFile()" class="btn btn-danger pull-right">Start Again<span class="glyphicon glyphicon-remove"></span></button></h2>
+    <a role="button" class="pull-right btn btn-default" ng-click="toggleDataSummary.showFlag = !toggleDataSummary.showFlag"><span ng-show="!toggleDataSummary.showFlag"><span class="glyphicon glyphicon-plus-sign"></span> Show Data Summary</span><span ng-show="toggleDataSummary.showFlag"><span class="glyphicon glyphicon-minus-sign"></span> Hide Data Summary</span></a> 
+    <h2 class="nexa blue"><span class="glyphicon glyphicon-list"></span>&nbsp;Data summary </h2> 
 
     <div ng-show="undoDataMappingId"  class="col-xs-12 alert alert-warning">You have just set the structure column, if you are not happy with the outcome <button class="btn btn-default" ng-click="undoDataMapping()">Undo</button></div>
 <div class="col-xs-12" ng-include="'views/templates/validation_table.html'">
 </div>
 <div class="row">
-    <div class="col-xs-12 alert-info text-center">
-            <p class="nexa" style="padding-top:10px;"><strong><ng-pluralize count="totalCompoundBatches"
-            when="{'0': '0 compound',
+    <div class="col-xs-12 alert-info text-center" style="padding-top:10px;">
+            <div class="pull-right">
+
+                <button ng-show="stateName == 'cbh.projects.project.addcompounds'"  ng-click="saveTemporaryCompoundData()" class="btn btn-primary">
+                    Save These Records
+                </button>
+                <button ng-click="cancelFile()" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> Start Again</button>
+            </div>
+                
+            <p class="nexa" ><strong><ng-pluralize count="totalCompoundBatches"
+            when="{'0': '0 compounds',
              'one': '1 compound',
-              'other': '{} compunds'}"></ng-pluralize> will be saved to the database</strong></p>
+              'other': '{} compounds'}"></ng-pluralize> will be saved to the database</strong></p>
+
     </div>
 </div>
 
