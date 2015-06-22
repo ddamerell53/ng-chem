@@ -164,22 +164,12 @@ angular.module('ngChemApp')
                     columns: allCols,       
                                
                   }
-                
                   if(angular.isDefined(scope.uncuratedHeaders)){
-                  hotObj.afterChange = function(data,sourceOfChange){
-                      scope.cbh.saveChangesToTemporaryDataInController(data, sourceOfChange);
-                  }  
+                      hotObj.afterChange = function(data,sourceOfChange){
+                          scope.cbh.saveChangesToTemporaryDataInController(data, sourceOfChange);
+                      } 
+                  } 
                   renderers.renderHandsOnTable(scope, hotObj, element );
-
-                
-                
-
-                }
-
-
-
-
-
 
               }
               scope.$watch("redraw", function(newValue, oldValue){

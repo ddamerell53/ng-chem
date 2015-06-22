@@ -115,6 +115,9 @@ angular.module('ngChemApp')
 
         $scope.undoDataMapping = function(){
             var newParams = { projectKey: $stateParams.projectKey, mb_id: $scope.undoDataMappingId };
+            if($scope.datasets[$scope.current_dataset_id].config.multipleBatch){
+                CBHCompoundBatch.delete_index($scope.datasets[$scope.current_dataset_id].config);
+            }
             $state.transitionTo($state.current.name, 
                                         newParams,
                                         { location: true, 
@@ -137,10 +140,14 @@ angular.module('ngChemApp')
         };
 
         $scope.cancelFile = function(field) {
-            var newParams = { projectKey: $stateParams.projectKey }
+            var newParams = { projectKey: $stateParams.projectKey };
+            if($scope.datasets[$scope.current_dataset_id].config.multipleBatch){
+                CBHCompoundBatch.delete_index($scope.datasets[$scope.current_dataset_id].config);
+            }
+            $scope.setNull();
             $state.transitionTo($state.current.name, 
                                         newParams,
-                                        { location: true, 
+                                        { location: false, 
                                             inherit: false, 
                                             relative: $state.$current, 
                                             notify: true });
@@ -160,7 +167,7 @@ angular.module('ngChemApp')
         }
 
         $scope.setup = function(){
-
+            $scope.inputData = {inputstring : ""};
             $scope.filedata = {};
             $scope.filesUploading = false;
             $scope.dataReady = false;
@@ -312,16 +319,35 @@ angular.module('ngChemApp')
                         //Run a second get request to get a list of compounds
                     },
                     function(error){
-                        if($scope.datasets[$scope.current_dataset_id].config.type == file){
+                        if($scope.datasets[$scope.current_dataset_id].config.type == "file"){
                             $scope.datasets[$scope.current_dataset_id].config.errors = [MessageFactory.getMessage("file_error")];
+                        }
+                        if($scope.datasets[$scope.current_dataset_id].config.type == "smilesdata"){
+                            $scope.datasets[$scope.current_dataset_id].config.errors = [MessageFactory.getMessage("ids_not_processed")];
                         }
                         $scope.datasets[$scope.current_dataset_id].config.status = "add";
                         $scope.dataReady = false;
+                        $scope.currentlyLoading = false;
+
              }); 
         }
 
        
-
+        $scope.processSmilesData = function(){
+            $scope.current_dataset_id = $scope.inputData.inputstring;
+            var conf =   {
+                    "multipleBatch": null,
+                    "smilesdata" : $scope.inputData.inputstring,
+                    "type": "smilesdata",
+                    "projectKey" : projectKey,
+                    "struc_col" : "",
+                    "state" : "validate"};
+             $scope.datasets[$scope.current_dataset_id] = {
+                "config": conf,
+                "cancellers" : []
+            };
+             $scope.createMultiBatch();
+        }
 
 
 

@@ -221,22 +221,11 @@ angular.module('ngChemApp')
             c.renderer = rend[c.renderer];
           }
         });
-        // if(angular.isDefined(scope.hot1)){
-        //     scope.hot1.updateSettings({
-        //                 data: scope.compounds,
-        //                 colHeaders: hotObj.colHeaders,
-        //                 columns: hotObj.columns
-        //     });
-        // }else{
+
             var container1,
             hot1;
             var container = document.createElement('DIV');
 
-            // container.style.overflow = 'hidden';
-            // container.style.width = '100%';
-            // var ide = element[0].firstChild.id;
-            // var myelem = $("#" + ide);
-            // console.log();
 
             while (element[0].firstChild) {
                 element[0].removeChild(element[0].firstChild);
