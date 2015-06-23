@@ -14,7 +14,7 @@ li a svg.svg {
 }
 
 #loading-overlay { z-index: 200; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: #000; opacity: 0.7; }
-#loading-message { z-index: 200; position: absolute; width: 400px; height: 100px; line-height: 100px; background-color: #fff; text-align: center; font-size: 1.2em; left: 50%; top: 20%; margin-left: -200px; margin-top: -100px; }
+#loading-message { z-index: 200; position: absolute; width: 400px; height: 100px; line-height: 100px; background-color: #000; opacity:0.7; text-align: center; font-size: 1.2em; left: 50%; top: 20%; margin-left: -200px; margin-top: -100px; }
 
 .input-small { max-width: 200px; } 
 .handsontable th:first-child,  {
@@ -560,7 +560,7 @@ td, th {
 }
 
 span.date-number {
-  font-size: 5em;
+  font-size: 5vw;
   line-height: 1em;
   color: #fff;
   font-family: NexaBold;
@@ -604,6 +604,13 @@ span.date-number {
   border: 2px solid #ddd; 
   padding-top:20px;
   border-radius: 8px;
+}
+
+.img-circle.blue-bg {
+  height: 8vw;
+  width: 8vw;
+  margin: 0 auto 10px;
+  transition: 0.2s ease-in-out;
 }
 
 /* 16-column bootstrap grid classes */
