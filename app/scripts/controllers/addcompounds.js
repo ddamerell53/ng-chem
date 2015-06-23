@@ -58,19 +58,24 @@ angular.module('ngChemApp')
             });
         }
 
-
+        $scope.setLoadingMessageHeight = function(){
+            var scrollTop = $(window).scrollTop();
+            $("#loading-message").css("top", (scrollTop +200) + "px")
+        }
         $scope.saveTemporaryCompoundData = function(){
+            $scope.setLoadingMessageHeight();
             $scope.currentlyLoading = true;
+
             CBHCompoundBatch.saveMultiBatchMolecules($scope.datasets[$scope.current_dataset_id].config).then(
                     function(data){
                         $state.transitionTo("cbh.search", 
                                         {multiple_batch_id: $scope.datasets[$scope.current_dataset_id].config.multipleBatch, 
                             projectFrom: projectKey},
-                                        { location: true, 
+                            { location: true, 
                                             inherit: false, 
-                                            relative: $state.$current, 
-                                            notify: true });
-                        $scope.currentlyLoading = false;
+                                            relative: null, 
+                                            notify: true }
+                                        );
 
                     }
                 ).error(function(error){
@@ -131,6 +136,7 @@ angular.module('ngChemApp')
 
         $scope.cbh.setMappedFieldInController = function(newFieldName, unCuratedFieldName){
             if(newFieldName == "SMILES for chemical structures"){
+
                 $scope.datasets[$scope.current_dataset_id].config.struc_col = unCuratedFieldName;
                 $scope.undoDataMappingId = angular.copy($scope.datasets[$scope.current_dataset_id].config.multipleBatch);
                 $scope.createMultiBatch();
@@ -294,6 +300,7 @@ angular.module('ngChemApp')
                 $scope.molecule={"molfile":""};
 
         $scope.createMultiBatch = function(){
+            $scope.setLoadingMessageHeight();
             $scope.currentlyLoading = true;
 
             CBHCompoundBatch.createMultiBatch(
@@ -305,7 +312,9 @@ angular.module('ngChemApp')
                         $scope.dataReady = true;
                         $scope.compoundBatches.uncuratedHeaders = data.data.headers;
                         $scope.compoundBatches.excluded = data.data.excluded;
-                        CBHCompoundBatch.getImages( data.data.objects, 75, "imageSrc", $scope.imageCallback); 
+                        CBHCompoundBatch.getImages( data.data.objects, 75, "imageSrc"); 
+                        CBHCompoundBatch.getImages( data.data.objects, 400, "bigImageSrc", $scope.imageCallback); 
+
                         $scope.compoundBatches.data =data.data.objects;
                         $scope.totalCompoundBatches = data.data.batchStats.total;
                         //Here we change the URL without changing the state
@@ -500,8 +509,8 @@ angular.module('ngChemApp')
 
                 if(result.data.objects.length > 0){
                     var size = ($scope.listOrGallery.choice=="gallery") ? 100 : 75;
-                    CBHCompoundBatch.getImages(result.data.objects, 400, "bigImageSrc");
-                    CBHCompoundBatch.getImages( result.data.objects, size, "imageSrc", $scope.imageCallback); 
+                    CBHCompoundBatch.getImages( result.data.objects, size, "imageSrc"); 
+                    CBHCompoundBatch.getImages(result.data.objects, 400, "bigImageSrc", $scope.imageCallback);
 
                 }else if( ( $scope.pagination.current * parseInt($scope.pagination.compoundBatchesPerPage.value)) > $scope.totalCompoundBatches){
                     if($scope.pagination.current != 1){

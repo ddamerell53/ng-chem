@@ -70,13 +70,14 @@ angular.module('ngChemApp')
                   });
                 };
 
-              cbh.openSingleMol = function(mol) {
+              cbh.openSingleMol = function(mol, isNewCompoundsInterface) {
                   $scope.modalInstance = $modal.open({
                     templateUrl: 'views/single-compound.html',
                     size: 'lg',
                     
                     controller: ['$scope','$rootScope', '$modalInstance', '$timeout', 'CBHCompoundBatch', 'ProjectFactory',
                     function($scope, $rootScope, $modalInstance,  $timeout, CBHCompoundBatch, ProjectFactory) {
+                      $scope.isNewCompoundsInterface = isNewCompoundsInterface;
                       $scope.editMode = false;
                       $scope.mol = angular.copy(mol);
                       var split = mol.project.split("/");

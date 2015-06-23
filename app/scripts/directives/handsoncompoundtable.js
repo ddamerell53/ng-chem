@@ -13,26 +13,61 @@ angular.module('ngChemApp')
       restrict: 'E',
       link: function postLink(scope, element, attrs) {
               var redraw;
+              var jsonSchemaColDefs; 
 
-              scope.cbh.setMappedFieldInDirective = function(newFieldName, unCuratedFieldName){
-                angular.forEach(scope.uncuratedHeaders,
-                function(hdr){
+
+              scope.cbh.setMappedFieldInDirective = function(newFieldId, unCuratedFieldName){
+                if(newFieldId == ''){
+                  angular.forEach(scope.uncuratedHeaders,
+                  function(hdr){
                     if(hdr.name == unCuratedFieldName){
-                        hdr.copyTo = newFieldName;
-                        
+                      delete hdr.operations;
+                      hdr.copyTo = "";
                     }
                 });
+                }else{
+                  var newField = jsonSchemaColDefs[newFieldId];
+                var newFieldName = newField.title;
+                  angular.forEach(scope.uncuratedHeaders,
+                    function(hdr){
+                      if(hdr.name == unCuratedFieldName){
+                          hdr.copyTo = newFieldName;
+                          var fieldJsonPatchOperations = [];
+
+                          if(newField.type=="array"){
+                            fieldJsonPatchOperations.push({"op": "add", "path": "/custom_fields/" + newFieldName, "value" : []});
+                            fieldJsonPatchOperations.push({"op": "move", "path": "/custom_fields/" + newFieldName + "/0" , "from" : "/uncurated_fields/" + unCuratedFieldName });
+                          }else{
+                            var operation = {"op": "move", "path": "/custom_fields/" + newFieldName  , "from" : "/uncurated_fields/" + unCuratedFieldName };
+                            fieldJsonPatchOperations.push(operation);
+                            if(newField.format=="date"){
+                              fieldJsonPatchOperations.push({"op": "convertdate", "path": "/custom_fields/" + newFieldName});
+                            }
+                          }
+                          hdr.operations = fieldJsonPatchOperations;
+                          
+                      }
+                  });
                 if(newFieldName != "SMILES for chemical structures"){
                   //Smiles will get redrawn anyway as there is a call to the backend
                   redraw();
                 }
+                }
+                
                 scope.cbh.setMappedFieldInController(newFieldName, unCuratedFieldName);
               }
 
               redraw = function(){
+                  jsonSchemaColDefs = [];
+                  var isNewCompoundsInterface = false;
+                  if(angular.isDefined(scope.uncuratedHeaders)){
+                    isNewCompoundsInterface = true;
+                    jsonSchemaColDefs = [{"title": "SMILES for chemical structures", "type": "chemical"}];
+
+                  }
+
                   var pids = {};
                   var cNames = [];       //DO  NOT CHANGE SMILES TITLE without checking in addcompounds controller and the compounds.py file
-                  var jsonSchemaColDefs = [{"title": "SMILES for chemical structures", "type": "chemical"}];
                   var count = 0;
 
                   angular.forEach(scope.compounds, function(comp){
@@ -71,10 +106,11 @@ angular.module('ngChemApp')
 
                 var allCols;
 
-                if(angular.isDefined(scope.uncuratedHeaders)){
+                if(isNewCompoundsInterface){
                   var uncuratedColumns = scope.uncuratedHeaders.map(function(un, index, array){
                       var disableSel = "";
-                      var optList = angular.copy(jsonSchemaColDefs).map(function(cName){
+                      var optList = angular.copy(jsonSchemaColDefs).map(function(cName, cNameIndex){
+                          
                           var errorName = cName.type;
                             if(cName.format == "date"){
                               errorName = "stringdate";
@@ -87,13 +123,14 @@ angular.module('ngChemApp')
                           var weird = array.map(function(uncur){
                             
                             if(uncur.name != un.name){
-                              
                                 if(cName.title.toLowerCase()==uncur.copyTo.toLowerCase()){
-                                    disabledOrSelected = "<option disabled value='" + cName.title + "'>" +  cName.title + " <br>(Already mapped for " + uncur.name + ")</option>";
+                                    disabledOrSelected = "<option disabled value='" + cNameIndex + "'>" +  cName.title + " <br>(Already mapped for " + uncur.name + ")</option>";
                                 }
                             }else{
+                                console.log(uncur);
+
                                 if(cName.title.toLowerCase()==uncur.copyTo.toLowerCase()){
-                                    disabledOrSelected = "<option selected value='" + cName.title + "'>" +  cName.title + "</option>";
+                                    disabledOrSelected = "<option selected value='" + cNameIndex + "'>" +  cName.title + "</option>";
                                     if(cName.title == "SMILES for chemical structures"){
                                       disableSel = "disabled"
                                     }
@@ -103,7 +140,7 @@ angular.module('ngChemApp')
                           if(disabledOrSelected){
                             return disabledOrSelected;
                           }else{
-                            return "<option value='" + cName.title + "'>" +  cName.title + "</option>";
+                            return "<option value='" + cNameIndex + "'>" +  cName.title + "</option>";
                           }
 
                       });
@@ -164,12 +201,12 @@ angular.module('ngChemApp')
                     columns: allCols,       
                                
                   }
-                  if(angular.isDefined(scope.uncuratedHeaders)){
+                  if(isNewCompoundsInterface){
                       hotObj.afterChange = function(data,sourceOfChange){
                           scope.cbh.saveChangesToTemporaryDataInController(data, sourceOfChange);
                       } 
                   } 
-                  renderers.renderHandsOnTable(scope, hotObj, element );
+                  renderers.renderHandsOnTable(scope, hotObj, element , isNewCompoundsInterface);
 
               }
               scope.$watch("redraw", function(newValue, oldValue){

@@ -31,8 +31,9 @@ angular.module('ngChemApp')
             return '<a class="btn btn-sm btn-default" title="' + title + '" onclick="angular.element(this).scope().cbh.toggleWarningsFilter(&quot;' + fieldKey + '&quot;)" ><span class="glyphicon glyphicon-filter ' + className + ' " ></span></a>';
     }
 
-    function getRenderers(sco){
+    function getRenderers(sco, isNewCompounds){
         var scope;
+        var isNewCompoundsInterface = isNewCompounds;
         
         
         var renderers = {
@@ -151,7 +152,7 @@ angular.module('ngChemApp')
                   Handsontable.Dom.addEvent(img, 'mousedown', function (e){
                     // e.preventDefault(); // prevent selection quirk
                     var mol = instance.getSourceDataAtRow(row);
-                    scope.cbh.openSingleMol(mol);
+                    scope.cbh.openSingleMol(mol, isNewCompoundsInterface);
                   });
               
                   Handsontable.Dom.empty(td);
@@ -208,8 +209,8 @@ angular.module('ngChemApp')
       renderFilterLink : function(warningsFilter, fieldKey, title){
         return renderFilter(warningsFilter, fieldKey, title);
       },
-      renderHandsOnTable : function(scope, hotObj, element ){
-         var rend = getRenderers(scope);
+      renderHandsOnTable : function(scope, hotObj, element, isNewCompoundsInterface ){
+         var rend = getRenderers(scope, isNewCompoundsInterface);
          if(angular.isDefined(scope.elem)){
             var scroll = scope.elem.scrollLeft();
             var scrollTop = $(window).scrollTop();
