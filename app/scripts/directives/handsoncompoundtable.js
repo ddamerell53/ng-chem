@@ -53,16 +53,17 @@ angular.module('ngChemApp')
                   redraw();
                 }
                 }
-                console.log(newFieldName);
                 
                 scope.cbh.setMappedFieldInController(newFieldName, unCuratedFieldName);
               }
 
               redraw = function(){
-                  jsonSchemaColDefs = [{"title": "SMILES for chemical structures", "type": "chemical"}];
+                  jsonSchemaColDefs = [];
                   var isNewCompoundsInterface = false;
                   if(angular.isDefined(scope.uncuratedHeaders)){
                     isNewCompoundsInterface = true;
+                    jsonSchemaColDefs = [{"title": "SMILES for chemical structures", "type": "chemical"}];
+
                   }
 
                   var pids = {};
