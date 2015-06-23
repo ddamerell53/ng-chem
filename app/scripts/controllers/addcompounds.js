@@ -58,9 +58,14 @@ angular.module('ngChemApp')
             });
         }
 
-
+        $scope.setLoadingMessageHeight = function(){
+            var scrollTop = $(window).scrollTop();
+            $("#loading-message").css("top", (scrollTop +200) + "px")
+        }
         $scope.saveTemporaryCompoundData = function(){
+            $scope.setLoadingMessageHeight();
             $scope.currentlyLoading = true;
+
             CBHCompoundBatch.saveMultiBatchMolecules($scope.datasets[$scope.current_dataset_id].config).then(
                     function(data){
                         $state.transitionTo("cbh.search", 
@@ -131,6 +136,7 @@ angular.module('ngChemApp')
 
         $scope.cbh.setMappedFieldInController = function(newFieldName, unCuratedFieldName){
             if(newFieldName == "SMILES for chemical structures"){
+
                 $scope.datasets[$scope.current_dataset_id].config.struc_col = unCuratedFieldName;
                 $scope.undoDataMappingId = angular.copy($scope.datasets[$scope.current_dataset_id].config.multipleBatch);
                 $scope.createMultiBatch();
@@ -294,6 +300,7 @@ angular.module('ngChemApp')
                 $scope.molecule={"molfile":""};
 
         $scope.createMultiBatch = function(){
+            $scope.setLoadingMessageHeight();
             $scope.currentlyLoading = true;
 
             CBHCompoundBatch.createMultiBatch(
