@@ -29,7 +29,7 @@ angular.module('ngChemApp')
         //$scope.cbh.searchPage();
         console.log("cancel is being called");
         $scope.searchForm = {};
-        $state.go('cbh.search', {doScroll: false});
+        $state.transitionTo('cbh.search', {location: true, inherit:false, relative:null, notify:true});
     }
 
     $scope.runSearch = function(){

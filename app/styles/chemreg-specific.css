@@ -559,6 +559,53 @@ td, th {
   }
 }
 
+span.date-number {
+  font-size: 5em;
+  line-height: 1em;
+  color: #fff;
+  font-family: NexaBold;
+}
+.img-circle {
+  width:100%;
+  height:100%;
+}
+.img-circle.blue-bg.symp-stat {
+  height: 50px;
+  width: 50px;
+}
+.symp-stat {
+  padding: 10px 0;
+  text-align: center;
+}
+.symp-stat h2 {
+  font-size: 2em;
+  text-align: center;
+  padding-left: 5px;
+}
+
+.animate-show {
+  line-height: 20px;
+  opacity: 1;
+  margin-bottom:20px;
+}
+
+.animate-show.ng-hide-add.ng-hide-add-active,
+.animate-show.ng-hide-remove.ng-hide-remove-active {
+  -webkit-transition: all linear 0.3s;
+  transition: all linear 0.3s;
+}
+
+.animate-show.ng-hide {
+  line-height: 20px;
+  opacity: 0;
+}
+
+.data-summary-holder {
+  border: 2px solid #ddd; 
+  padding-top:20px;
+  border-radius: 8px;
+}
+
 /* 16-column bootstrap grid classes */
 /*!
  * Bootstrap v3.3.4 (http://getbootstrap.com)

@@ -49,6 +49,9 @@ angular.module('ngChemApp')
                           $scope.proj = proj;
                         }
                       });
+        $scope.toggleDataSummary = {
+            showFlag: true,
+        }
         $scope.topLink = function() {
             $state.go("cbh.projects.list.project", {
                 "projectKey": projectKey
