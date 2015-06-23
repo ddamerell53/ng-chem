@@ -526,6 +526,11 @@ td, th {
 .picker__header select {
   padding: 0 0 0 .5em;
 }
+@media (min-width: 990px) {
+  p.nexa.vw {
+    font-size:1.3vw;
+  }
+}
 /* Small changes to make the app look less gigantic on smaller screens */
 @media (max-width: 991px) {
   p.nexa, p, strong.nexa, .help-block, .form-group, .form-control {
