@@ -7,7 +7,7 @@
  * # chemdoodleWindow
  */
 angular.module('ngChemApp')
-  .directive('chemdoodleWindow', [ '$rootScope','$window', function ($rootScope, $window) {
+  .directive('chemdoodleWindow', [ '$rootScope','$window','$timeout', function ($rootScope, $window, $timeout) {
     return {
       template: '<div class="col-xs-12" id="chemdoodle-holder"><canvas id="chemdoodle" tabindex="1"></canvas></div>',
       restrict: 'E',
@@ -58,14 +58,15 @@ angular.module('ngChemApp')
 
             }
           }
-        });      
-        redraw(500);  
+        }); 
+
+        $timeout(function(){redraw(500)});  
         function redraw(doIt){
 
           if (jQuery('#chemdoodle-holder').is(":visible") || doIt){
 
               var cd_width = jQuery('#chemdoodle-holder').width();
-              if(doIt){
+              if(doIt && !cd_width){
                 cd_width = doIt;
               }
               jQuery('#chemdoodle-holder').html('<canvas id="chemdoodle" tabindex="1"></canvas>');

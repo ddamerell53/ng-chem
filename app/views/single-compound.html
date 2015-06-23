@@ -8,6 +8,14 @@
 
 </div>
 <div class="modal-body">
+    
+    <div class="row" ng-show="isNewCompoundsInterface">
+        <div class="col-xs-12" >
+<img ng-if="mol.properties.bigImageSrc" class="col-xs-12 col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1"  ng-src="{{mol.properties.bigImageSrc}}"></img>
+ 
+    </div>
+</div>
+<div ng-hide="isNewCompoundsInterface">
     <div class="row" ng-hide="mol.blindedBatchId">
     	<div class="col-xs-12 col-md-4" >
 <img ng-if="mol.properties.bigImageSrc" class="col-xs-12"  ng-src="{{mol.properties.bigImageSrc}}"></img>
@@ -76,7 +84,8 @@
     <button class="btn btn-primary"  ng-show="editMode" ng-click="updateBatch();modalInstance.dismiss('cancel');">Update and Close</button>
     <button class="btn btn-danger" ng-click="modalInstance.dismiss('cancel');">Close <span ng-show="editMode">and Discard Changes</span></button>
 </div>
-
+</div>
+</div>
 
 
 	

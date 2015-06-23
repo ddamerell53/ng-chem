@@ -47,7 +47,6 @@ angular.module('ngChemApp')
             
             var w = angular.element($window);
             if(w.width() > 1200) {
-                console.log(galleryPerPage.largeScreen);
                 $scope.itemsPerPage = angular.copy(galleryPerPage.largeScreen);
 
             }
