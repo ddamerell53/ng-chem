@@ -78,7 +78,7 @@
                 </div>
             </div>
         </div>
-<div class="row" ng-if="dataReady">
+<div ng-if="dataReady"><div class="row">
     <a role="button" class="pull-right btn btn-default" ng-click="toggleDataSummary.showFlag = !toggleDataSummary.showFlag"><span ng-show="!toggleDataSummary.showFlag"><span class="glyphicon glyphicon-plus-sign"></span> Show Data Summary</span><span ng-show="toggleDataSummary.showFlag"><span class="glyphicon glyphicon-minus-sign"></span> Hide Data Summary</span></a> 
     <h2 class="nexa blue"><span class="glyphicon glyphicon-list"></span>&nbsp;Data summary </h2> 
 
@@ -111,7 +111,7 @@
 <div class="col-xs-12" ng-include="'views/compound-list-new.html'">
 </div>
 </div>
-    
+    </div>
 
     </tab>
    <!--  <tab ng-disabled="true" heading="">
