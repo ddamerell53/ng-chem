@@ -15,9 +15,20 @@ angular.module('ngChemApp')
     $scope.refresh = function(schema, options, search){
         return $http.get(options.async.url + "?chembl_id__chembl_id__startswith=" + search);
     }
+    $scope.refreshCustFields = function(schema, options, search){
+        return $http.get(options.async.url + "?custom__field__startswith=" + search);
+    }
     var pf = searchUrlParams.setup($stateParams, {molecule: {}});
     $scope.searchForm = angular.copy(pf.searchForm);
     $scope.searchFormSchema.form[0].options.async.call = $scope.refresh;
+    //need to repeat this for the custom field lookup
+    
+    var custFieldFormItem = $filter('filter')($scope.searchFormSchema.form, {key:'search_custom_fields__kv_any'}, true);
+    /*var custFieldFormItem = angular.forEach($scope.searchFormSchema.form, function(item, key) {
+            fish.more = fish.id == fish_id;
+        });*/
+    console.log(custFieldFormItem[0])
+    custFieldFormItem[0].options.async.call = $scope.refreshCustFields;
     $scope.projectFrom = $stateParams.projectFrom;
     
     if($scope.searchForm.related_molregno__chembl__chembl_id__in) {
