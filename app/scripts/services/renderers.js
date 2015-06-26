@@ -189,7 +189,7 @@ angular.module('ngChemApp')
 
         }
         else{
-          return "<div class='well'><label style='min-width:80px' >"+ c.knownBy + " un</label></div>";
+          return "<div class='well'><label style='min-width:120px' >"+ c.knownBy + " un</label></div>";
 
         }
 
