@@ -196,7 +196,8 @@ angular.module('ngChemApp')
             $scope.compoundBatches = {data:[], 
                 sorts:[],
                 excluded: [],
-                redraw: 0};
+                redraw: 0,
+                columns: []};
             $scope.itemsPerPage = angular.copy($scope.listPerPage);
             $scope.pagination = {
                     current: 1,
@@ -223,22 +224,13 @@ angular.module('ngChemApp')
         }
 
         $scope.cbh.renderFilterLink = renderers.renderFilterLink;
-        $scope.cbh.addSort =  function(sortColumn){
+        $scope.cbh.file_extension = "";
+        $scope.cbh.addSort =  function(sortColumn, order){
                 var index=0
-                var order = "asc";
                 var toPop = [];
                 angular.forEach($scope.compoundBatches.sorts, function(sort){
                     if(angular.isDefined(sort[sortColumn])){
-                        order = angular.copy(sort[sortColumn].order);
                         toPop.push(angular.copy(index));
-                        if(order == "desc"){
-                            //do nothing - remove from sort and let the compounds be recieved without a sort
-                            order = "none";
-                            console.log("test");
-                        }
-                        if(order == "asc"){
-                            order = "desc";
-                        }
                     }
                     index ++;
                 });
@@ -249,9 +241,6 @@ angular.module('ngChemApp')
                 if(order != "none"){
                      dirObj[sortColumn] = {"order": order, "missing" : "_last"};
                     $scope.compoundBatches.sorts.unshift(dirObj);
-                }else{
-                    console.log("test2");
-
                 }
                  var newParams = angular.copy($stateParams);
                 newParams.page = 1;
@@ -273,6 +262,7 @@ angular.module('ngChemApp')
         $scope.assignFile = function(id, ext, file) {
 
             $scope.current_dataset_id = id;
+            $scope.cbh.file_extension = ext;
             var conf =  {
                     "file_name": id,
                     "multipleBatch": null,
@@ -311,7 +301,6 @@ angular.module('ngChemApp')
                         $scope.datasets[$scope.current_dataset_id].config = data.data;
                         $scope.dataReady = true;
                         $scope.compoundBatches.uncuratedHeaders = data.data.headers;
-                        $scope.compoundBatches.excluded = data.data.excluded;
                         CBHCompoundBatch.getImages( data.data.objects, 75, "imageSrc"); 
                         CBHCompoundBatch.getImages( data.data.objects, 400, "bigImageSrc", $scope.imageCallback); 
 
@@ -453,10 +442,10 @@ angular.module('ngChemApp')
         
 
         // call $anchorScroll()
-        if($stateParams.doScroll){
-            $location.hash('search-bottom');
-            $anchorScroll();
-        }
+        // if($stateParams.doScroll){
+        //     $location.hash('search-bottom');
+        //     $anchorScroll();
+        // }
         $scope.compoundBatches.redraw ++;
     }
 
@@ -495,10 +484,10 @@ angular.module('ngChemApp')
             offset, 
             filter, 
             $stateParams.sorts).then(function(result){
+                $scope.cbh.file_extension = result.data.fileExtension;
                 $scope.totalCompoundBatches = result.data.meta.totalCount;
                 $scope.compoundBatches.data =result.data.objects;
                 $scope.compoundBatches.uncuratedHeaders = result.data.headers;
-                $scope.compoundBatches.excluded = result.data.excluded;
 
                 $scope.current_dataset_id = $stateParams.mb_id;
                 $scope.datasets[$scope.current_dataset_id] = {

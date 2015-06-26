@@ -8,8 +8,8 @@
  * Factory in the ngChemApp.
  */
 angular.module('ngChemApp')
-  .factory('renderers', function ($timeout) {
-    // Service logic
+  .factory('renderers', function ($timeout, $compile) {
+    // Service logi
     // ...
     function strip_tags(input, allowed) {
                 var tags = /<\/?([a-z][a-z0-9]*)\b[^>]*>/gi,
@@ -31,7 +31,12 @@ angular.module('ngChemApp')
             return '<a class="btn btn-sm btn-default" title="' + title + '" onclick="angular.element(this).scope().cbh.toggleWarningsFilter(&quot;' + fieldKey + '&quot;)" ><span class="glyphicon glyphicon-filter ' + className + ' " ></span></a>';
     }
 
-    function getRenderers(sco, isNewCompounds){
+   
+    
+
+    // Public API here
+    var data = {
+        getRenderers: function(sco, isNewCompounds){
         var scope;
         var isNewCompoundsInterface = isNewCompounds;
         
@@ -132,7 +137,7 @@ angular.module('ngChemApp')
                 }
                 td.className = "htCenter htMiddle htDimmed";
                 td.innerHTML = "<h2 class='blue'><span class='"+ classN + "'></span></h2>";
-                 cellProperties.readOnly = true;
+                cellProperties.readOnly = true;
                 return td
               },
 
@@ -164,98 +169,40 @@ angular.module('ngChemApp')
               }};
         scope = sco;
         return renderers;
-      }
-    
+      },
 
-    // Public API here
-    var data = {
+
       getColumnLabel : function(c, scope){
-        if(c.noSort){
-            return "<label>"+ c.knownBy + "</label>";
+        
+        
+        
+        if(angular.isDefined(c.copyTo)){
+           return "<label style='min-width:240px'>"+ c.knownBy + c.copyTo +  "</label>";
+
         }
-        var warningFilterHTML = "";
-        if(c.warningsFilter){
-          warningFilterHTML = renderFilter(scope.warningsFilter, c.data, "");
+        if(c.data.indexOf("uncurated")==0){
+          return "<label style='min-width:240px'>"+ c.knownBy + " Unmapped</label>";
+
+        }else{
+          return "<label style='min-width:80px' >"+ c.knownBy + "</label>";
+
         }
 
-        //Return a piece of html including an onclick event that
-        //will pass to the appropriate function that mujst be implemented in the above controller
-        var className = "glyphicon glyphicon-sort";
-        var greySort = "lightgrey";
-        angular.forEach(scope.sorts, function(item){
-          if(angular.isDefined(item[c.data])){
-            //If an item is in the sorted columns list
-              if(item[c.data].order == "asc"){
-                className += '-by-alphabet';
-                greySort = "blue";
-              }else{
-                className += '-by-alphabet-alt';
-                greySort = "blue";
-              }
-          };
+    //     var warningFilterHTML = "";
+    //     if(c.warningsFilter){
+    //       warningFilterHTML = renderFilter(scope.warningsFilter, c.data, "");
+    //     }
 
-        });
-        var html = "<label>" + warningFilterHTML + c.knownBy + 
-        " <a class='btn btn-sm btn-default " + 
-        greySort + "' onclick='angular.element(this).scope().cbh.addSort(\"" 
-         + c.data + "\")'><span class='"
-          + className + "'></span></a></label>";
-        if(angular.isDefined(c.extra)){
-          html += c.extra;
-        }
-        return html
+    //     //Return a piece of html including an onclick event that
+    //     //will pass to the appropriate function that mujst be implemented in the above controller
+        
+    //     return html
         
       },
       renderFilterLink : function(warningsFilter, fieldKey, title){
         return renderFilter(warningsFilter, fieldKey, title);
-      },
-      renderHandsOnTable : function(scope, hotObj, element, isNewCompoundsInterface ){
-         var rend = getRenderers(scope, isNewCompoundsInterface);
-         if(angular.isDefined(scope.elem)){
-            var scroll = scope.elem.scrollLeft();
-            var scrollTop = $(window).scrollTop();
-
-         }
-        angular.forEach(hotObj.columns, function(c){
-          if(angular.isDefined(c.renderer)){
-
-            c.renderer = rend[c.renderer];
-          }
-        });
-
-            var container1,
-            hot1;
-            var container = document.createElement('DIV');
-
-
-            while (element[0].firstChild) {
-                element[0].removeChild(element[0].firstChild);
-            }
-           
-            element[0].appendChild(container);
-            var hot1 = new Handsontable(container, hotObj);
-            var id = element[0].firstChild.id;
-            scope.hotId = "#" + id;
-            var elem = $(scope.hotId);
-            $timeout(function(){
-              elem.doubleScroll();
-              scope.elem = elem;
-              if(scroll){
-                scope.elem.scrollLeft(scroll);
-              }
-              if(scrollTop){
-                $(window).scrollTop(scrollTop);
-              }
-            });
-           
-            scope.hot1 = hot1;
-
-        //}
-
-
-      
-        
       }
+      
     };
     return data;
 

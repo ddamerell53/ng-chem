@@ -11,23 +11,26 @@ angular.module('ngChemApp')
     return {
       template: '<div  ></div>',
       restrict: 'E',
-      link: function postLink(scope, element, attrs) {
+      link: function preLink(scope, element, attrs) {
               var redraw;
               var jsonSchemaColDefs; 
 
 
               scope.cbh.setMappedFieldInDirective = function(newFieldId, unCuratedFieldName){
-                if(newFieldId == ''){
+                console.log(newFieldId);
+                if(newFieldId === ""){
+                  console.log(newFieldId);
                   angular.forEach(scope.uncuratedHeaders,
                   function(hdr){
                     if(hdr.name == unCuratedFieldName){
                       delete hdr.operations;
                       hdr.copyTo = "";
                     }
-                });
+                  });
                 }else{
                   var newField = jsonSchemaColDefs[newFieldId];
                 var newFieldName = newField.title;
+                console.log(newFieldName);
                   angular.forEach(scope.uncuratedHeaders,
                     function(hdr){
                       if(hdr.name == unCuratedFieldName){
@@ -48,12 +51,11 @@ angular.module('ngChemApp')
                           
                       }
                   });
-                if(newFieldName != "SMILES for chemical structures"){
-                  //Smiles will get redrawn anyway as there is a call to the backend
-                  redraw();
+
+                  
                 }
-                }
-                
+                redraw();
+                  
                 scope.cbh.setMappedFieldInController(newFieldName, unCuratedFieldName);
               }
 
@@ -62,7 +64,11 @@ angular.module('ngChemApp')
                   var isNewCompoundsInterface = false;
                   if(angular.isDefined(scope.uncuratedHeaders)){
                     isNewCompoundsInterface = true;
-                    jsonSchemaColDefs = [{"title": "SMILES for chemical structures", "type": "chemical"}];
+                    if(scope.cbh.file_extension=="xlsx"){
+                      //SMiles option only for excel files
+                        jsonSchemaColDefs = [{"title": "SMILES for chemical structures", "type": "chemical"}];
+
+                    }
 
                   }
 
@@ -109,61 +115,71 @@ angular.module('ngChemApp')
                 if(isNewCompoundsInterface){
                   var uncuratedColumns = scope.uncuratedHeaders.map(function(un, index, array){
                       var disableSel = "";
+                      var copyTo = "";
                       var optList = angular.copy(jsonSchemaColDefs).map(function(cName, cNameIndex){
-                          
+                          var selectedModel = "";
                           var errorName = cName.type;
                             if(cName.format == "date"){
                               errorName = "stringdate";
                               
                             }
-                            if(un.fieldErrors[errorName] === true){
-                                return "<option disabled value='" + cName.title + "'>" +  cName.title + " (Invalid data for " + cName.friendly_field_type + ")</option>";
-                            }  
                             var disabledOrSelected = "";
-                          var weird = array.map(function(uncur){
-                            
+                            if(un.fieldErrors[errorName] === true){
+                              cName.disabled = true;
+                              cName.fieldError = true;
+                              cName.uiClass = "";
+                                disabledOrSelected = cName;
+                                //"<option  disabled >" +  cName.title + " (Invalid data for " + cName.friendly_field_type + ")</option>";
+                            }  
+                            if(!disabledOrSelected){
+                               var weird = array.map(function(uncur){
+                            //Check for other items that have been selected in the other dropdowns
                             if(uncur.name != un.name){
                                 if(cName.title.toLowerCase()==uncur.copyTo.toLowerCase()){
-                                    disabledOrSelected = "<option disabled value='" + cNameIndex + "'>" +  cName.title + " <br>(Already mapped for " + uncur.name + ")</option>";
+                                    cName.disabled = true;
+                                    cName.alreadyMapped = uncur.name;
+                                    cName.uiClass = "";
+                                    disabledOrSelected = cName;
                                 }
                             }else{
-                                console.log(uncur);
 
                                 if(cName.title.toLowerCase()==uncur.copyTo.toLowerCase()){
-                                    disabledOrSelected = "<option selected value='" + cNameIndex + "'>" +  cName.title + "</option>";
-                                    if(cName.title == "SMILES for chemical structures"){
-                                      disableSel = "disabled"
-                                    }
+                                    cName.uiClass = "glyphicon-check";
+                                    disabledOrSelected = cName;
+                                    copyTo = cName.title;
                                 }
                             }
                           });
+                            }
+                         
                           if(disabledOrSelected){
                             return disabledOrSelected;
                           }else{
-                            return "<option value='" + cNameIndex + "'>" +  cName.title + "</option>";
+                            cName.uiClass = "glyphicon-unchecked";
+                            return cName;
                           }
 
                       });
-
-                      var extraHtml = "<div class='form-group '  style='margin-top:10px'><select onchange='angular.element(this).scope().cbh.setMappedFieldInDirective(this.value, &quot;" + un.name + "&quot;)' class='form-control input-small '  " +  disableSel +" ><option value=''>Map column to:</option>" + optList.join("") + "</select>";
-                      return {extra: extraHtml, knownBy: un.name, data: "uncuratedFields." + un.name, readOnly:true, className: "htCenter htMiddle ", renderer: "linkRenderer"}
+//onchange='angular.element(this).scope().cbh.setMappedFieldInDirective(this.value, \"" + un.name + "\")'
+                      // var extraHtml = "<select onclick='event.stopPropagation();' onmouseup='event.stopPropagation();' autocomplete='off' class='form-control '  " +  disableSel +" ><option >Map column to:</option>" + optList.join("") + "</select>";
+                      return {sortOrder : "none", copyTo: copyTo, mappingOptions: optList, knownBy: un.name, data: "uncuratedFields." + un.name, readOnly:true, className: "htCenter htMiddle ", renderer: "linkRenderer"}
                   });
 
                   allCols = [
-                      {noSort:true, knownBy: "Image",data: "properties.imageSrc", renderer: "coverRenderer", readOnly: true,  className: "htCenter htMiddle "} ,
+                      {noSort:true, knownBy: "Structure",data: "properties.imageSrc", renderer: "coverRenderer", readOnly: true,  className: "htCenter htMiddle "} ,
 
-                      { knownBy: "Row",data: "id",  readOnly: true,  className: "htCenter htMiddle "} ,
-                      { knownBy: "Action",data: "properties.action", type:"dropdown", source: ["New Batch","Ignore"], className: "htCenter htMiddle "} ,
-                      { warningsFilter : true, knownBy:"Without Structure", data: "warnings.noStructure", renderer:"bulletRenderer", readonly:true},
-                      { warningsFilter : true, knownBy:"Can't Process", data: "warnings.parseError", renderer:"bulletRenderer", readonly:true},
-                      {warningsFilter : true, knownBy:"New to ChemReg", data: "warnings.new", renderer:"bulletRenderer", readonly:true},
-                      {warningsFilter : true, knownBy:"Overlap", data: "warnings.overlap", renderer:"bulletRenderer", readonly:true},
-                      {warningsFilter : true, knownBy:"Duplicated", data: "warnings.duplicate", renderer:"bulletRenderer", readonly:true},
-                      {knownBy:"Inchi Key", data: "standardInchiKey",  readonly:true, renderer: "linkRenderer"}
+                      { sortOrder : "none", knownBy: "Row",data: "id",  readOnly: true,  className: "htCenter htMiddle "} ,
+                      { sortOrder : "none",knownBy: "Action",data: "properties.action", type:"dropdown", source: ["New Batch","Ignore"], className: "htCenter htMiddle "} ,
+                      // {sortOrder : "none", warningsFilter : true, knownBy:"Without Structure", data: "warnings.noStructure", renderer:"bulletRenderer", readonly:true},
+                      // {sortOrder : "none", warningsFilter : true, knownBy:"Can't Process", data: "warnings.parseError", renderer:"bulletRenderer", readonly:true},
+                      // {sortOrder : "none",warningsFilter : true, knownBy:"New to ChemReg", data: "warnings.new", renderer:"bulletRenderer", readonly:true},
+                      // {sortOrder : "none",warningsFilter : true, knownBy:"Overlap", data: "warnings.overlap", renderer:"bulletRenderer", readonly:true},
+                      // {sortOrder : "none", warningsFilter : true, knownBy:"Duplicated", data: "warnings.duplicate", renderer:"bulletRenderer", readonly:true},
+                      {sortOrder : "none", knownBy:"Inchi Key", data: "standardInchiKey",  readonly:true, renderer: "linkRenderer"}
                     ].concat(uncuratedColumns);
                 }else{
                   allCols = [
-                      {noSort:true, knownBy: "Image",data: "properties.imageSrc", renderer: "coverRenderer", readOnly: true,  className: "htCenter htMiddle "},
+                      {noSort:true, knownBy: "Structure",data: "properties.imageSrc", renderer: "coverRenderer", readOnly: true,  className: "htCenter htMiddle "},
                       {noSort:true, knownBy: "UOx ID",data: "chemblId", renderer: "modalLinkRenderer", readOnly: true, className: " htCenter htMiddle "},
                       {noSort:true,knownBy: "Added By",data: "createdBy", readOnly: true, className: "htCenter htMiddle "},
                       {noSort:true,knownBy: "Date",data: "timestamp", readOnly: true,className: "htCenter htMiddle "},
@@ -177,8 +193,7 @@ angular.module('ngChemApp')
                   angular.forEach(allCols, function(c){
                     var keep = true;
                     angular.forEach(scope.excluded, function(ex){
-                      // console.log(ex);
-                      // console.log(c);
+                   
                       if(ex == c.data){
                         keep = false;
                       }
@@ -198,7 +213,8 @@ angular.module('ngChemApp')
                     width: '100%',
                     data: scope.compounds,
                     colHeaders: columnHeaders,
-                    columns: allCols,       
+                    columns: allCols, 
+                    // disableVisualSelection: true,      
                                
                   }
                   if(isNewCompoundsInterface){
@@ -206,7 +222,85 @@ angular.module('ngChemApp')
                           scope.cbh.saveChangesToTemporaryDataInController(data, sourceOfChange);
                       } 
                   } 
-                  renderers.renderHandsOnTable(scope, hotObj, element , isNewCompoundsInterface);
+
+            var rend = renderers.getRenderers(scope, isNewCompoundsInterface);
+         if(angular.isDefined(scope.elem)){
+            var scroll = scope.elem.scrollLeft();
+            var scrollTop = $(window).scrollTop();
+
+         }
+        angular.forEach(hotObj.columns, function(c){
+          if(angular.isDefined(c.renderer)){
+
+            c.renderer = rend[c.renderer];
+          }
+        });
+
+            var container1,
+            hot1;
+            var container = document.createElement('DIV');
+
+
+            while (element[0].firstChild) {
+                element[0].removeChild(element[0].firstChild);
+            }
+           
+            element[0].appendChild(container);
+            var hot1 = new Handsontable(container, hotObj);
+            var id = element[0].firstChild.id;
+            scope.hotId = "#" + id;
+            var elem = $(scope.hotId);
+
+            $timeout(function(){
+              var html = "";
+              $(elem[0].children[0].firstChild.firstChild.firstChild.firstChild.children[1].firstChild).replaceWith(html);
+              $(elem[0].children[1].firstChild.firstChild.firstChild.firstChild.children[1].firstChild).replaceWith(html);
+              // var data=["test","test2"];
+              // var s = $("<select id=\"selectId\" name=\"selectName\" />");
+              // for(var val in data) {
+              //     $("<option />", {value: val, text: data[val]}).appendTo(s);
+              // }
+              elem.wrap("<div id='myid' class='handsontable'></div>");
+              scope.width = 0;
+              // s.prependTo($(elem[0]));
+              angular.forEach(hotObj.columns, function(c, index){
+                  c.myColWidth = hot1.getColWidth(index); 
+                  scope.width += c.myColWidth;  
+                  if(!c.noSort){
+                    c.sortOrder = "none";
+                  }
+                  angular.forEach(scope.sorts, function(item){
+                    if(angular.isDefined(item[c.data])){
+                      //If an item is in the sorted columns list
+                        c.sortOrder = item[c.data].order;
+                        console.log("test");
+                    };
+
+                  });
+              });
+                //*[@id="ht_c2c5a3b0ab353bce"]/div[2]/div/div/div/table/thead
+              
+
+              scope.columns = hotObj.columns;
+              $("#myid").doubleScroll();
+              var header = document.createElement('DIV');
+              var head = angular.element(header);
+              head.html('<div ng-include="&apos;views/templates/compound-table-header.html&apos;"></div>');
+              var compiled = $compile(head.contents())(scope);
+              $("#myid").prepend(compiled);              
+
+              $('.btn-toggle').dropdown();
+              scope.elem = elem;
+              if(scroll){
+                scope.elem.scrollLeft(scroll);
+              }
+              if(scrollTop){
+                $(window).scrollTop(scrollTop);
+              }
+           
+            });
+           
+            scope.hot1 = hot1;
 
               }
               scope.$watch("redraw", function(newValue, oldValue){
