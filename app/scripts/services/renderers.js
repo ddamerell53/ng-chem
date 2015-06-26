@@ -177,14 +177,19 @@ angular.module('ngChemApp')
         
         
         if(angular.isDefined(c.copyTo)){
-           return "<label style='min-width:240px'>"+ c.knownBy + c.copyTo +  "</label>";
+           return "<div class='well'><label style='min-width:240px'>"+ c.knownBy + c.copyTo +  "</label></div>";
 
         }
         if(c.data.indexOf("uncurated")==0){
-          return "<label style='min-width:240px'>"+ c.knownBy + " Unmapped</label>";
+          return "<div class='well'><label style='min-width:240px'>"+ c.knownBy + " Unmapped</label></div>";
 
-        }else{
-          return "<label style='min-width:80px' >"+ c.knownBy + "</label>";
+        }
+        if(c.data.indexOf("custom")==0){
+          return "<div class='well'><label style='min-width:240px'>"+ c.knownBy + " un</label></div>";
+
+        }
+        else{
+          return "<div class='well'><label style='min-width:80px' >"+ c.knownBy + " un</label></div>";
 
         }
 
