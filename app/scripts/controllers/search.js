@@ -24,15 +24,15 @@ angular.module('ngChemApp')
     //need to repeat this for the custom field lookup
     
     var custFieldFormItem = $filter('filter')($scope.searchFormSchema.form, {key:'search_custom_fields__kv_any'}, true);
-    /*var custFieldFormItem = angular.forEach($scope.searchFormSchema.form, function(item, key) {
-            fish.more = fish.id == fish_id;
-        });*/
-    console.log(custFieldFormItem[0])
     custFieldFormItem[0].options.async.call = $scope.refreshCustFields;
     $scope.projectFrom = $stateParams.projectFrom;
     
     if($scope.searchForm.related_molregno__chembl__chembl_id__in) {
         $scope.searchFormSchema.schema.properties.related_molregno__chembl__chembl_id__in.items = $scope.searchForm.related_molregno__chembl__chembl_id__in.map(function(i){return {value : i, label : i}});
+    }
+    
+    if($scope.searchForm.search_custom_fields__kv_any) {
+        $scope.searchFormSchema.schema.properties.search_custom_fields__kv_any.items = $scope.searchForm.search_custom_fields__kv_any.map(function(i){return {value : i, label : i}});
     }
 
     $scope.cancel = function(){
