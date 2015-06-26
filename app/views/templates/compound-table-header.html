@@ -22,7 +22,7 @@
                                         </span>
                                     <span class="caret"></span></button>
                                     <ul class="dropdown-menu wide-dropdown" ng-class="($last ? 'pull-right' : '')"  role="menu" aria-labelledby="userBtn">
-                                        <li role="presentation">
+                                        <li ng-if="col.sortOrder != 'none'" role="presentation">
                                             <a ng-click="cbh.addSort(col.data, 'none')"><strong class="nexa"><span class="glyphicon glyphicon-remove"></span>
                                             &nbsp;Reset Sorts on {{col.knownBy}}</strong></a>
                                         </li>
@@ -103,7 +103,7 @@
                                                 
                                                 <a  class="" ng-click="$event.stopPropagation(); cbh.setMappedFieldInDirective('',col.knownBy);"><strong class="nexa">
                                                 <span class="glyphicon glyphicon-remove"></span>
-                                                &nbsp;Reset Mapping</strong>
+                                                &nbsp;Reset Mapping on {{col.knownBy}}</strong>
                                                 
                                                 </a>
                                                 
