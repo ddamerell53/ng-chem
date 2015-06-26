@@ -3,8 +3,8 @@
 		<div class="well projectbox">
 			<p class="nexa"><strong><a ui-sref="cbh.projects.list.project({projectKey: project.project_key, page:1})"><span title="{{ project.name }}">{{ project.name | limitTo : 20 }}</span><span ng-show="project.name.length > 20">...</span></a></strong><br/>
 				<span class="glyphicon glyphicon-time"></span> <small>Last Modified: {{ project.modified | date }}</small>
-				<a ui-sref="cbh.projects.project.demo.intro({projectKey: project.project_key})" role="button" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-plus-sign"></span> Add Compounds</a>
-                <a ui-sref="cbh.projects.project.addcompounds({projectKey: project.project_key})" role="button" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-plus-sign"></span> Add Compounds New</a>
+				
+                <a ui-sref="cbh.projects.project.addcompounds({projectKey: project.project_key})" role="button" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-plus-sign"></span> Add Compounds</a>
                 
 			</p>
 		</div>
