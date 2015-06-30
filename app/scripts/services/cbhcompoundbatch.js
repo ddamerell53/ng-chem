@@ -55,12 +55,7 @@ angular.module('ngChemApp')
 
     CBHCompoundBatch.reindexModifiedCompound = function(mb_id) {
       var params = {"current_batch": mb_id}
-      var promise = $http.post( urlConfig.cbh_compound_batches.list_endpoint  + "/reindex_compound/" , params).then(
-            function(data){
-                return data.data;
-            }
-        );
-        return promise;
+      $http.post( urlConfig.cbh_compound_batches.list_endpoint  + "/reindex_compound/" , params)
     }
 
 
