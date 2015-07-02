@@ -25,8 +25,7 @@
 
         <div ng-if="listOrGallery.choice == 'list'">
             <div id="myhot">
-
-                <handsoncompoundtable  uncurated-headers="compoundBatches.uncuratedHeaders" sorts="compoundBatches.sorts" cbh="cbh" compounds="compoundBatches.data", excluded="compoundBatches.excluded" warnings-filter="warningsFilter" redraw="compoundBatches.redraw" columns="compoundBatches.columns"></handsoncompoundtable>
+                <handsoncompoundtable  uncurated-headers="compoundBatches.uncuratedHeaders" sorts="compoundBatches.sorts" cbh="cbh" compounds="compoundBatches.data", excluded="compoundBatches.excluded" warnings-filter="warningsFilter" redraw="compoundBatches.redraw" columns="compoundBatches.columns" searchform-schema="searchFormSchema" search-form="searchForm"></handsoncompoundtable>
             </div>
             <div style="min-height:500px;" ng-show="noData" class="text-center"><img ng-show="!noData" src="images/loader.gif"></div>
 

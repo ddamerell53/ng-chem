@@ -21,6 +21,7 @@ angular.module('ngChemApp')
     'CBHCompoundBatch', 
     'MessageFactory',
     'renderers',
+    'searchUrlParams',
     function ($scope, 
         $state, 
         $stateParams,
@@ -33,7 +34,8 @@ angular.module('ngChemApp')
         urlConfig, 
         CBHCompoundBatch,
         MessageFactory,
-        renderers) {
+        renderers,
+        searchUrlParams) {
 
         $scope.csrftoken = $cookies[prefix.split("/")[0] + "csrftoken"];
        $scope.flowinit = {
@@ -306,6 +308,19 @@ angular.module('ngChemApp')
 
                         $scope.compoundBatches.data =data.data.objects;
                         $scope.totalCompoundBatches = data.data.batchStats.total;
+
+                        //setup of uiselect for custom fields filtering
+                        /*$scope.searchFormSchema= angular.copy($scope.cbh.projects.searchform);
+                        console.log($scope.searchFormSchema);
+                        var pf = searchUrlParams.setup($stateParams, {molecule: {}});
+                        $scope.searchForm = angular.copy(pf.searchForm);
+                        var custFieldFormItem = $filter('filter')($scope.searchFormSchema.cf_form, {key:'search_custom_fields__kv_any'}, true);
+                        custFieldFormItem[0].options.async.call = $scope.refreshCustFields;
+
+                        if($scope.searchForm.search_custom_fields__kv_any) {
+                            $scope.searchFormSchema.schema.properties.search_custom_fields__kv_any.items = $scope.searchForm.search_custom_fields__kv_any.map(function(i){return {value : i, label : i}});
+                        }*/
+
                         //Here we change the URL without changing the state
                          $state.transitionTo ($state.current.name, 
                                 {"mb_id" : $scope.datasets[$scope.current_dataset_id].config.multipleBatch,
@@ -332,7 +347,9 @@ angular.module('ngChemApp')
 
              }); 
         }
-
+        $scope.refreshCustFields = function(schema, options, search){
+            return $http.get(options.async.url + "?custom__field__startswith=" + search + "&custom_field=" + options.custom_field);
+        }
        
         $scope.processSmilesData = function(){
             $scope.current_dataset_id = $scope.inputData.inputstring;
@@ -494,6 +511,15 @@ angular.module('ngChemApp')
                     "config": result.data,
                     "cancellers" : []
                 }
+                $scope.searchFormSchema= angular.copy($scope.cbh.projects.searchform);
+                var pf = searchUrlParams.setup($stateParams, {molecule: {}});
+                $scope.searchForm = angular.copy(pf.searchForm);
+                var custFieldFormItem = $filter('filter')($scope.searchFormSchema.cf_form, {key:'search_custom_fields__kv_any'}, true);
+                custFieldFormItem[0].options.async.call = $scope.refreshCustFields;
+
+                /*if($scope.searchForm.search_custom_fields__kv_any) {
+                    $scope.searchFormSchema.schema.properties.search_custom_fields__kv_any.items = $scope.searchForm.search_custom_fields__kv_any.map(function(i){return {value : i, label : i}});
+                }*/
              $scope.dataReady = true;
 
                 if(result.data.objects.length > 0){

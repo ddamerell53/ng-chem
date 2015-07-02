@@ -15,7 +15,7 @@
                         <small><span  style=" margin-right:20px" ng-show="(col.copyTo)" class="pull-right alert-success"><span class="glyphicon glyphicon-arrow-right"></span>   {{col.copyTo}} </span></small>
                         </div>
                         <div  >
-                            <div ng-if="!col.noSort" class="pull-left">
+                            <div class="pull-left">
                                 <div class="dropdown"  aria-hidden="false">
                                     <button  class="btn btn-default btn-toggle mt-8" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><!-- <span class="glyphicon glyphicon-filter"></span> -->
                                         <span class="glyphicon " ng-class="{'asc': 'glyphicon-sort-by-alphabet', 'desc': 'glyphicon-sort-by-alphabet-alt', 'none': 'glyphicon-sort lightgrey'}[col.sortOrder]">
@@ -46,31 +46,29 @@
                                         </li>
                                         
                                         
-                                        <!-- <tabset  justified="true" >
+                                        <tabset  justified="true" >
                                            <tab ng-click="$event.stopPropagation();" heading="Filter">
+                                                
                                             
-                                        
-                                        <li role="presentation">
-                                            <a ng-click="$event.stopPropagation();">
-                                                <input placeholder="Search tags" type="text"></input>
-                                            </a>
-                                        </li>
-                                        <li role="presentation" class="spacer">
-                                        </li>
-                                        <li role="presentation">
-                                            <a class=""  ng-click="$event.stopPropagation();"><strong class="nexa">
-                                            <span class="glyphicon glyphicon-filter" ng-class=""></span>
-                                            &nbsp;A value  
-                                            <span class="pull-right glyphicon glyphicon-unchecked" ng-class=""></span>
-                                            </strong>
-                                            </a>
-                                        </li>
+                                            <li role="presentation">
+                                                <a class=""  ng-click="$event.stopPropagation();">
+                                                    <div class="col-xs-12"><form><div sf-schema="col.searchformSchema.cf_schema" sf-form="col.searchformSchema.cf_form" sf-model="col.searchForm"></div></form></div>
+                                                </a>
+                                            </li>
+                                            <li role="presentation" class="spacer">
+                                            </li>
+                                            <li role="presentation">
+                                                <a class=""  ng-click="$event.stopPropagation();"><strong class="nexa">
+                                                <span class="glyphicon glyphicon-filter" ng-class=""></span>
+                                                &nbsp;A value  
+                                                <span class="pull-right glyphicon glyphicon-unchecked" ng-class=""></span>
+                                                </strong>
+                                                </a>
+                                            </li>
                                            </tab>
                                             <tab ng-click="$event.stopPropagation();" heading="Exclude">
                                                 <div class="innerdrop">
-                                                <li role="presentation">
-                                                    <a ng-click="$event.stopPropagation();"><input placeholder="Search tags" type="text"></input>
-                                                    </a>
+                                                <li role="presentation"><!-- <div sf-schema="::searchFormSchema.cf_schema" sf-form="::searchFormSchema.cf_form" sf-model="searchForm"> --></div>
                                                 </li>
                                                 <li role="presentation" class="spacer">
                                             </li>
@@ -84,7 +82,7 @@
                                             </li>
                                         </div>
                                             </tab>
-                                        </tabset> -->
+                                        </tabset>
                                         
         
                         
