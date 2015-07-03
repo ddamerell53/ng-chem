@@ -12,6 +12,14 @@ li a svg.svg {
   font-size:0.75em;
 
 }
+.relative {
+  position:relative;
+}
+.rightglyph {
+    position: absolute; 
+    right: 20px; 
+    top:5px;
+}
 .htCore thead th {
   overflow:hidden;
   height:0;
