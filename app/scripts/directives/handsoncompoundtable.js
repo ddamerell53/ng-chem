@@ -30,7 +30,6 @@ angular.module('ngChemApp')
                 }else{
                   var newField = jsonSchemaColDefs[newFieldId];
                 var newFieldName = newField.title;
-                console.log(newFieldName);
                   angular.forEach(scope.uncuratedHeaders,
                     function(hdr){
                       if(hdr.name == unCuratedFieldName){
@@ -271,12 +270,12 @@ angular.module('ngChemApp')
                   c.searchformSchema = angular.copy(scope.searchformSchema)
                   if(angular.isDefined(c.searchformSchema)){
                     c.searchformSchema.cf_form[0].options['custom_field'] = c.knownBy;
-                  }
-                  if(c.searchForm.search_custom_fields__kv_any) {
+                     if(c.searchForm.search_custom_fields__kv_any) {
                     //loop through the items and only use those for this column
-
-                    c.searchformSchema.schema.properties.search_custom_fields__kv_any.items = c.searchForm.search_custom_fields__kv_any.map(function(i){return {value : i, label : i}});
+                        c.searchformSchema.schema.properties.search_custom_fields__kv_any.items = c.searchForm.search_custom_fields__kv_any.map(function(i){return {value : i, label : i}});
+                    }
                   }
+                 
                   angular.forEach(scope.sorts, function(item){
                     if(angular.isDefined(item[c.data])){
                       //If an item is in the sorted columns list

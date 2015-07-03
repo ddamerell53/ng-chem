@@ -7,29 +7,19 @@
         flow-file-success="assignFile($file.uniqueIdentifier, $file.getExtension())" 
         flow-upload-started="filesUploading=true" 
         flow-complete="filesUploading=false"> 
-<div class="row">
-    
-        <div class="col-xs-12 reg-nav">
-          <ul class="nav navbar-nav align-center text-center col-xs-12">
-            <a ng-click="topLink()" class=""><li class="col-xs-2 active"><h2><small>{{proj.name}} project home</small></h2><img src="images/home.svg" class="svg" alt="home" title="home"></li></a>
-            <li class="col-xs-2 col-xs-offset-2 active" ><h2><small>add <span class="glyphicon glyphicon-ok add text-success hidden"></span> </small></h2><img src="images/add.svg" class="svg" alt="add" title="add"></li>
-            <li class="col-xs-2" ng-class="{active:(datasets[current_dataset_id].config.state==='validate')}"><h2><small>validate and save<span class="glyphicon glyphicon-ok validate text-success hidden"></span></small></h2><img src="images/validate.svg" class="svg" alt="validate" title="validate"></li>
-             <li class="col-xs-2 pull-right" ng-class="{active: false}"><h2><small>saved <span class="glyphicon glyphicon-ok text-success finish hidden"></span></small></h2>
-                <h2 class="blue"><sup>6</sup>/<sub>7</sub></h2>
-             </li>
-              
-          </ul>
-        </div>
-</div>
-  <progressbar max="wizard.max" value="wizard.dynamic"><span class="pull-right" style="color:white; white-space:nowrap; margin-right:20px;">{{ wizard.step }} of {{ wizard.totalSteps }}</span></progressbar>
-
-<div class="row">
 
 <div class="col-xs-12">
-    <tabset class="col-xs-12" >
-    <h2 class="nexa blue"><span class="glyphicon glyphicon-plus"></span>&nbsp;Add compounds to {{proj.name}} project</h2>
 
-    <tab heading="Add Multiple">
+<div class="col-xs-12">
+    
+    <div class="spacer"></div>
+    <h2 class="nexa blue"><span class="glyphicon glyphicon-home"></span>&nbsp;Back to {{proj.name}} home</h2>
+    <div class="spacer"></div>
+</div>
+
+
+<tabset class="col-xs-12" >
+    <tab heading="Add Multiple Compounds to {{proj.name}}">
         <div class="row" ng-hide="dataReady">
          <div class="col-sm-6">
             <div class="row">
@@ -63,7 +53,7 @@
 
                     <info-box class="pull-right" style="margin-top:-5px; margin-right:5px" left="false" lookup="smiles_field"></info-box>
                     <label for="text_input" class="blue text-center"><strong class="nexa">Paste your SMILES or Standard Inchis here</strong></label>
-                </DIV>
+                </div>
                 <div class="form-group col-sm-9 col-lg-10">
                     
                     <div ui-ace   ng-model="inputData.inputstring" class="form-control" style="height:70px"></div>
@@ -138,4 +128,3 @@
 
   
 
-</div>
