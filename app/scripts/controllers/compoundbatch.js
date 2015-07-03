@@ -8,8 +8,8 @@
  * Controller of the ngChemApp
  */
 angular.module('ngChemApp')
-  .controller('CompoundbatchCtrl', ['$scope','$rootScope','$state','$stateParams','$timeout','CBHCompoundBatch','paramsAndForm','urlConfig','$window','$location','$anchorScroll', '$filter', 
-    function ($scope, $rootScope,$state, $stateParams,$timeout, CBHCompoundBatch, paramsAndForm, urlConfig, $window, $location, $anchorScroll, $filter) {
+  .controller('CompoundbatchCtrl', ['$scope','$rootScope','$state','$stateParams','$timeout','CBHCompoundBatch','paramsAndForm','urlConfig','$window','$location','$anchorScroll', '$filter', 'searchUrlParams', 
+    function ($scope, $rootScope,$state, $stateParams,$timeout, CBHCompoundBatch, paramsAndForm, urlConfig, $window, $location, $anchorScroll, $filter, searchUrlParams) {
     $scope.compoundBatches = {data:[], redraw:0};
     $scope.urlConfig = urlConfig;
     $scope.totalCompoundBatches = 0;
@@ -123,7 +123,21 @@ angular.module('ngChemApp')
         $scope.compoundBatches.redraw ++;
 
     }
+    function getAllUncuratedHeaders(data) {
+        //pull out and merge and uniquify all the uncurated fields
+        var uncurated_headers = []
+        angular.forEach(data, function(obj){
+            //get this object's uncurated fields
+            angular.forEach(obj.uncurated_fields, function(field) {
+                uncurated_fields.push(field);
+            });
+        });
+        return uncurated_headers;
+    }
 
+    $scope.refreshCustFields = function(schema, options, search){
+            return $http.get(options.async.url + "?custom__field__startswith=" + search + "&custom_field=" + options.custom_field);
+        }
     
     function getResultsPage(pageNumber) {
         filters.limit = $scope.pagination.compoundBatchesPerPage.value;
@@ -131,6 +145,15 @@ angular.module('ngChemApp')
         CBHCompoundBatch.query(filters).then(function(result) {
             $scope.totalCompoundBatches = result.meta.totalCount;
             $scope.compoundBatches.data =result.objects;
+
+            $scope.searchFormSchema= angular.copy($scope.cbh.projects.searchform);
+            var pf = searchUrlParams.setup($stateParams, {molecule: {}});
+            $scope.searchForm = angular.copy(pf.searchForm);
+            var custFieldFormItem = $filter('filter')($scope.searchFormSchema.cf_form, {key:'search_custom_fields__kv_any'}, true);
+            custFieldFormItem[0].options.async.call = $scope.refreshCustFields;
+
+            //$scope.compoundBatches.uncuratedHeaders = getAllUncuratedHeaders(result.objects);
+
             if(result.objects.length > 0){
                 var size = ($scope.listOrGallery.choice=="gallery") ? 100 : 75;
                 CBHCompoundBatch.getImages(result.objects, 400, "bigImageSrc");

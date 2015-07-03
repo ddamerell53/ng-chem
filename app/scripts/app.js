@@ -138,6 +138,8 @@ angular.module('ngChemApp')
                             function(data){
                               $scope.mol.customFields=data.customFields;
                               mol.customFields=data.customFields;
+                              //reindex the compound
+                              CBHCompoundBatch.reindexModifiedCompound($scope.mol.id);
                               $scope.update_success = true;
                               $scope.editMode = false;
                               $scope.init();

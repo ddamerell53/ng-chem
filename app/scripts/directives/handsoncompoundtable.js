@@ -14,7 +14,7 @@ angular.module('ngChemApp')
       link: function preLink(scope, element, attrs) {
               var redraw;
               var jsonSchemaColDefs; 
-
+              console.log(scope.searchformSchema);
 
               scope.cbh.setMappedFieldInDirective = function(newFieldId, unCuratedFieldName){
                 console.log(newFieldId);
@@ -57,7 +57,7 @@ angular.module('ngChemApp')
                 redraw();
                   
                 scope.cbh.setMappedFieldInController(newFieldName, unCuratedFieldName);
-              }
+              }//setMappedFieldInDirective
 
               redraw = function(){
                   jsonSchemaColDefs = [];
@@ -269,11 +269,21 @@ angular.module('ngChemApp')
                   if(!c.noSort){
                     c.sortOrder = "none";
                   }
+                  c.searchForm = angular.copy(scope.searchForm);
+                  c.searchformSchema = angular.copy(scope.searchformSchema)
+                  if(angular.isDefined(c.searchformSchema)){
+                    c.searchformSchema.cf_form[0].options['custom_field'] = c.knownBy;
+                  }
+                  if(c.searchForm.search_custom_fields__kv_any) {
+                    //loop through the items and only use those for this column
+
+                    c.searchformSchema.schema.properties.search_custom_fields__kv_any.items = c.searchForm.search_custom_fields__kv_any.map(function(i){return {value : i, label : i}});
+                  }
                   angular.forEach(scope.sorts, function(item){
                     if(angular.isDefined(item[c.data])){
                       //If an item is in the sorted columns list
                         c.sortOrder = item[c.data].order;
-                        console.log("test");
+                        
                     };
 
                   });
@@ -285,6 +295,7 @@ angular.module('ngChemApp')
               $("#myid").doubleScroll();
               var header = document.createElement('DIV');
               var head = angular.element(header);
+              console.log("getting here on search page")
               head.html('<div ng-include="&apos;views/templates/compound-table-header.html&apos;"></div>');
               var compiled = $compile(head.contents())(scope);
               $("#myid").prepend(compiled);              
@@ -324,7 +335,9 @@ angular.module('ngChemApp')
         "uncuratedHeaders" : "=",
         "columns" : "=",
         "excluded" : "=",
-        "warningsFilter" : "="
+        "warningsFilter" : "=",
+        "searchformSchema": "=",
+        "searchForm": "="
       }
     };
   }]);
