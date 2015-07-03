@@ -7,7 +7,7 @@
  * # HandsOnCompoundTable
  */
 angular.module('ngChemApp')
-  .directive('handsoncompoundtable',["$timeout","$compile","renderers", function ($timeout,$compile, renderers) {
+  .directive('handsoncompoundtable',["$timeout","$compile","renderers","$rootScope", function ($timeout,$compile, renderers, $rootScope) {
     return {
       template: '<div  ></div>',
       restrict: 'E',
@@ -287,15 +287,24 @@ angular.module('ngChemApp')
                     };
 
                   });
+                  
               });
                 //*[@id="ht_c2c5a3b0ab353bce"]/div[2]/div/div/div/table/thead
               
 
               scope.columns = hotObj.columns;
+              angular.forEach(scope.columns, function(col, index){
+                var watchString = "columns[" + index + "].searchForm.search_custom_fields__kv_any";
+                scope.$watch(watchString, function(newValue, oldValue){
+                  if(newValue !== oldValue){
+                    //broadcast the newValue
+                    $rootScope.$broadcast('custom-field-filter',{'newValue': newValue});
+                  }
+                }, true);
+              })
               $("#myid").doubleScroll();
               var header = document.createElement('DIV');
               var head = angular.element(header);
-              console.log("getting here on search page")
               head.html('<div ng-include="&apos;views/templates/compound-table-header.html&apos;"></div>');
               var compiled = $compile(head.contents())(scope);
               $("#myid").prepend(compiled);              

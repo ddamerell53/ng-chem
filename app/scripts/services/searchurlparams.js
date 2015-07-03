@@ -10,7 +10,7 @@
 
 
 angular.module('ngChemApp')
-    .factory('searchUrlParams', function($filter, $rootScope) {
+    .factory('searchUrlParams', function($filter) {
 
         // Private variables
 
@@ -24,7 +24,6 @@ angular.module('ngChemApp')
 
             function setStructure(key) {
                 searchForm.molecule.molfile = stateParams[key];
-                // $rootScope.searchMolfile = $stateParams[key];
                 if (stateParams[key].indexOf("ChemDoodle") < 0) {
                     searchForm.smiles = stateParams[key];
                 }

@@ -136,8 +136,13 @@ angular.module('ngChemApp')
     }
 
     $scope.refreshCustFields = function(schema, options, search){
+            
             return $http.get(options.async.url + "?custom__field__startswith=" + search + "&custom_field=" + options.custom_field);
+            //var resp = $http.get(options.async.url + "?custom__field__startswith=" + search + "&custom_field=" + options.custom_field);
         }
+    $scope.broadcastFilter = function() {
+        console.log("broadcastFilter called");
+    }
     
     function getResultsPage(pageNumber) {
         filters.limit = $scope.pagination.compoundBatchesPerPage.value;
