@@ -86,14 +86,19 @@ angular.module('ngChemApp')
         }
 
         $scope.cbh.saveChangesToTemporaryDataInController = function(changes, sourceOfChange){
+
             if(changes){
+                // $scope.currentlyLoading = true;
                  $scope.disableButtons = true;
                     var itemsToChange = changes.map(function(item){
                         return $scope.compoundBatches.data[item[0]]
                     });
                     var patchData = angular.copy($scope.datasets[$scope.current_dataset_id].config);
                     patchData.objects = itemsToChange;
-                    CBHCompoundBatch.patchTempList(patchData);
+                    CBHCompoundBatch.patchTempList(patchData).then(function(data){
+                        // $scope.currentlyLoading = false;
+                        $scope.imageCallback();
+                    });
             }
            
 

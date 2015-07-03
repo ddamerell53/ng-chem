@@ -212,8 +212,8 @@ angular.module('ngChemApp')
                     data: scope.compounds,
                     colHeaders: columnHeaders,
                     columns: allCols, 
-                    // disableVisualSelection: true,      
-                               
+                    
+                      
                   }
                   if(isNewCompoundsInterface){
                       hotObj.afterChange = function(data,sourceOfChange){
@@ -250,9 +250,9 @@ angular.module('ngChemApp')
             var elem = $(scope.hotId);
 
             $timeout(function(){
-              var html = "<tr></tr>";
-              $(elem[0].children[0].firstChild.firstChild.firstChild.firstChild.children[1].firstChild).replaceWith(html);
-              $(elem[0].children[1].firstChild.firstChild.firstChild.firstChild.children[1].firstChild).replaceWith(html);
+              // var html = "<tr></tr>";
+              // $(elem[0].children[0].firstChild.firstChild.firstChild.firstChild.children[1].firstChild).replaceWith(html);
+              // $(elem[0].children[1].firstChild.firstChild.firstChild.firstChild.children[1].firstChild).replaceWith(html);
               // var data=["test","test2"];
               // var s = $("<select id=\"selectId\" name=\"selectName\" />");
               // for(var val in data) {
