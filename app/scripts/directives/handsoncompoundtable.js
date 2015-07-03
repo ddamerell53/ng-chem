@@ -160,8 +160,6 @@ angular.module('ngChemApp')
                           }
 
                       });
-//onchange='angular.element(this).scope().cbh.setMappedFieldInDirective(this.value, \"" + un.name + "\")'
-                      // var extraHtml = "<select onclick='event.stopPropagation();' onmouseup='event.stopPropagation();' autocomplete='off' class='form-control '  " +  disableSel +" ><option >Map column to:</option>" + optList.join("") + "</select>";
                       return {sortOrder : "none", copyTo: copyTo, mappingOptions: optList, knownBy: un.name, data: "uncuratedFields." + un.name, readOnly:true, className: "htCenter htMiddle ", renderer: "linkRenderer"}
                   });
 
@@ -252,7 +250,7 @@ angular.module('ngChemApp')
             var elem = $(scope.hotId);
 
             $timeout(function(){
-              var html = "";
+              var html = "<tr></tr>";
               $(elem[0].children[0].firstChild.firstChild.firstChild.firstChild.children[1].firstChild).replaceWith(html);
               $(elem[0].children[1].firstChild.firstChild.firstChild.firstChild.children[1].firstChild).replaceWith(html);
               // var data=["test","test2"];
@@ -288,9 +286,7 @@ angular.module('ngChemApp')
 
                   });
               });
-                //*[@id="ht_c2c5a3b0ab353bce"]/div[2]/div/div/div/table/thead
               
-
               scope.columns = hotObj.columns;
               $("#myid").doubleScroll();
               var header = document.createElement('DIV');
