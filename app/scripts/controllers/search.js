@@ -35,6 +35,13 @@ angular.module('ngChemApp')
         $scope.searchFormSchema.schema.properties.search_custom_fields__kv_any.items = $scope.searchForm.search_custom_fields__kv_any.map(function(i){return {value : i, label : i}});
     }
 
+    $scope.$watch('searchForm.search_custom_fields__kv_any', function(newValue, oldValue){
+                  if(newValue !== oldValue){
+                    //broadcast the newValue
+                    $rootScope.$broadcast('custom-field-to-table',{'newValue': newValue});
+                  }
+                }, true);
+
     $scope.cancel = function(){
         //$location.url('/search?limit=&offset=');
         //$scope.cbh.searchPage();
@@ -50,7 +57,7 @@ angular.module('ngChemApp')
 
     $rootScope.projectKey = "Projects";
 
-    $scope.$on('custom-field-filter', function(event, data) {
+    $scope.$on('custom-field-from-table', function(event, data) {
         console.log("CUSTOM FILTER KLAXON",data.newValue);
         $scope.searchForm.search_custom_fields__kv_any = data.newValue;
         $scope.searchFormSchema.schema.properties.search_custom_fields__kv_any.items = $scope.searchForm.search_custom_fields__kv_any.map(function(i){return {value : i, label : i}});

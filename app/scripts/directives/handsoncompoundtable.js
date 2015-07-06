@@ -293,14 +293,44 @@ angular.module('ngChemApp')
               
 
               scope.columns = hotObj.columns;
+              
+              
               angular.forEach(scope.columns, function(col, index){
                 var watchString = "columns[" + index + "].searchForm.search_custom_fields__kv_any";
+                //retrieve the current search form to apply custom field filters from URL
+                //we have already cloned the search form elements to build the models for the initial load.
+                if (col.searchForm.search_custom_fields__kv_any) {
+                      console.log("custom search field found", col.searchForm.search_custom_fields__kv_any);
+                      angular.forEach(col.searchForm.search_custom_fields__kv_any, function(field){
+                        var colname = field.split('|');
+                        if (colname == col.knownBy){
+                          col.searchformSchema.schema.properties.search_custom_fields__kv_any.items = col.searchForm.search_custom_fields__kv_any.map(function(i){return {value : i, label : i}});
+                          scope.$emit('schemaFormRedraw');
+                        }
+                      });
+                      /*scope.$apply(function(){
+                        col.searchformSchema.schema.properties.search_custom_fields__kv_any.items = col.searchForm.search_custom_fields__kv_any.map(function(i){return {value : i, label : i}});
+                        scope.$broadcast('schemaFormRedraw');
+                      });*/
+                      
+                }
+                
                 scope.$watch(watchString, function(newValue, oldValue){
                   if(newValue !== oldValue){
                     //broadcast the newValue
-                    $rootScope.$broadcast('custom-field-filter',{'newValue': newValue});
+                    $rootScope.$broadcast('custom-field-from-table',{'newValue': newValue});
                   }
                 }, true);
+                //this needs to be at an overall level
+                //look up the correct column's knownBy
+                //then do the reverse of the custom-field-to-table
+                /*scope.$on('custom-field-from-table', function(event, data) {
+                    console.log("CUSTOM FILTER KLAXON",data.newValue);
+                    $scope.searchForm.search_custom_fields__kv_any = data.newValue;
+                    $scope.searchFormSchema.schema.properties.search_custom_fields__kv_any.items = $scope.searchForm.search_custom_fields__kv_any.map(function(i){return {value : i, label : i}});
+                    $scope.$broadcast("schemaFormRedraw");
+
+                });*/
               })
               $("#myid").doubleScroll();
               var header = document.createElement('DIV');
