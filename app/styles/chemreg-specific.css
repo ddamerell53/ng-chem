@@ -12,7 +12,28 @@ li a svg.svg {
   font-size:0.75em;
 
 }
+.relative {
+  position:relative;
+}
+.rightglyph {
+    position: absolute; 
+    right: 20px; 
+    top:5px;
+}
+.htCore thead th {
+  overflow:hidden;
+  height:0;
+}
+.htCore thead  th div {
+  overflow:hidden;
+  height:0;
+  margin-top:-10px;
+  margin-bottom:-10px;
 
+}
+.wtHolder {
+  margin-bottom:100px;
+}
 #loading-overlay { z-index: 2000; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: #000; opacity: 0.7; min-height:5000px;}
 #loading-message { z-index: 2000; position: absolute; width: 400px; height: 100px; line-height: 100px; background-color: #fff; text-align: center; font-size: 1.2em; left: 50%; top: 200px; margin-left: -200px; margin-top: -100px; }
 

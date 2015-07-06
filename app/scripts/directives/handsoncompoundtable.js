@@ -30,7 +30,6 @@ angular.module('ngChemApp')
                 }else{
                   var newField = jsonSchemaColDefs[newFieldId];
                 var newFieldName = newField.title;
-                console.log(newFieldName);
                   angular.forEach(scope.uncuratedHeaders,
                     function(hdr){
                       if(hdr.name == unCuratedFieldName){
@@ -160,8 +159,6 @@ angular.module('ngChemApp')
                           }
 
                       });
-//onchange='angular.element(this).scope().cbh.setMappedFieldInDirective(this.value, \"" + un.name + "\")'
-                      // var extraHtml = "<select onclick='event.stopPropagation();' onmouseup='event.stopPropagation();' autocomplete='off' class='form-control '  " +  disableSel +" ><option >Map column to:</option>" + optList.join("") + "</select>";
                       return {sortOrder : "none", copyTo: copyTo, mappingOptions: optList, knownBy: un.name, data: "uncuratedFields." + un.name, readOnly:true, className: "htCenter htMiddle ", renderer: "linkRenderer"}
                   });
 
@@ -214,8 +211,8 @@ angular.module('ngChemApp')
                     data: scope.compounds,
                     colHeaders: columnHeaders,
                     columns: allCols, 
-                    // disableVisualSelection: true,      
-                               
+                    
+                      
                   }
                   if(isNewCompoundsInterface){
                       hotObj.afterChange = function(data,sourceOfChange){
@@ -252,9 +249,9 @@ angular.module('ngChemApp')
             var elem = $(scope.hotId);
 
             $timeout(function(){
-              var html = "";
-              $(elem[0].children[0].firstChild.firstChild.firstChild.firstChild.children[1].firstChild).replaceWith(html);
-              $(elem[0].children[1].firstChild.firstChild.firstChild.firstChild.children[1].firstChild).replaceWith(html);
+              // var html = "<tr></tr>";
+              // $(elem[0].children[0].firstChild.firstChild.firstChild.firstChild.children[1].firstChild).replaceWith(html);
+              // $(elem[0].children[1].firstChild.firstChild.firstChild.firstChild.children[1].firstChild).replaceWith(html);
               // var data=["test","test2"];
               // var s = $("<select id=\"selectId\" name=\"selectName\" />");
               // for(var val in data) {
@@ -273,12 +270,12 @@ angular.module('ngChemApp')
                   c.searchformSchema = angular.copy(scope.searchformSchema)
                   if(angular.isDefined(c.searchformSchema)){
                     c.searchformSchema.cf_form[0].options['custom_field'] = c.knownBy;
-                  }
-                  if(c.searchForm.search_custom_fields__kv_any) {
+                     if(c.searchForm.search_custom_fields__kv_any) {
                     //loop through the items and only use those for this column
-
-                    c.searchformSchema.schema.properties.search_custom_fields__kv_any.items = c.searchForm.search_custom_fields__kv_any.map(function(i){return {value : i, label : i}});
+                        c.searchformSchema.schema.properties.search_custom_fields__kv_any.items = c.searchForm.search_custom_fields__kv_any.map(function(i){return {value : i, label : i}});
+                    }
                   }
+                 
                   angular.forEach(scope.sorts, function(item){
                     if(angular.isDefined(item[c.data])){
                       //If an item is in the sorted columns list
@@ -289,9 +286,7 @@ angular.module('ngChemApp')
                   });
                   
               });
-                //*[@id="ht_c2c5a3b0ab353bce"]/div[2]/div/div/div/table/thead
               
-
               scope.columns = hotObj.columns;
               
               

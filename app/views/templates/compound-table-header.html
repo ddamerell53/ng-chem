@@ -29,15 +29,16 @@
                                         <li role="presentation" class="divider">
                                         </li>
                                         <li role="presentation">
-                                            <a class="disabled" ng-click="cbh.addSort(col.data, 'asc')"><strong class="nexa"><span class="glyphicon glyphicon-sort-by-alphabet"></span>
-                                            &nbsp;Sort A-Z </span>
-                                            <span class="pull-right glyphicon " ng-class="(col.sortOrder=='asc') ? 'glyphicon-check':'glyphicon-unchecked'"></span>
+                                            <a class="relative" ng-click="cbh.addSort(col.data, 'asc')"><strong class="nexa">
+                                                <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+                                            &nbsp;Sort A-Z 
+                                            <span  class=" glyphicon rightglyph" ng-class="(col.sortOrder=='asc') ? 'glyphicon-check':'glyphicon-unchecked'"></span>
                                         </strong></a>
                                         </li>
                                         <li role="presentation">
-                                            <a ng-click="cbh.addSort(col.data, 'desc')"><strong class="nexa"><span class="glyphicon glyphicon-sort-by-alphabet-alt"></span>
+                                            <a class="relative" ng-click="cbh.addSort(col.data, 'desc')"><strong class="nexa"><span class="glyphicon glyphicon-sort-by-alphabet-alt"></span>
                                             &nbsp;Sort Z-A 
-                                            <span class="pull-right glyphicon " ng-class="(col.sortOrder=='desc') ? 'glyphicon-check':'glyphicon-unchecked'"></span>
+                                            <span  class="rightglyph glyphicon " ng-class="(col.sortOrder=='desc') ? 'glyphicon-check':'glyphicon-unchecked'"></span>
 
                                         </strong>
                                             
@@ -108,10 +109,10 @@
                                             </li>
                                         <li ng-repeat="opt in col.mappingOptions" role="presentation">
                                                 
-                                                <a ng-if="opt.uiClass" class="" ng-click="$event.stopPropagation(); cbh.setMappedFieldInDirective($index,col.knownBy);"><strong class="nexa">
+                                                <a class="relative" ng-if="opt.uiClass" class="" ng-click="$event.stopPropagation(); cbh.setMappedFieldInDirective($index,col.knownBy);"><strong class="nexa">
                                                 <span ng-bind-html="opt.icon"></span>
                                                 &nbsp;{{opt.title}}</strong>
-                                                <span ng-if="opt.uiClass" class="glyphicon  pull-right" ng-class="opt.uiClass"></span>
+                                                <span ng-if="opt.uiClass" class="glyphicon  rightglyph" ng-class="opt.uiClass"></span>
                                                 </a>
                                                 <a disabled ng-if="!opt.uiClass" class="" ng-click="$event.stopPropagation();"><strong class="nexa lightgrey">
                                                 <span ng-bind-html="opt.icon"></span>
