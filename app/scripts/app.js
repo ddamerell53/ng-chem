@@ -85,12 +85,11 @@ angular.module('ngChemApp')
                       $scope.projectWithCustomFieldData;
                       angular.forEach($rootScope.projects,function(myproj){
                         if(myproj.id.toString() == projid){
-                          $scope.projectWithCustomFieldData = myproj
+                          $scope.projectWithCustomFieldData = myproj;
+                          $scope.projectObj = myproj;
                         }
                       });
-                      ProjectFactory.get({projectId: projid}).$promise.then(function(data){
-                        $scope.projectObj = data;
-                      });
+                      
                       
                  
                       $scope.myform = $scope.projectWithCustomFieldData.schemaform.form;
