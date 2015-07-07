@@ -140,9 +140,8 @@ angular.module('ngChemApp')
             return $http.get(options.async.url + "?custom__field__startswith=" + search + "&custom_field=" + options.custom_field);
             //var resp = $http.get(options.async.url + "?custom__field__startswith=" + search + "&custom_field=" + options.custom_field);
         }
-    $scope.typeahead = ["test"];
 
-    $scope.refreshSingleCustField = function(searchTerm, customField){
+    $scope.refreshSingleCustField = function(url, searchTerm, customField){
         $http.get(options.async.url + "?custom__field__startswith=" + searchTerm + "&custom_field=" + customField).then(function(response){
             $scope.typeahead = response.data;
         });

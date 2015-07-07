@@ -68,6 +68,12 @@ angular.module('ngChemApp')
                   
                 scope.cbh.setMappedFieldInController(newFieldName, unCuratedFieldName);
               }//setMappedFieldInDirective
+              scope.typeahead = []
+              scope.refreshSingleCustField = function(url, searchTerm, knownBy){
+                  $http.get(url + "?custom__field__startswith=" + searchTerm + "&custom_field=" + knownBy).then(function(response){
+                      scope.typeahead = response.data;
+                  });
+              }
 
               redraw = function(){
                   jsonSchemaColDefs = [];
@@ -287,7 +293,7 @@ angular.module('ngChemApp')
                     };
 
                   });
-
+                  c.typeahead = []
                   c.searchForm = angular.copy(scope.searchForm);
                   c.searchformSchema = angular.copy(scope.searchformSchema)
                   if(angular.isDefined(c.searchformSchema)){
@@ -296,7 +302,7 @@ angular.module('ngChemApp')
                       //loop through the items and only use those for this column
                       angular.forEach(c.searchForm.search_custom_fields__kv_any, function(field, index){
                         c.searchForm.search_custom_fields__kv_any = $filter('filter')(c.searchForm.search_custom_fields__kv_any, function(value, index) { return value.split("|")[0] == c.knownBy })
-                        c.searchformSchema.schema.properties.search_custom_fields__kv_any.items = c.searchForm.search_custom_fields__kv_any.map(function(i){return {value : i, label : i}});
+                        c.searchformSchema.schema.properties.search_custom_fields__kv_any.items = c.searchForm.search_custom_fields__kv_any.map(function(i){return {value : i, label : labelifyCustomField(i)}});
                       });
                         
                     }
@@ -308,7 +314,7 @@ angular.module('ngChemApp')
               
               
               angular.forEach(scope.columns, function(col, index){
-                var watchString = "columns[" + index + "].searchForm.search_custom_fields__kv_any";
+                var watchString = "columns[" + index + "].searchformSchema.schema.properties.search_custom_fields__kv_any.items";
                 //retrieve the current search form to apply custom field filters from URL
                 //we have already cloned the search form elements to build the models for the initial load.
                   
@@ -317,8 +323,29 @@ angular.module('ngChemApp')
                   if(newValue !== oldValue){
                     //broadcast the newValue
                     var addOrRemove = ""
+                    
+                    var valToSend;
+                    var strippedValues = []
+                    //need to strip out angular $$ variables to enable array comparison
+                    angular.forEach(newValue, function(item){
+                      item = angular.fromJson(angular.toJson(item));
+                      strippedValues.push(item);
+                    })
+                    console.log("newValue is now", strippedValues)
 
-                    $rootScope.$broadcast('custom-field-from-table',{'newValue': newValue, 'addOrRemove': addOrRemove});
+                    //work out the array difference so we know which value to add to (or remove from) the search form
+                    if(newValue.length > oldValue.length) {
+                      addOrRemove = "add"
+                      //work out which values are in the new value but no the old value
+                      var valToSend = _.filter(strippedValues, function(obj){ return !_.findWhere(oldValue, obj); });
+                    }
+                    else if (oldValue.length > newValue.length){
+                      addOrRemove = "remove";
+                      //work out which values are in the old value but no the new value
+                      var valToSend = _.filter(oldValue, function(obj){ return !_.findWhere(strippedValues, obj); });
+                    }
+
+                    $rootScope.$broadcast('custom-field-from-table',{'newValue': valToSend[0], 'addOrRemove': addOrRemove});
                   }
                 }, true);
 
