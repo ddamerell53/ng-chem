@@ -312,7 +312,7 @@ angular.module('ngChemApp')
                         CBHCompoundBatch.getImages( data.data.objects, 400, "bigImageSrc", $scope.imageCallback); 
 
                         $scope.compoundBatches.data =data.data.objects;
-                        $scope.totalCompoundBatches = data.data.batchStats.total;
+                        $scope.totalCompoundBatches = data.data.batchstats.total;
 
                         //setup of uiselect for custom fields filtering
                         /*$scope.searchFormSchema= angular.copy($scope.cbh.projects.searchform);
