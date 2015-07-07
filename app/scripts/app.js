@@ -69,7 +69,51 @@ angular.module('ngChemApp')
                     }
                   });
                 };
-              
+
+              /* Create an object for communication between handsontable and the search form WRT custom fields */
+              cbh.createCustomFieldTransport = function(newValue, oldValue, arrayContains) {
+                  var addOrRemove = ""
+                  
+                  var valToSend;
+                  var strippedValues = []
+                  
+                  //need to strip out angular $$ variables to enable array comparison
+                  angular.forEach(newValue, function(item){
+                    if(angular.isObject(item)){
+                      item = angular.fromJson(angular.toJson(item));  
+                    }
+                    strippedValues.push(item);
+                  })
+
+                  //work out the array difference so we know which value to add to (or remove from) the search form
+                  //the order of supplying arrays is important in these comparators, hence the size comparison conditional
+                  //we need to use underscore filter for object array comparison
+                  //we need to use underscore difference for string array comparison
+                  if(newValue.length > oldValue.length) {
+                    addOrRemove = "add"
+                    //work out which values are in the new value but not the old value
+                    if(arrayContains == "obj"){
+                      var valToSend = _.filter(strippedValues, function(obj){ return !_.findWhere(oldValue, obj); });
+                    }
+                    else if (arrayContains == "string") {
+                      var valToSend = _.difference(strippedValues, oldValue);
+                    }
+                    
+                  }
+                  else if (oldValue.length > newValue.length){
+                    addOrRemove = "remove";
+                    //work out which values are in the old value but not the new value
+                    if(arrayContains == "obj"){
+                      var valToSend = _.filter(oldValue, function(obj){ return !_.findWhere(strippedValues, obj); });
+                    }
+                    else if (arrayContains == "string") {
+                      var valToSend = _.difference(oldValue, strippedValues);
+                    }
+                    
+                  }
+
+                  return {'newValue': valToSend[0], 'addOrRemove': addOrRemove};
+              }
 
               cbh.openSingleMol = function(mol, isNewCompoundsInterface) {
                   $scope.modalInstance = $modal.open({
