@@ -59,8 +59,15 @@ angular.module('ngChemApp')
 
     $scope.$on('custom-field-from-table', function(event, data) {
         //work out whether this is being added or removed
-        console.log("CUSTOM FILTER KLAXON",data.newValue);
-        $scope.searchForm.search_custom_fields__kv_any = data.newValue;
+        console.log("CUSTOM FILTER KLAXON",data);
+        
+        if(data.addOrRemove == "add") {
+            $scope.searchForm.search_custom_fields__kv_any.push(data.newValue.value);
+        }
+        else if(data.addOrRemove == "remove"){
+            $scope.searchForm.search_custom_fields__kv_any.splice($scope.searchForm.search_custom_fields__kv_any.indexOf(data.newValue.value), 1);
+        }
+        //$scope.searchForm.search_custom_fields__kv_any = data.newValue;
         $scope.searchFormSchema.schema.properties.search_custom_fields__kv_any.items = $scope.searchForm.search_custom_fields__kv_any.map(function(i){return {value : i, label : i}});
         $scope.$broadcast("schemaFormRedraw");
 
