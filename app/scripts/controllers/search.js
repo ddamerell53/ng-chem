@@ -64,7 +64,8 @@ angular.module('ngChemApp')
         
         if(data.addOrRemove == "add") {
             //is it already there? If so, don't re-add - no dupes allowed
-            if(!$filter('filter')($scope.searchForm.search_custom_fields__kv_any, function(value, index) { return value == data.newValue.value })){
+            var match = $filter('filter')($scope.searchForm.search_custom_fields__kv_any, function(value, index) { return value == data.newValue.value })
+            if(match.length == 0){
                 $scope.searchForm.search_custom_fields__kv_any.push(data.newValue.value);
                 $scope.searchFormSchema.schema.properties.search_custom_fields__kv_any.items = $scope.searchForm.search_custom_fields__kv_any.map(function(i){return {value : i, label : i}});
                 $scope.$broadcast("schemaFormRedraw"); 
