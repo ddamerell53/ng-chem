@@ -46,7 +46,6 @@ angular.module('ngChemApp')
     $scope.cancel = function(){
         //$location.url('/search?limit=&offset=');
         //$scope.cbh.searchPage();
-        console.log("cancel is being called");
         $scope.searchForm = {};
         $state.transitionTo('cbh.search', {location: true, inherit:false, relative:null, notify:true});
     }
@@ -59,8 +58,6 @@ angular.module('ngChemApp')
     $rootScope.projectKey = "Projects";
 
     $scope.$on('custom-field-from-table', function(event, data) {
-        //work out whether this is being added or removed
-        console.log("CUSTOM FILTER KLAXON",data);
         
         if(data.addOrRemove == "add") {
             //is it already there? If so, don't re-add - no dupes allowed

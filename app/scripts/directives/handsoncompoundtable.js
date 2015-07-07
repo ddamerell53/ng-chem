@@ -328,7 +328,6 @@ angular.module('ngChemApp')
                  //then do the reverse of the custom-field-to-table
                  scope.$on('custom-field-to-table', function(event, data) {
                       if(col.knownBy == data.newValue.split("|")[0]) {
-                        console.log("COLUMN MATCH KLAXON");
                         if(data.addOrRemove == "add") {
                           var match = $filter('filter')(col.searchForm.search_custom_fields__kv_any, function(value, index) { return value == data.newValue })
                           if(match.length == 0){
@@ -357,7 +356,6 @@ angular.module('ngChemApp')
                   if(newValue !== oldValue){
                     //broadcast the newValue
                     var broadcastObj = scope.cbh.createCustomFieldTransport(newValue, oldValue, "obj");
-                    console.log("from table", broadcastObj)
                     $rootScope.$broadcast('custom-field-from-table', broadcastObj);
                   }
                 }, true);
