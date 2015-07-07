@@ -12,6 +12,10 @@ li a svg.svg {
   font-size:0.75em;
 
 }
+.noindent {
+ padding-left: 1.2em; 
+
+}
 .relative {
   position:relative;
 }

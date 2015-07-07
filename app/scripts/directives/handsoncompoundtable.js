@@ -80,7 +80,7 @@ angular.module('ngChemApp')
                   var isNewCompoundsInterface = false;
                   if(angular.isDefined(scope.uncuratedHeaders)){
                     isNewCompoundsInterface = true;
-                    if(scope.cbh.file_extension=="xlsx"){
+                    if(scope.cbh.fileextension=="xlsx"){
                       //SMiles option only for excel files
                         jsonSchemaColDefs = [{"title": "SMILES for chemical structures", "type": "chemical"}];
 
@@ -183,12 +183,9 @@ angular.module('ngChemApp')
                       {noSort:true, knownBy: "Structure",data: "properties.imageSrc", renderer: "coverRenderer", readOnly: true,  className: "htCenter htMiddle "} ,
 
                       { sortOrder : "none", knownBy: "Row",data: "id",  readOnly: true,  className: "htCenter htMiddle "} ,
+                      { noSort:true, readOnly:true, knownBy: "Info", data:"originalSmiles", renderer: "infoRenderer"},
                       { sortOrder : "none",knownBy: "Action",data: "properties.action", type:"dropdown", source: ["New Batch","Ignore"], className: "htCenter htMiddle "} ,
-                      // {sortOrder : "none", warningsFilter : true, knownBy:"Without Structure", data: "warnings.noStructure", renderer:"bulletRenderer", readonly:true},
-                      // {sortOrder : "none", warningsFilter : true, knownBy:"Can't Process", data: "warnings.parseError", renderer:"bulletRenderer", readonly:true},
-                      // {sortOrder : "none",warningsFilter : true, knownBy:"New to ChemReg", data: "warnings.new", renderer:"bulletRenderer", readonly:true},
-                      // {sortOrder : "none",warningsFilter : true, knownBy:"Overlap", data: "warnings.overlap", renderer:"bulletRenderer", readonly:true},
-                      // {sortOrder : "none", warningsFilter : true, knownBy:"Duplicated", data: "warnings.duplicate", renderer:"bulletRenderer", readonly:true},
+                     
                       {sortOrder : "none", knownBy:"Inchi Key", data: "standardInchiKey",  readonly:true, renderer: "linkRenderer"}
                     ].concat(uncuratedColumns);
                 }else{
@@ -389,7 +386,7 @@ angular.module('ngChemApp')
         "excluded" : "=",
         "warningsFilter" : "=",
         "searchformSchema": "=",
-        "searchForm": "="
+        "searchForm": "=",
       }
     };
   }]);

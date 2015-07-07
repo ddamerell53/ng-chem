@@ -106,7 +106,7 @@ app.controller('DemoCtrl', ['$scope', '$rootScope', '$state', 'ChEMBLFactory', '
             $scope.custom_field_mapping = {}; //
             $scope.warningNumber = 0; //
             $scope.uploaded_file_name = ""; //
-            $scope.file_extension = "";
+            $scope.fileextension = "";
             $scope.filesInProcessing = false;
 
             $scope.struccol_options = [{
@@ -273,7 +273,7 @@ app.controller('DemoCtrl', ['$scope', '$rootScope', '$state', 'ChEMBLFactory', '
         $scope.assignFileId = function(id, ext, file) {
             $scope.startAgain();
             $scope.uploaded_file_name = id;
-            $scope.file_extension = ext;
+            $scope.fileextension = ext;
             $scope.headers_not_retrieved = false;
             $timeout($scope.parseHeaders, 100);
         }
@@ -291,7 +291,7 @@ app.controller('DemoCtrl', ['$scope', '$rootScope', '$state', 'ChEMBLFactory', '
         $scope.mapFilePage = function() {
             $scope.setDragModels();
 
-            if ($scope.file_extension == "cdx" || $scope.file_extension == "cdxml" || $scope.file_extension == "" || $scope.dragmodels.lists.headers.length == 0) {
+            if ($scope.fileextension == "cdx" || $scope.fileextension == "cdxml" || $scope.fileextension == "" || $scope.dragmodels.lists.headers.length == 0) {
                 $state.go("cbh.projects.project.demo.map.multiple", {
                     'multiple_batch_id': $scope.validatedData.currentBatch
                 });
@@ -313,7 +313,7 @@ app.controller('DemoCtrl', ['$scope', '$rootScope', '$state', 'ChEMBLFactory', '
 
         }
         $scope.isFileExcel = function() {
-            return ($scope.file_extension == 'xls' || $scope.file_extension == 'xlsx');
+            return ($scope.fileextension == 'xls' || $scope.fileextension == 'xlsx');
         }
 
         $scope.parseInput = function() {
@@ -565,7 +565,7 @@ app.controller('DemoCtrl', ['$scope', '$rootScope', '$state', 'ChEMBLFactory', '
             //service backend detects file type
             //returns object which is populated into the list for map page
             $scope.filesInProcessing = true;
-            if ($scope.file_extension == "cdx" || $scope.file_extension == "cdxml") {
+            if ($scope.fileextension == "cdx" || $scope.fileextension == "cdxml") {
                 $scope.processFiles();
             } else {
                 $scope.dragmodels.lists.headers = [];
