@@ -323,48 +323,43 @@ angular.module('ngChemApp')
                 var watchString = "columns[" + index + "].searchformSchema.schema.properties.search_custom_fields__kv_any.items";
                 //retrieve the current search form to apply custom field filters from URL
                 //we have already cloned the search form elements to build the models for the initial load.
-                  
+                //this needs to be at an overall level
+                 //look up the correct column's knownBy
+                 //then do the reverse of the custom-field-to-table
+                 scope.$on('custom-field-to-table', function(event, data) {
+                      if(col.knownBy == data.newValue.split("|")[0]) {
+                        if(data.addOrRemove == "add") {
+                          var match = $filter('filter')(col.searchForm.search_custom_fields__kv_any, function(value, index) { return value == data.newValue })
+                          if(match.length == 0){
+                            col.searchForm.search_custom_fields__kv_any.push(data.newValue);
+                            col.searchformSchema.schema.properties.search_custom_fields__kv_any.items = col.searchForm.search_custom_fields__kv_any.map(function(i){return {value : i, label : labelifyCustomField(i)}});
+                          }
+                        }
+                        else if(data.addOrRemove == "remove"){
+                          //becuase there are watches on both the schemas, we need to ensure that on the return journey, no more items are removed.
+                          var diffs = $filter('filter')(col.searchForm.search_custom_fields__kv_any, function(value, index) { return value == data.newValue })
+                          if(diffs.length > 0){
+                            col.searchForm.search_custom_fields__kv_any.splice(col.searchForm.search_custom_fields__kv_any.indexOf(data.newValue), 1);
+                            col.searchformSchema.schema.properties.search_custom_fields__kv_any.items = col.searchForm.search_custom_fields__kv_any.map(function(i){return {value : i, label : labelifyCustomField(i)}});
+                          }
+                        }
+                        
+
+                      }
+                      /*$scope.searchForm.search_custom_fields__kv_any = data.newValue;
+                      $scope.searchFormSchema.schema.properties.search_custom_fields__kv_any.items = $scope.searchForm.search_custom_fields__kv_any.map(function(i){return {value : i, label : i}});
+                      $scope.$broadcast("schemaFormRedraw");*/
+
+                  });  
                 
                 scope.$watch(watchString, function(newValue, oldValue){
                   if(newValue !== oldValue){
                     //broadcast the newValue
-                    var addOrRemove = ""
-                    
-                    var valToSend;
-                    var strippedValues = []
-                    //need to strip out angular $$ variables to enable array comparison
-                    angular.forEach(newValue, function(item){
-                      item = angular.fromJson(angular.toJson(item));
-                      strippedValues.push(item);
-                    })
-                    console.log("newValue is now", strippedValues)
-
-                    //work out the array difference so we know which value to add to (or remove from) the search form
-                    if(newValue.length > oldValue.length) {
-                      addOrRemove = "add"
-                      //work out which values are in the new value but no the old value
-                      var valToSend = _.filter(strippedValues, function(obj){ return !_.findWhere(oldValue, obj); });
-                    }
-                    else if (oldValue.length > newValue.length){
-                      addOrRemove = "remove";
-                      //work out which values are in the old value but no the new value
-                      var valToSend = _.filter(oldValue, function(obj){ return !_.findWhere(strippedValues, obj); });
-                    }
-
-                    $rootScope.$broadcast('custom-field-from-table',{'newValue': valToSend[0], 'addOrRemove': addOrRemove});
+                    var broadcastObj = scope.cbh.createCustomFieldTransport(newValue, oldValue, "obj");
+                    $rootScope.$broadcast('custom-field-from-table', broadcastObj);
                   }
                 }, true);
 
-                //this needs to be at an overall level
-                //look up the correct column's knownBy
-                //then do the reverse of the custom-field-to-table
-                /*scope.$on('custom-field-from-table', function(event, data) {
-                    console.log("CUSTOM FILTER KLAXON",data.newValue);
-                    $scope.searchForm.search_custom_fields__kv_any = data.newValue;
-                    $scope.searchFormSchema.schema.properties.search_custom_fields__kv_any.items = $scope.searchForm.search_custom_fields__kv_any.map(function(i){return {value : i, label : i}});
-                    $scope.$broadcast("schemaFormRedraw");
-
-                });*/
                 //scope.$emit('schemaFormRedraw');
                 
               })
@@ -397,7 +392,6 @@ angular.module('ngChemApp')
               }, true);
 
                             // original by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
-
 
              
               

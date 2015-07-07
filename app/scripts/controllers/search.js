@@ -38,14 +38,14 @@ angular.module('ngChemApp')
     $scope.$watch('searchForm.search_custom_fields__kv_any', function(newValue, oldValue){
                   if(newValue !== oldValue){
                     //broadcast the newValue
-                    $rootScope.$broadcast('custom-field-to-table',{'newValue': newValue});
+                    var broadcastObj = $scope.cbh.createCustomFieldTransport(newValue, oldValue, "string");
+                    $rootScope.$broadcast('custom-field-to-table', broadcastObj);
                   }
                 }, true);
 
     $scope.cancel = function(){
         //$location.url('/search?limit=&offset=');
         //$scope.cbh.searchPage();
-        console.log("cancel is being called");
         $scope.searchForm = {};
         $state.transitionTo('cbh.search', {location: true, inherit:false, relative:null, notify:true});
     }
@@ -58,18 +58,27 @@ angular.module('ngChemApp')
     $rootScope.projectKey = "Projects";
 
     $scope.$on('custom-field-from-table', function(event, data) {
-        //work out whether this is being added or removed
-        console.log("CUSTOM FILTER KLAXON",data);
         
         if(data.addOrRemove == "add") {
-            $scope.searchForm.search_custom_fields__kv_any.push(data.newValue.value);
+            //is it already there? If so, don't re-add - no dupes allowed
+            var match = $filter('filter')($scope.searchForm.search_custom_fields__kv_any, function(value, index) { return value == data.newValue.value })
+            if(match.length == 0){
+                $scope.searchForm.search_custom_fields__kv_any.push(data.newValue.value);
+                $scope.searchFormSchema.schema.properties.search_custom_fields__kv_any.items = $scope.searchForm.search_custom_fields__kv_any.map(function(i){return {value : i, label : i}});
+                $scope.$broadcast("schemaFormRedraw"); 
+            }
+            
         }
         else if(data.addOrRemove == "remove"){
-            $scope.searchForm.search_custom_fields__kv_any.splice($scope.searchForm.search_custom_fields__kv_any.indexOf(data.newValue.value), 1);
+            var diffs = $filter('filter')($scope.searchForm.search_custom_fields__kv_any, function(value, index) { return value == data.newValue.value })
+            if(diffs.length > 0){
+                $scope.searchForm.search_custom_fields__kv_any.splice($scope.searchForm.search_custom_fields__kv_any.indexOf(data.newValue.value), 1);
+                $scope.searchFormSchema.schema.properties.search_custom_fields__kv_any.items = $scope.searchForm.search_custom_fields__kv_any.map(function(i){return {value : i, label : i}});
+                $scope.$broadcast("schemaFormRedraw");
+            }
+            
         }
-        //$scope.searchForm.search_custom_fields__kv_any = data.newValue;
-        $scope.searchFormSchema.schema.properties.search_custom_fields__kv_any.items = $scope.searchForm.search_custom_fields__kv_any.map(function(i){return {value : i, label : i}});
-        $scope.$broadcast("schemaFormRedraw");
+        
 
     });
 
