@@ -128,24 +128,11 @@ angular.module('ngChemApp')
             $scope.initialise();
         }
 
-        $scope.undoDataMapping = function(){
-            var newParams = { projectKey: $stateParams.projectKey, mb_id: $scope.undoDataMappingId };
-            if($scope.datasets[$scope.current_dataset_id].config.multipleBatch){
-                CBHCompoundBatch.delete_index($scope.datasets[$scope.current_dataset_id].config);
-            }
-            $state.transitionTo($state.current.name, 
-                                        newParams,
-                                        { location: true, 
-                                            inherit: false, 
-                                            relative: $state.$current, 
-                                            notify: true });
-        }
-
+ 
         $scope.cbh.setMappedFieldInController = function(newFieldName, unCuratedFieldName){
             if(newFieldName == "SMILES for chemical structures"){
 
                 $scope.datasets[$scope.current_dataset_id].config.struc_col = unCuratedFieldName;
-                $scope.undoDataMappingId = angular.copy($scope.datasets[$scope.current_dataset_id].config.multipleBatch);
                 $scope.createMultiBatch();
             }else{
                 
@@ -485,8 +472,8 @@ angular.module('ngChemApp')
                 field = $scope.warningsFilter.split("|")[0];
                 filterBy = $scope.warningsFilter.split("|")[1];
             }
-            if($scope.warningsFilter == "warnings.withStructure"){
-;                filter.bool.must_not.push({"term": {"warnings.withoutStructure": "true"}});
+            if($scope.warningsFilter == "warnings.withstructure"){
+;                filter.bool.must_not.push({"term": {"warnings.withoutstructure": "true"}});
                 filter.bool.must_not.push({"term": {"warnings.parseError": "true"}});
             }else{
                 var term = {"term": {}};
