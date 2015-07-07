@@ -109,7 +109,7 @@
                                     <ul class="dropdown-menu wide-dropdown"  role="menu" aria-labelledby="userBtn">
                                         <li ng-if="col.copyTo" role="presentation">
                                                 
-                                                <a  class="" ng-click="$event.stopPropagation(); cbh.setMappedFieldInDirective('',col.knownBy);"><strong class="nexa">
+                                                <a  class="" ng-click="$event.stopPropagation(); cbh.toggleMappedFieldInDirective('',col.knownBy);"><strong class="nexa">
                                                 <span class="glyphicon glyphicon-remove"></span>
                                                 &nbsp;Reset Mapping on {{col.knownBy}}</strong>
                                                 
@@ -118,7 +118,7 @@
                                             </li>
                                         <li ng-repeat="opt in col.mappingOptions" role="presentation">
                                                 
-                                                <a class="relative" ng-if="opt.uiClass" class="" ng-click="$event.stopPropagation(); cbh.setMappedFieldInDirective($index,col.knownBy);"><strong class="nexa">
+                                                <a class="relative" ng-if="opt.uiClass" class="" ng-click="$event.stopPropagation(); cbh.toggleMappedFieldInDirective($index,col.knownBy);"><strong class="nexa">
                                                 <span ng-bind-html="opt.icon"></span>
                                                 &nbsp;{{opt.title}}</strong>
                                                 <span ng-if="opt.uiClass" class="glyphicon  rightglyph" ng-class="opt.uiClass"></span>
