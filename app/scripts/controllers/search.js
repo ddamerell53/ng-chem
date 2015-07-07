@@ -23,8 +23,8 @@ angular.module('ngChemApp')
     $scope.searchFormSchema.form[0].options.async.call = $scope.refresh;
     //need to repeat this for the custom field lookup
     
-    var custFieldFormItem = $filter('filter')($scope.searchFormSchema.form, {key:'search_custom_fields__kv_any'}, true);
-    custFieldFormItem[0].options.async.call = $scope.refreshCustFields;
+    $scope.custFieldFormItem = $filter('filter')($scope.searchFormSchema.form, {key:'search_custom_fields__kv_any'}, true);
+    $scope.custFieldFormItem[0].options.async.call = $scope.refreshCustFields;
     $scope.projectFrom = $stateParams.projectFrom;
     
     if($scope.searchForm.related_molregno__chembl__chembl_id__in) {
@@ -58,11 +58,16 @@ angular.module('ngChemApp')
     $rootScope.projectKey = "Projects";
 
     $scope.$on('custom-field-from-table', function(event, data) {
+        //work out whether this is being added or removed
         console.log("CUSTOM FILTER KLAXON",data.newValue);
         $scope.searchForm.search_custom_fields__kv_any = data.newValue;
         $scope.searchFormSchema.schema.properties.search_custom_fields__kv_any.items = $scope.searchForm.search_custom_fields__kv_any.map(function(i){return {value : i, label : i}});
         $scope.$broadcast("schemaFormRedraw");
 
     });
+
+    $scope.cbh.repaintUiselect = function(){
+        $rootScope.$broadcast('schemaFormRedraw');
+      }
 
   }]);

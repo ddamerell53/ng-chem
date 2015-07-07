@@ -45,15 +45,24 @@
                                         </a>
 
                                         </li>
-                                        
-                                        
+
                                         <tabset  justified="true" >
                                            <tab ng-click="$event.stopPropagation();" heading="Filter">
                                                 
                                             
                                             <li role="presentation">
                                                 <a class=""  ng-click="$event.stopPropagation();">
-                                                    <form><div class="form-group" sf-schema="col.searchformSchema.cf_schema" sf-form="col.searchformSchema.cf_form" sf-model="col.searchForm"></div></form>
+                                                    <form><!-- <div class="form-group" sf-schema="col.searchformSchema.cf_schema" sf-form="col.searchformSchema.cf_form" sf-model="col.searchForm"></div -->
+                                                        <div class="form-group" >
+                                                            <ui-select multiple ng-model="col.searchForm.search_custom_fields__kv_any" theme="bootstrap" on-select="col.searchForm.search_custom_fields__kv_any.push($item.value)" on-remove="col.searchForm.search_custom_fields__kv_any.splice(col.searchForm.search_custom_fields__kv_any.indexOf($item.value), 1)" class="col.searchformSchema.cf_form[0].htmlClass">
+                                                              <ui-select-match placeholder="Choose...">{{$item}}</ui-select-match>
+                                                              <ui-select-choices repeat="item in typeahead | filter: $select.search" refresh-delay="col.searchformSchema.cf_form[0].options.refreshDelay" refresh="refreshSingleCustField($select.search, col.knownBy)">
+                                                                <div ng-bind-html="item | highlight: $select.search"></div>
+                                                                
+                                                            </ui-select-choices>
+                                                            </ui-select>
+                                                        </div>
+                                                    </form>
                                                 </a>
                                             </li>
                                             <li role="presentation" class="spacer">

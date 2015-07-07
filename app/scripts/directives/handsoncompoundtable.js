@@ -7,17 +7,28 @@
  * # HandsOnCompoundTable
  */
 angular.module('ngChemApp')
-  .directive('handsoncompoundtable',["$timeout","$compile","renderers","$rootScope", function ($timeout,$compile, renderers, $rootScope) {
+  .directive('handsoncompoundtable',["$timeout","$compile","renderers","$rootScope","$filter", function ($timeout,$compile, renderers, $rootScope, $filter) {
     return {
       template: '<div  ></div>',
       restrict: 'E',
+      transclude: true,
       link: function preLink(scope, element, attrs) {
               var redraw;
               var jsonSchemaColDefs; 
-              console.log(scope.searchformSchema);
+              //console.log(scope.searchformSchema);
+              function labelifyCustomField(field) {
+                //for the column uiselect filters, we don't need the column name
+                var parts = field.split("|");
+                return parts[1];
+              }
+
+              function checkCustomField(startsWith, fieldToCheck) {
+                var fieldSplit = fieldToCheck.split("|");
+                return startsWith == fieldSplit[0];
+              }
 
               scope.cbh.setMappedFieldInDirective = function(newFieldId, unCuratedFieldName){
-                console.log(newFieldId);
+                //console.log(newFieldId);
                 if(newFieldId === ""){
                   console.log(newFieldId);
                   angular.forEach(scope.uncuratedHeaders,
@@ -266,15 +277,7 @@ angular.module('ngChemApp')
                   if(!c.noSort){
                     c.sortOrder = "none";
                   }
-                  c.searchForm = angular.copy(scope.searchForm);
-                  c.searchformSchema = angular.copy(scope.searchformSchema)
-                  if(angular.isDefined(c.searchformSchema)){
-                    c.searchformSchema.cf_form[0].options['custom_field'] = c.knownBy;
-                     if(c.searchForm.search_custom_fields__kv_any) {
-                    //loop through the items and only use those for this column
-                        c.searchformSchema.schema.properties.search_custom_fields__kv_any.items = c.searchForm.search_custom_fields__kv_any.map(function(i){return {value : i, label : i}});
-                    }
-                  }
+                  
                  
                   angular.forEach(scope.sorts, function(item){
                     if(angular.isDefined(item[c.data])){
@@ -284,6 +287,20 @@ angular.module('ngChemApp')
                     };
 
                   });
+
+                  c.searchForm = angular.copy(scope.searchForm);
+                  c.searchformSchema = angular.copy(scope.searchformSchema)
+                  if(angular.isDefined(c.searchformSchema)){
+                    c.searchformSchema.cf_form[0].options['custom_field'] = c.knownBy;
+                     if(c.searchForm.search_custom_fields__kv_any) {
+                      //loop through the items and only use those for this column
+                      angular.forEach(c.searchForm.search_custom_fields__kv_any, function(field, index){
+                        c.searchForm.search_custom_fields__kv_any = $filter('filter')(c.searchForm.search_custom_fields__kv_any, function(value, index) { return value.split("|")[0] == c.knownBy })
+                        c.searchformSchema.schema.properties.search_custom_fields__kv_any.items = c.searchForm.search_custom_fields__kv_any.map(function(i){return {value : i, label : i}});
+                      });
+                        
+                    }
+                  }
                   
               });
               
@@ -294,28 +311,17 @@ angular.module('ngChemApp')
                 var watchString = "columns[" + index + "].searchForm.search_custom_fields__kv_any";
                 //retrieve the current search form to apply custom field filters from URL
                 //we have already cloned the search form elements to build the models for the initial load.
-                if (col.searchForm.search_custom_fields__kv_any) {
-                      console.log("custom search field found", col.searchForm.search_custom_fields__kv_any);
-                      angular.forEach(col.searchForm.search_custom_fields__kv_any, function(field){
-                        var colname = field.split('|');
-                        if (colname == col.knownBy){
-                          col.searchformSchema.schema.properties.search_custom_fields__kv_any.items = col.searchForm.search_custom_fields__kv_any.map(function(i){return {value : i, label : i}});
-                          scope.$emit('schemaFormRedraw');
-                        }
-                      });
-                      /*scope.$apply(function(){
-                        col.searchformSchema.schema.properties.search_custom_fields__kv_any.items = col.searchForm.search_custom_fields__kv_any.map(function(i){return {value : i, label : i}});
-                        scope.$broadcast('schemaFormRedraw');
-                      });*/
-                      
-                }
+                  
                 
                 scope.$watch(watchString, function(newValue, oldValue){
                   if(newValue !== oldValue){
                     //broadcast the newValue
-                    $rootScope.$broadcast('custom-field-from-table',{'newValue': newValue});
+                    var addOrRemove = ""
+
+                    $rootScope.$broadcast('custom-field-from-table',{'newValue': newValue, 'addOrRemove': addOrRemove});
                   }
                 }, true);
+
                 //this needs to be at an overall level
                 //look up the correct column's knownBy
                 //then do the reverse of the custom-field-to-table
@@ -326,6 +332,8 @@ angular.module('ngChemApp')
                     $scope.$broadcast("schemaFormRedraw");
 
                 });*/
+                //scope.$emit('schemaFormRedraw');
+                
               })
               $("#myid").doubleScroll();
               var header = document.createElement('DIV');
@@ -342,7 +350,9 @@ angular.module('ngChemApp')
               if(scrollTop){
                 $(window).scrollTop(scrollTop);
               }
-           
+              
+              //scope.cbh.repaintUiselect();
+
             });
            
             scope.hot1 = hot1;
@@ -350,6 +360,7 @@ angular.module('ngChemApp')
               }
               scope.$watch("redraw", function(newValue, oldValue){
                 redraw();
+
               }, true);
 
                             // original by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)

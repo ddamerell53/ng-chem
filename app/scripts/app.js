@@ -69,6 +69,7 @@ angular.module('ngChemApp')
                     }
                   });
                 };
+              
 
               cbh.openSingleMol = function(mol, isNewCompoundsInterface) {
                   $scope.modalInstance = $modal.open({
