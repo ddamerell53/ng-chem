@@ -223,7 +223,7 @@ angular.module('ngChemApp')
         }
 
         $scope.cbh.renderFilterLink = renderers.renderFilterLink;
-        $scope.cbh.file_extension = "";
+        $scope.cbh.fileextension = "";
         $scope.cbh.addSort =  function(sortColumn, order){
                 var index=0
                 var toPop = [];
@@ -261,12 +261,12 @@ angular.module('ngChemApp')
         $scope.assignFile = function(id, ext, file) {
 
             $scope.current_dataset_id = id;
-            $scope.cbh.file_extension = ext;
+            $scope.cbh.fileextension = ext;
             var conf =  {
                     "file_name": id,
                     "multiplebatch": null,
                     "type": "file",
-                    "file_extension" : ext,
+                    "fileextension" : ext,
                     "projectKey" : projectKey,
                     "struccol" : "",
                     "state" : "validate"};
@@ -300,6 +300,7 @@ angular.module('ngChemApp')
                         $scope.datasets[$scope.current_dataset_id].config = data.data;
                         $scope.dataReady = true;
                         $scope.compoundBatches.uncuratedHeaders = data.data.headers;
+                       
                         CBHCompoundBatch.getImages( data.data.objects, 75, "imageSrc"); 
                         CBHCompoundBatch.getImages( data.data.objects, 400, "bigImageSrc", $scope.imageCallback); 
 
@@ -498,11 +499,11 @@ angular.module('ngChemApp')
             offset, 
             filter, 
             $stateParams.sorts).then(function(result){
-                $scope.cbh.file_extension = result.data.fileExtension;
+                $scope.cbh.fileextension = result.data.fileExtension;
                 $scope.totalCompoundBatches = result.data.meta.totalCount;
                 $scope.compoundBatches.data =result.data.objects;
                 $scope.compoundBatches.uncuratedHeaders = result.data.headers;
-
+                
                 $scope.current_dataset_id = $stateParams.mb_id;
                 $scope.datasets[$scope.current_dataset_id] = {
                     "config": result.data,

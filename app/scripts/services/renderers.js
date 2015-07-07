@@ -42,6 +42,24 @@ angular.module('ngChemApp')
         
         
         var renderers = {
+              infoRenderer : function(instance, td, row, col, prop, value, cellProperties) {
+                var mol = instance.getSourceDataAtRow(row);
+                var html = "<ul class='noindent'>";
+                 var errors = [["parseError", "<li ><span class='alert-danger'>Data not processable</span></li>"],
+                 ["smilesParseError", "<li ><span class='alert-danger'>SMILES not processable: </span><br><small class='blue'>SMILESHERE</small></li>"],
+                    ["duplicate", "<li ><span class='alert-warning'>Duplicated record</span></li>"],
+                    ["new", "<li ><span class='alert-success'>New</span></li>"],
+                    ["overlap", "<li ><span class='alert-info'>Overlap</span></li>"]];
+                  angular.forEach(errors, function(e){
+                    console.log(mol);
+                    if (angular.isDefined(mol.warnings[e[0]])){
+                      html += e[1];
+                    }
+                  });
+                  html += "</ul>"
+                  td.innerHTML = html.replace("SMILESHERE", mol.originalSmiles);
+                return td;
+              },
 
 
               
