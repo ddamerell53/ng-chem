@@ -11,8 +11,8 @@
 
                         </div>
                         <small><span style="margin-right:20px" ng-show="(!angular.isDefined(col.mappingOptions))" class="">&nbsp;</span></small>
-                        <small><span style="margin-right:20px" ng-show="(col.mappingOptions.length > 0 &amp;&amp; !col.copyTo)" class="pull-right alert-danger">Unmapped</span></small>
-                        <small><span  style=" margin-right:20px" ng-show="(col.copyTo)" class="pull-right alert-success"><span class="glyphicon glyphicon-arrow-right"></span>   {{col.copyTo}} </span></small>
+                        <small><span style="margin-right:20px" ng-show="(col.mappingOptions.length > 0 &amp;&amp; !col.copyTo)" class="pull-right alert-danger">Unmapped <info-box freetext="Any unmapped values will be written anyway.  User should contact administrator if they want the field to be available to the whole project."></info-box></span></small>
+                        <small><span  style=" margin-right:20px" ng-show="(col.copyTo)" class="pull-right alert-success"><span class="glyphicon glyphicon-arrow-right"></span>   {{col.copyTo}} <info-box freetext="Mapped values will be written to the specified field against the project.  User should contact administrator if they want extra project fields."></info-box></span></small>
                         </div>
                         <div  >
                             <div class="pull-left">
