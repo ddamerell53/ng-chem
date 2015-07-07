@@ -27,10 +27,9 @@ angular.module('ngChemApp')
                 return startsWith == fieldSplit[0];
               }
 
-              scope.cbh.setMappedFieldInDirective = function(newFieldId, unCuratedFieldName){
+              scope.cbh.toggleMappedFieldInDirective = function(newFieldId, unCuratedFieldName){
                 //console.log(newFieldId);
                 if(newFieldId === ""){
-                  console.log(newFieldId);
                   angular.forEach(scope.uncuratedHeaders,
                   function(hdr){
                     if(hdr.name == unCuratedFieldName){
@@ -44,20 +43,27 @@ angular.module('ngChemApp')
                   angular.forEach(scope.uncuratedHeaders,
                     function(hdr){
                       if(hdr.name == unCuratedFieldName){
-                          hdr.copyTo = newFieldName;
-                          var fieldJsonPatchOperations = [];
-
-                          if(newField.type=="array"){
-                            fieldJsonPatchOperations.push({"op": "add", "path": "/custom_fields/" + newFieldName, "value" : []});
-                            fieldJsonPatchOperations.push({"op": "move", "path": "/custom_fields/" + newFieldName + "/0" , "from" : "/uncurated_fields/" + unCuratedFieldName });
+                          if (hdr.copyTo == newFieldName){
+                            //Already set therefore reset
+                            hdr.copyTo = "";
+                            delete hdr.operations;
                           }else{
-                            var operation = {"op": "move", "path": "/custom_fields/" + newFieldName  , "from" : "/uncurated_fields/" + unCuratedFieldName };
-                            fieldJsonPatchOperations.push(operation);
-                            if(newField.format=="date"){
-                              fieldJsonPatchOperations.push({"op": "convertdate", "path": "/custom_fields/" + newFieldName});
+                            hdr.copyTo = newFieldName;
+                            var fieldJsonPatchOperations = [];
+
+                            if(newField.type=="array"){
+                              fieldJsonPatchOperations.push({"op": "add", "path": "/custom_fields/" + newFieldName, "value" : []});
+                              fieldJsonPatchOperations.push({"op": "move", "path": "/custom_fields/" + newFieldName + "/0" , "from" : "/uncurated_fields/" + unCuratedFieldName });
+                            }else{
+                              var operation = {"op": "move", "path": "/custom_fields/" + newFieldName  , "from" : "/uncurated_fields/" + unCuratedFieldName };
+                              fieldJsonPatchOperations.push(operation);
+                              if(newField.format=="date"){
+                                fieldJsonPatchOperations.push({"op": "convertdate", "path": "/custom_fields/" + newFieldName});
+                              }
                             }
-                          }
                           hdr.operations = fieldJsonPatchOperations;
+                          
+                          }
                           
                       }
                   });
@@ -67,6 +73,7 @@ angular.module('ngChemApp')
                 redraw();
                   
                 scope.cbh.setMappedFieldInController(newFieldName, unCuratedFieldName);
+
               }//setMappedFieldInDirective
               scope.typeahead = []
               scope.refreshSingleCustField = function(url, searchTerm, knownBy){
@@ -74,6 +81,7 @@ angular.module('ngChemApp')
                       scope.typeahead = response.data;
                   });
               }
+
 
               redraw = function(){
                   jsonSchemaColDefs = [];
@@ -239,6 +247,7 @@ angular.module('ngChemApp')
 
             var rend = renderers.getRenderers(scope, isNewCompoundsInterface);
          if(angular.isDefined(scope.elem)){
+            //if there has already been a scroll on the compound table then we fix it in place
             var scroll = scope.elem.scrollLeft();
             var scrollTop = $(window).scrollTop();
 
@@ -276,7 +285,7 @@ angular.module('ngChemApp')
               // }
               elem.wrap("<div id='myid' class='handsontable'></div>");
               scope.width = 0;
-              // s.prependTo($(elem[0]));
+
               angular.forEach(hotObj.columns, function(c, index){
                   c.myColWidth = hot1.getColWidth(index); 
                   scope.width += c.myColWidth;  
@@ -370,7 +379,7 @@ angular.module('ngChemApp')
               $("#myid").prepend(compiled);              
 
               $('.btn-toggle').dropdown();
-              scope.elem = elem;
+              scope.elem = $("#myid");
               if(scroll){
                 scope.elem.scrollLeft(scroll);
               }

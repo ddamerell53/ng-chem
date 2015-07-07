@@ -306,8 +306,8 @@ angular.module('ngChemApp')
         return $http.post( urlConfig.cbh_compound_batches.list_endpoint + "/multi_batch_custom_fields/", config );
     }
 
-    CBHCompoundBatch.validateFiles = function(projectKey,file_name, struc_col) {
-        var promise = $http.post( urlConfig.cbh_compound_batches.list_endpoint + "/validate_files/" , {"projectKey": projectKey, "file_name":file_name, "struc_col":struc_col}).then(
+    CBHCompoundBatch.validateFiles = function(projectKey,file_name, struccol) {
+        var promise = $http.post( urlConfig.cbh_compound_batches.list_endpoint + "/validate_files/" , {"projectKey": projectKey, "file_name":file_name, "struccol":struccol}).then(
             function(data){
                 return data.data;
             }

@@ -92,7 +92,7 @@ app.controller('DemoCtrl', ['$scope', '$rootScope', '$state', 'ChEMBLFactory', '
             $scope.justSaved = false;
             $scope.processingMultiBatch = false;
             $scope.processingSingle = false;
-            $scope.struc_col_selected = {
+            $scope.struccol_selected = {
                 name: "",
                 value: "Please select"
             };
@@ -109,13 +109,13 @@ app.controller('DemoCtrl', ['$scope', '$rootScope', '$state', 'ChEMBLFactory', '
             $scope.file_extension = "";
             $scope.filesInProcessing = false;
 
-            $scope.struc_col_options = [{
+            $scope.struccol_options = [{
                 name: "",
                 value: "No structure"
             },
 
             ]; //
-            $scope.struc_col_str = ""; //
+            $scope.struccol_str = ""; //
             $scope.validated = {
                 "warnings": {
                     "inorganicCount": "0",
@@ -280,8 +280,8 @@ app.controller('DemoCtrl', ['$scope', '$rootScope', '$state', 'ChEMBLFactory', '
 
         $scope.setDragModels = function(){
             $scope.dragmodels.lists.headers = [];
-                angular.copy($scope.struc_col_options).slice(1).map(function(d){
-                    if($scope.struc_col_str === d.name){
+                angular.copy($scope.struccol_options).slice(1).map(function(d){
+                    if($scope.struccol_str === d.name){
                         $scope.binmodels.lists.ignored.push(d);
                     }else{
                         $scope.dragmodels.lists.headers.push(d);
@@ -551,11 +551,11 @@ app.controller('DemoCtrl', ['$scope', '$rootScope', '$state', 'ChEMBLFactory', '
         $scope.updateStrucCol = function(str) {
             //If it is a real structure column then try to process the file
             if (str != "No structure") {
-                $scope.struc_col_str = str;
+                $scope.struccol_str = str;
                 $scope.processFiles();
                 
             }else{
-                $scope.struc_col_str = "";
+                $scope.struccol_str = "";
                 $scope.cancelFile();
             }
         }
@@ -581,7 +581,7 @@ app.controller('DemoCtrl', ['$scope', '$rootScope', '$state', 'ChEMBLFactory', '
                             // $scope.dragmodels.lists.headers.push({
                             //     label: value
                             // });
-                            $scope.struc_col_options.push({
+                            $scope.struccol_options.push({
                                 name: value,
                                 value: value
                             });
@@ -604,7 +604,7 @@ app.controller('DemoCtrl', ['$scope', '$rootScope', '$state', 'ChEMBLFactory', '
         //so they can be used in the validate methods provided for SMILES/InChi lists
         //this method also needs to pass the field mapping from the map page
         $scope.processFiles = function() {
-            CBHCompoundBatch.validateFiles(projectKey, $scope.uploaded_file_name, $scope.struc_col_str).then(
+            CBHCompoundBatch.validateFiles(projectKey, $scope.uploaded_file_name, $scope.struccol_str).then(
                 function(data) {
                     $scope.validatedData = data;
                     $scope.filesInProcessing = false;
@@ -642,7 +642,7 @@ app.controller('DemoCtrl', ['$scope', '$rootScope', '$state', 'ChEMBLFactory', '
 
         $scope.isStrucColUnspecified = function() {
             //indicates to the "next" button on mapping files page that the structure column has been specified
-            return ($scope.struc_col_str == "");
+            return ($scope.struccol_str == "");
         }
 
 

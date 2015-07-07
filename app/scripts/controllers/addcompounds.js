@@ -71,7 +71,7 @@ angular.module('ngChemApp')
             CBHCompoundBatch.saveMultiBatchMolecules($scope.datasets[$scope.current_dataset_id].config).then(
                     function(data){
                         $state.transitionTo("cbh.search", 
-                                        {multiple_batch_id: $scope.datasets[$scope.current_dataset_id].config.multipleBatch, 
+                                        {multiple_batch_id: $scope.datasets[$scope.current_dataset_id].config.multiplebatch, 
                             projectFrom: projectKey},
                             { location: true, 
                                             inherit: false, 
@@ -87,7 +87,7 @@ angular.module('ngChemApp')
 
         $scope.cbh.saveChangesToTemporaryDataInController = function(changes, sourceOfChange){
 
-            if(changes){
+            if(changes && changes.length > 0){
                 // $scope.currentlyLoading = true;
                  $scope.disableButtons = true;
                     var itemsToChange = changes.map(function(item){
@@ -128,28 +128,20 @@ angular.module('ngChemApp')
             $scope.initialise();
         }
 
-        $scope.undoDataMapping = function(){
-            var newParams = { projectKey: $stateParams.projectKey, mb_id: $scope.undoDataMappingId };
-            if($scope.datasets[$scope.current_dataset_id].config.multipleBatch){
-                CBHCompoundBatch.delete_index($scope.datasets[$scope.current_dataset_id].config);
-            }
-            $state.transitionTo($state.current.name, 
-                                        newParams,
-                                        { location: true, 
-                                            inherit: false, 
-                                            relative: $state.$current, 
-                                            notify: true });
-        }
-
+ 
         $scope.cbh.setMappedFieldInController = function(newFieldName, unCuratedFieldName){
-            if(newFieldName == "SMILES for chemical structures"){
-
-                $scope.datasets[$scope.current_dataset_id].config.struc_col = unCuratedFieldName;
-                $scope.undoDataMappingId = angular.copy($scope.datasets[$scope.current_dataset_id].config.multipleBatch);
+            $scope.datasets[$scope.current_dataset_id].config.headers = $scope.compoundBatches.uncuratedHeaders;
+            if ($scope.datasets[$scope.current_dataset_id].config.struccol == unCuratedFieldName && newFieldName== "SMILES for chemical structures"){
+                //Reset the field name in this case
+                $scope.datasets[$scope.current_dataset_id].config.struccol = "";
                 $scope.createMultiBatch();
-            }else{
+            }
+            else if(newFieldName == "SMILES for chemical structures"){
+                $scope.datasets[$scope.current_dataset_id].config.struccol = unCuratedFieldName;
+                $scope.createMultiBatch();
+            }
+            else{
                 
-                $scope.datasets[$scope.current_dataset_id].config.headers = $scope.compoundBatches.uncuratedHeaders;
                 CBHCompoundBatch.saveBatchCustomFields($scope.datasets[$scope.current_dataset_id].config)
             }
 
@@ -157,7 +149,7 @@ angular.module('ngChemApp')
 
         $scope.cancelFile = function(field) {
             var newParams = { projectKey: $stateParams.projectKey };
-            if($scope.datasets[$scope.current_dataset_id].config.multipleBatch){
+            if($scope.datasets[$scope.current_dataset_id].config.multiplebatch){
                 CBHCompoundBatch.delete_index($scope.datasets[$scope.current_dataset_id].config);
             }
             $scope.setNull();
@@ -272,11 +264,11 @@ angular.module('ngChemApp')
             $scope.cbh.file_extension = ext;
             var conf =  {
                     "file_name": id,
-                    "multipleBatch": null,
+                    "multiplebatch": null,
                     "type": "file",
                     "file_extension" : ext,
                     "projectKey" : projectKey,
-                    "struc_col" : "",
+                    "struccol" : "",
                     "state" : "validate"};
 
             if(["sdf", "xlsx", "cdx", "cdxml"].indexOf(ext) == -1){
@@ -328,13 +320,13 @@ angular.module('ngChemApp')
 
                         //Here we change the URL without changing the state
                          $state.transitionTo ($state.current.name, 
-                                {"mb_id" : $scope.datasets[$scope.current_dataset_id].config.multipleBatch,
+                                {"mb_id" : $scope.datasets[$scope.current_dataset_id].config.multiplebatch,
                                 "projectKey": $stateParams.projectKey}, 
                                 { location: true, 
                                     inherit: false, 
                                     relative: $state.$current, 
                                     notify: false });
-                        $stateParams.mb_id = $scope.datasets[$scope.current_dataset_id].config.multipleBatch;
+                        $stateParams.mb_id = $scope.datasets[$scope.current_dataset_id].config.multiplebatch;
 
                         //returns a multiple batch id and a status
                         //Run a second get request to get a list of compounds
@@ -359,11 +351,11 @@ angular.module('ngChemApp')
         $scope.processSmilesData = function(){
             $scope.current_dataset_id = $scope.inputData.inputstring;
             var conf =   {
-                    "multipleBatch": null,
+                    "multiplebatch": null,
                     "smilesdata" : $scope.inputData.inputstring,
                     "type": "smilesdata",
                     "projectKey" : projectKey,
-                    "struc_col" : "",
+                    "struccol" : "",
                     "state" : "validate"};
              $scope.datasets[$scope.current_dataset_id] = {
                 "config": conf,
@@ -386,7 +378,7 @@ angular.module('ngChemApp')
             }
           if($stateParams.mb_id) {
                 $scope.current_dataset_id = $stateParams.mb_id;
-                $scope.datasets[$scope.current_dataset_id] = {multipleBatch : $scope.current_dataset_id}
+                $scope.datasets[$scope.current_dataset_id] = {multiplebatch : $scope.current_dataset_id}
             }
           if($stateParams.warningsFilter) {
                 $scope.warningsFilter = $stateParams.warningsFilter;
@@ -485,8 +477,8 @@ angular.module('ngChemApp')
                 field = $scope.warningsFilter.split("|")[0];
                 filterBy = $scope.warningsFilter.split("|")[1];
             }
-            if($scope.warningsFilter == "warnings.withStructure"){
-;                filter.bool.must_not.push({"term": {"warnings.withoutStructure": "true"}});
+            if($scope.warningsFilter == "warnings.withstructure"){
+;                filter.bool.must_not.push({"term": {"warnings.withoutstructure": "true"}});
                 filter.bool.must_not.push({"term": {"warnings.parseError": "true"}});
             }else{
                 var term = {"term": {}};
