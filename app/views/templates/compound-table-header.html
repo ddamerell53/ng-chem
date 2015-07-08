@@ -46,10 +46,7 @@
 
                                         </li>
 
-                                        <tabset  justified="true" >
-                                           <tab ng-click="$event.stopPropagation();" heading="Filter">
-                                            
-                                            <li role="presentation">
+                                            <li ng-show="col.searchForm" role="presentation">
                                                 <a class=""  ng-click="$event.stopPropagation();">
                                                     <form><!-- <div class="form-group" sf-schema="col.searchformSchema.cf_schema" sf-form="col.searchformSchema.cf_form" sf-model="col.searchForm"></div -->
                                                         <div class="form-group" >
@@ -74,8 +71,6 @@
                                                 </strong>
                                                 </a>
                                             </li>
-                                           </tab>
-                                            <tab ng-click="$event.stopPropagation();" heading="Exclude">
                                                 <div class="innerdrop">
                                                 <li role="presentation"><!-- <div sf-schema="::searchFormSchema.cf_schema" sf-form="::searchFormSchema.cf_form" sf-model="searchForm"> --></div>
                                                 </li>
@@ -83,15 +78,13 @@
                                             </li>
                                             <li role="presentation">
                                                 
-                                                <a class="" ng-click="$event.stopPropagation();"><strong class="nexa">
+                                                <a class="" ng-click="cbh.excludeFilter(col.data, 'blanks')"><strong class="nexa">
                                                 <span class="glyphicon glyphicon-ban-circle" ng-class=""></span>
-                                                &nbsp;An Item</strong>
+                                                &nbsp;Exclude blanks</strong>
                                                 <span class="glyphicon glyphicon-unchecked pull-right" ng-class=""></span>
                                                 </a>
                                             </li>
                                         </div>
-                                            </tab>
-                                        </tabset>
                                         
         
                         

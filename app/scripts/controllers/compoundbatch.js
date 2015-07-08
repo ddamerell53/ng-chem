@@ -150,6 +150,32 @@ angular.module('ngChemApp')
     $scope.broadcastFilter = function() {
         console.log("broadcastFilter called");
     }
+
+    $scope.cbh.excludeFilter =  function(sortColumn, excludeType){
+
+        //have an exclude array
+        //containing objects that specify the column name and the exclude type (blank, value etc)
+        //console.log("triggering exclude filter", sortColumn, excludeType);
+        var newParams = angular.copy($stateParams);
+        //add the excludes option here
+        //as an object inside filters
+
+        var excludes = [];
+        excludes.push({'sortColumn':sortColumn, 'type': excludeType});
+
+        newParams.page = 1;
+        newParams.excludes = excludes;
+        /*$state.transitionTo($state.current.name, 
+                                newParams,
+                                { location: true, 
+                                    inherit: false, 
+                                    relative: $state.$current, 
+                                    notify: false });*/
+        $stateParams = newParams;
+        //$scope.initialise();
+        console.log("stateparams", $stateParams);
+        getResultsPage(newParams.page)
+    };
     
     
     function getResultsPage(pageNumber) {
@@ -185,6 +211,50 @@ angular.module('ngChemApp')
             
        });        
     }
+
+    $scope.initialise = function(){
+        if($stateParams.viewType) {
+                $scope.listOrGallery.choice = $stateParams.viewType;
+            }
+          if($stateParams.mb_id) {
+                $scope.current_dataset_id = $stateParams.mb_id;
+                $scope.datasets[$scope.current_dataset_id] = {multiplebatch : $scope.current_dataset_id}
+            }
+          if($stateParams.warningsFilter) {
+                $scope.warningsFilter = $stateParams.warningsFilter;
+            }else{
+                $scope.warningsFilter = "";
+
+            }
+            
+            if(angular.isDefined($stateParams.compoundBatchesPerPage)){
+               var filtered = $filter("filter")($scope.itemsPerPage, $stateParams.compoundBatchesPerPage, true);
+               if(filtered[0]) {
+                $scope.pagination.compoundBatchesPerPage = filtered[0]; 
+               }
+               else {
+                $scope.pagination.compoundBatchesPerPage = $scope.itemsPerPage[0];
+               }
+            }
+            else {
+                $scope.pagination.compoundBatchesPerPage = $scope.itemsPerPage[0];
+            }
+            if(angular.isDefined($stateParams.page)){
+               $scope.pagination.current = $stateParams.page;  
+            }
+             if (angular.isDefined($stateParams.sorts)){
+                $scope.compoundBatches.sorts = JSON.parse($stateParams.sorts);
+            }
+
+             if (angular.isDefined($stateParams.mb_id)){
+                getResultsPage($scope.pagination.current);
+            }
+            
+        // getResultsPage($scope.pagination.current);
+
+
+    }   
+
     getResultsPage($scope.pagination.current);
 
 
