@@ -1,6 +1,6 @@
 
-            <div style="width:{{width}}px;">
-                <div class="well"  style="width:{{(col.myColWidth -12)}}px; display:inline-block; margin-bottom:0px; border-radius:0; min-height:104px" ng-repeat="col in columns"> 
+            <div style="width:{{width}}px; border-right: 1px solid #e3e3e3">
+                <div class="well"  style="border-right:0px;border-bottom:0px;display:inline-block; width:{{(($first||$last) ? col.myColWidth -12 : col.myColWidth -11)}}px; display:inline-block; margin-bottom:0px; border-radius:0; min-height:104px" ng-repeat="col in columns"> 
                         <div class="row" >
                             <div class="col-xs-12">
                             <label class="pull-left">{{col.knownBy}}
