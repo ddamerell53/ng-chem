@@ -51,7 +51,6 @@ angular.module('ngChemApp')
                     ["new", "<li ><span class='alert-success'>New</span></li>"],
                     ["overlap", "<li ><span class='alert-info'>Overlap</span></li>"]];
                   angular.forEach(errors, function(e){
-                    console.log(mol);
                     if (angular.isDefined(mol.warnings[e[0]])){
                       html += e[1];
                     }
