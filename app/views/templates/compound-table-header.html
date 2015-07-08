@@ -1,4 +1,3 @@
-
             <div style="width:{{width}}px; border-right: 1px solid #e3e3e3">
                 <div class="well"  style="border-right:0px;border-bottom:0px;display:inline-block; width:{{(($first||$last) ? col.myColWidth -12 : col.myColWidth -11)}}px; display:inline-block; margin-bottom:0px; border-radius:0; min-height:104px" ng-repeat="col in columns"> 
                         <div class="row" >
@@ -12,7 +11,8 @@
                         </div>
                         <small><span style="margin-right:20px" ng-show="(!angular.isDefined(col.mappingOptions))" class="">&nbsp;</span></small>
                         <small><span style="margin-right:20px" ng-show="(col.mappingOptions.length > 0 &amp;&amp; !col.copyTo)" class="pull-right alert-danger">Unmapped <info-box freetext="Any unmapped values will be written anyway.  User should contact administrator if they want the field to be available to the whole project."></info-box></span></small>
-                        <small><span  style=" margin-right:20px" ng-show="(col.copyTo)" class="pull-right alert-success"><span class="glyphicon glyphicon-arrow-right"></span>   {{col.copyTo}} <info-box freetext="Mapped values will be written to the specified field against the project.  User should contact administrator if they want extra project fields."></info-box></span></small>
+                        <small><span  style=" margin-right:20px" ng-show="(col.copyTo)" class="pull-right alert-success">
+                            <span class="glyphicon glyphicon-arrow-right"></span>   {{col.copyTo}} <span ng-show="col.automapped==true">&nbsp;(auto)</span><info-box freetext="Mapped values will be written to the specified field against the project.  User should contact administrator if they want extra project fields."></info-box></span></small>
                         </div>
                         <div  >
                             <div class="pull-left">

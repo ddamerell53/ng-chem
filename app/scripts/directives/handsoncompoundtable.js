@@ -35,6 +35,7 @@ angular.module('ngChemApp')
                     if(hdr.name == unCuratedFieldName){
                       delete hdr.operations;
                       hdr.copyTo = "";
+                      hdr.automapped = false;
                     }
                   });
                 }else{
@@ -47,8 +48,11 @@ angular.module('ngChemApp')
                             //Already set therefore reset
                             hdr.copyTo = "";
                             delete hdr.operations;
+                            hdr.automapped = false;
+
                           }else{
                             hdr.copyTo = newFieldName;
+                            hdr.automapped = false;
                             var fieldJsonPatchOperations = [];
 
                             if(newField.type=="array"){
@@ -139,7 +143,7 @@ angular.module('ngChemApp')
                 if(isNewCompoundsInterface){
                   var uncuratedColumns = scope.uncuratedHeaders.map(function(un, index, array){
                       var disableSel = "";
-                      var copyTo = "";
+                      var copyTo = un.copyTo;
                       var optList = angular.copy(jsonSchemaColDefs).map(function(cName, cNameIndex){
                           var selectedModel = "";
                           var errorName = cName.type;
@@ -184,7 +188,7 @@ angular.module('ngChemApp')
                           }
 
                       });
-                      return {sortOrder : "none", copyTo: copyTo, mappingOptions: optList, knownBy: un.name, data: "uncuratedFields." + un.name, readOnly:true, className: "htCenter htMiddle ", renderer: "linkRenderer"}
+                      return {sortOrder : "none", copyTo: copyTo, mappingOptions: optList, knownBy: un.name, data: "uncuratedFields." + un.name, readOnly:true, className: "htCenter htMiddle ", renderer: "linkRenderer", automapped : un.automapped}
                   });
 
                   allCols = [
