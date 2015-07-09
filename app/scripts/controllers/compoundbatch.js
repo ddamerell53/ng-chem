@@ -245,19 +245,17 @@ angular.module('ngChemApp')
                                             notify: false });
             $stateParams = newParams;
             $scope.initialise();
-        }
-$scope.cbh.addSort =  function(sortColumn, order){
-                var index=0
-                var toPop = [];
-                angular.forEach($scope.compoundBatches.sorts, function(sort){
-                    if(angular.isDefined(sort[sortColumn])){
-                        toPop.push(angular.copy(index));
+        };
+
+        $scope.cbh.addSort =  function(sortColumn, order){
+               
+                var i = $scope.compoundBatches.sorts.length;
+                while (i--) {
+                    if(angular.isDefined($scope.compoundBatches.sorts[i][sortColumn])){
+                        $scope.compoundBatches.sorts.pop(i);
                     }
-                    index ++;
-                });
-                angular.forEach(toPop,function(p){
-                    $scope.compoundBatches.sorts.pop(p);
-                })
+                }
+                 
                 var dirObj = {};
                 if(order != "none"){
                      dirObj[sortColumn] = {"order": order, "missing" : "_last", "ignore_unmapped" : true};
