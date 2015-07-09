@@ -10,7 +10,7 @@
 angular.module('ngChemApp')
   .controller('CompoundbatchCtrl', ['$scope','$rootScope','$state','$stateParams','$timeout','CBHCompoundBatch','paramsAndForm','urlConfig','$window','$location','$anchorScroll', '$filter', 'searchUrlParams', 
     function ($scope, $rootScope,$state, $stateParams,$timeout, CBHCompoundBatch, paramsAndForm, urlConfig, $window, $location, $anchorScroll, $filter, searchUrlParams) {
-    $scope.compoundBatches = {data:[], redraw:0};
+    $scope.compoundBatches = {data:[], redraw:0, sorts:[]};
     $scope.urlConfig = urlConfig;
     $scope.totalCompoundBatches = 0;
     
@@ -38,6 +38,9 @@ angular.module('ngChemApp')
             { label: "90/page", value: "90" },
         ],
     } 
+     if (angular.isDefined($stateParams.sorts)){
+                $scope.compoundBatches.sorts = JSON.parse($stateParams.sorts);
+            }
     //initialise this as list first
     if(angular.isDefined($stateParams.viewType)) {
         if($stateParams.viewType == 'list') {
@@ -237,6 +240,52 @@ angular.module('ngChemApp')
             
        });        
     }
+        $scope.nullSorts = function(){
+            $scope.compoundBatches.sorts =[];
+             var newParams = angular.copy($stateParams);
+            newParams.page = 1;
+            newParams.sorts = undefined;
+            $state.transitionTo($state.current.name, 
+                                        newParams,
+                                        { location: true, 
+                                            inherit: false, 
+                                            relative: $state.$current, 
+                                            notify: false });
+            $stateParams = newParams;
+            $scope.initialise();
+        };
+
+        $scope.cbh.addSort =  function(sortColumn, order){
+               
+                var i = $scope.compoundBatches.sorts.length;
+                while (i--) {
+                    if(angular.isDefined($scope.compoundBatches.sorts[i][sortColumn])){
+                        $scope.compoundBatches.sorts.pop(i);
+                    }
+                }
+                 
+                var dirObj = {};
+                if(order != "none"){
+                     dirObj[sortColumn] = {"order": order, "missing" : "_last", "ignore_unmapped" : true};
+                    $scope.compoundBatches.sorts.unshift(dirObj);
+                }
+                 var newParams = angular.copy($stateParams);
+                newParams.page = 1;
+                if($scope.compoundBatches.sorts.length > 0){
+                    newParams.sorts = JSON.stringify($scope.compoundBatches.sorts);
+                }else{
+                    newParams.sorts = undefined;
+                }
+                $state.transitionTo($state.current.name, 
+                                        newParams,
+                                        { location: true, 
+                                            inherit: false, 
+                                            relative: $state.$current, 
+                                            notify: false });
+                $stateParams = newParams;
+                 getResultsPage($scope.pagination.current);
+            };
+
 
     $scope.initialise = function(){
         if($stateParams.viewType) {
