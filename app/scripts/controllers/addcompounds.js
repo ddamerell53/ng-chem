@@ -238,7 +238,7 @@ angular.module('ngChemApp')
                 })
                 var dirObj = {};
                 if(order != "none"){
-                     dirObj[sortColumn] = {"order": order, "missing" : "_last"};
+                     dirObj[sortColumn] = {"order": order, "missing" : "_last", "ignore_unmapped" : true};
                     $scope.compoundBatches.sorts.unshift(dirObj);
                 }
                  var newParams = angular.copy($stateParams);
