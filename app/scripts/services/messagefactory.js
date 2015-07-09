@@ -138,7 +138,7 @@ angular.module('ngChemApp')
             registration_none_success: "No molecules were registered",
             registration_error: "An unknown error occurred when registering compounds, the chembiohub team have been notified and will contact you when the issue has been investigated.",
         //}:
-            justSaved: "This data was recently saved, click start again or go back to the project page."
+            justSaved: "This data was recently saved, click start again or go back to the project page.",
 
             //mapped from existing freetext fields
             image_more_details: "Click the image for more details about that molecule",
