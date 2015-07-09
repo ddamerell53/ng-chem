@@ -313,7 +313,10 @@ angular.module('ngChemApp')
                     };
 
                   });
+                  //set these to be a conditional of whether excludeBlanks and esxcludeFields are empty in the url
+                  
                   c.excludeBlanks = false;
+                  c.excludeFields = false;
                   c.typeahead = []
                   c.searchForm = angular.copy(scope.searchForm);
                   c.searchformSchema = angular.copy(scope.searchformSchema)

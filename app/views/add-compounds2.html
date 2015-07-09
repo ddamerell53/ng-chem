@@ -25,8 +25,9 @@
         <div class="row" ng-hide="dataReady">
          <div class="col-sm-6">
             <div class="row">
-                <info-box class="pull-right" style="margin-top:-5px; margin-right:5px" left="false" lookup="file_types"></info-box>
+                
                 <label  for="file_input" class="blue"><strong class="nexa">Drag and drop your files here.</strong></label>
+                <info-box style="margin-top:-5px; margin-right:5px" right="true" lookup="file_upload_help_text" lookupitems="messages"></info-box>
             </div>
              <div flow-drop flow-drag-enter="style={border:'4px dashed green', padding: '10px'}" flow-drag-leave="style={border:'4px dashed #ddd', padding: '10px'}" ng-style="style={border:'4px dashed #ddd', padding: '10px'}" class="col-sm-9 col-lg-10" style="min-height:50px">
                 <div   ng-repeat="file in $flow.files" style="margin-bottom:0px; min-height:40px">
@@ -53,8 +54,9 @@
                 <div class ="col-sm-6" >
             <div class="row">
 
-                    <info-box class="pull-right" style="margin-top:-5px; margin-right:5px" left="false" lookup="smiles_field"></info-box>
+                    
                     <label for="text_input" class="blue text-center"><strong class="nexa">Paste your SMILES or Standard Inchis here</strong></label>
+                    <info-box style="margin-top:-5px; margin-right:5px" left="false" lookup="smiles_field" lookupitems="messages"></info-box>
                 </div>
                 <div class="form-group col-sm-9 col-lg-10">
                     
