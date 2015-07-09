@@ -56,6 +56,8 @@ angular.module('ngChemApp')
                     }
                   });
                   html += "</ul>"
+                      td.className  += "htCenter htMiddle ";
+
                   td.innerHTML = html.replace("SMILESHERE", mol.originalSmiles);
                 return td;
               },
@@ -188,6 +190,7 @@ angular.module('ngChemApp')
         return renderers;
       },
 
+     
 
       getColumnLabel : function(c, scope){
         

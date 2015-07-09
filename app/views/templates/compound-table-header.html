@@ -15,7 +15,7 @@
                             <span class="glyphicon glyphicon-arrow-right"></span>   {{col.copyTo}} <span ng-show="col.automapped==true">&nbsp;(auto)</span><info-box freetext="Mapped values will be written to the specified field against the project.  User should contact administrator if they want extra project fields." right="!$last"></info-box></span></small>
                         </div>
                         <div  >
-                            <div class="pull-left">
+                            <div class="pull-left" ng-if="!col.noSort">
                                 <div class="dropdown"  aria-hidden="false">
                                     <button  class="btn btn-default btn-toggle mt-8" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><!-- <span class="glyphicon glyphicon-filter"></span> -->
                                         <span class="glyphicon " ng-class="{'asc': 'glyphicon-sort-by-alphabet', 'desc': 'glyphicon-sort-by-alphabet-alt', 'none': 'glyphicon-sort lightgrey'}[col.sortOrder]">
