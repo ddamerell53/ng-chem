@@ -334,7 +334,13 @@ angular.module('ngChemApp')
                     },
                     function(error){
                         if($scope.datasets[$scope.current_dataset_id].config.type == "file"){
-                            $scope.datasets[$scope.current_dataset_id].config.errors = [MessageFactory.getMessage("file_error")];
+                            var mess = MessageFactory.getMessage(error.data.error);
+                            if (angular.isDefined(mess) && mess !== ""){
+                                $scope.datasets[$scope.current_dataset_id].config.errors = [mess];
+                            }
+                            else{
+                                $scope.datasets[$scope.current_dataset_id].config.errors = [MessageFactory.getMessage("file_error")];
+                            }
                         }
                         if($scope.datasets[$scope.current_dataset_id].config.type == "smilesdata"){
                             $scope.datasets[$scope.current_dataset_id].config.errors = [MessageFactory.getMessage("ids_not_processed")];

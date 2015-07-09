@@ -159,7 +159,7 @@ angular.module('ngChemApp')
     CBHCompoundBatch.query = function(filters) {
          var promise = $http( 
             {
-                url: urlConfig.cbh_compound_batches.list_endpoint,
+                url: urlConfig.cbh_compound_batches.list_endpoint + "/get_list_elasticsearch/",
                 method: 'GET',
                 params: filters
             }
