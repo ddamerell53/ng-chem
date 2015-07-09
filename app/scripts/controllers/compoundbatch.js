@@ -161,7 +161,7 @@ angular.module('ngChemApp')
         //as an object inside filters
 
         var excludes = [];
-        excludes.push(sortColumn);
+        excludes.push(sortColumn.data);
 
         newParams.page = 1;
         if (excludeType == 'blanks') {
@@ -169,7 +169,12 @@ angular.module('ngChemApp')
         }
         else if (excludeType == 'fields'){
             //add the column custom field selections to newParams
-
+            //console.log("col=", sortColumn);
+            angular.forEach(sortColumn.searchformSchema.schema.properties.search_custom_fields__kv_any, function(field){
+                excludes.push(field.value);
+            });
+            newParams.excludeFields = excludes;
+            
         }
         
         $stateParams = newParams;
