@@ -164,7 +164,13 @@ angular.module('ngChemApp')
         excludes.push(sortColumn);
 
         newParams.page = 1;
-        newParams.excludeBlanks = excludes;
+        if (excludeType == 'blanks') {
+            newParams.excludeBlanks = excludes;
+        }
+        else if (excludeType == 'fields'){
+            //add the column custom field selections to newParams
+
+        }
         
         $stateParams = newParams;
         //$scope.initialise();

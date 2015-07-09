@@ -78,7 +78,15 @@
                                             </li>
                                             <li role="presentation">
                                                 
-                                                <a class="" ng-click="cbh.excludeFilter(col.data, 'blanks');col.excludeBlank=true"><strong class="nexa">
+                                                <a class="" ng-click="cbh.excludeFilter(col.data, 'blanks');col.excludeBlank=!col.excludeBlank"><strong class="nexa">
+                                                <span class="glyphicon glyphicon-ban-circle" ng-class=""></span>
+                                                &nbsp;Exclude blanks</strong>
+                                                <span class="glyphicon pull-right" ng-class="(col.excludeBlank==true) ? 'glyphicon-check':'glyphicon-unchecked'"></span>
+                                                </a>
+                                            </li>
+                                            <li role="presentation">
+                                                
+                                                <a class="" ng-click="cbh.excludeFilter(col.data, 'fields');col.excludeFields=!col.excludeFields"><strong class="nexa">
                                                 <span class="glyphicon glyphicon-ban-circle" ng-class=""></span>
                                                 &nbsp;Exclude blanks</strong>
                                                 <span class="glyphicon pull-right" ng-class="(col.excludeBlank==true) ? 'glyphicon-check':'glyphicon-unchecked'"></span>
