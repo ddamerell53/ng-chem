@@ -1,7 +1,7 @@
 
 <button class="btn btn-lg" style="min-height:100px; width:13.93%; margin-right:5px" ng-repeat="item in validationItems" ng-class="item.class" ng-click="item.filter()">
         <div class="row">
-    <info-box class="pull-right" style="margin-top:-5px; margin-right:5px" left="false" lookup="{{item.message}}"></info-box>
+    <info-box class="pull-right" style="margin-top:-5px; margin-right:5px" left="false" lookup="{{item.message}}"  lookupitems="messages"></info-box>
 </div>
     <div class="row">
         <div   ng-show="filesInProcessing" class="col-centered bubblingG">
