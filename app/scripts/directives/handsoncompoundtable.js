@@ -88,6 +88,7 @@ angular.module('ngChemApp')
 
 
               redraw = function(){
+ 
                   jsonSchemaColDefs = [];
                   var isNewCompoundsInterface = false;
                   if(angular.isDefined(scope.uncuratedHeaders)){
@@ -318,6 +319,7 @@ angular.module('ngChemApp')
                   c.excludeBlanks = false;
                   c.excludeFields = false;
                   c.typeahead = []
+                  
                   c.searchForm = angular.copy(scope.searchForm);
                   c.searchformSchema = angular.copy(scope.searchformSchema)
                   if(angular.isDefined(c.searchformSchema)){

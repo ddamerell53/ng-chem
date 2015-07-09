@@ -517,7 +517,7 @@ angular.module('ngChemApp')
                 }
                 $scope.searchFormSchema= angular.copy($scope.cbh.projects.searchform);
                 var pf = searchUrlParams.setup($stateParams, {molecule: {}});
-                $scope.searchForm = angular.copy(pf.searchForm);
+                $scope.searchForm = false; //angular.copy(pf.searchForm);
                 var custFieldFormItem = $filter('filter')($scope.searchFormSchema.cf_form, {key:'search_custom_fields__kv_any'}, true);
                 custFieldFormItem[0].options.async.call = $scope.refreshCustFields;
 

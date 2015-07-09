@@ -91,10 +91,13 @@
                     <button ng-click="cancelFile()" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> Start Again</button>
                 </div>
                    
-                <div><strong class="nexa"><ng-pluralize count="totalCompoundBatches"
+                <div><strong class="nexa"><ng-pluralize count="totalNotIgnored"
                                 when="{'0': '0 new batches',
                                  'one': '1 new batch',
-                                  'other': '{} new batches'}"></ng-pluralize> will be saved to the database</strong></div>
+                                  'other': '{} new batches'}"></ng-pluralize> will be saved to the database and <ng-pluralize count="totalIgnored"
+                                when="{'0': '0 batches',
+                                 'one': '1 batch',
+                                  'other': '{} new batches'}"></ng-pluralize> will be ignored.</strong></div>
             </div>
 
     </div>

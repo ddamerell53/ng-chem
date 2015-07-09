@@ -193,13 +193,19 @@ angular.module('ngChemApp')
     function getResultsPage(pageNumber) {
         filters.limit = $scope.pagination.compoundBatchesPerPage.value;
         filters.offset = (pageNumber -1) * $scope.pagination.compoundBatchesPerPage.value;
+        filters.sorts = $stateParams.sorts;
         CBHCompoundBatch.query(filters).then(function(result) {
             $scope.totalCompoundBatches = result.meta.totalCount;
             $scope.compoundBatches.data =result.objects;
 
             $scope.searchFormSchema= angular.copy($scope.cbh.projects.searchform);
             var pf = searchUrlParams.setup($stateParams, {molecule: {}});
-            $scope.searchForm = angular.copy(pf.searchForm);
+            if($state.current.name=="cbh.search"){
+                $scope.searchForm = angular.copy(pf.searchForm);
+
+            }else{
+                $scope.searchForm = false;
+            }
             var custFieldFormItem = $filter('filter')($scope.searchFormSchema.cf_form, {key:'search_custom_fields__kv_any'}, true);
             custFieldFormItem[0].options.async.call = $scope.refreshCustFields;
 

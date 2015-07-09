@@ -26,7 +26,7 @@
                                             <a ng-click="cbh.addSort(col.data, 'none')"><strong class="nexa"><span class="glyphicon glyphicon-remove"></span>
                                             &nbsp;Reset Sorts on {{col.knownBy}}</strong></a>
                                         </li>
-                                        <li role="presentation" class="divider">
+                                        <li ng-if="col.sortOrder != 'none'" role="presentation" class="divider">
                                         </li>
                                         <li role="presentation">
                                             <a class="relative" ng-click="cbh.addSort(col.data, 'asc')"><strong class="nexa">
@@ -46,7 +46,7 @@
 
                                         </li>
 
-                                            <li ng-show="col.searchForm" role="presentation">
+                                            <li ng-if="col.searchForm" role="presentation">
                                                 <a class=""  ng-click="$event.stopPropagation();">
                                                     <form><!-- <div class="form-group" sf-schema="col.searchformSchema.cf_schema" sf-form="col.searchformSchema.cf_form" sf-model="col.searchForm"></div -->
                                                         <div class="form-group" >
@@ -61,22 +61,11 @@
                                                     </form>
                                                 </a>
                                             </li>
-                                            <li role="presentation" class="spacer">
-                                            </li>
-                                            <li role="presentation">
-                                                <a class=""  ng-click="$event.stopPropagation();"><strong class="nexa">
-                                                <span class="glyphicon glyphicon-filter" ng-class=""></span>
-                                                &nbsp;A value  
-                                                <span class="pull-right glyphicon glyphicon-unchecked" ng-class=""></span>
-                                                </strong>
-                                                </a>
-                                            </li>
-                                                <div class="innerdrop">
-                                                <li role="presentation"><!-- <div sf-schema="::searchFormSchema.cf_schema" sf-form="::searchFormSchema.cf_form" sf-model="searchForm"> --></div>
-                                                </li>
-                                                <li role="presentation" class="spacer">
-                                            </li>
-                                            <li role="presentation">
+                                            
+                                            
+                                                
+                                            
+                                            <li ng-if="col.searchForm" role="presentation">
                                                 
                                                 <a class="" ng-click="cbh.excludeFilter(col, 'blanks');col.excludeBlank=!col.excludeBlank"><strong class="nexa">
                                                 <span class="glyphicon glyphicon-ban-circle" ng-class=""></span>
@@ -84,7 +73,7 @@
                                                 <span class="glyphicon pull-right" ng-class="(col.excludeBlank==true) ? 'glyphicon-check':'glyphicon-unchecked'"></span>
                                                 </a>
                                             </li>
-                                            <li role="presentation">
+                                            <li ng-if="col.searchForm" role="presentation">
                                                 
                                                 <a class="" ng-click="cbh.excludeFilter(col, 'fields');col.excludeFields=!col.excludeFields"><strong class="nexa">
                                                 <span class="glyphicon glyphicon-ban-circle" ng-class=""></span>
