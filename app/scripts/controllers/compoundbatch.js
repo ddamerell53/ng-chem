@@ -151,46 +151,54 @@ angular.module('ngChemApp')
         console.log("broadcastFilter called");
     }
 
-    $scope.cbh.excludeFilter =  function(sortColumn, excludeType){
+    $scope.cbh.blanksFilter =  function(sortColumn, showType){
 
-        //have an exclude array
-        //containing objects that specify the column name and the exclude type (blank, value etc)
-        //console.log("triggering exclude filter", sortColumn, excludeType);
+        //have an exclude array for both show blanks and show non blanks
+        //containing objects that specify the column name
         var newParams = angular.copy($stateParams);
+        newParams.page = 1;
         //add the excludes option here
         //as an object inside filters
-
-        var excludes = [];
-        excludes.push(sortColumn.data);
-
-        newParams.page = 1;
-        if (excludeType == 'blanks') {
-            newParams.excludeBlanks = excludes;
+        
+        if (showType == 'blanks') {
+            if (!newParams.showBlanks) {
+                newParams.showBlanks = [];
+            }
+            newParams.showBlanks.push(sortColumn.data);
+            //need to remove the equivalent parameter from showNonBlanks, if exists - you can't have both
+            if(newParams.showNonBlanks){
+                newParams.showNonBlanks.splice(newParams.showNonBlanks.indexOf(sortColumn.data), 1);
+            }
         }
-        else if (excludeType == 'fields'){
-            //add the column custom field selections to newParams
-            //console.log("col=", sortColumn);
-            angular.forEach(sortColumn.searchformSchema.schema.properties.search_custom_fields__kv_any, function(field){
-                excludes.push(field.value);
-            });
-            newParams.excludeFields = excludes;
-            
+
+        else if (showType == 'nonblanks') {
+            if (!newParams.showNonBlanks) {
+                newParams.showNonBlanks = [];
+            }
+            newParams.showNonBlanks.push(sortColumn.data);
+            //need to remove the equivalent parameter from showBlanks, if exists - you can't have both
+            if(newParams.showBlanks){
+                newParams.showBlanks.splice(newParams.showNonBlanks.indexOf(sortColumn.data), 1);
+            }
         }
+
         
         $stateParams = newParams;
         //$scope.initialise();
         console.log("stateparams", $stateParams);
         
-        $state.transitionTo($state.current.name, 
+        /*$state.transitionTo($state.current.name, 
                                 newParams,
                                 { location: true, 
-                                    inherit: false, 
-                                    notify: false });
-        //getResultsPage(newParams.page)
+                                    inherit: false,
+                                    relative: $state.$current, 
+                                    notify: false });*/
+        getResultsPage(newParams.page);
     };
     
     
     function getResultsPage(pageNumber) {
+        console.log("hiya");
         filters.limit = $scope.pagination.compoundBatchesPerPage.value;
         filters.offset = (pageNumber -1) * $scope.pagination.compoundBatchesPerPage.value;
         filters.sorts = $stateParams.sorts;

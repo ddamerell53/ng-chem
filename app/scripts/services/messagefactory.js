@@ -140,6 +140,18 @@ angular.module('ngChemApp')
         //}:
             justSaved: "This data was recently saved, click start again or go back to the project page."
 
+            //mapped from existing freetext fields
+            image_more_details: "Click the image for more details about that molecule",
+            unmapped_values_written: "Any unmapped values will be written anyway.  User should contact administrator if they want the field to be available to the whole project.",
+            mapped_values_written: "Mapped values will be written to the specified field against the project.  User should contact administrator if they want extra project fields.",
+            total_values: "This is the total number of records that have been submitted via the form above.",
+            valid_structure_values: "These records have a valid structure as interpretted by chemreg based upon the data you have provided. If this result is zero for an Excel file you will need to 'map' your SMILES field below.",
+            no_valid_structure_values: "These records have no valid structure as interpretted by chemreg based upon the data you have provided. When registered this type of record can still be searched and can be used for inventory management.",
+            error_total_values: "These structures contain errors and cannot be processed - check your input data and the info column below.",
+
+
+
+
     }
 
     var legends = {

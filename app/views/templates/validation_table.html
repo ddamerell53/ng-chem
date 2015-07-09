@@ -10,7 +10,7 @@
 
                 </div>
                 
-                <small><h2 class="blue text-center">Uploaded <info-box right="true" freetext="This is the total number of records that have been submitted via the form above."></info-box> <br>Records </h2></small><!-- info-box here -->
+                <small><h2 class="blue text-center">Uploaded <info-box right="true" lookup="total_values" lookupitems="messages"></info-box> <br>Records </h2></small><!-- info-box here -->
             </div>
             <div class="col-xs-8">
                 
@@ -23,7 +23,7 @@
                     </div>
                     <div class="col-xs-3 pull-right" style="padding:10px 4px 0 0;">
                         <div class="pull-right"><a ng-show="datasets[current_dataset_id].config.batchstats['withstructure'] > 0" ng-click ="cbh.toggleWarningsFilter('warnings.withstructure')" class="btn btn-sm btn-default" ng-class="warningsFilter =='warnings.withstructure' ? 'blue' : 'lightgrey'" title="Filter only records where there is a valid structure"><span class="glyphicon glyphicon-filter "></span></a>
-                        <info-box freetext="These records have a valid structure as interpretted by chemreg based upon the data you have provided. If this result is zero for an Excel file you will need to 'map' your SMILES field below."></info-box></div>
+                        <info-box lookup="valid_structure_values" lookupitems="messages"></info-box></div>
                     </div>
 
                 </div>
@@ -37,7 +37,7 @@
                     </div>
                     <div class="col-xs-3 pull-right" style="padding:10px 4px 0 0;">
                         <div class="pull-right"><a ng-show="datasets[current_dataset_id].config.batchstats['withoutstructure'] > 0" ng-click ="cbh.toggleWarningsFilter('warnings.withoutstructure')" class="btn btn-sm btn-default" ng-class="warningsFilter =='warnings.withoutstructure' ? 'blue' : 'lightgrey'" title="Filter only records where there is no structure"><span class="glyphicon glyphicon-filter "></span></a>
-                        <info-box freetext="These records have no valid structure as interpretted by chemreg based upon the data you have provided. When registered this type of record can still be searched and can be used for inventory management."></info-box></div>
+                        <info-box lookup="no_valid_structure_values" lookupvalues="messages"></info-box></div>
                     </div>
 
                 </div>
@@ -51,7 +51,7 @@
                     </div>
                     <div class="col-xs-3 pull-right" style="padding:10px 4px 0 0;">
                         <div class="pull-right"><a ng-show="datasets[current_dataset_id].config.batchstats['parseErrors'] > 0" ng-click ="cbh.toggleWarningsFilter('warnings.parseError')" class="btn btn-sm btn-default" ng-class="warningsFilter =='warnings.parseError' ? 'blue' : 'lightgrey'" title="Filter only records where the structure cannot be processed"><span class="glyphicon glyphicon-filter "></span></a>
-                        <info-box freetext="These structures contain errors and cannot be processed - check your input data and the info column below."></info-box></div>
+                        <info-box lookup="error_total_values" lookupitems="messages"></info-box></div>
                     </div>
 
                 </div>
@@ -72,7 +72,7 @@
         
                     </div>
                     
-                    <small><h2 class="blue text-center">Unique <info-box freetext="The compounds submitted have been matched up against each-other using what is known as an INCHI key to give the total number of unique compounds. This should pick out identical structures taking into account any stereochemical features represented by the input data."></info-box> <br> Compounds </h2></small><!-- info-box here -->
+                    <small><h2 class="blue text-center">Unique <info-box lookup="inchi_matching" lookupitems="messages"></info-box> <br> Compounds </h2></small><!-- info-box here -->
                 </div>
                 <div class="col-xs-8">
                     <div class="row">
@@ -84,7 +84,7 @@
                         </div>
                         <div class="col-xs-3 pull-right" style="padding:10px 4px 0 0;">
                             <div class="pull-right"><a ng-show="datasets[current_dataset_id].config.compoundstats['new'] > 0" ng-click ="cbh.toggleWarningsFilter('warnings.new')" class="btn btn-sm btn-default" ng-class="warningsFilter =='warnings.new' ? 'blue' : 'lightgrey'" title="Filter only records new to this project"><span class="glyphicon glyphicon-filter "></span></a>
-                            <info-box freetext="ChemReg has not registered these compounds in this project. They may be present in other projects but currently to migrate a compound, you re-register it."></info-box></div>
+                            <info-box lookup="new_to_chemreg" lookupitems="messages"></info-box></div>
                         </div>
         
                     </div>
@@ -98,7 +98,7 @@
                         </div>
                         <div class="col-xs-3 pull-right" style="padding:10px 4px 0 0;">
                             <div class="pull-right"><a ng-show="datasets[current_dataset_id].config.compoundstats['overlaps'] > 0" ng-click ="cbh.toggleWarningsFilter('warnings.overlap')" class="btn btn-sm btn-default" ng-class="warningsFilter =='warnings.overlap' ? 'blue' : 'lightgrey'" title="Filter only records where the structure overlaps with existing ChemReg records"><span class="glyphicon glyphicon-filter "></span></a>
-                            <info-box freetext="Some of these compounds have structural matches within this project so will be assigned as a new batch of that compound."></info-box></div>
+                            <info-box lookup="project_match_values" lookupitems="messages"></info-box></div>
                         </div>
         
                     </div>
@@ -107,7 +107,7 @@
                         <div class="row" ng-show='(datasets[current_dataset_id].config.compoundstats["duplicateoverlaps"] + datasets[current_dataset_id].config.compoundstats["duplicatenew"]) > 0' style="padding:0;">
                             <div class="col-xs-1 "  ></div>
                             <div class="col-xs-8"  style="padding:10px 0 0 0"><p class="nexa vw">Duplicates were found</p></div>
-                            <div class="col-xs-3 pull-right"   style="padding:10px 4px 0 0;"><div class="pull-right"><a ng-click ="cbh.toggleWarningsFilter('warnings.duplicate')" class="btn btn-sm btn-default" ng-class="warningsFilter =='warnings.duplicate' ? 'blue' : 'lightgrey'" title="Filter only records that are duplicated in the uploaded data"><span class="glyphicon glyphicon-filter "></span></a><info-box freetext="Some compounds are duplicated within the submitted data based upon matching using the INCHI chemical identifier."></info-box></div></div>
+                            <div class="col-xs-3 pull-right"   style="padding:10px 4px 0 0;"><div class="pull-right"><a ng-click ="cbh.toggleWarningsFilter('warnings.duplicate')" class="btn btn-sm btn-default" ng-class="warningsFilter =='warnings.duplicate' ? 'blue' : 'lightgrey'" title="Filter only records that are duplicated in the uploaded data"><span class="glyphicon glyphicon-filter "></span></a><info-box lookup="chemreg_match_values" lookupitems="messages"></info-box></div></div>
         
                         </div>
         
@@ -119,7 +119,7 @@
                         </div>
                             <div class="col-xs-3 pull-right"  style="padding:10px 4px 0 0;" >
                                 <div class="pull-right">
-                            <info-box class="pull-right" freetext="No compounds are duplicated within the submitted data based upon matching using the INCHI chemical identifier."></info-box>
+                            <info-box class="pull-right" lookup="duplicate_count_values" lookupitems="messages"></info-box>
                         </div>
                         </div>
                         </div>
