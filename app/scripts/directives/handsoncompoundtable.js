@@ -131,7 +131,7 @@ angular.module('ngChemApp')
                 
                 var customCols = cNames.map(function(cn){
                   
-                  return {noSort:true,
+                  return {
                     knownBy: cn, 
                     data: "customFields." + cn, readOnly:true, 
                     className: "htCenter htMiddle ", 
