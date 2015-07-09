@@ -237,13 +237,23 @@ angular.module('ngChemApp')
                     data: scope.compounds,
                     colHeaders: columnHeaders,
                     columns: allCols, 
-                    
+                    maxRows: scope.compounds.length
                       
                   }
                   if(isNewCompoundsInterface){
                       hotObj.afterChange = function(data,sourceOfChange){
                           scope.cbh.saveChangesToTemporaryDataInController(data, sourceOfChange);
-                      } 
+                      };
+                      hotObj.cells = function (row, col, prop) { 
+                          if (prop =="properties.action"){
+                              var comp = scope.compounds[row];
+                              if(comp.warnings.parseError || comp.warnings.smilesParseError){
+                                return {readOnly:true};
+                              }  
+                          }
+                      };
+                      
+
                   } 
 
             var rend = renderers.getRenderers(scope, isNewCompoundsInterface);

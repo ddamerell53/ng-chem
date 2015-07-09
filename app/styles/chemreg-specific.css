@@ -14,7 +14,7 @@ li a svg.svg {
 }
 .noindent {
  padding-left: 1.2em; 
-
+ margin-bottom:0;
 }
 .relative {
   position:relative;
