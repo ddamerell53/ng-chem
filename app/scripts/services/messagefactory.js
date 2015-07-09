@@ -50,7 +50,7 @@ angular.module('ngChemApp')
             drawing_label_suppl: "Sketcher window provided by ChemDoodle.",
             drawing_label: "Draw your molecule here",
             smiles_or_id_help_text: "IDs can be any of the following formats: InCHI, InCHI key, SMILES, CAS numbers, Sigma aldrich catalogue numbers",
-            file_upload_help_text: "Excel(xlsx), Chemdraw XML or SD files are accepted",
+            file_upload_help_text: "Excel(xlsx), Chemdraw XML or SD files are accepted. For more detailed information, see the Help section",
             drawing_help_text: "Draw the molecule you would like to register. If salts or hydrates are required, draw these as neutral molecules alongside",
             sd_invalid: "The SD file uploaded was not of a valid format, please verify",
             cdmxl_invalid: "The Chemdraw XML file uploaded was not of a valid format, please verify",
