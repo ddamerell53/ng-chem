@@ -148,8 +148,11 @@ angular.module('ngChemApp')
             valid_structure_values: "These records have a valid structure as interpretted by chemreg based upon the data you have provided. If this result is zero for an Excel file you will need to 'map' your SMILES field below.",
             no_valid_structure_values: "These records have no valid structure as interpretted by chemreg based upon the data you have provided. When registered this type of record can still be searched and can be used for inventory management.",
             error_total_values: "These structures contain errors and cannot be processed - check your input data and the info column below.",
-
-
+            inchi_matching: "The compounds submitted have been matched up against each-other using what is known as an INCHI key to give the total number of unique compounds. This should pick out identical structures taking into account any stereochemical features represented by the input data.",
+            new_to_chemreg: "ChemReg has not registered these compounds in this project. They may be present in other projects but currently to migrate a compound, you re-register it.",
+            project_match_values: "Some of these compounds have structural matches within this project so will be assigned as a new batch of that compound.",
+            chemreg_match_values: "Some compounds are duplicated within the submitted data based upon matching using the INCHI chemical identifier.",
+            duplicate_count_values: "No compounds are duplicated within the submitted data based upon matching using the INCHI chemical identifier.",
 
 
     }
