@@ -299,6 +299,7 @@ angular.module('ngChemApp')
                     };
 
                   });
+                  c.excludeBlanks = false;
                   c.typeahead = []
                   c.searchForm = angular.copy(scope.searchForm);
                   c.searchformSchema = angular.copy(scope.searchformSchema)

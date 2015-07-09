@@ -161,20 +161,21 @@ angular.module('ngChemApp')
         //as an object inside filters
 
         var excludes = [];
-        excludes.push({'sortColumn':sortColumn, 'type': excludeType});
+        excludes.push(sortColumn);
 
         newParams.page = 1;
-        newParams.excludes = excludes;
-        /*$state.transitionTo($state.current.name, 
-                                newParams,
-                                { location: true, 
-                                    inherit: false, 
-                                    relative: $state.$current, 
-                                    notify: false });*/
+        newParams.excludeBlanks = excludes;
+        
         $stateParams = newParams;
         //$scope.initialise();
         console.log("stateparams", $stateParams);
-        getResultsPage(newParams.page)
+        
+        $state.transitionTo($state.current.name, 
+                                newParams,
+                                { location: true, 
+                                    inherit: false, 
+                                    notify: false });
+        //getResultsPage(newParams.page)
     };
     
     
