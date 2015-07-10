@@ -247,7 +247,7 @@ angular.module('ngChemApp')
                 data
             ).then(
             function(data){
-                return data.data;
+                return data;
             }
         );
         return promise;
