@@ -56,8 +56,8 @@ angular.module('ngChemApp')
                             var fieldJsonPatchOperations = [];
 
                             if(newField.type=="array"){
-                              fieldJsonPatchOperations.push({"op": "add", "path": "/custom_fields/" + newFieldName, "value" : []});
-                              fieldJsonPatchOperations.push({"op": "move", "path": "/custom_fields/" + newFieldName + "/0" , "from" : "/uncurated_fields/" + unCuratedFieldName });
+                              fieldJsonPatchOperations.push({"op": "split", "path": "/uncurated_fields/" + unCuratedFieldName});
+                              fieldJsonPatchOperations.push({"op": "move", "path": "/custom_fields/" + newFieldName , "from" : "/uncurated_fields/" + unCuratedFieldName });
                             }else{
                               var operation = {"op": "move", "path": "/custom_fields/" + newFieldName  , "from" : "/uncurated_fields/" + unCuratedFieldName };
                               fieldJsonPatchOperations.push(operation);
