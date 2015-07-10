@@ -650,6 +650,11 @@ span.date-number {
   transition: 0.2s ease-in-out;
 }
 
+div.column-header-form ul.ui-select-choices {
+  position:absolute;
+  top: 32px !important;
+}
+
 /* 16-column bootstrap grid classes */
 /*!
  * Bootstrap v3.3.4 (http://getbootstrap.com)
