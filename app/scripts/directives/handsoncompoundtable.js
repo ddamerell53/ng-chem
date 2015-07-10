@@ -452,6 +452,7 @@ angular.module('ngChemApp')
         "searchForm": "=",
         "showBlanks": "=",
         "showNonBlanks": "=",
+        "messages": "=",
       }
     };
   }]);
