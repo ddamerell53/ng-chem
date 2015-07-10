@@ -98,6 +98,7 @@ angular.module('ngChemApp')
                     CBHCompoundBatch.patchTempList(patchData).then(function(data){
                         // $scope.currentlyLoading = false;
                         $scope.imageCallback();
+                        $scope.compoundBatches.savestats = data.data.savestats;
                     });
             }
            
@@ -301,6 +302,7 @@ angular.module('ngChemApp')
                         CBHCompoundBatch.getImages( data.data.objects, 400, "bigImageSrc", $scope.imageCallback); 
 
                         $scope.compoundBatches.data =data.data.objects;
+                        $scope.compoundBatches.savestats = data.data.savestats;
                         $scope.totalCompoundBatches = data.data.batchstats.total;
 
                         //setup of uiselect for custom fields filtering
@@ -505,7 +507,7 @@ angular.module('ngChemApp')
                 $scope.totalCompoundBatches = result.data.meta.totalCount;
                 $scope.compoundBatches.data =result.data.objects;
                 $scope.compoundBatches.uncuratedHeaders = result.data.headers;
-                
+                $scope.compoundBatches.savestats = result.data.savestats;
                 $scope.current_dataset_id = $stateParams.mb_id;
                 $scope.datasets[$scope.current_dataset_id] = {
                     "config": result.data,
