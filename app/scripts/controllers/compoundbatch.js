@@ -41,6 +41,13 @@ angular.module('ngChemApp')
      if (angular.isDefined($stateParams.sorts)){
                 $scope.compoundBatches.sorts = JSON.parse($stateParams.sorts);
             }
+    if(angular.isDefined($stateParams.showBlanks)){
+        $scope.showBlanks = $stateParams.showBlanks;
+    }
+
+    if(angular.isDefined($stateParams.showNonBlanks)){
+        $scope.showNonBlanks = $stateParams.showNonBlanks;
+    }
     //initialise this as list first
     if(angular.isDefined($stateParams.viewType)) {
         if($stateParams.viewType == 'list') {
@@ -167,9 +174,13 @@ angular.module('ngChemApp')
             if (!newParams.showBlanks) {
                 newParams.showBlanks = [];
             }
+            else {
+                newParams.showBlanks = JSON.parse(newParams.showBlanks);
+            }
             newParams.showBlanks.push(sortColumn.data);
+
             //need to remove the equivalent parameter from showNonBlanks, if exists - you can't have both
-            if(newParams.showNonBlanks){
+            if(newParams.showNonBlanks != undefined){
                 newParams.showNonBlanks.splice(newParams.showNonBlanks.indexOf(sortColumn.data), 1);
             }
         }
@@ -178,33 +189,38 @@ angular.module('ngChemApp')
             if (!newParams.showNonBlanks) {
                 newParams.showNonBlanks = [];
             }
+
+            else {
+                newParams.showNonBlanks = JSON.parse(newParams.showNonBlanks);
+            }
             newParams.showNonBlanks.push(sortColumn.data);
             //need to remove the equivalent parameter from showBlanks, if exists - you can't have both
-            if(newParams.showBlanks){
+            if(newParams.showBlanks != undefined){
                 newParams.showBlanks.splice(newParams.showNonBlanks.indexOf(sortColumn.data), 1);
             }
         }
 
-        
-        $stateParams = newParams;
-        //$scope.initialise();
-        console.log("stateparams", $stateParams);
-        
-        /*$state.transitionTo($state.current.name, 
-                                newParams,
-                                { location: true, 
-                                    inherit: false,
-                                    relative: $state.$current, 
-                                    notify: false });*/
-        getResultsPage(newParams.page);
+        console.log(newParams);
+        newParams.showBlanks = JSON.stringify(newParams.showBlanks);
+        newParams.showNonBlanks = JSON.stringify(newParams.showNonBlanks);
+        $state.go($state.current.name, newParams, {reload:true, inherit:false});
+        //getResultsPage(newParams.page);
     };
     
     
     function getResultsPage(pageNumber) {
-        console.log("hiya");
         filters.limit = $scope.pagination.compoundBatchesPerPage.value;
         filters.offset = (pageNumber -1) * $scope.pagination.compoundBatchesPerPage.value;
         filters.sorts = $stateParams.sorts;
+        filters.showBlanks = $stateParams.showBlanks;
+        if(filters.showBlanks){
+            filters.showBlanks = filters.showBlanks.replace("customFields", "custom_fields")
+        }
+        filters.showNonBlanks = $stateParams.showNonBlanks;
+        if(filters.showNonBlanks){
+            filters.showNonBlanks = filters.showNonBlanks.replace("customFields", "custom_fields")
+        }
+
         CBHCompoundBatch.query(filters).then(function(result) {
             $scope.totalCompoundBatches = result.meta.totalCount;
             $scope.compoundBatches.data =result.objects;
@@ -229,6 +245,13 @@ angular.module('ngChemApp')
 
             }else if( ( $scope.pagination.current * parseInt($scope.pagination.compoundBatchesPerPage.value)) > $scope.totalCompoundBatches){
                 $scope.pageChanged(1);
+            }
+            console.log("stateparams 249", $stateParams);
+            if(angular.isDefined($stateParams.showBlanks)){
+                $scope.compoundBatches.showBlanks = JSON.parse($stateParams.showBlanks)
+            }
+            if(angular.isDefined($stateParams.showNonBlanks)){
+                $scope.compoundBatches.showNonBlanks = JSON.parse($stateParams.showNonBlanks)
             }
             else{
                 if($state.current.name==="cbh.search"){

@@ -315,9 +315,29 @@ angular.module('ngChemApp')
 
                   });
                   //set these to be a conditional of whether excludeBlanks and esxcludeFields are empty in the url
+                  c.showBlank = false;
+                  c.showNonBlank = false;
+                  //initialise from search parameters
+                  console.log(c);
+                  if(scope.showNonBlanks){
+                    angular.forEach(scope.showNonBlanks, function(nonblank){
+                      //is this column a match with c.data?
+                      if(nonblank == c.data){
+                        c.showNonBlank = true;
+                      }
+                    })
+                  }
+                  if(scope.showBlanks){
+                    angular.forEach(scope.showBlanks, function(blank){
+                      //is this column a match with c.data?
+                      if(blank == c.data){
+                        c.showBlank = true;
+                      }
+                    })
+                  }
                   
-                  c.excludeBlanks = false;
-                  c.excludeFields = false;
+                  
+                  //c.excludeFields = false;
                   c.typeahead = []
                   
                   c.searchForm = angular.copy(scope.searchForm);
@@ -430,6 +450,8 @@ angular.module('ngChemApp')
         "warningsFilter" : "=",
         "searchformSchema": "=",
         "searchForm": "=",
+        "showBlanks": "=",
+        "showNonBlanks": "=",
       }
     };
   }]);
