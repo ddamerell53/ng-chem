@@ -246,13 +246,6 @@ angular.module('ngChemApp')
             }else if( ( $scope.pagination.current * parseInt($scope.pagination.compoundBatchesPerPage.value)) > $scope.totalCompoundBatches){
                 $scope.pageChanged(1);
             }
-            console.log("stateparams 249", $stateParams);
-            if(angular.isDefined($stateParams.showBlanks)){
-                $scope.compoundBatches.showBlanks = JSON.parse($stateParams.showBlanks)
-            }
-            if(angular.isDefined($stateParams.showNonBlanks)){
-                $scope.compoundBatches.showNonBlanks = JSON.parse($stateParams.showNonBlanks)
-            }
             else{
                 if($state.current.name==="cbh.search"){
                     $scope.noData = "No Compounds Found. Why not try amending your search?";
@@ -260,6 +253,14 @@ angular.module('ngChemApp')
                      $scope.noData = "No Compounds Found. To add compounds use the link above.";
                 }
             }
+            console.log("stateparams 249", $stateParams);
+            if(angular.isDefined($stateParams.showBlanks)){
+                $scope.compoundBatches.showBlanks = JSON.parse($stateParams.showBlanks)
+            }
+            if(angular.isDefined($stateParams.showNonBlanks)){
+                $scope.compoundBatches.showNonBlanks = JSON.parse($stateParams.showNonBlanks)
+            }
+            
             
        });        
     }
