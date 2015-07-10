@@ -196,8 +196,8 @@ angular.module('ngChemApp')
         
         
         
-        if(angular.isDefined(c.copyTo)){
-           return "<div class='well'><label style='min-width:240px'>"+ c.knownBy + c.copyTo +  "</label></div>";
+        if(angular.isDefined(c.copyto)){
+           return "<div class='well'><label style='min-width:240px'>"+ c.knownBy + c.copyto +  "</label></div>";
 
         }
         if(c.data.indexOf("uncurated")==0){

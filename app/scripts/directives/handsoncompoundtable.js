@@ -34,7 +34,7 @@ angular.module('ngChemApp')
                   function(hdr){
                     if(hdr.name == unCuratedFieldName){
                       delete hdr.operations;
-                      hdr.copyTo = "";
+                      hdr.copyto = "";
                       hdr.automapped = false;
                     }
                   });
@@ -44,14 +44,14 @@ angular.module('ngChemApp')
                   angular.forEach(scope.uncuratedHeaders,
                     function(hdr){
                       if(hdr.name == unCuratedFieldName){
-                          if (hdr.copyTo == newFieldName){
+                          if (hdr.copyto == newFieldName){
                             //Already set therefore reset
-                            hdr.copyTo = "";
+                            hdr.copyto = "";
                             delete hdr.operations;
                             hdr.automapped = false;
 
                           }else{
-                            hdr.copyTo = newFieldName;
+                            hdr.copyto = newFieldName;
                             hdr.automapped = false;
                             var fieldJsonPatchOperations = [];
 
@@ -144,7 +144,7 @@ angular.module('ngChemApp')
                 if(isNewCompoundsInterface){
                   var uncuratedColumns = scope.uncuratedHeaders.map(function(un, index, array){
                       var disableSel = "";
-                      var copyTo = un.copyTo;
+                      var copyto = un.copyto;
                       var optList = angular.copy(jsonSchemaColDefs).map(function(cName, cNameIndex){
                           var selectedModel = "";
                           var errorName = cName.type;
@@ -164,7 +164,7 @@ angular.module('ngChemApp')
                                var weird = array.map(function(uncur){
                             //Check for other items that have been selected in the other dropdowns
                             if(uncur.name != un.name){
-                                if(cName.title.toLowerCase()==uncur.copyTo.toLowerCase()){
+                                if(cName.title.toLowerCase()==uncur.copyto.toLowerCase()){
                                     cName.disabled = true;
                                     cName.alreadyMapped = uncur.name;
                                     cName.uiClass = "";
@@ -172,10 +172,10 @@ angular.module('ngChemApp')
                                 }
                             }else{
 
-                                if(cName.title.toLowerCase()==uncur.copyTo.toLowerCase()){
+                                if(cName.title.toLowerCase()==uncur.copyto.toLowerCase()){
                                     cName.uiClass = "glyphicon-check";
                                     disabledOrSelected = cName;
-                                    copyTo = cName.title;
+                                    copyto = cName.title;
                                 }
                             }
                           });
@@ -189,7 +189,7 @@ angular.module('ngChemApp')
                           }
 
                       });
-                      return {sortOrder : "none", copyTo: copyTo, mappingOptions: optList, knownBy: un.name, data: "uncuratedFields." + un.name, readOnly:true, className: "htCenter htMiddle ", renderer: "linkRenderer", automapped : un.automapped}
+                      return {sortOrder : "none", copyto: copyto, mappingOptions: optList, knownBy: un.name, data: "uncuratedFields." + un.name, readOnly:true, className: "htCenter htMiddle ", renderer: "linkRenderer", automapped : un.automapped}
                   });
 
                   allCols = [
@@ -315,29 +315,9 @@ angular.module('ngChemApp')
 
                   });
                   //set these to be a conditional of whether excludeBlanks and esxcludeFields are empty in the url
-                  c.showBlank = false;
-                  c.showNonBlank = false;
-                  //initialise from search parameters
-                  console.log(c);
-                  if(scope.showNonBlanks){
-                    angular.forEach(scope.showNonBlanks, function(nonblank){
-                      //is this column a match with c.data?
-                      if(nonblank == c.data){
-                        c.showNonBlank = true;
-                      }
-                    })
-                  }
-                  if(scope.showBlanks){
-                    angular.forEach(scope.showBlanks, function(blank){
-                      //is this column a match with c.data?
-                      if(blank == c.data){
-                        c.showBlank = true;
-                      }
-                    })
-                  }
                   
-                  
-                  //c.excludeFields = false;
+                  c.excludeBlanks = false;
+                  c.excludeFields = false;
                   c.typeahead = []
                   
                   c.searchForm = angular.copy(scope.searchForm);
@@ -450,9 +430,6 @@ angular.module('ngChemApp')
         "warningsFilter" : "=",
         "searchformSchema": "=",
         "searchForm": "=",
-        "showBlanks": "=",
-        "showNonBlanks": "=",
-        "messages": "=",
       }
     };
   }]);

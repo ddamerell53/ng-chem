@@ -10,9 +10,9 @@
 
                         </div>
                         <small><span style="margin-right:20px" ng-show="(!angular.isDefined(col.mappingOptions))" class="">&nbsp;</span></small>
-                        <small><span style="margin-right:20px" ng-show="(col.mappingOptions.length > 0 &amp;&amp; !col.copyTo)" class="pull-right alert-danger">Unmapped <info-box lookup="unmapped_values_written" lookupitems="messages" right="!$last"></info-box></span></small>
-                        <small><span  style=" margin-right:20px" ng-show="(col.copyTo)" class="pull-right alert-success">
-                            <span class="glyphicon glyphicon-arrow-right"></span>   {{col.copyTo}} <span ng-show="col.automapped==true">&nbsp;(auto)</span><info-box lookup="mapped_values_written" lookupitems="messages" right="!$last"></info-box></span></small>
+                        <small><span style="margin-right:20px" ng-show="(col.mappingOptions.length > 0 &amp;&amp; !col.copyto)" class="pull-right alert-danger">Unmapped <info-box lookup="unmapped_values_written" lookupitems="messages" right="!$last"></info-box></span></small>
+                        <small><span  style=" margin-right:20px" ng-show="(col.copyto)" class="pull-right alert-success">
+                            <span class="glyphicon glyphicon-arrow-right"></span>   {{col.copyto}} <span ng-show="col.automapped==true">&nbsp;(auto)</span><info-box lookup="mapped_values_written" lookupitems="messages" right="!$last"></info-box></span></small>
                         </div>
                         <div  >
                             <div class="pull-left" ng-if="!col.noSort">
@@ -101,12 +101,12 @@
                             <div class="pull-right" ng-if="(col.mappingOptions.length > 0)">
                                 <div class="dropdown pull-right"  aria-hidden="false">
                                     <button  class="btn btn-default btn-toggle mt-8" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                        {{(col.copyTo !='' ? 'Remap' : 'Map')}}
-                                        <span class="glyphicon glyphicon-random" ng-class="col.copyTo =='' ? 'lightgrey' : ''"></span>
+                                        {{(col.copyto !='' ? 'Remap' : 'Map')}}
+                                        <span class="glyphicon glyphicon-random" ng-class="col.copyto =='' ? 'lightgrey' : ''"></span>
                                             
                                     <span class="caret"></span></button>
                                     <ul class="dropdown-menu wide-dropdown"  role="menu" aria-labelledby="userBtn">
-                                        <li ng-if="col.copyTo" role="presentation">
+                                        <li ng-if="col.copyto" role="presentation">
                                                 
                                                 <a  class="" ng-click="$event.stopPropagation(); cbh.toggleMappedFieldInDirective('',col.knownBy);"><strong class="nexa">
                                                 <span class="glyphicon glyphicon-remove"></span>
