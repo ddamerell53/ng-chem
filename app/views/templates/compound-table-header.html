@@ -17,10 +17,12 @@
                         <div  >
                             <div class="pull-left" ng-if="!col.noSort">
                                 <div class="dropdown"  aria-hidden="false">
-                                    <button  class="btn btn-default btn-toggle mt-8" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><!-- <span class="glyphicon glyphicon-filter"></span> -->
+                                    <button  class="btn btn-default btn-toggle mt-8" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                        <span class="glyphicon " ng-class="col.showBlank==true || col.showNonBlank==true ? 'glyphicon-filter' : 'glyphicon-filter lightgrey'"></span>
                                         <span class="glyphicon " ng-class="{'asc': 'glyphicon-sort-by-alphabet', 'desc': 'glyphicon-sort-by-alphabet-alt', 'none': 'glyphicon-sort lightgrey'}[col.sortOrder]">
                                         </span>
-                                    <span class="caret"></span></button>
+                                    <span class="caret"></span>
+                                    </button>
                                     <ul class="dropdown-menu wide-dropdown" ng-class="($last ? 'pull-right' : '')"  role="menu" aria-labelledby="userBtn">
                                         <li ng-if="col.sortOrder != 'none'" role="presentation">
                                             <a ng-click="cbh.addSort(col.data, 'none')"><strong class="nexa"><span class="glyphicon glyphicon-remove"></span>
