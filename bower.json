@@ -33,7 +33,7 @@
     "angular-schema-form": "~0.8.0",
     "angular-schema-form-datepicker": "~0.3.1",
     "angular-schema-form-ui-select": "git@github.com:thesgc/angular-schema-form-ui-select.git#0.1.5",
-    "angular-info-box": "git@github.com:paulbarrett79/angular-info-box.git#v0.0.3",
+    "angular-info-box": "git@github.com:paulbarrett79/angular-info-box.git#v0.0.4",
     "angular-utils-pagination": "~0.7.0",
     "handsontable": "~0.15.0",
     "angular-ui-ace": "bower"
