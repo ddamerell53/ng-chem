@@ -37,7 +37,7 @@
                     </div>
                     <div class="col-xs-3 pull-right" style="padding:10px 4px 0 0;">
                         <div class="pull-right"><a ng-show="datasets[current_dataset_id].config.batchstats['withoutstructure'] > 0" ng-click ="cbh.toggleWarningsFilter('warnings.withoutstructure')" class="btn btn-sm btn-default" ng-class="warningsFilter =='warnings.withoutstructure' ? 'blue' : 'lightgrey'" title="Filter only records where there is no structure"><span class="glyphicon glyphicon-filter "></span></a>
-                        <info-box lookup="no_valid_structure_values" lookupvalues="messages"></info-box></div>
+                        <info-box lookup="no_valid_structure_values" lookupvalues="messages" left="false"></info-box></div>
                     </div>
 
                 </div>
