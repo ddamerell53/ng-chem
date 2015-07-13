@@ -27,7 +27,7 @@ angular.module('ngChemApp')
             templateUrl: 'views/cbh.html',
             abstract : true,
             
-            controller: function($scope, $rootScope, $state, $location, $modal, urlConfig, loggedInUser, projectList, prefix, $compile) {
+            controller: function($scope, $rootScope, $state, $location, $modal, urlConfig, loggedInUser, projectList, prefix, $compile, MessageFactory) {
                 var cbh = this;
                 cbh.logged_in_user = loggedInUser;
                 cbh.projects = projectList;
@@ -69,6 +69,7 @@ angular.module('ngChemApp')
                     }
                   });
                 };
+                cbh.messages = MessageFactory.getMessages();
 
               /* Create an object for communication between handsontable and the search form WRT custom fields */
               cbh.createCustomFieldTransport = function(newValue, oldValue, arrayContains) {

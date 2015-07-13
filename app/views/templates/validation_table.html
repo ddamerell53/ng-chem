@@ -10,7 +10,7 @@
 
                 </div>
                 
-                <small><h2 class="blue text-center">Uploaded <info-box right="true" lookup="total_values" lookupitems="messages"></info-box> <br>Records </h2></small><!-- info-box here -->
+                <small><h2 class="blue text-center">Uploaded <info-box right="true" lookup="total_values" lookupitems="cbh.messages"></info-box> <br>Records </h2></small><!-- info-box here -->
             </div>
             <div class="col-xs-8">
                 
@@ -23,7 +23,7 @@
                     </div>
                     <div class="col-xs-3 pull-right" style="padding:10px 4px 0 0;">
                         <div class="pull-right"><a ng-show="datasets[current_dataset_id].config.batchstats['withstructure'] > 0" ng-click ="cbh.toggleWarningsFilter('warnings.withstructure')" class="btn btn-sm btn-default" ng-class="warningsFilter =='warnings.withstructure' ? 'blue' : 'lightgrey'" title="Filter only records where there is a valid structure"><span class="glyphicon glyphicon-filter "></span></a>
-                        <info-box lookup="valid_structure_values" lookupitems="messages"></info-box></div>
+                        <info-box lookup="valid_structure_values" lookupitems="cbh.messages"></info-box></div>
                     </div>
 
                 </div>
@@ -37,7 +37,7 @@
                     </div>
                     <div class="col-xs-3 pull-right" style="padding:10px 4px 0 0;">
                         <div class="pull-right"><a ng-show="datasets[current_dataset_id].config.batchstats['withoutstructure'] > 0" ng-click ="cbh.toggleWarningsFilter('warnings.withoutstructure')" class="btn btn-sm btn-default" ng-class="warningsFilter =='warnings.withoutstructure' ? 'blue' : 'lightgrey'" title="Filter only records where there is no structure"><span class="glyphicon glyphicon-filter "></span></a>
-                        <info-box lookup="no_valid_structure_values" lookupvalues="messages" left="false"></info-box></div>
+                        <info-box lookup="no_valid_structure_values" lookupitems="cbh.messages" left="false"></info-box></div>
                     </div>
 
                 </div>
@@ -51,7 +51,7 @@
                     </div>
                     <div class="col-xs-3 pull-right" style="padding:10px 4px 0 0;">
                         <div class="pull-right"><a ng-show="datasets[current_dataset_id].config.batchstats['parseErrors'] > 0" ng-click ="cbh.toggleWarningsFilter('warnings.parseError')" class="btn btn-sm btn-default" ng-class="warningsFilter =='warnings.parseError' ? 'blue' : 'lightgrey'" title="Filter only records where the structure cannot be processed"><span class="glyphicon glyphicon-filter "></span></a>
-                        <info-box lookup="error_total_values" lookupitems="messages"></info-box></div>
+                        <info-box lookup="error_total_values" lookupitems="cbh.messages"></info-box></div>
                     </div>
 
                 </div>
@@ -72,7 +72,7 @@
         
                     </div>
                     
-                    <small><h2 class="blue text-center">Unique <info-box lookup="inchi_matching" lookupitems="messages"></info-box> <br> Compounds </h2></small><!-- info-box here -->
+                    <small><h2 class="blue text-center">Unique <info-box lookup="inchi_matching" lookupitems="cbh.messages"></info-box> <br> Compounds </h2></small><!-- info-box here -->
                 </div>
                 <div class="col-xs-8">
                     <div class="row">
@@ -98,7 +98,7 @@
                         </div>
                         <div class="col-xs-3 pull-right" style="padding:10px 4px 0 0;">
                             <div class="pull-right"><a ng-show="datasets[current_dataset_id].config.compoundstats['overlaps'] > 0" ng-click ="cbh.toggleWarningsFilter('warnings.overlap')" class="btn btn-sm btn-default" ng-class="warningsFilter =='warnings.overlap' ? 'blue' : 'lightgrey'" title="Filter only records where the structure overlaps with existing ChemReg records"><span class="glyphicon glyphicon-filter "></span></a>
-                            <info-box lookup="project_match_values" lookupitems="messages"></info-box></div>
+                            <info-box lookup="project_match_values" lookupitems="cbh.messages"></info-box></div>
                         </div>
         
                     </div>
@@ -107,7 +107,7 @@
                         <div class="row" ng-show='(datasets[current_dataset_id].config.compoundstats["duplicateoverlaps"] + datasets[current_dataset_id].config.compoundstats["duplicatenew"]) > 0' style="padding:0;">
                             <div class="col-xs-1 "  ></div>
                             <div class="col-xs-8"  style="padding:10px 0 0 0"><p class="nexa vw">Duplicates were found</p></div>
-                            <div class="col-xs-3 pull-right"   style="padding:10px 4px 0 0;"><div class="pull-right"><a ng-click ="cbh.toggleWarningsFilter('warnings.duplicate')" class="btn btn-sm btn-default" ng-class="warningsFilter =='warnings.duplicate' ? 'blue' : 'lightgrey'" title="Filter only records that are duplicated in the uploaded data"><span class="glyphicon glyphicon-filter "></span></a><info-box lookup="chemreg_match_values" lookupitems="messages"></info-box></div></div>
+                            <div class="col-xs-3 pull-right"   style="padding:10px 4px 0 0;"><div class="pull-right"><a ng-click ="cbh.toggleWarningsFilter('warnings.duplicate')" class="btn btn-sm btn-default" ng-class="warningsFilter =='warnings.duplicate' ? 'blue' : 'lightgrey'" title="Filter only records that are duplicated in the uploaded data"><span class="glyphicon glyphicon-filter "></span></a><info-box lookup="chemreg_match_values" lookupitems="cbh.messages"></info-box></div></div>
         
                         </div>
         
@@ -119,7 +119,7 @@
                         </div>
                             <div class="col-xs-3 pull-right"  style="padding:10px 4px 0 0;" >
                                 <div class="pull-right">
-                            <info-box class="pull-right" lookup="duplicate_count_values" lookupitems="messages"></info-box>
+                            <info-box class="pull-right" lookup="duplicate_count_values" lookupitems="cbh.messages"></info-box>
                         </div>
                         </div>
                         </div>
