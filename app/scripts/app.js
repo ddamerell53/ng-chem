@@ -283,10 +283,10 @@ angular.module('ngChemApp')
             templateUrl: 'views/help.html',
             controller: function($scope, $rootScope) {
               $scope.slides = [
-                { image: "images/reg-single.gif", text: "Adding One Compound" },
-                { image: "images/reg-multiple.gif", text: "Adding Multiple Compounds" },
-                { image: "images/edit-custom-fields.gif", text: "Editing Tagged Fields" },
-                { image: "images/search-by-tag.gif", text: "Searching By Tag" },
+                { image: "images/reg-single.gif", text: "Adding one compound" },
+                { image: "images/reg-multiple.gif", text: "Adding multiple compounds" },
+                { image: "images/edit-custom-fields.gif", text: "Editing tagged fields" },
+                { image: "images/search-by-tag.gif", text: "Searching by tag" },
               ];
               $rootScope.projName = "";
             }
