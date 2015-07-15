@@ -316,8 +316,26 @@ angular.module('ngChemApp')
                   });
                   //set these to be a conditional of whether excludeBlanks and esxcludeFields are empty in the url
                   
-                  c.excludeBlanks = false;
-                  c.excludeFields = false;
+                  c.showBlank = false;
+                  c.showNonBlank = false;
+                  //initialise from search parameters
+                  console.log(c);
+                  if(scope.showNonBlanks){
+                    angular.forEach(scope.showNonBlanks, function(nonblank){
+                      //is this column a match with c.data?
+                      if(nonblank == c.data){
+                        c.showNonBlank = true;
+                      }
+                    })
+                  }
+                  if(scope.showBlanks){
+                    angular.forEach(scope.showBlanks, function(blank){
+                      //is this column a match with c.data?
+                      if(blank == c.data){
+                        c.showBlank = true;
+                      }
+                    })
+                  }
                   c.typeahead = []
                   
                   c.searchForm = angular.copy(scope.searchForm);
@@ -348,6 +366,7 @@ angular.module('ngChemApp')
                  //then do the reverse of the custom-field-to-table
                  scope.$on('custom-field-to-table', function(event, data) {
                       if(col.knownBy == data.newValue.split("|")[0]) {
+                        console.log("COLUMN MATCH KLAXON");
                         if(data.addOrRemove == "add") {
                           var match = $filter('filter')(col.searchForm.search_custom_fields__kv_any, function(value, index) { return value == data.newValue })
                           if(match.length == 0){
@@ -376,11 +395,10 @@ angular.module('ngChemApp')
                   if(newValue !== oldValue){
                     //broadcast the newValue
                     var broadcastObj = scope.cbh.createCustomFieldTransport(newValue, oldValue, "obj");
+                    console.log("from table", broadcastObj)
                     $rootScope.$broadcast('custom-field-from-table', broadcastObj);
                   }
                 }, true);
-
-                //scope.$emit('schemaFormRedraw');
                 
               })
               $("#myid").doubleScroll();
@@ -430,6 +448,9 @@ angular.module('ngChemApp')
         "warningsFilter" : "=",
         "searchformSchema": "=",
         "searchForm": "=",
+        "showBlanks": "=",
+        "showNonBlanks": "=",
+        "messages": "=",
       }
     };
   }]);

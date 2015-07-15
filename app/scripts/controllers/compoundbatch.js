@@ -253,7 +253,6 @@ angular.module('ngChemApp')
                      $scope.noData = "No Compounds Found. To add compounds use the link above.";
                 }
             }
-            console.log("stateparams 249", $stateParams);
             if(angular.isDefined($stateParams.showBlanks)){
                 $scope.compoundBatches.showBlanks = JSON.parse($stateParams.showBlanks)
             }
