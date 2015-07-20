@@ -49,18 +49,21 @@
                                         </li>
 
                                             <li ng-if="col.searchForm" role="presentation">
-                                                <a class=""  ng-click="$event.stopPropagation();">
-                                                    <form><!-- <div class="form-group" sf-schema="col.searchformSchema.cf_schema" sf-form="col.searchformSchema.cf_form" sf-model="col.searchForm"></div -->
-                                                        <div class="form-group column-header-form" >
-                                                            <ui-select multiple ng-model="col.searchformSchema.schema.properties.search_custom_fields__kv_any.items" theme="bootstrap"  class="col.searchformSchema.cf_form[0].htmlClass">
+                                                <a class=""  ng-click="$event.stopPropagation();$event.preventDefault();">
+                                                   
+                                                        <div ng-click="$event.stopPropagation();$event.preventDefault();" class="form-group column-header-form" >
+                                                            <ui-select  multiple 
+                                                            ng-model="col.searchformSchema.schema.properties.search_custom_fields__kv_any.items" 
+                                                            theme="bootstrap"  
+                                                            class="col.searchformSchema.cf_form[0].htmlClass"
+                                                            >
                                                               <ui-select-match placeholder="Choose...">{{$item.label}}</ui-select-match>
-                                                              <ui-select-choices repeat="item in typeahead | filter: $select.search track by item.value" refresh-delay="col.searchformSchema.cf_form[0].options.refreshDelay" refresh="refreshSingleCustField(col.searchformSchema.cf_form[0].options.async.url ,$select.search, col.knownBy)" style="top: 32px;">
+                                                              <ui-select-choices repeat="item in col.typeahead | filter: $select.search track by item.value" refresh-delay="col.searchformSchema.cf_form[0].options.refreshDelay" refresh="refreshSingleCustField(col,$select.search)" style="top: 32px;">
                                                                 <div ng-bind-html="item.label | highlight: $select.search"></div>
                                                                 
                                                             </ui-select-choices>
                                                             </ui-select>
                                                         </div>
-                                                    </form>
                                                 </a>
                                             </li>
                                             

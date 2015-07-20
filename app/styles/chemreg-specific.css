@@ -35,6 +35,9 @@ li a svg.svg {
   margin-bottom:-10px;
 
 }
+.ui-select-container input {
+  width: 100% !important;
+}
 .wtHolder {
   margin-bottom:100px;
 }

@@ -79,3 +79,17 @@ req.then(function(projData){
  
 
 
+// var uis = angular.module('ui.select')
+
+// .constant('uiSelectConfig', {
+//   theme: 'bootstrap',
+//   searchEnabled: true,
+//   sortable: false,
+//   placeholder: 'Choose...', // Empty by default, like HTML tag <select>
+//   refreshDelay: 0, // In milliseconds
+//   closeOnSelect: false,
+//   generateId: function() {
+//     return latestId++;
+//   },
+//   appendToBody: false
+// });
