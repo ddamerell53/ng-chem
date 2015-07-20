@@ -151,11 +151,11 @@ angular.module('ngChemApp')
             //var resp = $http.get(options.async.url + "?custom__field__startswith=" + search + "&custom_field=" + options.custom_field);
         }
 
-    $scope.refreshSingleCustField = function(url, searchTerm, customField){
-        $http.get(options.async.url + "?custom__field__startswith=" + searchTerm + "&custom_field=" + customField).then(function(response){
-            $scope.typeahead = response.data;
-        });
-    }
+    // $scope.refreshSingleCustField = function(url, searchTerm, customField){
+    //     $http.get(options.async.url + "?custom__field__startswith=" + searchTerm + "&custom_field=" + customField).then(function(response){
+    //         $scope.typeahead = response.data;
+    //     });
+    // }
 
     $scope.broadcastFilter = function() {
         console.log("broadcastFilter called");

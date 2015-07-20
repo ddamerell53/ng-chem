@@ -79,10 +79,10 @@ angular.module('ngChemApp')
                 scope.cbh.setMappedFieldInController(newFieldName, unCuratedFieldName);
 
               }//setMappedFieldInDirective
-              scope.typeahead = []
-              scope.refreshSingleCustField = function(url, searchTerm, knownBy){
-                  $http.get(url + "?custom__field__startswith=" + searchTerm + "&custom_field=" + knownBy).then(function(response){
-                      scope.typeahead = response.data;
+              scope.refreshSingleCustField = function(col, searchTerm, knownBy){
+                  var url = col.searchformSchema.cf_form[0].options.async.url;
+                  $http.get(url + "?custom__field__startswith=" + searchTerm + "&custom_field=" + col.knownBy).then(function(response){
+                      col.typeahead = response.data;
                   });
               }
 
@@ -132,11 +132,13 @@ angular.module('ngChemApp')
                 
                 var customCols = cNames.map(function(cn){
                   
-                  return {
+                  var col =  {
                     knownBy: cn, 
                     data: "customFields." + cn, readOnly:true, 
                     className: "htCenter htMiddle ", 
-                    renderer: "linkRenderer"}
+                    renderer: "linkRenderer",
+                    typeahed : []}
+                  return col;
                 });
 
                 var allCols;
@@ -319,7 +321,6 @@ angular.module('ngChemApp')
                   c.showBlank = false;
                   c.showNonBlank = false;
                   //initialise from search parameters
-                  console.log(c);
                   if(scope.showNonBlanks){
                     angular.forEach(scope.showNonBlanks, function(nonblank){
                       //is this column a match with c.data?
@@ -336,10 +337,10 @@ angular.module('ngChemApp')
                       }
                     })
                   }
-                  c.typeahead = []
+                  c.typeahead = [];
                   
                   c.searchForm = angular.copy(scope.searchForm);
-                  c.searchformSchema = angular.copy(scope.searchformSchema)
+                  c.searchformSchema = angular.copy(scope.searchformSchema);
                   if(angular.isDefined(c.searchformSchema)){
                     c.searchformSchema.cf_form[0].options['custom_field'] = c.knownBy;
                      if(c.searchForm.search_custom_fields__kv_any) {
@@ -350,6 +351,8 @@ angular.module('ngChemApp')
                       });
                         
                     }
+                  }else{
+                    c.searchformSchema.schema.properties.search_custom_fields__kv_any.items = [];
                   }
                   
               });
