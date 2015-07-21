@@ -288,7 +288,7 @@ angular.module('ngChemApp')
         $scope.createMultiBatch = function(){
             $scope.setLoadingMessageHeight();
             $scope.currentlyLoading = true;
-
+            $timeout(function(){ $scope.setLoadingMessageHeight();});
             CBHCompoundBatch.createMultiBatch(
                 $scope.datasets[$scope.current_dataset_id]).then(
                     function(data){
