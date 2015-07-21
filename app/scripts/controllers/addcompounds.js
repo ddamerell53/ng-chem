@@ -403,12 +403,9 @@ angular.module('ngChemApp')
              if (angular.isDefined($stateParams.mb_id)){
                 getResultsPage($scope.pagination.current);
             }
-            
         // getResultsPage($scope.pagination.current);
-
-
     }   
-    
+    $scope.cbh.includedProjectKeys = [$scope.proj.project_key];
           
 
     $scope.changeNumberPerPage = function(viewType) {

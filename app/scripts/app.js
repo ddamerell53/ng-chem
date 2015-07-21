@@ -406,6 +406,8 @@ angular.module('ngChemApp')
                       angular.forEach($scope.projects, function(proj) {
                         if(proj.project_key == projectKey) {
                           $scope.proj = proj;
+                          $scope.cbh.includedProjectKeys = [$scope.proj.project_key];
+
                         }
                       });
                 },
