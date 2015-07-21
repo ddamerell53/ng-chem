@@ -27,10 +27,12 @@ angular.module('ngChemApp')
             templateUrl: 'views/cbh.html',
             abstract : true,
             
-            controller: function($scope, $rootScope, $state, $location, $modal, urlConfig, loggedInUser, projectList, prefix, $compile, MessageFactory) {
+            controller: function($scope, $rootScope, $state, $location, $modal, urlConfig, loggedInUser, projectList, prefix, $compile, MessageFactory, skinConfig) {
                 var cbh = this;
                 cbh.logged_in_user = loggedInUser;
                 cbh.projects = projectList;
+                cbh.skinning = skinConfig.objects[0];
+                //$scope.skinning = cbh.skinning;
                 cbh.prefix = urlConfig.instance_path.base;
                 cbh.api_base = urlConfig.admin.list_endpoint;
                 cbh.searchPage =   function(){
@@ -360,11 +362,11 @@ angular.module('ngChemApp')
             url: '/list',
             templateUrl: 'views/projects-list.html',
             controller: function($rootScope, $state, $stateParams, $scope) {
-              $rootScope.headline = "Projects List";
-              $rootScope.subheading = "Click a project title to see more details and add compounds to that project";
+              $rootScope.headline = $scope.cbh.skinning.project_alias + " List";
+              $rootScope.subheading = "Click a project title to see more details and add compounds to that " + $scope.cbh.skinning.project_alias;
               $rootScope.help_lookup = "";
-              $rootScope.projectKey = "Projects";
-              $rootScope.projName = "Projects";
+              $rootScope.projectKey = $scope.cbh.skinning.project_alias + "s";
+              $rootScope.projName = $scope.cbh.skinning.project_alias + "s";
               $rootScope.glyphicon = "folder-open";
 
               //if a new user has no projects associated, refdirect them to a default view with supplementary info

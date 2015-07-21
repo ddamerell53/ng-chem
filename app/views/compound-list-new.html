@@ -3,9 +3,9 @@
     <div class="col-xs-12">
         <h2 class="blue"> 
             <ng-pluralize count="totalCompoundBatches"
-            when="{'0': '0 results',
-             'one': '1 result',
-              'other': '{} results'}">
+            when="{'0': '0 ' + cbh.skinning.result_alias + 's',
+             'one': '1 ' + cbh.skinning.result_alias,
+              'other': '{} ' + cbh.skinning.result_alias + 's'}">
             </ng-pluralize>
             <span ng-if="warningsFilter"> (filtered)</span>
         </h2>
