@@ -454,7 +454,11 @@ angular.module('ngChemApp')
         //     $location.hash('search-bottom');
         //     $anchorScroll();
         // }
-        $scope.compoundBatches.redraw ++;
+
+        $timeout(function(){
+                    $scope.compoundBatches.redraw ++;
+
+        });
     }
 
     
@@ -515,8 +519,8 @@ angular.module('ngChemApp')
 
                 if(result.data.objects.length > 0){
                     var size = ($scope.listOrGallery.choice=="gallery") ? 100 : 75;
-                    CBHCompoundBatch.getImages( result.data.objects, size, "imageSrc"); 
-                    CBHCompoundBatch.getImages(result.data.objects, 400, "bigImageSrc", $scope.imageCallback);
+                    CBHCompoundBatch.getImages( result.data.objects, size, "imageSrc" , $scope.imageCallback); 
+                    CBHCompoundBatch.getImages(result.data.objects, 400, "bigImageSrc");
 
                 }else if( ( $scope.pagination.current * parseInt($scope.pagination.compoundBatchesPerPage.value)) > $scope.totalCompoundBatches){
                     if($scope.pagination.current != 1){
