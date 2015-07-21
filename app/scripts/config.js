@@ -22,7 +22,9 @@ var configuration = {
     {"list_endpoint": path + "cbh_batch_upload", 
     "schema": path + "cbh_batch_upload/schema"}, 
     "cbh_projects": {"list_endpoint": path + 
-    "cbh_projects", "schema": path + "cbh_projects/schema"}, 
+    "cbh_projects", "schema": path + "cbh_projects/schema"},
+    "cbh_skinning": {"list_endpoint": path + 
+    "cbh_skinning", "schema": path + "cbh_skinning/schema"}, 
     "cbh_compound_batches": {"list_endpoint": path + 
     "cbh_compound_batches", "schema": path + "cbh_compound_batches/schema"}, 
     "users": {"list_endpoint": path + "users", "schema": path + "users/schema"},
@@ -71,6 +73,14 @@ req.then(function(projData){
         angular.bootstrap(angular.element( document.querySelector( '#bodytest' ) ), ["ngChemApp"]);
     });
     });
+var skin = $http({  method: "get",
+                    url: configuration.cbh_skinning.list_endpoint
+                  });
+skin.then(function(skinObj){
+  angular.module('ngChemApp').value('skinConfig',  
+          skinObj.data
+    );
+})
 
 
 
