@@ -288,7 +288,7 @@ angular.module('ngChemApp')
         $scope.createMultiBatch = function(){
             $scope.setLoadingMessageHeight();
             $scope.currentlyLoading = true;
-
+            $timeout(function(){ $scope.setLoadingMessageHeight();});
             CBHCompoundBatch.createMultiBatch(
                 $scope.datasets[$scope.current_dataset_id]).then(
                     function(data){
@@ -305,17 +305,6 @@ angular.module('ngChemApp')
                         $scope.compoundBatches.savestats = data.data.savestats;
                         $scope.totalCompoundBatches = data.data.batchstats.total;
 
-                        //setup of uiselect for custom fields filtering
-                        /*$scope.searchFormSchema= angular.copy($scope.cbh.projects.searchform);
-                        console.log($scope.searchFormSchema);
-                        var pf = searchUrlParams.setup($stateParams, {molecule: {}});
-                        $scope.searchForm = angular.copy(pf.searchForm);
-                        var custFieldFormItem = $filter('filter')($scope.searchFormSchema.cf_form, {key:'search_custom_fields__kv_any'}, true);
-                        custFieldFormItem[0].options.async.call = $scope.refreshCustFields;
-
-                        if($scope.searchForm.search_custom_fields__kv_any) {
-                            $scope.searchFormSchema.schema.properties.search_custom_fields__kv_any.items = $scope.searchForm.search_custom_fields__kv_any.map(function(i){return {value : i, label : i}});
-                        }*/
 
                         //Here we change the URL without changing the state
                          $state.transitionTo ($state.current.name, 
@@ -465,7 +454,11 @@ angular.module('ngChemApp')
         //     $location.hash('search-bottom');
         //     $anchorScroll();
         // }
-        $scope.compoundBatches.redraw ++;
+
+        $timeout(function(){
+                    $scope.compoundBatches.redraw ++;
+
+        });
     }
 
     
@@ -503,7 +496,7 @@ angular.module('ngChemApp')
             offset, 
             filter, 
             $stateParams.sorts).then(function(result){
-                $scope.cbh.fileextension = result.data.fileExtension;
+                $scope.cbh.fileextension = result.data.fileextension;
                 $scope.totalCompoundBatches = result.data.meta.totalCount;
                 $scope.compoundBatches.data =result.data.objects;
                 $scope.compoundBatches.uncuratedHeaders = result.data.headers;
@@ -526,8 +519,8 @@ angular.module('ngChemApp')
 
                 if(result.data.objects.length > 0){
                     var size = ($scope.listOrGallery.choice=="gallery") ? 100 : 75;
-                    CBHCompoundBatch.getImages( result.data.objects, size, "imageSrc"); 
-                    CBHCompoundBatch.getImages(result.data.objects, 400, "bigImageSrc", $scope.imageCallback);
+                    CBHCompoundBatch.getImages( result.data.objects, size, "imageSrc" , $scope.imageCallback); 
+                    CBHCompoundBatch.getImages(result.data.objects, 400, "bigImageSrc");
 
                 }else if( ( $scope.pagination.current * parseInt($scope.pagination.compoundBatchesPerPage.value)) > $scope.totalCompoundBatches){
                     if($scope.pagination.current != 1){

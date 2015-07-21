@@ -18,7 +18,7 @@
                             <div class="pull-left" ng-if="!col.noSort">
                                 <div class="dropdown"  aria-hidden="false">
                                     <button  class="btn btn-default btn-toggle mt-8" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                        <span class="glyphicon " ng-class="col.showBlank==true || col.showNonBlank==true ? 'glyphicon-filter' : 'glyphicon-filter lightgrey'"></span>
+                                        <span ng-if="col.searchForm" class="glyphicon " ng-class="col.showBlank==true || col.showNonBlank==true ? 'glyphicon-filter' : 'glyphicon-filter lightgrey'"></span>
                                         <span class="glyphicon " ng-class="{'asc': 'glyphicon-sort-by-alphabet', 'desc': 'glyphicon-sort-by-alphabet-alt', 'none': 'glyphicon-sort lightgrey'}[col.sortOrder]">
                                         </span>
                                     <span class="caret"></span>
@@ -109,15 +109,7 @@
                                             
                                     <span class="caret"></span></button>
                                     <ul class="dropdown-menu wide-dropdown"  role="menu" aria-labelledby="userBtn">
-                                        <li ng-if="col.copyto" role="presentation">
-                                                
-                                                <a  class="" ng-click="$event.stopPropagation(); cbh.toggleMappedFieldInDirective('',col.knownBy);"><strong class="nexa">
-                                                <span class="glyphicon glyphicon-remove"></span>
-                                                &nbsp;Reset Mapping on {{col.knownBy}}</strong>
-                                                
-                                                </a>
-                                                
-                                            </li>
+                                       
                                         <li ng-repeat="opt in col.mappingOptions" role="presentation">
                                                 
                                                 <a class="relative" ng-if="opt.uiClass" class="" ng-click="$event.stopPropagation(); cbh.toggleMappedFieldInDirective($index,col.knownBy);"><strong class="nexa">

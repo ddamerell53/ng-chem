@@ -138,6 +138,7 @@ angular.module('ngChemApp')
     };
 
     CBHCompoundBatch.saveMultiBatchMolecules = function(config) {
+        
         return $http.post( urlConfig.cbh_compound_batches.list_endpoint + "/multi_batch_save/", config);
     };
 
