@@ -351,8 +351,6 @@ angular.module('ngChemApp')
                       });
                         
                     }
-                  }else{
-                    c.searchformSchema.schema.properties.search_custom_fields__kv_any.items = [];
                   }
                   
               });
