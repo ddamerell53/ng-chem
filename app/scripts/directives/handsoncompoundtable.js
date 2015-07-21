@@ -369,9 +369,15 @@ angular.module('ngChemApp')
                       if(col.knownBy == data.newValue.split("|")[0]) {
                         console.log("COLUMN MATCH KLAXON");
                         if(data.addOrRemove == "add") {
+                          console.log("col.searchForm.search_custom_fields__kv_any",col.searchForm.search_custom_fields__kv_any)
                           var match = $filter('filter')(col.searchForm.search_custom_fields__kv_any, function(value, index) { return value == data.newValue })
                           if(match.length == 0){
-                            col.searchForm.search_custom_fields__kv_any.push(data.newValue);
+                            if(col.searchForm.search_custom_fields__kv_any){
+                              col.searchForm.search_custom_fields__kv_any.push(data.newValue);  
+                            }
+                            else {
+                              col.searchForm.search_custom_fields__kv_any = [(data.newValue)]; 
+                            }
                             col.searchformSchema.schema.properties.search_custom_fields__kv_any.items = col.searchForm.search_custom_fields__kv_any.map(function(i){return {value : i, label : labelifyCustomField(i)}});
                           }
                         }
