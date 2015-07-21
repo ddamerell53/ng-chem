@@ -18,7 +18,7 @@
                             <div class="pull-left" ng-if="!col.noSort">
                                 <div class="dropdown"  aria-hidden="false">
                                     <button  class="btn btn-default btn-toggle mt-8" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                        <span class="glyphicon " ng-class="col.showBlank==true || col.showNonBlank==true ? 'glyphicon-filter' : 'glyphicon-filter lightgrey'"></span>
+                                        <span ng-if="col.searchForm" class="glyphicon " ng-class="col.showBlank==true || col.showNonBlank==true ? 'glyphicon-filter' : 'glyphicon-filter lightgrey'"></span>
                                         <span class="glyphicon " ng-class="{'asc': 'glyphicon-sort-by-alphabet', 'desc': 'glyphicon-sort-by-alphabet-alt', 'none': 'glyphicon-sort lightgrey'}[col.sortOrder]">
                                         </span>
                                     <span class="caret"></span>

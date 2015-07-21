@@ -503,7 +503,7 @@ angular.module('ngChemApp')
             offset, 
             filter, 
             $stateParams.sorts).then(function(result){
-                $scope.cbh.fileextension = result.data.fileExtension;
+                $scope.cbh.fileextension = result.data.fileextension;
                 $scope.totalCompoundBatches = result.data.meta.totalCount;
                 $scope.compoundBatches.data =result.data.objects;
                 $scope.compoundBatches.uncuratedHeaders = result.data.headers;

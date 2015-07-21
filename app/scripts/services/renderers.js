@@ -56,7 +56,7 @@ angular.module('ngChemApp')
                     }
                   });
                   html += "</ul>"
-                      td.className  += "htCenter htMiddle ";
+                      td.className  += " htMiddle ";
 
                   td.innerHTML = html.replace("SMILESHERE", mol.originalSmiles);
                 return td;
