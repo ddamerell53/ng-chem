@@ -305,17 +305,6 @@ angular.module('ngChemApp')
                         $scope.compoundBatches.savestats = data.data.savestats;
                         $scope.totalCompoundBatches = data.data.batchstats.total;
 
-                        //setup of uiselect for custom fields filtering
-                        /*$scope.searchFormSchema= angular.copy($scope.cbh.projects.searchform);
-                        console.log($scope.searchFormSchema);
-                        var pf = searchUrlParams.setup($stateParams, {molecule: {}});
-                        $scope.searchForm = angular.copy(pf.searchForm);
-                        var custFieldFormItem = $filter('filter')($scope.searchFormSchema.cf_form, {key:'search_custom_fields__kv_any'}, true);
-                        custFieldFormItem[0].options.async.call = $scope.refreshCustFields;
-
-                        if($scope.searchForm.search_custom_fields__kv_any) {
-                            $scope.searchFormSchema.schema.properties.search_custom_fields__kv_any.items = $scope.searchForm.search_custom_fields__kv_any.map(function(i){return {value : i, label : i}});
-                        }*/
 
                         //Here we change the URL without changing the state
                          $state.transitionTo ($state.current.name, 

@@ -407,16 +407,22 @@ angular.module('ngChemApp')
                   }
                 }, true);
                 
-              })
+              });
+              if(customCols){
+                //Ensuring there is enough height for the menu bars to sit in
+                   var minHeight = 200 + customCols.length *30;
+                   $("#myid").css("min-height", minHeight + "px");
+              }
               $("#myid").doubleScroll();
               var header = document.createElement('DIV');
               var head = angular.element(header);
-              head.html('<div ng-include="&apos;views/templates/compound-table-header.html&apos;"></div>');
+              head.html('<div  ng-include="&apos;views/templates/compound-table-header.html&apos;"></div>');
               var compiled = $compile(head.contents())(scope);
               $("#myid").prepend(compiled);              
 
               $('.btn-toggle').dropdown();
               scope.elem = $("#myid");
+
               if(scroll){
                 scope.elem.scrollLeft(scroll);
               }
