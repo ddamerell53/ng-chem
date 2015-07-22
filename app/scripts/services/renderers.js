@@ -62,6 +62,20 @@ angular.module('ngChemApp')
                 return td;
               },
 
+              centeredNumericRenderer : function(instance, td, row, col, prop, value, cellProperties) {
+                /*var escaped = Handsontable.helper.stringify(value);
+                escaped = strip_tags(escaped, '<em><b><strong><a><big>'); //be sure you only allow certain HTML tags to avoid XSS threats (you should also remove unwanted HTML attributes)
+                td.innerHTML = escaped;
+              */
+                Handsontable.renderers.TextRenderer.apply(this, arguments);
+                cellProperties.type = "numeric"
+                cellProperties.format = "0.00"
+                td.className = "htCenter htMiddle";
+                return td;
+
+              },
+
+
 
               
                safeHtmlRenderer : function(instance, td, row, col, prop, value, cellProperties) {
