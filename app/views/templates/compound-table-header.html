@@ -18,18 +18,13 @@
                             <div class="pull-left" ng-if="!col.noSort">
                                 <div class="dropdown"  aria-hidden="false">
                                     <button  class="btn btn-default btn-toggle mt-8" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                        <span ng-if="col.searchForm" class="glyphicon " ng-class="col.showBlank==true || col.showNonBlank==true ? 'glyphicon-filter' : 'glyphicon-filter lightgrey'"></span>
+                                        <span ng-if="col.searchForm" class="glyphicon " ng-class="cbh.isCustomFieldFiltered(col.knownBy) || col.showBlank==true || col.showNonBlank==true ? 'glyphicon-filter' : 'glyphicon-filter lightgrey'"></span>
                                         <span class="glyphicon " ng-class="{'asc': 'glyphicon-sort-by-alphabet', 'desc': 'glyphicon-sort-by-alphabet-alt', 'none': 'glyphicon-sort lightgrey'}[col.sortOrder]">
                                         </span>
                                     <span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu wide-dropdown" ng-class="($last ? 'pull-right' : '')"  role="menu" aria-labelledby="userBtn">
-                                        <li ng-if="col.sortOrder != 'none'" role="presentation">
-                                            <a ng-click="cbh.addSort(col.data, 'none')"><strong class="nexa"><span class="glyphicon glyphicon-remove"></span>
-                                            &nbsp;Reset Sorts on {{col.knownBy}}</strong></a>
-                                        </li>
-                                        <li ng-if="col.sortOrder != 'none'" role="presentation" class="divider">
-                                        </li>
+                                        
                                         <li role="presentation">
                                             <a class="relative" ng-click="cbh.addSort(col.data, 'asc')"><strong class="nexa">
                                                 <span class="glyphicon glyphicon-sort-by-alphabet"></span>
@@ -48,32 +43,15 @@
 
                                         </li>
 
-                                            <li ng-if="col.searchForm" role="presentation">
-                                                <a class=""  ng-click="$event.stopPropagation();$event.preventDefault();">
-                                                   
-                                                        <div ng-click="$event.stopPropagation();$event.preventDefault();" class="form-group column-header-form" >
-                                                            <ui-select  multiple 
-                                                            ng-model="col.searchformSchema.schema.properties.search_custom_fields__kv_any.items" 
-                                                            theme="bootstrap"  
-                                                            class="col.searchformSchema.cf_form[0].htmlClass"
-                                                            >
-                                                              <ui-select-match placeholder="Choose...">{{$item.label}}</ui-select-match>
-                                                              <ui-select-choices repeat="item in col.typeahead | filter: $select.search track by item.value" refresh-delay="col.searchformSchema.cf_form[0].options.refreshDelay" refresh="refreshSingleCustField(col,$select.search)" style="top: 32px;">
-                                                                <div ng-bind-html="item.label | highlight: $select.search"></div>
-                                                                
-                                                            </ui-select-choices>
-                                                            </ui-select>
-                                                        </div>
-                                                </a>
-                                            </li>
                                             
                                             
                                                 
-                                            
+                                            <li ng-if="col.searchForm" role="presentation" class="divider"></li>
+
                                             <li ng-if="col.searchForm" role="presentation">
                                                 
                                                 <a class="" ng-click="cbh.blanksFilter(col, 'blanks');col.showBlank=!col.showBlank;col.showNonBlank=null;"><strong class="nexa">
-                                                <span class="glyphicon glyphicon-ban-circle" ng-class=""></span>
+                                                <span class="glyphicon glyphicon-filter" ng-class=""></span>
                                                 &nbsp;Show only blanks</strong>
                                                 <span class="glyphicon pull-right" ng-class="(col.showBlank==true) ? 'glyphicon-check':'glyphicon-unchecked'"></span>
                                                 </a>
@@ -81,19 +59,38 @@
                                             <li ng-if="col.searchForm" role="presentation">
                                                 
                                                 <a class="" ng-click="cbh.blanksFilter(col, 'nonblanks');col.showNonBlank=!col.showNonBlank;col.showBlank=null;"><strong class="nexa">
-                                                <span class="glyphicon glyphicon-ban-circle" ng-class=""></span>
+                                                <span class="glyphicon glyphicon-filter" ng-class=""></span>
                                                 &nbsp;Show only non-blanks</strong>
                                                 <span class="glyphicon pull-right" ng-class="(col.showNonBlank==true) ? 'glyphicon-check':'glyphicon-unchecked'"></span>
                                                 </a>
                                             </li>
-                                            <!-- <li ng-if="col.searchForm" role="presentation">
-                                                
-                                                <a class="" ng-click="cbh.excludeFilter(col, 'fields');col.excludeFields=!col.excludeFields"><strong class="nexa">
-                                                <span class="glyphicon glyphicon-ban-circle" ng-class=""></span>
-                                                &nbsp;Exclude fields</strong>
-                                                <span class="glyphicon pull-right" ng-class="(col.excludeBlank==true) ? 'glyphicon-check':'glyphicon-unchecked'"></span>
-                                                </a>
-                                            </li> -->
+                                            <li ng-if="col.searchForm"  role="presentation" class="divider"></li>
+                                            <li ng-if="col.searchForm" role="presentation">
+                                                <span class="input-in-dropdown" ng-click="$event.stopPropagation();$event.preventDefault();">
+                                                   
+                                                        <div ng-click="$event.stopPropagation();$event.preventDefault();" class="form-group column-header-form" >
+                                                            <div class="input-group">
+
+                                                            <ui-select  multiple 
+                                                            ng-model="col.searchformSchema.schema.properties.search_custom_fields__kv_any.items" 
+                                                            theme="bootstrap"  
+                                                            class="col.searchformSchema.cf_form[0].htmlClass"
+                                                            >
+                                                              <ui-select-match placeholder="Filter {{col.knownBy}}...">{{$item.label}}</ui-select-match>
+                                                              <ui-select-choices repeat="item in col.typeahead | filter: $select.search track by item.value" refresh-delay="col.searchformSchema.cf_form[0].options.refreshDelay" refresh="refreshSingleCustField(col,$select.search)" style="top: 32px;">
+                                                                <div ng-bind-html="item.label | highlight: $select.search"></div>
+                                                                
+                                                            </ui-select-choices>
+                                                            </ui-select>
+                                                              <span class="input-group-addon" id="basic-addon2" ng-click="cbh.runSearch(true)"><span class=" glyphicon glyphicon-filter" ></span>Apply</span>
+
+                                                        </div>
+
+                                                        </div>
+                                                    
+                                                </span>
+                                            </li>
+                                            
                                         </div>
                                         
         

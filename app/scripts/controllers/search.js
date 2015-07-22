@@ -52,10 +52,29 @@ angular.module('ngChemApp')
         $state.transitionTo('cbh.search', {location: true, inherit:false, relative:null, notify:true});
     }
 
-    $scope.runSearch = function(){
+    $scope.cbh.runSearch = function(doScroll){
+
         var newParams = searchUrlParams.fromForm($scope.searchForm);
-        $state.go('cbh.search', newParams.params, {reload:true});
+        newParams.params.doScroll = doScroll;
+        newParams.params.sorts = $stateParams.sorts;
+        newParams.params.showNonBlanks = $stateParams.showNonBlanks;
+        newParams.params.showBlanks = $stateParams.showBlanks;
+
+        $scope.cbh.changeSearchParams(newParams.params, true);
+
+        // $state.go('cbh.search', newParams.params, {reload:true});
     }
+
+    $scope.cbh.isCustomFieldFiltered = function(knownBy){
+        if(angular.isDefined($stateParams.search_custom_fields__kv_any)){
+            if ($stateParams.search_custom_fields__kv_any.indexOf(knownBy) > -1){
+            return true;
+            }
+        }
+        
+        return false;
+    }
+
 
     $rootScope.projectKey = "Projects";
 

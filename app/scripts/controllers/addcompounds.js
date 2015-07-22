@@ -89,17 +89,17 @@ angular.module('ngChemApp')
 
             if(changes && changes.length > 0){
                 // $scope.currentlyLoading = true;
-                 $scope.disableButtons = true;
-                    var itemsToChange = changes.map(function(item){
-                        return $scope.compoundBatches.data[item[0]]
-                    });
-                    var patchData = angular.copy($scope.datasets[$scope.current_dataset_id].config);
-                    patchData.objects = itemsToChange;
-                    CBHCompoundBatch.patchTempList(patchData).then(function(data){
-                        // $scope.currentlyLoading = false;
-                        $scope.imageCallback();
-                        $scope.compoundBatches.savestats = data.data.savestats;
-                    });
+                $scope.disableButtons = true;
+                var itemsToChange = changes.map(function(item){
+                    return $scope.compoundBatches.data[item[0]]
+                });
+                var patchData = angular.copy($scope.datasets[$scope.current_dataset_id].config);
+                patchData.objects = itemsToChange;
+                CBHCompoundBatch.patchTempList(patchData).then(function(data){
+                    // $scope.currentlyLoading = false;
+                    // $scope.imageCallback();
+                    $scope.compoundBatches.savestats = data.data.savestats;
+                });
             }
            
 
