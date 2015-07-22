@@ -101,22 +101,16 @@ angular.module('ngChemApp')
 
                   }
 
-                  var pids = {};
                   var cNames = [];       //DO  NOT CHANGE SMILES TITLE without checking in addcompounds controller and the compounds.py file
                   var count = 0;
 
-                  angular.forEach(scope.compounds, function(comp){
-                    var split = comp.project.split("/");
-                    var projid = split[split.length-1]; 
-                    pids[projid] = true;   
-                  });
-
+                  
                   var projects = scope.cbh.projects.objects;
 
                   angular.forEach(projects,function(myproj){
 
                     
-                    if ( pids.hasOwnProperty(myproj.id.toString())){
+                    if ( scope.cbh.includedProjectKeys.indexOf(myproj.project_key) > -1){
                         angular.forEach(myproj.schemaform.form, function(i){
                           if(cNames.indexOf( i.key) < 0){
 

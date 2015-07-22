@@ -35,6 +35,9 @@ angular.module('ngChemApp')
         $scope.searchFormSchema.schema.properties.search_custom_fields__kv_any.items = $scope.searchForm.search_custom_fields__kv_any.map(function(i){return {value : i, label : i}});
     }
 
+    $scope.cbh.includedProjectKeys = $scope.searchForm.projects;
+
+
     $scope.$watch('searchForm.search_custom_fields__kv_any', function(newValue, oldValue){
                   if(newValue !== oldValue){
                     //broadcast the newValue
