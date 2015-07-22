@@ -124,13 +124,20 @@ angular.module('ngChemApp')
 
     $scope.imageCallback = function() {
         
-
+        // console.log("call");
         // call $anchorScroll()
-        if($stateParams.doScroll){
-            $location.hash('search-bottom');
-            $anchorScroll();
-        }
+        // if($stateParams.doScroll){
+        //     $location.hash('search-bottom');
+        //     $anchorScroll();
+        // }
+
+        
         $scope.compoundBatches.redraw ++;
+        $timeout(function(){
+        $(window).scrollTop($stateParams.scrollTop);
+                    $("#myid").scrollLeft($stateParams.scroll);
+
+        },100);
 
     }
     function getAllUncuratedHeaders(data) {
@@ -169,41 +176,52 @@ angular.module('ngChemApp')
         newParams.page = 1;
         //add the excludes option here
         //as an object inside filters
-        
-        if (showType == 'blanks') {
-            if (!newParams.showBlanks) {
+        if (!newParams.showBlanks) {
                 newParams.showBlanks = [];
             }
-            else {
+        else {
                 newParams.showBlanks = JSON.parse(newParams.showBlanks);
-            }
-            newParams.showBlanks.push(sortColumn.data);
-
-            //need to remove the equivalent parameter from showNonBlanks, if exists - you can't have both
-            if(newParams.showNonBlanks != undefined){
-                newParams.showNonBlanks.splice(newParams.showNonBlanks.indexOf(sortColumn.data), 1);
-            }
         }
-
-        else if (showType == 'nonblanks') {
-            if (!newParams.showNonBlanks) {
+        if (!newParams.showNonBlanks) {
                 newParams.showNonBlanks = [];
-            }
-
-            else {
+        }
+        else {
                 newParams.showNonBlanks = JSON.parse(newParams.showNonBlanks);
-            }
-            newParams.showNonBlanks.push(sortColumn.data);
-            //need to remove the equivalent parameter from showBlanks, if exists - you can't have both
-            if(newParams.showBlanks != undefined){
-                newParams.showBlanks.splice(newParams.showNonBlanks.indexOf(sortColumn.data), 1);
-            }
         }
 
-        console.log(newParams);
+        if (showType == 'blanks') {
+            var index1 = newParams.showBlanks.indexOf(sortColumn.data);
+            if(index1 == -1){
+                newParams.showBlanks.push(sortColumn.data);
+            }else{
+                //Toggle off if already selected
+                newParams.showBlanks.splice(index1, 1);
+            }
+            //need to remove the equivalent parameter from showNonBlanks, if exists - you can't have both
+            var index = newParams.showNonBlanks.indexOf(sortColumn.data);
+            if(index > -1){
+                newParams.showNonBlanks.splice(index, 1);
+            }
+        }
+        else if (showType == 'nonblanks') { 
+          var index1 = newParams.showNonBlanks.indexOf(sortColumn.data);
+            if(index1 == -1){
+                newParams.showNonBlanks.push(sortColumn.data);
+            }else{
+                //Toggle off if already selected
+                newParams.showNonBlanks.splice(index1, 1);
+            }
+            //need to remove the equivalent parameter from showNonBlanks, if exists - you can't have both
+            var index = newParams.showBlanks.indexOf(sortColumn.data);
+            if(index > -1){
+                newParams.showBlanks.splice(index, 1);
+            }
+        }
         newParams.showBlanks = JSON.stringify(newParams.showBlanks);
         newParams.showNonBlanks = JSON.stringify(newParams.showNonBlanks);
-        $state.go($state.current.name, newParams, {reload:true, inherit:false});
+        $scope.cbh.changeSearchParams(newParams);
+
+        // $state.go($state.current.name, newParams, {reload:true, inherit:false});
         //getResultsPage(newParams.page);
     };
     
@@ -247,6 +265,7 @@ angular.module('ngChemApp')
                 $scope.pageChanged(1);
             }
             else{
+                $scope.imageCallback();
                 if($state.current.name==="cbh.search"){
                     $scope.noData = "No Compounds Found. Why not try amending your search?";
                 }else{
@@ -263,50 +282,52 @@ angular.module('ngChemApp')
             
        });        
     }
-        $scope.nullSorts = function(){
-            $scope.compoundBatches.sorts =[];
-             var newParams = angular.copy($stateParams);
+   
+
+
+        $scope.cbh.changeSearchParams = function(newParams, notify){
+            newParams.scroll = $("#myid").scrollLeft();
+            newParams.scrollTop = $(window).scrollTop();
             newParams.page = 1;
-            newParams.sorts = undefined;
-            $state.transitionTo($state.current.name, 
+                $scope.pagination.current = 1;
+                $state.transitionTo($state.current.name, 
                                         newParams,
                                         { location: true, 
                                             inherit: false, 
-                                            relative: $state.$current, 
-                                            notify: false });
-            $stateParams = newParams;
-            $scope.initialise();
-        };
+                                            relative: undefined, 
+                                            notify: true });
+            
+                
+               
+        }
 
         $scope.cbh.addSort =  function(sortColumn, order){
                
                 var i = $scope.compoundBatches.sorts.length;
+                var toggeldOff = false;
                 while (i--) {
                     if(angular.isDefined($scope.compoundBatches.sorts[i][sortColumn])){
+                        if($scope.compoundBatches.sorts[i][sortColumn].order == order){
+                            var toggeldOff = true;
+                        }
                         $scope.compoundBatches.sorts.pop(i);
                     }
                 }
                  
                 var dirObj = {};
-                if(order != "none"){
+                if(!toggeldOff){
                      dirObj[sortColumn] = {"order": order, "missing" : "_last", "ignore_unmapped" : true};
                     $scope.compoundBatches.sorts.unshift(dirObj);
                 }
                  var newParams = angular.copy($stateParams);
-                newParams.page = 1;
+                
                 if($scope.compoundBatches.sorts.length > 0){
                     newParams.sorts = JSON.stringify($scope.compoundBatches.sorts);
                 }else{
                     newParams.sorts = undefined;
                 }
-                $state.transitionTo($state.current.name, 
-                                        newParams,
-                                        { location: true, 
-                                            inherit: false, 
-                                            relative: $state.$current, 
-                                            notify: false });
-                $stateParams = newParams;
-                 getResultsPage($scope.pagination.current);
+                $scope.cbh.changeSearchParams(newParams);
+                
             };
 
 

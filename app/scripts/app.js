@@ -92,7 +92,8 @@ angular.module('ngChemApp')
                   //the order of supplying arrays is important in these comparators, hence the size comparison conditional
                   //we need to use underscore filter for object array comparison
                   //we need to use underscore difference for string array comparison
-                  if(newValue.length > oldValue.length) {
+                  if(angular.isDefined(newValue) && angular.isDefined(oldValue)){
+                    if( newValue.length > oldValue.length) {
                     addOrRemove = "add"
                     //work out which values are in the new value but not the old value
                     if(arrayContains == "obj"){
@@ -116,6 +117,8 @@ angular.module('ngChemApp')
                   }
 
                   return {'newValue': valToSend[0], 'addOrRemove': addOrRemove};
+                  }
+                  
               }
 
               cbh.openSingleMol = function(mol, isNewCompoundsInterface) {
@@ -227,7 +230,7 @@ angular.module('ngChemApp')
 
 
         .state('cbh.search', {
-            url: '/search?&projectFrom=&sorts=&page=&compoundBatchesPerPage=&project__project_key__in&functional_group&flexmatch&related_molregno__chembl__chembl_id__in&with_substructure&similar_to&fpValue&created__gte&created__lte&molfile&smiles&search_custom_fields__kv_any&multiple_batch_id=&viewType=&doScroll=&showBlanks=&showNonBlanks=&limit&offset',
+            url: '/search?&projectFrom=&scroll=&scrollTop=&sorts=&page=&compoundBatchesPerPage=&project__project_key__in&functional_group&flexmatch&related_molregno__chembl__chembl_id__in&with_substructure&similar_to&fpValue&created__gte&created__lte&molfile&smiles&search_custom_fields__kv_any&multiple_batch_id=&viewType=&doScroll=&showBlanks=&showNonBlanks=&limit&offset',
             //url: '/search',
             //params: ['project__project_key', 'flexmatch', 'with_substructure', 'similar_to', 'fpValue', 'created__gte', 'created__lte', 'molfile', 'smiles', 'limit', 'offset', 'random'],
             resolve:{

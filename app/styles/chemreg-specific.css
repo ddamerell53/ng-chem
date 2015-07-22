@@ -24,6 +24,17 @@ li a svg.svg {
     right: 20px; 
     top:5px;
 }
+
+.input-in-dropdown{
+  display: block;
+  padding: 3px 20px;
+  clear: both;
+  font-weight: normal;
+  line-height: 1.42857143;
+  white-space: nowrap;
+
+}
+
 .htCore thead th {
   overflow:hidden;
   height:0;
@@ -505,7 +516,7 @@ strong.nexa, p.nexa strong {
   color:white;
 }
 .wide-dropdown {
-    width: 400px !important;
+    width: 300px !important;
 }
 i {
   margin: 0;
