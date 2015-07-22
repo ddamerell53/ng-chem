@@ -32,10 +32,9 @@ angular.module('ngChemApp')
     }
     
     if($scope.searchForm.search_custom_fields__kv_any) {
-        $scope.searchFormSchema.schema.properties.search_custom_fields__kv_any.items = $scope.searchForm.search_custom_fields__kv_any.map(function(i){return {value : i, label : i}});
+        $scope.searchFormSchema.schema.properties.search_custom_fields__kv_any.items = $scope.searchForm.search_custom_fields__kv_any.map(function(i){return {value : i, label : i.replace("|",": ")}});
     }
-
-    $scope.cbh.includedProjectKeys = $scope.searchForm.projects;
+    $scope.cbh.includedProjectKeys = $scope.searchForm.project__project_key__in;
 
 
     $scope.$watch('searchForm.search_custom_fields__kv_any', function(newValue, oldValue){
@@ -67,7 +66,7 @@ angular.module('ngChemApp')
             var match = $filter('filter')($scope.searchForm.search_custom_fields__kv_any, function(value, index) { return value == data.newValue.value })
             if(match.length == 0){
                 $scope.searchForm.search_custom_fields__kv_any.push(data.newValue.value);
-                $scope.searchFormSchema.schema.properties.search_custom_fields__kv_any.items = $scope.searchForm.search_custom_fields__kv_any.map(function(i){return {value : i, label : i}});
+                $scope.searchFormSchema.schema.properties.search_custom_fields__kv_any.items = $scope.searchForm.search_custom_fields__kv_any.map(function(i){return {value : i, label : i.replace("|", ": ")}});
                 $scope.$broadcast("schemaFormRedraw"); 
             }
             
@@ -76,7 +75,7 @@ angular.module('ngChemApp')
             var diffs = $filter('filter')($scope.searchForm.search_custom_fields__kv_any, function(value, index) { return value == data.newValue.value })
             if(diffs.length > 0){
                 $scope.searchForm.search_custom_fields__kv_any.splice($scope.searchForm.search_custom_fields__kv_any.indexOf(data.newValue.value), 1);
-                $scope.searchFormSchema.schema.properties.search_custom_fields__kv_any.items = $scope.searchForm.search_custom_fields__kv_any.map(function(i){return {value : i, label : i}});
+                $scope.searchFormSchema.schema.properties.search_custom_fields__kv_any.items = $scope.searchForm.search_custom_fields__kv_any.map(function(i){return {value : i, label : i.replace("|", ": ")}});
                 $scope.$broadcast("schemaFormRedraw");
             }
             

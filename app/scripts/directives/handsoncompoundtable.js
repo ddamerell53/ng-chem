@@ -110,7 +110,7 @@ angular.module('ngChemApp')
                   angular.forEach(projects,function(myproj){
 
                     
-                    if ( scope.cbh.includedProjectKeys.indexOf(myproj.project_key) > -1){
+                    if ( !angular.isDefined(scope.cbh.includedProjectKeys) ||scope.cbh.includedProjectKeys.indexOf(myproj.project_key) > -1){
                         angular.forEach(myproj.schemaform.form, function(i){
                           if(cNames.indexOf( i.key) < 0){
 

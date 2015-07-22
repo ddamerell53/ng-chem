@@ -40,7 +40,7 @@ angular.module('ngChemApp')
                 searchForm.project__project_key__in = window.projectKeys;
             }
             if (stateParams.search_custom_fields__kv_any) {
-                searchForm.search_custom_fields__kv_any = stateParams.search_custom_fields__kv_any.split(",");;
+                searchForm.search_custom_fields__kv_any = JSON.parse(stateParams.search_custom_fields__kv_any);
             } else {
                 searchForm.search_custom_fields__kv_any = [];
             }
@@ -117,7 +117,7 @@ angular.module('ngChemApp')
             if (!angular.equals([], searchForm.search_custom_fields__kv_any) && angular.isDefined(searchForm.search_custom_fields__kv_any)) {
                 //var encodedCustFields = btoa(JSON.stringify(searchForm.custom_fields));
                 var encodedCustFields = "";
-                encodedCustFields = searchForm.search_custom_fields__kv_any.join(",");
+                encodedCustFields = JSON.stringify(searchForm.search_custom_fields__kv_any);
                 params.search_custom_fields__kv_any = encodedCustFields;
             }
             else {
