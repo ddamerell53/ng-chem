@@ -65,7 +65,7 @@ angular.module('ngChemApp')
             no_data: "No data to process was found in the file, please check the file and try again.",
             ids_not_processed: "No Smiles or Inchi identifiers could be processed, please check the format, remove spaces and try again.",
             
-            file_error: "File cannot be processed even though the format apears valid, if you have questions please contact the chembiohub team.",
+            file_error: "File cannot be processed even though the format appears valid, if you have questions please contact the ChemBio Hub team.",
             file_format_error: "File cannot be processed, the format is invalid. Files must be XLSX, cdxml, cdx or sdf format and labelled as such.",
             total_batches: "The total numer of records added in this file or dataset",
             oops: "Oops, should not have got here, if you have not pressed back on the browser, gone to an outdated bookmark or lost your data by refreshing please let the ChemReg team know. Click cancel to restart.",
@@ -118,8 +118,8 @@ angular.module('ngChemApp')
         //(change)
             batch_overlaps: "Number of substances which have already been registered. New private batches will be registered in this project for each of these.",
             file_too_large: "File larger than hte current maximum size of 1000 compounds. Support for larger files is coming soon. Please contact the ChemBio Hub team if you need to do large uploads.",
-            file_types : ".xlsx, .sdf, .cdx and .cdxml files are currently supported by chemreg. In Excel files the structure column should be in SMILES and the headers should be at the top of the dataset. Data should be on the first worksheet of the workbook. When registering salts via chemdraw it is importeant to use the \"group\" feature to ensure the salt is interpretted as a single record. If you would like to be able to register a different file type, please let the chembiohub team know.",
-            smiles_field: "Each line of data will be interpretted as a separate SMILES or INCHI identifier. If you would like to be able to register compounds with a different type of identifier, please let the chembiohub team know.",
+            file_types : ".xlsx, .sdf, .cdx and .cdxml files are currently supported by chemreg. In Excel files the structure column should be in SMILES and the headers should be at the top of the dataset. Data should be on the first worksheet of the workbook. When registering salts via chemdraw it is importeant to use the \"group\" feature to ensure the salt is interpretted as a single record. If you would like to be able to register a different file type, please let the ChemBio Hub team know.",
+            smiles_field: "Each line of data will be interpretted as a separate SMILES or INCHI identifier. If you would like to be able to register compounds with a different type of identifier, please let the ChemBio Hub team know.",
             batch_duplicates: "Duplicate structures (with identical INCHI keys).",
           
 
@@ -136,7 +136,7 @@ angular.module('ngChemApp')
         //"finish": {
             registration_success: "No batches were registered with the ids and properties shown below",
             registration_none_success: "No molecules were registered",
-            registration_error: "An unknown error occurred when registering compounds, the chembiohub team have been notified and will contact you when the issue has been investigated.",
+            registration_error: "An unknown error occurred when registering compounds, the ChemBio Hub team have been notified and will contact you when the issue has been investigated.",
         //}:
             justSaved: "This data was recently saved, click start again or go back to the project page.",
 
