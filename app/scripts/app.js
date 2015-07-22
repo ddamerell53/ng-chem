@@ -374,6 +374,9 @@ angular.module('ngChemApp')
               //   $state.go('cbh.projects.empty');
               // }
               $scope.isDefault = true;
+              $scope.toggleDataSummary = {
+                showFlag: false,
+              }
               
             }
         })
