@@ -46,6 +46,10 @@ li a svg.svg {
   margin-bottom:-10px;
 
 }
+/* handsontable - htNumeric right align overrides htCenter center alignment */
+td.htCenter.htNumeric {
+  text-align: center;
+}
 .ui-select-container input {
   width: 100% !important;
 }

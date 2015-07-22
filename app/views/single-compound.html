@@ -47,7 +47,7 @@
 <!-- <button-input copy-model="mol.rotatableBonds" disabled="true" label="'Rotatable Bonds'"></button-input>
  -->
 <div class="col-xs-12 ">
-<h2 class="nexa blue ">Custom Fields 
+<h2 class="nexa blue ">Project Data 
     <button ng-disabled="!projectObj.editor" class="btn btn-warning" ng-model="editMode" btn-checkbox btn-checkbox-true="1" ng-click="init()" btn-checkbox-false="0">Toggle Edit Mode</button>
  <button class="btn btn-primary"  ng-show="editMode" ng-click="updateBatch()">Update Batch Custom Fields</button>
 </h2>
@@ -72,7 +72,7 @@
 		</div>
         <div class="spacer"></div>
 <div class="col-xs-12" ng-show="mol.uncuratedFields | notEmpty">
-            <h2 class="nexa blue">Uncurated Fields</h2>
+            <h2 class="nexa blue">Supplementary Data</h2>
             <div class="col-xs-6" ng-repeat="(name, value) in mol.uncuratedFields">
             <button-input copy-model="::value" disabled="true" label="::name"></button-input>
 

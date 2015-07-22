@@ -1,5 +1,5 @@
 <div class="row">
-	<div class="col-xs-6 col-sm-3" ng-repeat="project in projects">
+	<div class="col-xs-6 col-sm-3" ng-repeat="project in projects" ng-if="$index < 4">
 		<div class="well projectbox">
 			<p class="nexa"><strong><a ui-sref="cbh.projects.list.project({projectKey: project.project_key, page:1, sorts:[]})"><span title="{{ project.name }}">{{ project.name | limitTo : 20 }}</span><span ng-show="project.name.length > 20">...</span></a></strong><br/>
 				<span class="glyphicon glyphicon-time"></span> <small>Last modified: {{ project.modified | date }}</small>
@@ -12,4 +12,22 @@
 
 	</div>
 	
+</div>
+
+<div class="row" ng-show="!toggleDataSummary.showFlag && projects.length > 4">
+<div><h2 class="blue centered">...</h2> </div></div>
+
+<div class="row" ng-show="toggleDataSummary.showFlag">
+	<div class="col-xs-6 col-sm-3" ng-repeat="project in projects" ng-if="$index >= 4">
+		<div class="well projectbox">
+			<p class="nexa"><strong><a ui-sref="cbh.projects.list.project({projectKey: project.project_key, page:1, sorts:[]})"><span title="{{ project.name }}">{{ project.name | limitTo : 20 }}</span><span ng-show="project.name.length > 20">...</span></a></strong><br/>
+				<span class="glyphicon glyphicon-time"></span> <small>Last modified: {{ project.modified | date }}</small>
+				
+                <a ng-if="project.editor" ui-sref="cbh.projects.project.addcompounds({projectKey: project.project_key})" role="button" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-plus-sign"></span> Add compounds</a>
+                <a ng-if="!project.editor" disabled title="You do not have permission to edit compounds on this project. Please ask an administrator for details." role="button" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-plus-sign"></span> Add compounds</a>
+                
+			</p>
+		</div>
+
+	</div>
 </div>
