@@ -263,6 +263,7 @@ angular.module('ngChemApp')
 
             }else if( ( $scope.pagination.current * parseInt($scope.pagination.compoundBatchesPerPage.value)) > $scope.totalCompoundBatches){
                 $scope.pageChanged(1);
+                $scope.imageCallback();
             }
             else{
                 $scope.imageCallback();

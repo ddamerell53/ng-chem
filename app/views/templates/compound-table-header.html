@@ -46,7 +46,7 @@
                                             
                                             
                                                 
-                                            <li role="presentation" class="divider"></li>
+                                            <li ng-if="col.searchForm" role="presentation" class="divider"></li>
 
                                             <li ng-if="col.searchForm" role="presentation">
                                                 
@@ -64,7 +64,7 @@
                                                 <span class="glyphicon pull-right" ng-class="(col.showNonBlank==true) ? 'glyphicon-check':'glyphicon-unchecked'"></span>
                                                 </a>
                                             </li>
-                                            <li role="presentation" class="divider"></li>
+                                            <li ng-if="col.searchForm"  role="presentation" class="divider"></li>
                                             <li ng-if="col.searchForm" role="presentation">
                                                 <span class="input-in-dropdown" ng-click="$event.stopPropagation();$event.preventDefault();">
                                                    
