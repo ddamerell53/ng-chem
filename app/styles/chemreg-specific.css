@@ -81,6 +81,9 @@ height: auto !important;
   width: 20px;
   text-align: center;
 }
+.suwala-doubleScroll-scroll-wrapper {
+  width:inherit !important;
+}
 /*::-webkit-scrollbar {
       width: 12px;
     }

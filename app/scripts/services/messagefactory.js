@@ -40,8 +40,8 @@ angular.module('ngChemApp')
 
     var messages = {
         //"home": {
-            wizard_intro_text: "To upload multiple compounds you will need a list of SMILES; an InChi key or list of InChi keys; or either a SD, ChemDraw or Excel file.",
-            projects_help: "Clicking Add Compounds will take you to a new page where you can add single compounds or batches of compounds from files, SMILES or InChi keys.",
+            wizard_intro_text: "To upload multiple compounds you will need a list of SMILES; an InChI key or list of InChI keys; or either a SD, ChemDraw or Excel file.",
+            projects_help: "Clicking Add Compounds will take you to a new page where you can add single compounds or batches of compounds from files, SMILES or InChI keys.",
 
         //},
         //"add": {
@@ -63,7 +63,7 @@ angular.module('ngChemApp')
             mol_pains_hits_tooltip: null,
             no_headers: "Headers could not be retrieved from the uploaded file, please check the format and try again.",
             no_data: "No data to process was found in the file, please check the file and try again.",
-            ids_not_processed: "No SMILES or InChi identifiers could be processed, please check the format, remove any spaces and try again.",
+            ids_not_processed: "No SMILES or InChI identifiers could be processed, please check the format, remove any spaces and try again.",
             
             file_error: "File cannot be processed even though the format appears valid. If you have questions please contact the ChemBio Hub team.",
             file_format_error: "File cannot be processed, the format is invalid. Files must be xlsx, cdxml, cdx or sdf format and labelled as such.",
@@ -119,8 +119,8 @@ angular.module('ngChemApp')
             batch_overlaps: "Number of substances which have already been registered. New private batches will be registered in this project for each of these.",
             file_too_large: "File larger than hte current maximum size of 1000 compounds. Support for larger files is coming soon. Please contact the ChemBio Hub team if you need to do large uploads.",
             file_types : ".xlsx, .sdf, .cdx and .cdxml files are currently supported by chemreg. In Excel files the structure column should be in SMILES and the headers should be at the top of the dataset. Data should be on the first worksheet of the workbook. When registering salts via chemdraw it is importeant to use the \"group\" feature to ensure the salt is interpretted as a single record. If you would like to be able to register a different file type, please let the ChemBio Hub team know.",
-            smiles_field: "Each line of data will be interpreted as a separate SMILES or InChi identifier. If you would like to be able to register compounds with a different type of identifier, please let the ChemBio Hub team know.",
-            batch_duplicates: "Duplicate structures (with identical InChi keys).",
+            smiles_field: "Each line of data will be interpreted as a separate SMILES or InChI identifier. If you would like to be able to register compounds with a different type of identifier, please let the ChemBio Hub team know.",
+            batch_duplicates: "Duplicate structures (with identical InChI keys).",
           
 
             batch_errors_0: "No errors were found",
