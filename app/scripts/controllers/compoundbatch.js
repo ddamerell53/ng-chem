@@ -301,7 +301,20 @@ angular.module('ngChemApp')
                 
                
         }
-
+        $scope.nullSorts = function(){
+            $scope.compoundBatches.sorts =[];
+             var newParams = angular.copy($stateParams);
+            newParams.page = 1;
+            newParams.sorts = undefined;
+            $state.transitionTo($state.current.name, 
+                                        newParams,
+                                        { location: true, 
+                                            inherit: false, 
+                                            relative: $state.$current, 
+                                            notify: false });
+            $stateParams = newParams;
+            $scope.initialise();
+        };
         $scope.cbh.addSort =  function(sortColumn, order){
                
                 var i = $scope.compoundBatches.sorts.length;

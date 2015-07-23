@@ -225,21 +225,27 @@ angular.module('ngChemApp')
 
         $scope.cbh.renderFilterLink = renderers.renderFilterLink;
         $scope.cbh.fileextension = "";
-        $scope.cbh.addSort =  function(sortColumn, order){
-                var i = $scope.compoundBatches.sorts.length;
 
+            $scope.cbh.addSort =  function(sortColumn, order){
+               
+                var i = $scope.compoundBatches.sorts.length;
+                var toggeldOff = false;
                 while (i--) {
                     if(angular.isDefined($scope.compoundBatches.sorts[i][sortColumn])){
+                        if($scope.compoundBatches.sorts[i][sortColumn].order == order){
+                            var toggeldOff = true;
+                        }
                         $scope.compoundBatches.sorts.pop(i);
                     }
                 }
+                 
                 var dirObj = {};
-                if(order != "none"){
+                if(!toggeldOff){
                      dirObj[sortColumn] = {"order": order, "missing" : "_last", "ignore_unmapped" : true};
                     $scope.compoundBatches.sorts.unshift(dirObj);
                 }
                  var newParams = angular.copy($stateParams);
-                newParams.page = 1;
+                
                 if($scope.compoundBatches.sorts.length > 0){
                     newParams.sorts = JSON.stringify($scope.compoundBatches.sorts);
                 }else{
@@ -252,8 +258,11 @@ angular.module('ngChemApp')
                                             relative: $state.$current, 
                                             notify: false });
                 $stateParams = newParams;
-                $scope.initialise();
+                $scope.initialise();                
             };
+
+
+
         $scope.setNull();
         $scope.assignFile = function(id, ext, file) {
 
