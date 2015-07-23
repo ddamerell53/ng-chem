@@ -169,22 +169,45 @@
 	</div>
 
 
-	<div class="col-xs-8 col-xs-offset-2">
+	<!-- <div class="col-xs-8 col-xs-offset-2">
 
 		<div style="height: 305px">
-		    <carousel interval="30000" disable-animation="true">
+		    <carousel interval="31000" disable-animation="true">
 		      <slide ng-repeat="slide in slides" active="slide.active">
 		        <img ng-src="{{slide.image}}" style="margin:auto;">
 		        <div class="carousel-caption" style="background-color: rgba(0,0,0,0.5)">
-		          <h2>{{slide.text}}</h2>
 		        </div>
 		      </slide>
 		    </carousel>
 		  </div>
 
+	</div> -->
+
+	<div class="row">
+		<div class="col-xs-12 giffer-holder">
+			<img data-gifffer="images/add-compounds-v2.gif" data-gifffer-width="1000" data-gifffer-height="500" style="margin:0 auto">
+		</div>
 	</div>
+	<div class="row mt">
+		<div class="col-xs-12 giffer-holder">
+			<img data-gifffer="images/searching-v2.gif" data-gifffer-width="1000" data-gifffer-height="500">
+		</div>
+	</div>
+	<div class="row mt">
+		<div class="col-xs-12 giffer-holder">
+			<img data-gifffer="images/searching-struc-v2.gif" data-gifffer-width="1000" data-gifffer-height="500">
+		</div>
+	</div>
+
 
 </div>
 
 <div class="spacer"></div>
 
+<script type="text/javascript">
+
+$(document).ready(function(){
+	Gifffer();
+});
+
+</script>

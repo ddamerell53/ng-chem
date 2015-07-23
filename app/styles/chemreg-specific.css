@@ -84,6 +84,12 @@ height: auto !important;
 .suwala-doubleScroll-scroll-wrapper {
   width:inherit !important;
 }
+.gifffer-play-button div {
+  border-left-color: white !important;
+}
+.giffer-holder div {
+  margin:0 auto;
+}
 /*::-webkit-scrollbar {
       width: 12px;
     }
