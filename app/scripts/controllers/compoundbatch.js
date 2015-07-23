@@ -301,7 +301,7 @@ angular.module('ngChemApp')
                 
                
         }
-        $scope.nullSorts = function(){
+ $scope.nullSorts = function(){
             $scope.compoundBatches.sorts =[];
              var newParams = angular.copy($stateParams);
             newParams.page = 1;
