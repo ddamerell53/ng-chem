@@ -55,7 +55,7 @@ var $http = initInjector.get("$http");
 
 var req = $http({  method: "get",
                     url: configuration.cbh_projects.list_endpoint,
-                    params: {"schemaform": true}, });
+                    params: {"schemaform": true, "limit":1000}, });
 req.then(function(projData){
     angular.module('ngChemApp').value('loggedInUser',  
         projData.data.user
