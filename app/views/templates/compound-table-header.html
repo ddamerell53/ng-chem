@@ -1,5 +1,7 @@
-            <div style="width:{{width}}px; border-right: 1px solid #e3e3e3">
-                <div class="well"  style="border-right:0px;border-bottom:0px;display:inline-block; width:{{(($first||$last) ? col.myColWidth -12 : col.myColWidth -11)}}px; display:inline-block; margin-bottom:0px; border-radius:0; min-height:104px" ng-repeat="col in columns"> 
+            <div style="width:{{width /16 }}em; border-right: 1px solid #CCC; border-left: 1px solid #CCC">
+                <div class=""  style="  background-color: #f5f5f5; box-sizing:border-box;
+      -moz-box-sizing:border-box; padding: 0 {{(400 / (width))}}% 0 {{(400 / (width))}}%;
+      -webkit-box-sizing:border-box; border-right:1px solid #CCC;border-bottom:0px;display:inline-block; width:{{(($first) ? (col.myColWidth -1)*100 / width  : (col.myColWidth ) *100 / (width)  )}}%; display:inline-block; margin-bottom:0px; border-radius:0; min-height:104px ;" ng-repeat="col in columns"> 
                         <div class="row" >
                             <div class="col-xs-12">
                             <label class="pull-left">{{col.knownBy}}

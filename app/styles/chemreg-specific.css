@@ -24,7 +24,9 @@ li a svg.svg {
     right: 20px; 
     top:5px;
 }
-
+.suwala-doubleScroll-scroll-wrapper {
+   width: inherit !important;
+}
 .input-in-dropdown{
   display: block;
   padding: 3px 20px;
