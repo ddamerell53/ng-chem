@@ -22,7 +22,17 @@ angular.module('ngChemApp')
     $scope.searchForm = angular.copy(pf.searchForm);
     $scope.searchFormSchema.form[0].options.async.call = $scope.refresh;
     //need to repeat this for the custom field lookup
-    
+    $scope.searchFormSchema.form[1].$validators = {
+      notEnough: function(value) {
+        if(!angular.isDefined(value)){
+            return false;
+        }
+        if (value.length == 0) {
+          return false;
+        }
+        return true
+      }
+    }
     $scope.custFieldFormItem = $filter('filter')($scope.searchFormSchema.form, {key:'search_custom_fields__kv_any'}, true);
     $scope.custFieldFormItem[0].options.async.call = $scope.refreshCustFields;
     $scope.projectFrom = $stateParams.projectFrom;
@@ -35,8 +45,10 @@ angular.module('ngChemApp')
         $scope.searchFormSchema.schema.properties.search_custom_fields__kv_any.items = $scope.searchForm.search_custom_fields__kv_any.map(function(i){return {value : i, label : i.replace("|",": ")}});
     }
     $scope.cbh.includedProjectKeys = $scope.searchForm.project__project_key__in;
-
-
+    $scope.$on("sf-render-finished", function(){
+        $timeout(function(){$rootScope.$broadcast("schemaFormValidate");});
+    })
+    
     $scope.$watch('searchForm.search_custom_fields__kv_any', function(newValue, oldValue){
                   if(newValue !== oldValue){
                     //broadcast the newValue

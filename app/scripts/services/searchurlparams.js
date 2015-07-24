@@ -37,7 +37,7 @@ angular.module('ngChemApp')
                 searchForm.project__project_key__in = stateParams.project__project_key__in.split(",");
             }
             else {
-                searchForm.project__project_key__in = window.projectKeys;
+                searchForm.project__project_key__in = [];
             }
             if (stateParams.search_custom_fields__kv_any) {
                 searchForm.search_custom_fields__kv_any = JSON.parse(stateParams.search_custom_fields__kv_any);
