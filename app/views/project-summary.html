@@ -1,10 +1,11 @@
-<div class="row">
-	<div class="col-xs-12">
-		<h2 class="subheading">{{ proj.name }}</h2>
+<div class="row" style="margin-left:0px">
+		<h2 class="subheading">{{ proj.name }}
+            <a ng-if="proj.editor" ui-sref="cbh.projects.project.addcompounds({projectKey: proj.project_key})" role="button" class="btn btn-sm btn-primary pull-right"><span class="glyphicon glyphicon-plus-sign"></span> Add compounds</a>
+                <a ng-if="!proj.editor" disabled title="You do not have permission to edit compounds on this project. Please ask an administrator for details." role="button" class="btn btn-sm btn-primary pull-right"><span class="glyphicon glyphicon-plus-sign"></span> Add compounds</a>
+        </h2>
 		<!-- <h2 class="blue nexa">
 			<small>Project details here</small>
 		</h2> -->
-	</div>
 </div>
 
 
