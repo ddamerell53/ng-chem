@@ -134,7 +134,16 @@ angular.module('ngChemApp')
         
         $scope.compoundBatches.redraw ++;
         $timeout(function(){
-        $(window).scrollTop($stateParams.scrollTop);
+            if($scope.totalCompoundBatches > 0 && $stateParams.doScroll){
+                $location.hash('search-bottom');
+                $anchorScroll();
+            }
+            else if(angular.isDefined($stateParams.scrollTop),$stateParams.scrollTop >0){
+                $(window).scrollTop($stateParams.scrollTop);
+            }else{
+                $(window).scrollTop(0);
+            }
+        
                     $("#myid").scrollLeft($stateParams.scroll);
 
         },100);

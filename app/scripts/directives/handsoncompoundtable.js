@@ -26,7 +26,6 @@ angular.module('ngChemApp')
                 var fieldSplit = fieldToCheck.split("|");
                 return startsWith == fieldSplit[0];
               }
-
               scope.cbh.toggleMappedFieldInDirective = function(newFieldId, unCuratedFieldName){
                 //console.log(newFieldId);
                 if(newFieldId === ""){
@@ -436,6 +435,9 @@ angular.module('ngChemApp')
                 redraw();
 
               }, true);
+
+              scope.$on("updateListView", function(){redraw();});
+
 
                             // original by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
 

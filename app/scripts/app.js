@@ -181,6 +181,7 @@ angular.module('ngChemApp')
                       $scope.removeAlert = function(){
                         $scope.update_success = false;
                       }
+                      cbh.isUpdated = false;
                       $scope.updateBatch = function(){
                         CBHCompoundBatch.patch({"customFields" : $scope.mol.customFields,
                                                 "projectKey" : $scope.projectWithCustomFieldData.project_key,
@@ -194,6 +195,7 @@ angular.module('ngChemApp')
                               $scope.editMode = false;
                               $scope.init();
                               $timeout($scope.removeAlert, 5000);
+                              cbh.isUpdated = true;
                             }
                           );
                       }
@@ -204,7 +206,11 @@ angular.module('ngChemApp')
             // });    
 
                     }]
-                  });
+                  }).result.finally(function() {
+                      if(cbh.isUpdated){
+                        $rootScope.$broadcast("updateListView");
+                      }
+                });
                 };
 
 
