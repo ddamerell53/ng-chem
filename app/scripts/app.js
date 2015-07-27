@@ -36,7 +36,7 @@ angular.module('ngChemApp')
                 cbh.prefix = urlConfig.instance_path.base;
                 cbh.api_base = urlConfig.admin.list_endpoint;
                 cbh.searchPage =   function(){
-                  $state.go('cbh.search', {project__project_key__in: window.projectKeys.join(",")}, {reload:true} );
+                  $state.go('cbh.search', {}, {reload:true} );
                 }
                 $scope.projects = projectList.objects;
 
@@ -181,6 +181,7 @@ angular.module('ngChemApp')
                       $scope.removeAlert = function(){
                         $scope.update_success = false;
                       }
+                      cbh.isUpdated = false;
                       $scope.updateBatch = function(){
                         CBHCompoundBatch.patch({"customFields" : $scope.mol.customFields,
                                                 "projectKey" : $scope.projectWithCustomFieldData.project_key,
@@ -194,6 +195,7 @@ angular.module('ngChemApp')
                               $scope.editMode = false;
                               $scope.init();
                               $timeout($scope.removeAlert, 5000);
+                              cbh.isUpdated = true;
                             }
                           );
                       }
@@ -204,7 +206,11 @@ angular.module('ngChemApp')
             // });    
 
                     }]
-                  });
+                  }).result.finally(function() {
+                      if(cbh.isUpdated){
+                        $rootScope.$broadcast("updateListView");
+                      }
+                });
                 };
 
 
@@ -409,7 +415,7 @@ angular.module('ngChemApp')
             views: {
               projectsummary: {
                 templateUrl: 'views/project-summary.html',
-                controller: function($scope, projectKey){
+                controller: function($scope, $state,  projectKey){
                    $scope.projects = $scope.cbh.projects.objects;
                       angular.forEach($scope.projects, function(proj) {
                         if(proj.project_key == projectKey) {
@@ -418,6 +424,9 @@ angular.module('ngChemApp')
 
                         }
                       });
+                  $scope.cbh.searchPage =   function(){
+                    $state.go('cbh.search', {"project__project_key__in": $scope.proj.project_key}, {reload:true} );
+                  };
                 },
               },
               'newresults' :{
@@ -431,10 +440,13 @@ angular.module('ngChemApp')
         .state('cbh.projects.project', {
             url: window.projectUrlMatcher,
             templateUrl: 'views/project-full.html',
-            controller: function($rootScope, projectKey) {
+            controller: function($scope, $rootScope,$state, projectKey) {
               //need to check here thaat project is valid
               //we already have a list of allowed projects - if none of these, redirect to project list?
               $rootScope.projectKey = projectKey;
+              $scope.cbh.searchPage =   function(){
+                    $state.go('cbh.search', {"project__project_key__in": projectKey}, {reload:true} );
+                  };
             },
             resolve: {
               projectKey: ['$stateParams', function($stateParams){

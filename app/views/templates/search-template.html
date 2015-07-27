@@ -8,7 +8,7 @@
 		</div>
 	</div>
 
-	<form novalidate name="inputForm" role="form" ng-submit="cbh.runSearch()" >
+	<form novalidate name="inputForm" role="form"  >
 		<div class="row">
 			<div class="col-sm-5">
 				<div class="row">
@@ -25,16 +25,8 @@
 				
 				<div sf-schema="searchFormSchema.schema" sf-form="searchFormSchema.form" sf-model="searchForm"></div>
 				<!-- <div ng-include="'views/search_custom_fields.html'"></div> -->
-
 				<div class="row"></div>
 			<!-- Buttons -->
-
-			<div class="pull-right">
-			<button type="cancel" ng-click="cancel()" class="btn btn-lg btn-danger "><span class="glyphicon glyphicon-close"></span> Reset</button>
-
-			<button type="submit" class="btn btn-lg btn-primary "><span class="glyphicon glyphicon-search"></span> Run search</button>
-
-		</div>
 
 		</div>
 				
@@ -42,8 +34,18 @@
 
 
 			</div>
+			<a id="search-bottom"></a>
+
+			<div class="pull-right">
+			<button type="cancel" ng-click="cancel()" class="btn btn-lg btn-danger "><span class="glyphicon glyphicon-close"></span> Reset</button>
+
+			<button ng-click="cbh.runSearch(true)" type="submit" class="btn btn-lg btn-primary "><span class="glyphicon glyphicon-search"></span> Run search</button>
+
 		</div>
 
+		</div>
 
 	</form>
+	
+
 </div>

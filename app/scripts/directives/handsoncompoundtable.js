@@ -26,7 +26,6 @@ angular.module('ngChemApp')
                 var fieldSplit = fieldToCheck.split("|");
                 return startsWith == fieldSplit[0];
               }
-
               scope.cbh.toggleMappedFieldInDirective = function(newFieldId, unCuratedFieldName){
                 //console.log(newFieldId);
                 if(newFieldId === ""){
@@ -203,9 +202,10 @@ angular.module('ngChemApp')
                       {noSort:true, knownBy: "UOx ID",data: "chemblId", renderer: "modalLinkRenderer", readOnly: true, className: " htCenter htMiddle "},
                       {noSort:true,knownBy: "Added By",data: "createdBy", readOnly: true, className: "htCenter htMiddle "},
                       {noSort:true,knownBy: "Date",data: "timestamp", readOnly: true,className: "htCenter htMiddle "},
-                      {noSort:true,knownBy: "Mol Weight",data: "molecularWeight", readOnly: true, className: "htCenter htMiddle ", renderer: "centeredNumericRenderer"},
-                      {noSort:true,knownBy: "Batch ID",data: "multipleBatchId", readOnly: true, className: "htCenter htMiddle "},
-                      {noSort:true,knownBy: "Project",data: "project", readOnly: true, className: "htCenter htMiddle ", renderer: "projectRenderer"},
+                      {knownBy: "Mol Weight",data: "molecularWeight", readOnly: true, className: "htCenter htMiddle ", renderer: "centeredNumericRenderer"},
+                      { knownBy: "Batch ID",data: "id", readOnly: true, className: "htCenter htMiddle "},
+                      {noSort:true, knownBy: "Upload ID",data: "multipleBatchId", readOnly: true, className: "htCenter htMiddle "},
+                      {knownBy: "Project",data: "project", readOnly: true, className: "htCenter htMiddle ", renderer: "projectRenderer"},
                     ].concat(customCols);
                 }
                 if(angular.isDefined(scope.excluded)){
@@ -435,6 +435,9 @@ angular.module('ngChemApp')
                 redraw();
 
               }, true);
+
+              scope.$on("updateListView", function(){redraw();});
+
 
                             // original by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
 

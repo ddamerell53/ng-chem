@@ -72,7 +72,7 @@ angular.module('ngChemApp')
                     function(data){
                         $state.transitionTo("cbh.search", 
                                         {multiple_batch_id: $scope.datasets[$scope.current_dataset_id].config.multiplebatch, 
-                            projectFrom: projectKey},
+                            projectFrom: projectKey, project__project_key__in: projectKey},
                             { location: true, 
                                             inherit: false, 
                                             relative: null, 
