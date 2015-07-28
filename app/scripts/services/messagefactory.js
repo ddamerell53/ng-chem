@@ -41,7 +41,7 @@ angular.module('ngChemApp')
     var messages = {
         //"home": {
             wizard_intro_text: "To upload multiple compounds you will need a list of SMILES; an InChI key or list of InChI keys; or either a SD, ChemDraw or Excel file.",
-            projects_help: "Clicking Add Compounds will take you to a new page where you can add single compounds or batches of compounds from files, SMILES or InChI keys.",
+            projects_help: "Clicking Add Compounds or Add Items will take you to a new page where you can add single compounds/items or batches of compounds/items from files, SMILES or InChI keys.",
 
         //},
         //"add": {
@@ -96,8 +96,8 @@ angular.module('ngChemApp')
             no_valid_structure_values: "Records with no valid structure as interpreted by ChemReg. This type of record can still be registered and searched for inventory management purposes.",
             error_total_values: "Structures that contain errors and cannot be processed. Check your input data and the info column below.",
             inchi_matching: "Compounds submitted have been compared to each other using their InChI key to detect duplicate structures and stereoisomers.",
-            new_to_chemreg: "Compounds not previously registered to this project. These compounds may be present in other projects.",
-            project_match_values: "Some of your compounds are already registered to this project. New batches of these compounds will be created in this project.",
+            new_to_chemreg: "Compounds or items not previously registered to this project. These compounds or items may be present in other projects.",
+            project_match_values: "Some of your compounds or items are already registered to this project. New batches of these compounds or items will be created in this project.",
             chemreg_match_values: "Some duplicate compounds have been detected in your data.",
             duplicate_count_values: "No duplicate compounds have been detected in your data.",
 

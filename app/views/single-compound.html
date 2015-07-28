@@ -3,7 +3,7 @@
    
     <h2 class="modal-title blue nexa">Batch {{::mol.id}} - {{::mol.chemblId}} <a href="" clip-copy="::mol.chemblId" clip-click="" role="button" class="btn btn-default"><span class="glyphicon glyphicon-file"></span> Copy ID</a> 
 
-<a href="" clip-copy="::mol.properties.cdxml" clip-click="" role="button" class="btn btn-default"><span class="glyphicon glyphicon-file"></span> Copy CDXML</a> <small><span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;{{projectObj.name}}</small> </h2>
+<a ng-if="projectObj.project_type.show_compounds == true" href="" clip-copy="::mol.properties.cdxml" clip-click="" role="button" class="btn btn-default"><span class="glyphicon glyphicon-file"></span> Copy CDXML</a> <small><span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;{{projectObj.name}}</small> </h2>
     
 
 </div>
@@ -29,10 +29,11 @@
 </div>
 <div class="col-xs-12 col-md-6" >
 <button-input copy-model="::mol.createdBy" disabled="true" label="'Added By'"></button-input>
-
-<button-input copy-model="::mol.canonicalSmiles" disabled="true" label="'SMILES'"></button-input>
-<button-input copy-model="::mol.standardInchi" disabled="true" label="'Standard INCHI'"></button-input>
-<button-input copy-model="::mol.standardInchiKey" disabled="true" label="'Standard INCHI key'"></button-input>
+<div ng-if="projectObj.project_type.show_compounds == true">
+    <button-input copy-model="::mol.canonicalSmiles" disabled="true" label="'SMILES'"></button-input>
+    <button-input copy-model="::mol.standardInchi" disabled="true" label="'Standard INCHI'"></button-input>
+    <button-input copy-model="::mol.standardInchiKey" disabled="true" label="'Standard INCHI key'"></button-input>
+</div>
 </div>
 <div class="col-xs-12 col-md-6" >
  <button-input copy-model="::mol.alogp | number:2" disabled="true" label="'AlogP'"></button-input>

@@ -372,7 +372,7 @@ angular.module('ngChemApp')
             templateUrl: 'views/projects-list.html',
             controller: function($rootScope, $state, $stateParams, $scope) {
               $rootScope.headline = $scope.cbh.skinning.project_alias + " List";
-              $rootScope.subheading = "Click a project title to see more details and add compounds to that " + $scope.cbh.skinning.project_alias;
+              $rootScope.subheading = "Click a " + $scope.cbh.skinning.project_alias + " title to see more details and add compounds or items to that " + $scope.cbh.skinning.project_alias;
               $rootScope.help_lookup = "";
               $rootScope.projectKey = $scope.cbh.skinning.project_alias + "s";
               $rootScope.projName = $scope.cbh.skinning.project_alias + "s";

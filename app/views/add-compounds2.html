@@ -21,7 +21,7 @@
 
 
 <tabset class="col-xs-12" >
-    <tab heading="Add compounds to {{proj.name}}">
+    <tab heading="Add {{proj.project_type.show_compounds == true ? 'compounds' : 'items' }} to {{proj.name}}">
         <div class="row" ng-hide="dataReady">
          <div class="col-sm-6">
             <div class="row">

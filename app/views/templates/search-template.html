@@ -4,7 +4,7 @@
 			<h2 class="blue pull-left"><span class="glyphicon glyphicon-search"></span> Search </h2>
 		</div>
 		<div ng-if="projectFrom" class="col-sm-12 alert alert-success">
-			Your saved compounds are shown below. Use the tools to search these compounds and others in this project <button ui-sref="cbh.projects.project.addcompounds({projectKey: projectFrom})" class=" pull-right btn btn-primary add more compounds">Add more Compounds</button>
+			Your saved {{projectFrom.project_type.show_compounds == true ? 'compounds' : 'items' }} are shown below. Use the tools to search these {{projectFrom.project_type.show_compounds == true ? 'compounds' : 'items' }} and others in this project <button ui-sref="cbh.projects.project.addcompounds({projectKey: projectFrom})" class=" pull-right btn btn-primary add more compounds">Add more {{projectFrom.project_type.show_compounds == true ? 'compounds' : 'items' }}</button>
 		</div>
 	</div>
 

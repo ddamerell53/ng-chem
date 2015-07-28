@@ -430,6 +430,10 @@ strong.nexa, p.nexa strong {
   background-color: lightcyan;
   color: #002147;
 }
+.projectbox.nonchem {
+ background-color: mistyrose;
+ color: #002147; 
+}
 
 .mt-8 {
    margin-top:8px;
