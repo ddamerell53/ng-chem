@@ -198,6 +198,7 @@ angular.module('ngChemApp')
                     ].concat(uncuratedColumns);
                 }else{
                   allCols = [
+                      {noSort:true, knownBy: "Archived?",data: "properties.archived", renderer: "archivedRenderer", readOnly: true,  className: "htCenter htMiddle "},
                       {noSort:true, knownBy: "Structure",data: "properties.imageSrc", renderer: "coverRenderer", readOnly: true,  className: "htCenter htMiddle "},
                       {noSort:true, knownBy: "UOx ID",data: "chemblId", renderer: "modalLinkRenderer", readOnly: true, className: " htCenter htMiddle "},
                       {noSort:true,knownBy: "Added By",data: "createdBy", readOnly: true, className: "htCenter htMiddle "},

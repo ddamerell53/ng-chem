@@ -98,6 +98,16 @@ angular.module('ngChemApp')
     
     filters = paramsAndForm.params;
       
+    $scope.cbh.patchRecord = function(mol){
+        CBHCompoundBatch.patch(mol).then(function(data){
+            CBHCompoundBatch.reindexModifiedCompound(data.id).then(function(reindexed){
+                console.log(reindexed);
+                });
+            });
+        
+        $scope.compoundBatches.redraw ++;
+    };;
+
 
     $scope.changeNumberPerPage = function(viewType) {
         var newParams = angular.copy($stateParams);
