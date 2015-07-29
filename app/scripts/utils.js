@@ -30,6 +30,14 @@ function svgify(){
 
     });
 }
+Array.prototype.chunk = function(chunkSize) {
+    var array=this;
+    return [].concat.apply([],
+        array.map(function(elem,i) {
+            return i%chunkSize ? [] : [array.slice(i,i+chunkSize)];
+        })
+    );
+}
 
 Array.prototype.clean = function(deleteValue) {
   for (var i = 0; i < this.length; i++) {

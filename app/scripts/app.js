@@ -49,7 +49,6 @@ angular.module('ngChemApp')
                 angular.element(document).ready(function() {
 
                   angular.element("info-box", function() {
-                    console.log("happening");
                   });
                 });
                 $scope.isLoggedIn = function() {
@@ -415,7 +414,7 @@ angular.module('ngChemApp')
             views: {
               projectsummary: {
                 templateUrl: 'views/project-summary.html',
-                controller: function($scope, $state,  projectKey){
+                controller: function($scope, $state,  projectKey, CBHCompoundBatch){
                    $scope.projects = $scope.cbh.projects.objects;
                       angular.forEach($scope.projects, function(proj) {
                         if(proj.project_key == projectKey) {
@@ -424,6 +423,23 @@ angular.module('ngChemApp')
 
                         }
                       });
+                      var myform = angular.copy($scope.proj.schemaform.form);
+                      $scope.myschema = angular.copy($scope.proj.schemaform.schema);
+                      $scope.formChunks = myform.chunk(Math.ceil($scope.proj.schemaform.form.length/3));
+                      $scope.blankForm = function(){
+                           $scope.newMol = {"customFields" : {}};
+                      };
+                      $scope.blankForm();
+                      $scope.saveSingleCompound = function(){
+                        CBHCompoundBatch.saveSingleCompound(projectKey, '', $scope.newMol.customFields).then(
+                          function(data){
+                            CBHCompoundBatch.reindexModifiedCompound(data.data.id).then(function(reindexed){
+                                $state.go($state.current, {"page" : 1}, {reload: true});
+                            });
+                          }
+                        );
+                      }
+
                   $scope.cbh.searchPage =   function(){
                     $state.go('cbh.search', {"project__project_key__in": $scope.proj.project_key}, {reload:true} );
                   };

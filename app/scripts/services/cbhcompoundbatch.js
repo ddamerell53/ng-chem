@@ -55,7 +55,7 @@ angular.module('ngChemApp')
 
     CBHCompoundBatch.reindexModifiedCompound = function(id) {
       var params = {"id": id}
-      $http.post( urlConfig.cbh_compound_batches.list_endpoint  + "/reindex_compound/" , params)
+      return $http.post( urlConfig.cbh_compound_batches.list_endpoint  + "/reindex_compound/" , params)
     }
 
 
@@ -132,7 +132,10 @@ angular.module('ngChemApp')
 
     CBHCompoundBatch.saveSingleCompound = function(projectKey, molfile, customFields, stereoSelected) {
         //Add a property to the molfile to say that this molecule has been hand drawn
-        molfile += '\n>  <_drawingBondsWedged>\nTrue\n\n$$$$';
+        if(molfile !=''){
+          molfile += '\n>  <_drawingBondsWedged>\nTrue\n\n$$$$';
+        }
+        
         return $http.post( urlConfig.cbh_compound_batches.list_endpoint +"/" , {"projectKey": projectKey ,ctab:molfile, "customFields":customFields , "stereoSelected" : "As Drawn"});
 
     };
