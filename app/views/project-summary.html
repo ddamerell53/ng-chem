@@ -1,7 +1,7 @@
 <div class="row" style="margin-left:0px">
 		<h2 class="subheading">{{ proj.name }}
                 <div class="pull-right">
-                    <a ng-if="(proj.editor && proj.project_type.show_compounds == false)" ng-click="" role="button" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-plus"></span> Add single</a> 
+                    <a ng-if="(proj.editor && proj.project_type.show_compounds == false)" ng-click="toggleSingleForm.showFlag = !toggleSingleForm.showFlag" role="button" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-plus"></span> Add single</a> 
                     <a ng-if="!proj.editor" disabled title="You do not have permission to edit {{project.project_type.show_compounds == true ? 'compounds' : 'items' }} on this project. Please ask an administrator for details." role="button" "btn btn-sm btn-default"><span class="glyphicon glyphicon-plus"></span> Add {{project.project_type.show_compounds == true ? 'compound' : 'item' }}</a>
                     <a ng-if="proj.editor" ui-sref="cbh.projects.project.addcompounds({projectKey: proj.project_key})" role="button" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-th-list"></span> Add {{proj.project_type.show_compounds == true ? 'compounds' : 'items' }}</a>
                     <a ng-if="!proj.editor" disabled title="You do not have permission to edit compounds on this project. Please ask an administrator for details." role="button" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-th-list"></span> Add {{proj.project_type.show_compounds == true ? 'compounds' : 'items' }}</a>
@@ -17,14 +17,15 @@
 		<!-- <h2 class="blue nexa">
 			<small>Project details here</small>
 		</h2> -->
-
-        <div ng-repeat="form in formChunks" class="col-xs-12 col-sm-4">
-            <div  class=" form-group" sf-schema="::myschema" sf-form="::form" sf-model="newMol.customFields"></div>
-            <div class="spacer"></div>
-            <div class="form-group pull-right" ng-show="$last">
-                <button ng-click="blankForm()" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span>Clear Form</button>
-                <button  ng-click="saveSingleCompound()" class="btn btn-success"><span class="glyphicon glyphicon-ok"></span>Save record
-                </button>
+        <div class="show-animate" ng-show="toggleSingleForm.showFlag">
+            <div ng-repeat="form in formChunks" class="col-xs-12 col-sm-4">
+                <div  class=" form-group" sf-schema="::myschema" sf-form="::form" sf-model="newMol.customFields"></div>
+                <div class="spacer"></div>
+                <div class="form-group pull-right" ng-show="$last">
+                    <button ng-click="blankForm()" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span>Clear Form</button>
+                    <button  ng-click="saveSingleCompound()" class="btn btn-success"><span class="glyphicon glyphicon-ok"></span>Save record
+                    </button>
+                </div>
             </div>
         </div>
 </div>

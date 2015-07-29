@@ -385,6 +385,9 @@ angular.module('ngChemApp')
               $scope.toggleDataSummary = {
                 showFlag: false,
               }
+              $scope.toggleSingleForm = {
+                 showFlag: false,
+              };
               
             }
         })
@@ -439,6 +442,7 @@ angular.module('ngChemApp')
                           }
                         );
                       }
+                      
 
                   $scope.cbh.searchPage =   function(){
                     $state.go('cbh.search', {"project__project_key__in": $scope.proj.project_key}, {reload:true} );
