@@ -408,7 +408,7 @@ angular.module('ngChemApp')
         // })
 
         .state('cbh.projects.list.project', {
-            url: window.projectUrlMatcher + "?page=&compoundBatchesPerPage=&viewType=&doScroll=&sorts=",
+            url: window.projectUrlMatcher + "?archived=?page=&compoundBatchesPerPage=&viewType=&doScroll=&sorts=",
             resolve: {
               projectKey: ['$stateParams', function($stateParams){
                   return $stateParams.projectKey;
