@@ -1,8 +1,12 @@
 <div class="row" style="margin-left:0px">
 		<h2 class="subheading">{{ proj.name }}
-
-            <a ng-if="proj.editor" ui-sref="cbh.projects.project.addcompounds({projectKey: proj.project_key})" role="button" class="btn btn-sm btn-default pull-right"><span class="glyphicon glyphicon-plus-sign"></span> Add {{proj.project_type.show_compounds == true ? 'compounds' : 'items' }}</a>
-                <a ng-if="!proj.editor" disabled title="You do not have permission to edit compounds on this project. Please ask an administrator for details." role="button" class="btn btn-sm btn-default pull-right"><span class="glyphicon glyphicon-plus-sign"></span> Add {{proj.project_type.show_compounds == true ? 'compounds' : 'items' }}</a>
+                <div class="pull-right">
+                    <a ng-if="(proj.editor && proj.project_type.show_compounds == false)" ng-click="" role="button" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-plus"></span> Add single</a> 
+                    <a ng-if="!proj.editor" disabled title="You do not have permission to edit {{project.project_type.show_compounds == true ? 'compounds' : 'items' }} on this project. Please ask an administrator for details." role="button" "btn btn-sm btn-default"><span class="glyphicon glyphicon-plus"></span> Add {{project.project_type.show_compounds == true ? 'compound' : 'item' }}</a>
+                    <a ng-if="proj.editor" ui-sref="cbh.projects.project.addcompounds({projectKey: proj.project_key})" role="button" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-th-list"></span> Add {{proj.project_type.show_compounds == true ? 'compounds' : 'items' }}</a>
+                    <a ng-if="!proj.editor" disabled title="You do not have permission to edit compounds on this project. Please ask an administrator for details." role="button" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-th-list"></span> Add {{proj.project_type.show_compounds == true ? 'compounds' : 'items' }}</a>
+                    
+                </div>
                 <div class="pull-right" style="margin-right:10px; border: 1px solid #fff; padding: 0 3px 2px; border-radius:4px; margin-top: -2px;"><small style="color:white;">
                 	<img src="/images/chemical-icon-white.png" ng-if="proj.project_type.show_compounds == true">
                 	<img src="/images/inventory-icon-white.png" ng-if="proj.project_type.show_compounds == false">

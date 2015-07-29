@@ -111,7 +111,7 @@ app.controller('DemoCtrl', ['$scope', '$rootScope', '$state', 'ChEMBLFactory', '
 
             $scope.struccol_options = [{
                 name: "",
-                value: "No structure"
+                value: "No image"
             },
 
             ]; //
@@ -550,7 +550,7 @@ app.controller('DemoCtrl', ['$scope', '$rootScope', '$state', 'ChEMBLFactory', '
 
         $scope.updateStrucCol = function(str) {
             //If it is a real structure column then try to process the file
-            if (str != "No structure") {
+            if (str != "No image") {
                 $scope.struccol_str = str;
                 $scope.processFiles();
                 
