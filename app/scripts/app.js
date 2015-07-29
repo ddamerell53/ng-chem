@@ -388,6 +388,12 @@ angular.module('ngChemApp')
               $scope.toggleSingleForm = {
                  showFlag: false,
               };
+              $scope.addSingleRecord = function(projKey){
+                console.log('hello');
+                $scope.toggleSingleForm.showFlag = true;
+                console.log(projKey);
+                $state.go('cbh.projects.list.project', {'projectKey': projKey, 'page':1, 'sorts':[]});
+              };
               
             }
         })

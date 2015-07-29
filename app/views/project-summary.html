@@ -17,7 +17,7 @@
 		<!-- <h2 class="blue nexa">
 			<small>Project details here</small>
 		</h2> -->
-        <div class="show-animate" ng-show="toggleSingleForm.showFlag">
+        <div class="show-animate" ng-show="toggleSingleForm.showFlag && proj.project_type.show_compounds == false">
             <div ng-repeat="form in formChunks" class="col-xs-12 col-sm-4">
                 <div  class=" form-group" sf-schema="::myschema" sf-form="::form" sf-model="newMol.customFields"></div>
                 <div class="spacer"></div>
