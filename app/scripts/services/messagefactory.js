@@ -101,6 +101,8 @@ angular.module('ngChemApp')
             chemreg_match_values: "Some duplicate compounds have been detected in your data.",
             duplicate_count_values: "No duplicate compounds have been detected in your data.",
 
+            project_data_field_download: "Download a summary of the required data fields for this project. This document gives an indication as to the type of data expected for each field (date, text etc.) and the allowed values for multiple value fields.",
+
 
     }
 

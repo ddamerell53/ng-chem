@@ -2,7 +2,7 @@
 		<h2 class="subheading">{{ proj.name }}
                 <div class="pull-right">
                     <a ng-if="(proj.editor && proj.project_type.show_compounds == false)" ng-click="toggleSingleForm.showFlag = !toggleSingleForm.showFlag" role="button" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-plus"></span> Add single</a> 
-                    <a ng-if="!proj.editor" disabled title="You do not have permission to edit {{project.project_type.show_compounds == true ? 'compounds' : 'items' }} on this project. Please ask an administrator for details." role="button" "btn btn-sm btn-default"><span class="glyphicon glyphicon-plus"></span> Add {{project.project_type.show_compounds == true ? 'compound' : 'item' }}</a>
+                    <a ng-if="!proj.editor" disabled title="You do not have permission to edit {{proj.project_type.show_compounds == true ? 'compounds' : 'items' }} on this project. Please ask an administrator for details." role="button" "btn btn-sm btn-default"><span class="glyphicon glyphicon-plus"></span> Add {{project.project_type.show_compounds == true ? 'compound' : 'item' }}</a>
                     <a ng-if="proj.editor" ui-sref="cbh.projects.project.addcompounds({projectKey: proj.project_key})" role="button" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-th-list"></span> Add {{proj.project_type.show_compounds == true ? 'compounds' : 'items' }}</a>
                     <a ng-if="!proj.editor" disabled title="You do not have permission to edit compounds on this project. Please ask an administrator for details." role="button" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-th-list"></span> Add {{proj.project_type.show_compounds == true ? 'compounds' : 'items' }}</a>
                     
@@ -13,10 +13,15 @@
                 	<!-- <img ng-src="{{proj.project_type.show_compounds && '/images/chemical-icon-white.png'
                 	|| '/images/inventory-icon-white.png'}} " alt="{{proj.project_type.name}} project" title="{{proj.project_type.name}} project"> --> {{proj.project_type.name}}</small>
                 </div>
+                
         </h2>
 		<!-- <h2 class="blue nexa">
 			<small>Project details here</small>
 		</h2> -->
+        <div class="pull-right">
+                    <a ng-href="{{  urlConfig.cbh_projects.list_endpoint }}/?project_key={{proj.id}}&format=xls" role="button" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-floppy-save"></span> Project Data Summary</a>
+                    <info-box lookup="project_data_field_download" lookupitems="cbh.messages" left="true"></info-box>
+                </div>
         <div class="show-animate" ng-show="toggleSingleForm.showFlag && proj.project_type.show_compounds == false">
             <div ng-repeat="form in formChunks" class="col-xs-12 col-sm-4">
                 <div  class=" form-group" sf-schema="::myschema" sf-form="::form" sf-model="newMol.customFields"></div>
