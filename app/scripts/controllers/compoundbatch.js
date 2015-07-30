@@ -98,6 +98,34 @@ angular.module('ngChemApp')
     
     filters = paramsAndForm.params;
       
+    $scope.cbh.patchRecord = function(mol){
+        CBHCompoundBatch.patch(mol).then(function(data){
+            CBHCompoundBatch.reindexModifiedCompound(data.id).then(function(reindexed){
+                console.log(reindexed);
+                });
+            });
+        
+        $scope.compoundBatches.redraw ++;
+    };;
+     if( $stateParams.archived == "true"){
+            $scope.cbh.archiveMode = true;
+    }else{
+            $scope.cbh.archiveMode = false;
+    }
+
+    $scope.cbh.toggleArchivedMode = function(){
+        alert("test");
+       $scope.archiveMode = !$scope.archiveMode;
+       var newParams = angular.copy($stateParams);
+        newParams.page = 1;
+        newParams.compoundBatchesPerPage = $scope.pagination.compoundBatchesPerPage.value;
+        newParams.doScroll = 'true';
+        newParams.archived = ($scope.archiveMode).toString();
+        console.log(newParams);
+        $state.go($state.current.name,newParams);
+        
+    }
+   
 
     $scope.changeNumberPerPage = function(viewType) {
         var newParams = angular.copy($stateParams);
@@ -239,6 +267,7 @@ angular.module('ngChemApp')
         filters.limit = $scope.pagination.compoundBatchesPerPage.value;
         filters.offset = (pageNumber -1) * $scope.pagination.compoundBatchesPerPage.value;
         filters.sorts = $stateParams.sorts;
+        filters.archived = $stateParams.archived;
         filters.showBlanks = $stateParams.showBlanks;
         if(filters.showBlanks){
             filters.showBlanks = filters.showBlanks.replace("customFields", "custom_fields")

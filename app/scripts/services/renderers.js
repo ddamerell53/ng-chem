@@ -86,6 +86,45 @@ angular.module('ngChemApp')
                 return td;
               },
 
+              archivedRenderer : function(instance, td, row, col, prop, value, cellProperties) {
+                var projects = scope.cbh.projects.objects;
+                var mol = instance.getSourceDataAtRow(row);
+                var split = mol.project.split("/");
+                var projid = split[split.length-1]; 
+                angular.forEach(projects,function(myproj){
+
+                    
+                    
+                    if(myproj.id == projid){
+                      var toArchive = false ;
+                      var escaped = "<button class='btn btn-success'><span class=' glyphicon glyphicon-ok'></span>Restore</button>";
+                      if(value==null || value=="false" || value==false){
+                          var escaped = "<button class='btn btn-danger'><span class='glyphicon glyphicon-remove'></span>Archive</button>";
+                          toArchive = true;
+                      }
+                      
+                      var a = document.createElement('a');
+                      a.innerHTML = escaped;
+                      Handsontable.Dom.addEvent(a, 'mousedown', function (e){
+                          // e.preventDefault(); // prevent selection quirk
+                          
+                          mol.properties.archived=toArchive;
+                          mol.projectKey= myproj.project_key;
+                          scope.cbh.patchRecord(mol);
+                      });
+                      Handsontable.Dom.empty(td);
+                      td.className  += "htCenter htMiddle";
+                      td.appendChild(a);
+                    
+                      return td;
+                    }
+                      
+                  });
+
+                
+              },
+
+
               modalLinkRenderer : function(instance, td, row, col, prop, value, cellProperties) {
                 if(value==null){
                   return td;

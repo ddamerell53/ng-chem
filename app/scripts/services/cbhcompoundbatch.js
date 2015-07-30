@@ -59,6 +59,14 @@ angular.module('ngChemApp')
     }
 
 
+    CBHCompoundBatch.markAsArchived = function(batch_id){
+        return $http.post( urlConfig.cbh_compound_batches.list_endpoint  + "/archive/" , {id: batch_id})
+    }
+
+
+
+
+
     CBHCompoundBatch.getSearchResults = function(mb_id, limit, offset, filter, sorts){
             var params = {
                                     "limit" : limit,
@@ -260,7 +268,12 @@ angular.module('ngChemApp')
 
 
 
-    CBHCompoundBatch.search = function(searchForm) {
+    CBHCompoundBatch.search = function(searchForm, archived) {
+        if(archived){
+          searchForm.properties__archived = "true";
+
+          
+        }
         var promise = $http({
             url:urlConfig.cbh_compound_batches.list_endpoint,
             method:'GET',
