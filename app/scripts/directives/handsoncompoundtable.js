@@ -106,9 +106,11 @@ angular.module('ngChemApp')
 
                   
                   var projects = scope.cbh.projects.objects;
-
+                  var showCompounds = false;
                   angular.forEach(projects,function(myproj){
-
+                    if (myproj.project_type.show_compounds ==true){
+                      showCompounds = true;
+                    }
                     
                     if ( !angular.isDefined(scope.cbh.includedProjectKeys) ||scope.cbh.includedProjectKeys.indexOf(myproj.project_key) > -1){
                         angular.forEach(myproj.schemaform.form, function(i){
@@ -202,10 +204,11 @@ angular.module('ngChemApp')
                     allCols = [
                       {noSort:true, knownBy: "Archive or Restore",data: "properties.archived", renderer: "archivedRenderer", readOnly: true,  className: "htCenter htMiddle "}
                     ];
-
+                  }
+                  if (showCompounds){
+                    allCols.concat([{noSort:true, knownBy: "Structure",data: "properties.imageSrc", renderer: "coverRenderer", readOnly: true,  className: "htCenter htMiddle "},])
                   }
                   allCols = allCols.concat([
-                      {noSort:true, knownBy: "Structure",data: "properties.imageSrc", renderer: "coverRenderer", readOnly: true,  className: "htCenter htMiddle "},
                       {noSort:true, knownBy: "UOx ID",data: "chemblId", renderer: "modalLinkRenderer", readOnly: true, className: " htCenter htMiddle "},
                       {noSort:true,knownBy: "Added By",data: "createdBy", readOnly: true, className: "htCenter htMiddle "},
                       {noSort:true,knownBy: "Date",data: "timestamp", readOnly: true,className: "htCenter htMiddle "},
