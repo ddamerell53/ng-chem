@@ -120,11 +120,14 @@ angular.module('ngChemApp')
                   
               }
 
-              cbh.openSingleMol = function(mol, isNewCompoundsInterface) {
+              cbh.openSingleMol = function(mol, isNewCompoundsInterface, editingOnlyProperty) {
+                  var templateU = editingOnlyProperty ? 'views/templates/single-field.html':'views/templates/single-compound-full.html';
+
+
+
                   $scope.modalInstance = $modal.open({
-                    templateUrl: 'views/single-compound.html',
+                    templateUrl: templateU,
                     size: 'lg',
-                    
                     controller: ['$scope','$rootScope', '$modalInstance', '$timeout', 'CBHCompoundBatch', 'ProjectFactory',
                     function($scope, $rootScope, $modalInstance,  $timeout, CBHCompoundBatch, ProjectFactory) {
                       $scope.isNewCompoundsInterface = isNewCompoundsInterface;
@@ -139,10 +142,17 @@ angular.module('ngChemApp')
                           $scope.projectObj = myproj;
                         }
                       });
+                      $scope.singleForm = false;
+
+                      if(editingOnlyProperty){
+                        angular.forEach($scope.projectWithCustomFieldData.schemaform.form, function(formItem){
+                          if(formItem.key === editingOnlyProperty.split(".")[1]){
+                            $scope.singleForm = [angular.copy(formItem)];
+                          }
+                        });
+                      }
                       
-                      
-                 
-                      $scope.myform = $scope.projectWithCustomFieldData.schemaform.form;
+
                       var myform = $scope.projectWithCustomFieldData.schemaform.form;
                       var len = Math.ceil( myform.length/2);
                       $scope.firstForm = angular.copy(myform).splice(0, len);
@@ -181,7 +191,7 @@ angular.module('ngChemApp')
                         $scope.update_success = false;
                       }
                       cbh.isUpdated = false;
-                      $scope.updateBatch = function(){
+                      $scope.updateBatch = function(instance){
                         CBHCompoundBatch.patch({"customFields" : $scope.mol.customFields,
                                                 "projectKey" : $scope.projectWithCustomFieldData.project_key,
                                                 "id": $scope.mol.id}).then(
@@ -195,6 +205,10 @@ angular.module('ngChemApp')
                               $scope.init();
                               $timeout($scope.removeAlert, 5000);
                               cbh.isUpdated = true;
+                              if(angular.isDefined(instance)){
+                                instance.dismiss('cancel');
+                              }
+                              
                             }
                           );
                       }
@@ -235,7 +249,7 @@ angular.module('ngChemApp')
 
 
         .state('cbh.search', {
-            url: '/search?&projectFrom=&scroll=&scrollTop=&sorts=&page=&compoundBatchesPerPage=&project__project_key__in&functional_group&flexmatch&related_molregno__chembl__chembl_id__in&with_substructure&similar_to&fpValue&created__gte&created__lte&molfile&smiles&search_custom_fields__kv_any&multiple_batch_id=&viewType=&doScroll=&showBlanks=&showNonBlanks=&limit&offset',
+            url: '/search?editMode=&archived=&projectFrom=&scroll=&scrollTop=&sorts=&page=&compoundBatchesPerPage=&project__project_key__in&functional_group&flexmatch&related_molregno__chembl__chembl_id__in&with_substructure&similar_to&fpValue&created__gte&created__lte&molfile&smiles&search_custom_fields__kv_any&multiple_batch_id=&viewType=&doScroll=&showBlanks=&showNonBlanks=&limit&offset',
             //url: '/search',
             //params: ['project__project_key', 'flexmatch', 'with_substructure', 'similar_to', 'fpValue', 'created__gte', 'created__lte', 'molfile', 'smiles', 'limit', 'offset', 'random'],
             resolve:{
@@ -408,7 +422,7 @@ angular.module('ngChemApp')
         // })
 
         .state('cbh.projects.list.project', {
-            url: window.projectUrlMatcher + "?archived=?page=&compoundBatchesPerPage=&viewType=&doScroll=&sorts=",
+            url: window.projectUrlMatcher + "?editMode=archived=?page=&compoundBatchesPerPage=&viewType=&doScroll=&sorts=",
             resolve: {
               projectKey: ['$stateParams', function($stateParams){
                   return $stateParams.projectKey;
@@ -443,7 +457,7 @@ angular.module('ngChemApp')
                         CBHCompoundBatch.saveSingleCompound(projectKey, '', $scope.newMol.customFields).then(
                           function(data){
                             CBHCompoundBatch.reindexModifiedCompound(data.data.id).then(function(reindexed){
-                                $state.go($state.current, {"page" : 1}, {reload: true});
+                                $state.go($state.current, {"page" : 1, "sorts": [], "filters": undefined}, {reload: true});
                             });
                           }
                         );

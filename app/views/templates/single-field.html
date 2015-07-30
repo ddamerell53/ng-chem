@@ -1,0 +1,13 @@
+ <div class="modal-body">
+
+
+<div  ng-if="singleForm" class=" form-group" sf-schema="::myschema" sf-form="::singleForm" sf-model="mol.customFields"></div>
+<div  ng-if="!singleForm" class="alert alert-warning">Field is not present in the project to which this compound belongs.</div>
+
+</div>
+
+
+<div class="modal-footer">
+     <button class="btn btn-primary" ng-disabled="!projectObj.editor" ng-click="updateBatch(modalInstance);">Update and Close</button>
+    <button class="btn btn-danger" ng-click="modalInstance.dismiss('cancel');">Close <span ng-show="singleForm">and Discard Changes</span></button>
+</div>

@@ -106,27 +106,40 @@ angular.module('ngChemApp')
             });
         
         $scope.compoundBatches.redraw ++;
-    };;
-     if( $stateParams.archived == "true"){
-            $scope.cbh.archiveMode = true;
+    };
+
+    if( $stateParams.archived == "true" || $stateParams.archived ==true){
+            $scope.cbh.archiveFilter = true;
     }else{
-            $scope.cbh.archiveMode = false;
+            $scope.cbh.archiveFilter = false;
     }
 
-    $scope.cbh.toggleArchivedMode = function(){
-        alert("test");
-       $scope.archiveMode = !$scope.archiveMode;
+    if( $stateParams.editMode == "true" || $stateParams.editMode ==true){
+            $scope.cbh.editMode = true;
+    }else{
+            $scope.cbh.editMode = false;
+    }
+
+    $scope.cbh.toggleArchiveFilter = function(){
+       $scope.cbh.archiveFilter = !$scope.cbh.archiveFilter;
        var newParams = angular.copy($stateParams);
         newParams.page = 1;
         newParams.compoundBatchesPerPage = $scope.pagination.compoundBatchesPerPage.value;
         newParams.doScroll = 'true';
-        newParams.archived = ($scope.archiveMode).toString();
-        console.log(newParams);
+        newParams.archived = ($scope.cbh.archiveFilter).toString();
         $state.go($state.current.name,newParams);
-        
     }
    
-
+   $scope.cbh.toggleEditMode = function(){
+       $scope.cbh.editMode = !$scope.cbh.editMode;
+       var newParams = angular.copy($stateParams);
+        newParams.page = 1;
+        newParams.compoundBatchesPerPage = $scope.pagination.compoundBatchesPerPage.value;
+        newParams.doScroll = 'true';
+        newParams.editMode = ($scope.cbh.editMode).toString();
+        $state.go($state.current.name,newParams);
+    }
+   
     $scope.changeNumberPerPage = function(viewType) {
         var newParams = angular.copy($stateParams);
         newParams.page = 1;

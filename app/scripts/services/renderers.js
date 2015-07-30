@@ -39,7 +39,34 @@ angular.module('ngChemApp')
         getRenderers: function(sco, isNewCompounds){
         var scope;
         var isNewCompoundsInterface = isNewCompounds;
-        
+        var linkrend = function(instance, td, row, col, prop, value, cellProperties) {
+               var escaped = Handsontable.helper.stringify(value);
+                escaped = strip_tags(escaped, '');
+                if (escaped.indexOf("http") == 0 && escaped.indexOf("//") > 0){
+
+                  var a = document.createElement('a');
+                  var afterHttp = escaped.split("//")[1];
+                  a.innerHTML = afterHttp;
+                  if (afterHttp.length>30){
+                      a.innerHTML = afterHttp.substring(0,29) +"...";
+                  }
+                  a.href = escaped;
+                  a.target = "_blank";
+                  Handsontable.Dom.empty(td);
+                  td.className  += "htCenter htMiddle ";
+                  td.appendChild(a);
+                }else{
+                  td.className  += " htMiddle ";
+                  if(prop == "standardInchiKey"){
+                    td.innerHTML = escaped.substring(0,10) +"...";
+                    cellProperties.readOnly = true;
+                  }else{
+                     td.innerHTML = '<div class="">' + escaped + '</div>';
+                  }
+                }
+                
+                return td;
+              };
         
         var renderers = {
               infoRenderer : function(instance, td, row, col, prop, value, cellProperties) {
@@ -92,22 +119,17 @@ angular.module('ngChemApp')
                 var split = mol.project.split("/");
                 var projid = split[split.length-1]; 
                 angular.forEach(projects,function(myproj){
-
-                    
-                    
                     if(myproj.id == projid){
                       var toArchive = false ;
-                      var escaped = "<button class='btn btn-success'><span class=' glyphicon glyphicon-ok'></span>Restore</button>";
+                      var escaped = "<button class='btn btn-success'><span class=' glyphicon glyphicon-ok'></span>&nbsp;Restore</button>";
                       if(value==null || value=="false" || value==false){
-                          var escaped = "<button class='btn btn-danger'><span class='glyphicon glyphicon-remove'></span>Archive</button>";
+                          var escaped = "<button class='btn btn-danger'><span class='glyphicon glyphicon-remove'></span>&nbsp;Archive</button>";
                           toArchive = true;
                       }
-                      
                       var a = document.createElement('a');
                       a.innerHTML = escaped;
                       Handsontable.Dom.addEvent(a, 'mousedown', function (e){
                           // e.preventDefault(); // prevent selection quirk
-                          
                           mol.properties.archived=toArchive;
                           mol.projectKey= myproj.project_key;
                           scope.cbh.patchRecord(mol);
@@ -115,7 +137,6 @@ angular.module('ngChemApp')
                       Handsontable.Dom.empty(td);
                       td.className  += "htCenter htMiddle";
                       td.appendChild(a);
-                    
                       return td;
                     }
                       
@@ -172,35 +193,26 @@ angular.module('ngChemApp')
 
               },
   
-               linkRenderer : function(instance, td, row, col, prop, value, cellProperties) {
-               var escaped = Handsontable.helper.stringify(value);
-                escaped = strip_tags(escaped, '');
-                if (escaped.indexOf("http") == 0 && escaped.indexOf("//") > 0){
-
-                  var a = document.createElement('a');
-                  var afterHttp = escaped.split("//")[1];
-                  a.innerHTML = afterHttp;
-                  if (afterHttp.length>30){
-                      a.innerHTML = afterHttp.substring(0,29) +"...";
-                  }
-                  a.href = escaped;
-                  a.target = "_blank";
-                  Handsontable.Dom.empty(td);
-                  td.className  += "htCenter htMiddle ";
-                  td.appendChild(a);
-                }else{
-                  td.className  += " htMiddle ";
-                  if(prop == "standardInchiKey"){
-                    td.innerHTML = escaped.substring(0,10) +"...";
-                    cellProperties.readOnly = true;
-                  }else{
-                     td.innerHTML = escaped;
-                  }
+               linkRenderer : linkrend,
+  
+              customFieldRenderer: function(instance, td, row, col, prop, value, cellProperties) {
+                td = linkrend(instance, td, row, col, prop, value, cellProperties);
+                if(cellProperties.readOnly == false){
+                  td.className  += " gallery-item";
+                    var button = document.createElement("div");
+                    button.className ="row";
+                    button.innerHTML = "<button class='btn btn-sm btn-default pull-right' style='positon:top' ><span class='glyphicon glyphicon-pencil'></span></button>"
+                    td.insertBefore( button, td.firstChild );
+                  Handsontable.Dom.addEvent(button, 'mousedown', function (e){
+                   e.preventDefault(); // prevent selection quirk
+                    var mol = instance.getSourceDataAtRow(row);
+                    scope.cbh.openSingleMol(mol, false, prop);
+                    
+                  });
                 }
                 
-                return td;
+                return td
               },
-  
               bulletRenderer:  function(instance, td, row, col, prop, value, cellProperties) {
                 var classN = "glyphicon glyphicon-unchecked";
                 

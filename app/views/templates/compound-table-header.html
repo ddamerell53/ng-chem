@@ -21,17 +21,26 @@
                             <div class="pull-left" ng-if="col.data =='properties.archived'">
                                 <div class="dropdown"  aria-hidden="false">
                                     <button  class="btn btn-default btn-toggle mt-8" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                        <span  class="glyphicon " ng-class="cbh.archiveMode ? 'glyphicon-filter' : 'glyphicon-filter lightgrey'"></span>
+                                        <span  class="glyphicon " ng-class="cbh.archiveFilter ? 'glyphicon-filter' : 'glyphicon-filter lightgrey'"></span>
                                         
                                     <span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu wide-dropdown" ng-class="(!$first ? 'pull-right' : '')"  role="menu" aria-labelledby="userBtn">
                                         <li>
-                                            <a class="relative" ng-click="cbh.toggleArchivedMode()" tabindex="0">
+                                            <a class="relative" ng-click="cbh.toggleArchiveFilter()" tabindex="0">
                                                 <strong class="nexa">
                                                     <span class="glyphicon glyphicon-filter"></span>
                                                                     &nbsp;Show only archived 
-                                                    <span class="glyphicon rightglyph" ng-class="(cbh.archiveMode) ? 'glyphicon-check':'glyphicon-unchecked'"></span>
+                                                    <span class="glyphicon rightglyph" ng-class="(cbh.archiveFilter) ? 'glyphicon-check':'glyphicon-unchecked'"></span>
+                                                </strong>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="relative" ng-click="cbh.toggleArchiveFilter()" tabindex="0">
+                                                <strong class="nexa">
+                                                    <span class="glyphicon glyphicon-filter"></span>
+                                                                    &nbsp;Show records not archived 
+                                                    <span class="glyphicon rightglyph" ng-class="(cbh.archiveFilter) ? 'glyphicon-unchecked': 'glyphicon-check'"></span>
                                                 </strong>
                                             </a>
                                         </li>
