@@ -108,11 +108,13 @@ angular.module('ngChemApp')
                   var projects = scope.cbh.projects.objects;
                   var showCompounds = false;
                   angular.forEach(projects,function(myproj){
-                    if (myproj.project_type.show_compounds ==true){
-                      showCompounds = true;
-                    }
                     
+              
                     if ( !angular.isDefined(scope.cbh.includedProjectKeys) ||scope.cbh.includedProjectKeys.indexOf(myproj.project_key) > -1){
+                        if (myproj.project_type.show_compounds){
+                          showCompounds = true;
+                        }
+
                         angular.forEach(myproj.schemaform.form, function(i){
                           if(cNames.indexOf( i.key) < 0){
                              var hotColumn = {
@@ -134,7 +136,6 @@ angular.module('ngChemApp')
                       
                   });
                 
-                  
                  
                 var allCols = [];
 
@@ -206,7 +207,7 @@ angular.module('ngChemApp')
                     ];
                   }
                   if (showCompounds){
-                    allCols.concat([{noSort:true, knownBy: "Structure",data: "properties.imageSrc", renderer: "coverRenderer", readOnly: true,  className: "htCenter htMiddle "},])
+                    allCols = allCols.concat([{noSort:true, knownBy: "Structure",data: "properties.imageSrc", renderer: "coverRenderer", readOnly: true,  className: "htCenter htMiddle "},])
                   }
                   allCols = allCols.concat([
                       {noSort:true, knownBy: "UOx ID",data: "chemblId", renderer: "modalLinkRenderer", readOnly: true, className: " htCenter htMiddle "},
@@ -245,7 +246,6 @@ angular.module('ngChemApp')
                     colHeaders: columnHeaders,
                     columns: allCols, 
                     maxRows: scope.compounds.length,
-                    stretchH: 'all',
                   }
                   if(isNewCompoundsInterface){
                       hotObj.afterChange = function(data,sourceOfChange){
