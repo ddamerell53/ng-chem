@@ -31,18 +31,50 @@ angular.module('ngChemApp')
             return '<a class="btn btn-sm btn-default" title="' + title + '" onclick="angular.element(this).scope().cbh.toggleWarningsFilter(&quot;' + fieldKey + '&quot;)" ><span class="glyphicon glyphicon-filter ' + className + ' " ></span></a>';
     }
 
-   
-    
-
     // Public API here
     var data = {
         getRenderers: function(sco, isNewCompounds){
         var scope;
         var isNewCompoundsInterface = isNewCompounds;
         var linkrend = function(instance, td, row, col, prop, value, cellProperties) {
+          console.log(cellProperties)
                var escaped = Handsontable.helper.stringify(value);
                 escaped = strip_tags(escaped, '');
-                if (escaped.indexOf("http") == 0 && escaped.indexOf("//") > 0){
+                if (cellProperties.field_type == 'href'){
+                    var a = document.createElement('a');
+                    if(escaped.length > 0){
+                      if(escaped.substring(1,1) ==":"){
+                        //assume a file link
+                        escaped = "file://" + escaped;
+                      }
+                    }
+                    a.innerHTML = "view";
+                    a.href = escaped;
+                    a.target = "_blank";
+                    Handsontable.Dom.empty(td);
+                    td.className  += "htCenter htMiddle ";
+                    td.appendChild(a);
+                }
+                else if (cellProperties.field_type == 'imghref'){
+                    var a = document.createElement('a');
+                    if(escaped.length > 0){
+                      if(escaped.substring(1,1) ==":"){
+                        //assume a file link
+                        escaped = "file://" + escaped;
+                      }
+                    }
+                    a.innerHTML = "view";
+                    a.href = escaped;
+                    a.target = "_blank";
+                    Handsontable.Dom.empty(td);
+                    td.className  += "htCenter htMiddle ";
+                    var i = document.createElement('img');
+                    i.src = escaped;
+                    i.className="img-responsive";
+                    a.appendChild(i);
+                    td.appendChild(a);
+                }
+                else if (escaped.indexOf("http") == 0 && escaped.indexOf("//") > 0){
 
                   var a = document.createElement('a');
                   var afterHttp = escaped.split("//")[1];

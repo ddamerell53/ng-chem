@@ -119,7 +119,8 @@ angular.module('ngChemApp')
                                 readOnly:!scope.cbh.editMode, 
                                 className: "htCenter htMiddle ", 
                                 renderer: "customFieldRenderer",
-                                typeahed : []
+                                typeahed : [],
+                                field_type: i.field_type,
                             };
                             cNames.push(i.key);
                             customCols.push(hotColumn);
