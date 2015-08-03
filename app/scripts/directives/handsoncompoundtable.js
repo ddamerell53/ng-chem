@@ -254,6 +254,10 @@ angular.module('ngChemApp')
                               }  
                           }
                       };
+                  }else{
+                      hotObj.afterChange = function(data,sourceOfChange){
+                          scope.cbh.saveChangesToCompoundDataInController(data, sourceOfChange);
+                      };
                   }
 
             var rend = renderers.getRenderers(scope, isNewCompoundsInterface);

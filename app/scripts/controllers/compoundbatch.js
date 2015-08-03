@@ -395,7 +395,29 @@ angular.module('ngChemApp')
                 
             };
 
+            $scope.cbh.saveChangesToCompoundDataInController = function(changes, sourceOfChange){
+                if(angular.isDefined(changes)){
+                    if( changes && changes.length > 0){
 
+                        // $scope.currentlyLoading = true;
+                        $scope.disableButtons = true;
+                        var itemsToChange = changes.map(function(item){
+                            return $scope.compoundBatches.data[item[0]]
+                        });
+                        var patchData = {};
+                        patchData.objects = itemsToChange;
+                        CBHCompoundBatch.patchList(patchData, $rootScope.projects).then(function(data){
+                            console.log(data);
+                            angular.forEach(data, function(d){
+
+                                CBHCompoundBatch.reindexModifiedCompound(d.id);
+                            })
+                        });
+                    }
+                }
+              
+           
+    };
     $scope.initialise = function(){
         if($stateParams.viewType) {
                 $scope.listOrGallery.choice = $stateParams.viewType;

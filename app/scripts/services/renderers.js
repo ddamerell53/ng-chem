@@ -37,7 +37,6 @@ angular.module('ngChemApp')
         var scope;
         var isNewCompoundsInterface = isNewCompounds;
         var linkrend = function(instance, td, row, col, prop, value, cellProperties) {
-          console.log(cellProperties)
                var escaped = Handsontable.helper.stringify(value);
                 escaped = strip_tags(escaped, '');
                 if (cellProperties.field_type == 'href'){
@@ -62,17 +61,19 @@ angular.module('ngChemApp')
                         //assume a file link
                         escaped = "file://" + escaped;
                       }
+                       a.innerHTML = "view";
+                      a.href = escaped;
+                      a.target = "_blank";
                     }
-                    a.innerHTML = "view";
-                    a.href = escaped;
-                    a.target = "_blank";
+                   
                     Handsontable.Dom.empty(td);
                     td.className  += "htCenter htMiddle ";
                     var i = document.createElement('img');
                     i.src = escaped;
                     i.className="img-responsive";
-                    a.appendChild(i);
+                    td.appendChild(i);
                     td.appendChild(a);
+                    td.setAttribute("style", "min-height:100px;min-width:200px;max-width:200px");
                 }
                 else if (escaped.indexOf("http") == 0 && escaped.indexOf("//") > 0){
 

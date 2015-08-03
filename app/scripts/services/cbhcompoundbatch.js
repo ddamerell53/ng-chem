@@ -243,7 +243,7 @@ angular.module('ngChemApp')
         return defer.promise;
     }
 
-    CBHCompoundBatch.patch = function(data, projectKey){
+    var patch = function(data, projectKey){
         var promise = $http.patch(  urlConfig.cbh_compound_batches.list_endpoint + '/' + data.id + '/' ,       
                 data
             ).then(
@@ -252,6 +252,25 @@ angular.module('ngChemApp')
             }
         );
         return promise;
+    }
+
+    CBHCompoundBatch.patch = patch;
+
+    CBHCompoundBatch.patchList = function(data, projects){
+        var defer = $q.defer();
+        var promises = [];
+        angular.forEach(data.objects, function(obj){
+          var split = obj.project.split("/");
+          var projid = split[split.length-1]; 
+          angular.forEach(projects,function(myproj){
+              if(myproj.id == projid){
+                  obj.project_key = myproj.project_key;
+
+              }
+          });
+          promises.push(patch(obj));
+        });
+        return $q.all(promises);
     }
 
     CBHCompoundBatch.patchTempList = function(data){
