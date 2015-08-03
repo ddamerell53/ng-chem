@@ -14,7 +14,7 @@
             </div>
             <div class="col-xs-8">
                 
-                <div class="row">
+                <div class="row" ng-if="proj.project_type.show_compounds == true">
                     <div class="img-circle col-xs-3 blue-bg symp-stat" style="background-color:#038B14">
                         <h2>{{datasets[current_dataset_id].config.batchstats["withstructure"]}}</h2>
                     </div>
@@ -28,7 +28,7 @@
 
                 </div>
 
-                <div class="row">
+                <div class="row" ng-if="proj.project_type.show_compounds == true">
                     <div class="img-circle col-xs-3 blue-bg symp-stat" style="background-color:#038B14">
                         <h2>{{datasets[current_dataset_id].config.batchstats["withoutstructure"]}}</h2>
                     </div>
@@ -63,7 +63,7 @@
 
     </div>
 
-    <div class="col-md-5 data-summary-holder" style="margin-right:20px;">
+    <div class="col-md-5 data-summary-holder" style="margin-right:20px;" ng-if="proj.project_type.show_compounds == true">
 
         <div class="row"><div class="col-xs-4">
                     <div class="img-circle blue-bg text-center" style="background-color:rgb(207,122,48)">
@@ -72,7 +72,7 @@
         
                     </div>
                     
-                    <small><h2 class="blue text-center">Unique <info-box lookup="inchi_matching" lookupitems="cbh.messages"></info-box> <br> Compounds </h2></small><!-- info-box here -->
+                    <small><h2 class="blue text-center">Unique <info-box lookup="inchi_matching" lookupitems="cbh.messages"></info-box> <br> Compounds </h2></small>
                 </div>
                 <div class="col-xs-8">
                     <div class="row">
