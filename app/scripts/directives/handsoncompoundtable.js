@@ -66,8 +66,7 @@ angular.module('ngChemApp')
                             }
                           hdr.operations = fieldJsonPatchOperations;
                           
-                          }
-                          
+                          }  
                       }
                   });
 
@@ -103,13 +102,10 @@ angular.module('ngChemApp')
                   var customCols = [];       //DO  NOT CHANGE SMILES TITLE without checking in addcompounds controller and the compounds.py file
                   var count = 0;
                   var cNames = [];
-
-                  
                   var projects = scope.cbh.projects.objects;
                   var showCompounds = false;
                   angular.forEach(projects,function(myproj){
-                    
-              
+
                     if ( !angular.isDefined(scope.cbh.includedProjectKeys) ||scope.cbh.includedProjectKeys.indexOf(myproj.project_key) > -1){
                         if (myproj.project_type.show_compounds){
                           showCompounds = true;
@@ -192,11 +188,9 @@ angular.module('ngChemApp')
 
                   allCols = [
                       {noSort:true, knownBy: "Structure",data: "properties.imageSrc", renderer: "coverRenderer", readOnly: true,  className: "htCenter htMiddle "} ,
-
                       { sortOrder : "none", knownBy: "Row",data: "id",  readOnly: true,  className: "htCenter htMiddle "} ,
                       { noSort:true, readOnly:true, knownBy: "Info", data:"originalSmiles", renderer: "infoRenderer"},
                       { sortOrder : "none",knownBy: "Action",data: "properties.action", type:"dropdown", source: ["New Batch","Ignore"], className: "htCenter htMiddle "} ,
-                     
                       {sortOrder : "none", knownBy:"Inchi Key", data: "standardInchiKey",  readonly:true, renderer: "linkRenderer"}
                     ].concat(uncuratedColumns);
                 }else{
@@ -241,7 +235,7 @@ angular.module('ngChemApp')
                     return renderers.getColumnLabel(c, scope);
                 });
                 var hotObj = {
-                    colWidths:200,
+                    // colWidths:200,
                     data: scope.compounds,
                     colHeaders: columnHeaders,
                     columns: allCols, 
@@ -415,7 +409,10 @@ angular.module('ngChemApp')
                    var minHeight = 200 + customCols.length *30;
                    $("#myid").css("min-height", minHeight + "px");
               }
-              // $("#myid").doubleScroll();
+              if(!scope.cbh.editMode){
+                $("#myid").doubleScroll();
+              }
+              
               var header = document.createElement('DIV');
               var head = angular.element(header);
               head.html('<div  ng-include="&apos;views/templates/compound-table-header.html&apos;"></div>');
