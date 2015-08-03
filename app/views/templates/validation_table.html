@@ -1,6 +1,7 @@
 <div class="row animate-show" id="compound-data-breakdown" ng-show="toggleDataSummary.showFlag" >
-
-    <div class="col-md-5 col-md-offset-1 data-summary-holder" style="margin-right:20px;">
+    <!-- non-chemical / inventory info should go in this box. It is now twice as wide as before to allow extra info.
+         The chemical validation data is shown as normal for appropriate projects -->
+    <div class="col-md-offset-1 data-summary-holder" style="margin-right:20px;" ng-class="proj.project_type.show_compounds == true ? 'col-md-5 ' : 'col-md-10 '">
 
         <div class="row">
             <div class="col-xs-4">
