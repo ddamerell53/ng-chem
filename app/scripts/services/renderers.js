@@ -73,7 +73,7 @@ angular.module('ngChemApp')
                     i.className="img-responsive";
                     td.appendChild(i);
                     td.appendChild(a);
-                    td.setAttribute("style", "min-height:100px;min-width:200px;max-width:200px");
+                    td.setAttribute("style", "min-height:100px;min-width:100px;max-width:100px");
                 }
                 else if (escaped.indexOf("http") == 0 && escaped.indexOf("//") > 0){
 

@@ -198,21 +198,29 @@ angular.module('ngChemApp')
                   
                   if(scope.cbh.editMode){
                     allCols = [
-                      {noSort:true, knownBy: "Archive or Restore",data: "properties.archived", renderer: "archivedRenderer", readOnly: true,  className: "htCenter htMiddle "}
+                      {noSort:true, knownBy: "Archive/Restore",data: "properties.archived", renderer: "archivedRenderer", readOnly: true,  className: "htCenter htMiddle "}
                     ];
                   }
                   if (showCompounds){
-                    allCols = allCols.concat([{noSort:true, knownBy: "Structure",data: "properties.imageSrc", renderer: "coverRenderer", readOnly: true,  className: "htCenter htMiddle "},])
+                    allCols = allCols.concat([{noSort:true, knownBy: "Structure",data: "properties.imageSrc", renderer: "coverRenderer", readOnly: true,  className: "htCenter htMiddle "},]);
                   }
-                  allCols = allCols.concat([
+                   allCols = allCols.concat([
                       {noSort:true, knownBy: "UOx ID",data: "chemblId", renderer: "modalLinkRenderer", readOnly: true, className: " htCenter htMiddle "},
-                      {noSort:true,knownBy: "Added By",data: "createdBy", readOnly: true, className: "htCenter htMiddle "},
+                      {knownBy: "Project",data: "project", readOnly: true, className: "htCenter htMiddle ", renderer: "projectRenderer"}
+
+                  ]);
+                  if(!scope.cbh.editMode){
+                    allCols = allCols.concat([
+                     {noSort:true,knownBy: "Added By",data: "createdBy", readOnly: true, className: "htCenter htMiddle "},
                       {noSort:true,knownBy: "Date",data: "timestamp", readOnly: true,className: "htCenter htMiddle "},
                       {knownBy: "Mol Weight",data: "molecularWeight", readOnly: true, className: "htCenter htMiddle ", renderer: "centeredNumericRenderer"},
                       { knownBy: "Batch ID",data: "id", readOnly: true, className: "htCenter htMiddle "},
-                      {noSort:true, knownBy: "Upload ID",data: "multipleBatchId", readOnly: true, className: "htCenter htMiddle "},
-                      {knownBy: "Project",data: "project", readOnly: true, className: "htCenter htMiddle ", renderer: "projectRenderer"},
-                    ]).concat(customCols);
+                      {noSort:true, knownBy: "Upload ID",data: "multipleBatchId", readOnly: true, className: "htCenter htMiddle "}
+                    ]);
+                  }
+                 
+                     
+                    allCols = allCols.concat(customCols);
                 }
                 if(angular.isDefined(scope.excluded)){
                   var theCols = [];
