@@ -94,7 +94,7 @@ angular.module('ngChemApp')
             total_values: "Total number of records submitted.",
             valid_structure_values: "Records with a valid structure as interpreted by ChemReg. If this result is zero for an Excel file you may need to identify the SMILES field below.",
             no_valid_structure_values: "Records with no valid structure as interpreted by ChemReg. This type of record can still be registered and searched for inventory management purposes.",
-            error_total_values: "Structures that contain errors and cannot be processed. Check your input data and the info column below.",
+            error_total_values: "Data records that contain errors and cannot be processed. Check your input data and the info column below.",
             inchi_matching: "Compounds submitted have been compared to each other using their InChI key to detect duplicate structures and stereoisomers.",
             new_to_chemreg: "Compounds or items not previously registered to this project. These compounds or items may be present in other projects.",
             project_match_values: "Some of your compounds or items are already registered to this project. New batches of these compounds or items will be created in this project.",
