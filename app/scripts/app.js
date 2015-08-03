@@ -479,7 +479,7 @@ angular.module('ngChemApp')
 
         .state('cbh.projects.project', {
             url: window.projectUrlMatcher,
-            templateUrl: 'views/project-full.html',
+            templateUrl: 'views/myproject-full.html',
             controller: function($scope, $rootScope,$state, projectKey) {
               //need to check here thaat project is valid
               //we already have a list of allowed projects - if none of these, redirect to project list?

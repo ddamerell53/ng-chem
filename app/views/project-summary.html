@@ -2,7 +2,7 @@
 		<h2 class="subheading">{{ proj.name }}
                 <div class="pull-right">
                     <a ng-if="(proj.editor && proj.project_type.show_compounds == false)" ng-click="toggleSingleForm.showFlag = !toggleSingleForm.showFlag" role="button" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-plus"></span> Add single</a> 
-                    <a ng-if="!proj.editor" disabled title="You do not have permission to edit {{proj.project_type.show_compounds == true ? 'compounds' : 'items' }} on this project. Please ask an administrator for details." role="button" "btn btn-sm btn-default"><span class="glyphicon glyphicon-plus"></span> Add {{project.project_type.show_compounds == true ? 'compound' : 'item' }}</a>
+                    <a ng-if="!proj.editor" disabled title="You do not have permission to edit {{proj.project_type.show_compounds == true ? 'compounds' : 'items' }} on this project. Please ask an administrator for details." role="button" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-plus"></span> Add {{project.project_type.show_compounds == true ? 'compound' : 'item' }}</a>
                     <a ng-if="proj.editor" ui-sref="cbh.projects.project.addcompounds({projectKey: proj.project_key})" role="button" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-th-list"></span> Add {{proj.project_type.show_compounds == true ? 'compounds' : 'items' }}</a>
                     <a ng-if="!proj.editor" disabled title="You do not have permission to edit compounds on this project. Please ask an administrator for details." role="button" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-th-list"></span> Add {{proj.project_type.show_compounds == true ? 'compounds' : 'items' }}</a>
                     
@@ -34,7 +34,3 @@
             </div>
         </div>
 </div>
-
-
-
-	
