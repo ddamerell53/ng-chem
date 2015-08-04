@@ -88,6 +88,13 @@ td .row {
 .modal {
   text-align: center;
 }
+.editing .modal-content {
+    min-height: 500px;
+}
+.editing .modal-dialog {
+    overflow-y: auto;
+}
+
 
 @media screen and (min-width: 768px) { 
   .modal:before {

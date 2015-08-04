@@ -247,13 +247,27 @@ angular.module('ngChemApp')
 
                   $(holderRow).appendTo($(td));
 
+                  var mol = instance.getSourceDataAtRow(row);
+                  //is this a date?
+                  //if not, open the row editor as normal
+                  console.log(mol);
                   Handsontable.Dom.addEvent(button, 'mousedown', function (e){
                     e.preventDefault(); // prevent selection quirk
                     e.stopPropagation();
-                    var mol = instance.getSourceDataAtRow(row);
+                    
+                    
                     scope.cbh.openSingleMol(mol, false, prop);
                   
                   });
+                  //if it IS a date, just open the date popup
+                  /*Handsontable.Dom.addEvent(button, 'mousedown', function (e){
+                    e.preventDefault(); // prevent selection quirk
+                    e.stopPropagation();
+                    
+                    
+                    //scope.cbh.openSingleMol(mol, false, prop);
+                  
+                  });*/
                 }
                 
                 return td
