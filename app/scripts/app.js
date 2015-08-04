@@ -123,11 +123,12 @@ angular.module('ngChemApp')
               cbh.openSingleMol = function(mol, isNewCompoundsInterface, editingOnlyProperty) {
                   var templateU = editingOnlyProperty ? 'views/templates/single-field.html':'views/templates/single-compound-full.html';
 
-
+                  var editingClass = editingOnlyProperty ? 'editing' : '';
 
                   $scope.modalInstance = $modal.open({
                     templateUrl: templateU,
                     size: 'lg',
+                    windowClass: editingClass,
                     controller: ['$scope','$rootScope', '$modalInstance', '$timeout', 'CBHCompoundBatch', 'ProjectFactory',
                     function($scope, $rootScope, $modalInstance,  $timeout, CBHCompoundBatch, ProjectFactory) {
                       $scope.isNewCompoundsInterface = isNewCompoundsInterface;

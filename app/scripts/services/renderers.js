@@ -232,16 +232,42 @@ angular.module('ngChemApp')
                 td = linkrend(instance, td, row, col, prop, value, cellProperties);
                 if(cellProperties.readOnly == false){
                   td.className  += " gallery-item";
-                    var button = document.createElement("div");
-                    button.className ="row";
-                    button.innerHTML = "<button class='btn btn-sm btn-default pull-right' style='positon:top' ><span class='glyphicon glyphicon-pencil'></span></button>"
-                    td.insertBefore( button, td.firstChild );
+                  var holderRow = document.createElement("div");
+                  holderRow.className += "row"
+
+                  var button = document.createElement("div");
+                  //button.className ="row";
+                  button.innerHTML = "<button class='btn btn-xs btn-default pull-right' style='positon:top' title='Edit'><span class='glyphicon glyphicon-pencil'></span></button>"
+                  td.firstChild.className += ' col-xs-12';
+                  //td.firstChild.style = 'margin-bottom:10px;';
+
+                  //td.insertBefore( button, td.firstChild );
+                  $(button).appendTo($(holderRow));
+                  $(td.firstChild).css('margin-bottom', '18px').appendTo($(holderRow));
+
+                  $(holderRow).appendTo($(td));
+
+                  var mol = instance.getSourceDataAtRow(row);
+                  //is this a date?
+                  //if not, open the row editor as normal
+                  console.log(mol);
                   Handsontable.Dom.addEvent(button, 'mousedown', function (e){
-                   e.preventDefault(); // prevent selection quirk
-                    var mol = instance.getSourceDataAtRow(row);
-                    scope.cbh.openSingleMol(mol, false, prop);
+                    e.preventDefault(); // prevent selection quirk
+                    e.stopPropagation();
                     
+                    
+                    scope.cbh.openSingleMol(mol, false, prop);
+                  
                   });
+                  //if it IS a date, just open the date popup
+                  /*Handsontable.Dom.addEvent(button, 'mousedown', function (e){
+                    e.preventDefault(); // prevent selection quirk
+                    e.stopPropagation();
+                    
+                    
+                    //scope.cbh.openSingleMol(mol, false, prop);
+                  
+                  });*/
                 }
                 
                 return td

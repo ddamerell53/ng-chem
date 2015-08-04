@@ -81,6 +81,36 @@ height: auto !important;
   width: 20px;
   text-align: center;
 }
+/* Edit mode css */
+td .row {
+    margin: 0;
+}
+.modal {
+  text-align: center;
+}
+.editing .modal-content {
+    min-height: 500px;
+}
+.editing .modal-dialog {
+    overflow-y: auto;
+}
+
+
+@media screen and (min-width: 768px) { 
+  .modal:before {
+    display: inline-block;
+    vertical-align: middle;
+    content: " ";
+    height: 100%;
+  }
+}
+
+.modal-dialog {
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+}
+
 .suwala-doubleScroll-scroll-wrapper {
   width:inherit !important;
 }
@@ -630,7 +660,7 @@ td, th {
 }
 
 span.date-number {
-  font-size: 5vw;
+  font-size: 3.5vw;
   line-height: 1em;
   color: #fff;
   font-family: NexaBold;
@@ -648,7 +678,7 @@ span.date-number {
   text-align: center;
 }
 .symp-stat h2 {
-  font-size: 2em;
+  font-size: 1.7vw;
   text-align: center;
   padding-left: 5px;
 }
