@@ -85,6 +85,24 @@ height: auto !important;
 td .row {
     margin: 0;
 }
+.modal {
+  text-align: center;
+}
+
+@media screen and (min-width: 768px) { 
+  .modal:before {
+    display: inline-block;
+    vertical-align: middle;
+    content: " ";
+    height: 100%;
+  }
+}
+
+.modal-dialog {
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+}
 
 .suwala-doubleScroll-scroll-wrapper {
   width:inherit !important;
