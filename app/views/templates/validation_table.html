@@ -1,7 +1,7 @@
 <div class="row animate-show" id="compound-data-breakdown" ng-show="toggleDataSummary.showFlag" >
     <!-- non-chemical / inventory info should go in this box. It is now twice as wide as before to allow extra info.
          The chemical validation data is shown as normal for appropriate projects -->
-    <div class="col-md-offset-1 data-summary-holder" style="margin-right:20px;" ng-class="proj.project_type.show_compounds == true ? 'col-md-5 ' : 'col-md-10 '">
+    <div class=" data-summary-holder" style="margin-right:20px;" ng-class="proj.project_type.show_compounds == true ? 'col-md-5 col-md-offset-1' : 'col-md-6 col-md-offset-3 '">
 
         <div class="row">
             <div class="col-xs-4">
@@ -51,7 +51,7 @@
                          <p class="nexa vw" style="padding-top:10px;">not processed</p>
                     </div>
                     <div class="col-xs-3 pull-right" style="padding:10px 4px 0 0;">
-                        <div class="pull-right"><a ng-show="datasets[current_dataset_id].config.batchstats['parseErrors'] > 0" ng-click ="cbh.toggleWarningsFilter('warnings.parseError')" class="btn btn-sm btn-default" ng-class="warningsFilter =='warnings.parseError' ? 'blue' : 'lightgrey'" title="Filter only records where the structure cannot be processed"><span class="glyphicon glyphicon-filter "></span></a>
+                        <div ng-class="proj.project_type.show_compounds == true ? 'pull-right' : ''"><a ng-show="datasets[current_dataset_id].config.batchstats['parseErrors'] > 0" ng-click ="cbh.toggleWarningsFilter('warnings.parseError')" class="btn btn-sm btn-default" ng-class="warningsFilter =='warnings.parseError' ? 'blue' : 'lightgrey'" title="Filter only records where the structure cannot be processed"><span class="glyphicon glyphicon-filter "></span></a>
                         <info-box lookup="error_total_values" lookupitems="cbh.messages"></info-box></div>
                     </div>
 
