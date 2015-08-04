@@ -287,8 +287,7 @@ angular.module('ngChemApp')
         scope = sco;
         return renderers;
       },
-
-     
+    
 
       getColumnLabel : function(c, scope){
         

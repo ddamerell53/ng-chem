@@ -24,6 +24,17 @@
     <div class ="col-xs-12">
 
         <div ng-if="listOrGallery.choice == 'list'">
+            <div ng-show="(changesToUndo.length > 0)" >
+                <div class="alert alert-warning text-center">
+                    <ng-pluralize count="changesToUndo.length"
+                 when="{'0': '',
+                     'one': '1 item updated.',
+                     'other': '{} items updated.'}">
+</ng-pluralize> <button class="btn  btn-danger pull-right" ng-click="undoChanges()"><span class="glyphicon glyphicon-thumbs-down"></span> Undo</button>
+</div>
+                <div class="spacer"></div>
+            </div>
+            
             <div id="myhot">
                 <handsoncompoundtable  uncurated-headers="compoundBatches.uncuratedHeaders" sorts="compoundBatches.sorts"  cbh="cbh" compounds="compoundBatches.data", excluded="compoundBatches.excluded" warnings-filter="warningsFilter" redraw="compoundBatches.redraw" columns="compoundBatches.columns" searchform-schema="searchFormSchema" search-form="searchForm" show-blanks="compoundBatches.showBlanks" show-non-blanks="compoundBatches.showNonBlanks" messages="messages"></handsoncompoundtable>
             </div>
