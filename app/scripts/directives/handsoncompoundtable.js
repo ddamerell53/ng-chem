@@ -208,23 +208,30 @@ angular.module('ngChemApp')
                     ];
                   }
                   if (showCompounds){
-                    allCols = allCols.concat([{noSort:true, knownBy: "Structure",data: "properties.imageSrc", renderer: "coverRenderer", readOnly: true,  className: "htCenter htMiddle "},]);
+                    allCols = allCols.concat([{noSort:true, knownBy: "Structure",data: "properties.imageSrc", renderer: "coverRenderer", readOnly: true,  className: "htCenter htMiddle "},
+
+                        ]);
                   }
                    allCols = allCols.concat([
                       {noSort:true, knownBy: "UOx ID",data: "chemblId", renderer: "modalLinkRenderer", readOnly: true, className: " htCenter htMiddle "},
                       {knownBy: "Project",data: "project", readOnly: true, className: "htCenter htMiddle ", renderer: "projectRenderer"}
 
                   ]);
+
                   if(!scope.cbh.editMode){
                     allCols = allCols.concat([
                      {noSort:true,knownBy: "Added By",data: "createdBy", readOnly: true, className: "htCenter htMiddle "},
                       {noSort:true,knownBy: "Date",data: "timestamp", readOnly: true,className: "htCenter htMiddle "},
-                      {knownBy: "Mol Weight",data: "molecularWeight", readOnly: true, className: "htCenter htMiddle ", renderer: "centeredNumericRenderer"},
                       { knownBy: "Batch ID",data: "id", readOnly: true, className: "htCenter htMiddle "},
                       {noSort:true, knownBy: "Upload ID",data: "multipleBatchId", readOnly: true, className: "htCenter htMiddle "}
                     ]);
                   }
-                 
+                 if (showCompounds){
+                    allCols = allCols.concat([
+                      {knownBy: "Mol Weight",data: "molecularWeight", readOnly: true, className: "htCenter htMiddle ", renderer: "centeredNumericRenderer"},
+
+                        ]);
+                  }
                      
                     allCols = allCols.concat(customCols);
                 }
