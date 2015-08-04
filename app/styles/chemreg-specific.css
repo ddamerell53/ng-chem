@@ -81,6 +81,11 @@ height: auto !important;
   width: 20px;
   text-align: center;
 }
+/* Edit mode css */
+td .row {
+    margin: 0;
+}
+
 .suwala-doubleScroll-scroll-wrapper {
   width:inherit !important;
 }
