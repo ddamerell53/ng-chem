@@ -18,11 +18,13 @@
                     <label ng-if="!editModeUnreachable()" class="btn btn-default" ng-class="{ active: cbh.editMode === true }" >
                         <input type="radio"  ng-click="cbh.toggleEditMode()" id="list-btn"  style="display:none;"  ><span class="glyphicon glyphicon-pencil"></span><span class="hidden-xs hidden-sm"> Edit</span>
                     </label>
-                    <label ng-if="editModeUnreachable()" class="btn btn-default" disabled >
+                    <label ng-if="editModeUnreachable()" class="btn btn-default" disabled title="{{cbh.messages.edit_mode_unavailable_projects}}">
                         <span class="glyphicon glyphicon-pencil"></span><span class="hidden-xs hidden-sm"> Edit</span>
-                        <info-box style="margin-top:-5px; margin-right:5px" right="true" lookup="edit_mode_unavailable_projects" lookupitems="cbh.messages"></info-box>
+
                     </label>
+
                 </div>
+                <info-box style="margin-top:-5px; margin-right:5px" right="true" lookup="edit_mode" lookupitems="cbh.messages"></info-box>
             </div>
             <div class="col-xs-3 col-sm-4" style="padding:0 3px;">
                 <label class="btn btn-default" ng-class="{ active: listOrGallery.choice === 'gallery' }">
