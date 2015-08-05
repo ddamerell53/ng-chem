@@ -448,10 +448,23 @@ angular.module('ngChemApp')
                         }
                       });
                       var myform = angular.copy($scope.proj.schemaform.form);
+                      //we may need to replicate this within the search form...
+                      angular.forEach(myform, function(item){
+                        item['feedback'] = false;
+                        item['disableSuccessState'] = true;
+
+                      });
                       $scope.myschema = angular.copy($scope.proj.schemaform.schema);
                       $scope.formChunks = myform.chunk(Math.ceil($scope.proj.schemaform.form.length/3));
                       $scope.blankForm = function(){
                            $scope.newMol = {"customFields" : {}};
+                           //need to also make the form pristine and remove (usually incorrect) validation cues...
+                           //we've removed the feedback because it is broken in angular schema form and therefore inconsistent.
+                           angular.forEach($scope.formChunks, function(chunk){
+                              chunk.$pristine = true;
+                           });
+
+
                       };
                       $scope.blankForm();
                       $scope.saveSingleCompound = function(){
