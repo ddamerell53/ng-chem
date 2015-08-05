@@ -186,7 +186,9 @@ angular.module('ngChemApp')
                       });
                       return {sortOrder : "none", copyto: copyto, mappingOptions: optList, knownBy: un.name, data: "uncuratedFields." + un.name, readOnly:true, className: "htCenter htMiddle ", renderer: "linkRenderer", automapped : un.automapped}
                   });
+
                   if (showCompounds){
+
                   allCols = [
                       {noSort:true, knownBy: "Structure",data: "properties.imageSrc", renderer: "coverRenderer", readOnly: true,  className: "htCenter htMiddle "} ,
                       { sortOrder : "none", knownBy: "Row",data: "id",  readOnly: true,  className: "htCenter htMiddle "} ,
@@ -202,6 +204,12 @@ angular.module('ngChemApp')
                     ].concat(uncuratedColumns);
                   }
                 }else{
+                    allCols = [
+                      { sortOrder : "none", knownBy: "Row",data: "id",  readOnly: true,  className: "htCenter htMiddle "} ,
+                      { sortOrder : "none",knownBy: "Action",data: "properties.action", type:"dropdown", source: ["New Batch","Ignore"], className: "htCenter htMiddle "} ,
+                    ].concat(uncuratedColumns);
+                }
+                }else{
                   
                   if(scope.cbh.editMode){
                     allCols = [
@@ -209,23 +217,30 @@ angular.module('ngChemApp')
                     ];
                   }
                   if (showCompounds){
-                    allCols = allCols.concat([{noSort:true, knownBy: "Structure",data: "properties.imageSrc", renderer: "coverRenderer", readOnly: true,  className: "htCenter htMiddle "},]);
+                    allCols = allCols.concat([{noSort:true, knownBy: "Structure",data: "properties.imageSrc", renderer: "coverRenderer", readOnly: true,  className: "htCenter htMiddle "},
+
+                        ]);
                   }
                    allCols = allCols.concat([
                       {noSort:true, knownBy: "UOx ID",data: "chemblId", renderer: "modalLinkRenderer", readOnly: true, className: " htCenter htMiddle "},
                       {knownBy: "Project",data: "project", readOnly: true, className: "htCenter htMiddle ", renderer: "projectRenderer"}
 
                   ]);
+
                   if(!scope.cbh.editMode){
                     allCols = allCols.concat([
                      {noSort:true,knownBy: "Added By",data: "createdBy", readOnly: true, className: "htCenter htMiddle "},
                       {noSort:true,knownBy: "Date",data: "timestamp", readOnly: true,className: "htCenter htMiddle "},
-                      {knownBy: "Mol Weight",data: "molecularWeight", readOnly: true, className: "htCenter htMiddle ", renderer: "centeredNumericRenderer"},
                       { knownBy: "Batch ID",data: "id", readOnly: true, className: "htCenter htMiddle "},
                       {noSort:true, knownBy: "Upload ID",data: "multipleBatchId", readOnly: true, className: "htCenter htMiddle "}
                     ]);
                   }
-                 
+                 if (showCompounds){
+                    allCols = allCols.concat([
+                      {knownBy: "Mol Weight",data: "molecularWeight", readOnly: true, className: "htCenter htMiddle ", renderer: "centeredNumericRenderer"},
+
+                        ]);
+                  }
                      
                     allCols = allCols.concat(customCols);
                 }
@@ -256,6 +271,7 @@ angular.module('ngChemApp')
                     colHeaders: columnHeaders,
                     columns: allCols, 
                     maxRows: scope.compounds.length,
+                    fillHandle: "vertical"
                   }
                   if(isNewCompoundsInterface){
                       hotObj.afterChange = function(data,sourceOfChange){
@@ -270,9 +286,26 @@ angular.module('ngChemApp')
                           }
                       };
                   }else{
+
                       hotObj.afterChange = function(data,sourceOfChange){
                           scope.cbh.saveChangesToCompoundDataInController(data, sourceOfChange);
                       };
+                      hotObj.beforeAutofill = function(start, end, data){
+                        // console.log(start);
+                        // console.log(end);
+                        // console.log(data);
+                        
+                        for (var colNo = start.col; colNo <= end.col; colNo++){
+                            if(allCols[colNo].field_type == "uiselecttags"){
+                                for (var rowNo = start.row; rowNo <= end.end; rowNo++){
+
+                                }
+                            }
+                        }
+                        
+
+                      };
+                      
                   }
 
             var rend = renderers.getRenderers(scope, isNewCompoundsInterface);
@@ -300,6 +333,7 @@ angular.module('ngChemApp')
            
             element[0].appendChild(container);
             var hot1 = new Handsontable(container, hotObj);
+            // hot1.populateFromArray = renderers.getPopulateFromArray(hot1);
             var id = element[0].firstChild.id;
             scope.hotId = "#" + id;
             var elem = $(scope.hotId);

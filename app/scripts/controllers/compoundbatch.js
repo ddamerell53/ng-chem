@@ -106,9 +106,10 @@ angular.module('ngChemApp')
     filters = paramsAndForm.params;
       
     $scope.cbh.patchRecord = function(mol){
+        $scope.compoundBatches.backup = angular.copy($scope.compoundBatches.data);
         CBHCompoundBatch.patch(mol).then(function(data){
             CBHCompoundBatch.reindexModifiedCompound(data.id).then(function(reindexed){
-                console.log(reindexed);
+                $scope.undoChanges = [data.id];
                 });
             });
         
@@ -120,11 +121,48 @@ angular.module('ngChemApp')
     }else{
             $scope.cbh.archiveFilter = false;
     }
+    $scope.editModeUnreachable = function(){
+        var noEdit =true;
+        if(angular.isDefined($stateParams.projectKey)){
+            angular.forEach($rootScope.projects,function(myproj){
+                     if(myproj.project_key == $stateParams.projectKey ){
+                    if(myproj.editor){
+                            noEdit = false;
+                          }
+                        }  
+        });
+            return noEdit;
+        };
 
+        if($scope.cbh.includedProjectKeys.length != 1 || $stateParams.project__project_key__in.split(",").length !=1 ){
+
+            return true;
+        }else{
+            
+            angular.forEach($rootScope.projects,function(myproj){
+                
+                     if(myproj.project_key == $stateParams.project__project_key__in ){
+                    if(myproj.editor){
+                            noEdit = false;
+                          }
+                        }
+                
+
+               
+            });
+            return noEdit;
+        }
+    };
     if( $stateParams.editMode == "true" || $stateParams.editMode ==true){
-            $scope.cbh.editMode = true;
+        $scope.cbh.editMode = true;
+        if($scope.editModeUnreachable()){
+             $scope.cbh.toggleEditMode();
+
+        }
+            
     }else{
-            $scope.cbh.editMode = false;
+        $scope.cbh.editMode = false;
+      
     }
 
     $scope.cbh.toggleArchiveFilter = function(){
@@ -300,6 +338,7 @@ angular.module('ngChemApp')
         CBHCompoundBatch.query(filters).then(function(result) {
             $scope.totalCompoundBatches = result.meta.totalCount;
             $scope.compoundBatches.data =result.objects;
+            $scope.compoundBatches.backup = angular.copy(result.objects);
 
             $scope.searchFormSchema= angular.copy($scope.cbh.projects.searchform);
             var pf = searchUrlParams.setup($stateParams, {molecule: {}});
@@ -402,19 +441,49 @@ angular.module('ngChemApp')
                 
             };
 
+            $scope.changesToUndo = [];
+
+            $scope.undoChanges = function(){
+                console.log("test")
+                $scope.currentlyLoading = true;
+                $scope.compoundBatches.data = angular.copy($scope.compoundBatches.backup);
+                var itemsToChange = $scope.changesToUndo.map(function(item){
+                    return $scope.compoundBatches.data[item[0]]
+                });
+                CBHCompoundBatch.patchList({"objects" :itemsToChange}, $rootScope.projects).then(function(data){
+                    angular.forEach(data, function(d){
+
+                        CBHCompoundBatch.reindexModifiedCompound(d.id);
+
+                    });
+                    $scope.compoundBatches.redraw ++;
+                    $scope.currentlyLoading = false;
+                    $scope.compoundBatches.backup = angular.copy($scope.compoundBatches.data);
+                });
+            }
+
+            $scope.$on("updateListView", function(){
+                $scope.compoundBatches.backup = angular.copy($scope.compoundBatches.data);
+            });
+
             $scope.cbh.saveChangesToCompoundDataInController = function(changes, sourceOfChange){
+                //set the backup before updating
+                $scope.changesToUndo = [];
                 if(angular.isDefined(changes)){
                     if( changes && changes.length > 0){
+                        // $scope.compoundBatches.backup = angular.copy($scope.compoundBatches.data);
+
 
                         // $scope.currentlyLoading = true;
                         $scope.disableButtons = true;
                         var itemsToChange = changes.map(function(item){
                             return $scope.compoundBatches.data[item[0]]
                         });
+                        
+                        $scope.changesToUndo = changes;
                         var patchData = {};
                         patchData.objects = itemsToChange;
                         CBHCompoundBatch.patchList(patchData, $rootScope.projects).then(function(data){
-                            console.log(data);
                             angular.forEach(data, function(d){
 
                                 CBHCompoundBatch.reindexModifiedCompound(d.id);
