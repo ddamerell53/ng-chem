@@ -114,11 +114,23 @@ angular.module('ngChemApp')
     }else{
             $scope.cbh.archiveFilter = false;
     }
-
+    $scope.editModeUnreachable = function(){
+        if($scope.cbh.includedProjectKeys.length != 1 || $stateParams.project__project_key__in.split(",").length !=1){
+            return true;
+        }else{
+            return false;
+        }
+    };
     if( $stateParams.editMode == "true" || $stateParams.editMode ==true){
-            $scope.cbh.editMode = true;
+        $scope.cbh.editMode = true;
+        if($scope.cbh.includedProjectKeys.length != 1){
+             $scope.cbh.toggleEditMode();
+
+        }
+            
     }else{
-            $scope.cbh.editMode = false;
+        $scope.cbh.editMode = false;
+      
     }
 
     $scope.cbh.toggleArchiveFilter = function(){

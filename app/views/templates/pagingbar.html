@@ -15,8 +15,12 @@
                     <label class="btn btn-default" ng-class="{ active: listOrGallery.choice === 'list' }" >
                         <input type="radio" ng-model="listOrGallery.choice" value="list" id="list-btn" name="listOrGallery" style="display:none;" ng-change="changeNumberPerPage('list')"><span class="glyphicon glyphicon-list-alt"></span><span class="hidden-xs hidden-sm"> List</span>
                     </label>
-                    <label class="btn btn-default" ng-class="{ active: cbh.editMode === true }" >
+                    <label ng-if="!editModeUnreachable()" class="btn btn-default" ng-class="{ active: cbh.editMode === true }" >
                         <input type="radio"  ng-click="cbh.toggleEditMode()" id="list-btn"  style="display:none;"  ><span class="glyphicon glyphicon-pencil"></span><span class="hidden-xs hidden-sm"> Edit</span>
+                    </label>
+                    <label ng-if="editModeUnreachable()" class="btn btn-default" disabled >
+                        <span class="glyphicon glyphicon-pencil"></span><span class="hidden-xs hidden-sm"> Edit</span>
+                        <info-box style="margin-top:-5px; margin-right:5px" right="true" lookup="edit_mode_unavailable_projects" lookupitems="cbh.messages"></info-box>
                     </label>
                 </div>
             </div>

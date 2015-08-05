@@ -46,10 +46,11 @@ angular.module('ngChemApp')
                         //assume a file link
                         escaped = "file://" + escaped;
                       }
-                    }
-                    a.innerHTML = "view";
+                       a.innerHTML = "view";
                     a.href = escaped;
                     a.target = "_blank";
+                    }
+                   
                     Handsontable.Dom.empty(td);
                     td.className  += "htCenter htMiddle ";
                     td.appendChild(a);

@@ -60,6 +60,7 @@ angular.module('ngChemApp')
         //},
 
         //"batch_reg":{
+            edit_mode_unavailable_projects: "Edit mode is only available when editing one project at a time",
             batch_reg_total_processed_0: "No substances were processed.",
             batch_reg_total_processed_1: "One substance was processed and:",
             batch_reg_total_processed_other : "substances were processed of which:",
