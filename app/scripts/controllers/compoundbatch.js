@@ -8,11 +8,18 @@
  * Controller of the ngChemApp
  */
 angular.module('ngChemApp')
-  .controller('CompoundbatchCtrl', ['$scope','$rootScope','$state','$stateParams','$timeout','CBHCompoundBatch','paramsAndForm','urlConfig','$window','$location','$anchorScroll', '$filter', 'searchUrlParams', 
+  .controller('CompoundbatchCtrl', ['$scope','$rootScope','$state','$stateParams','$timeout','CBHCompoundBatch','paramsAndForm','urlConfig','$window','$location','$anchorScroll', '$filter', 'searchUrlParams',
     function ($scope, $rootScope,$state, $stateParams,$timeout, CBHCompoundBatch, paramsAndForm, urlConfig, $window, $location, $anchorScroll, $filter, searchUrlParams) {
     $scope.compoundBatches = {data:[], redraw:0, sorts:[]};
     $scope.urlConfig = urlConfig;
     $scope.totalCompoundBatches = 0;
+    //$scope.stateProjectKey = $stateParams.projectKey;
+    $scope.projects = $scope.cbh.projects.objects;
+      angular.forEach($scope.projects, function(proj) {
+        if(proj.project_key == $stateParams.projectKey) {
+          $scope.proj = proj;
+        }
+      });
     
     $scope.listOrGallery = {
         choice: "list",

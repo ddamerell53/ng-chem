@@ -18,10 +18,10 @@
 		<!-- <h2 class="blue nexa">
 			<small>Project details here</small>
 		</h2> -->
-        <div class="pull-right">
+        <!-- <div class="pull-right">
                     <a ng-href="{{  urlConfig.cbh_projects.list_endpoint }}/?project_key={{proj.id}}&format=xls" role="button" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-floppy-save"></span> Project Data Summary</a>
                     <info-box lookup="project_data_field_download" lookupitems="cbh.messages" left="true"></info-box>
-                </div>
+                </div> -->
         <div class="show-animate" ng-show="toggleSingleForm.showFlag && proj.project_type.show_compounds == false">
             <div ng-repeat="form in formChunks" class="col-xs-12 col-sm-4">
                 <div  class=" form-group" sf-schema="::myschema" sf-form="::form" sf-model="newMol.customFields"></div>
