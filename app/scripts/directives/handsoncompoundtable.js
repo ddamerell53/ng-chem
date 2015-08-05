@@ -204,12 +204,6 @@ angular.module('ngChemApp')
                     ].concat(uncuratedColumns);
                   }
                 }else{
-                    allCols = [
-                      { sortOrder : "none", knownBy: "Row",data: "id",  readOnly: true,  className: "htCenter htMiddle "} ,
-                      { sortOrder : "none",knownBy: "Action",data: "properties.action", type:"dropdown", source: ["New Batch","Ignore"], className: "htCenter htMiddle "} ,
-                    ].concat(uncuratedColumns);
-                }
-                }else{
                   
                   if(scope.cbh.editMode){
                     allCols = [
