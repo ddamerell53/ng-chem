@@ -115,15 +115,40 @@ angular.module('ngChemApp')
             $scope.cbh.archiveFilter = false;
     }
     $scope.editModeUnreachable = function(){
-        if($scope.cbh.includedProjectKeys.length != 1 || $stateParams.project__project_key__in.split(",").length !=1){
+        var noEdit =true;
+        if(angular.isDefined($stateParams.projectKey)){
+            angular.forEach($rootScope.projects,function(myproj){
+                     if(myproj.project_key == $stateParams.projectKey ){
+                    if(myproj.editor){
+                            noEdit = false;
+                          }
+                        }  
+        });
+            return noEdit;
+        };
+
+        if($scope.cbh.includedProjectKeys.length != 1 || $stateParams.project__project_key__in.split(",").length !=1 ){
+
             return true;
         }else{
-            return false;
+            
+            angular.forEach($rootScope.projects,function(myproj){
+                
+                     if(myproj.project_key == $stateParams.project__project_key__in ){
+                    if(myproj.editor){
+                            noEdit = false;
+                          }
+                        }
+                
+
+               
+            });
+            return noEdit;
         }
     };
     if( $stateParams.editMode == "true" || $stateParams.editMode ==true){
         $scope.cbh.editMode = true;
-        if($scope.cbh.includedProjectKeys.length != 1){
+        if($scope.editModeUnreachable()){
              $scope.cbh.toggleEditMode();
 
         }
