@@ -12,6 +12,6 @@ var configuration = {
     "schema": "/newsite_ws/users/schema"}
 }
 
-angular.module('ngChemApp').value('urlConfig',  
+angular.module('chembiohubAssayApp').value('urlConfig',  
   configuration
 );

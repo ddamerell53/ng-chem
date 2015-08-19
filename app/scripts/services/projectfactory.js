@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc service
- * @name ngChemApp.projectfactory
+ * @name chembiohubAssayApp.projectfactory
  * @description
  * # projectfactory
- * Factory in the ngChemApp.
+ * Factory in the chembiohubAssayApp.
  */
-angular.module('ngChemApp')
+angular.module('chembiohubAssayApp')
   .factory('ProjectFactory' ,function ($resource, urlConfig) {
     // Service logic
     // ...

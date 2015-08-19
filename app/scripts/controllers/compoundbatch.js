@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc function
- * @name ngChemApp.controller:CompoundbatchCtrl
+ * @name chembiohubAssayApp.controller:CompoundbatchCtrl
  * @description
  * # CompoundbatchCtrl
- * Controller of the ngChemApp
+ * Controller of the chembiohubAssayApp
  */
-angular.module('ngChemApp')
+angular.module('chembiohubAssayApp')
   .controller('CompoundbatchCtrl', ['$scope','$rootScope','$state','$stateParams','$timeout','CBHCompoundBatch','paramsAndForm','urlConfig','$window','$location','$anchorScroll', '$filter', 'searchUrlParams',
     function ($scope, $rootScope,$state, $stateParams,$timeout, CBHCompoundBatch, paramsAndForm, urlConfig, $window, $location, $anchorScroll, $filter, searchUrlParams) {
     $scope.compoundBatches = {data:[], redraw:0, sorts:[]};

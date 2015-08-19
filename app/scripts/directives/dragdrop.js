@@ -1,4 +1,4 @@
-angular.module('ngChemApp.directives',[])
+angular.module('chembiohubAssayApp.directives',[])
 .directive('draggable', function () {
 	return {
 	  restrict: 'A',

@@ -2,11 +2,11 @@
 
 /**
  * @ngdoc directive
- * @name ngChemApp.directive:projectList
+ * @name chembiohubAssayApp.directive:projectList
  * @description
  * # projectList
  */
-angular.module('ngChemApp')
+angular.module('chembiohubAssayApp')
   .directive('projectList',  function () {
     return {
       templateUrl: 'views/templates/project-list.html',

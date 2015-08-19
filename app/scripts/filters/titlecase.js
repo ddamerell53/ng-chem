@@ -2,13 +2,13 @@
 
 /**
  * @ngdoc filter
- * @name ngChemApp.filter:titleCase
+ * @name chembiohubAssayApp.filter:titleCase
  * @function
  * @description
  * # titleCase
- * Filter in the ngChemApp.
+ * Filter in the chembiohubAssayApp.
  */
-angular.module('ngChemApp')
+angular.module('chembiohubAssayApp')
   .filter('titlecase', function () {
     return function (input) {
       var smallWords = /^(a|an|and|as|at|but|by|en|for|if|in|nor|of|on|or|per|the|to|vs?\.?|via)$/i;

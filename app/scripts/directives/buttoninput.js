@@ -2,11 +2,11 @@
 
 /**
  * @ngdoc directive
- * @name ngChemApp.directive:buttonInput
+ * @name chembiohubAssayApp.directive:buttonInput
  * @description
  * # buttonInput
  */
-angular.module('ngChemApp')
+angular.module('chembiohubAssayApp')
   .directive('buttonInput', function () {
     return {
       template: '<bootstrap-decorator>\

@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc service
- * @name ngChemApp.MessageFactory
+ * @name chembiohubAssayApp.MessageFactory
  * @description
  * # MessageFactory
- * Factory in the ngChemApp.
+ * Factory in the chembiohubAssayApp.
  */
-angular.module('ngChemApp')
+angular.module('chembiohubAssayApp')
   .factory('MessageFactory', function (){
     // Service logic
     // ...
@@ -52,7 +52,7 @@ angular.module('ngChemApp')
             
             file_error: "File cannot be processed even though the format appears valid. If you have questions please contact the ChemBio Hub team.",
             file_format_error: "File cannot be processed, the format is invalid. Files must be xlsx, cdxml, cdx or sdf format and labelled as such.",
-            oops: "Oops, should not have got here, if you have not pressed back on the browser, gone to an outdated bookmark or lost your data by refreshing please let the ChemReg team know. Click cancel to restart.",
+            oops: "Oops, should not have got here, if you have not pressed back on the browser, gone to an outdated bookmark or lost your data by refreshing please let the AssayReg team know. Click cancel to restart.",
 
         //},
         //"map": {
@@ -67,10 +67,10 @@ angular.module('ngChemApp')
             batch_reg_total_processed_1: "One substance was processed and:",
             batch_reg_total_processed_other : "substances were processed of which:",
 
-            batch_reg_new_to_chemreg_other : "We check all of the projects you have access to to get this total.  If the number is zero it means all of your compounds already exist in ChemReg.",           
+            batch_reg_new_to_chemreg_other : "We check all of the projects you have access to to get this total.  If the number is zero it means all of your compounds already exist in AssayReg.",           
             batch_prereg_to_public_single: "This substance is valid and was already registered as public.  A new private batch of this will be registered in this project.",
             batch_prereg_to_project_single: "This substance is valid and was already registered to this project.  A new private batch of this will be registered in this project.",
-            batch_reg_new_to_chemreg_single: "This substance is not publically registered in ChemBio Hub ChemReg. The first batch of this substance will be registered to this project.",
+            batch_reg_new_to_chemreg_single: "This substance is not publically registered in ChemBio Hub AssayReg. The first batch of this substance will be registered to this project.",
 
         //(change)
             batch_overlaps: "Number of substances which have already been registered. New private batches will be registered in this project for each of these.",
@@ -78,7 +78,7 @@ angular.module('ngChemApp')
             batch_duplicates: "Duplicate structures (with identical InChI keys).",
             batch_errors_single: "Number of errors in processing the molecule, possibly due to invalid valency",
             batch_errors_other: "Number of molecules could not be processed and will be ignored. They are located at positions ",
-            field_errors_other: "Number of errors when attempting to map the fields in your uploaded data to the fields in ChemReg.",
+            field_errors_other: "Number of errors when attempting to map the fields in your uploaded data to the fields in AssayReg.",
         //(change)
             batch_reg_recent_registration_error: "You have already registered this batch today. Are you sure you wish to continue?",
         //make "conintue" the button icon?
@@ -95,8 +95,8 @@ angular.module('ngChemApp')
             unmapped_values_written: "Any unmapped values will be written anyway.  User should contact administrator if they want the field to be available to the whole project.",
             mapped_values_written: "Mapped values will be written to the specified field against the project.  User should contact administrator if they want extra project fields.",
             total_values: "Total number of records submitted.",
-            valid_structure_values: "Records with a valid structure as interpreted by ChemReg. If this result is zero for an Excel file you may need to identify the SMILES field below.",
-            no_valid_structure_values: "Records with no valid structure as interpreted by ChemReg. This type of record can still be registered and searched for inventory management purposes.",
+            valid_structure_values: "Records with a valid structure as interpreted by AssayReg. If this result is zero for an Excel file you may need to identify the SMILES field below.",
+            no_valid_structure_values: "Records with no valid structure as interpreted by AssayReg. This type of record can still be registered and searched for inventory management purposes.",
             error_total_values: "Data records that contain errors and cannot be processed. Check your input data and the info column below.",
             inchi_matching: "Compounds submitted have been compared to each other using their InChI key to detect duplicate structures and stereoisomers.",
             new_to_chemreg: "Compounds or items not previously registered to this project. These compounds or items may be present in other projects.",

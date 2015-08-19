@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc function
- * @name ngChemApp.controller:ProjectCtrl
+ * @name chembiohubAssayApp.controller:ProjectCtrl
  * @description
  * # ProjectCtrl
- * Controller of the ngChemApp
+ * Controller of the chembiohubAssayApp
  */
-angular.module('ngChemApp')
+angular.module('chembiohubAssayApp')
   .controller('ProjectCtrl', [ '$scope', '$rootScope', '$state', 'ProjectFactory', 'MessageFactory', '$stateParams','urlConfig', function ($scope, $rootScope, $state, ProjectFactory, MessageFactory, $stateParams, urlConfig) {
     //stuff
     $scope.urlConfig =  urlConfig;

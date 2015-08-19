@@ -2,14 +2,14 @@
 
 /**
  * @ngdoc service
- * @name ngChemApp.HTTPProject
+ * @name chembiohubAssayApp.HTTPProject
  * @description
  * # HTTPProject
- * Factory in the ngChemApp.
+ * Factory in the chembiohubAssayApp.
 
  http://stackoverflow.com/questions/23968129/limiting-http-interceptor-to-specific-domain
  */
-angular.module('ngChemApp')
+angular.module('chembiohubAssayApp')
   .factory('HTTPProject', ["$stateParams", function ($http, $stateParams) {
     // Service logic
     // ...

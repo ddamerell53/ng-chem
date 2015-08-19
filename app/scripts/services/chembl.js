@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module('ngChemApp');
+var app = angular.module('chembiohubAssayApp');
 
 /** Factories for querying APIs **/
 app.factory('ChEMBLFactory',[ '$http', function ($http) {

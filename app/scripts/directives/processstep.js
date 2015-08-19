@@ -2,11 +2,11 @@
 
 /**
  * @ngdoc directive
- * @name ngChemApp.directive:processStep
+ * @name chembiohubAssayApp.directive:processStep
  * @description
  * # processStep
  */
-angular.module('ngChemApp')
+angular.module('chembiohubAssayApp')
   .directive('processStep', function () {
     return {
       template: '',

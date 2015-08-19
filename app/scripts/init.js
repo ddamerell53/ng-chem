@@ -11,7 +11,7 @@ var lightApp = angular.module('lightApp', [
     'ui.sortable'
   ]);
 
-var ngChemApp =  angular.module('ngChemApp', [
+var chembiohubAssayApp =  angular.module('chembiohubAssayApp', [
     'lightApp',
     'ngAnimate',
     'ngAria',

@@ -2,14 +2,14 @@
 
 /**
  * @ngdoc service
- * @name ngChemApp.searchUrlParams
+ * @name chembiohubAssayApp.searchUrlParams
  * @description
  * # searchUrlParams
- * Provider in the ngChemApp.
+ * Provider in the chembiohubAssayApp.
  */
 
 
-angular.module('ngChemApp')
+angular.module('chembiohubAssayApp')
     .factory('searchUrlParams', function($filter) {
 
         // Private variables

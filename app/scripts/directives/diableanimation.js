@@ -2,11 +2,11 @@
 
 /**
  * @ngdoc directive
- * @name ngChemApp.directive:diableAnimation
+ * @name chembiohubAssayApp.directive:diableAnimation
  * @description
  * # diableAnimation
  */
-angular.module('ngChemApp')
+angular.module('chembiohubAssayApp')
   .directive('disableAnimation', function($animate){
     return {
         restrict: 'A',

@@ -3,7 +3,7 @@
 describe('Directive: projectList', function () {
 
   // load the directive's module
-  beforeEach(module('ngChemApp'));
+  beforeEach(module('chembiohubAssayApp'));
 
   var element,
     scope;

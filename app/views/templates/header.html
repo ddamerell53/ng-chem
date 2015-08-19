@@ -2,48 +2,34 @@
 
 	<div class="container">
 		<div class="row">
-			<div class="col-xs-4">
+			<div class="col-xs-5" >
 				<!-- Projects button -->
 				<div class="row pull-left">
-					<div class="dropdown" ng-show="isLoggedIn()">
-						<button id="projectsBtn" class="btn btn-primary btn-toggle mt-8" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-folder-open"></span> <span ng-show="cbh.skinning" class="hidden-xs hidden-sm" style="text-transform: capitalize;">{{cbh.skinning.project_alias}}s</span><span ng-show="!cbh.skinning" class="hidden-xs hidden-sm">Projects</span> <span class="caret"></span></button>
-						<ul class="dropdown-menu" role="menu" aria-labelledby="projectsBtn" >
-							<li role="presentation" ng-repeat="prj in projects"><a ui-sref="cbh.projects.list.project({projectKey: prj.project_key})">{{prj.name}}</a></li>
-							<li ng-hide="projects.length"><a href="#" style="color: #ddd">No projects</a></li>
-							<li ng-show="projects.length" style="background-color:#ddd;"><a ui-sref="cbh.projects.list">Go to list...</a></li>
+					<div class="dropdown" ng-show="isLoggedIn()" style="background-color:rgb(68,104,125); margin-top:-7px; padding:16px; height:76px; max-height:76px;">
+						<a id="projectsBtn" class="mt-8" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><strong class="text-center nexa" style="padding-top:5px; color:white;"><img src="bower_components/chembiohub-theme/img/CBH_2_2_LowRes.png" style="height:45px">AssayReg</strong></a>&nbsp;<span class="caret" style="color:white;"></span>
+						<ul class="dropdown-menu ng-animate" role="menu" aria-labelledby="projectsBtn" style="width:210px;">
+							<li role="presentation" style="background-color:#ddd;"><span class="glyphicon glyphicon-user"></span> <strong class="nexa"><span>{{cbh.logged_in_user.first_name + " " + cbh.logged_in_user.last_name  || cbh.logged_in_user.username}}</span></strong></li>
+							<li role="presentation" ng-if="cbh.logged_in_user.is_superuser" style="padding: 0 8px;"><a ng-href="{{cbh.api_base}}/admin"><span class="glyphicon glyphicon-cog"></span> <strong class="nexa">Admin Panel</strong></a></li>
+							<li role="presentation" style="padding:0 8px;"><a href="http://goo.gl/forms/y6e4achfUE" onclick='return !window.open(this.href);'><span class="glyphicon glyphicon-exclamation-sign"></span> <strong class="nexa">Report an issue</strong></a></li>
+							<li role="presentation" style="padding:0 8px;"><a href="{{ getUrlBase() }}logout"><span class="glyphicon glyphicon-off"></span> <strong class="nexa">Log Out</strong></a></li>
 						</ul>
 					</div>
 					
 				</div>
 				
 			</div>
-			<div class="col-xs-4" id="slogan">
-				<h2 class="text-center" style="padding-top:5px;"><a href="https://chembiohub.ox.ac.uk" target="_blank"><img src="bower_components/chembiohub-theme/img/CBH_2_2_LowRes.png" style="height:45px"></a>  ChemReg <small><sup>beta</sup></small></h2>
-			</div>
-			<div class="col">
-					<div class="dropdown pull-right" ng-show="isLoggedIn()">
-						<button id="userBtn" class="btn btn-primary btn-toggle mt-8" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span> <span class="hidden-xs hidden-sm">{{cbh.logged_in_user.first_name || cbh.logged_in_user.username}}</span> <span class="caret"></span></button>
-						<ul class="dropdown-menu" role="menu" aria-labelledby="userBtn">
-							<li role="presentation" ng-if="cbh.logged_in_user.is_superuser"><a ng-href="{{cbh.api_base}}/admin"><span class="glyphicon glyphicon-cog"></span> <strong class="nexa">Admin Panel</strong></a></li>
-							<li role="presentation"><a ui-sref="cbh.users"><span class="glyphicon glyphicon-user"></span> <strong class="nexa">User List</strong></a></li>
-							<li role="presentation"><a href="http://goo.gl/forms/y6e4achfUE" onclick='return !window.open(this.href);'><span class="glyphicon glyphicon-exclamation-sign"></span> <strong class="nexa">Report an issue</strong></a></li>
-							<li role="presentation"><a href="{{ getUrlBase() }}logout"><span class="glyphicon glyphicon-off"></span> <strong class="nexa">Log Out</strong></a></li>
-							<!-- <li role="presentation"><a href="#">User Option B</a></li>
-							<li role="presentation"><a href="#">User Option C</a></li>
-							<li role="presentation"><a href="#">User Option D</a></li> -->
-						</ul>
-					</div>
-			</div>
-			<div class="col">
-				<!-- Login and top level nav -->
-					<div class="pull-right" id="quicklinks">
-						<div style="padding-top:10px;">
-							<small>
-								<a ui-sref="cbh.projects.list" style="color:white;vertical-align: text-top;">Projects</a> | <a ng-click="cbh.searchPage()" style="color:white;vertical-align: text-top;">Search</a> | <a ui-sref="cbh.help" style="color:white;vertical-align: text-top;">Help</a>&nbsp;
-							</small>
-						</div>
-					</div>
-				
+			<div class="col-xs-7" id="slogan" class="text-right">
+				<ul class="list-inline pull-right text-center">
+					<li class="text-center" style="color:white; margin-right:10px;"><span class="glyphicon glyphicon-plus-sign" style="font-size:30px;"></span><br><strong class="nexa"><small>add data</small></strong></li>
+					<li class="text-center" style="color:white; margin-right:10px;"><span class="glyphicon glyphicon-edit" style="font-size:30px;"></span><br><strong class="nexa"><small>edit data</small></strong></li>
+					<li class="text-center" style="color:white; margin-right:10px;"><span class="glyphicon glyphicon-folder-open" style="font-size:30px;"></span><br><strong class="nexa"><small>projects</small></strong></li>
+					<li class="text-center" style="color:white; margin-right:10px;"><span class="glyphicon glyphicon-search" style="font-size:30px;"></span><br><strong class="nexa"><small>search</small></strong></li>
+					<li class="text-center" style="color:white; margin-right:10px;"><span class="glyphicon glyphicon-question-sign" style="font-size:30px;"></span><br><strong class="nexa"><small>help</small></strong></li>
+				</ul>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
 			</div>
 			
 

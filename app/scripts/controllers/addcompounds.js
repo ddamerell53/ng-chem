@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc function
- * @name ngChemApp.controller:AddcompoundsCtrl
+ * @name chembiohubAssayApp.controller:AddcompoundsCtrl
  * @description
  * # AddcompoundsCtrl
- * Controller of the ngChemApp
+ * Controller of the chembiohubAssayApp
  */
-angular.module('ngChemApp')
+angular.module('chembiohubAssayApp')
   .controller('AddCompoundsCtrl',['$scope', 
     '$state', 
     '$stateParams', 

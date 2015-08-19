@@ -3,7 +3,7 @@
 describe('Controller: AddcompoundsCtrl', function () {
 
   // load the controller's module
-  beforeEach(module('ngChemApp'));
+  beforeEach(module('chembiohubAssayApp'));
 
   var AddcompoundsCtrl,
     scope;

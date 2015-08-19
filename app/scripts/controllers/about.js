@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc function
- * @name ngChemApp.controller:AboutCtrl
+ * @name chembiohubAssayApp.controller:AboutCtrl
  * @description
  * # AboutCtrl
- * Controller of the ngChemApp
+ * Controller of the chembiohubAssayApp
  */
-angular.module('ngChemApp')
+angular.module('chembiohubAssayApp')
   .controller('AboutCtrl', function ($scope) {
     $scope.awesomeThings = [
       'HTML5 Boilerplate',

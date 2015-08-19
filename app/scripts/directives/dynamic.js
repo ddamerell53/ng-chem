@@ -2,11 +2,11 @@
 
 /**
  * @ngdoc directive
- * @name ngChemApp.directive:dynamic
+ * @name chembiohubAssayApp.directive:dynamic
  * @description
  * # dynamic
  */
-angular.module('ngChemApp')
+angular.module('chembiohubAssayApp')
 app.directive('dynamic', function ($compile) {
   return {
     restrict: 'A',

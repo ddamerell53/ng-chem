@@ -2,11 +2,11 @@
 
 /**
  * @ngdoc directive
- * @name ngChemApp.directive:HandsOnCompoundTable
+ * @name chembiohubAssayApp.directive:HandsOnCompoundTable
  * @description
  * # HandsOnCompoundTable
  */
-angular.module('ngChemApp')
+angular.module('chembiohubAssayApp')
   .directive('handsoncompoundtable',["$timeout","$compile","renderers","$rootScope","$filter", function ($timeout,$compile, renderers, $rootScope, $filter) {
     return {
       template: '<div  ></div>',

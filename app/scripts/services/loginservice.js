@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc service
- * @name ngChemApp.LoginService
+ * @name chembiohubAssayApp.LoginService
  * @description
  * # LoginService
- * Factory in the ngChemApp.
+ * Factory in the chembiohubAssayApp.
  */
-angular.module('ngChemApp')
+angular.module('chembiohubAssayApp')
   .factory('LoginService', function ($resource,  urlConfig) {
     // Service logic
     // ...

@@ -2,11 +2,11 @@
 
 /**
  * @ngdoc directive
- * @name ngChemApp.directive:chemdoodleWindow
+ * @name chembiohubAssayApp.directive:chemdoodleWindow
  * @description An angular directive to house ChemDoodle chemical sketcher and retain information from a rootScope variable.
  * # chemdoodleWindow
  */
-angular.module('ngChemApp')
+angular.module('chembiohubAssayApp')
   .directive('chemdoodleWindow', [ '$rootScope','$window','$timeout', function ($rootScope, $window, $timeout) {
     return {
       template: '<div class="col-xs-12" id="chemdoodle-holder"><canvas id="chemdoodle" tabindex="1"></canvas></div>',

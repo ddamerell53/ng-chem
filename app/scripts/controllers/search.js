@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc function
- * @name ngChemApp.controller:SearchCtrl
+ * @name chembiohubAssayApp.controller:SearchCtrl
  * @description
  * # SearchCtrl
- * Controller of the ngChemApp
+ * Controller of the chembiohubAssayApp
  */
-angular.module('ngChemApp')
+angular.module('chembiohubAssayApp')
   .controller('SearchCtrl',['$scope','$http', '$rootScope', '$filter', '$stateParams', '$location', '$state', '$timeout', 'projectFactory', 'gridconfig', 'CBHCompoundBatch', 'urlConfig', 'searchUrlParams',
     function ($scope,$http, $rootScope, $filter, $stateParams, $location, $state, $timeout, projectFactory, gridconfig, CBHCompoundBatch, urlConfig, searchUrlParams) {
 

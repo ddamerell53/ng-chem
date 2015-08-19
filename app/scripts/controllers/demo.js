@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc function
- * @name ngChemApp.controller:DemoCtrl
+ * @name chembiohubAssayApp.controller:DemoCtrl
  * @description
  * # DemoCtrl
- * Controller of the ngChemApp
+ * Controller of the chembiohubAssayApp
  */
-var app = angular.module('ngChemApp');
+var app = angular.module('chembiohubAssayApp');
 
 
 app.controller('DemoCtrl', ['$scope', '$rootScope', '$state', 'ChEMBLFactory', 'MessageFactory', 'CBHCompoundBatch', '$cookies', '$timeout', '$stateParams', 'projectKey', 'prefix', 'urlConfig', 'projectFactory',
@@ -63,7 +63,7 @@ app.controller('DemoCtrl', ['$scope', '$rootScope', '$state', 'ChEMBLFactory', '
 
         };
         $rootScope.headline = "Back to " + $scope.proj.name + " project page";
-        $rootScope.subheading = "Welcome to the ChemReg wizard"
+        $rootScope.subheading = "Welcome to the AssayReg wizard"
         $rootScope.glyphicon = "arrow-left";
         // $rootScope.tophref = (urlConfig.instance_path.url_frag.split("/")[0] + "/#/projects/list/" + projectKey).replace("/dev/","");
         $rootScope.topLink = function() {

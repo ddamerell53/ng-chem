@@ -2,13 +2,13 @@
 
 /**
  * @ngdoc filter
- * @name ngChemApp.filter:toTrusted
+ * @name chembiohubAssayApp.filter:toTrusted
  * @function
  * @description
  * # toTrusted
- * Filter in the ngChemApp.
+ * Filter in the chembiohubAssayApp.
  */
-angular.module('ngChemApp')
+angular.module('chembiohubAssayApp')
   .filter('toTrusted', ['$sce', function($sce){
         return function(text) {
             return $sce.trustAsHtml(text);

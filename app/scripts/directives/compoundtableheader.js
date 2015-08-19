@@ -2,11 +2,11 @@
 
 /**
  * @ngdoc directive
- * @name ngChemApp.directive:compoundTableHeader
+ * @name chembiohubAssayApp.directive:compoundTableHeader
  * @description
  * # compoundTableHeader
  */
-angular.module('ngChemApp')
+angular.module('chembiohubAssayApp')
   .directive('compoundtableheader', function () {
     return {
       templateUrl: 'views/templates/compound-table-header.html',

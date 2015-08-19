@@ -37,11 +37,11 @@ var configuration = {
 
 };
 
-angular.module('ngChemApp').value('urlConfig',  
+angular.module('chembiohubAssayApp').value('urlConfig',  
   configuration
 );
 
-angular.module('ngChemApp').value('prefix',  
+angular.module('chembiohubAssayApp').value('prefix',  
   part
 );
 
@@ -57,10 +57,10 @@ var req = $http({  method: "get",
                     url: configuration.cbh_projects.list_endpoint,
                     params: {"schemaform": true, "limit":1000}, });
 req.then(function(projData){
-    angular.module('ngChemApp').value('loggedInUser',  
+    angular.module('chembiohubAssayApp').value('loggedInUser',  
         projData.data.user
     );
-    angular.module('ngChemApp').value('projectList',  
+    angular.module('chembiohubAssayApp').value('projectList',  
           projData.data
     );
 
@@ -70,14 +70,14 @@ req.then(function(projData){
      window.projectKeys = projectKeys;
     window.projectUrlMatcher = "/{projectKey:" + projectKeys.join('|') + "}/";
     angular.element(document).ready(function() {
-        angular.bootstrap(angular.element( document.querySelector( '#bodytest' ) ), ["ngChemApp"]);
+        angular.bootstrap(angular.element( document.querySelector( '#bodytest' ) ), ["chembiohubAssayApp"]);
     });
     });
 var skin = $http({  method: "get",
                     url: configuration.cbh_skinning.list_endpoint
                   });
 skin.then(function(skinObj){
-  angular.module('ngChemApp').value('skinConfig',  
+  angular.module('chembiohubAssayApp').value('skinConfig',  
           skinObj.data
     );
 })

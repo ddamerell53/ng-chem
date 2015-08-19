@@ -98,7 +98,7 @@
                              <p class="nexa vw" style="padding-top:10px;">overlaps</p>
                         </div>
                         <div class="col-xs-3 pull-right" style="padding:10px 4px 0 0;">
-                            <div class="pull-right"><a ng-show="datasets[current_dataset_id].config.compoundstats['overlaps'] > 0" ng-click ="cbh.toggleWarningsFilter('warnings.overlap')" class="btn btn-sm btn-default" ng-class="warningsFilter =='warnings.overlap' ? 'blue' : 'lightgrey'" title="Filter only records where the structure overlaps with existing ChemReg records"><span class="glyphicon glyphicon-filter "></span></a>
+                            <div class="pull-right"><a ng-show="datasets[current_dataset_id].config.compoundstats['overlaps'] > 0" ng-click ="cbh.toggleWarningsFilter('warnings.overlap')" class="btn btn-sm btn-default" ng-class="warningsFilter =='warnings.overlap' ? 'blue' : 'lightgrey'" title="Filter only records where the structure overlaps with existing AssayReg records"><span class="glyphicon glyphicon-filter "></span></a>
                             <info-box lookup="project_match_values" lookupitems="cbh.messages"></info-box></div>
                         </div>
         
@@ -263,7 +263,7 @@
             </th>
             <td>
                 {{datasets[current_dataset_id].config.compoundstats["new"]}} 
-                <a ng-show="datasets[current_dataset_id].config.compoundstats['new'] > 0" ng-click ="cbh.toggleWarningsFilter('warnings.new')" class="btn btn-sm btn-default" ng-class="warningsFilter =='warnings.new' ? 'blue' : 'lightgrey'" title="Filter only records new to ChemReg"><span class="glyphicon glyphicon-filter "></span></a>
+                <a ng-show="datasets[current_dataset_id].config.compoundstats['new'] > 0" ng-click ="cbh.toggleWarningsFilter('warnings.new')" class="btn btn-sm btn-default" ng-class="warningsFilter =='warnings.new' ? 'blue' : 'lightgrey'" title="Filter only records new to AssayReg"><span class="glyphicon glyphicon-filter "></span></a>
             </td>
         </tr>
         <tr>
@@ -272,7 +272,7 @@
             </th>
             <td>
                 {{datasets[current_dataset_id].config.compoundstats["overlaps"]}} 
-                <a ng-show="datasets[current_dataset_id].config.compoundstats['overlaps'] > 0" ng-click ="cbh.toggleWarningsFilter('warnings.overlap')" class="btn btn-sm btn-default" ng-class="warningsFilter =='warnings.overlap' ? 'blue' : 'lightgrey'" title="Filter only records where the structure overlaps with existing ChemReg records"><span class="glyphicon glyphicon-filter "></span></a>
+                <a ng-show="datasets[current_dataset_id].config.compoundstats['overlaps'] > 0" ng-click ="cbh.toggleWarningsFilter('warnings.overlap')" class="btn btn-sm btn-default" ng-class="warningsFilter =='warnings.overlap' ? 'blue' : 'lightgrey'" title="Filter only records where the structure overlaps with existing AssayReg records"><span class="glyphicon glyphicon-filter "></span></a>
             </td>
         </tr>
        <tr>

@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc service
- * @name ngChemApp.skinning
+ * @name chembiohubAssayApp.skinning
  * @description
  * # skinning
- * Factory in the ngChemApp.
+ * Factory in the chembiohubAssayApp.
  */
-angular.module('ngChemApp')
+angular.module('chembiohubAssayApp')
   .factory('SkinningFactory', function ($resource) {
     // Service logic
     // ...

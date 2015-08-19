@@ -3,7 +3,7 @@
 describe('Controller: CompoundbatchCtrl', function () {
 
   // load the controller's module
-  beforeEach(module('ngChemApp'));
+  beforeEach(module('chembiohubAssayApp'));
 
   var CompoundbatchCtrl,
     scope;

@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc service
- * @name ngChemApp.chemFileValidation
+ * @name chembiohubAssayApp.chemFileValidation
  * @description
  * # chemFileValidation
- * Factory in the ngChemApp.
+ * Factory in the chembiohubAssayApp.
  */
-angular.module('ngChemApp')
+angular.module('chembiohubAssayApp')
   .factory('chemFileValidation', function () {
     // Service logic
     // ...

@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc service
- * @name ngChemApp.renderers
+ * @name chembiohubAssayApp.renderers
  * @description
  * # renderers
- * Factory in the ngChemApp.
+ * Factory in the chembiohubAssayApp.
  */
-angular.module('ngChemApp')
+angular.module('chembiohubAssayApp')
   .factory('renderers', function ($timeout, $compile) {
     // Service logi
     // ...

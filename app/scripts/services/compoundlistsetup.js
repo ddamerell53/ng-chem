@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc service
- * @name ngChemApp.CompoundListSetup
+ * @name chembiohubAssayApp.CompoundListSetup
  * @description
  * # CompoundListSetup
- * Factory in the ngChemApp.
+ * Factory in the chembiohubAssayApp.
  */
-angular.module('ngChemApp')
+angular.module('chembiohubAssayApp')
   .service('CompoundListSetup', [ 'CBHCompoundBatch', '$rootScope', '$stateParams', '$q', 'urlConfig', function (CBHCompoundBatch, $rootScope, $stateParams, $q, urlConfig) {
     
     //var CompoundListSetup = {};

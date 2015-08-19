@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc service
- * @name ngChemApp.CBHCompoundBatch
+ * @name chembiohubAssayApp.CBHCompoundBatch
  * @description
  * # CBHCompoundBatch
- * Factory in the ngChemApp.
+ * Factory in the chembiohubAssayApp.
  */
-angular.module('ngChemApp')
+angular.module('chembiohubAssayApp')
   .factory('CBHCompoundBatch', ['$compile', '$http', '$q','$timeout','$cookies','urlConfig'  ,function ($compile, $http, $q ,$timeout, $cookies ,urlConfig, cbh_compound_batches) {
 
     // Service logic

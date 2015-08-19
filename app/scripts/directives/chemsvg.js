@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc directive
- * @name ngChemApp.directive:chemsvg
+ * @name chembiohubAssayApp.directive:chemsvg
  Creates a data point
  * @description
  * # chemsvg
  */
-angular.module('ngChemApp')
+angular.module('chembiohubAssayApp')
   .directive('chemsvg', function ($compile) {
     return {
       //template: '<img ng-if="encSmiles" ng-show="encSmiles" ng-src="{{finalUrl}}/{{encSmiles}}/{{size}}"></img>',

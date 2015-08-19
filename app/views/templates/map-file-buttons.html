@@ -10,8 +10,8 @@
         
         <a ng-disabled="(dragmodels.lists.headers.length + dropmodels.lists.length) == 0" ng-click="resetMappingForm()"><button ng-disabled="(dragmodels.lists.headers.length + dropmodels.lists.length) == 0" class="btn btn-primary" style="margin-right:5px;">Reset drag and drop area</button></a>
         <a ng-disabled="(dragmodels.lists.headers.length + dropmodels.lists.length) == 0">
-            <button ng-disabled="(dragmodels.lists.headers.length + dropmodels.lists.length) == 0" class="btn btn-primary" ng-disabled="justSaved" ng-click="mapCustomFieldsToMols(true)" ng-show="isFileExcel()" ng-disabled="(isStrucColUnspecified()  + (dragmodels.lists.headers.length + dropmodels.lists.length) == 0 )|| justSaved">Save all Molecules to ChemReg</button>
-            <button ng-disabled="(dragmodels.lists.headers.length + dropmodels.lists.length) == 0"class="btn btn-primary" ng-disabled="justSaved" ng-click="mapCustomFieldsToMols(true)" ng-hide="isFileExcel()" ng-disabled="(dragmodels.lists.headers.length + dropmodels.lists.length) == 0 || justSaved" >Save all Molecules to ChemReg</button>
+            <button ng-disabled="(dragmodels.lists.headers.length + dropmodels.lists.length) == 0" class="btn btn-primary" ng-disabled="justSaved" ng-click="mapCustomFieldsToMols(true)" ng-show="isFileExcel()" ng-disabled="(isStrucColUnspecified()  + (dragmodels.lists.headers.length + dropmodels.lists.length) == 0 )|| justSaved">Save all Molecules to AssayReg</button>
+            <button ng-disabled="(dragmodels.lists.headers.length + dropmodels.lists.length) == 0"class="btn btn-primary" ng-disabled="justSaved" ng-click="mapCustomFieldsToMols(true)" ng-hide="isFileExcel()" ng-disabled="(dragmodels.lists.headers.length + dropmodels.lists.length) == 0 || justSaved" >Save all Molecules to AssayReg</button>
         </a>
 
     </div>

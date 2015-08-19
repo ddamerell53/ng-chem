@@ -3,7 +3,7 @@
 describe('Filter: titleCase', function () {
 
   // load the filter's module
-  beforeEach(module('ngChemApp'));
+  beforeEach(module('chembiohubAssayApp'));
 
   // initialize a new instance of the filter before each test
   var titleCase;

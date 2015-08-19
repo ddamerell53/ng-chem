@@ -2,10 +2,10 @@
 
 /**
  * @ngdoc function
- * @name ngChemApp.controller:BatchesCtrl
+ * @name chembiohubAssayApp.controller:BatchesCtrl
  * @description
  * # BatchesCtrl
- * Controller of the ngChemApp
+ * Controller of the chembiohubAssayApp
  */
 
 
@@ -75,7 +75,7 @@ var ngFooter = function ($scope, grid) {
         return curPage <= 1;
     };
 };
-angular.module('ngChemApp')
+angular.module('chembiohubAssayApp')
 
   .controller('BatchesCtrl',['$scope', '$modal', '$timeout', '$q', '$state', '$stateParams','$location', 'gridconfig', 'projectKey', 'MessageFactory', 'CBHCompoundBatch', 'paramsAndForm', function ($scope, $modal, $timeout, $q, $state, $stateParams, $location, gridconfig, projectKey, MessageFactory, CBHCompoundBatch, paramsAndForm) {
 

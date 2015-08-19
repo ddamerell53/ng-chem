@@ -3,7 +3,7 @@
 describe('Service: skinning', function () {
 
   // load the service's module
-  beforeEach(module('ngChemApp'));
+  beforeEach(module('chembiohubAssayApp'));
 
   // instantiate service
   var skinning;

@@ -2,11 +2,11 @@
 
 /**
  * @ngdoc directive
- * @name ngChemApp.directive:appProgress
+ * @name chembiohubAssayApp.directive:appProgress
  * @description
  * # appProgress
  */
-angular.module('ngChemApp')
+angular.module('chembiohubAssayApp')
   .directive('appProgress', [ function () {
     return {
       templateUrl: 'views/templates/app-progress.html',
