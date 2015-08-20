@@ -35,4 +35,5 @@ var chembiohubAssayApp =  angular.module('chembiohubAssayApp', [
     'ui.sortable',
     'angularUtils.directives.dirPagination',
     'angular-info-box',
+    'elasticui',
   ]);

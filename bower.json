@@ -36,7 +36,8 @@
     "angular-info-box": "git@github.com:paulbarrett79/angular-info-box.git#v0.0.4",
     "angular-utils-pagination": "~0.7.0",
     "handsontable": "git@github.com:thesgc/handsontable.git#master",
-    "angular-ui-ace": "bower"
+    "angular-ui-ace": "bower",
+    "elasticui": "*"
   },
   "devDependencies": {
     "angular-mocks": "~1.3.0",
