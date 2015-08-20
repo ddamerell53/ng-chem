@@ -2,29 +2,33 @@
 
 	<div class="container">
 		<div class="row">
-			<div class="col-xs-5" >
+			<div class="col pull-right" style="margin-left:20px;">
 				<!-- Projects button -->
-				<div class="row pull-left">
-					<div class="dropdown" ng-show="isLoggedIn()" style="background-color:rgb(68,104,125); margin-top:-7px; padding:16px; height:76px; max-height:76px;">
-						<a id="projectsBtn" class="mt-8" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><strong class="text-center nexa" style="padding-top:5px; color:white;"><img src="bower_components/chembiohub-theme/img/CBH_2_2_LowRes.png" style="height:45px">AssayReg</strong></a>&nbsp;<span class="caret" style="color:white;"></span>
-						<ul class="dropdown-menu ng-animate" role="menu" aria-labelledby="projectsBtn" style="width:210px;">
-							<li role="presentation" style="background-color:#ddd;"><span class="glyphicon glyphicon-user"></span> <strong class="nexa"><span>{{cbh.logged_in_user.first_name + " " + cbh.logged_in_user.last_name  || cbh.logged_in_user.username}}</span></strong></li>
-							<li role="presentation" ng-if="cbh.logged_in_user.is_superuser" style="padding: 0 8px;"><a ng-href="{{cbh.api_base}}/admin"><span class="glyphicon glyphicon-cog"></span> <strong class="nexa">Admin Panel</strong></a></li>
-							<li role="presentation" style="padding:0 8px;"><a href="http://goo.gl/forms/y6e4achfUE" onclick='return !window.open(this.href);'><span class="glyphicon glyphicon-exclamation-sign"></span> <strong class="nexa">Report an issue</strong></a></li>
-							<li role="presentation" style="padding:0 8px;"><a href="{{ getUrlBase() }}logout"><span class="glyphicon glyphicon-off"></span> <strong class="nexa">Log Out</strong></a></li>
-						</ul>
+				<a id="projectsBtn" class="mt-8" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<div class="row pull-right">
+						
+						<div class="dropdown" ng-show="isLoggedIn()" style="background-color:rgb(68,104,125); margin-top:-7px; padding:16px; height:76px; max-height:76px;">
+							<strong class="text-center nexa" style="padding-top:5px; color:white;"><img src="bower_components/chembiohub-theme/img/CBH_2_2_LowRes.png" style="height:45px">AssayReg</strong>&nbsp;<span class="caret" style="color:white;"></span>
+							<ul class="dropdown-menu ng-animate" role="menu" aria-labelledby="projectsBtn" style="width:210px;">
+								<li role="presentation" style="background-color:#ddd; padding:0 8px;"><span class="glyphicon glyphicon-user"></span> <strong class="nexa"><span>{{cbh.logged_in_user.first_name + " " + cbh.logged_in_user.last_name  || cbh.logged_in_user.username}}</span></strong></li>
+								<li role="presentation" ng-if="cbh.logged_in_user.is_superuser" style="padding: 0 8px;"><a ng-href="{{cbh.api_base}}/admin"><span class="glyphicon glyphicon-cog"></span> <strong class="nexa">Admin Panel</strong></a></li>
+								<li role="presentation" style="padding:0 8px;"><a href="http://goo.gl/forms/y6e4achfUE" onclick='return !window.open(this.href);'><span class="glyphicon glyphicon-exclamation-sign"></span> <strong class="nexa">Report an issue</strong></a></li>
+								<li role="presentation" style="padding:0 8px;"><a href="{{ getUrlBase() }}logout"><span class="glyphicon glyphicon-off"></span> <strong class="nexa">Log Out</strong></a></li>
+							</ul>
+						</div>
+						
+						
 					</div>
-					
-				</div>
+				</a>
 				
 			</div>
-			<div class="col-xs-7" id="slogan" class="text-right">
+			<div class="col" id="slogan" class="text-right pull-right">
 				<ul class="list-inline pull-right text-center">
-					<li class="text-center" style="color:white; margin-right:10px;"><span class="glyphicon glyphicon-plus-sign" style="font-size:30px;"></span><br><strong class="nexa"><small>add data</small></strong></li>
-					<li class="text-center" style="color:white; margin-right:10px;"><span class="glyphicon glyphicon-edit" style="font-size:30px;"></span><br><strong class="nexa"><small>edit data</small></strong></li>
-					<li class="text-center" style="color:white; margin-right:10px;"><span class="glyphicon glyphicon-folder-open" style="font-size:30px;"></span><br><strong class="nexa"><small>projects</small></strong></li>
-					<li class="text-center" style="color:white; margin-right:10px;"><span class="glyphicon glyphicon-search" style="font-size:30px;"></span><br><strong class="nexa"><small>search</small></strong></li>
-					<li class="text-center" style="color:white; margin-right:10px;"><span class="glyphicon glyphicon-question-sign" style="font-size:30px;"></span><br><strong class="nexa"><small>help</small></strong></li>
+					<!-- <li class="text-center" style="color:white; margin-right:10px;"><span class="glyphicon glyphicon-plus-sign" style="font-size:30px;"></span><br><strong class="nexa"><small>add data</small></strong></li>
+					<li class="text-center" style="color:white; margin-right:10px;"><span class="glyphicon glyphicon-edit" style="font-size:30px;"></span><br><strong class="nexa"><small>edit data</small></strong></li> -->
+					<li class="text-center" style="color:white; margin-right:10px;"><a ui-sref="cbh.projects.list" style="color:white;"><span class="glyphicon glyphicon-folder-open" style="font-size:30px;"></span><br><strong class="nexa"><small>projects</small></strong></a></li>
+					<li class="text-center" style="color:white; margin-right:10px;"><a ui-sref="cbh.search" style="color:white;"><span class="glyphicon glyphicon-search" style="font-size:30px;"></span><br><strong class="nexa"><small>search</small></strong></a></li>
+					<li class="text-center" style="color:white; margin-right:10px;"><a ui-sref="cbh.help" style="color:white;"><span class="glyphicon glyphicon-question-sign" style="font-size:30px;"></span><br><strong class="nexa"><small>help</small></strong></a></li>
 				</ul>
 				<div></div>
 				<div></div>
