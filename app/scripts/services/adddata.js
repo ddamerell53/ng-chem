@@ -15,7 +15,9 @@ angular.module('chembiohubAssayApp')
     //http://www.sitepoint.com/creating-crud-app-minutes-angulars-resource/
 
     //retrieve data classification
-    var dataClassification = $resource(urlConfig.instance_path.url_frag + 'datastore/cbh_datapoint_classifications/:dc', {dc: '@dc'});
+    var dataClassification = $resource(urlConfig.instance_path.url_frag + 'datastore/cbh_datapoint_classifications/:dc', {dc: '@dc'}, {
+        'update': { method:'PATCH', params:{dc: '@dc'} }
+    });
 
     //retrieve level data
     var level = $resource(urlConfig.instance_path.url_frag + 'datastore/cbh_datapoints/:dpid', {dpid: '@dpid'});

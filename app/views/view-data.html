@@ -1,9 +1,16 @@
 <div class="container" >
 
-
-	<div class="row mt">
+	<div class="row">
 		<div class="col-xs-12">
-			<h2 class="blue"><span class="glyphicon glyphicon-plus-sign"></span> View Studies</h2>
+			<a ui-sref="cbh.projects.project.assay.data_overview({projectKey : projectKey})">
+	        	<h2 class="nexa blue"><small><span class="glyphicon glyphicon-circle-arrow-left"></span>&nbsp;Back to project overview</small></h2>
+	        </a>
+	    </div>
+	</div>
+	<div class="row">
+		<div class="col-xs-12">
+			<h2 class="blue"><span class="glyphicon glyphicon-list"></span> View Studies<br><a ui-sref="cbh.projects.list">
+        </a></h2>
 		</div>
 	</div>
 <div ng-repeat="(levelindex, level) in levels = ['l0', 'l1', 'l2', 'l3' ]" >
