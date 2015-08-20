@@ -224,9 +224,9 @@ angular.module('chembiohubAssayApp')
     var dataClassifications = $resource('(prefix)/api/datastore/cbh_datapoint_classifications',{});
 
     return {
-      dataClassifications,
-      test_ws_data,
-      test_datapoints,
+      dataClassifications: dataClassifications,
+      test_ws_data: test_ws_data,
+      test_datapoints: test_datapoints,
     }
 
   }]);

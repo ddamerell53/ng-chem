@@ -31,9 +31,9 @@ angular.module('chembiohubAssayApp')
 
     return {
 
-      dataClassification,
-      level,
-      pwf
+      dataClassification: dataClassification,
+      level: level,
+      pwf: pwf
 
     }
 
