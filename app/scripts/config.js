@@ -83,6 +83,9 @@ skin.then(function(skinObj){
 })
 
 
+angular.module('chembiohubAssayApp').constant('euiHost',  
+   arr[0] + "//" + arr[2] + "/" + part + "/datastore"
+);
 
 
 
