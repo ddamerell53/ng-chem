@@ -6,7 +6,7 @@
                 	<img src="images/assay-icon.png" ng-if="project.project_type.show_compounds == false && project.project_type.name == 'assay' " class="pull-right" alt="{{project.project_type.name}} project" title="{{project.project_type.name}} project">
 			<p class="nexa"><strong><a ui-sref="cbh.view })"><span title="{{ project.name }}">{{ project.name | limitTo : 20 }}</span><span ng-show="project.name.length > 20">...</span></a></strong><br/>
 				<span class="glyphicon glyphicon-time"></span> <small>Last modified: {{ project.modified | date }}</small><br>
-				{{project.project_type}}
+				
 			</p>
 		</div>
 
