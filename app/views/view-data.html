@@ -19,7 +19,7 @@
 		<div  ng-repeat="form in assayctrl.proj.enabled_forms">
 			<div  class="row" ng-if="form.id == viewctrl.dc">
 				<div class="col-xs-12" style="border: 1px solid #444; padding:10px; border-radius:5px; margin-bottom:20px;"  eui-index="'cbh_queries'" 
-				eui-filter="ejs.BoolFilter().must(ejs.TermFilter('data_form_config.raw' , form.resource_uri)).must(ejs.TermFilter('level_from', level))" eui-enabled="true">
+				eui-filter="ejs.BoolFilter().must(ejs.TermFilter('data_form_config.raw' , form.resource_uri)).must(ejs.TermFilter('level_from', level)).must(ejs.TermFilter('l0_permitted_projects.raw', assayctrl.proj.resource_uri))" eui-enabled="true">
 						<div>
 							<small>{{form[level].data_type.name}}</small>
 							<br>
@@ -67,14 +67,6 @@
 </div>
 
 
-
-	<div class="row mt">
-		<div class="col-xs-12">
-			<div class="form-group pull-right">
-				<button type='submit' class="btn btn-primary"><span class="glyphicon glyphicon-plus-sign"></span> Add New</button>
-			</div>
-		</div>
-	</div>
 
 
 	

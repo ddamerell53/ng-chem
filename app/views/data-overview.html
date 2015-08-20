@@ -16,7 +16,7 @@
 		</div>
 	</div>
 <div class="row">
-		<div  ng-repeat="form in assayctrl.projectData.objects[2].enabled_forms">
+		<div  ng-repeat="form in assayctrl.proj.enabled_forms">
 			<div  class="row" ng-if="$first">
 				<div class="col-xs-6 bg-success" style="border: 1px solid #444; padding:10px; border-radius:5px; margin-bottom:20px;" >
 					<div ng-repeat="level in ['l0']" class="col-xs-2">
@@ -38,7 +38,7 @@
 
 	<div class="row">
 		<div  ng-repeat="form in assayctrl.proj.enabled_forms">
-			<div  class="row" eui-index="'cbh_queries'" eui-filter="ejs.BoolFilter().must(ejs.TermFilter('data_form_config.raw' , form.resource_uri))" eui-enabled="true" >
+			<div  class="row" eui-index="'cbh_queries'" eui-filter="ejs.BoolFilter().must(ejs.TermFilter('data_form_config.raw' , form.resource_uri)).must(ejs.TermFilter('l0_permitted_projects.raw', assayctrl.proj.resource_uri))" eui-enabled="true" >
 				<div class="col-xs-12 bg-info" style="border: 1px solid #444; padding:10px; border-radius:5px; margin-bottom:20px;" >
 					<div ng-repeat="level in ['l1', 'l2', 'l3']" class="col-xs-3">
 						<div eui-aggregation="ejs.FilterAggregation('dfc_' + form.id + '_' + level).filter(ejs.TermFilter('level_from.raw' , level))">
