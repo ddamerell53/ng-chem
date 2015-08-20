@@ -36,6 +36,10 @@ li a svg.svg {
   white-space: nowrap;
 
 }
+.table-responsive .dropdown-menu,
+  .table-responsive .dropdown-toggle {
+        position: static !important;
+  }
 
 .htCore thead th {
   overflow:hidden;

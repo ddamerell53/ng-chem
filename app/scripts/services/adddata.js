@@ -23,7 +23,7 @@ angular.module('chembiohubAssayApp')
     //retrieve custom field config
 
     //var supply_whole_uri = $resource('', {supply_uri: '@uri'});
-    var pwf = $resource(urlConfig.instance_path.url_frag + 'datastore/cbh_projects_with_forms/:projectid', {projectid: '@projectid'});
+    var pwf = $resource(urlConfig.instance_path.url_frag + 'datastore/cbh_projects_with_forms/');
 
     
 

@@ -13,9 +13,17 @@ angular.module('chembiohubAssayApp')
   	//we need:
   	var addctrl = this;
   	//method to generate the form for a given level of a given datapoint classification
-  	addctrl.getForm = function(dc, level) {
+  	addctrl.getForm = function(dc, level, data_form_id) {
   		console.log("dc is ", dc);
   		console.log("level is ", level);
+      var res;
+            angular.forEach($scope.assayctrl.proj.enabled_forms, function(form){
+              if (form.id == data_form_id){
+                res = form[level];
+
+              }
+
+            });
 
   		//setting a test flag to use the hardcoded json we have to build the forms.
   		var testFlag = false;
@@ -55,9 +63,10 @@ angular.module('chembiohubAssayApp')
             $scope.level_datapoint.id=null;
             $scope.level_datapoint.resource_uri = null;
 						//now get the custom field config from this datapoint
-						var custom_field_config_res = $resource(result['custom_field_config'], {});
-						var custom_field_config_promise = custom_field_config_res.get();
-						custom_field_config_promise.$promise.then(function(res){
+
+
+            
+
 							$scope.custom_field_config = res
 							$scope.edit_form =  []
 							$scope.edit_schema = { "type": "object", 'properties' : {}, 'required': [] };
@@ -70,7 +79,7 @@ angular.module('chembiohubAssayApp')
 
 
 							});
-						});
+						
 					});
 				}
 				else {
@@ -152,7 +161,7 @@ angular.module('chembiohubAssayApp')
 
   	//method to send this data to the appropriate post endpoint with a new ID (instead of the default "1") (this point may happen in the service or even at the backend?)
 
-  	addctrl.getForm($stateParams.dc, $stateParams.lev);
+  	addctrl.getForm($stateParams.dc, $stateParams.lev, $stateParams.data_form_id);
 
     
   }]);

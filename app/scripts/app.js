@@ -748,9 +748,14 @@ angular.module('chembiohubAssayApp')
       url: 'assay/',
       controllerAs: 'assayctrl',
       abstract:true,
-      controller:  function($scope, $stateParams, AddDataFactory) {
+      controller:  function($scope, $stateParams,$rootScope, AddDataFactory, projectKey) {
             var assayctrl = this;
-           assayctrl.projectData = AddDataFactory.pwf.get();
+           assayctrl.projectData = AddDataFactory.pwf.get({"project_key": projectKey },
+              function(pwf){
+                assayctrl.proj = pwf.objects[0];
+              }
+            );
+           
 
         },
       templateUrl: 'views/demo-add.html',
@@ -759,7 +764,7 @@ angular.module('chembiohubAssayApp')
 
     /* ASSAYREG IMPLEMENTATION */
     .state('cbh.projects.project.assay.add_data', {
-      url: 'add_data/:dc?lev=',
+      url: 'add_data/:dc?lev=&data_form_id=',
       templateUrl: 'views/add-data.html',
       controller: 'AddDataCtrl',
       controllerAs: 'addctrl',
