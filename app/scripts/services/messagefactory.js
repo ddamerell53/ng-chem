@@ -41,7 +41,7 @@ angular.module('chembiohubAssayApp')
     var messages = {
         //"home": {
             wizard_intro_text: "To upload multiple compounds you will need a list of SMILES; an InChI key or list of InChI keys; or either a SD, ChemDraw or Excel file.",
-            projects_help: "Clicking Add Compounds or Add Items will take you to a new page where you can add single compounds/items or batches of compounds/items from files, SMILES or InChI keys.",
+            projects_help: "Clicking a project title will take you to the overview page for that project.",
 
         //},
         //"add": {
