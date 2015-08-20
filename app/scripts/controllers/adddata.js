@@ -36,9 +36,9 @@ angular.module('chembiohubAssayApp')
   			//we now need to reset three variables - the dataclassification URI, the level URI and the dataclassification ID
   			//this will ensure that when we post back, we will have new objects created and associated with that dataClassification
   			
-  			$scope.clone['resource_uri'] = "";
+  			$scope.clone['resource_uri'] = null;
 	  		$scope.clone[level] = "";
-	  		$scope.clone['id'] = "";
+	  		$scope.clone['id'] = null;
 	  		//retain the uri of the level we need 
 	  		level_uri = $scope.dc_data[level];
   			console.log('level_uri', level_uri);
@@ -52,7 +52,8 @@ angular.module('chembiohubAssayApp')
 					var level_promise = level_datapoint_resource.get();
 					level_promise.$promise.then(function(result){
 						$scope.level_datapoint = result;
-
+            $scope.level_datapoint.id=null;
+            $scope.level_datapoint.resource_uri = null;
 						//now get the custom field config from this datapoint
 						var custom_field_config_res = $resource(result['custom_field_config'], {});
 						var custom_field_config_promise = custom_field_config_res.get();
@@ -131,14 +132,14 @@ angular.module('chembiohubAssayApp')
   		//console.log($scope.clone);
   		$scope.clone.$save();
 
-  		var post_resource = AddDataFactory.dataClassification;
-  		var post_promise = post_resource.get( {'dc': $stateParams.dc}, function(dc){
-  			dc = $scope.clone;
+  		// var post_resource = AddDataFactory.dataClassification;
+  		// var post_promise = post_resource.get( {'dc': $stateParams.dc}, function(dc){
+  		// 	dc = $scope.clone;
 
-  			dc.$save({'dc': $stateParams.dc}, function(data){
-  				console.log(data);
-  			});
-  		});
+  		// 	dc.$save({'dc': $stateParams.dc}, function(data){
+  		// 		console.log(data);
+  		// 	});
+  		// });
   		/*post_promise.$resource.then(function(data){
   			console.log(data);
   		})*/

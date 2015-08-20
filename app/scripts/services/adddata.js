@@ -21,17 +21,17 @@ angular.module('chembiohubAssayApp')
     var level = $resource(urlConfig.instance_path.url_frag + 'datastore/cbh_datapoints/:dpid', {dpid: '@dpid'});
 
     //retrieve custom field config
-    var cfg = $resource(urlConfig.instance_path.url_frag + 'datastore/cbh_custom_field_config/:cfgid', {cfgid: '@cfgid'});
 
     //var supply_whole_uri = $resource('', {supply_uri: '@uri'});
-    
+    var pwf = $resource(urlConfig.instance_path.url_frag + 'datastore/cbh_projects_with_forms/:projectid', {projectid: '@projectid'});
+
     
 
     return {
 
       dataClassification,
       level,
-      cfg,
+      pwf
 
     }
 

@@ -744,28 +744,47 @@ angular.module('chembiohubAssayApp')
     })
   
 
+    .state('cbh.projects.project.assay', {
+      url: 'assay/',
+      controllerAs: 'assayctrl',
+      abstract:true,
+      controller:  function($scope, $stateParams, AddDataFactory) {
+            var assayctrl = this;
+           assayctrl.projectData = AddDataFactory.pwf.get();
+
+        },
+      templateUrl: 'views/demo-add.html',
+
+    })
+
     /* ASSAYREG IMPLEMENTATION */
-    .state('cbh.add', {
-      url: '/add/:dc?lev=',
+    .state('cbh.projects.project.assay.add_data', {
+      url: 'add_data/:dc?lev=',
       templateUrl: 'views/add-data.html',
       controller: 'AddDataCtrl',
       controllerAs: 'addctrl',
     })
 
-    .state('cbh.edit', {
-      url: '/edit/:dc?lev=',
+    .state('cbh.projects.project.assay.edit_data', {
+      url: 'edit_data/:dc?lev=',
       templateUrl: 'views/edit-data.html',
       controller: 'EditDataCtrl',
       controllerAs: 'editctrl',
     })
 
-    .state('cbh.view', {
-      url: '/view/:dc?lev=&offset=&limit=',
+    .state('cbh.projects.project.assay.view_data', {
+      url: 'view_data/:dc',
       templateUrl: 'views/view-data.html',
       controller: 'ViewDataCtrl',
       controllerAs: 'viewctrl',
     })
 
+    .state('cbh.projects.project.assay.data_overview', {
+      url: 'data_overview/',
+      templateUrl: 'views/data-overview.html',
+      controller: 'DataOverviewCtrl',
+      controllerAs: 'dataoverviewctrl',
+    })
 
 
 

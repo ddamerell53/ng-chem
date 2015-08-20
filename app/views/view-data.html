@@ -3,23 +3,39 @@
 
 	<div class="row mt">
 		<div class="col-xs-12">
-			<div class="form-group pull-right">
-				<button type='submit' class="btn btn-primary"><span class="glyphicon glyphicon-plus-sign"></span> Add New</button>
-			</div>
 			<h2 class="blue"><span class="glyphicon glyphicon-plus-sign"></span> View Studies</h2>
 		</div>
 	</div>
-<div class="row">
-		<div  ng-repeat="form in viewctrl.projectData.objects[2].enabled_forms">
-			<div  class="row" ng-if="$first">
-				<div class="col-xs-6 bg-success" style="border: 1px solid #444; padding:10px; border-radius:5px; margin-bottom:20px;" >
-					<div ng-repeat="level in ['l0']" class="col-xs-2">
+<div ng-repeat="level in ['l0', 'l1', 'l2', 'l3' ]" >
+
+<div class="row"  >
+		<div  ng-repeat="form in assayctrl.projectData.objects[2].enabled_forms">
+			<div  class="row" ng-if="form.id == viewctrl.dc">
+				<div class="col-xs-12" style="border: 1px solid #444; padding:10px; border-radius:5px; margin-bottom:20px;"  eui-index="'cbh_queries'" 
+				eui-filter="ejs.BoolFilter().must(ejs.TermFilter('data_form_config.raw' , form.resource_uri)).must(ejs.TermFilter('level_from', level))" eui-enabled="true"
 						<!-- show only the first item as all l0 should be the same-->
-						<div  >
+						<div>
 							<small>{{form[level].data_type.name}}</small>
 							<br>
 							<strong class="nexa">{{form[level].name}}</strong>
 						</div>
+					<div class="table-responsive">
+					  <table class="table">
+					  	<thead>
+					     	<tr>
+					     		<th ng-repeat="field in form[level].project_data_fields">
+					     			{{field.name}}
+					     		</th>
+					     	</tr>
+					 	</thead>
+					 	<tbody>
+					     	<tr ng-repeat="hit in indexVM.results.hits.hits">
+					     		<td ng-repeat="field in form[level].project_data_fields">
+					     			{{hit._source[level].project_data[field.name]}}
+					     		</td>
+					     	</tr>
+					 	</tbody>
+					   </table>
 					</div>
 				</div>
 				
@@ -27,32 +43,8 @@
 		</div>
 	</div>
 
-
-
-
-	<div class="row">
-		<div  ng-repeat="form in viewctrl.projectData.objects[2].enabled_forms">
-			<div  class="row" eui-index="'cbh_queries'" eui-filter="ejs.BoolFilter().must(ejs.TermFilter('data_form_config.raw' , form.resource_uri))" eui-enabled="true" >
-				<div class="col-xs-12 bg-info" style="border: 1px solid #444; padding:10px; border-radius:5px; margin-bottom:20px;" >
-					<div ng-repeat="level in ['l1', 'l2', 'l3', 'l4']" class="col-xs-3">
-						<div eui-aggregation="ejs.FilterAggregation('dfc_' + form.id + '_' + level).filter(ejs.TermFilter('level_from.raw' , level))">
-							<br>
-							
-
-							 <div class="report text-center">
-<!-- 						         	<info-box left="true" lookup="batch_overlaps"  lookupitems="cbh.messages"></info-box></div>
- -->						          <div class="report-type"><!-- <small>{{form[level].data_type.name}}</small> -->
- 										<strong class="nexa">{{form[level].name}}</strong>
- 									</div>
-						          <div class="report-value "><strong class="nexa">{{aggResult.doc_count}}</strong></div>
-						</div>
-					</div>
-				</div>
-				
-			</div>
-		</div>
-	</div>
 </div>
+
 
 
 	<div class="row mt">
