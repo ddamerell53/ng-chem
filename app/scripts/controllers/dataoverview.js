@@ -12,10 +12,11 @@ angular.module('chembiohubAssayApp')
 	var dataoverviewctrl = this;
 
 	$scope.modalInstance = {};
-    $scope.popup_data = {}; 
+    $scope.popup_data = {};
 
-    dataoverviewctrl.openDetail = function() {
-      
+    dataoverviewctrl.openDetail = function(input_popup_data) {
+      console.log(input_popup_data);
+      $scope.popup_data = input_popup_data;
       $scope.modalInstance = $modal.open({
         templateUrl: 'views/modal-template.html',
         size: 'md',
@@ -26,6 +27,7 @@ angular.module('chembiohubAssayApp')
 
         }, 
         controller: function($scope, $modalInstance, popup_data, $timeout) {
+          console.log("popup_data", popup_data);
           $scope.popup_data = popup_data;
           
           $scope.modalInstance = $modalInstance;

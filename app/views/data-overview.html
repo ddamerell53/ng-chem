@@ -21,7 +21,7 @@
 			<div  class="row" ng-if="$first">
 				<div class="col-xs-6 bg-success" style="border: 1px solid #444; padding:10px; border-radius:5px; margin-bottom:20px;" >
 						<div class="pull-right button-group">				
-							<button class="btn btn-sm btn-primary" ng-click="dataoverviewctrl.openDetail()"><span class="glyphicon glyphicon-list"></span> View Details</button>
+							<button class="btn btn-sm btn-primary" ng-click="dataoverviewctrl.openDetail(hit._source['l1'].project_data)"><span class="glyphicon glyphicon-list"></span> View Details</button>
 							<button class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-plus-sign"></span> Add {{form['l1'].data_type.name}}</button>
 						</div>
 						<!-- show only the first item as all l0 should be the same-->
@@ -62,7 +62,7 @@
 									<div class="col-xs-12 bg-info" style="border-radius:5px; margin-bottom:20px; padding:10px;" ng-if="hit._source['l2'].id != 1">
 										<div class="pull-right button-group">
 											
-											<button class="btn btn-sm btn-primary" ng-click="dataoverviewctrl.openDetail()"><span class="glyphicon glyphicon-list"></span> View Details</button>
+											<button class="btn btn-sm btn-primary" ng-click="dataoverviewctrl.openDetail(hit._source['l2'].project_data)"><span class="glyphicon glyphicon-list"></span> View Details</button>
 											<button class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-plus-sign"></span> Add {{form['l2'].data_type.name}}</button>
 										</div>
 										<p><strong class="nexa"><span style="color:#eee; background-color:#002147; padding:5px; border-radius:5px;">{{form['l2'].data_type.name}}</span> {{form['l2'].name}}</strong> <span class="glyphicon glyphicon-calendar"></span>  <small><em>last modified on {{hit._source['l2'].modified | date}}</em></small></p>
