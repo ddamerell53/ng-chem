@@ -748,14 +748,31 @@ angular.module('chembiohubAssayApp')
       url: 'assay/',
       controllerAs: 'assayctrl',
       abstract:true,
-      controller:  function($scope, $stateParams,$rootScope, AddDataFactory, projectKey) {
+      resolve: {
+        project_with_forms : ['projectKey','AddDataFactory',function(projectKey, AddDataFactory){
+          return AddDataFactory.pwf.get({"project_key": projectKey }, function(data){
+            return data;
+          }).$promise;
+        }
+
+        ]
+      },
+      controller:  function($scope, $stateParams,$rootScope, AddDataFactory, project_with_forms, projectKey) {
             var assayctrl = this;
-           assayctrl.projectData = AddDataFactory.pwf.get({"project_key": projectKey },
-              function(pwf){
-                assayctrl.proj = pwf.objects[0];
-              }
-            );
+            assayctrl.dfc_lookup  = {};
            
+                assayctrl.proj = project_with_forms.objects[0];
+
+                angular.forEach(assayctrl.proj.enabled_forms, function(data_form_config){
+                  assayctrl.dfc_lookup[data_form_config.resource_uri] = data_form_config;
+                });
+
+
+         
+           assayctrl.get_fields = function(dfc_uri, level){
+              return assayctrl.dfc_lookup[dfc_uri][level].project_data_fields;
+
+           }
 
         },
       templateUrl: 'views/demo-add.html',
