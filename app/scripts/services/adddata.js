@@ -19,6 +19,11 @@ angular.module('chembiohubAssayApp')
         'update': { method:'PATCH', params:{dc: '@dc'} }
     });
 
+    var nestedDataClassification = $resource(
+      urlConfig.instance_path.url_frag + 'datastore/cbh_datapoint_classifications_nested/:dc', 
+      {dc: '@dc'});
+
+
     //retrieve level data
     var level = $resource(urlConfig.instance_path.url_frag + 'datastore/cbh_datapoints/:dpid', {dpid: '@dpid'});
 
@@ -32,6 +37,7 @@ angular.module('chembiohubAssayApp')
     return {
 
       "dataClassification": dataClassification,
+      "nestedDataClassification" : nestedDataClassification,
       "level": level,
       "pwf": pwf
 
