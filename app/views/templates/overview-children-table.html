@@ -2,9 +2,7 @@
             <div class="row" style="margin:10px 15px 0;">
                 <div class="col-xs-12 " style="border-radius:5px; padding:10px;">
                     <div class="pull-right button-group">
-                        
-                        {{dpclassif.next_level_cfc}}
-                        <a role="button" ui-sref="cbh.projects.project.assay.add_data({'dc': dpclassif.id, 'projectKey': projectKey, 'lev': dpclassif.next_level_cfc.level_from, 'data_form_id' : dpclassif.next_level_cfc.id })" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-plus-sign"></span> Add {{dpclassif.next_level_cfc.data_type.name}}</a>
+                            <a role="button" ui-sref="cbh.projects.project.assay.add_data({'dc': dpclassif.id, 'projectKey': projectKey, 'lev': dpclassif.next_level_cfc.level_from, 'data_form_id' : dpclassif.next_level_cfc.id })" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-plus-sign"></span> Add {{dpclassif.next_level_cfc.data_type.name}}</a>
                     </div>
                     <p>
                         <strong class="nexa">
@@ -37,8 +35,9 @@
                             </tbody>
                         </table>
                     </div>
-
+                    <!--here to make sure data binging works, dont delete before fixing binding-->
                     <span style="visibility:hidden;font-size:1px;" ng-repeat="c in dpclassif.children" >{{c.created}}</span>
+                    <!--here to make sure data binging works, dont delete before fixing binding-->
 
                 </div>
                 
