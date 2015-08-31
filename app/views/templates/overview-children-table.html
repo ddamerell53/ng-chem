@@ -3,8 +3,8 @@
                 <div class="col-xs-12 " style="border-radius:5px; padding:10px;">
                     <div class="pull-right button-group">
                         
-                        
-                        <a role="button" ui-sref="cbh.projects.project.assay.add_data({'dc': hit._source.id, 'projectKey': projectKey, 'lev': levels[levelindex+1], 'data_form_id' : viewctrl.dc })" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-plus-sign"></span> Add {{dpclassif.next_level_cfc.data_type.name}}</a>
+                        {{dpclassif.next_level_cfc}}
+                        <a role="button" ui-sref="cbh.projects.project.assay.add_data({'dc': dpclassif.id, 'projectKey': projectKey, 'lev': dpclassif.next_level_cfc.level_from, 'data_form_id' : dpclassif.next_level_cfc.id })" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-plus-sign"></span> Add {{dpclassif.next_level_cfc.data_type.name}}</a>
                     </div>
                     <p>
                         <strong class="nexa">

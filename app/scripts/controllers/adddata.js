@@ -30,7 +30,8 @@ angular.module('chembiohubAssayApp')
 
   		$scope.dc_data = {};
   		$scope.clone = {};
-  		$scope.level_datapoint = {};
+      $scope.level_datapoint = {};
+  		$scope.context_datapoint = {};
   		$scope.test_model = {'project_data': {} };
   		var AddDF = AddDataFactory.dataClassification;
   		var level_uri = "";
@@ -49,6 +50,12 @@ angular.module('chembiohubAssayApp')
 	  		$scope.clone['id'] = null;
 	  		//retain the uri of the level we need 
 	  		level_uri = $scope.dc_data[level];
+        var context_level_uri = ""
+        if(level != 'l0'){
+          //get parent level
+          var new_level = "l" + (parseInt(level[1]) + 1).toString();
+          context_level_uri = $scope.dc_data[new_level];  
+        }
   			console.log('level_uri', level_uri);
 
   			if(level) {
@@ -57,6 +64,13 @@ angular.module('chembiohubAssayApp')
 				//needs prefix adding
 				if(!testFlag){
 					var level_datapoint_resource = $resource(level_uri, {});
+          if(level != "l0") {
+            var context_datapoint_resource = $resource(context_level_uri, {});
+            var context_promise = context_datapoint_resource.get();
+            context_promise.$promise.then(function(result){
+              $scope.context_datapoint = result;  
+            });  
+          }
 					var level_promise = level_datapoint_resource.get();
 					level_promise.$promise.then(function(result){
 						$scope.level_datapoint = result;
