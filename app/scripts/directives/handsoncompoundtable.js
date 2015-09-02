@@ -235,6 +235,9 @@ angular.module('ngChemApp')
 
                         ]);
                   }
+
+                    allCols = allCols.concat(scope.plugins.map(function(plugin){return plugin.handsontable_column}));
+                  
                      
                     allCols = allCols.concat(customCols);
                 }
@@ -514,6 +517,7 @@ angular.module('ngChemApp')
         "showBlanks": "=",
         "showNonBlanks": "=",
         "messages": "=",
+        "plugins": "=",
       }
     };
   }]);

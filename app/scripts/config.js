@@ -18,6 +18,8 @@ else {
 var path = arr[0] + "//" + arr[2] + "/" + part +"/";
 var admin_url = admin_base + part;
 var configuration = {
+    "cbh_plugins":{"list_endpoint": path + "cbh_plugins", 
+    "schema": path + "cbh_plugins/schema"}, 
     "cbh_batch_upload": 
     {"list_endpoint": path + "cbh_batch_upload", 
     "schema": path + "cbh_batch_upload/schema"}, 

@@ -27,6 +27,7 @@ angular.module('ngChemApp')
             templateUrl: 'views/cbh.html',
             abstract : true,
             
+            
             controller: function($scope, $rootScope, $state, $location, $modal, urlConfig, loggedInUser, projectList, prefix, $compile, MessageFactory, skinConfig) {
                 var cbh = this;
                 cbh.logged_in_user = loggedInUser;
@@ -288,7 +289,12 @@ angular.module('ngChemApp')
              
               'newresults@cbh.search' :{
                 templateUrl: 'views/compound-list-new.html',
-                controller: 'CompoundbatchCtrl'
+                controller: 'CompoundbatchCtrl',
+                resolve: {
+                      plugins:  function(PluginFactory, $stateParams, $q) {
+                      return PluginFactory.get().$promise;
+                  }
+                }
               },
 
             }
@@ -485,7 +491,12 @@ angular.module('ngChemApp')
               },
               'newresults' :{
                 templateUrl: 'views/compound-list-new.html',
-                controller: 'CompoundbatchCtrl'
+                controller: 'CompoundbatchCtrl',
+                resolve: {
+              plugins:  function(PluginFactory, $stateParams, $q) {
+                return PluginFactory.get().$promise;
+              }
+            },
               },
             }
             
