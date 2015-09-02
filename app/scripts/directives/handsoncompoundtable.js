@@ -231,7 +231,7 @@ angular.module('ngChemApp')
                   }
                  if (showCompounds){
                     allCols = allCols.concat([
-                      {knownBy: "Mol Weight",data: "molecularWeight", readOnly: true, className: "htCenter htMiddle ", renderer: "centeredNumericRenderer"},
+                      //{knownBy: "Mol Weight",data: "molecularWeight", readOnly: true, className: "htCenter htMiddle ", renderer: "centeredNumericRenderer"},
 
                         ]);
                   }
@@ -263,7 +263,7 @@ angular.module('ngChemApp')
                     return renderers.getColumnLabel(c, scope);
                 });
                 var hotObj = {
-                    // colWidths:200,
+                     colWidths:150,
                     data: scope.compounds,
                     colHeaders: columnHeaders,
                     columns: allCols, 
