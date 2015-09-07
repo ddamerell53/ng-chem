@@ -55,7 +55,7 @@
                                 <li ng-class="{disabled:indexVM.pageCount <= indexVM.page}"><a href="" ng-click="indexVM.page=indexVM.pageCount">Last</a></li>
                                 <li>
                                     <select ng-model="indexVM.pageSize">
-                                        <option ng-repeat="item in [5, 10, 20]">{{item}}</option>
+                                        <option ng-repeat="item in [5, 10, 20]">{{item}} per page</option>
                                     </select>
                                 </li>
                             </ul>
