@@ -11,8 +11,8 @@ angular.module('chembiohubAssayApp')
   .controller('DataOverviewCtrl', ['$scope', 'AddDataFactory', '$modal', '$resource', '$stateParams' , function ($scope, AddDataFactory, $modal, $resource, $stateParams) {
 	var dataoverviewctrl = this;
   var classes = {
-    'l1': "bg-warning",
-    'l2' : "bg-info"
+    'l1': "l1",
+    'l2' : "l2"
   }
 	$scope.modalInstance = {};
     $scope.popup_data = {};

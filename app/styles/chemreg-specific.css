@@ -722,6 +722,34 @@ div.column-header-form ul.ui-select-choices {
   top: 32px !important;
 }
 
+/* AssayReg nested div colours - using university colour palette */
+
+.l1 {
+  border: 1px solid rgb(0,119,112);
+}
+.l1 strong {
+  color:rgb(0,119,112);
+}
+.l2 {
+  border: 1px solid rgb(135,36,52);
+}
+.l2 strong {
+  color:rgb(135,36,52);
+}
+.l3 {
+  background-color:rgb(224,222,217);
+}
+.l3 table {
+  background-color:#fff;
+  text-align: center;
+}
+.l3 table th {
+  color:#002147;
+  background-color:rgb(158, 206, 235);
+  text-align: center;
+}
+
+
 /* 16-column bootstrap grid classes */
 /*!
  * Bootstrap v3.3.4 (http://getbootstrap.com)
