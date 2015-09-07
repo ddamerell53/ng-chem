@@ -17,7 +17,8 @@ angular.module('chembiohubAssayApp')
 	$scope.modalInstance = {};
     $scope.popup_data = {};
     $scope.getAnnotations = function(dpc){
-        dpc.dfc_full = $scope.assayctrl.dfc_lookup[dpc.data_form_config];
+        if( angular.isDefined(dpc.id)){
+          dpc.dfc_full = $scope.assayctrl.dfc_lookup[dpc.data_form_config];
         dpc.main_cfc = dpc.dfc_full[dpc.level_from];
         dpc.main_data = dpc[dpc.level_from];
         dpc.htmlClassName = classes[dpc.level_from];
@@ -33,6 +34,8 @@ angular.module('chembiohubAssayApp')
         }else{
           dpc.childrenTemplate = "views/templates/overview-children.html";
         }
+        }
+        
     };
     $scope.iterate_children = function(obj){
         angular.forEach(obj.children, function(child){
