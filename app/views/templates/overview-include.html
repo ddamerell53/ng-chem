@@ -4,7 +4,10 @@
                     <div class="pull-right button-group">
                         
                         <button class="btn btn-sm btn-primary" ng-click="dataoverviewctrl.openDetail(dpclassif.main_data.project_data)"><span class="glyphicon glyphicon-list"></span> <span class="hidden-xs hidden-sm" title="View Details">View Details</span></button>
-                        <a role="button" ui-sref="cbh.projects.project.assay.add_data({'dc': hit._source.id, 'projectKey': projectKey, 'lev': levels[levelindex+1], 'data_form_id' : viewctrl.dc })" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-plus-sign"></span> <span class="hidden-xs hidden-sm" title="Add {{dpclassif.main_cfc.data_type.name}}">Add {{dpclassif.main_cfc.data_type.name}}</span></a>
+                        <a role="button" ng-click="dpclassif.addingChild = true" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-plus-sign"></span> <span class="hidden-xs hidden-sm" title="Add {{dpclassif.next_level_cfc.data_type.name}}">Add {{dpclassif.next_level_cfc.data_type.name}}</span></a>
+
+
+                        <!-- <a role="button" ui-sref="cbh.projects.project.assay.add_data({'dc': hit._source.id, 'projectKey': projectKey, 'lev': levels[levelindex+1], 'data_form_id' : viewctrl.dc })" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-plus-sign"></span> <span class="hidden-xs hidden-sm" title="Add {{dpclassif.main_cfc.data_type.name}}">Add {{dpclassif.main_cfc.data_type.name}}</span></a> -->
                     </div>
                     <p>
                         <strong class="nexa">
@@ -13,6 +16,21 @@
                         <span class="glyphicon glyphicon-calendar"></span>  
                         <small><em>last modified on {{dpclassif.main_data.modified | date}}</em></small>
                     </p>
+                    <div ng-if="dpclassif.addingChild" >
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group" sf-schema="dpclassif.next_level_edit_schema" sf-form="dpclassif.next_level_edit_form" sf-model="dpclassif.new_next_level_model.project_data"></div>
+                            </div>
+                        </div>
+                        <div class="row mt">
+                            <div class="col-xs-12">
+                                <div class="form-group pull-right">
+                                    <button type="button" class="btn btn-danger" ng-click="dpclassif.setForm(dpclassif.default_data)"><span class="glyphicon glyphicon-remove-circle"></span> Cancel</button>
+                                    <button type='submit' class="btn btn-primary" ng-click="dpclassif.addChild()"><span class="glyphicon glyphicon-share"></span> Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div ng-include="dpclassif.childrenTemplate"></div>
 
