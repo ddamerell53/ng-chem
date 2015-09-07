@@ -12,8 +12,8 @@
                         <small><em>last modified on {{dpclassif.main_data.modified | date}}</em></small>
                     </p>
                     
-                    <div class="table-responsive" style="background-color:white;">
-                        <table class="table table-striped" eui-index="'cbh_queries'"  eui-filter="ejs.BoolFilter().must(ejs.TermFilter('data_form_config.raw' ,dpclassif.data_form_config )).must(ejs.TermFilter('level_from', dpclassif.next_level)).must(ejs.TermFilter('l0_permitted_projects.raw', assayctrl.proj.resource_uri)).must(ejs.TermFilter('parent_id' ,dpclassif.id ))" eui-enabled="true" >
+                    <div class="table-responsive" style="background-color:white;" eui-index="'cbh_queries'"  eui-filter="ejs.BoolFilter().must(ejs.TermFilter('data_form_config.raw' ,dpclassif.data_form_config )).must(ejs.TermFilter('level_from', dpclassif.next_level)).must(ejs.TermFilter('l0_permitted_projects.raw', assayctrl.proj.resource_uri)).must(ejs.TermFilter('parent_id' ,dpclassif.id ))" eui-enabled="true">
+                        <table class="table table-striped">
 
                             <thead>
                                 <tr>
@@ -34,17 +34,29 @@
                                 </tr>
                                     
                             </tbody>
-                            <!-- <select ng-model="indexVM.pageSize">
-                                <option ng-repeat="item in [10, 20, 50, 100]">{{item}}</option>
-                            </select>
-                            <ul class="pager">
-                                <li ng-class="{disabled:indexVM.page <= 1}"><a href="" ng-click="indexVM.page=indexVM.page - 1">Previous</a></li>
-                                <li ng-class="{disabled:indexVM.pageCount <= indexVM.page}"><a href="" ng-click="indexVM.page=indexVM.page + 1">Next</a></li>
-                            </ul> -->
+                            
+
                         </table>
+                        <div class="text-center">
+                            
+
+                            <ul class="pager">
+
+                                <li ng-class="{disabled:indexVM.page <= 1}"><a href="" ng-click="indexVM.page=1">First</a></li>
+                                <li ng-class="{disabled:indexVM.page <= 1}"><a href="" ng-click="indexVM.page=indexVM.page - 1">Previous</a></li>
+                                <li>{{indexVM.page}} of {{indexVM.pageCount}}</li>
+                                <li ng-class="{disabled:indexVM.pageCount <= indexVM.page}"><a href="" ng-click="indexVM.page=indexVM.page + 1">Next</a></li>
+                                <li ng-class="{disabled:indexVM.pageCount <= indexVM.page}"><a href="" ng-click="indexVM.page=indexVM.pageCount">Last</a></li>
+                                <li>
+                                    <select ng-model="indexVM.pageSize">
+                                        <option ng-repeat="item in [5, 10, 20]">{{item}}</option>
+                                    </select>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                     <!--here to make sure data binging works, dont delete before fixing binding-->
-                    <span style="visibility:hidden;font-size:1px;" ng-repeat="c in dpclassif.children" >{{c.created}}</span>
+                    <!-- <span style="visibility:hidden;font-size:1px;" ng-repeat="c in dpclassif.children" >{{c.created}}</span> -->
                     <!--here to make sure data binging works, dont delete before fixing binding-->
 
                 </div>
