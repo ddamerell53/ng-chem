@@ -13,10 +13,11 @@
                     </p>
                     
                     <div class="table-responsive" style="background-color:white;">
-                        <table class="table table-striped">
+                        <table class="table table-striped" eui-index="'cbh_queries'"  eui-filter="ejs.BoolFilter().must(ejs.TermFilter('data_form_config.raw' ,dpclassif.data_form_config )).must(ejs.TermFilter('level_from', dpclassif.next_level)).must(ejs.TermFilter('l0_permitted_projects.raw', assayctrl.proj.resource_uri)).must(ejs.TermFilter('parent_id' ,dpclassif.id ))" eui-enabled="true" >
+
                             <thead>
                                 <tr>
-                                    <th ng-if="dpclassif.children[0].main_data.project_data[bottomlevelfield.elasticsearch_fieldname]" ng-repeat="bottomlevelfield in dpclassif.next_level_cfc.project_data_fields">
+                                    <th ng-repeat="bottomlevelfield in dpclassif.next_level_cfc.project_data_fields">
                                         <small>
                                         {{bottomlevelfield.name}}
                                     </small>
@@ -24,10 +25,10 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="childItem in dpclassif.children" >
-                                    <td style="line-height:0.9 !important;" ng-if="childItem.main_data.project_data[field.elasticsearch_fieldname]" ng-repeat="field in dpclassif.next_level_cfc.project_data_fields">
+                                <tr ng-repeat="childItem in indexVM.results.hits.hits" >
+                                    <td style="line-height:0.9 !important;" ng-repeat="field in dpclassif.next_level_cfc.project_data_fields">
                                         <small>
-                                        {{childItem.main_data.project_data[field.elasticsearch_fieldname]}}
+                                        {{childItem._source[dpclassif.next_level].project_data[field.elasticsearch_fieldname]}}
                                         </small>
                                  </td>
                                 </tr>
