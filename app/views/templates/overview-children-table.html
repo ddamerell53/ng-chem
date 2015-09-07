@@ -14,6 +14,9 @@
 
                             <thead>
                                 <tr>
+                                    <th><small>
+                                        Actions
+                                    </small></th>
                                     <th ng-repeat="bottomlevelfield in dpclassif.next_level_cfc.project_data_fields">
                                         <small>
                                         {{bottomlevelfield.name}}
@@ -22,15 +25,28 @@
                                 </tr>
                             </thead>
                             <tbody>
+
                                 <tr ng-repeat="childItem in indexVM.results.hits.hits" >
+                                    <td>
+                                        <a  ng-click="dpclassif.addDataToForm(childItem._source[dpclassif.next_level])" > 
+                                            <span class="hidden-xs hidden-sm" title="Clone">Clone</span>
+                                        </a>
+                                    </td>
                                     <td style="line-height:0.9 !important;" ng-repeat="field in dpclassif.next_level_cfc.project_data_fields">
                                         <small>
                                         {{childItem._source[dpclassif.next_level].project_data[field.elasticsearch_fieldname]}}
                                         </small>
-                                 </td>
+                                    </td>
                                 </tr>
                                     
                             </tbody>
+                            <!-- <select ng-model="indexVM.pageSize">
+                                <option ng-repeat="item in [10, 20, 50, 100]">{{item}}</option>
+                            </select>
+                            <ul class="pager">
+                                <li ng-class="{disabled:indexVM.page <= 1}"><a href="" ng-click="indexVM.page=indexVM.page - 1">Previous</a></li>
+                                <li ng-class="{disabled:indexVM.pageCount <= indexVM.page}"><a href="" ng-click="indexVM.page=indexVM.page + 1">Next</a></li>
+                            </ul> -->
                         </table>
                     </div>
                     <!--here to make sure data binging works, dont delete before fixing binding-->

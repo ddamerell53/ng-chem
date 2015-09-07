@@ -748,6 +748,19 @@ div.column-header-form ul.ui-select-choices {
   background-color:rgb(158, 206, 235);
   text-align: center;
 }
+#h2loading {
+  text-align: center;
+}
+div.modal-body {
+  font-size: 0.8em;
+  word-wrap: break-word;
+}
+div.modal-header, div.modal-footer {
+  background-color:rgb(188,210,195);
+}
+div.modal-body table td, div.modal-body table th{
+  font-size: 1em;
+}
 
 
 /* 16-column bootstrap grid classes */

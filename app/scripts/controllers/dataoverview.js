@@ -15,6 +15,7 @@ angular.module('chembiohubAssayApp')
     'l1': "l1",
     'l2' : "l2"
   }
+  $scope.iamloading = false;
 	$scope.modalInstance = {};
     $scope.popup_data = {};
     $scope.getAnnotations = function(dpc){
@@ -30,6 +31,8 @@ angular.module('chembiohubAssayApp')
 
           dpc.setForm = function(defaults){
             dpc.new_next_level_model = defaults;
+            dpc.new_next_level_model.id = null;
+            dpc.resource_uri = null;
             dpc.next_level_edit_form = [];
             dpc.next_level_edit_schema = { "type": "object", 'properties' : {}, 'required': [] };
             angular.forEach(dpc.next_level_cfc.project_data_fields, function(proj_data){
@@ -40,6 +43,10 @@ angular.module('chembiohubAssayApp')
                   angular.extend(dpc.next_level_edit_schema.properties, angular.copy(proj_data.edit_schema.properties));
                 });
             dpc.addingChild = false;
+          }
+          dpc.addDataToForm = function(data){
+            dpc.setForm(data);
+            dpc.addingChild = true;
           }
           dpc.setForm(dpc.default_data);
 
@@ -81,17 +88,23 @@ angular.module('chembiohubAssayApp')
         
     };
     $scope.iterate_children = function(obj){
-        angular.forEach(obj.children, function(child){
+        angular.forEach(obj.children, function(child, index){
           if( angular.isDefined(child.id)){
             child.parentObj = obj;
             
             $scope.getAnnotations(child);
             $scope.iterate_children(child);
+            if (index == (obj.children.length - 1)){
+                $scope.iamloading = false;
+              }
             }
+       
           });
     }
 
     dataoverviewctrl.fetchData = function(){
+      $scope.iamloading = true;
+      console.log('iamloading', $scope.iamloading);
        AddDataFactory.nestedDataClassification.get({
         "l0_permitteded_projects__project_key": $stateParams.projectKey, 
         "parent_id": "None", 
@@ -99,16 +112,16 @@ angular.module('chembiohubAssayApp')
       },
         function(data){
           dataoverviewctrl.l0_object = data.objects[0];
-          $scope.iterate_children(dataoverviewctrl.l0_object);    
+          $scope.iterate_children(dataoverviewctrl.l0_object);
         }
       );
     }
     dataoverviewctrl.openDetail = function(input_popup_data) {
-      console.log(input_popup_data);
+
       $scope.popup_data = input_popup_data;
       $scope.modalInstance = $modal.open({
         templateUrl: 'views/modal-template.html',
-        size: 'md',
+        size: 'lg',
         resolve: {
           popup_data: function () {
             return $scope.popup_data;
