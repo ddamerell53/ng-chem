@@ -3,7 +3,7 @@
                 <div class="col-xs-12 " style="border-radius:5px;  padding:10px;">
                     <div class="pull-right button-group">
                         
-                        <button class="btn btn-sm btn-primary" ng-click="dataoverviewctrl.openDetail(dpclassif.main_data.project_data)"><span class="glyphicon glyphicon-list"></span> <span class="hidden-xs hidden-sm" title="View Details">View Details</span></button>
+                        <button class="btn btn-sm btn-primary" ng-click="dataoverviewctrl.openDetail(dpclassif)"><span class="glyphicon glyphicon-list"></span> <span class="hidden-xs hidden-sm" title="View Details">View Details</span></button>
                         <a role="button" ui-sref="cbh.projects.project.assay.add_data({'dc': hit._source.id, 'projectKey': projectKey, 'lev': levels[levelindex+1], 'data_form_id' : viewctrl.dc })" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-plus-sign"></span> <span class="hidden-xs hidden-sm" title="Add {{dpclassif.main_cfc.data_type.name}}">Add {{dpclassif.main_cfc.data_type.name}}</span></a>
                     </div>
                     <p>
