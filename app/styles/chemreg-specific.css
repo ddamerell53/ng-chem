@@ -731,7 +731,7 @@ div.column-header-form ul.ui-select-choices {
   color:rgb(0,119,112);
 }
 .l2 {
-  border: 1px solid rgb(135,36,52);
+  border: 1px dashed rgb(135,36,52);
 }
 .l2 strong {
   color:rgb(135,36,52);
