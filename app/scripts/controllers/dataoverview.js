@@ -30,7 +30,7 @@ angular.module('chembiohubAssayApp')
           dpc.default_data = {'project_data': {} ,'custom_field_config' : dpc.next_level_cfc.resource_uri};
 
           dpc.setForm = function(defaults){
-            dpc.new_next_level_model = defaults;
+            dpc.new_next_level_model = angular.copy(defaults);
             dpc.new_next_level_model.id = null;
             dpc.resource_uri = null;
             dpc.next_level_edit_form = [];

@@ -9,7 +9,7 @@
                         <small><em>last modified on {{dpclassif.main_data.modified | date}}</em></small>
                     </p>
                     
-                    <div class="table-responsive" style="background-color:white;" eui-index="'cbh_queries'"  eui-filter="ejs.BoolFilter().must(ejs.TermFilter('data_form_config.raw' ,dpclassif.data_form_config )).must(ejs.TermFilter('level_from', dpclassif.next_level)).must(ejs.TermFilter('l0_permitted_projects.raw', assayctrl.proj.resource_uri)).must(ejs.TermFilter('parent_id' ,dpclassif.id ))" eui-enabled="true">
+                    <div class="table-responsive" style="background-color:white;" eui-index="'cbh_queries'"  eui-filter="ejs.BoolFilter().must(ejs.TermFilter('data_form_config.raw' ,dpclassif.data_form_config )).must(ejs.TermFilter('level_from', dpclassif.next_level)).must(ejs.TermFilter('l0_permitted_projects.raw', assayctrl.proj.resource_uri)).must(ejs.TermFilter('parent_id' ,dpclassif.id ))" eui-sort="ejs.Sort('modified').order('desc')" eui-enabled="true">
                         <table class="table table-striped">
 
                             <thead>
