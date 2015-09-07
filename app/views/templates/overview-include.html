@@ -3,17 +3,26 @@
                 <div class="col-xs-12 " style="border-radius:5px;  padding:10px;">
                     <div class="pull-right button-group">
                         
-                        <button class="btn btn-sm btn-primary" ng-click="dataoverviewctrl.openDetail(dpclassif)"><span class="glyphicon glyphicon-list"></span> <span class="hidden-xs hidden-sm" title="View Details">View Details</span></button>
+                        
                         <a role="button" ng-click="dpclassif.addingChild = true" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-plus-sign"></span> <span class="hidden-xs hidden-sm" title="Add {{dpclassif.next_level_cfc.data_type.name}}">Add {{dpclassif.next_level_cfc.data_type.name}}</span></a>
 
                     </div>
-                    <p>
-                        <strong class="nexa">
-                            <span style="color:#eee; background-color:#002147; padding:5px; border-radius:5px;">{{dpclassif.main_cfc.data_type.name}}</span> {{dpclassif.main_data.project_data.Title}} 
-                        </strong> 
-                        <span class="glyphicon glyphicon-calendar"></span>  
-                        <small><em>last modified on {{dpclassif.main_data.modified | date}}</em></small>
-                    </p>
+                    <div>
+                        <p>
+                            <strong class="nexa">
+                                <span style="color:#eee; background-color:#002147; padding:5px; border-radius:5px;">{{dpclassif.main_cfc.data_type.name}}</span> {{dpclassif.main_data.project_data.Title}} 
+                            </strong> 
+                            <span class="glyphicon glyphicon-calendar"></span>  
+                            <small><em>last modified on {{dpclassif.main_data.modified | date}}</em></small>
+                            <div class="button-group">
+                            
+                                <button class="btn btn-sm btn-primary" ng-click="dataoverviewctrl.openDetail(dpclassif)"><span class="glyphicon glyphicon-list"></span> <span class="hidden-xs hidden-sm" title="View Details">View Details</span></button>
+                                <a role="button" ng-click="dpclassif.parentObj.addingChild = true; dpclassif.parentObj.addDataToForm(dpclassif.main_data)" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-copy"></span> <span class="hidden-xs hidden-sm" title="Clone {{dpclassif.main_cfc.data_type.name}}">Clone {{dpclassif.main_cfc.data_type.name}}</span></a>
+
+                            </div>
+                        </p>
+                        
+                    </div>
                     <div ng-if="dpclassif.addingChild" >
                         <div class="row">
                             <div class="col-xs-12">
