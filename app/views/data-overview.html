@@ -28,7 +28,7 @@
 					<div ng-show="!no_l0" class="col-xs-12 bg-success" style="border: 1px solid #444; padding:10px; border-radius:5px; margin-bottom:20px;" >
 						<div class="pull-right button-group">				
 							<button class="btn btn-sm btn-primary" ng-click="dataoverviewctrl.openDetail(dataoverviewctrl.l0_object)"><span class="glyphicon glyphicon-list"></span> View Details</button>
-							<button class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-plus-sign"></span> Add {{form['l1'].data_type.name}}</button>
+							<button ng-click="" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-plus-sign"></span> Add {{form['l1'].data_type.name}}</button>
 						</div>
 						<!-- show only the first item as all l0 should be the same-->
 						<div>
@@ -46,14 +46,14 @@
 	<div ng-show="dataoverviewctrl.l0_object.addingChild" >
 	    <div class="row">
 	        <div class="col-xs-12">
-	            <div class="form-group" sf-schema="l0_object.next_level_edit_schema" sf-form="l0_object.next_level_edit_form" sf-model="l0_object.new_next_level_model.project_data"></div>
+	            <div class="form-group" sf-schema="dataoverviewctrl.l0_object.next_level_edit_schema" sf-form="dataoverviewctrl.l0_object.next_level_edit_form" sf-model="dataoverviewctrl.l0_object.new_next_level_model.project_data"></div>
 	        </div>
 	    </div>
 	    <div class="row mt">
 	        <div class="col-xs-12">
 	            <div class="form-group pull-right">
-	                <button type="button" class="btn btn-danger" ng-click="l0_object.cancel()"><span class="glyphicon glyphicon-remove-circle"></span> Cancel</button>
-	                <button type='submit' class="btn btn-primary" ng-click="l0_object.addChild()"><span class="glyphicon glyphicon-share"></span> Submit</button>
+	                <button type="button" class="btn btn-danger" ng-click="dataoverviewctrl.l0_object.cancel()"><span class="glyphicon glyphicon-remove-circle"></span> Cancel</button>
+	                <button type='submit' class="btn btn-primary" ng-click="dataoverviewctrl.l0_object.addChild()"><span class="glyphicon glyphicon-share"></span> Submit</button>
 	            </div>
 	        </div>
 	    </div>

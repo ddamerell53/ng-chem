@@ -26,6 +26,7 @@ angular.module('chembiohubAssayApp')
           dpc.htmlClassName = classes[dpc.level_from];
         
           dpc.next_level_cfc = dpc.dfc_full[dpc.next_level];
+
           dpc.addingChild = false;
           dpc.default_data = {'project_data': {} ,'custom_field_config' : dpc.next_level_cfc.resource_uri};
 
@@ -157,7 +158,6 @@ angular.module('chembiohubAssayApp')
 
         }, 
         controller: function($scope, $modalInstance, popup_data, $timeout) {
-          console.log("popup_data", popup_data);
           $scope.popup_data = popup_data;
           
           $scope.modalInstance = $modalInstance;
@@ -182,7 +182,6 @@ angular.module('chembiohubAssayApp')
 
         }, 
         controller: function($scope, $modalInstance, popup_data, $timeout) {
-          console.log(popup_data);
           $scope.popup_data = popup_data;
           $scope.popup_data.this_level_edit_form = [];
           $scope.popup_data.this_level_edit_schema = { "type": "object", 'properties' : {}, 'required': [] };
