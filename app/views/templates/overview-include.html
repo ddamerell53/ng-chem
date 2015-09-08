@@ -19,7 +19,7 @@
                         <div class="button-group pull-left" style="margin-left:10px;">
                         
                             <button class="btn btn-sm btn-primary" ng-click="dataoverviewctrl.openDetail(dpclassif)"><span class="glyphicon glyphicon-list"></span> <span class="hidden-xs hidden-sm" title="View Details">View Details</span></button>
-                            <a role="button" ng-click="dpclassif.parentObj.addingChild = true; dpclassif.parentObj.addDataToForm(dpclassif.main_data)" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-copy"></span> <span class="hidden-xs hidden-sm" title="Clone {{dpclassif.main_cfc.data_type.name}}">Clone {{dpclassif.main_cfc.data_type.name}}</span></a>
+                            <a role="button" ng-click="dpclassif.parentObj.addDataToForm(dpclassif.main_data)" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-copy"></span> <span class="hidden-xs hidden-sm" title="Clone {{dpclassif.main_cfc.data_type.name}}">Clone {{dpclassif.main_cfc.data_type.name}}</span></a>
 
                         </div>
                     </div>
@@ -27,17 +27,13 @@
                     <div ng-show="dpclassif.addingChild" >
                         <div class="row">
                             <div class="col-xs-12">
-                                {{dpclassif.next_level_edit_schema}}
                                 <div class="form-group" sf-schema="dpclassif.next_level_edit_schema" sf-form="dpclassif.next_level_edit_form" sf-model="dpclassif.new_next_level_model.project_data"></div>
-                                {{dpclassif.next_level_edit_form}}
-
-                                {{dpclassif.new_next_level_model.project_data}}
                             </div>
                         </div>
                         <div class="row mt">
                             <div class="col-xs-12">
                                 <div class="form-group pull-right">
-                                    <button type="button" class="btn btn-danger" ng-click="dpclassif.setForm(dpclassif.default_data)"><span class="glyphicon glyphicon-remove-circle"></span> Cancel</button>
+                                    <button type="button" class="btn btn-danger" ng-click="dpclassif.cancel()"><span class="glyphicon glyphicon-remove-circle"></span> Cancel</button>
                                     <button type='submit' class="btn btn-primary" ng-click="dpclassif.addChild()"><span class="glyphicon glyphicon-share"></span> Submit</button>
                                 </div>
                             </div>

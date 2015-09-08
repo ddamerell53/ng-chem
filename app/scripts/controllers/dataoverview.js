@@ -42,11 +42,16 @@ angular.module('chembiohubAssayApp')
                   dpc.next_level_edit_form.push(form);
                   angular.extend(dpc.next_level_edit_schema.properties, angular.copy(proj_data.edit_schema.properties));
                 });
-            dpc.addingChild = false;
+            
+          }
+
+          dpc.cancel = function(){
+            dpc.setForm(dpc.default_data);
           }
           dpc.addDataToForm = function(data){
-            dpc.setForm(data);
             dpc.addingChild = true;
+            dpc.setForm(data);
+            
           }
           dpc.setForm(dpc.default_data);
 
