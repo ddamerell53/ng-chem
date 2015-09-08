@@ -43,9 +43,7 @@ angular.module('chembiohubAssayApp')
                   dpc.next_level_edit_form.push(form);
                   angular.extend(dpc.next_level_edit_schema.properties, angular.copy(proj_data.edit_schema.properties));
                 });
-            });
-            
-            
+            }); 
           }
 
           dpc.cancel = function(){
@@ -125,18 +123,22 @@ angular.module('chembiohubAssayApp')
        
           });
     }
-
+    $scope.no_l0 = true;
     dataoverviewctrl.fetchData = function(){
       $scope.iamloading = true;
-      console.log('iamloading', $scope.iamloading);
        AddDataFactory.nestedDataClassification.get({
-        "l0_permitteded_projects__project_key": $stateParams.projectKey, 
+        "l0_permitted_projects__project_key": $stateParams.projectKey, 
         "parent_id": "None", 
         "full": "true" 
       },
         function(data){
-          dataoverviewctrl.l0_object = data.objects[0];
-          $scope.iterate_children(dataoverviewctrl.l0_object);
+          if(data.objects.length >= 1){
+            $scope.no_l0 = false;
+            dataoverviewctrl.l0_object = data.objects[0];
+            $scope.getAnnotations(dataoverviewctrl.l0_object);
+            $scope.iterate_children(dataoverviewctrl.l0_object);
+          }
+          
         }
       );
     }
