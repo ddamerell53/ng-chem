@@ -17,10 +17,16 @@
                         </div>
                         
                         <div class="button-group pull-left" style="margin-left:10px;">
-                        
-                            <button class="btn btn-sm btn-primary" ng-click="dataoverviewctrl.openDetail(dpclassif)"><span class="glyphicon glyphicon-list"></span> <span class="hidden-xs hidden-sm" title="View Details">View Details</span></button>
-                            <a role="button" ng-click="dpclassif.parentObj.addDataToForm(dpclassif.main_data)" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-copy"></span> <span class="hidden-xs hidden-sm" title="Clone {{dpclassif.main_cfc.data_type.name}}">Clone {{dpclassif.main_cfc.data_type.name}}</span></a>
-                            <a role="button" ng-click="dataoverviewctrl.openEditDetail(dpclassif)" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-copy"></span> <span class="hidden-xs hidden-sm" title="Edit {{dpclassif.main_cfc.data_type.name}}">Edit {{dpclassif.main_cfc.data_type.name}}</span></a>
+                            <div class="btn-group">
+                              <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                {{dpclassif.main_cfc.data_type.name}} Actions...<span class="caret"></span>
+                              </button>
+                              <ul class="dropdown-menu">
+                                <li><a ng-click="dataoverviewctrl.openDetail(dpclassif)"><span class="glyphicon glyphicon-list"></span> <span class="hidden-xs hidden-sm" title="View Details">View Details</span></a></li>
+                                <li><a ng-click="dpclassif.parentObj.addDataToForm(dpclassif.main_data)"><span class="glyphicon glyphicon-copy"></span> <span class="hidden-xs hidden-sm" title="Clone {{dpclassif.main_cfc.data_type.name}}">Clone</span></a></li>
+                                <li><a ng-click="dataoverviewctrl.openEditDetail(dpclassif)"><span class="glyphicon glyphicon-pencil"></span> <span class="hidden-xs hidden-sm" title="Edit {{dpclassif.main_cfc.data_type.name}}">Edit</span></a></li>
+                              </ul>
+                            </div>
 
                         </div>
                     </div>
