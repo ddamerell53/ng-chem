@@ -8,11 +8,13 @@
 
                     </div>
                     <div class="row">
-                            <div class="pull-left"><strong class="nexa">
-                                                            <span style="color:#eee; background-color:#002147; padding:5px; border-radius:5px;">{{dpclassif.main_cfc.data_type.name}}</span> {{dpclassif.main_data.project_data.Title}} 
-                                                        </strong>
-                                                        <span class="glyphicon glyphicon-calendar"></span>  
-                                                        <small><em>last modified on {{dpclassif.main_data.modified | date}}</em></small></div>
+                        <div class="pull-left">
+                                <strong class="nexa">                    
+                                    <span style="color:#eee; background-color:#002147; padding:5px; border-radius:5px;">{{dpclassif.main_cfc.data_type.name}}</span> {{dpclassif.main_data.project_data.Title}} 
+                                </strong>
+                            <span class="glyphicon glyphicon-calendar"></span>  
+                            <small><em>last modified on {{dpclassif.main_data.modified | date}}</em></small>
+                        </div>
                         
                         <div class="button-group pull-left" style="margin-left:10px;">
                         
@@ -21,13 +23,15 @@
 
                         </div>
                     </div>
-                    
-                        
-                        
+  
                     <div ng-show="dpclassif.addingChild" >
                         <div class="row">
                             <div class="col-xs-12">
+                                {{dpclassif.next_level_edit_schema}}
                                 <div class="form-group" sf-schema="dpclassif.next_level_edit_schema" sf-form="dpclassif.next_level_edit_form" sf-model="dpclassif.new_next_level_model.project_data"></div>
+                                {{dpclassif.next_level_edit_form}}
+
+                                {{dpclassif.new_next_level_model.project_data}}
                             </div>
                         </div>
                         <div class="row mt">
