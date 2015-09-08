@@ -117,6 +117,8 @@ angular.module('chembiohubAssayApp')
         "full": "true" 
       },
         function(data){
+
+          
           if(data.objects.length >= 1){
             $scope.no_l0 = false;
             dataoverviewctrl.l0_object = data.objects[0];
