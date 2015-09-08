@@ -48,6 +48,7 @@
 
                             <ul class="pager">
 
+                                <li>{{indexVM.results.hits.hits.length}} results </li>
                                 <li ng-class="{disabled:indexVM.page <= 1}"><a href="" ng-click="indexVM.page=1">First</a></li>
                                 <li ng-class="{disabled:indexVM.page <= 1}"><a href="" ng-click="indexVM.page=indexVM.page - 1">Previous</a></li>
                                 <li>{{indexVM.page}} of {{indexVM.pageCount}}</li>
