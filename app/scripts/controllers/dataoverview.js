@@ -8,8 +8,8 @@
  * Controller of the ngChemApp
  */
 angular.module('chembiohubAssayApp')
-  .controller('DataOverviewCtrl', ['$scope', 'AddDataFactory', '$modal', '$resource', '$stateParams', '$state' , 
-    function ($scope, AddDataFactory, $modal, $resource, $stateParams, $state) {
+  .controller('DataOverviewCtrl', ['$scope', 'AddDataFactory', '$modal', '$resource', '$stateParams', '$state' , '$timeout', 
+    function ($scope, AddDataFactory, $modal, $resource, $stateParams, $state, $timeout) {
 	var dataoverviewctrl = this;
   var classes = {
     'l1': "l1",
@@ -30,23 +30,27 @@ angular.module('chembiohubAssayApp')
           dpc.default_data = {'project_data': {} ,'custom_field_config' : dpc.next_level_cfc.resource_uri};
 
           dpc.setForm = function(defaults){
-            dpc.new_next_level_model = angular.copy(defaults);
-            dpc.new_next_level_model.id = null;
-            dpc.resource_uri = null;
-            dpc.next_level_edit_form = [];
-            dpc.next_level_edit_schema = { "type": "object", 'properties' : {}, 'required': [] };
-            angular.forEach(dpc.next_level_cfc.project_data_fields, function(proj_data){
+            $timeout(function(){
+              dpc.new_next_level_model = angular.copy(defaults);
+              dpc.new_next_level_model.id = null;
+              dpc.resource_uri = null;
+              dpc.next_level_edit_form = [];
+              dpc.next_level_edit_schema = { "type": "object", 'properties' : {}, 'required': [] };
+              angular.forEach(dpc.next_level_cfc.project_data_fields, function(proj_data){
                   //pull out the edit_form.form and edit_schema.schema
                   var form = angular.copy(proj_data.edit_form.form[0]);
                   form.htmlClass = "col-xs-3";
                   dpc.next_level_edit_form.push(form);
                   angular.extend(dpc.next_level_edit_schema.properties, angular.copy(proj_data.edit_schema.properties));
                 });
+            });
+            
             
           }
 
           dpc.cancel = function(){
             dpc.setForm(dpc.default_data);
+            dpc.addingChild = false;
           }
           dpc.addDataToForm = function(data){
             dpc.addingChild = true;
