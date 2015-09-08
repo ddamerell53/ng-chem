@@ -56,7 +56,11 @@ angular.module('chembiohubAssayApp')
             dpc.addingChild = true;
             dpc.setForm(data);
             
-          }
+          }/*
+          dpc.editData = function(data){
+            dpc.addingChild = false;
+            dpc.setForm(data);
+          }*/
           dpc.setForm(dpc.default_data);
 
           dpc.addChild = function(){
@@ -85,6 +89,17 @@ angular.module('chembiohubAssayApp')
                         });
                   });
           }
+/*
+          dpc.saveEdits = function(child_dpc_id){
+              var AddDF = AddDataFactory.dataClassification;
+              var adfresult = AddDF.get({'dc': child_dpc_id});
+              adfresult.$promise.then(function(clone){
+                    //clone[dpc.next_level] = dpc.new_next_level_model;
+                    clone.$update({'dc': child_dpc_id} ,function(data){
+                        $state.go($state.current, $stateParams, {reload: true});
+                    });
+              });
+          }*/
 
           
 
@@ -143,9 +158,58 @@ angular.module('chembiohubAssayApp')
           
           $scope.modalInstance = $modalInstance;
 
+      $scope.cancel = function () {
+        $modalInstance.dismiss('cancel');
+      };
+
+        }
+      });
+    };
+    dataoverviewctrl.openEditDetail = function(input_popup_data) {
+
+      $scope.popup_data = input_popup_data;
+      $scope.modalInstance = $modal.open({
+        templateUrl: 'views/modal-edit-template.html',
+        size: 'lg',
+        resolve: {
+          popup_data: function () {
+            return $scope.popup_data;
+          },
+
+        }, 
+        controller: function($scope, $modalInstance, popup_data, $timeout) {
+          console.log(popup_data);
+          $scope.popup_data = popup_data;
+          $scope.popup_data.this_level_edit_form = [];
+          $scope.popup_data.this_level_edit_schema = { "type": "object", 'properties' : {}, 'required': [] };
+          
+          angular.forEach(popup_data.main_cfc.project_data_fields, function(proj_data){
+            //pull out the edit_form.form and edit_schema.schema
+            var form = angular.copy(proj_data.edit_form.form[0]);
+            form.htmlClass = "col-xs-6";
+            $scope.popup_data.this_level_edit_form.push(form);
+            angular.extend($scope.popup_data.this_level_edit_schema.properties, angular.copy(proj_data.edit_schema.properties));
+          });
+          $scope.modalInstance = $modalInstance;
+
 		  $scope.cancel = function () {
 		    $modalInstance.dismiss('cancel');
 		  };
+      $scope.saveEdits = function() {
+        //do the update
+        var AddDF = AddDataFactory.dataClassification;
+        var adfresult = AddDF.get({'dc': $scope.popup_data.id});
+            adfresult.$promise.then(function(clone){
+                  clone[$scope.popup_data.level_from] = $scope.popup_data.main_data;
+                  clone.$update({'dc': $scope.popup_data.id} ,function(data){
+                      $state.go($state.current, $stateParams, {reload: true});
+                  });
+            });
+
+
+
+        
+      }
 
         }
       });
