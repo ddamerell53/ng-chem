@@ -29,7 +29,7 @@
                                 <tr ng-repeat="childItem in indexVM.results.hits.hits" >
                                     <td>
                                         <a  ng-click="dpclassif.addDataToForm(childItem._source[dpclassif.next_level])" > 
-                                            <span class="hidden-xs hidden-sm" title="Clone">Clone</span>
+                                            <span class="hidden-xs hidden-sm" title="Duplicate">Duplicate</span>
                                         </a>
                                     </td>
                                     <td style="line-height:0.9 !important;" ng-repeat="field in dpclassif.next_level_cfc.project_data_fields">

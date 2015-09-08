@@ -124,7 +124,7 @@ angular.module('chembiohubAssayApp')
        
           });
     }
-    $scope.no_l0 = true;
+    $scope.no_l0 = false;
     dataoverviewctrl.fetchData = function(){
       $scope.iamloading = true;
        AddDataFactory.nestedDataClassification.get({
@@ -140,6 +140,8 @@ angular.module('chembiohubAssayApp')
             dataoverviewctrl.l0_object = data.objects[0];
             $scope.getAnnotations(dataoverviewctrl.l0_object);
             $scope.iterate_children(dataoverviewctrl.l0_object);
+          }else{
+            $scope.no_l0 = true;
           }
           
         }

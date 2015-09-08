@@ -15,53 +15,41 @@
 			<h2 class="blue"><span class="glyphicon glyphicon-list"></span> View Studies</h2>
 		</div>
 	</div>
+
 	<div class="row">
 		<div class="col-xs-12">
 			
 			<div  ng-repeat="form in assayctrl.proj.enabled_forms">
 				<div  class="row" ng-if="$first">
-<<<<<<< HEAD
-
-
-					<div ng-show="no_l0"> 
+					<div class="col-xs-12 bg-danger" ng-show="no_l0"> 
 						Sorry, this project is not yet configured for assay data management, please contact an administrator.
 					</div>
 					<div ng-show="!no_l0" class="col-xs-12 bg-success" style="border: 1px solid #444; padding:10px; border-radius:5px; margin-bottom:20px;" >
-						<div class="pull-right button-group">				
-							<button class="btn btn-sm btn-primary" ng-click="dataoverviewctrl.openDetail(dataoverviewctrl.l0_object)"><span class="glyphicon glyphicon-list"></span> View Details</button>
-							<button ng-click="" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-plus-sign"></span> Add {{form['l1'].data_type.name}}</button>
-=======
-					<div class="col-xs-12 bg-success" style="border: 1px solid #444; padding:10px; border-radius:5px; margin-bottom:20px;" >
 						
 						<div class="pull-right button-group">				
 
-							<button class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-plus-sign"></span> Add {{form['l1'].data_type.name}}</button>
+							<button ng-click="dataoverviewctrl.l0_object.addDataToForm(dataoverviewctrl.l0_object.default_data)" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-plus-sign"></span> Add {{form['l1'].data_type.name}}</button>
 							
 
->>>>>>> e5a214cf6612010eda2c5d84efdaadc0af9ab50c
 						</div>
 						<!-- show only the first item as all l0 should be the same-->
 						<div class="pull-left">
 							<small>{{form['l0'].data_type.name}}</small>
 							<br>
-<<<<<<< HEAD
 							<strong class="nexa">{{dataoverviewctrl.l0_object.main_data.project_data.Title}}</strong>
-							
-						</div>	
-=======
-							<strong class="nexa">{{form['l0'].name}}</strong>
 							
 						</div>
 						<div class="button-group pull-left" style="margin-top:5px; margin-left:10px;">
 								<button class="btn btn-sm btn-primary" ng-click="dataoverviewctrl.openDetail(dataoverviewctrl.l0_object)"><span class="glyphicon glyphicon-list"></span> View Details</button>
 								<a role="button" ng-click="dataoverviewctrl.openEditDetail(dataoverviewctrl.l0_object)" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-pencil"></span> Edit {{form['l0'].data_type.name}}</a>
 							</div>	
->>>>>>> e5a214cf6612010eda2c5d84efdaadc0af9ab50c
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+
+
 
 	<div ng-show="dataoverviewctrl.l0_object.addingChild" >
 	    <div class="row">
