@@ -32,13 +32,13 @@
                                             <span class="hidden-xs hidden-sm" title="Duplicate">Duplicate</span>
                                         </a>
                                     </td>
-                                    <td style="line-height:0.9 !important;" ng-repeat="field in dpclassif.next_level_cfc.project_data_fields">
+                                    <td style="line-height:0.9 !important;" ng-repeat="field in dpclassif.next_level_cfc.project_data_fields" >
                                         <small>
                                         {{childItem._source[dpclassif.next_level].project_data[field.elasticsearch_fieldname]}}
                                         </small>
                                     </td>
                                 </tr>
-                                <tr ng-if="indexVM.results.hits.hits.length == 0" class="text-center"><td>No results</td></tr>
+                                <tr ng-if="indexVM.results.hits.hits.length == 0" class="text-center"><td colspan="{{dpclassif.next_level_cfc.project_data_fields.length}}" class="text-center">No results</td></tr>
                                     
                             </tbody>
                             
