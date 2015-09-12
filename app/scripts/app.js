@@ -590,20 +590,36 @@ angular.module('chembiohubAssayApp')
       controller:  function($scope, $stateParams,$rootScope, AddDataFactory, project_with_forms, projectKey) {
             var assayctrl = this;
             assayctrl.dfc_lookup  = {};
-           
-                assayctrl.proj = project_with_forms.objects[0];
+            assayctrl.proj = project_with_forms.objects[0];
 
-                angular.forEach(assayctrl.proj.enabled_forms, function(data_form_config){
-                  assayctrl.dfc_lookup[data_form_config.resource_uri] = data_form_config;
+            angular.forEach(assayctrl.proj.data_form_configs, function(dfc){
+              dfc.get_main_schema = function(){
+                var edit_schema = { "type": "object", 'properties' : {}, 'required': [] };
+                angular.forEach(dfc[dfc.last_level].project_data_fields, function(field){
+                  angular.extend(edit_schema.properties, angular.copy(field.edit_schema.properties));
                 });
+                return edit_schema;
+              };
+              dfc.get_main_form = function(){
+                var edit_form = [];
+                angular.forEach(dfc[dfc.last_level].project_data_fields, function(field){
+                  var form = angular.copy(field.edit_form.form[0]);
+                  form.htmlClass = "col-xs-3";
+                  edit_form.push(form);
+                });
+                return edit_form;
+              }
 
+              assayctrl.dfc_lookup[dfc.resource_uri] = dfc;
+              if(dfc.last_level == "l0"){
+                assayctrl.l0_dfc = dfc;
+                assayctrl.l0_cfc = assayctrl.l0_dfc["l0"];
+                assayctrl.l0_schema = dfc.get_main_schema();
+                assayctrl.l0_form = dfc.get_main_form();
+              }
+            });
 
-         
-           assayctrl.get_fields = function(dfc_uri, level){
-              return assayctrl.dfc_lookup[dfc_uri][level].project_data_fields;
-
-           }
-
+            
         },
       templateUrl: 'views/demo-add.html',
 

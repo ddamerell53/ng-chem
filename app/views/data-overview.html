@@ -12,17 +12,30 @@
 			<!-- <div class="form-group pull-right">
 				<button type='submit' class="btn btn-primary"><span class="glyphicon glyphicon-plus-sign"></span> Add New</button>
 			</div> -->
-			<h2 class="blue"><span class="glyphicon glyphicon-list"></span> View Studies</h2>
+			<h2 class="blue"><span class="glyphicon glyphicon-list"></span> {{assayctrl.proj.name}} Data Overview</h2>
 		</div>
 	</div>
 
 	<div class="row">
 		<div class="col-xs-12">
 			
-			<div  ng-repeat="form in assayctrl.proj.enabled_forms">
-				<div  class="row" ng-if="$first">
-					<div class="col-xs-12 bg-danger" ng-show="no_l0"> 
-						Sorry, this project is not yet configured for assay data management, please contact an administrator.
+			<div  >
+				<div  class="row" >
+					<div ng-show="no_l0" class="col-xs-12 bg-success" style="border: 1px solid #444; padding:10px; border-radius:5px; margin-bottom:20px;">
+						<h2 class="nexa blue"><small><span class="glyphicon glyphicon-plus"></span>&nbsp;To get  started, add more details about this project</small></h2>
+						<div class="row">
+					        <div class="col-xs-12">
+					            <div class="form-group" sf-schema="assayctrl.l0_schema" sf-form="assayctrl.l0_form" sf-model="dataoverviewctrl.l0_object.l0.project_data"></div>
+					        </div>
+					    </div>
+					    <div class="row mt">
+					        <div class="col-xs-12">
+					            <div class="form-group pull-right">
+					                <button type="button" class="btn btn-danger" ng-click="dataoverviewctrl.l0_object.cancel()"><span class="glyphicon glyphicon-remove-circle"></span> Cancel</button>
+					                <button type='submit' class="btn btn-primary" ng-click="dataoverviewctrl.save_dpc(dataoverviewctrl.l0_object)"><span class="glyphicon glyphicon-share"></span> Submit</button>
+					            </div>
+					        </div>
+					    </div>
 					</div>
 					<div ng-show="!no_l0" class="col-xs-12 bg-success" style="border: 1px solid #444; padding:10px; border-radius:5px; margin-bottom:20px;" >
 						
@@ -34,14 +47,14 @@
 						</div>
 						<!-- show only the first item as all l0 should be the same-->
 						<div class="pull-left">
-							<small>{{form['l0'].data_type.name}}</small>
+							<small>{{assayctrl.l0_dfc['l0'].data_type.name}}</small>
 							<br>
 							<strong class="nexa">{{dataoverviewctrl.l0_object.main_data.project_data.Title}}</strong>
 							
 						</div>
 						<div class="button-group pull-left" style="margin-top:5px; margin-left:10px;">
 								<button class="btn btn-sm btn-primary" ng-click="dataoverviewctrl.openDetail(dataoverviewctrl.l0_object)"><span class="glyphicon glyphicon-list"></span> View Details</button>
-								<a role="button" ng-click="dataoverviewctrl.openEditDetail(dataoverviewctrl.l0_object)" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-pencil"></span> Edit {{form['l0'].data_type.name}}</a>
+								<a role="button" ng-click="dataoverviewctrl.openEditDetail(dataoverviewctrl.l0_object)" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-pencil"></span> Edit {{assayctrl.l0_dfc['l0'].data_type.name}}</a>
 							</div>	
 					</div>
 				</div>
