@@ -610,6 +610,7 @@ angular.module('chembiohubAssayApp')
                 return edit_form;
               }
 
+
               assayctrl.dfc_lookup[dfc.resource_uri] = dfc;
               if(dfc.last_level == "l0"){
                 assayctrl.l0_dfc = dfc;
@@ -617,6 +618,11 @@ angular.module('chembiohubAssayApp')
                 assayctrl.l0_schema = dfc.get_main_schema();
                 assayctrl.l0_form = dfc.get_main_form();
               }
+            });
+            angular.forEach(assayctrl.proj.data_form_configs, function(dfc){
+              dfc.full_permitted_children = dfc.permitted_children.map(function(uri){
+                return assayctrl.dfc_lookup[uri];
+              })
             });
 
             

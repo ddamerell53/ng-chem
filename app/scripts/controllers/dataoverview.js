@@ -26,48 +26,72 @@ angular.module('chembiohubAssayApp')
     $scope.getAnnotations = function(dpc){
 
           dpc.dfc_full = $scope.assayctrl.dfc_lookup[dpc.data_form_config];
+          console.log(dpc.dfc_full);
           dpc.main_cfc = dpc.dfc_full[dpc.level_from];
           dpc.main_data = dpc[dpc.level_from];
           dpc.htmlClassName = classes[dpc.level_from];
+
+
         
-          dpc.setChosenDataFormConfig = function(dfc_uri){
+          dpc.setChosenDataFormConfig = function(dfc_uri, adding, templateData){
+            
+            dpc.addingChild = adding;
             dpc.next_level_dfc = $scope.assayctrl.dfc_lookup[dfc_uri];
-            dpc.next_level_cfc = dpc.next_level_dfc[dfc.last_level];
-            dpc.default_data = {'project_data': {} ,'custom_field_config' : dpc.next_level_cfc.resource_uri};
+            dpc.next_level_cfc = dpc.next_level_dfc[dpc.next_level_dfc.last_level];
+            if (!angular.isDefined(templateData)){
+              templateData =  {'project_data': {} ,'custom_field_config' : dpc.next_level_cfc.resource_uri};
+            }else{
+              templateData.id = null;
+              templateData.resource_uri = null;
+            }
+            dpc.default_data =templateData;
+            dpc.next_level_edit_form = dpc.next_level_dfc.get_main_form();
+            dpc.next_level_edit_schema = dpc.next_level_dfc.get_main_schema();
+            dpc.new_next_level_model = angular.copy(dpc.default_data );
+            dpc.next_data_type_name = dpc.next_level_dfc[dpc.next_level_dfc.last_level].data_type.name;
+            console.log(dpc.next_data_type_name);
+          }
+
+          dpc.cancel = function(){
+            if (dpc.dfc_full.permitted_children.length > 0){
+              //Default to the first in the list for thios but reset it every time that someone 
+              dpc.setChosenDataFormConfig(dpc.dfc_full.permitted_children[0]);
+            }
+            dpc.addingChild = false
 
           }
 
           if (dpc.dfc_full.permitted_children.length > 0){
             //Default to the first in the list for thios but reset it every time that someone 
-            dpc.setChosenDataFormConfig(dpc.dfc_full.permitted_children[0]);
-
+            dpc.setChosenDataFormConfig(dpc.dfc_full.permitted_children[0], false);
             dpc.addingChild = false;
-
+            if (dpc.dfc_full.permitted_children.length == 1){
+              if (dpc.children.length ==0){
+                dpc.addingChild = true;
+              }
+            }
           }
 
 
           
-          dpc.setForm = function(defaults){
-            $timeout(function(){
-              dpc.new_next_level_model = angular.copy(defaults);
-              dpc.new_next_level_model.id = null;
-              dpc.resource_uri = null;
-              dpc.next_level_edit_form = [];
-              dpc.next_level_edit_schema = { "type": "object", 'properties' : {}, 'required': [] };
-              angular.forEach(dpc.next_level_cfc.project_data_fields, function(proj_data){
-                  //pull out the edit_form.form and edit_schema.schema
-                  var form = angular.copy(proj_data.edit_form.form[0]);
-                  form.htmlClass = "col-xs-3";
-                  dpc.next_level_edit_form.push(form);
-                  angular.extend(dpc.next_level_edit_schema.properties, angular.copy(proj_data.edit_schema.properties));
-                });
-            }); 
-          }
+          // dpc.setForm = function(defaults){
+          //   $timeout(function(){
+          //     dpc.new_next_level_model = angular.copy(defaults);
+          //     dpc.new_next_level_model.id = null;
+          //     dpc.resource_uri = null;
+          //     dpc.next_level_edit_form = [];
+          //     dpc.next_level_edit_schema = { "type": "object", 'properties' : {}, 'required': [] };
+          //     angular.forEach(dpc.next_level_cfc.project_data_fields, function(proj_data){
+          //         //pull out the edit_form.form and edit_schema.schema
+          //         var form = angular.copy(proj_data.edit_form.form[0]);
+          //         form.htmlClass = "col-xs-3";
+          //         dpc.next_level_edit_form.push(form);
+          //         angular.extend(dpc.next_level_edit_schema.properties, angular.copy(proj_data.edit_schema.properties));
+          //       });
+          //   }); 
+          // }
 
-          dpc.cancel = function(){
-            dpc.setForm(dpc.default_data);
-            dpc.addingChild = false;
-          }
+          
           dpc.addDataToForm = function(data){
             dpc.addingChild = true;
             dpc.setForm(data);
@@ -87,7 +111,10 @@ angular.module('chembiohubAssayApp')
                         clone.children = [];
                         clone.id = null;
                         clone.resource_uri = null;
+                        clone.parent_id = dpc.id;
                         clone[dpc.next_level] = dpc.new_next_level_model;
+                        clone.data_form_config = dpc.next_level_dfc.resource_uri;
+                        console.log(dpc.next_level_dfc.resource_uri);
                         clone.$save(function(data){
                             $state.go($state.current, $stateParams, {reload: true});
                         });
@@ -118,7 +145,7 @@ angular.module('chembiohubAssayApp')
 
           
 
-          if(  dpc.next_level == dpc.dfc_full.last_level){
+          if(   dpc.next_level_dfc.human_added){
             dpc.childrenTemplate = "views/templates/overview-children-table.html";
           }else{
             dpc.childrenTemplate = "views/templates/overview-children.html";
@@ -133,12 +160,9 @@ angular.module('chembiohubAssayApp')
             
             $scope.getAnnotations(child);
             $scope.iterate_children(child);
-            if (index == (obj.children.length - 1)){
-                $scope.iamloading = false;
-              }
-            }
+            
        
-          });
+          }});
     }
     $scope.no_l0 = false;
     dataoverviewctrl.fetchData = function(){
@@ -152,6 +176,7 @@ angular.module('chembiohubAssayApp')
           if(data.objects.length >= 1){
             $scope.no_l0 = false;
             dataoverviewctrl.l0_object = data.objects[0];
+
             $scope.getAnnotations(dataoverviewctrl.l0_object);
             $scope.iterate_children(dataoverviewctrl.l0_object);
           }else{
@@ -225,11 +250,7 @@ angular.module('chembiohubAssayApp')
                       $state.go($state.current, $stateParams, {reload: true});
                   });
             });
-      }
-
-      
-
-
+          }
         }
       });
     };
@@ -237,7 +258,11 @@ angular.module('chembiohubAssayApp')
 
     dataoverviewctrl.save_dpc = function(new_dpc){
         var AddDF = AddDataFactory.dataClassification;
-        AddDF.save(new_dpc);
+        AddDF.save(new_dpc,
+            function(data){
+              $state.go($state.current, $stateParams, {reload: true});
+            }
+          );
       }
 
 

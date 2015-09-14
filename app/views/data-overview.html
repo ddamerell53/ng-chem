@@ -38,13 +38,18 @@
 					    </div>
 					</div>
 					<div ng-show="!no_l0" class="col-xs-12 bg-success" style="border: 1px solid #444; padding:10px; border-radius:5px; margin-bottom:20px;" >
-						
-						<div class="pull-right button-group">				
+						<div class="pull-right button-group" >
+                        
+                        <button id="{{dataoverviewctrl.l0_object.id}}" data-toggle="dropdown" dropdown-toggle class="btn btn-sm btn-primary">
+                            <span class="glyphicon glyphicon-plus-sign"></span> <span class="hidden-xs hidden-sm" title="Add {{dataoverviewctrl.l0_object.next_level_cfc.data_type.name}}">Add {{dataoverviewctrl.l0_object.next_data_type_name}} <span class="caret"></span></span>
+                        </button>
+                        
+	                    <ul style="margin-top: -22px" class="dropdown-menu" role="menu" aria-labelledby="{{dataoverviewctrl.l0_object.id}}">
+	                            <li ng-repeat="newdfc in dataoverviewctrl.l0_object.dfc_full.full_permitted_children" role="menuitem"><a ng-click="dataoverviewctrl.l0_object.setChosenDataFormConfig(newdfc.resource_uri, true); " >Using {{newdfc[newdfc.last_level].name}} template</a></li>
+	                        </ul>
 
-							<button ng-click="dataoverviewctrl.l0_object.addDataToForm(dataoverviewctrl.l0_object.default_data)" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-plus-sign"></span> Add {{form['l1'].data_type.name}}</button>
-							
+	                    </div>
 
-						</div>
 						<!-- show only the first item as all l0 should be the same-->
 						<div class="pull-left">
 							<small>{{assayctrl.l0_dfc['l0'].data_type.name}}</small>
