@@ -103,6 +103,8 @@ angular.module('chembiohubAssayApp')
           }*/
           // dpc.setForm(dpc.default_data);
           dpc.addChild = function(){
+              dataoverviewctrl.setLoadingMessageHeight();
+      dataoverviewctrl.currentlyLoading = true;
               var AddDF = AddDataFactory.dataClassification;
            
               var adfresult = AddDF.get({'dc': dpc.id});
@@ -122,6 +124,8 @@ angular.module('chembiohubAssayApp')
           };
 
           dpc.updateChild = function(child_dpc_id){
+            dataoverviewctrl.setLoadingMessageHeight();
+      dataoverviewctrl.currentlyLoading = true;
               var AddDF = AddDataFactory.dataClassification;
               var adfresult = AddDF.get({'dc': child_dpc_id});
                   adfresult.$promise.then(function(clone){
@@ -242,11 +246,14 @@ angular.module('chembiohubAssayApp')
 		  };
       $scope.saveEdits = function() {
         //do the update
+        dataoverviewctrl.setLoadingMessageHeight();
+      dataoverviewctrl.currentlyLoading = true;
         var AddDF = AddDataFactory.dataClassification;
         var adfresult = AddDF.get({'dc': $scope.popup_data.id});
             adfresult.$promise.then(function(clone){
                   clone[$scope.popup_data.level_from] = $scope.popup_data.main_data;
                   clone.$update({'dc': $scope.popup_data.id} ,function(data){
+                    $modalInstance.dismiss('saved');
                       $state.go($state.current, $stateParams, {reload: true});
                   });
             });
@@ -255,8 +262,13 @@ angular.module('chembiohubAssayApp')
       });
     };
     dataoverviewctrl.fetchData();
-
+dataoverviewctrl.setLoadingMessageHeight = function(){
+            var scrollTop = $(window).scrollTop();
+            $("#loading-message").css("top", (scrollTop +200) + "px")
+        }
     dataoverviewctrl.save_dpc = function(new_dpc){
+      dataoverviewctrl.setLoadingMessageHeight();
+      dataoverviewctrl.currentlyLoading = true;
         var AddDF = AddDataFactory.dataClassification;
         AddDF.save(new_dpc,
             function(data){
