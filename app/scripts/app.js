@@ -530,6 +530,8 @@ angular.module('chembiohubAssayApp')
 
     })
 
+
+    
     .state('cbh.projects.project', {
         url: window.projectUrlMatcher,
         templateUrl: 'views/project-full.html',
@@ -571,7 +573,102 @@ angular.module('chembiohubAssayApp')
 
 
 
+ .state('cbh.projects.project.compounds', {
+      url: "compounds/?editMode=archived=?page=&compoundBatchesPerPage=&viewType=&doScroll=&sorts=",
+      resolve: {
+        projectKey: ['$stateParams', function($stateParams) {
+          return $stateParams.projectKey;
+        }],
+        paramsAndForm: ['$stateParams', 'searchUrlParams',
+          function($stateParams, searchUrlParams) {
+            return searchUrlParams.fromForm({
+              "project__project_key__in": [$stateParams.projectKey, ]
+            });
+          }
+        ]
 
+      },
+
+      views: {
+        '': {
+          templateUrl: 'views/project-compounds.html',
+          controller: function($scope, $state, projectKey, CBHCompoundBatch) {
+            $scope.projects = $scope.cbh.projects.objects;
+            angular.forEach($scope.projects, function(proj) {
+              if (proj.project_key == projectKey) {
+                $scope.proj = proj;
+                $scope.cbh.includedProjectKeys = [$scope.proj.project_key];
+
+              }
+            });
+          }
+        },
+        "projectsummary@cbh.projects.project.compounds": {
+          templateUrl: 'views/project-summary.html',
+          controller: function($scope, $state, projectKey, CBHCompoundBatch) {
+            $scope.projects = $scope.cbh.projects.objects;
+            angular.forEach($scope.projects, function(proj) {
+              if (proj.project_key == projectKey) {
+                $scope.proj = proj;
+                $scope.cbh.includedProjectKeys = [$scope.proj.project_key];
+
+              }
+            });
+            var myform = angular.copy($scope.proj.schemaform.form);
+            //we may need to replicate this within the search form...
+            angular.forEach(myform, function(item) {
+              item['feedback'] = false;
+              item['disableSuccessState'] = true;
+
+            });
+            $scope.myschema = angular.copy($scope.proj.schemaform.schema);
+            $scope.formChunks = myform.chunk(Math.ceil($scope.proj.schemaform.form.length / 3));
+            $scope.blankForm = function() {
+              $scope.newMol = {
+                "customFields": {}
+              };
+              //need to also make the form pristine and remove (usually incorrect) validation cues...
+              //we've removed the feedback because it is broken in angular schema form and therefore inconsistent.
+              angular.forEach($scope.formChunks, function(chunk) {
+                chunk.$pristine = true;
+              });
+
+
+            };
+            $scope.blankForm();
+            $scope.saveSingleCompound = function() {
+              CBHCompoundBatch.saveSingleCompound(projectKey, '', $scope.newMol.customFields).then(
+                function(data) {
+                  CBHCompoundBatch.reindexModifiedCompound(data.data.id).then(function(reindexed) {
+                    $state.go($state.current, {
+                      "page": 1,
+                      "sorts": [],
+                      "filters": undefined
+                    }, {
+                      reload: true
+                    });
+                  });
+                }
+              );
+            }
+
+
+            $scope.cbh.searchPage = function() {
+              $state.go('cbh.search', {
+                "project__project_key__in": $scope.proj.project_key
+              }, {
+                reload: true
+              });
+            };
+          },
+        },
+        'newresults@cbh.projects.project.compounds': {
+          templateUrl: 'views/compound-list-new.html',
+          controller: 'CompoundbatchCtrl'
+        },
+      }
+
+    })
 
 
     .state('cbh.projects.project.assay', {
