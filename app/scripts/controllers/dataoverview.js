@@ -193,7 +193,7 @@ angular.module('chembiohubAssayApp')
     }
     dataoverviewctrl.openDetail = function(input_popup_data) {
 
-      $scope.popup_data = input_popup_data;
+      $scope.popup_data = angular.copy(input_popup_data);
       $scope.modalInstance = $modal.open({
         templateUrl: 'views/modal-template.html',
         size: 'lg',

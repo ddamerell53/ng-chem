@@ -8,6 +8,7 @@
 
 
 <div class="modal-footer">
+     <button class="btn btn-danger" ng-click="modalInstance.dismiss('cancel');">Close <span ng-show="singleForm">and Discard Changes</span></button>
      <button class="btn btn-primary" ng-disabled="!projectObj.editor" ng-click="updateBatch(modalInstance);">Update and Close</button>
-    <button class="btn btn-danger" ng-click="modalInstance.dismiss('cancel');">Close <span ng-show="singleForm">and Discard Changes</span></button>
+    
 </div>
