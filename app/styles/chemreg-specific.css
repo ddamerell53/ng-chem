@@ -12,6 +12,11 @@ li a svg.svg {
   font-size:0.75em;
 
 }
+
+
+.highlighted {
+background-color: #FFFF00;
+}
 .noindent {
  padding-left: 1.2em; 
  margin-bottom:0;

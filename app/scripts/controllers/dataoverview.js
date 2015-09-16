@@ -49,7 +49,10 @@ angular.module('chembiohubAssayApp')
             dpc.next_level_edit_schema = dpc.next_level_dfc.get_main_schema();
             dpc.new_next_level_model = angular.copy(dpc.default_data );
             dpc.next_data_type_name = dpc.next_level_dfc[dpc.next_level_dfc.last_level].data_type.name;
-            console.log(dpc.next_data_type_name);
+            dpc.next_level_searchnames = dpc.next_level_cfc.project_data_fields.map(function(field){
+              console.log(field.field_type);
+              return dpc.next_level_dfc.last_level + ".project_data." + field.elasticsearch_fieldname;
+            })
           }
 
           dpc.cancel = function(){
