@@ -309,6 +309,14 @@ angular.module('chembiohubAssayApp')
 
     })
 
+    .state('cbh.search_assays', {
+      url: '/search-assays?textsearch=',
+      templateUrl: 'views/searchassays.html',
+      controller: 'SearchAssaysCtrl',
+      
+
+    })
+
     .state('cbh.help', {
       //parent: 'Default',
       url: '/help',
