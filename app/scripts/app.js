@@ -40,6 +40,7 @@ angular.module('chembiohubAssayApp')
               reload: true
             });
           }
+          cbh.textsearch = '';
           $scope.projects = projectList.objects;
 
           $rootScope.projects = projectList.objects;
@@ -745,6 +746,13 @@ angular.module('chembiohubAssayApp')
         },
       templateUrl: 'views/demo-add.html',
 
+    })
+
+    .state('cbh.projects.project.upload', {
+      url: 'upload/',
+      templateUrl: 'views/assayupload.html',
+      controller: 'AssayUploadCtrl',
+      controllerAs: 'uploadctrl',
     })
 
     /* ASSAYREG IMPLEMENTATION */
