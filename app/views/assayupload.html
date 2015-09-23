@@ -21,8 +21,6 @@
 		    
 		    <div style="margin-bottom:0px; min-height:40px" ng-show="$flow.files.length == 0">
 		        No files uploaded
-		    
-
 		    </div>
 		    <div ng-if="(datasets[current_dataset_id].config.type==='file')" class="alert alert-danger" ng-repeat="error in datasets[current_dataset_id].config.errors">
 		        {{error}}
