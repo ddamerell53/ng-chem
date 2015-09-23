@@ -68,6 +68,17 @@ angular.module('chembiohubAssayApp')
 
     }
 
+    $scope.resetForm = function() {
+      angular.forEach($scope.selections, function(val, key){
+        $scope.selections[key] = [];
+      });
+      $scope.dates.start = '';
+      $scope.dates.end = '';
+      $scope.dates.startES = '';
+      $scope.dates.endES = '';
+      $scope.cbh.textsearch = '';
+    }
+
 
 
 
