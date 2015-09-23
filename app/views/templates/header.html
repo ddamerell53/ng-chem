@@ -26,8 +26,8 @@
 				<ul class="list-inline pull-right text-center">
 					<!-- <li class="text-center" style="color:white; margin-right:10px;"><span class="glyphicon glyphicon-plus-sign" style="font-size:30px;"></span><br><strong class="nexa"><small>add data</small></strong></li>
 					<li class="text-center" style="color:white; margin-right:10px;"><span class="glyphicon glyphicon-edit" style="font-size:30px;"></span><br><strong class="nexa"><small>edit data</small></strong></li> -->
-					<li style="vertical-align:top; margin-top:10px;"><input type="text" class="form-control" placeholder="Search Assays" ng-model="textsearch" style="width:300px;"></li>
-					<li style="vertical-align:top; margin-top:10px;"><a role="button" class="btn btn-sm btn-default" ui-sref="cbh.search_assays({'textsearch': textsearch})">Go</a></li>
+					<li style="vertical-align:top; margin-top:10px;"><input type="text" class="form-control" placeholder="Search Assays" ng-model="cbh.textsearch" style="width:300px;"></li>
+					<li style="vertical-align:top; margin-top:10px;"><a role="button" class="btn btn-sm btn-default" ui-sref="cbh.search_assays({'textsearch': cbh.textsearch})">Go</a></li>
 					<li class="text-center" style="color:white; margin-right:10px;"><a ui-sref="cbh.projects.list" style="color:white;"><span class="glyphicon glyphicon-folder-open" style="font-size:30px;"></span><br><strong class="nexa"><small>projects</small></strong></a></li>
 					<li class="text-center" style="color:white; margin-right:10px;"><a ui-sref="cbh.search" style="color:white;"><span class="glyphicon glyphicon-search" style="font-size:30px;"></span><br><strong class="nexa"><small>search compounds</small></strong></a></li>
 					<li class="text-center" style="color:white; margin-right:10px;"><a ui-sref="cbh.help" style="color:white;"><span class="glyphicon glyphicon-question-sign" style="font-size:30px;"></span><br><strong class="nexa"><small>help</small></strong></a></li>

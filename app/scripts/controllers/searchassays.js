@@ -8,7 +8,7 @@
  * Controller of the chembiohubAssayApp
  */
 angular.module('chembiohubAssayApp')
-  .controller('SearchAssaysCtrl', function ($scope, $filter) {
+  .controller('SearchAssaysCtrl', ['$scope', '$filter', function ($scope, $filter) {
     
   	//need to be able to pull in, via this controller or a service:
 
@@ -79,4 +79,4 @@ angular.module('chembiohubAssayApp')
 
 
 
-  });
+  }]);
