@@ -311,9 +311,20 @@ angular.module('chembiohubAssayApp')
 
     .state('cbh.search_assays', {
       url: '/search-assays?textsearch=',
+      resolve: {
+        /*project_with_forms : ['AddDataFactory',function(AddDataFactory){
+          return AddDataFactory.pwf.get(function(data){
+            console.log(data)
+            return data;
+          }).$promise;
+        }
+
+        ]*/
+      },
       templateUrl: 'views/searchassays.html',
       controller: 'SearchAssaysCtrl',
-      
+      controllerAs: 'searchassay',
+
 
     })
 
