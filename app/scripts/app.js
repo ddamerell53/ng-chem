@@ -748,7 +748,7 @@ angular.module('chembiohubAssayApp')
 
     })
 
-    .state('cbh.projects.project.upload', {
+    .state('cbh.projects.project.assay.upload', {
       url: 'upload/',
       templateUrl: 'views/assayupload.html',
       controller: 'AssayUploadCtrl',

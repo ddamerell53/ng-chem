@@ -9,6 +9,10 @@
  */
 angular.module('chembiohubAssayApp')
   .controller('AssayUploadCtrl', ['$scope', 'prefix', 'urlConfig', function ($scope, prefix, urlConfig) {
+		$scope.inputData = {inputstring : ""};
+        $scope.filedata = {};
+        $scope.filesUploading = false;
+        $scope.dataReady = false;
 		$scope.csrftoken = $cookies[prefix.split("/")[0] + "csrftoken"];
 		$scope.flowinit = {
 		    target: urlConfig.instance_path.url_frag + 'flow/upload/',
@@ -16,4 +20,5 @@ angular.module('chembiohubAssayApp')
 		        'X-CSRFToken': $scope.csrftoken
 		    }
 		};
+
   }]);

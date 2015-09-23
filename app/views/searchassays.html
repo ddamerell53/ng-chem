@@ -145,7 +145,7 @@
                     	<td>{{childItem._source.l0.project_data.Title}}</td>
                     	<td>{{childItem._source.l1.project_data.Title}}</td>
                     	<td>{{childItem._source.l2.project_data.Title}}</td>
-                    	<td>{{childItem._source.l3.created}}</td>
+                    	<td>{{childItem._source.l3.created | date : 'dd MMM yyyy'}}</td>
                         <td ng-repeat="(key, value) in childItem._source.l3.project_data" >
                             <!-- Put table cell contents in ng include -->
 
@@ -184,7 +184,5 @@
   // Escape any “rule” characters with an exclamation mark (!).
   format: 'dd mmm, yyyy',
   formatSubmit: 'yyyy-MM-dd',
-  hiddenPrefix: 'prefix__',
-  hiddenSuffix: '__suffix',
 });
 </script>
