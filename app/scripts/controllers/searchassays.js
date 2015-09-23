@@ -37,21 +37,13 @@ angular.module('chembiohubAssayApp')
 
   	$scope.selectedUris = function(level){
       //return the URIs of the selected items in the multiselect for the appropriate level
-      /*var selections = $scope.selections[level];
-      console.log('selections', selections)
-      var levs = _.pluck(selections, level);
-      //console.log('levs', levs);
-      return _.pluck(levs, 'resource_uri');*/
       var uris = []
 
       angular.forEach($scope.selections[level], function(lev) {
         var res_uri = lev._source[level].resource_uri;
         uris.push(res_uri);
       })
-      //console.log('uris', uris);
       return uris;
-
-
 
     };
 
@@ -64,9 +56,7 @@ angular.module('chembiohubAssayApp')
       console.log('date handler',startOrEnd);
       //convert the date to the required format for the elasticsearch filter
       var oldDate = $scope.dates[startOrEnd];
-      //console.log(oldDate);
       var dateObj = new Date(oldDate);
-      //console.log(dateObj);
       $scope.dates[startOrEnd + 'ES'] = $filter('date')(dateObj, 'yyyy-MM-dd');
 
 
