@@ -56,9 +56,15 @@ angular.module('chembiohubAssayApp')
       console.log('date handler',startOrEnd);
       //convert the date to the required format for the elasticsearch filter
       var oldDate = $scope.dates[startOrEnd];
-      var dateObj = new Date(oldDate);
-      $scope.dates[startOrEnd + 'ES'] = $filter('date')(dateObj, 'yyyy-MM-dd');
+      if (oldDate != '') {
+        var dateObj = new Date(oldDate);
 
+        $scope.dates[startOrEnd + 'ES'] = $filter('date')(dateObj, 'yyyy-MM-dd');
+      }
+      else {
+        $scope.dates[startOrEnd + 'ES'] = '';
+      }
+      
 
     }
 
