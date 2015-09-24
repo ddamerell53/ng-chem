@@ -704,7 +704,7 @@ angular.module('chembiohubAssayApp')
 
         ]
       },
-      controller:  function($scope, $stateParams,$rootScope, AddDataFactory, project_with_forms, projectKey) {
+      controller:  function($scope, $stateParams, $rootScope, AddDataFactory, project_with_forms, projectKey) {
             var assayctrl = this;
             assayctrl.dfc_lookup  = {};
             assayctrl.proj = project_with_forms.objects[0];
@@ -782,6 +782,12 @@ angular.module('chembiohubAssayApp')
       templateUrl: 'views/data-overview.html',
       controller: 'DataOverviewCtrl',
       controllerAs: 'dataoverviewctrl',
+      /*views: {
+        'multiple': {
+          templateUrl: 'views/assayupload.html',
+          controller: 'AssayUploadCtrl',
+        },
+      },*/
     })
 
 

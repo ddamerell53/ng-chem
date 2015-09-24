@@ -113,7 +113,7 @@
 				<span eui-enabled="selections.l2.length > 0" eui-filter="ejs.TermsFilter('l2.resource_uri.raw', selectedUris('l2'))"></span>
 				<span eui-enabled="dates.startES != ''" eui-filter="ejs.RangeFilter('l3.created').gte(dates.startES)"></span>
 				<span eui-enabled="dates.endES != ''" eui-filter="ejs.RangeFilter('l3.created').lte(dates.endES)"></span>
-				<span eui-enabled="cbh.textsearch != ''" eui-query="ejs.MultiMatchQuery('l3.*', cbh.textsearch)"></span>
+				<span eui-enabled="cbh.textsearch != ''" eui-query="ejs.MultiMatchQuery(['l0.project_data','l1.project_data','l2.project_data','l3.project_data'], cbh.textsearch)"></span>
 
 
 			<table class="table table-striped">

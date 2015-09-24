@@ -36,7 +36,7 @@ angular.module('chembiohubAssayApp')
 			//FlowFileFactory.cbhFlowfile.
 			var FlowDF = FlowFileFactory.cbhFlowfile;
 
-	  		var fdfresult = FlowDF.get({'identifier': fileId});
+	  		var fdfresult = FlowDF.get({'fileId': fileId});
 	  		fdfresult.$promise.then(function(result){
 	  			console.log(result.objects);
 	  			//put the sheet names into $scope.uploadData.sheetNames

@@ -8,8 +8,8 @@
  * Controller of the ngChemApp
  */
 angular.module('chembiohubAssayApp')
-  .controller('DataOverviewCtrl', ['$scope', 'AddDataFactory', '$modal', '$resource', '$stateParams', '$state' , '$timeout', 
-    function ($scope, AddDataFactory, $modal, $resource, $stateParams, $state, $timeout) {
+  .controller('DataOverviewCtrl', ['$scope', 'AddDataFactory', '$modal', '$resource', '$stateParams', '$state' , '$timeout', 'prefix', 'urlConfig', '$cookies', 'FlowFileFactory', 
+    function ($scope, AddDataFactory, $modal, $resource, $stateParams, $state, $timeout, prefix, urlConfig, $cookies, FlowFileFactory) {
 	var dataoverviewctrl = this;
 
 
@@ -36,6 +36,29 @@ angular.module('chembiohubAssayApp')
           dpc.setChosenDataFormConfig = function(dfc_uri, adding, templateData){
             
             dpc.addingChild = adding;
+            dpc.next_level_dfc = $scope.assayctrl.dfc_lookup[dfc_uri];
+            dpc.next_level_cfc = dpc.next_level_dfc[dpc.next_level_dfc.last_level];
+            if (!angular.isDefined(templateData)){
+              templateData =  {'project_data': {} ,'custom_field_config' : dpc.next_level_cfc.resource_uri};
+            }else{
+              templateData.id = null;
+              templateData.resource_uri = null;
+            }
+            dpc.default_data =templateData;
+            dpc.next_level_edit_form = dpc.next_level_dfc.get_main_form();
+            dpc.next_level_edit_schema = dpc.next_level_dfc.get_main_schema();
+            dpc.new_next_level_model = angular.copy(dpc.default_data );
+            dpc.next_data_type_name = dpc.next_level_dfc[dpc.next_level_dfc.last_level].data_type.name;
+            dpc.next_level_searchnames = dpc.next_level_cfc.project_data_fields.map(function(field){
+              console.log(field.field_type);
+              return dpc.next_level_dfc.last_level + ".project_data." + field.elasticsearch_fieldname;
+            })
+          }
+
+          //setting up a method for setting up dfc for file upload
+          //don't know what I do and don't need from this
+          dpc.setChosenDataFormConfigMultiple = function(dfc_uri, adding, templateData) {
+            dpc.addingMultiple = adding;
             dpc.next_level_dfc = $scope.assayctrl.dfc_lookup[dfc_uri];
             dpc.next_level_cfc = dpc.next_level_dfc[dpc.next_level_dfc.last_level];
             if (!angular.isDefined(templateData)){
@@ -279,6 +302,50 @@ dataoverviewctrl.setLoadingMessageHeight = function(){
             }
           );
       }
+
+      /* STUFF FOR FILE UPLOAD UI */
+
+      $scope.inputData = {inputstring : ""};
+        $scope.filedata = {};
+        $scope.filesUploading = false;
+        $scope.dataReady = false;
+    $scope.csrftoken = $cookies[prefix.split("/")[0] + "csrftoken"];
+    $scope.flowinit = {
+      //need to change target to the new WS path provided by Andy
+        target: urlConfig.instance_path.url_frag + 'flow/upload/',
+        headers: {
+            'X-CSRFToken': $scope.csrftoken
+        }
+    };
+
+    //object containing user config, selected options and flowfile metadata returned from ws callls
+
+    $scope.uploadData = {
+      'sheetNames': [],
+      'sheetName': '',
+
+    }
+
+    $scope.getSheetsForFile = function(fileId) {
+      //perform get request to get list of sheets
+      //probably best to create a resource here - we will need it for other types of upload (img etc)
+      //FlowFileFactory.cbhFlowfile.
+      var FlowDF = FlowFileFactory.cbhFlowfile;
+
+        var fdfresult = FlowDF.get({'fileId': fileId});
+        fdfresult.$promise.then(function(result){
+          console.log(result.objects);
+          //put the sheet names into $scope.uploadData.sheetNames
+
+        });
+
+        //also need to get the possible levels and datapoint classifications to select from
+
+    }
+
+    $scope.getPreviewData = function() {
+
+    }
 
 
 
