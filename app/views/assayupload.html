@@ -1,9 +1,9 @@
-<div flow-init="flowinit"
-    flow-name="filedata.flow"
-    flow-files-submitted="currentlyLoading = true; $flow.upload()"
-    flow-file-success="getSheetsForFile($file.uniqueIdentifier)" 
-    flow-upload-started="filesUploading=true" 
-    flow-complete="filesUploading=false"> 
+<div flow-init="dpclassif.flowinit"
+    flow-name="dpclassif.filedata.flow"
+    flow-files-submitted="dpclassif.currentlyLoading = true; $flow.upload()"
+    flow-file-success="dpclassif.getSheetsForFile($file.uniqueIdentifier)" 
+    flow-upload-started="dpclassif.filesUploading=true" 
+    flow-complete="dpclassif.filesUploading=false"> 
 
 <div class="row">
 <div class="col-sm-6 col-xs-offset-2">
@@ -41,15 +41,21 @@
 
 <!-- Select sheet -->
 
-<div class="row" ng-show="uploadData.uploaded">
-	<div class="col-xs-12">
-		<div class="form-group">
+<div class="row" ng-show="dpclassif.uploadData.uploaded">
+	<!-- <div class="col-xs-12">
 				<label class="control-label">Select sheet containing your upload data:</label>
-				<select class="form-control" ng-options="sheet.name for sheet in uploadData.sheetNames" ng-model="uploadData.sheetName" ng-change="specifySheet()">
+				<select class="form-control" ng-options="sheet.name for sheet in dpclassif.uploadData.sheetNames" ng-model="dpclassif.uploadData.sheetName" ng-change="dpclassif.specifySheet()">
 				</select>
 
 			</div>
-	</div>	
+	</div>	 -->
+    <tabset>
+        
+        <tab ng-repeat="sheet in dpclassif.uploadData.sheets" select="sheet.specifySheet()">
+            <tab-heading>{{sheet.name}}</tab-heading>
+            {{sheet.metadata.resource_uri}}
+        </tab>
+    </tabset>
 </div>
 
 

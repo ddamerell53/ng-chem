@@ -20,7 +20,7 @@ angular.module('chembiohubAssayApp')
     var cbhFlowfile = $resource(urlConfig.instance_path.url_frag + 'datastore/cbh_flowfiles/:fileId', {fileId: '@fileId'});
 
     var cbhAttachments = $resource(urlConfig.instance_path.url_frag + 'datastore/cbh_attachments', {
-      flowfile: '@flowfile',
+      flowfile: urlConfig.instance_path.url_frag + 'datastore/cbh_flowfiles/' + '@flowfile',
       data_point_classification:  "@data_point_classification",
       chosen_data_form_config: "@chosen_data_form_config",
       sheet_name: "@sheetname",

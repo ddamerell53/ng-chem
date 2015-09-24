@@ -73,6 +73,121 @@ angular.module('chembiohubAssayApp')
             dpc.next_level_edit_schema = dpc.next_level_dfc.get_main_schema();
             dpc.new_next_level_model = angular.copy(dpc.default_data );
             dpc.next_data_type_name = dpc.next_level_dfc[dpc.next_level_dfc.last_level].data_type.name;
+      /*
+      ************************ 
+      STUFF FOR FILE UPLOAD UI
+      ************************ 
+      */
+
+      dpc.inputData = {inputstring : ""};
+        dpc.filedata = {};
+        dpc.filesUploading = false;
+        dpc.dataReady = false;
+    dpc.csrftoken = $cookies[prefix.split("/")[0] + "csrftoken"];
+    dpc.flowinit = {
+      //need to change target to the new WS path provided by Andy
+        target: urlConfig.instance_path.url_frag + 'flow/upload/',
+        headers: {
+            'X-CSRFToken': dpc.csrftoken
+        }
+    };
+
+    //object containing user config, selected options and flowfile metadata returned from ws callls
+
+    dpc.uploadData = {
+      'sheetNames': [''],
+      'sheetName': '',
+      'uploaded': false,
+      'fileId': '',
+      'resource_uri': '',
+      'sheets'  : []
+
+    }
+
+    dpc.getSheetsForFile = function(fileId) {
+      //perform get request to get list of sheets
+      //probably best to create a resource here - we will need it for other types of upload (img etc)
+      //FlowFileFactory.cbhFlowfile.
+      var FlowDF = FlowFileFactory.cbhFlowfile;
+        dpc.uploadData.fileId = fileId;
+        var fdfresult = FlowDF.get({'fileId': fileId});
+        fdfresult.$promise.then(function(result){
+          //put the sheet names into dpc.uploadData.sheetNames
+          //dpc.uploadData.sheet_names = result.sheet_names;
+          angular.forEach(result.sheet_names, function(sheet_name) {
+            /*newobj = {}
+            newobj.name = sheet_name*/
+
+            var sheet = {'name': sheet_name,
+                          active:false};
+            sheet.specifySheet = function() {
+                 if(!angular.isDefined(sheet.metadata)){
+                      
+                      //we now have sheetName.name, pass to the specified webservice
+                      var FlowDF = FlowFileFactory.cbhAttachments;
+                      /*
+                      flowfile: '@flowfile',
+                      data_point_classification:  "@data_point_classification",
+                      chosen_data_form_config: "@chosen_data_form_config",
+                      sheet_name: "@sheetname",
+                       */
+                       //Resource URIs are not obvious here - the flowfile one cannot be sent from backend as it proports to contain session id which must be kept private
+                       //The data point classification one is from the "nested resource" so is wrong
+
+                      var fdfresult = FlowDF.save({ 
+                        'flowfile': '/'+ prefix + '/datastore/cbh_flowfiles/' + dpc.uploadData.fileId,
+                        'data_point_classification' :'/'+  prefix + '/datastore/cbh_datapoint_classifications/' + dpc.id,//dpc
+                        'chosen_data_form_config': dpc.next_level_dfc.resource_uri,
+                        'sheet_name': sheet.name,
+
+                      }, function(result){
+                        sheet.active=true;
+                        sheet.metadata = result;
+                      });
+                 }
+
+
+              }
+
+            dpc.uploadData.sheets.push(sheet);
+          })
+          dpc.uploadData.uploaded = true;
+
+        });
+
+        //also need to get the possible levels and datapoint classifications to select from
+
+    }
+
+    dpc.specifySheet = function() {
+      //we now have sheetName.name, pass to the specified webservice
+      var FlowDF = FlowFileFactory.cbhAttachments;
+      /*
+      flowfile: '@flowfile',
+      data_point_classification:  "@data_point_classification",
+      chosen_data_form_config: "@chosen_data_form_config",
+      sheet_name: "@sheetname",
+       */
+       //Resource URIs are not obvious here - the flowfile one cannot be sent from backend as it proports to contain session id which must be kept private
+       //The data point classification one is from the "nested resource" so is wrong
+
+      var fdfresult = FlowDF.save({ 
+        'flowfile': '/'+ prefix + '/datastore/cbh_flowfiles/' + dpc.uploadData.fileId,
+        'data_point_classification' :'/'+  prefix + '/datastore/cbh_datapoint_classifications/' + dpc.id,//dpc
+        'chosen_data_form_config': dpc.next_level_dfc.resource_uri,
+        'sheet_name': dpc.uploadData.sheetName.name,
+
+      }, function(result){
+        dpc.uploadData.attachmentData = result;
+      });
+    }
+
+    dpc.getPreviewData = function() {
+
+    }
+
+
+
             dpc.next_level_searchnames = dpc.next_level_cfc.project_data_fields.map(function(field){
               
               return dpc.next_level_dfc.last_level + ".project_data." + field.elasticsearch_fieldname;
@@ -290,7 +405,10 @@ angular.module('chembiohubAssayApp')
         }
       });
     };
+
+
     dataoverviewctrl.fetchData();
+
 dataoverviewctrl.setLoadingMessageHeight = function(){
             var scrollTop = $(window).scrollTop();
             $("#loading-message").css("top", (scrollTop +200) + "px")
@@ -306,83 +424,7 @@ dataoverviewctrl.setLoadingMessageHeight = function(){
           );
       }
 
-      /*
-      ************************ 
-      STUFF FOR FILE UPLOAD UI
-      ************************ 
-      */
 
-      $scope.inputData = {inputstring : ""};
-        $scope.filedata = {};
-        $scope.filesUploading = false;
-        $scope.dataReady = false;
-    $scope.csrftoken = $cookies[prefix.split("/")[0] + "csrftoken"];
-    $scope.flowinit = {
-      //need to change target to the new WS path provided by Andy
-        target: urlConfig.instance_path.url_frag + 'flow/upload/',
-        headers: {
-            'X-CSRFToken': $scope.csrftoken
-        }
-    };
-
-    //object containing user config, selected options and flowfile metadata returned from ws callls
-
-    $scope.uploadData = {
-      'sheetNames': [],
-      'sheetName': '',
-      'uploaded': false,
-      'fileId': '',
-
-
-    }
-
-    $scope.getSheetsForFile = function(fileId) {
-      //perform get request to get list of sheets
-      //probably best to create a resource here - we will need it for other types of upload (img etc)
-      //FlowFileFactory.cbhFlowfile.
-      var FlowDF = FlowFileFactory.cbhFlowfile;
-        $scope.uploadData.fileId = fileId;
-        var fdfresult = FlowDF.get({'fileId': fileId});
-        fdfresult.$promise.then(function(result){
-          
-          //put the sheet names into $scope.uploadData.sheetNames
-          //$scope.uploadData.sheet_names = result.sheet_names;
-          angular.forEach(result.sheet_names, function(sheet_name) {
-            /*newobj = {}
-            newobj.name = sheet_name*/
-            $scope.uploadData.sheetNames.push({'name': sheet_name});
-          })
-          $scope.uploadData.uploaded = true;
-
-        });
-
-        //also need to get the possible levels and datapoint classifications to select from
-
-    }
-
-    $scope.specifySheet = function() {
-      //we now have sheetName.name, pass to the specified webservice
-      var FlowDF = FlowFileFactory.cbhAttachments;
-      /*
-      flowfile: '@flowfile',
-      data_point_classification:  "@data_point_classification",
-      chosen_data_form_config: "@chosen_data_form_config",
-      sheet_name: "@sheetname",
-       */
-      var fdfresult = FlowDF.save({ 
-        'flowfile': $scope.uploadData.fileId,
-        'data_point_classification' : $scope.dpcForUpload.next_level_dpc.resource_uri,//dpc
-        'chosen_data_form_config': $scope.dpcForUpload.next_level_cfc.resource_uri,
-        'sheet_name': $scope.uploadData.sheetName.name,
-
-      }, function(result){
-        console.log(result);
-      });
-    }
-
-    $scope.getPreviewData = function() {
-
-    }
 
 
 
