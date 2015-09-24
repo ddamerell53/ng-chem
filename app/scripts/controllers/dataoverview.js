@@ -303,7 +303,11 @@ dataoverviewctrl.setLoadingMessageHeight = function(){
           );
       }
 
-      /* STUFF FOR FILE UPLOAD UI */
+      /*
+      ************************ 
+      STUFF FOR FILE UPLOAD UI
+      ************************ 
+      */
 
       $scope.inputData = {inputstring : ""};
         $scope.filedata = {};
@@ -323,6 +327,7 @@ dataoverviewctrl.setLoadingMessageHeight = function(){
     $scope.uploadData = {
       'sheetNames': [],
       'sheetName': '',
+      'uploaded': false,
 
     }
 
@@ -334,8 +339,15 @@ dataoverviewctrl.setLoadingMessageHeight = function(){
 
         var fdfresult = FlowDF.get({'fileId': fileId});
         fdfresult.$promise.then(function(result){
-          console.log(result.objects);
+          
           //put the sheet names into $scope.uploadData.sheetNames
+          //$scope.uploadData.sheet_names = result.sheet_names;
+          angular.forEach(result.sheet_names, function(sheet_name) {
+            /*newobj = {}
+            newobj.name = sheet_name*/
+            $scope.uploadData.sheetNames.push({'name': sheet_name});
+          })
+          $scope.uploadData.uploaded = true;
 
         });
 
