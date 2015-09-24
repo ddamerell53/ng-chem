@@ -1,7 +1,7 @@
 <div flow-init="flowinit"
     flow-name="filedata.flow"
     flow-files-submitted="currentlyLoading = true; $flow.upload()"
-    flow-file-success="assignFile($file.uniqueIdentifier, $file.getExtension())" 
+    flow-file-success="getSheetsForFile($file.uniqueIdentifier)" 
     flow-upload-started="filesUploading=true" 
     flow-complete="filesUploading=false"> 
 
@@ -38,4 +38,20 @@
 </div>
 </div>
 
-<!-- Upload results -->
+<!-- Select sheet -->
+
+<div class="row" ng-show="dataReady">
+	<div class="col-xs-12">
+		<div class="form-group">
+				<label class="control-label">Select sheet containing your upload data:</label>
+				<select class="form-control" ng-options="sheet.name for sheet in uploadData.sheetNames" ng-model="uploadData.sheetName">
+				</select>
+
+			</div>
+	</div>	
+</div>
+
+
+<!-- Preview data -->
+
+<div class="row"></div>

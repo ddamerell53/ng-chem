@@ -8,7 +8,7 @@
  * Controller of the chembiohubAssayApp
  */
 angular.module('chembiohubAssayApp')
-  .controller('AssayUploadCtrl', ['$scope', 'prefix', 'urlConfig', '$cookies', function ($scope, prefix, urlConfig, $cookies) {
+  .controller('AssayUploadCtrl', ['$scope', 'prefix', 'urlConfig', '$cookies', 'FlowFileFactory', function ($scope, prefix, urlConfig, $cookies, FlowFileFactory) {
 		$scope.inputData = {inputstring : ""};
         $scope.filedata = {};
         $scope.filesUploading = false;
@@ -21,5 +21,37 @@ angular.module('chembiohubAssayApp')
 		        'X-CSRFToken': $scope.csrftoken
 		    }
 		};
+
+		//object containing user config, selected options and flowfile metadata returned from ws callls
+
+		$scope.uploadData = {
+			'sheetNames': [],
+			'sheetName': '',
+
+		}
+
+		$scope.getSheetsForFile = function(fileId) {
+			//perform get request to get list of sheets
+			//probably best to create a resource here - we will need it for other types of upload (img etc)
+			//FlowFileFactory.cbhFlowfile.
+			var FlowDF = FlowFileFactory.cbhFlowfile;
+	  		var level_uri = "";
+
+	  		var adfresult = FlowDF.get({'fileId': fileId});
+	  		adfresult.$promise.then(function(result){
+	  			console.log(result);
+	  			//put the sheet names into $scope.uploadData.sheetNames
+
+	  		});
+
+	  		//also need to get the possible levels and datapoint classifications to select from
+
+		}
+
+		$scope.getPreviewData = function() {
+
+		}
+
+
 
   }]);
