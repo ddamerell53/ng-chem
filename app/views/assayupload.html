@@ -32,7 +32,7 @@
  
     <div class="row"><div class="col-xs-12 pull-right">
             <span flow-btn name="file_input" role="btn" class="btn btn-primary btn-sm pull-right nexa" ng-show="$flow.files.length < 1">Upload</span>
-            <a ng-show="$flow.files.length > 0" ng-click="file.cancel(); cancelFile(); $flow.files=[];"   class="btn btn-sm btn-danger pull-right" role="btn">Remove</a>
+            <a ng-show="$flow.files.length > 0" ng-click="file.cancel(); cancelFile(); $flow.files=[]; dpclassif.cancelFile();"   class="btn btn-sm btn-danger pull-right" role="btn">Remove</a>
         </div></div>
 
     </div>
@@ -49,11 +49,18 @@
 
 			</div>
 	</div>	 -->
+    <label for="tabs" class="blue"><strong class="nexa">Select the tab corresponding to the required sheet from your spreadsheet.</strong></label>
     <tabset>
         
         <tab ng-repeat="sheet in dpclassif.uploadData.sheets" select="sheet.specifySheet()">
             <tab-heading>{{sheet.name}}</tab-heading>
             {{sheet.metadata.resource_uri}}
+
+             <div class="row" ng-if="sheet.metadata.resource_uri" eui-index="'cbh_attachments/' + sheet.metadata.id"   eui-sort="ejs.Sort('id').order('asc')" eui-enabled="true" style="margin:5px 5px 0;">
+                <div ng-repeat="childItem in indexVM.results.hits.hits">
+                    {{childItem}}
+                </div>
+            </div>
         </tab>
     </tabset>
 </div>

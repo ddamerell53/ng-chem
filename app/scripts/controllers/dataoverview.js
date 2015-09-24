@@ -59,6 +59,9 @@ angular.module('chembiohubAssayApp')
           //setting up a method for setting up dfc for file upload
           //don't know what I do and don't need from this
           dpc.setChosenDataFormConfigMultiple = function(dfc_uri, adding, templateData) {
+
+
+
             dpc.addingMultiple = adding;
             dpc.next_level_dfc = $scope.assayctrl.dfc_lookup[dfc_uri];
             dpc.next_level_cfc = dpc.next_level_dfc[dpc.next_level_dfc.last_level];
@@ -93,15 +96,20 @@ angular.module('chembiohubAssayApp')
     };
 
     //object containing user config, selected options and flowfile metadata returned from ws callls
-
-    dpc.uploadData = {
-      'sheetNames': [''],
-      'sheetName': '',
+    dpc.initUpload = function(){
+       dpc.uploadData = {
+      
       'uploaded': false,
       'fileId': '',
       'resource_uri': '',
       'sheets'  : []
 
+    }
+    }
+    dpc.initUpload();
+   
+    dpc.cancelFile = function(){
+      dpc.setChosenDataFormConfigMultiple(dfc_uri, adding, templateData);
     }
 
     dpc.getSheetsForFile = function(fileId) {
@@ -112,7 +120,6 @@ angular.module('chembiohubAssayApp')
         dpc.uploadData.fileId = fileId;
         var fdfresult = FlowDF.get({'fileId': fileId});
         fdfresult.$promise.then(function(result){
-          //put the sheet names into dpc.uploadData.sheetNames
           //dpc.uploadData.sheet_names = result.sheet_names;
           angular.forEach(result.sheet_names, function(sheet_name) {
             /*newobj = {}
@@ -159,32 +166,7 @@ angular.module('chembiohubAssayApp')
 
     }
 
-    dpc.specifySheet = function() {
-      //we now have sheetName.name, pass to the specified webservice
-      var FlowDF = FlowFileFactory.cbhAttachments;
-      /*
-      flowfile: '@flowfile',
-      data_point_classification:  "@data_point_classification",
-      chosen_data_form_config: "@chosen_data_form_config",
-      sheet_name: "@sheetname",
-       */
-       //Resource URIs are not obvious here - the flowfile one cannot be sent from backend as it proports to contain session id which must be kept private
-       //The data point classification one is from the "nested resource" so is wrong
-
-      var fdfresult = FlowDF.save({ 
-        'flowfile': '/'+ prefix + '/datastore/cbh_flowfiles/' + dpc.uploadData.fileId,
-        'data_point_classification' :'/'+  prefix + '/datastore/cbh_datapoint_classifications/' + dpc.id,//dpc
-        'chosen_data_form_config': dpc.next_level_dfc.resource_uri,
-        'sheet_name': dpc.uploadData.sheetName.name,
-
-      }, function(result){
-        dpc.uploadData.attachmentData = result;
-      });
-    }
-
-    dpc.getPreviewData = function() {
-
-    }
+  
 
 
 
