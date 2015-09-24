@@ -23,6 +23,7 @@ angular.module('chembiohubAssayApp')
   $scope.iamloading = false;
 	$scope.modalInstance = {};
     $scope.popup_data = {};
+    $scope.dpcForUpload = {};
     $scope.getAnnotations = function(dpc){
 
           dpc.dfc_full = $scope.assayctrl.dfc_lookup[dpc.data_form_config];
@@ -73,7 +74,7 @@ angular.module('chembiohubAssayApp')
             dpc.new_next_level_model = angular.copy(dpc.default_data );
             dpc.next_data_type_name = dpc.next_level_dfc[dpc.next_level_dfc.last_level].data_type.name;
             dpc.next_level_searchnames = dpc.next_level_cfc.project_data_fields.map(function(field){
-              console.log(field.field_type);
+              
               return dpc.next_level_dfc.last_level + ".project_data." + field.elasticsearch_fieldname;
             })
           }
@@ -180,6 +181,8 @@ angular.module('chembiohubAssayApp')
           }else{
             dpc.childrenTemplate = "views/templates/overview-children.html";
           }
+
+          $scope.dpcForUpload = dpc;
         
         
     };
@@ -328,6 +331,8 @@ dataoverviewctrl.setLoadingMessageHeight = function(){
       'sheetNames': [],
       'sheetName': '',
       'uploaded': false,
+      'fileId': '',
+
 
     }
 
@@ -336,7 +341,7 @@ dataoverviewctrl.setLoadingMessageHeight = function(){
       //probably best to create a resource here - we will need it for other types of upload (img etc)
       //FlowFileFactory.cbhFlowfile.
       var FlowDF = FlowFileFactory.cbhFlowfile;
-
+        $scope.uploadData.fileId = fileId;
         var fdfresult = FlowDF.get({'fileId': fileId});
         fdfresult.$promise.then(function(result){
           
@@ -353,6 +358,26 @@ dataoverviewctrl.setLoadingMessageHeight = function(){
 
         //also need to get the possible levels and datapoint classifications to select from
 
+    }
+
+    $scope.specifySheet = function() {
+      //we now have sheetName.name, pass to the specified webservice
+      var FlowDF = FlowFileFactory.cbhAttachments;
+      /*
+      flowfile: '@flowfile',
+      data_point_classification:  "@data_point_classification",
+      chosen_data_form_config: "@chosen_data_form_config",
+      sheet_name: "@sheetname",
+       */
+      var fdfresult = FlowDF.save({ 
+        'flowfile': $scope.uploadData.fileId,
+        'data_point_classification' : $scope.dpcForUpload.next_level_dpc.resource_uri,//dpc
+        'chosen_data_form_config': $scope.dpcForUpload.next_level_cfc.resource_uri,
+        'sheet_name': $scope.uploadData.sheetName.name,
+
+      }, function(result){
+        console.log(result);
+      });
     }
 
     $scope.getPreviewData = function() {
