@@ -116,6 +116,9 @@ angular.module('chembiohubAssayApp')
       //perform get request to get list of sheets
       //probably best to create a resource here - we will need it for other types of upload (img etc)
       //FlowFileFactory.cbhFlowfile.
+      dataoverviewctrl.setLoadingMessageHeight();
+      dataoverviewctrl.currentlyLoading = true;
+      
       var FlowDF = FlowFileFactory.cbhFlowfile;
         dpc.uploadData.fileId = fileId;
         var fdfresult = FlowDF.get({'fileId': fileId});
@@ -151,6 +154,7 @@ angular.module('chembiohubAssayApp')
                         sheet.active=true;
                         sheet.metadata = result;
                         console.log(sheet.metadata);
+                        dataoverviewctrl.currentlyLoading = false;
                       });
                  }
 
@@ -163,8 +167,11 @@ angular.module('chembiohubAssayApp')
                 var fdfresult = FlowDF.get({'sheetId': sheet_uri}, function(result){
                   console.log(result);
                 });*/
+                dataoverviewctrl.setLoadingMessageHeight();
+                dataoverviewctrl.currentlyLoading = true;
                 $http.get('/'+ prefix + '/datastore/cbh_attachments/save_temporary_data?sheetId=' + sheet_id ).then(function(response){
-                     console.log(response);
+                     //console.log(response);
+                     $state.go($state.current, $stateParams, {reload: true});
                  });
               }
 
@@ -238,7 +245,7 @@ angular.module('chembiohubAssayApp')
           // dpc.setForm(dpc.default_data);
           dpc.addChild = function(){
               dataoverviewctrl.setLoadingMessageHeight();
-      dataoverviewctrl.currentlyLoading = true;
+              dataoverviewctrl.currentlyLoading = true;
               var AddDF = AddDataFactory.dataClassification;
            
               var adfresult = AddDF.get({'dc': dpc.id});

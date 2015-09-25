@@ -30,10 +30,15 @@
     </div>
 </div>
  
-    <div class="row"><div class="col-xs-12 pull-right">
-            <span flow-btn name="file_input" role="btn" class="btn btn-primary btn-sm pull-right nexa" ng-show="$flow.files.length < 1">Upload</span>
-            <a ng-show="$flow.files.length > 0" ng-click="file.cancel(); cancelFile(); $flow.files=[]; dpclassif.cancelFile();"   class="btn btn-sm btn-danger pull-right" role="btn">Remove</a>
-        </div></div>
+    <div class="row">
+    	<div class="col-xs-12 pull-right">
+    		<div class="btn-group">
+	            <span flow-btn name="file_input" role="btn" class="btn btn-primary btn-sm pull-right nexa" ng-show="$flow.files.length < 1">Upload</span>
+	            <a ng-show="$flow.files.length > 0" ng-click="file.cancel(); cancelFile(); $flow.files=[]; dpclassif.cancelFile();" class="btn btn-sm btn-danger pull-right" role="button">Remove</a>
+	            <a ng-click="file.cancel(); cancelFile(); $flow.files=[]; dpclassif.cancelFile(); dpclassif.addingMultiple = false;" class="btn btn-sm btn-danger pull-right" role="button">Cancel</a>
+	        </div>
+        </div>
+    </div>
 
     </div>
 </div>
@@ -55,10 +60,12 @@
         <tab ng-repeat="sheet in dpclassif.uploadData.sheets" select="sheet.specifySheet()">
             <tab-heading>{{sheet.name}}</tab-heading>
             
-            <div class="row">
+            <div class="row" ng-if="sheet.metadata.resource_uri">
             	<div class="col-xs-12">
-	            	<div class="btn-group">
+	            	<div class="pull-right">
+	            		<a ng-click="file.cancel(); cancelFile(); $flow.files=[]; dpclassif.cancelFile(); dpclassif.addingMultiple = false;" role="button" class="btn btn-danger">Cancel</a>
 	            		<a ng-click="sheet.saveSheet(sheet.metadata.id)" role="button" class="btn btn-primary">Save this sheet</a>
+	            		
 	            	</div>
 	            </div>
             </div>
