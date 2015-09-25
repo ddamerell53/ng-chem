@@ -164,6 +164,9 @@
                         </td>  -->
                         <!-- one cell containing a link to a popup with all the fields in -->
                         <td><a ng-click="showDetailPopup(childItem._source.l3.custom_field_config, childItem._source.l3.project_data)">View Activity Details</a></td>
+                        <td>
+                            {{childItem._source.chembl}}
+                        </td>
                         
                     </tr>
                     <tr ng-if="indexVM.results.hits.hits.length == 0" class="text-center"><td colspan="{{(1+ dpclassif.next_level_cfc.project_data_fields.length)}}" class="text-center">No results</td></tr>

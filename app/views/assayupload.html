@@ -1,6 +1,6 @@
-<div flow-init="dpclassif.flowinit"
+<div flow-init="flowinit"
     flow-name="dpclassif.filedata.flow"
-    flow-files-submitted="dpclassif.currentlyLoading = true; $flow.upload()"
+    flow-files-submitted="$flow.upload()"
     flow-file-success="dpclassif.getSheetsForFile($file.uniqueIdentifier)" 
     flow-upload-started="dpclassif.filesUploading=true" 
     flow-complete="dpclassif.filesUploading=false"> 
@@ -93,7 +93,8 @@
                                             <span ng-bind-html="childItem.highlight[dpclassif.next_level + '.attachment_data.project_data.' + field.elasticsearch_fieldname][0]"></span>
                                         </small>
                                         <small ng-hide="childItem.highlight[dpclassif.next_level + '.project_data.' + field.elasticsearch_fieldname]">
-                                        {{childItem._source.attachment_data.project_data[field.elasticsearch_fieldname]}}
+
+                                        {{childItem._source.attachment_data.project_data[field.elasticsearch_fieldname] | limitTo:100}}
                                         </small>
                                     </td>
                                 </tr>
