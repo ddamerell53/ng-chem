@@ -112,14 +112,28 @@ angular.module('chembiohubAssayApp')
                 
                 $scope.modalInstance = $modalInstance;
 
-            $scope.cancel = function () {
-              $modalInstance.dismiss('cancel');
-            };
+                $scope.cancel = function () {
+                  $modalInstance.dismiss('cancel');
+                };
 
               }
             });
        });
 
+    }
+
+    $scope.isHighlightPresent = function(highlights, level){
+      //for this highlight set, is there a highlight present for this level?
+      
+      angular.forEach(highlights, function(val, key){
+        /*console.log('val', val);
+        console.log('key', key);*/
+        if(key.indexOf(level) == 0){
+          console.log('iyer');
+          return val;
+        }
+      });
+      return false;
     }
 
 

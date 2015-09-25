@@ -107,13 +107,13 @@
 			<h2 class="subheading">Results</h2>
 			<!-- Just showing Activities for now -->
 			<!-- Results table here - filters eventually in table header? -->
-			<div eui-index="'cbh_queries'" eui-enabled="true" eui-filter="ejs.TermFilter('level_from', 'l3')" eui-highlight="ejs.Highlight('*').preTags('<span class=\'highlighted\'>').postTags('</span>')">
+			<div eui-index="'cbh_queries'" eui-enabled="true" eui-filter="ejs.TermFilter('level_from', 'l3')" >
 				<span eui-enabled="selections.l0.length > 0" eui-filter="ejs.TermsFilter('l0.resource_uri.raw', selectedUris('l0'))"></span>
 				<span eui-enabled="selections.l1.length > 0" eui-filter="ejs.TermsFilter('l1.resource_uri.raw', selectedUris('l1'))"></span>
 				<span eui-enabled="selections.l2.length > 0" eui-filter="ejs.TermsFilter('l2.resource_uri.raw', selectedUris('l2'))"></span>
 				<span eui-enabled="dates.startES != ''" eui-filter="ejs.RangeFilter('l3.created').gte(dates.startES)"></span>
 				<span eui-enabled="dates.endES != ''" eui-filter="ejs.RangeFilter('l3.created').lte(dates.endES)"></span>
-				<span eui-enabled="cbh.textsearch != ''" eui-query="ejs.MultiMatchQuery(['l0.project_data_all','l1.project_data_all','l2.project_data_all','l3.project_data_all'], cbh.textsearch).type('phrase_prefix')"></span>
+				<span eui-enabled="cbh.textsearch != ''" eui-query="ejs.MultiMatchQuery(['l0.project_data_all','l1.project_data_all','l2.project_data_all','l3.project_data_all'], cbh.textsearch).type('phrase_prefix')" eui-highlight="ejs.Highlight('*').preTags('<span class=\'highlighted\'>').postTags('</span>')"></span>
 
 
 			<table class="table table-striped">
@@ -148,11 +148,24 @@
                 <tbody>
 
                     <tr ng-repeat="childItem in indexVM.results.hits.hits" >
-                    	<td><a ng-click="showDetailPopup(childItem._source.l0.custom_field_config, childItem._source.l0.project_data)">{{childItem._source.l0.project_data.Title}}</a></td>
-                    	<td><a ng-click="showDetailPopup(childItem._source.l1.custom_field_config, childItem._source.l1.project_data)">{{childItem._source.l1.project_data.Title}}</a></td>
-                    	<td><a ng-click="showDetailPopup(childItem._source.l2.custom_field_config, childItem._source.l2.project_data)">{{childItem._source.l2.project_data.Title}}</a></td>
+                    	<td><a ng-click="showDetailPopup(childItem._source.l0.custom_field_config, childItem._source.l0.project_data)">{{childItem._source.l0.project_data.Title}}</a><br>
+                    		<p ng-show="isHighlightPresent(childItem.highlight, 'l0') != ''">
+                                hello
+                            </p></td>
+                    	<td><a ng-click="showDetailPopup(childItem._source.l1.custom_field_config, childItem._source.l1.project_data)">{{childItem._source.l1.project_data.Title}}</a><br>
+                    		<p ng-show="isHighlightPresent(childItem.highlight, 'l1') != ''">
+                                hello
+                            </p></td>
+                    	<td><a ng-click="showDetailPopup(childItem._source.l2.custom_field_config, childItem._source.l2.project_data)">{{childItem._source.l2.project_data.Title}}</a><br>
+                    		<p ng-show="isHighlightPresent(childItem.highlight, 'l2') != ''">
+                                hello
+                            </p></td>
                     	<td>{{childItem._source.l3.created | date : 'dd MMM yyyy'}}</td>
-                        <td><a ng-click="showDetailPopup(childItem._source.l3.custom_field_config, childItem._source.l3.project_data)">View Activity Details</a></td>
+                        <td><a ng-click="showDetailPopup(childItem._source.l3.custom_field_config, childItem._source.l3.project_data)">View Activity Details</a><br>
+                        	<p ng-show="isHighlightPresent(childItem.highlight, 'l3') != ''">
+                               hello
+                            </p>
+                            {{childItem.highlight}}</td>
 
                         
                     </tr>
