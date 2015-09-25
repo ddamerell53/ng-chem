@@ -10,8 +10,7 @@
                                             
                                             <ul style="margin-top: -8px" class="dropdown-menu" role="menu" aria-labelledby="{{dpclassif.id}}">
                                                 <li ng-repeat="newdfc in dpclassif.dfc_full.full_permitted_children" role="menuitem"><a ng-click="dpclassif.setChosenDataFormConfig(newdfc.resource_uri, true); " >Using {{newdfc[newdfc.last_level].name}} template</a></li>
-                                                <li class="divider"></li>
-                                                <li ng-repeat="newdfc in dpclassif.dfc_full.full_permitted_children" role="menuitem"><a ng-href="{{(newdfc[newdfc.last_level].resource_uri + '/?format=xlsx')}}" >Download {{newdfc[newdfc.last_level].name}} template</a></li>
+                                                
                                             </ul>
                     
                     
@@ -24,6 +23,8 @@
                     
                                             <ul style="margin-top: -8px" class="dropdown-menu" role="menu" aria-labelledby="{{dpclassif.id}}_multiple">
                                                 <li ng-repeat="newdfc in dpclassif.dfc_full.full_permitted_children" role="menuitem"><a ng-click="dpclassif.setChosenDataFormConfigMultiple(newdfc.resource_uri, true); " >Using {{newdfc[newdfc.last_level].name}} template</a></li>
+                                                <li class="divider"></li>
+                                                <li ng-repeat="newdfc in dpclassif.dfc_full.full_permitted_children" role="menuitem"><a ng-href="{{(newdfc[newdfc.last_level].resource_uri + '/?format=xlsx')}}" >Download {{newdfc[newdfc.last_level].name}} template</a></li>
                                             </ul>
                                         </div></div>
 

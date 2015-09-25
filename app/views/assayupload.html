@@ -56,9 +56,11 @@
             <tab-heading>{{sheet.name}}</tab-heading>
             
             <div class="row">
-            	<div class="btn-group">
-            		<a ng-click="sheet.saveSheet(sheet.metadata.id)" role="button" class="btn btn-primary">Save this sheet</a>
-            	</div>
+            	<div class="col-xs-12">
+	            	<div class="btn-group">
+	            		<a ng-click="sheet.saveSheet(sheet.metadata.id)" role="button" class="btn btn-primary">Save this sheet</a>
+	            	</div>
+	            </div>
             </div>
 
              <div class="row" ng-if="sheet.metadata.resource_uri" eui-index="'cbh_attachments/' + sheet.metadata.id"   eui-sort="ejs.Sort('id').order('asc')" eui-enabled="true" style="margin:5px 5px 0;">
