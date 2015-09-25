@@ -49,17 +49,75 @@
 
 			</div>
 	</div>	 -->
-    <label for="tabs" class="blue"><strong class="nexa">Select the tab corresponding to the required sheet from your spreadsheet.</strong></label>
+    <label for="tabs" class="blue"><strong class="nexa">Select the tab corresponding to the required sheet from your spreadsheet.</strong><info-box lookup="assay_file_use_template" lookupitems="cbh.messages" right="true"></info-box></label>
     <tabset>
         
         <tab ng-repeat="sheet in dpclassif.uploadData.sheets" select="sheet.specifySheet()">
             <tab-heading>{{sheet.name}}</tab-heading>
-            {{sheet.metadata.resource_uri}}
+            
+            <div class="row">
+            	<div class="btn-group">
+            		<a ng-click="sheet.saveSheet(sheet.metadata.id)" role="button" class="btn btn-primary">Save this sheet</a>
+            	</div>
+            </div>
 
              <div class="row" ng-if="sheet.metadata.resource_uri" eui-index="'cbh_attachments/' + sheet.metadata.id"   eui-sort="ejs.Sort('id').order('asc')" eui-enabled="true" style="margin:5px 5px 0;">
-                <div ng-repeat="childItem in indexVM.results.hits.hits">
+
+             	<!-- Table goes here -->
+             	<table class="table table-striped">
+
+                            <thead>
+                                <tr>
+                                    <th ng-repeat="bottomlevelfield in dpclassif.next_level_cfc.project_data_fields">
+                                        <small>
+                                        {{bottomlevelfield.name}}
+                                    </small>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <tr ng-repeat="childItem in indexVM.results.hits.hits" >
+                                    
+                                    <td style="line-height:0.9 !important;" ng-repeat="field in dpclassif.next_level_cfc.project_data_fields" >
+                                        <small ng-show="childItem.highlight[dpclassif.next_level + '.project_data.' + field.elasticsearch_fieldname]">
+                                            <span ng-bind-html="childItem.highlight[dpclassif.next_level + '.attachment_data.project_data.' + field.elasticsearch_fieldname][0]"></span>
+                                        </small>
+                                        <small ng-hide="childItem.highlight[dpclassif.next_level + '.project_data.' + field.elasticsearch_fieldname]">
+                                        {{childItem._source.attachment_data.project_data[field.elasticsearch_fieldname]}}
+                                        </small>
+                                    </td>
+                                </tr>
+                                <tr ng-if="indexVM.results.hits.hits.length == 0" class="text-center"><td colspan="{{(1+ dpclassif.next_level_cfc.project_data_fields.length)}}" class="text-center">No results</td></tr>
+                                    
+                            </tbody>
+                            
+
+                        </table>
+
+                        <div class="text-center">
+                            
+
+                            <ul class="pager">
+
+                                <li>{{indexVM.results.hits.hits.length}} results </li>
+                                <li ng-class="{disabled:indexVM.page <= 1}"><a href="" ng-click="indexVM.page=1">First</a></li>
+                                <li ng-class="{disabled:indexVM.page <= 1}"><a href="" ng-click="indexVM.page=indexVM.page - 1">Previous</a></li>
+                                <li>{{indexVM.page}} of {{indexVM.pageCount}}</li>
+                                <li ng-class="{disabled:indexVM.pageCount <= indexVM.page}"><a href="" ng-click="indexVM.page=indexVM.page + 1">Next</a></li>
+                                <li ng-class="{disabled:indexVM.pageCount <= indexVM.page}"><a href="" ng-click="indexVM.page=indexVM.pageCount">Last</a></li>
+                                <li>
+                                    <select ng-model="indexVM.pageSize">
+                                        <option ng-repeat="item in [5, 10, 20]">{{item}}</option>
+                                    </select>
+                                    per page
+                                </li>
+                            </ul>
+                        </div>
+
+                <!-- <div ng-repeat="childItem in indexVM.results.hits.hits">
                     {{childItem}}
-                </div>
+                </div> -->
             </div>
         </tab>
     </tabset>

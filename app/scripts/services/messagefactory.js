@@ -49,6 +49,7 @@ angular.module('chembiohubAssayApp')
             drawing_label: "Draw your molecule here",
             file_upload_help_text: "Excel(xlsx), ChemDraw xml or SD files are accepted. For more detailed information, see the Help section.",
             assay_file_upload_help_text: "Excel(xlsx) are accepted. For more detailed information, see the Help section.",
+            assay_file_use_template: "The system assumes that you are using data created from one of the available downloadable templates. Please ensure you have used this or your data may not map properly.",
             ids_not_processed: "No SMILES or InChI identifiers could be processed, please check the format, remove any spaces and try again.",
             
             file_error: "File cannot be processed even though the format appears valid. If you have questions please contact the ChemBio Hub team.",

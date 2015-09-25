@@ -150,10 +150,22 @@ angular.module('chembiohubAssayApp')
                       }, function(result){
                         sheet.active=true;
                         sheet.metadata = result;
+                        console.log(sheet.metadata);
                       });
                  }
 
 
+              }
+
+              sheet.saveSheet = function(sheet_id) {
+                /*var FlowDF = FlowFileFactory.cbhSaveAttachment;
+                
+                var fdfresult = FlowDF.get({'sheetId': sheet_uri}, function(result){
+                  console.log(result);
+                });*/
+                $http.get('/'+ prefix + '/datastore/cbh_attachments/save_temporary_data?sheetId=' + sheet_id ).then(function(response){
+                     console.log(response);
+                 });
               }
 
             dpc.uploadData.sheets.push(sheet);
@@ -161,8 +173,6 @@ angular.module('chembiohubAssayApp')
           dpc.uploadData.uploaded = true;
 
         });
-
-        //also need to get the possible levels and datapoint classifications to select from
 
     }
 
