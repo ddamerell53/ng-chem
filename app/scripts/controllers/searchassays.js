@@ -8,7 +8,7 @@
  * Controller of the chembiohubAssayApp
  */
 angular.module('chembiohubAssayApp')
-  .controller('SearchAssaysCtrl', ['$scope', '$filter', function ($scope, $filter) {
+  .controller('SearchAssaysCtrl', ['$scope', '$filter', '$modal', function ($scope, $filter, $modal) {
     
   	//need to be able to pull in, via this controller or a service:
 
@@ -33,6 +33,9 @@ angular.module('chembiohubAssayApp')
       'startES': '',
       'endES': '',
     }
+
+    $scope.modalInstance = {};
+    $scope.popup_data = {};
   	
 
   	$scope.selectedUris = function(level){
@@ -77,6 +80,46 @@ angular.module('chembiohubAssayApp')
       $scope.dates.startES = '';
       $scope.dates.endES = '';
       $scope.cbh.textsearch = '';
+    }
+
+    $scope.showDetailPopup = function(cfc_uri, project_data){
+      console.log('cfcuri', cfc_uri);
+      console.log('proj_data', project_data);
+
+      //look up the custom field config object
+      //pass this and the data to the popup
+      $http.get(cfc_uri).then(function(response){
+           console.log(response.data.project_data_fields);
+           //map these to project_data before adding to popup
+           //example on the dataoverview template page when initialising popups there
+            //$scope.popup_data = angular.copy(response.data);
+            $scope.popup_data = {};
+            $scope.popup_data['main_cfc'] = response.data;
+            $scope.popup_data['main_data'] = {};
+            $scope.popup_data.main_data['project_data'] = project_data;
+
+            $scope.modalInstance = $modal.open({
+              templateUrl: 'views/modal-template.html',
+              size: 'lg',
+              resolve: {
+                popup_data: function () {
+                  return $scope.popup_data;
+                },
+
+              }, 
+              controller: function($scope, $modalInstance, popup_data, $timeout) {
+                $scope.popup_data = popup_data;
+                
+                $scope.modalInstance = $modalInstance;
+
+            $scope.cancel = function () {
+              $modalInstance.dismiss('cancel');
+            };
+
+              }
+            });
+       });
+
     }
 
 

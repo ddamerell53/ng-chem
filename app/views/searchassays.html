@@ -113,7 +113,7 @@
 				<span eui-enabled="selections.l2.length > 0" eui-filter="ejs.TermsFilter('l2.resource_uri.raw', selectedUris('l2'))"></span>
 				<span eui-enabled="dates.startES != ''" eui-filter="ejs.RangeFilter('l3.created').gte(dates.startES)"></span>
 				<span eui-enabled="dates.endES != ''" eui-filter="ejs.RangeFilter('l3.created').lte(dates.endES)"></span>
-				<span eui-enabled="cbh.textsearch != ''" eui-query="ejs.MultiMatchQuery(['l0.project_data','l1.project_data','l2.project_data','l3.project_data'], cbh.textsearch)"></span>
+				<span eui-enabled="cbh.textsearch != ''" eui-query="ejs.MultiMatchQuery(['l0.project_data_all','l1.project_data_all','l2.project_data_all','l3.project_data_all'], cbh.textsearch)"></span>
 
 
 			<table class="table table-striped">
@@ -132,6 +132,9 @@
                         <th><small>
                             Added
                         </small></th>
+                        <th><small>
+                            Activity Details
+                        </small></th>
                         <!-- <th ng-repeat="bottomlevelfield in dpclassif.next_level_cfc.project_data_fields">
                             <small>
                             {{bottomlevelfield.name}}
@@ -142,22 +145,25 @@
                 <tbody>
 
                     <tr ng-repeat="childItem in indexVM.results.hits.hits" >
-                    	<td>{{childItem._source.l0.project_data.Title}}</td>
-                    	<td>{{childItem._source.l1.project_data.Title}}</td>
-                    	<td>{{childItem._source.l2.project_data.Title}}</td>
+                    	<td><a ng-click="showDetailPopup(childItem._source.l0.custom_field_config, childItem._source.l0.project_data)">{{childItem._source.l0.project_data.Title}}</a></td>
+                    	<td><a ng-click="showDetailPopup(childItem._source.l1.custom_field_config, childItem._source.l1.project_data)">{{childItem._source.l1.project_data.Title}}</a></td>
+                    	<td><a ng-click="showDetailPopup(childItem._source.l2.custom_field_config, childItem._source.l2.project_data)">{{childItem._source.l2.project_data.Title}}</a></td>
                     	<td>{{childItem._source.l3.created | date : 'dd MMM yyyy'}}</td>
-                        <td ng-repeat="(key, value) in childItem._source.l3.project_data" >
-                            <!-- Put table cell contents in ng include -->
+                        <!-- <td ng-repeat="(key, value) in childItem._source.l3.project_data" >
 
-                            <!-- <small ng-show="childItem._source['l3.project_data.' + field.elasticsearch_fieldname]">
+                            <small ng-show="childItem._source['l3.project_data.' + field.elasticsearch_fieldname]">
                                 <span ng-bind-html="childItem.highlight['l3.project_data.' + field.elasticsearch_fieldname][0]"></span>
                             </small>
                             <small ng-hide="childItem.highlight['l3.project_data.' + field.elasticsearch_fieldname]">
                             {{childItem._source[l3].project_data[field.elasticsearch_fieldname]}}
-                            </small> -->
+                            </small>
+
+
                             <small><em>{{key}}</em></small><br>
                             <small><strong>{{value}}</strong></small>
-                        </td> 
+                        </td>  -->
+                        <!-- one cell containing a link to a popup with all the fields in -->
+                        <td><a ng-click="showDetailPopup(childItem._source.l3.custom_field_config, childItem._source.l3.project_data)">View Activity Details</a></td>
                         
                     </tr>
                     <tr ng-if="indexVM.results.hits.hits.length == 0" class="text-center"><td colspan="{{(1+ dpclassif.next_level_cfc.project_data_fields.length)}}" class="text-center">No results</td></tr>

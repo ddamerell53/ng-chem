@@ -3,22 +3,8 @@
         </div>
         <div class="modal-body">
             
-            <!-- <dl class="dl-horizontal" ng-repeat="(key, value) in popup_data">
-														
-				  <dt>{{key}}</dt>
-				  <dd>{{value}}</dd>
-				
-			</dl> -->
-            <!-- <div class="row" ng-repeat="(key, value) in popup_data">
-                <div class="col-xs-4">{{key}}</div>
-                <div class="col-xs-8">{{value}}</div>
-            </div> -->
             <table class="table table-striped">
-                <!-- <tr ng-repeat="(key, value) in popup_data">
-
-                    <th>{{key}}</th>
-                    <td>{{value}}</td>
-                </tr> -->
+                
                 <tr ng-repeat="form in popup_data.main_cfc.project_data_fields">
                     <th>{{form.name}}</th>
                     <td>{{popup_data.main_data.project_data[form.elasticsearch_fieldname]}}</td>
