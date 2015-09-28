@@ -60,7 +60,9 @@ angular.module('chembiohubAssayApp')
           //don't know what I do and don't need from this
           dpc.setChosenDataFormConfigMultiple = function(dfc_uri, adding, templateData) {
 
-
+            dpc.logger = function(){
+              console.log(dpc.filedata);
+            }
 
             dpc.addingMultiple = adding;
             dpc.next_level_dfc = $scope.assayctrl.dfc_lookup[dfc_uri];
@@ -86,14 +88,7 @@ angular.module('chembiohubAssayApp')
         dpc.filedata = {};
         dpc.filesUploading = false;
         dpc.dataReady = false;
-    dpc.csrftoken = $cookies[prefix.split("/")[0] + "csrftoken"];
-    dpc.flowinit = {
-      //need to change target to the new WS path provided by Andy
-        target: urlConfig.instance_path.url_frag + 'flow/upload/',
-        headers: {
-            'X-CSRFToken': dpc.csrftoken
-        }
-    };
+    
 
     //object containing user config, selected options and flowfile metadata returned from ws callls
     dpc.initUpload = function(){
@@ -116,13 +111,14 @@ angular.module('chembiohubAssayApp')
       //perform get request to get list of sheets
       //probably best to create a resource here - we will need it for other types of upload (img etc)
       //FlowFileFactory.cbhFlowfile.
-      dataoverviewctrl.setLoadingMessageHeight();
-      dataoverviewctrl.currentlyLoading = true;
-      
+      // dataoverviewctrl.setLoadingMessageHeight();
+      // dataoverviewctrl.currentlyLoading = true;
+      console.log("test")
       var FlowDF = FlowFileFactory.cbhFlowfile;
         dpc.uploadData.fileId = fileId;
         var fdfresult = FlowDF.get({'fileId': fileId});
         fdfresult.$promise.then(function(result){
+          console.log("test2")
           //dpc.uploadData.sheet_names = result.sheet_names;
           angular.forEach(result.sheet_names, function(sheet_name) {
             /*newobj = {}
@@ -167,8 +163,8 @@ angular.module('chembiohubAssayApp')
                 var fdfresult = FlowDF.get({'sheetId': sheet_uri}, function(result){
                   console.log(result);
                 });*/
-                dataoverviewctrl.setLoadingMessageHeight();
-                dataoverviewctrl.currentlyLoading = true;
+                // dataoverviewctrl.setLoadingMessageHeight();
+                // dataoverviewctrl.currentlyLoading = true;
                 $http.get('/'+ prefix + '/datastore/cbh_attachments/save_temporary_data?sheetId=' + sheet_id ).then(function(response){
                      //console.log(response);
                      $state.go($state.current, $stateParams, {reload: true});
@@ -206,11 +202,11 @@ angular.module('chembiohubAssayApp')
             //Default to the first in the list for thios but reset it every time that someone 
             dpc.setChosenDataFormConfig(dpc.dfc_full.permitted_children[0], false);
             dpc.addingChild = false;
-            if (dpc.dfc_full.permitted_children.length == 1){
-              if (dpc.children.length ==0){
-                dpc.addingChild = true;
-              }
-            }
+            // if (dpc.dfc_full.permitted_children.length == 1){
+            //   if (dpc.children.length ==0){
+            //     dpc.addingChild = true;
+            //   }
+            // }
           }
 
 
@@ -405,7 +401,14 @@ angular.module('chembiohubAssayApp')
       });
     };
 
-
+$scope.csrftoken = $cookies[prefix.split("/")[0] + "csrftoken"];
+    $scope.flowinit = {
+      //need to change target to the new WS path provided by Andy
+        target: urlConfig.instance_path.url_frag + 'flow/upload/',
+        headers: {
+            'X-CSRFToken': $scope.csrftoken
+        }
+    };
     dataoverviewctrl.fetchData();
 
 dataoverviewctrl.setLoadingMessageHeight = function(){

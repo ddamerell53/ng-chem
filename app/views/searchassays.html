@@ -161,11 +161,17 @@
                                 hello
                             </p></td>
                     	<td>{{childItem._source.l3.created | date : 'dd MMM yyyy'}}</td>
-                        <td><a ng-click="showDetailPopup(childItem._source.l3.custom_field_config, childItem._source.l3.project_data)">View Activity Details</a><br>
+
+                        <!-- <td><a ng-click="showDetailPopup(childItem._source.l3.custom_field_config, childItem._source.l3.project_data)">View Activity Details</a><br>
                         	<p ng-show="isHighlightPresent(childItem.highlight, 'l3') != ''">
                                hello
                             </p>
                             {{childItem.highlight}}</td>
+ -->
+                        <td><a ng-click="showDetailPopup(childItem._source.l3.custom_field_config, childItem._source.l3.project_data)">View Activity Details</a></td>
+                        <td>
+                            {{childItem._source.chembl}}
+                        </td>
 
                         
                     </tr>
