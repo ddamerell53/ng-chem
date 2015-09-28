@@ -166,8 +166,7 @@
                         	<p ng-show="isHighlightPresent(childItem.highlight, 'l3') != ''">
                                hello
                             </p>
-                            {{childItem.highlight}}</td>
- -->
+                            {{childItem.highlight}}</td>-->
                         <td><a ng-click="showDetailPopup(childItem._source.l3.custom_field_config, childItem._source.l3.project_data)">View Activity Details</a></td>
                         <td>
                             {{childItem._source.chembl}}
@@ -186,7 +185,7 @@
 
                             <ul class="pager">
 
-                                <li>{{indexVM.results.hits.hits.length}} results </li>
+                                <li>{{indexVM.results.hits.total}} results </li>
                                 <li ng-class="{disabled:indexVM.page <= 1}"><a href="" ng-click="indexVM.page=1">First</a></li>
                                 <li ng-class="{disabled:indexVM.page <= 1}"><a href="" ng-click="indexVM.page=indexVM.page - 1">Previous</a></li>
                                 <li>{{indexVM.page}} of {{indexVM.pageCount}}</li>
