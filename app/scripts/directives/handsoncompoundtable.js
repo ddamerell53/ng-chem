@@ -236,7 +236,7 @@ angular.module('ngChemApp')
                         ]);
                   }
 
-                    allCols = allCols.concat(scope.plugins.map(function(plugin){return plugin.handsontable_column}));
+                    //allCols = allCols.concat(scope.plugins.map(function(plugin){return plugin.handsontable_column}));
                   
                      
                     allCols = allCols.concat(customCols);

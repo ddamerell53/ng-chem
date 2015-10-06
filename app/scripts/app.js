@@ -290,11 +290,11 @@ angular.module('ngChemApp')
               'newresults@cbh.search' :{
                 templateUrl: 'views/compound-list-new.html',
                 controller: 'CompoundbatchCtrl',
-                resolve: {
+                /*resolve: {
                       plugins:  function(PluginFactory, $stateParams, $q) {
                       return PluginFactory.get().$promise;
                   }
-                }
+                }*/
               },
 
             }
@@ -493,9 +493,9 @@ angular.module('ngChemApp')
                 templateUrl: 'views/compound-list-new.html',
                 controller: 'CompoundbatchCtrl',
                 resolve: {
-              plugins:  function(PluginFactory, $stateParams, $q) {
+              /*plugins:  function(PluginFactory, $stateParams, $q) {
                 return PluginFactory.get().$promise;
-              }
+              }*/
             },
               },
             }

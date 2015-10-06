@@ -8,8 +8,8 @@
  * Controller of the ngChemApp
  */
 angular.module('ngChemApp')
-  .controller('CompoundbatchCtrl', ['$scope','$rootScope','$state','$stateParams','$timeout','CBHCompoundBatch','paramsAndForm','urlConfig','$window','$location','$anchorScroll', '$filter', 'searchUrlParams','plugins',
-    function ($scope, $rootScope,$state, $stateParams,$timeout, CBHCompoundBatch, paramsAndForm, urlConfig, $window, $location, $anchorScroll, $filter, searchUrlParams, plugins) {
+  .controller('CompoundbatchCtrl', ['$scope','$rootScope','$state','$stateParams','$timeout','CBHCompoundBatch','paramsAndForm','urlConfig','$window','$location','$anchorScroll', '$filter', 'searchUrlParams',
+    function ($scope, $rootScope,$state, $stateParams,$timeout, CBHCompoundBatch, paramsAndForm, urlConfig, $window, $location, $anchorScroll, $filter, searchUrlParams) {
     $scope.compoundBatches = {data:[], redraw:0, sorts:[]};
     $scope.urlConfig = urlConfig;
     $scope.totalCompoundBatches = 0;
@@ -21,7 +21,8 @@ angular.module('ngChemApp')
         }
       });
     
-    $scope.pluginColumns = plugins;
+    //$scope.pluginColumns = plugins;
+    $scope.pluginColumns = {};
 
 
     $scope.listOrGallery = {
