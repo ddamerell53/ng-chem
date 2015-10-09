@@ -277,7 +277,7 @@ angular.module('ngChemApp')
                       hotObj.cells = function (row, col, prop) { 
                           if (prop =="properties.action"){
                               var comp = scope.compounds[row];
-                              if(comp.warnings.parseError || comp.warnings.smilesParseError){
+                              if(comp.warnings.parseError || comp.warnings.smilesParseError || comp.warnings.inchiCreationError){
                                 return {readOnly:true};
                               }  
                           }
