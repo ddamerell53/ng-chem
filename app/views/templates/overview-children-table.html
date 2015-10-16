@@ -43,6 +43,9 @@
                                         <small ng-hide="childItem.highlight[dpclassif.next_level + '.project_data.' + field.elasticsearch_fieldname]">
                                         {{childItem._source[dpclassif.next_level].project_data[field.elasticsearch_fieldname]}}
                                         </small>
+                                        <small ng-show="isChemicalId(childItem._source[dpclassif.next_level].project_data[field.elasticsearch_fieldname])">
+                                            Hello
+                                        </small>
                                     </td>
                                 </tr>
                                 <tr ng-if="indexVM.results.hits.hits.length == 0" class="text-center"><td colspan="{{(1+ dpclassif.next_level_cfc.project_data_fields.length)}}" class="text-center">No results</td></tr>
@@ -56,10 +59,10 @@
 
                             <ul class="pager">
 
-                                <li>{{indexVM.results.hits.hits.length}} results </li>
+                                <li>{{indexVM.results.hits.total}} results </li>
                                 <li ng-class="{disabled:indexVM.page <= 1}"><a href="" ng-click="indexVM.page=1">First</a></li>
                                 <li ng-class="{disabled:indexVM.page <= 1}"><a href="" ng-click="indexVM.page=indexVM.page - 1">Previous</a></li>
-                                <li>{{indexVM.page}} of {{indexVM.pageCount}}</li>
+                                <li>Page {{indexVM.page}} of {{indexVM.pageCount}}</li>
                                 <li ng-class="{disabled:indexVM.pageCount <= indexVM.page}"><a href="" ng-click="indexVM.page=indexVM.page + 1">Next</a></li>
                                 <li ng-class="{disabled:indexVM.pageCount <= indexVM.page}"><a href="" ng-click="indexVM.page=indexVM.pageCount">Last</a></li>
                                 <li>

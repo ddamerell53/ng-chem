@@ -307,6 +307,18 @@ angular.module('chembiohubAssayApp')
        
           }});
     }
+    $scope.isChemicalId = function(fielddata){
+      //does this have the pattern of being a chem ID (in local instance starting with DEV but would match UOX)
+      var fs = fielddata.toString();
+      if (fs.indexOf('UOX') == 0 || fs.indexOf('DEV') == 0){
+        //is it the right length to be an ID, while containing no whitespace?
+        if(fielddata.length == 10 && !(/\s/g.test(fs))){
+          return true;
+        }
+      }
+      return false;
+
+    }
     $scope.no_l0 = false;
     dataoverviewctrl.fetchData = function(){
       $scope.iamloading = true;
