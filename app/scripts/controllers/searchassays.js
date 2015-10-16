@@ -8,7 +8,7 @@
  * Controller of the chembiohubAssayApp
  */
 angular.module('chembiohubAssayApp')
-  .controller('SearchAssaysCtrl', ['$scope', '$filter', '$modal', 'ExportDataFactory', 'urlConfig', function ($scope, $filter, $modal, ExportDataFactory, urlConfig) {
+  .controller('SearchAssaysCtrl', ['$scope', '$filter', '$modal', 'urlConfig', function ($scope, $filter, $modal, urlConfig) {
     
   	//need to be able to pull in, via this controller or a service:
 

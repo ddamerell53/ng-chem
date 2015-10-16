@@ -8,6 +8,7 @@
                         <span class="glyphicon glyphicon-calendar"></span>  
                         <small><em>last modified on {{dpclassif.main_data.modified | date}}</em></small>
                         <span class="pull-right"><input type="text" eui-query="ejs.MultiMatchQuery([dpclassif.next_level + '.project_data_all'] , querystring).type('phrase_prefix')" ng-model="querystring" eui-enabled="querystring" eui-highlight="ejs.Highlight('*').preTags('<span class=\'highlighted\'>').postTags('</span>')"/>
+                        <span class="pull-right" ng-include="'views/templates/download-results.html'"></span>
 
 </span>
 
@@ -54,6 +55,7 @@
                             
 
                         </table>
+
                         <div class="text-center">
                             
 
@@ -73,6 +75,7 @@
                                 </li>
                             </ul>
                         </div>
+
                     </div>
                     <!--here to make sure data binging works, dont delete before fixing binding-->
                     <!-- <span style="visibility:hidden;font-size:1px;" ng-repeat="c in dpclassif.children" >{{c.created}}</span> -->

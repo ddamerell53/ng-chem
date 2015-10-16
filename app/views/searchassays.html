@@ -166,7 +166,7 @@
 	                            {{childItem.highlight}}</td>-->
 	                        <td><a ng-click="showDetailPopup(childItem._source.l3.custom_field_config, childItem._source.l3.project_data)">View Activity Details</a></td>
 	                        <td>
-	                            {{childItem._source.chembl}}
+	                        	<a ng-if="childItem._source.chembl" ng-click="showDetailPopup(childItem._source.l3.custom_field_config, childItem._source.chembl)">View as Chembl Data</a>
 	                        </td>
 
 	                        
@@ -179,14 +179,14 @@
 	            </table>
 	            <div class="row">
 
-							<div class="col-xs-12">
-	            				<div class="pull-left">
-	            					<a href="{{indexVM.results.resource_uri}}/?from=0&size=1000&format=xlsx" role="button" class="btn btn-primary">Download</a>
+		<div class="col-xs-12">
+			<div class="pull-left" ng-include="'views/templates/download-results.html'">
+				
 
-	            				</div>
-	            			</div>
-	            				
-					</div>
+			</div>
+		</div>
+			
+</div>
 	            <div class="text-center">
 	                            
 
