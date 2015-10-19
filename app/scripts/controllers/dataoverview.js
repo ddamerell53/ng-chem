@@ -324,7 +324,7 @@ angular.module('chembiohubAssayApp')
       $scope.iamloading = true;
       
        AddDataFactory.nestedDataClassification.get({
-        "l0_permitted_projects": $scope.assayctrl.proj.resource_uri, 
+        "l0_permitted_projects": $scope.assayctrl.proj.id, 
       },
         function(data){
           if(data.objects.length >= 1){
