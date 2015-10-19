@@ -42,7 +42,6 @@
 
     </div>
 </div>
-</div>
 
 <!-- Select sheet -->
 
@@ -93,8 +92,7 @@
                                             <span ng-bind-html="childItem.highlight[dpclassif.next_level + '.attachment_data.project_data.' + field.elasticsearch_fieldname][0]"></span>
                                         </small>
                                         <small ng-hide="childItem.highlight[dpclassif.next_level + '.project_data.' + field.elasticsearch_fieldname]">
-
-                                        {{childItem._source.attachment_data.project_data[field.elasticsearch_fieldname] | limitTo:100}}
+                                            {{childItem._source.attachment_data.project_data[field.elasticsearch_fieldname] | limitTo:100}}
                                         </small>
                                     </td>
                                 </tr>
@@ -110,10 +108,10 @@
 
                             <ul class="pager">
 
-                                <li>{{indexVM.results.hits.hits.length}} results </li>
+                                <li>{{indexVM.results.hits.total}} records </li>
                                 <li ng-class="{disabled:indexVM.page <= 1}"><a href="" ng-click="indexVM.page=1">First</a></li>
                                 <li ng-class="{disabled:indexVM.page <= 1}"><a href="" ng-click="indexVM.page=indexVM.page - 1">Previous</a></li>
-                                <li>{{indexVM.page}} of {{indexVM.pageCount}}</li>
+                                <li>Page {{indexVM.page}} of {{indexVM.pageCount}}</li>
                                 <li ng-class="{disabled:indexVM.pageCount <= indexVM.page}"><a href="" ng-click="indexVM.page=indexVM.page + 1">Next</a></li>
                                 <li ng-class="{disabled:indexVM.pageCount <= indexVM.page}"><a href="" ng-click="indexVM.page=indexVM.pageCount">Last</a></li>
                                 <li>
@@ -132,6 +130,9 @@
         </tab>
     </tabset>
 </div>
+</div>
+
+
 
 
 <!-- Preview data -->

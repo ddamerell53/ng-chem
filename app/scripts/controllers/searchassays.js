@@ -8,7 +8,7 @@
  * Controller of the chembiohubAssayApp
  */
 angular.module('chembiohubAssayApp')
-  .controller('SearchAssaysCtrl', ['$scope', '$filter', '$modal', function ($scope, $filter, $modal) {
+  .controller('SearchAssaysCtrl', ['$scope', '$filter', '$modal', 'urlConfig', function ($scope, $filter, $modal, urlConfig) {
     
   	//need to be able to pull in, via this controller or a service:
 
@@ -56,7 +56,6 @@ angular.module('chembiohubAssayApp')
     }
 
     $scope.dateHandler = function(startOrEnd) {
-      console.log('date handler',startOrEnd);
       //convert the date to the required format for the elasticsearch filter
       var oldDate = $scope.dates[startOrEnd];
       if (oldDate != '') {
@@ -83,13 +82,13 @@ angular.module('chembiohubAssayApp')
     }
 
     $scope.showDetailPopup = function(cfc_uri, project_data){
-      console.log('cfcuri', cfc_uri);
-      console.log('proj_data', project_data);
+      /*console.log('cfcuri', cfc_uri);
+      console.log('proj_data', project_data);*/
 
       //look up the custom field config object
       //pass this and the data to the popup
       $http.get(cfc_uri).then(function(response){
-           console.log(response.data.project_data_fields);
+           //console.log(response.data.project_data_fields);
            //map these to project_data before adding to popup
            //example on the dataoverview template page when initialising popups there
             //$scope.popup_data = angular.copy(response.data);
@@ -112,9 +111,9 @@ angular.module('chembiohubAssayApp')
                 
                 $scope.modalInstance = $modalInstance;
 
-            $scope.cancel = function () {
-              $modalInstance.dismiss('cancel');
-            };
+                $scope.cancel = function () {
+                  $modalInstance.dismiss('cancel');
+                };
 
               }
             });
@@ -122,10 +121,18 @@ angular.module('chembiohubAssayApp')
 
     }
 
-
-
-
-
+    $scope.isHighlightPresent = function(highlights, level){
+      //for this highlight set, is there a highlight present for this level?
+      
+      angular.forEach(highlights, function(val, key){
+        /*console.log('val', val);
+        console.log('key', key);*/
+        if(key.indexOf(level) == 0){
+          return val;
+        }
+      });
+      return false;
+    }
 
 
 

@@ -8,7 +8,7 @@
                                                 <span class="glyphicon glyphicon-plus-sign"></span> <span class="hidden-xs hidden-sm" title="Add {{dpclassif.next_level_cfc.data_type.name}}">Add Single {{dpclassif.next_data_type_name}} <span class="caret"></span></span>
                                             </button>
                                             
-                                            <ul style="margin-top: -8px" class="dropdown-menu" role="menu" aria-labelledby="{{dpclassif.id}}">
+                                            <ul style="margin-top: -8px" class="dropdown-menu pull-right" role="menu" aria-labelledby="{{dpclassif.id}}">
                                                 <li ng-repeat="newdfc in dpclassif.dfc_full.full_permitted_children" role="menuitem"><a ng-click="dpclassif.setChosenDataFormConfig(newdfc.resource_uri, true); " >Using {{newdfc[newdfc.last_level].name}} template</a></li>
                                                 
                                             </ul>
@@ -21,7 +21,7 @@
                                                 <span class="glyphicon glyphicon-plus-sign"></span> <span class="hidden-xs hidden-sm" title="Add {{dpclassif.next_level_cfc.data_type.name}}">Upload Multiple {{dpclassif.next_level_cfc.data_type.plural}} <span class="caret"></span></span>
                                             </button>
                     
-                                            <ul style="margin-top: -8px" class="dropdown-menu" role="menu" aria-labelledby="{{dpclassif.id}}_multiple">
+                                            <ul style="margin-top: -8px" class="dropdown-menu pull-right" role="menu" aria-labelledby="{{dpclassif.id}}_multiple" >
                                                 <li ng-repeat="newdfc in dpclassif.dfc_full.full_permitted_children" role="menuitem"><a ng-click="dpclassif.setChosenDataFormConfigMultiple(newdfc.resource_uri, true); " >Using {{newdfc[newdfc.last_level].name}} template</a></li>
                                                 <li class="divider"></li>
                                                 <li ng-repeat="newdfc in dpclassif.dfc_full.full_permitted_children" role="menuitem"><a ng-href="{{(newdfc[newdfc.last_level].resource_uri + '/?format=xlsx')}}" >Download {{newdfc[newdfc.last_level].name}} template</a></li>
