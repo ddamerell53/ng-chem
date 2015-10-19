@@ -12,11 +12,15 @@ angular.module('chembiohubAssayApp')
 
 
 .config(function($stateProvider, $urlRouterProvider, $urlMatcherFactoryProvider) {
+$urlRouterProvider.when('', '/projects/list');
 
     // catch all route
     // send users to the form page 
     $urlRouterProvider.otherwise('/404');
 
+    // the known route, with missing '/' - let's create alias
+
+// the unknown
 
     $urlMatcherFactoryProvider.defaultSquashPolicy("slash");
     var modalInstance;

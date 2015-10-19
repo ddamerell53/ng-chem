@@ -27,7 +27,6 @@ angular.module('chembiohubAssayApp')
     $scope.getAnnotations = function(dpc){
 
           dpc.dfc_full = $scope.assayctrl.dfc_lookup[dpc.data_form_config];
-          console.log(dpc.dfc_full);
           dpc.main_cfc = dpc.dfc_full[dpc.level_from];
           dpc.main_data = dpc[dpc.level_from];
           dpc.htmlClassName = classes[dpc.level_from];
@@ -51,7 +50,6 @@ angular.module('chembiohubAssayApp')
             dpc.new_next_level_model = angular.copy(dpc.default_data );
             dpc.next_data_type_name = dpc.next_level_dfc[dpc.next_level_dfc.last_level].data_type.name;
             dpc.next_level_searchnames = dpc.next_level_cfc.project_data_fields.map(function(field){
-              console.log(field.field_type);
               return dpc.next_level_dfc.last_level + ".project_data." + field.elasticsearch_fieldname;
             })
           }
@@ -60,9 +58,7 @@ angular.module('chembiohubAssayApp')
           //don't know what I do and don't need from this
           dpc.setChosenDataFormConfigMultiple = function(dfc_uri, adding, templateData) {
 
-            dpc.logger = function(){
-              console.log(dpc.filedata);
-            }
+            
 
             dpc.addingMultiple = adding;
             dpc.next_level_dfc = $scope.assayctrl.dfc_lookup[dfc_uri];
@@ -113,12 +109,10 @@ angular.module('chembiohubAssayApp')
       //FlowFileFactory.cbhFlowfile.
       // dataoverviewctrl.setLoadingMessageHeight();
       // dataoverviewctrl.currentlyLoading = true;
-      console.log("test")
       var FlowDF = FlowFileFactory.cbhFlowfile;
         dpc.uploadData.fileId = fileId;
         var fdfresult = FlowDF.get({'fileId': fileId});
         fdfresult.$promise.then(function(result){
-          console.log("test2")
           //dpc.uploadData.sheet_names = result.sheet_names;
           angular.forEach(result.sheet_names, function(sheet_name) {
             /*newobj = {}
@@ -149,7 +143,6 @@ angular.module('chembiohubAssayApp')
                       }, function(result){
                         sheet.active=true;
                         sheet.metadata = result;
-                        console.log(sheet.metadata);
                         dataoverviewctrl.currentlyLoading = false;
                       });
                  }
@@ -158,15 +151,8 @@ angular.module('chembiohubAssayApp')
               }
 
               sheet.saveSheet = function(sheet_id) {
-                /*var FlowDF = FlowFileFactory.cbhSaveAttachment;
                 
-                var fdfresult = FlowDF.get({'sheetId': sheet_uri}, function(result){
-                  console.log(result);
-                });*/
-                // dataoverviewctrl.setLoadingMessageHeight();
-                // dataoverviewctrl.currentlyLoading = true;
                 $http.get('/'+ prefix + '/datastore/cbh_attachments/save_temporary_data?sheetId=' + sheet_id ).then(function(response){
-                     //console.log(response);
                      $state.go($state.current, $stateParams, {reload: true});
                  });
               }
@@ -253,7 +239,6 @@ angular.module('chembiohubAssayApp')
                         clone.parent_id = dpc.id;
                         clone[dpc.next_level] = dpc.new_next_level_model;
                         clone.data_form_config = dpc.next_level_dfc.resource_uri;
-                        console.log(dpc.next_level_dfc.resource_uri);
                         clone.$save(function(data){
                             $state.go($state.current, $stateParams, {reload: true});
                         });
@@ -307,24 +292,13 @@ angular.module('chembiohubAssayApp')
        
           }});
     }
-    $scope.isChemicalId = function(fielddata){
-      //does this have the pattern of being a chem ID (in local instance starting with DEV but would match UOX)
-      // var fs = fielddata.toString();
-      // if (fs.indexOf('UOX') == 0 || fs.indexOf('DEV') == 0){
-      //   //is it the right length to be an ID, while containing no whitespace?
-      //   if(fielddata.length == 10 && !(/\s/g.test(fs))){
-      //     return true;
-      //   }
-      // }
-      return false;
 
-    }
     $scope.no_l0 = false;
     dataoverviewctrl.fetchData = function(){
       $scope.iamloading = true;
       
        AddDataFactory.nestedDataClassification.get({
-        "l0_permitted_projects": $scope.assayctrl.proj.id, 
+        "project_key": $scope.assayctrl.proj.project_key, 
       },
         function(data){
           if(data.objects.length >= 1){
