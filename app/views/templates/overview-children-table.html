@@ -50,9 +50,7 @@
                                 <small ng-hide="childItem.highlight[dpclassif.next_level + '.project_data.' + field.elasticsearch_fieldname]">
                                     {{childItem._source[dpclassif.next_level].project_data[field.elasticsearch_fieldname]}}
                                 </small>
-                                <small ng-show="isChemicalId(childItem._source[dpclassif.next_level].project_data[field.elasticsearch_fieldname])">
-                                    Hello
-                                </small>
+                                
                             </td>
                         </tr>
                         <tr ng-if="indexVM.results.hits.hits.length == 0" class="text-center"><td colspan="{{(1+ dpclassif.next_level_cfc.project_data_fields.length)}}" class="text-center">No results</td></tr>
