@@ -37,6 +37,8 @@
     "angular-utils-pagination": "~0.7.0",
     "handsontable": "git@github.com:thesgc/handsontable.git#master",
     "angular-ui-ace": "bower",
+    "elasticsearch-angular-simple" : "git@github.com:YousefED/elasticsearch.angular.simple.git#master",
+
     "elasticui": "*"
   },
   "devDependencies": {
