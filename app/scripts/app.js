@@ -121,6 +121,32 @@ angular.module('ngChemApp')
                   
               }
 
+
+              cbh.openFilterPopup = function(col) {
+                console.log('col', col);
+                $scope.col = angular.copy(col);
+                $scope.modalInstance = $modal.open({
+                  templateUrl: 'views/templates/compound-table-filter.html',
+                  size: 'md',
+                  resolve: {
+                    col: function () {
+                      return $scope.col;
+                    },
+
+                  }, 
+                  controller: function($scope, $modalInstance, col, $timeout) {
+                    $scope.col = col;
+                    
+                    $scope.modalInstance = $modalInstance;
+
+                    $scope.cancel = function () {
+                      $modalInstance.dismiss('cancel');
+                    };
+
+                  }
+                });
+              }
+
               cbh.openSingleMol = function(mol, isNewCompoundsInterface, editingOnlyProperty) {
                   var templateU = editingOnlyProperty ? 'views/templates/single-field.html':'views/templates/single-compound-full.html';
 

@@ -37,7 +37,7 @@ li a svg.svg {
 
 }
 
-.htCore thead th {
+/*.htCore thead th {
   overflow:hidden;
   height:0;
 }
@@ -47,7 +47,7 @@ li a svg.svg {
   margin-top:-10px;
   margin-bottom:-10px;
 
-}
+}*/
 /* handsontable - htNumeric right align overrides htCenter center alignment */
 td.htCenter.htNumeric {
   text-align: center;

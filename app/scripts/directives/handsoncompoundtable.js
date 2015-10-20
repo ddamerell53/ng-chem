@@ -7,7 +7,7 @@
  * # HandsOnCompoundTable
  */
 angular.module('ngChemApp')
-  .directive('handsoncompoundtable',["$timeout","$compile","renderers","$rootScope","$filter", function ($timeout,$compile, renderers, $rootScope, $filter) {
+  .directive('handsoncompoundtable',["$timeout","$compile","renderers","$rootScope","$filter","$modal", function ($timeout,$compile, renderers, $rootScope, $filter, $modal) {
     return {
       template: '<div  ></div>',
       restrict: 'E',
@@ -84,6 +84,58 @@ angular.module('ngChemApp')
                   });
               }
 
+
+              function buildButton() {
+                var button = document.createElement('BUTTON');
+
+                button.innerHTML = '<span class="glyphicon glyphicon-filter"></span>';
+                button.className = 'tableFilter';
+
+                return button;
+              }
+
+              function addButtonMenuEvent(button, col) {
+                Handsontable.Dom.addEvent(button, 'click', function (event) {
+
+                  event.preventDefault();
+                  event.stopImmediatePropagation();
+
+                  //need to pass in the column here to get data out
+                  //trigger call to cbh object to build modal window
+                  //should take care ove everything from there.
+                  //cbh scope can't see the correct variables to trigger filtering so need to try it here
+                  
+                    scope.col = angular.copy(col);
+                    scope.modalInstance = $modal.open({
+                      templateUrl: 'views/templates/compound-table-filter.html',
+                      size: 'md',
+                      resolve: {
+                        col: function () {
+                          return scope.col;
+                        },
+                        cbh: function() {
+                          return scope.cbh;
+                        }
+
+                      }, 
+                      controller: function($scope, $modalInstance, col, cbh, $timeout) {
+                        $scope.col = col;
+                        
+                        $scope.modalInstance = $modalInstance;
+
+                        //need to resolve the cbh object so that the filter selection triggers a reload
+                        $scope.cbh = cbh;
+
+                        $scope.cancel = function () {
+                          $modalInstance.dismiss('cancel');
+                        };
+
+                      }
+                    });
+                
+                });
+              }
+             
 
               redraw = function(){
  
@@ -258,7 +310,7 @@ angular.module('ngChemApp')
                   allCols = theCols;
                 }
 
-
+                console.log("allCols", allCols);
                 var columnHeaders = allCols.map(function(c){
                     return renderers.getColumnLabel(c, scope);
                 });
@@ -267,6 +319,22 @@ angular.module('ngChemApp')
                     data: scope.compounds,
                     colHeaders: columnHeaders,
                     columns: allCols, 
+                    //afterGetColHeader is a function that is called when the html of the header has already been set
+                    //which allows DOM manipulation after the TH has been created
+                    //there are lots of useful hooks provided by Handsontable
+                    //http://docs.handsontable.com/0.15.0-beta3/Hooks.html
+                    afterGetColHeader: function(col, TH) {
+                      var instance = this,
+                      button = buildButton();
+
+                      addButtonMenuEvent(button, allCols[col]);
+
+                      if (TH.firstChild.lastChild.nodeName === 'BUTTON') {
+                        TH.firstChild.removeChild(TH.firstChild.lastChild);
+                      }
+                      TH.firstChild.appendChild(button);
+                      TH.style['white-space'] = 'normal';
+                    },
                     maxRows: scope.compounds.length,
                     fillHandle: "vertical"
                   }
@@ -288,9 +356,6 @@ angular.module('ngChemApp')
                           scope.cbh.saveChangesToCompoundDataInController(data, sourceOfChange);
                       };
                       hotObj.beforeAutofill = function(start, end, data){
-                        // console.log(start);
-                        // console.log(end);
-                        // console.log(data);
                         
                         for (var colNo = start.col; colNo <= end.col; colNo++){
                             if(allCols[colNo].field_type == "uiselecttags"){
@@ -336,15 +401,8 @@ angular.module('ngChemApp')
             var elem = $(scope.hotId);
 
             $timeout(function(){
-              // var html = "<tr></tr>";
-              // $(elem[0].children[0].firstChild.firstChild.firstChild.firstChild.children[1].firstChild).replaceWith(html);
-              // $(elem[0].children[1].firstChild.firstChild.firstChild.firstChild.children[1].firstChild).replaceWith(html);
-              // var data=["test","test2"];
-              // var s = $("<select id=\"selectId\" name=\"selectName\" />");
-              // for(var val in data) {
-              //     $("<option />", {value: val, text: data[val]}).appendTo(s);
-              // }
-              elem.wrap("<div id='myid' style='' class='handsontable'></div>");
+              
+              elem.wrap("<div id='myid' style='overflow-x:scroll' class='handsontable'></div>");
               scope.width = 0;
 
               angular.forEach(hotObj.columns, function(c, index){
@@ -414,9 +472,8 @@ angular.module('ngChemApp')
                  //then do the reverse of the custom-field-to-table
                  scope.$on('custom-field-to-table', function(event, data) {
                       if(col.knownBy == data.newValue.split("|")[0]) {
-                        console.log("COLUMN MATCH KLAXON");
+                        
                         if(data.addOrRemove == "add") {
-                          console.log("col.searchForm.search_custom_fields__kv_any",col.searchForm.search_custom_fields__kv_any)
                           var match = $filter('filter')(col.searchForm.search_custom_fields__kv_any, function(value, index) { return value == data.newValue })
                           if(match.length == 0){
                             if(col.searchForm.search_custom_fields__kv_any){
@@ -429,7 +486,7 @@ angular.module('ngChemApp')
                           }
                         }
                         else if(data.addOrRemove == "remove"){
-                          //becuase there are watches on both the schemas, we need to ensure that on the return journey, no more items are removed.
+                          //because there are watches on both the schemas, we need to ensure that on the return journey, no more items are removed.
                           var diffs = $filter('filter')(col.searchForm.search_custom_fields__kv_any, function(value, index) { return value == data.newValue })
                           if(diffs.length > 0){
                             col.searchForm.search_custom_fields__kv_any.splice(col.searchForm.search_custom_fields__kv_any.indexOf(data.newValue), 1);
@@ -439,9 +496,6 @@ angular.module('ngChemApp')
                         
 
                       }
-                      /*$scope.searchForm.search_custom_fields__kv_any = data.newValue;
-                      $scope.searchFormSchema.schema.properties.search_custom_fields__kv_any.items = $scope.searchForm.search_custom_fields__kv_any.map(function(i){return {value : i, label : i}});
-                      $scope.$broadcast("schemaFormRedraw");*/
 
                   });  
                 
@@ -449,7 +503,7 @@ angular.module('ngChemApp')
                   if(newValue !== oldValue){
                     //broadcast the newValue
                     var broadcastObj = scope.cbh.createCustomFieldTransport(newValue, oldValue, "obj");
-                    console.log("from table", broadcastObj)
+                    //console.log("from table", broadcastObj)
                     $rootScope.$broadcast('custom-field-from-table', broadcastObj);
                   }
                 }, true);
@@ -460,15 +514,17 @@ angular.module('ngChemApp')
                    var minHeight = 200 + customCols.length *30;
                    $("#myid").css("min-height", minHeight + "px");
               }
-              if(!scope.cbh.editMode){
+              //removing double scroll - IE compat issues
+              /*if(!scope.cbh.editMode){
                 $("#myid").doubleScroll();
-              }
+              }*/
               
-              var header = document.createElement('DIV');
+              //removing recompiled HTML header - IE compat issues
+              /*var header = document.createElement('DIV');
               var head = angular.element(header);
               head.html('<div  ng-include="&apos;views/templates/compound-table-header.html&apos;"></div>');
               var compiled = $compile(head.contents())(scope);
-              $("#myid").prepend(compiled);              
+              $("#myid").prepend(compiled);   */           
 
               $('.btn-toggle').dropdown();
               scope.elem = $("#myid");
@@ -479,8 +535,6 @@ angular.module('ngChemApp')
               if(scrollTop){
                 $(window).scrollTop(scrollTop);
               }
-              
-              //scope.cbh.repaintUiselect();
 
             });
            
