@@ -6,7 +6,7 @@
                 	<img src="images/assay-icon.png"class="pull-right" alt="{{project.project_type.name}} project" title="{{project.project_type.name}} project">
 			<p class="nexa"><strong><a ui-sref="cbh.projects.project.assay.data_overview({projectKey: project.project_key})"><span title="{{ project.name }}">{{ project.name | limitTo : 20 }}</span><span ng-show="project.name.length > 20">...</span></a></strong><br/>
 				<span class="glyphicon glyphicon-time"></span> <small>Last modified: {{ project.modified | date }}</small><br>
-				<a ui-sref="cbh.projects.project.assay.upload({projectKey: project.project_key})" role="button" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-upload"></span> Upload data</a>
+			<!-- 	<a ui-sref="cbh.projects.project.assay.upload({projectKey: project.project_key})" role="button" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-upload"></span> Upload data</a> -->
 				
 			</p>
 		</div>
@@ -18,7 +18,7 @@
 <!-- <div class="row" ng-show="!toggleDataSummary.showFlag && projects.length > 4">
 <div><h2 class="blue centered">...</h2> </div></div>
  -->
- <div class="row" >
+ <!-- <div class="row" >
 	<div class="col-xs-6 col-sm-3" ng-repeat="project in projects">
 		<div class="well projectbox {{project.project_type.show_compounds == false ? 'nonchem' : ''}}">
 			<img src="images/chemical-icon.png" ng-if="project.project_type.show_compounds == true" class="pull-right" alt="{{project.project_type.name}} project" title="{{project.project_type.name}} project">
@@ -36,4 +36,4 @@
 		</div>
 
 	</div>
-</div> 
+</div>  -->
