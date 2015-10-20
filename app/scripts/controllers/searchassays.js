@@ -103,7 +103,7 @@ angular.module('chembiohubAssayApp')
                   $modalInstance.dismiss('cancel');
                 };
 
-              }
+              }});
     }
 
     $scope.showDetailPopup = function(cfc_uri, project_data){
