@@ -85,13 +85,38 @@ angular.module('ngChemApp')
               }
 
 
-              function buildButton() {
+              function buildButton(col) {
                 var button = document.createElement('BUTTON');
-
-                button.innerHTML = '<span class="glyphicon glyphicon-filter"></span>';
+                var inactiveStr = "";
+                console.log('col in buildButton', col);
+                if(col.noSort){
+                  inactiveStr = " lightgrey"
+                }
+                button.innerHTML = '<span class="glyphicon glyphicon-filter' + inactiveStr + '"></span>';
                 button.className = 'tableFilter';
 
                 return button;
+              }
+
+              function buildInfoSpans(col){
+                
+                var mappingOptions = document.createElement('span');
+                if(col.mappingOptions && !col.copyto){
+                  mappingOptions.className = 'pull-right alert-danger'
+                  mappingOptions.style.marginRight = "20px;"
+                  mappingOptions.innerHTML = 'Unmapped <info-box lookup="unmapped_values_written" lookupitems="cbh.messages" right="true"></info-box>'
+                }
+                else if(col.mappingOptions && col.copyto){
+                  var automappedSpan = '<span></span>';
+                  if(col.automapped == true){
+                    automappedSpan = '<span>(auto)</span>';
+                  }
+                  mappingOptions.className = 'pull-right alert-success'
+                  mappingOptions.style.marginRight = "20px;"
+                  mappingOptions.innerHTML = '<span class="glyphicon glyphicon-arrow-right"></span>' + col.copyto + automappedSpan + '<info-box lookup="mapped_values_written" lookupitems="cbh.messages" right="true"></info-box></span>';
+                }
+                console.log('mappingOptions', mappingOptions)
+                return mappingOptions;
               }
 
               function addButtonMenuEvent(button, col) {
@@ -325,7 +350,8 @@ angular.module('ngChemApp')
                     //http://docs.handsontable.com/0.15.0-beta3/Hooks.html
                     afterGetColHeader: function(col, TH) {
                       var instance = this,
-                      button = buildButton();
+                      button = buildButton(allCols[col]),
+                      infospans = buildInfoSpans(allCols[col]);
 
                       addButtonMenuEvent(button, allCols[col]);
 
@@ -333,6 +359,10 @@ angular.module('ngChemApp')
                         TH.firstChild.removeChild(TH.firstChild.lastChild);
                       }
                       TH.firstChild.appendChild(button);
+                      TH.firstChild.appendChild(infospans);
+                      //now we need to build in the warnings...
+                      //<span style="margin-right:20px" ng-show="(col.mappingOptions.length > 0 &amp;&amp; !col.copyto)" class="pull-right alert-danger">Unmapped <info-box lookup="unmapped_values_written" lookupitems="cbh.messages" right="!$last"></info-box></span>
+                      
                       TH.style['white-space'] = 'normal';
                     },
                     maxRows: scope.compounds.length,

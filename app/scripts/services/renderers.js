@@ -319,32 +319,7 @@ angular.module('ngChemApp')
 
       getColumnLabel : function(c, scope){
         
-        
-        
-        if(angular.isDefined(c.copyto)){
-           return "<label style='min-width:240px'>"+ c.knownBy + c.copyto +  "</label>";
-
-        }
-        if(c.data.indexOf("uncurated")==0){
-          return "<label style='min-width:240px'>"+ c.knownBy + " Unmapped</label>";
-
-        }
-       
-        else{
-          return "<label style='min-width:80px' >"+ c.knownBy + " un</label>";
-          
-
-        }
-
-    //     var warningFilterHTML = "";
-    //     if(c.warningsFilter){
-    //       warningFilterHTML = renderFilter(scope.warningsFilter, c.data, "");
-    //     }
-
-    //     //Return a piece of html including an onclick event that
-    //     //will pass to the appropriate function that mujst be implemented in the above controller
-        
-    //     return html
+        return "<label style='min-width:80px' >"+ c.knownBy + "</label>";
         
       },
       renderFilterLink : function(warningsFilter, fieldKey, title){
