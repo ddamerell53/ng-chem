@@ -166,7 +166,7 @@
 	                            {{childItem.highlight}}</td>-->
 	                        <td><a ng-click="showDetailPopup(childItem._source.l3.custom_field_config, childItem._source.l3.project_data)">View Activity Details</a></td>
 	                        <td>
-	                        	<a ng-if="childItem._source.chembl" ng-click="showDetailPopup('chembl', childItem._source.chembl)">View as Chembl Data</a>
+	                        	<a ng-if="childItem._source.chembl" ng-click="showChemblPopup(childItem._source.chembl)">View as Chembl Data</a>
 	                        </td>
 
 	                        

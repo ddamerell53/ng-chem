@@ -82,6 +82,30 @@ angular.module('chembiohubAssayApp')
 
     }
 
+    $scope.showChemblPopup = function(chembl_data){
+      $scope.popup_data = chembl_data;
+      $scope.modalInstance = $modal.open({
+              templateUrl: 'views/modal-template.html',
+              size: 'lg',
+              resolve: {
+                popup_data: function () {
+                  return $scope.popup_data;
+                },
+
+              }, 
+              controller: function($scope, $modalInstance, popup_data, $timeout) {
+                $scope.popup_data = popup_data;
+                $scope.popup_data['main_cfc'] = 'chembl'
+                
+                $scope.modalInstance = $modalInstance;
+
+                $scope.cancel = function () {
+                  $modalInstance.dismiss('cancel');
+                };
+
+              }
+    }
+
     $scope.showDetailPopup = function(cfc_uri, project_data){
       /*console.log('cfcuri', cfc_uri);
       console.log('proj_data', project_data);*/
