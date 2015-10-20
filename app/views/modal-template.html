@@ -3,7 +3,7 @@
         </div>
         <div class="modal-body">
             
-            <table class="table table-striped">
+            <table class="table table-striped" ng-if="popup_data.main_cfc != 'chembl'">
                 
                 <tr ng-repeat="form in popup_data.main_cfc.project_data_fields">
                     <th>{{form.name}}</th>
@@ -11,6 +11,7 @@
                 </tr>
                 
             </table>
+            <pre ng-if="popup_data.main_cfc == 'chembl'">{{popup_data | json}}</pre>
         </div>
         <div class="modal-footer">
             <button class="btn btn-danger" type="button" ng-click="cancel()">Close</button>

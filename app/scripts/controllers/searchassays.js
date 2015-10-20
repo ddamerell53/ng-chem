@@ -8,7 +8,7 @@
  * Controller of the chembiohubAssayApp
  */
 angular.module('chembiohubAssayApp')
-  .controller('SearchAssaysCtrl', ['$scope', '$filter', '$modal', 'urlConfig', function ($scope, $filter, $modal, urlConfig) {
+  .controller('SearchAssaysCtrl', ['$scope', '$filter', '$modal', 'urlConfig', '$stateParams', function ($scope, $filter, $modal, urlConfig, $stateParams) {
     
   	//need to be able to pull in, via this controller or a service:
 
@@ -19,7 +19,7 @@ angular.module('chembiohubAssayApp')
 
   	//and populate into scope models to be used in filters and aggregations on the page
 
-  	
+  	$scope.cbh.textsearch = $stateParams.textsearch;
     $scope.selections = {
       'l0': [],
       'l1': [],
@@ -79,6 +79,7 @@ angular.module('chembiohubAssayApp')
       $scope.dates.startES = '';
       $scope.dates.endES = '';
       $scope.cbh.textsearch = '';
+
     }
 
     $scope.showDetailPopup = function(cfc_uri, project_data){
