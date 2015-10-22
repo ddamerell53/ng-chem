@@ -22,11 +22,56 @@
 				</a>
 				
 			</div>
-			<div class="col" id="slogan" class="text-right pull-right">
+			<div class="col" id="slogan" class="text-right pull-right" eui-index="'cbh_queries'" eui-enabled="true"  >
+				<!-- eui-query="ejs.MultiMatchQuery(['l0.project_data.Title','l1.project_data.Title','l2.project_data.Title','l3.project_data.Title'], cbh.textsearch).type('phrase_prefix')" -->
+				<!--eui-aggregation="ejs.TermsAggregation('title_filtering').field('l1.project_data_all').size(10)"-->
 				<ul class="list-inline pull-right text-center">
 					<!-- <li class="text-center" style="color:white; margin-right:10px;"><span class="glyphicon glyphicon-plus-sign" style="font-size:30px;"></span><br><strong class="nexa"><small>add data</small></strong></li>
 					<li class="text-center" style="color:white; margin-right:10px;"><span class="glyphicon glyphicon-edit" style="font-size:30px;"></span><br><strong class="nexa"><small>edit data</small></strong></li> -->
-					<li style="vertical-align:top; margin-top:10px;"><input type="text" class="form-control" placeholder="Search Assays" ng-model="cbh.textsearch" style="width:300px;"></li>
+					<li style="vertical-align:top; margin-top:10px;">
+						<!-- <input type="text" class="form-control" placeholder="Search Assays" ng-model="cbh.textsearch" style="width:600px;"> -->
+						
+						<span eui-enabled="cbh.textsearch" eui-query="ejs.MultiMatchQuery(['l0.project_data.Title','l1.project_data.Title','l2.project_data.Title','l3.project_data.Title'], cbh.textsearch).type('phrase_prefix')" eui-highlight="ejs.Highlight('*').preTags('<span class=\'highlighted\'>').postTags('</span>')"></span>
+
+						<!-- <span eui-enabled="cbh.textsearch" eui-aggregation="ejs.FilterAggregation('L0agg').filter(ejs.TermFilter('level_from', 'l0'))"></span>
+						<span eui-enabled="cbh.textsearch" eui-aggregation="ejs.FilterAggregation('L1agg').filter(ejs.TermFilter('level_from', 'l1'))"></span>
+						<span eui-enabled="cbh.textsearch" eui-aggregation="ejs.FilterAggregation('L2agg').filter(ejs.TermFilter('level_from', 'l2'))"></span> -->
+						<!-- <span eui-enabled="cbh.textsearch" eui-aggregation="ejs.FilterAggregation('L0agg').filter(ejs.TermFilter('level_from', 'l0')).agg(ejs.TermsAggregation('title_filtering_l0').field('l0.project_data.Title'))"></span>
+						<span eui-enabled="cbh.textsearch" eui-aggregation="ejs.FilterAggregation('L1agg').filter(ejs.TermFilter('level_from', 'l1')).agg(ejs.TermsAggregation('title_filtering_l1').field('l1.project_data.Title'))"></span>
+						<span eui-enabled="cbh.textsearch" eui-aggregation="ejs.FilterAggregation('L2agg').filter(ejs.TermFilter('level_from', 'l2')).agg(ejs.TermsAggregation('title_filtering_l2').field('l2.project_data.Title'))"></span> -->
+						<span eui-enabled="cbh.textsearch" eui-aggregation="ejs.TermsAggregation('title_filtering_l0').field('l0.project_data.Title.raw').size(5).agg(ejs.FilterAggregation('L0agg').filter(ejs.TermFilter('level_from', 'l0')))"></span>
+						<span eui-enabled="cbh.textsearch" eui-aggregation="ejs.TermsAggregation('title_filtering_l1').field('l1.project_data.Title.raw').size(5).agg(ejs.FilterAggregation('L1agg').filter(ejs.TermFilter('level_from', 'l1')))"></span>
+						<span eui-enabled="cbh.textsearch" eui-aggregation="ejs.TermsAggregation('title_filtering_l2').field('l2.project_data.Title.raw').size(5).agg(ejs.FilterAggregation('L2agg').filter(ejs.TermFilter('level_from', 'l2')))"></span>
+
+						<div class="dropdown" >
+							<input type="text" class="form-control" placeholder="Search Assays" ng-model="cbh.textsearch" style="width:600px;" data-toggle="dropdown">
+							<ul class="dropdown-menu" ng-show="cbh.textsearch != ''" style="width:600px;">
+								<!-- <li ng-repeat="item in indexVM.results.hits.hits" role="presentation">
+									<a ng-click="console.log('whee')">{{item._source.l0.project_data.Title}} &gt;&gt; {{item._source.l1.project_data.Title}} &gt;&gt; {{item._source.l2.project_data.Title}}</a>
+								</li> -->
+								<li ng-repeat="thing in indexVM.results.aggregations.title_filtering_l2.buckets" role="presentation" ng-if="indexVM.results.aggregations.title_filtering_l2.buckets[0].L2agg.doc_count > 0">
+									<a ng-click="console.log('whee')">{{thing.key}}</a>
+								</li>
+								<li ng-if="indexVM.results.aggregations.title_filtering_l1.buckets[0].L1agg.doc_count > 0"><hr></li>
+								<li ng-repeat="thing in indexVM.results.aggregations.title_filtering_l1.buckets" role="presentation" ng-if="indexVM.results.aggregations.title_filtering_l1.buckets[0].L1agg.doc_count > 0">
+									<a ng-click="console.log('whee')">{{thing.key}}</a>
+								</li>
+								<li ng-if="indexVM.results.aggregations.title_filtering_l0.buckets[0].L0agg.doc_count > 0"><hr></li>
+								<li ng-repeat="thing in indexVM.results.aggregations.title_filtering_l0.buckets" role="presentation" ng-if="indexVM.results.aggregations.title_filtering_l0.buckets[0].L0agg.doc_count > 0">
+									<a ng-click="console.log('whee')">{{thing.key}}</a>
+								</li>
+								<li><hr></li>
+								<li role="presentation">
+									<a ng-click="">Search "{{cbh.textsearch}}"</a>
+								</li>
+								
+								<!-- <li ng-repeat="bucket in aggResults.buckets" role="presentation">
+									<a ng-click="console.log('whee')">{{bucket}}</a>
+								</li> -->
+							</ul>
+						</div>
+
+					</li>
 					<li style="vertical-align:top; margin-top:10px;"><a role="button" class="btn btn-sm btn-default" ui-sref="cbh.search_assays({'textsearch': cbh.textsearch})">Go</a></li>
 					<li class="text-center" style="color:white; margin-right:10px;"><a ui-sref="cbh.projects.list" style="color:white;"><span class="glyphicon glyphicon-folder-open" style="font-size:30px;"></span><br><strong class="nexa"><small>projects</small></strong></a></li>
 					<!-- <li class="text-center" style="color:white; margin-right:10px;"><a ui-sref="cbh.search" style="color:white;"><span class="glyphicon glyphicon-search" style="font-size:30px;"></span><br><strong class="nexa"><small>search compounds</small></strong></a></li> -->
