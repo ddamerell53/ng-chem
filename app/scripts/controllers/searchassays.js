@@ -18,7 +18,7 @@ angular.module('chembiohubAssayApp')
   	//assays available to the selected studies
 
   	//and populate into scope models to be used in filters and aggregations on the page
-
+    
   	$scope.cbh.textsearch = $stateParams.textsearch;
     $scope.selections = {
       'l0': [],
@@ -36,19 +36,65 @@ angular.module('chembiohubAssayApp')
 
     $scope.modalInstance = {};
     $scope.popup_data = {};
-  	
+
+    $scope.indexVMOnInit = [];
+
+    //do we have any search params? 
+    //for levels they will be URIs in the URL
+    if ($stateParams.l0) {
+      $scope.selections.l0.push(decodeURIComponent($stateParams.l0));
+    }
+    if ($stateParams.l1) {
+      $scope.selections.l1.push(decodeURIComponent($stateParams.l1));
+    }
+    if ($stateParams.l2) {
+      //console.log('decoded',decodeURIComponent($stateParams.l2))
+      $scope.selections.l2.push(decodeURIComponent($stateParams.l2));
+    }
+
+    //console.log($scope.indexVMOnInit);
+    $scope.searchFieldsCount = 0;
+    $scope.advancedSearchFields = []
+  	$scope.addCustomField = function() {
+        var newItemNo = $scope.searchFieldsCount + 1;
+        $scope.advancedSearchFields.push({
+            'name': '',
+            'value': '',
+            'id': newItemNo,
+            newItemNo: newItemNo,
+        });
+        $scope.searchFieldsCount++;
+    };
+    //$scope.filedata = {};
+    $scope.removeCustomField = function(item) {
+
+        //$scope.advancedSearchFields.pop(item);
+        var index = $scope.advancedSearchFields.indexOf(item);
+        $scope.advancedSearchFields.splice(index, 1); 
+
+
+    };
 
   	$scope.selectedUris = function(level){
       //return the URIs of the selected items in the multiselect for the appropriate level
       var uris = []
 
-      angular.forEach($scope.selections[level], function(lev) {
+      /*angular.forEach($scope.selections[level], function(lev) {
         var res_uri = lev._source[level].resource_uri;
         uris.push(res_uri);
-      })
-      return uris;
+      })*/
+      return $scope.selections[level];
 
     };
+
+    $scope.isSelectedInUrl = function(level, uri){
+      angular.forEach($scope.selections[level], function(item){
+        if(item == uri) {
+          return true;
+        }
+      })
+      return false;
+    }
 
     $scope.clearSelections = function(level) {
       //remove any selections made in the appropriate level selector

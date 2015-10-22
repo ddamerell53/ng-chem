@@ -315,7 +315,7 @@ $urlRouterProvider.when('', '/projects/list');
     })
 
     .state('cbh.search_assays', {
-      url: '/search-assays?textsearch=',
+      url: '/search-assays?textsearch=&l0=&l1=&l2=',
       resolve: {
         /*project_with_forms : ['AddDataFactory',function(AddDataFactory){
           return AddDataFactory.pwf.get(function(data){
