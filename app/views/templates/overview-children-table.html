@@ -28,7 +28,7 @@
                             <th><small>
                                 Actions
                             </small></th>
-                            <th><small>
+                            <th ng-show="assaycrtl.proj.project_type.show_compounds"><small>
                                 Structure
                             </small></th>
                             <th ng-repeat="bottomlevelfield in dpclassif.next_level_cfc.project_data_fields">
@@ -46,7 +46,7 @@
                                     <span class="hidden-xs hidden-sm" title="Duplicate">Duplicate</span>
                                 </a>
                             </td>
-                            <td>
+                            <td ng-show="assaycrtl.proj.project_type.show_compounds">
                                 <img ng-src="data:image/png;base64,{{childItem._source.imgSrc}}"></img>
 
                             </td>
