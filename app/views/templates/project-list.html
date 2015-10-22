@@ -1,14 +1,36 @@
 <div class="row">
 	<div class="col-xs-6 col-sm-3" ng-repeat="project in projects">
-		<div class="well projectbox {{project.project_type.show_compounds == false ? 'nonchem' : ''}}">
-			<!-- <img src="images/chemical-icon.png" ng-if="project.project_type.show_compounds == true" class="pull-right" alt="{{project.project_type.name}} project" title="{{project.project_type.name}} project">
-                	<img src="images/inventory-icon.png" ng-if="project.project_type.show_compounds == false" class="pull-right" alt="{{project.project_type.name}} project" title="{{project.project_type.name}} project"> -->
+		<div class="well projectbox {{project.project_type.show_compounds == false ? 'nonchem' : ''}}" style="padding-bottom:10px">
+			<img src="images/chemical-icon.png" ng-if="project.project_type.show_compounds == true" class="pull-right" alt="{{project.project_type.name}} project" title="{{project.project_type.name}} project">
+                	<img src="images/inventory-icon.png" ng-if="project.project_type.show_compounds == false" class="pull-right" alt="{{project.project_type.name}} project" title="{{project.project_type.name}} project">
                 	<img src="images/assay-icon.png"class="pull-right" alt="{{project.project_type.name}} project" title="{{project.project_type.name}} project">
-			<p class="nexa"><strong><a ui-sref="cbh.projects.project.assay.data_overview({projectKey: project.project_key})"><span title="{{ project.name }}">{{ project.name | limitTo : 20 }}</span><span ng-show="project.name.length > 20">...</span></a></strong><br/>
-				<span class="glyphicon glyphicon-time"></span> <small>Last modified: {{ project.modified | date }}</small><br>
-			<!-- 	<a ui-sref="cbh.projects.project.assay.upload({projectKey: project.project_key})" role="button" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-upload"></span> Upload data</a> -->
-				
-			</p>
+			<p class="nexa" style="margin-bottom:0;">
+                <strong><a ui-sref="cbh.projects.project.assay.data_overview({projectKey: project.project_key})"><span title="{{ project.name }}">{{ project.name | limitTo : 16 }}</span><span ng-show="project.name.length > 16">...</span></a>
+                </strong>
+                <br>
+				<span class="glyphicon glyphicon-time"></span> <small>Last modified: {{ project.modified | date }}</small>
+                
+			     <div class="col-xs-5">
+				<button id="{{project.id}}" ng-if="project.editor"  role="button" data-toggle="dropdown" class="btn btn-sm btn-primary btn-toggle"><span class="glyphicon glyphicon-plus-sign"></span> Add <span class="caret"></span>
+                    
+                </button>
+                <ul class="dropdown-menu col-xs-8" role="menu" aria-labelledby="{{project.id}}">
+                        <li role="menuitem"><a ui-sref="cbh.projects.project.addcompounds({projectKey: project.project_key})">Add {{project.project_type.show_compounds == true ? 'compounds' : 'Inventory items' }}</a></li>
+                        
+                      </ul>
+                    </div>
+               <div class="col-xs-6 pull-right">
+                <button id="{{project.id}}_2" ng-if="project.editor"  role="button" data-toggle="dropdown" class="btn btn-sm btn-primary btn-toggle "><span class="glyphicon glyphicon-search"></span> Search <span class="caret"></span>
+                    
+                </button>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="{{project.id}}_2">
+                        <li role="menuitem"><a ui-sref="cbh.search({project__project_key__in: project.project_key})">Search {{project.project_type.show_compounds == true ? 'compounds' : 'inventory items' }}</a></li>
+                        
+                      </ul>
+                  </div>
+            </p>
+               <!--  <a ng-if="!project.editor" disabled title="You do not have permission to edit {{project.project_type.show_compounds == true ? 'compounds' : 'items' }} on this project. Please ask an administrator for details." role="button" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-plus-sign"></span> Add {{project.project_type.show_compounds == true ? 'compounds' : 'items' }}</a> -->
+			
 		</div>
 
 	</div>
@@ -26,8 +48,7 @@
 			<p class="nexa"><strong><a ui-sref="cbh.projects.project.compounds({projectKey: project.project_key, page:1, sorts:[]})"><span title="{{ project.name }}">{{ project.name | limitTo : 20 }}</span><span ng-show="project.name.length > 20">...</span></a></strong><br/>
 				<span class="glyphicon glyphicon-time"></span> <small>Last modified: {{ project.modified | date }}</small>
 
-				<a ng-if="(project.editor && project.project_type.show_compounds == false)" ng-click="addSingleRecord(project.project_key)" role="button" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-plus"></span> Add single</a>
-                <a ng-if="!project.editor" disabled title="You do not have permission to edit {{project.project_type.show_compounds == true ? 'compounds' : 'items' }} on this project. Please ask an administrator for details." role="button" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-plus"></span> Add {{project.project_type.show_compounds == true ? 'compound' : 'item' }}</a>
+				
 				
                 <a ng-if="project.editor" ui-sref="cbh.projects.project.addcompounds({projectKey: project.project_key})" role="button" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-plus-sign"></span> Add {{project.project_type.show_compounds == true ? 'compounds' : 'items' }}</a>
                 <a ng-if="!project.editor" disabled title="You do not have permission to edit {{project.project_type.show_compounds == true ? 'compounds' : 'items' }} on this project. Please ask an administrator for details." role="button" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-plus-sign"></span> Add {{project.project_type.show_compounds == true ? 'compounds' : 'items' }}</a>
