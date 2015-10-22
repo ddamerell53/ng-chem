@@ -28,6 +28,9 @@
                             <th><small>
                                 Actions
                             </small></th>
+                            <th><small>
+                                Structure
+                            </small></th>
                             <th ng-repeat="bottomlevelfield in dpclassif.next_level_cfc.project_data_fields">
                                 <small>
                                     {{bottomlevelfield.name}}
@@ -42,6 +45,10 @@
                                 <a  ng-click="dpclassif.setChosenDataFormConfig(dpclassif.next_level_dfc.resource_uri, true, childItem._source[dpclassif.next_level])" > 
                                     <span class="hidden-xs hidden-sm" title="Duplicate">Duplicate</span>
                                 </a>
+                            </td>
+                            <td>
+                                <img ng-src="data:image/png;base64,{{childItem._source.imgSrc}}"></img>
+
                             </td>
                             <td style="line-height:0.9 !important;" ng-repeat="field in dpclassif.next_level_cfc.project_data_fields" >
                                 <small ng-show="childItem.highlight[dpclassif.next_level + '.project_data.' + field.elasticsearch_fieldname]">

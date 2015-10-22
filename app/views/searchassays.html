@@ -107,7 +107,7 @@
 			<h2 class="subheading">Results</h2>
 			<!-- Just showing Activities for now -->
 			<!-- Results table here - filters eventually in table header? -->
-			<div eui-index="'cbh_queries'" eui-enabled="true" eui-filter="ejs.TermFilter('level_from', 'l3')" >
+			<div eui-index="'cbh_queries'" eui-enabled="true" eui-filter="ejs.TermFilter('level_from', 'l3')"  eui-sort="ejs.Sort('modified').order('desc')" >
 				<span eui-enabled="selections.l0.length > 0" eui-filter="ejs.TermsFilter('l0.resource_uri.raw', selectedUris('l0'))"></span>
 				<span eui-enabled="selections.l1.length > 0" eui-filter="ejs.TermsFilter('l1.resource_uri.raw', selectedUris('l1'))"></span>
 				<span eui-enabled="selections.l2.length > 0" eui-filter="ejs.TermsFilter('l2.resource_uri.raw', selectedUris('l2'))"></span>
@@ -120,21 +120,29 @@
 
 	                <thead>
 	                    <tr>
-	                        <th><small>
-	                            Project
+	                    	<th ><small>
+	                            Structure
 	                        </small></th>
-	                        <th><small>
-	                            Study
+	                    	<th><small>
+	                        	Standardised Activity
 	                        </small></th>
+	                    	<th><small>
+	                            Activity Details
+	                        </small></th>
+
 	                        <th><small>
 	                            Assay
 	                        </small></th>
 	                        <th><small>
-	                            Added
+	                            Sub-Project
 	                        </small></th>
 	                        <th><small>
-	                            Activity Details
+	                            Project
 	                        </small></th>
+	                        <th><small>
+	                            Added
+	                        </small></th>
+	                        
 	                        <!-- <th ng-repeat="bottomlevelfield in dpclassif.next_level_cfc.project_data_fields">
 	                            <small>
 	                            {{bottomlevelfield.name}}
@@ -145,29 +153,26 @@
 	                <tbody>
 
 	                    <tr ng-repeat="childItem in indexVM.results.hits.hits" >
-	                    	<td><a ng-click="showDetailPopup(childItem._source.l0.custom_field_config, childItem._source.l0.project_data)">{{childItem._source.l0.project_data.Title}}</a><br>
-	                    		<p ng-show="isHighlightPresent(childItem.highlight, 'l0') != ''">
-	                                hello
-	                            </p></td>
-	                    	<td><a ng-click="showDetailPopup(childItem._source.l1.custom_field_config, childItem._source.l1.project_data)">{{childItem._source.l1.project_data.Title}}</a><br>
-	                    		<p ng-show="isHighlightPresent(childItem.highlight, 'l1') != ''">
-	                                hello
-	                            </p></td>
-	                    	<td><a ng-click="showDetailPopup(childItem._source.l2.custom_field_config, childItem._source.l2.project_data)">{{childItem._source.l2.project_data.Title}}</a><br>
-	                    		<p ng-show="isHighlightPresent(childItem.highlight, 'l2') != ''">
-	                                hello
-	                            </p></td>
+	                    	<td>
+	                    		<img ng-if="childItem._source.imgSrc" ng-src="data:image/png;base64,{{childItem._source.imgSrc}}"></img>
+	                    	</td>
+	                    	<td><a ng-click="showDetailPopup(childItem._source.l3.custom_field_config, childItem._source.l3.project_data)">View Activity Details</a></td>
+	                        <td>
+	                        	{{childItem._source.chembl.activities.published_type}}&nbsp;-&nbsp;{{childItem._source.chembl.activities.published_value}}{{childItem._source.chembl.activities.published_units}}
+	                        	<a ng-if="childItem._source.chembl" ng-click="showChemblPopup(childItem._source.chembl)">View deposition preview</a>
+	                        </td>
+	                        <td><a ng-click="showDetailPopup(childItem._source.l2.custom_field_config, childItem._source.l2.project_data)">{{childItem._source.l2.project_data.Title}}</a><br></td>
+	                    		
+	                        <td><a ng-click="showDetailPopup(childItem._source.l1.custom_field_config, childItem._source.l1.project_data)">{{childItem._source.l1.project_data.Title}}</a><br></td>
+	                    		
+
+	                    	<td><a ng-click="showDetailPopup(childItem._source.l0.custom_field_config, childItem._source.l0.project_data)">{{childItem._source.l0.project_data.Title}}</a><br></td>
+	                    		
+	                    	
 	                    	<td>{{childItem._source.l3.created | date : 'dd MMM yyyy'}}</td>
 
-	                        <!-- <td><a ng-click="showDetailPopup(childItem._source.l3.custom_field_config, childItem._source.l3.project_data)">View Activity Details</a><br>
-	                        	<p ng-show="isHighlightPresent(childItem.highlight, 'l3') != ''">
-	                               hello
-	                            </p>
-	                            {{childItem.highlight}}</td>-->
-	                        <td><a ng-click="showDetailPopup(childItem._source.l3.custom_field_config, childItem._source.l3.project_data)">View Activity Details</a></td>
-	                        <td>
-	                        	<a ng-if="childItem._source.chembl" ng-click="showChemblPopup(childItem._source.chembl)">View as Chembl Data</a>
-	                        </td>
+	                        
+	                        
 
 	                        
 	                    </tr>
