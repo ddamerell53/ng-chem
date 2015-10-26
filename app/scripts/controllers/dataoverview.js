@@ -374,10 +374,12 @@ angular.module('chembiohubAssayApp')
           
           $scope.modalInstance = $modalInstance;
 
-          $scope.mapping = {
+          /*$scope.project_fields.unshift({
             'name': '',
             'value': ''
-          }
+          })*/
+
+          $scope.mapping = $scope.project_fields[0];
 
           if(col_being_mapped.attachment_field_mapped_to) {
             //$scope.mapping.value = col_being_mapped.attachment_field_mapped_to;
@@ -400,6 +402,16 @@ angular.module('chembiohubAssayApp')
 
           $scope.setNewMapping = function(){
             col_being_mapped.attachment_field_mapped_to = $scope.mapping.value
+          };
+
+          $scope.clearMapping = function(){
+            //deselct the items from the ngmodel of the select box
+            dataoverviewctrl.listOfUnmappedFields.push($scope.mapping.value);
+            $scope.mapping = $scope.project_fields[0];
+            //clear the URI indicating the mapping from the file column
+            $scope.setNewMapping();
+            //also add this to the list of unmapped fields? Use dataoverviewctrl if so
+
           }
 
         }
@@ -411,8 +423,10 @@ angular.module('chembiohubAssayApp')
     dataoverviewctrl.someMappingFunction = function(col_being_mapped){
       //console.log('map_to_field_id', map_to_field_id)
       //remove from the lst of unmapped fields
-      dataoverviewctrl.listOfUnmappedFields.splice(dataoverviewctrl.listOfUnmappedFields.indexOf(col_being_mapped.attachment_field_mapped_to), 1);
-
+      if(col_being_mapped.attachment_field_mapped_to){
+        dataoverviewctrl.listOfUnmappedFields.splice(dataoverviewctrl.listOfUnmappedFields.indexOf(col_being_mapped.attachment_field_mapped_to), 1);  
+      }
+      
       var promise = $http.patch(  col_being_mapped.resource_uri ,       
               col_being_mapped
           ).then(
