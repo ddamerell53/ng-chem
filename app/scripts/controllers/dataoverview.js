@@ -145,7 +145,7 @@ angular.module('chembiohubAssayApp')
                         sheet.active=true;
                         sheet.metadata = result;
                         //sheet.listOfMappedFields = dpc.getListOfMappedFields(sheet.metadata.attachment_custom_field_config.project_data_fields);
-                        dataoverviewctrl.listOfUnmappedFields = dpc.getListOfUnmappedFields(sheet.metadata.attachment_custom_field_config.project_data_fields);
+                        dataoverviewctrl.listOfUnmappedFields = dpc.getListOfUnmappedFields(result.attachment_custom_field_config.project_data_fields);
                         dataoverviewctrl.currentlyLoading = false;
                       });
                  }
@@ -168,15 +168,14 @@ angular.module('chembiohubAssayApp')
 
     }
 
-  
+            //create a list of fields which still need a mapping
             dpc.getListOfUnmappedFields = function(sheet){
-              /*console.log('getListOfRequiredFields', sheet);
-              return ['a','b','c']*/
-              //array map the fields marked as mapped
-              var fieldList = sheet.map(function(obj){ 
-                 if(!obj.attachment_field_mapped_to){
-                   return obj.id;
-                 }
+              
+              var fieldList = []
+              angular.forEach(sheet, function(item) {
+                if(!item.attachment_field_mapped_to){
+                  fieldList.push(item.attachment_field_mapped_to)
+                }
               });
               return fieldList;
             }
@@ -412,7 +411,7 @@ angular.module('chembiohubAssayApp')
     dataoverviewctrl.someMappingFunction = function(col_being_mapped){
       //console.log('map_to_field_id', map_to_field_id)
       //remove from the lst of unmapped fields
-      dataoverviewctrl.listOfUnmappedFields.splice(dataoverviewctrl.listOfUnmappedFields.indexOf(col_being_mapped.id), 1);
+      dataoverviewctrl.listOfUnmappedFields.splice(dataoverviewctrl.listOfUnmappedFields.indexOf(col_being_mapped.attachment_field_mapped_to), 1);
 
       var promise = $http.patch(  col_being_mapped.resource_uri ,       
               col_being_mapped

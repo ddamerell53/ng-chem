@@ -62,8 +62,8 @@
             <div class="row" ng-if="sheet.metadata.resource_uri">
             	<div class="col-xs-12">
 	            	<div class="pull-left">
-                        <div ng-if="dataoverviewctrl.listOfUnmappedFields.length > 0" class="alert-warning"><small>There are unmapped fields in your file</small></div>
-                        <div ng-if="dataoverviewctrl.listOfUnmappedFields.length == 0" class="alert-success"><small>All fields mapped</small></div>
+                        <div ng-if="dataoverviewctrl.listOfUnmappedFields.length > 0" class="alert-warning" style="padding:10px;"><span class="glyphicon glyphicon-warning-sign"></span> <small>There are unmapped fields in your file</small></div>
+                        <div ng-if="dataoverviewctrl.listOfUnmappedFields.length == 0" class="alert-success" style="padding:10px;"><span class="glyphicon glyphicon-ok"></span> <small>All fields mapped</small></div>
                     </div>
                     <div class="pull-right">
 	            		<a ng-click="file.cancel(); cancelFile(); $flow.files=[]; dpclassif.cancelFile(); dpclassif.addingMultiple = false;" role="button" class="btn btn-danger">Cancel</a>
@@ -97,9 +97,6 @@
                                 <tr ng-repeat="childItem in indexVM.results.hits.hits" >
                                     
                                     <td class="text-center" style="line-height:0.9 !important;" ng-repeat="field in sheet.metadata.attachment_custom_field_config.project_data_fields" >
-                                        <!-- <small ng-show="childItem.highlight[dpclassif.next_level + '.project_data.' + field.elasticsearch_fieldname]">
-                                            <span ng-bind-html="childItem.highlight[dpclassif.next_level + '.attachment_data.project_data.' + field.elasticsearch_fieldname][0]"></span>
-                                        </small> -->
                                         <small>
                                            {{childItem._source.attachment_data.project_data[field.elasticsearch_fieldname] | limitTo:100}}
                                         </small>
