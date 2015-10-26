@@ -145,7 +145,7 @@ angular.module('chembiohubAssayApp')
                         sheet.active=true;
                         sheet.metadata = result;
                         //sheet.listOfMappedFields = dpc.getListOfMappedFields(sheet.metadata.attachment_custom_field_config.project_data_fields);
-                        dataoverviewctrl.listOfUnmappedFields = dpc.getListOfUnmappedFields(result.attachment_custom_field_config.project_data_fields);
+                        dataoverviewctrl.listOfUnmappedFields = dataoverviewctrl.getListOfUnmappedFields(result.attachment_custom_field_config.project_data_fields, result.attachment_custom_field_config.titleMap);
                         dataoverviewctrl.currentlyLoading = false;
                       });
                  }
@@ -168,17 +168,7 @@ angular.module('chembiohubAssayApp')
 
     }
 
-            //create a list of fields which still need a mapping
-            dpc.getListOfUnmappedFields = function(sheet){
-              
-              var fieldList = []
-              angular.forEach(sheet, function(item) {
-                if(!item.attachment_field_mapped_to){
-                  fieldList.push(item.attachment_field_mapped_to)
-                }
-              });
-              return fieldList;
-            }
+            
 
 
             dpc.next_level_searchnames = dpc.next_level_cfc.project_data_fields.map(function(field){
@@ -374,16 +364,9 @@ angular.module('chembiohubAssayApp')
           
           $scope.modalInstance = $modalInstance;
 
-          /*$scope.project_fields.unshift({
-            'name': '',
-            'value': ''
-          })*/
-
           $scope.mapping = $scope.project_fields[0];
 
           if(col_being_mapped.attachment_field_mapped_to) {
-            //$scope.mapping.value = col_being_mapped.attachment_field_mapped_to;
-            //$scope.mapping.name = $filter('filter')()
             //find the project field where the URI is the value
             angular.forEach(project_fields, function(field){
               if(field.value == col_being_mapped.attachment_field_mapped_to){
@@ -410,15 +393,45 @@ angular.module('chembiohubAssayApp')
             $scope.mapping = $scope.project_fields[0];
             //clear the URI indicating the mapping from the file column
             $scope.setNewMapping();
-            //also add this to the list of unmapped fields? Use dataoverviewctrl if so
+            //also add this to the list of unmapped fields?
 
           }
 
         }
       });
     };
-
     dataoverviewctrl.listOfUnmappedFields = []
+    //create a list of fields which still need a mapping
+    dataoverviewctrl.getListOfUnmappedFields = function(fields, map){
+      
+      var fieldList = []
+      console.log('fields', fields);
+      console.log('map', map);
+      //check each entry in title map - if it has no corresponding entry in any attachment field config, add it to the list
+      angular.forEach(map, function(item){
+
+        var hasEntry = false;
+        angular.forEach(fields, function(field) {
+          if(field.attachment_field_mapped_to){
+            
+            if (field.attachment_field_mapped_to == item.value){
+              hasEntry = true;
+            }
+
+
+          }
+
+        });
+        if(!hasEntry){
+          fieldList.push(item.value)
+        }
+
+      })
+
+      return fieldList;
+    };
+
+    
 
     dataoverviewctrl.someMappingFunction = function(col_being_mapped){
       //console.log('map_to_field_id', map_to_field_id)

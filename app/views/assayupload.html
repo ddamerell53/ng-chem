@@ -58,7 +58,6 @@
         
         <tab ng-repeat="sheet in dpclassif.uploadData.sheets" select="sheet.specifySheet()">
             <tab-heading>{{sheet.name}}</tab-heading>
-            
             <div class="row" ng-if="sheet.metadata.resource_uri">
             	<div class="col-xs-12">
 	            	<div class="pull-left">
