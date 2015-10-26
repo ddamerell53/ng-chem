@@ -157,6 +157,16 @@ angular.module('chembiohubAssayApp')
                  });
               }
 
+              //find the correct sheet headers to use
+              sheet.useCorrectSheetHits = function(index, hits){
+                angular.forEach(hits, function(hit){
+                  console.log('hit', hit);
+                  if(hit._index == 'temp_attachment_sheet__' + index){
+                    return hit._source.attachment_data.project_data;
+                  }
+                });
+              }
+
             dpc.uploadData.sheets.push(sheet);
           })
           dpc.uploadData.uploaded = true;
@@ -339,6 +349,51 @@ angular.module('chembiohubAssayApp')
         }
       });
     };
+
+    dataoverviewctrl.showMappingPopup = function(project_fields, col_being_mapped) {
+
+      $scope.project_fields = project_fields;
+      $scope.col_being_mapped = col_being_mapped;
+      $scope.modalInstance = $modal.open({
+        templateUrl: 'views/templates/map-file-modal.html',
+        size: 'sm',
+        resolve: {
+          project_fields: function () {
+            return $scope.project_fields;
+          },
+          col_being_mapped: function () {
+            return $scope.col_being_mapped;
+          },
+
+        }, 
+        controller: function($scope, $modalInstance, project_fields, col_being_mapped, $timeout) {
+          $scope.project_fields = project_fields;
+          $scope.col_being_mapped = col_being_mapped;
+          
+          $scope.modalInstance = $modalInstance;
+
+          $scope.mapping = {
+            'choice': ''
+          }
+
+          $scope.cancel = function () {
+            $modalInstance.dismiss('cancel');
+          };
+
+          $scope.someMappingFunction = function(col_being_mapped) {
+            dataoverviewctrl.someMappingFunction(col_being_mapped);
+          };
+
+        }
+      });
+    };
+
+    dataoverviewctrl.someMappingFunction = function(col_being_mapped){
+      console.log('file_field_id', col_being_mapped.resource_uri)
+      //console.log('map_to_field_id', map_to_field_id)
+
+    }
+
     dataoverviewctrl.openEditDetail = function(input_popup_data) {
 
       $scope.popup_data = angular.copy(input_popup_data);

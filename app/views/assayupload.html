@@ -70,16 +70,22 @@
             </div>
 
              <div class="row" ng-if="sheet.metadata.resource_uri" eui-index="'cbh_attachments__' + sheet.metadata.id"   eui-sort="ejs.Sort('id').order('asc')" eui-enabled="true" style="margin:5px 5px 0;">
-
+                
              	<!-- Table goes here -->
              	<table class="table table-striped">
-
+                            
                             <thead>
                                 <tr>
-                                    <th ng-repeat="bottomlevelfield in dpclassif.next_level_cfc.project_data_fields">
+                                    <!-- <th ng-repeat="bottomlevelfield in dpclassif.next_level_cfc.project_data_fields"> -->
+                                    <!-- <th ng-repeat="(key, value) in sheet.useCorrectSheetHits(sheet.metadata.id, indexVM.results.hits.hits)"> -->
+                                    <!-- <th ng-repeat="(key, value) in indexVM.results.hits.hits[0]._source.attachment_data.project_data"> -->
+                                    <th ng-repeat="item in sheet.metadata.attachment_custom_field_config.project_data_fields track by item.position">
+
                                         <small>
-                                        {{bottomlevelfield.name}}
-                                    </small>
+                                            {{ item.elasticsearch_fieldname | removeSpaces }}
+                                        </small>
+                                        <!-- {{sheet.metadata.attachment_custom_field_config}} -->
+                                        <button class="tableFilter btn btn-default" ng-click="dataoverviewctrl.showMappingPopup(sheet.metadata.titleMap, item)"><span class="glyphicon glyphicon-random"></span></button>
                                     </th>
                                 </tr>
                             </thead>
