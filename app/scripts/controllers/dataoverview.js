@@ -359,7 +359,9 @@ angular.module('chembiohubAssayApp')
 
         }, 
         controller: function($scope, $modalInstance, project_fields, col_being_mapped, $timeout, $filter) {
-          $scope.project_fields = project_fields;
+          $scope.project_fields = angular.copy(project_fields);
+          $scope.modded_project_fields = [$scope.project_fields[0]];
+
           $scope.col_being_mapped = col_being_mapped;
           
           $scope.modalInstance = $modalInstance;
@@ -375,6 +377,22 @@ angular.module('chembiohubAssayApp')
             }) 
           }
 
+          //limit project_field options to those which are not selected elsewhere, but still include the currently selected one (!)
+          angular.forEach(project_fields, function(field){
+            if(dataoverviewctrl.listOfUnmappedFields.indexOf(field.value) > -1){
+              $scope.modded_project_fields.push(field);
+            }
+            //is it this mapping?
+            if($scope.col_being_mapped.attachment_field_mapped_to){
+              if(field.value == col_being_mapped.attachment_field_mapped_to){
+                $scope.modded_project_fields.push(field)
+              }
+            }
+
+
+          })
+
+          
           $scope.cancel = function () {
             $modalInstance.dismiss('cancel');
           };

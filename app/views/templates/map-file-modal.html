@@ -13,8 +13,9 @@
             <div class="pull-left" aria-hidden="false">
                 
                 
-                <select ng-options="field.name for field in project_fields track by field.value" ng-model="mapping" class="form-control" ng-change="setNewMapping()" style="width:100%">
+                <select ng-options="field.name for field in modded_project_fields track by field.value" ng-model="mapping" class="form-control" ng-change="setNewMapping()" style="width:100%" ng-class="'text-success'">
                 </select>
+
                 <a ng-click="clearMapping()" class="pull-right">Clear</a>
 
 
