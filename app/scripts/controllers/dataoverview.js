@@ -98,6 +98,7 @@ angular.module('chembiohubAssayApp')
     }
     }
     dpc.initUpload();
+    
    
     dpc.cancelFile = function(){
       dpc.setChosenDataFormConfigMultiple(dfc_uri, adding, templateData);
@@ -143,6 +144,8 @@ angular.module('chembiohubAssayApp')
                       }, function(result){
                         sheet.active=true;
                         sheet.metadata = result;
+                        //sheet.listOfMappedFields = dpc.getListOfMappedFields(sheet.metadata.attachment_custom_field_config.project_data_fields);
+                        dataoverviewctrl.listOfUnmappedFields = dpc.getListOfUnmappedFields(sheet.metadata.attachment_custom_field_config.project_data_fields);
                         dataoverviewctrl.currentlyLoading = false;
                       });
                  }
@@ -157,16 +160,6 @@ angular.module('chembiohubAssayApp')
                  });
               }
 
-              //find the correct sheet headers to use
-              sheet.useCorrectSheetHits = function(index, hits){
-                angular.forEach(hits, function(hit){
-                  console.log('hit', hit);
-                  if(hit._index == 'temp_attachment_sheet__' + index){
-                    return hit._source.attachment_data.project_data;
-                  }
-                });
-              }
-
             dpc.uploadData.sheets.push(sheet);
           })
           dpc.uploadData.uploaded = true;
@@ -176,7 +169,17 @@ angular.module('chembiohubAssayApp')
     }
 
   
-
+            dpc.getListOfUnmappedFields = function(sheet){
+              /*console.log('getListOfRequiredFields', sheet);
+              return ['a','b','c']*/
+              //array map the fields marked as mapped
+              var fieldList = sheet.map(function(obj){ 
+                 if(!obj.attachment_field_mapped_to_id){
+                   return obj.id;
+                 }
+              });
+              return fieldList;
+            }
 
 
             dpc.next_level_searchnames = dpc.next_level_cfc.project_data_fields.map(function(field){
@@ -388,9 +391,22 @@ angular.module('chembiohubAssayApp')
       });
     };
 
+    dataoverviewctrl.listOfUnmappedFields = []
+
     dataoverviewctrl.someMappingFunction = function(col_being_mapped){
-      console.log('file_field_id', col_being_mapped.resource_uri)
       //console.log('map_to_field_id', map_to_field_id)
+      //remove from the lst of unmapped fields
+      dataoverviewctrl.listOfUnmappedFields.splice(dataoverviewctrl.listOfUnmappedFields.indexOf(col_being_mapped.id), 1);
+
+      var promise = $http.patch(  col_being_mapped.resource_uri ,       
+              col_being_mapped
+          ).then(
+          function(data){
+              return data.data;
+          }
+      );
+      return promise;
+      
 
     }
 
