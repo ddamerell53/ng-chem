@@ -16,8 +16,8 @@
                     {{field.name}}
                   </option>
                 </select> -->
-
-                <select ng-options="field.name for field in project_fields track by field.value" ng-model="col_being_mapped.attachment_field_mapped_to" class="form-control" style="width:100%">
+                
+                <select ng-options="field.name for field in project_fields track by field.value" ng-model="mapping" class="form-control" ng-change="setNewMapping()" style="width:100%">
                 </select>
 
 

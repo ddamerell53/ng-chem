@@ -369,14 +369,26 @@ angular.module('chembiohubAssayApp')
           },
 
         }, 
-        controller: function($scope, $modalInstance, project_fields, col_being_mapped, $timeout) {
+        controller: function($scope, $modalInstance, project_fields, col_being_mapped, $timeout, $filter) {
           $scope.project_fields = project_fields;
           $scope.col_being_mapped = col_being_mapped;
           
           $scope.modalInstance = $modalInstance;
 
           $scope.mapping = {
-            'choice': ''
+            'name': '',
+            'value': ''
+          }
+
+          if(col_being_mapped.attachment_field_mapped_to) {
+            //$scope.mapping.value = col_being_mapped.attachment_field_mapped_to;
+            //$scope.mapping.name = $filter('filter')()
+            //find the project field where the URI is the value
+            angular.forEach(project_fields, function(field){
+              if(field.value == col_being_mapped.attachment_field_mapped_to){
+                $scope.mapping = field;
+              }
+            }) 
           }
 
           $scope.cancel = function () {
@@ -386,6 +398,10 @@ angular.module('chembiohubAssayApp')
           $scope.someMappingFunction = function(col_being_mapped) {
             dataoverviewctrl.someMappingFunction(col_being_mapped);
           };
+
+          $scope.setNewMapping = function(){
+            col_being_mapped.attachment_field_mapped_to = $scope.mapping.value
+          }
 
         }
       });
