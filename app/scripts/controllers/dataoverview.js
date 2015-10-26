@@ -174,7 +174,7 @@ angular.module('chembiohubAssayApp')
               return ['a','b','c']*/
               //array map the fields marked as mapped
               var fieldList = sheet.map(function(obj){ 
-                 if(!obj.attachment_field_mapped_to_id){
+                 if(!obj.attachment_field_mapped_to){
                    return obj.id;
                  }
               });
