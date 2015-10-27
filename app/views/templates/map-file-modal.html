@@ -9,7 +9,7 @@
             <div aria-hidden="false">
                 
                 
-                <select id="field-selector" ng-options="field.name for field in modded_project_fields track by field.value" ng-model="mapping" class="form-control" ng-change="someMappingFunction(col_being_mapped);" style="width:100%" ng-class="'text-success'">
+                <select id="field-selector" ng-options="field.name for field in modded_project_fields track by field.value" ng-model="mapping" ng-required="col_being_mapped.required" class="form-control" ng-change="someMappingFunction(col_being_mapped);" style="width:100%" ng-class="'text-success'">
                 </select>
 
                 <a ng-click="clearMapping()" class="pull-right">Clear selection</a><br>
