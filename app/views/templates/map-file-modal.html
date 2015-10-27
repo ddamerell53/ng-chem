@@ -12,7 +12,7 @@
                 <select id="field-selector" ng-options="field.name for field in modded_project_fields track by field.value" ng-model="mapping" ng-required="col_being_mapped.required" class="form-control" ng-change="someMappingFunction(col_being_mapped);" style="width:100%" ng-class="'text-success'">
                 </select>
 
-                <a ng-click="clearMapping()" class="pull-right">Clear selection</a><br>
+                <a ng-click="clearMapping(col_being_mapped.required)" class="pull-right">Clear selection</a><br>
 
                 <div class="pull-right">Why is this list limited? <info-box freetext="The dropdown list shows fields which don't currently have a mapping. If you want to re-map a column, you need to click Clear Selection on the column that currently has that mapping to free it up." right="true"></info-box>
                 </div>

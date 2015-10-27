@@ -122,7 +122,8 @@ angular.module('chembiohubAssayApp')
             var sheet = {'name': sheet_name,
                           active:false};
 
-              sheet.listOfUnmappedFields = []
+              sheet.listOfUnmappedFields = [];
+              sheet.listOfUnmappedMandatoryFields = [];
             sheet.specifySheet = function() {
                  if(!angular.isDefined(sheet.metadata)){
                       
@@ -166,6 +167,34 @@ angular.module('chembiohubAssayApp')
               }
               //create a list of fields which still need a mapping
               sheet.getListOfUnmappedFields = function(fields, map){
+                
+                var fieldList = []
+                console.log('fields', fields);
+                console.log('map', map);
+                //check each entry in title map - if it has no corresponding entry in any attachment field config, add it to the list
+                angular.forEach(map, function(item){
+
+                  var hasEntry = false;
+                  angular.forEach(fields, function(field) {
+                    if(field.attachment_field_mapped_to){
+                      
+                      if (field.attachment_field_mapped_to == item.value || !item.value){
+                        hasEntry = true;
+                      }
+
+
+                    }
+
+                  });
+                  if(!hasEntry){
+                    fieldList.push(item.value)
+                  }
+
+                })
+
+                return fieldList;
+              };
+              sheet.getListOfUnmappedMandatoryFields = function(fields, map){
                 
                 var fieldList = []
                 console.log('fields', fields);
@@ -449,6 +478,9 @@ angular.module('chembiohubAssayApp')
             var name_of_field = $scope.mapping.name;
             if(col_being_mapped.attachment_field_mapped_to){
               sheet.listOfUnmappedFields.splice(sheet.listOfUnmappedFields.indexOf(col_being_mapped.attachment_field_mapped_to), 1);  
+              if(col_being_mapped.required){
+                sheet.listOfUnmappedMandatoryFields.splice(sheet.listOfUnmappedMandatoryFields.indexOf(col_being_mapped.attachment_field_mapped_to), 1);  
+              }
             }
             var promise = $http.patch(  col_being_mapped.resource_uri ,       
                   col_being_mapped
@@ -459,10 +491,14 @@ angular.module('chembiohubAssayApp')
                       //we can't map this field.
                       //re-add the field to the list of unmapped fields
                       console.log('getting here');
-                      if(col_being_mapped.required) {
+                      //if(col_being_mapped.required) {
                         sheet.listOfUnmappedFields.push(old_attachment_field_mapped_to)
                         $scope.sheet.listOfUnmappedFields.push(old_attachment_field_mapped_to)
-                      }
+                      //}
+                        if(col_being_mapped.required) {
+                          sheet.listOfUnmappedMandatoryFields.push(old_attachment_field_mapped_to)
+                          $scope.sheet.listOfUnmappedMandatoryFields.push(old_attachment_field_mapped_to)
+                        }
                       
                       //change the error message to say you still can't map that field
                       $scope.mapping = $scope.project_fields[0];
@@ -490,9 +526,12 @@ angular.module('chembiohubAssayApp')
             col_being_mapped.attachment_field_mapped_to = $scope.mapping.value
           };
 
-          $scope.clearMapping = function(){
+          $scope.clearMapping = function(isRequiredField){
             //deselct the items from the ngmodel of the select box
             sheet.listOfUnmappedFields.push($scope.mapping.value);
+            if(isRequiredField){
+              sheet.listOfUnmappedMandatoryFields.push($scope.mapping.value);
+            }
             $scope.mapping = $scope.project_fields[0];
             //clear the URI indicating the mapping from the file column
             $scope.setNewMapping();
