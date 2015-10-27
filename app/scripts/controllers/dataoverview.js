@@ -342,10 +342,11 @@ angular.module('chembiohubAssayApp')
       });
     };
 
-    dataoverviewctrl.showMappingPopup = function(project_fields, col_being_mapped) {
+    dataoverviewctrl.showMappingPopup = function(project_fields, col_being_mapped, sheetId) {
 
       $scope.project_fields = project_fields;
       $scope.col_being_mapped = col_being_mapped;
+      $scope.sheetId = sheetId;
       $scope.modalInstance = $modal.open({
         templateUrl: 'views/templates/map-file-modal.html',
         size: 'sm',
@@ -356,13 +357,17 @@ angular.module('chembiohubAssayApp')
           col_being_mapped: function () {
             return $scope.col_being_mapped;
           },
+          sheetId: function () {
+            return $scope.sheetId;
+          },
 
         }, 
-        controller: function($scope, $modalInstance, project_fields, col_being_mapped, $timeout, $filter) {
+        controller: function($scope, $modalInstance, project_fields, col_being_mapped, sheetId, $timeout, $filter) {
           $scope.project_fields = angular.copy(project_fields);
           $scope.modded_project_fields = [$scope.project_fields[0]];
 
           $scope.col_being_mapped = col_being_mapped;
+          $scope.sheetId = sheetId;
           
           $scope.modalInstance = $modalInstance;
 

@@ -87,7 +87,7 @@
                                             {{ item.elasticsearch_fieldname | removeSpaces }}
                                         </small><br>
                                         <!-- {{sheet.metadata.attachment_custom_field_config}} -->
-                                        <button class="tableFilter btn btn-default" ng-click="dataoverviewctrl.showMappingPopup(sheet.metadata.titleMap, item)"><span class="glyphicon glyphicon-random" ng-class="{'text-success': item.attachment_field_mapped_to, 'text-warning': !item.attachment_field_mapped_to}"></span></button>
+                                        <button class="tableFilter btn btn-default" ng-click="dataoverviewctrl.showMappingPopup(sheet.metadata.titleMap, item, sheet.metadata.id)"><span class="glyphicon glyphicon-random" ng-class="{'text-success': item.attachment_field_mapped_to, 'text-warning': !item.attachment_field_mapped_to}"></span></button>
                                     </th>
                                 </tr>
                             </thead>
