@@ -185,7 +185,7 @@ angular.module('chembiohubAssayApp')
                     }
 
                   });
-                  if(!hasEntry){
+                  if(!hasEntry && field.required){
                     fieldList.push(item.value)
                   }
 
@@ -459,8 +459,11 @@ angular.module('chembiohubAssayApp')
                       //we can't map this field.
                       //re-add the field to the list of unmapped fields
                       console.log('getting here');
-                      sheet.listOfUnmappedFields.push(old_attachment_field_mapped_to)
-                      $scope.sheet.listOfUnmappedFields.push(old_attachment_field_mapped_to)
+                      if(col_being_mapped.required) {
+                        sheet.listOfUnmappedFields.push(old_attachment_field_mapped_to)
+                        $scope.sheet.listOfUnmappedFields.push(old_attachment_field_mapped_to)
+                      }
+                      
                       //change the error message to say you still can't map that field
                       $scope.mapping = $scope.project_fields[0];
                       $scope.messageClass = "text-danger";

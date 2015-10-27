@@ -55,8 +55,8 @@
             <div class="row" ng-if="sheet.metadata.resource_uri">
             	<div class="col-xs-12">
 	            	<div class="pull-left">
-                        <div ng-if="sheet.listOfUnmappedFields.length > 0" class="alert-warning" style="padding:10px;"><span class="glyphicon glyphicon-warning-sign"></span> <small>There are unmapped fields in your file</small></div>
-                        <div ng-if="sheet.listOfUnmappedFields.length == 0" class="alert-success" style="padding:10px;"><span class="glyphicon glyphicon-ok"></span> <small>All fields mapped</small></div>
+                        <div ng-if="sheet.listOfUnmappedFields.length > 0" class="alert-warning" style="padding:10px;"><span class="glyphicon glyphicon-warning-sign"></span> <small>There are unmapped mandaatory fields in your file</small></div>
+                        <div ng-if="sheet.listOfUnmappedFields.length == 0" class="alert-success" style="padding:10px;"><span class="glyphicon glyphicon-ok"></span> <small>All mandatory fields mapped</small></div>
                     </div>
                     <div class="pull-right">
 	            		<a ng-click="file.cancel(); cancelFile(); $flow.files=[]; dpclassif.cancelFile(); dpclassif.addingMultiple = false;" role="button" class="btn btn-danger">Cancel</a>
