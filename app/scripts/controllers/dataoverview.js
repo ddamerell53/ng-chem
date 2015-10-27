@@ -408,6 +408,11 @@ angular.module('chembiohubAssayApp')
 
           $scope.mapping = $scope.project_fields[0];
 
+          $scope.sheet = sheet;
+
+          $scope.warningMessage = "You have rows with unmappable data in this field.";
+          $scope.messageClass = "text-danger";
+
           if(col_being_mapped.attachment_field_mapped_to) {
             //find the project field where the URI is the value
             angular.forEach(project_fields, function(field){
@@ -438,10 +443,44 @@ angular.module('chembiohubAssayApp')
           };
 
           $scope.someMappingFunction = function(col_being_mapped) {
+            //store a copy of the field being mapped to in case we lose it after patching
+            console.log('someMappingFunction being called');
+            var old_attachment_field_mapped_to = col_being_mapped.attachment_field_mapped_to;
+            var name_of_field = $scope.mapping.name;
             if(col_being_mapped.attachment_field_mapped_to){
               sheet.listOfUnmappedFields.splice(sheet.listOfUnmappedFields.indexOf(col_being_mapped.attachment_field_mapped_to), 1);  
             }
-            dataoverviewctrl.someMappingFunction(col_being_mapped);
+            var promise = $http.patch(  col_being_mapped.resource_uri ,       
+                  col_being_mapped
+                ).then(
+                function(data){
+                    $scope.setNewMapping();
+                    if(data.data.attachment_field_unmappable_to){
+                      //we can't map this field.
+                      //re-add the field to the list of unmapped fields
+                      console.log('getting here');
+                      sheet.listOfUnmappedFields.push(old_attachment_field_mapped_to)
+                      $scope.sheet.listOfUnmappedFields.push(old_attachment_field_mapped_to)
+                      //change the error message to say you still can't map that field
+                      $scope.mapping = $scope.project_fields[0];
+                      $scope.messageClass = "text-danger";
+                      $scope.warningMessage = "You cannot map to " + name_of_field;
+                      //blur the select box to refresh
+                      var selectBox = document.getElementById('field-selector');
+                      angular.element(selectBox).blur();
+                    }
+                    else {
+                      $scope.messageClass = "text-success";
+                      $scope.warningMessage = "Mapping saved";
+                      return data.data;
+                    }
+                    
+                }, function(errorData){
+                  
+                  
+                }
+            );
+            return promise;
           };
 
           $scope.setNewMapping = function(){
@@ -461,7 +500,7 @@ angular.module('chembiohubAssayApp')
       });
     };    
 
-    dataoverviewctrl.someMappingFunction = function(col_being_mapped){
+    /*dataoverviewctrl.someMappingFunction = function(col_being_mapped){
       //console.log('map_to_field_id', map_to_field_id)
       //remove from the lst of unmapped fields
       
@@ -470,12 +509,14 @@ angular.module('chembiohubAssayApp')
           ).then(
           function(data){
               return data.data;
+          }, function(errorData){
+            alert(errorData);
           }
       );
       return promise;
       
 
-    }
+    }*/
 
     dataoverviewctrl.openEditDetail = function(input_popup_data) {
 
@@ -518,6 +559,8 @@ angular.module('chembiohubAssayApp')
                     $modalInstance.dismiss('saved');
                       $state.go($state.current, $stateParams, {reload: true});
                   });
+            }, function(errorData){
+              //TODO error handling
             });
           }
         }
@@ -545,6 +588,9 @@ dataoverviewctrl.setLoadingMessageHeight = function(){
         AddDF.save(new_dpc,
             function(data){
               $state.go($state.current, $stateParams, {reload: true});
+            },
+            function(errorData){
+              //TODO error handling
             }
           );
       }

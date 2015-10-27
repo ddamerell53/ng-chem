@@ -6,39 +6,39 @@
     flow-complete="dpclassif.filesUploading=false"> 
 
 <div class="row">
-<div class="col-sm-6 col-xs-offset-2">
-<div class="row">
-    
-    <div class="col-xs-12">
-    	<label for="file_input" class="blue"><strong class="nexa">Drag and drop your files here or click Upload to browse for a file</strong></label>
-        <info-box style="margin-top:-5px; margin-right:5px" right="true" lookup="assay_file_upload_help_text" lookupitems="cbh.messages"></info-box>
-        <div flow-drop flow-drag-enter="style={border:'4px dashed green', padding: '10px'}" flow-drag-leave="style={border:'4px dashed #ddd', padding: '10px'}" ng-style="style={border:'4px dashed #ddd', padding: '10px'}" class="col-sm-9 col-lg-10" style="min-height:50px">
-		    <div ng-repeat="file in $flow.files" style="margin-bottom:0px; min-height:40px">
-		        <!-- <td>{{$index+1}}</td> -->
-		        {{file.name | limitTo : 40}}
+    <div class="col-sm-6 col-xs-offset-2">
+        <div class="row">
+            
+            <div class="col-xs-12">
+            	<label for="file_input" class="blue"><strong class="nexa">Drag and drop your files here or click Upload to browse for a file</strong></label>
+                <info-box style="margin-top:-5px; margin-right:5px" right="true" lookup="assay_file_upload_help_text" lookupitems="cbh.messages"></info-box>
+                <div flow-drop flow-drag-enter="style={border:'4px dashed green', padding: '10px'}" flow-drag-leave="style={border:'4px dashed #ddd', padding: '10px'}" ng-style="style={border:'4px dashed #ddd', padding: '10px'}" class="col-sm-9 col-lg-10" style="min-height:50px">
+        		    <div ng-repeat="file in $flow.files" style="margin-bottom:0px; min-height:40px">
+        		        
+        		        {{file.name | limitTo : 40}}
 
-		    
-		    </div>
-		    
-		    <div style="margin-bottom:0px; min-height:40px" ng-show="$flow.files.length == 0">
-		        No files uploaded
-		    </div>
-		    <div ng-if="(datasets[current_dataset_id].config.type==='file')" class="alert alert-danger" ng-repeat="error in datasets[current_dataset_id].config.errors">
-		        {{error}}
-		    </div>
-	    </div>
-    </div>
-</div>
- 
-    <div class="row">
-    	<div class="col-xs-12 pull-right">
-    		<div class="btn-group">
-	            <span flow-btn name="file_input" role="btn" class="btn btn-primary btn-sm pull-right nexa" ng-show="$flow.files.length < 1">Upload</span>
-	            <a ng-show="$flow.files.length > 0" ng-click="file.cancel(); cancelFile(); $flow.files=[]; dpclassif.cancelFile();" class="btn btn-sm btn-danger pull-right" role="button">Remove</a>
-	            <a ng-click="file.cancel(); cancelFile(); $flow.files=[]; dpclassif.cancelFile(); dpclassif.addingMultiple = false;" class="btn btn-sm btn-danger pull-right" role="button">Cancel</a>
-	        </div>
+        		    
+        		    </div>
+        		    
+        		    <div style="margin-bottom:0px; min-height:40px" ng-show="$flow.files.length == 0">
+        		        No files uploaded
+        		    </div>
+        		    <div ng-if="(datasets[current_dataset_id].config.type==='file')" class="alert alert-danger" ng-repeat="error in datasets[current_dataset_id].config.errors">
+        		        {{error}}
+        		    </div>
+        	    </div>
+            </div>
         </div>
-    </div>
+     
+        <div class="row">
+        	<div class="col-xs-12 pull-left">
+    	            
+                    <a ng-click="file.cancel(); cancelFile(); $flow.files=[]; dpclassif.cancelFile(); dpclassif.addingMultiple = false;" class="btn btn-sm btn-danger" role="button">Cancel</a>
+    	            <a ng-show="$flow.files.length > 0" ng-click="file.cancel(); cancelFile(); $flow.files=[]; dpclassif.cancelFile();" class="btn btn-sm btn-danger" role="button">Remove</a>
+                    <span flow-btn name="file_input" role="btn" class="btn btn-primary btn-sm nexa" ng-show="$flow.files.length < 1">Upload</span>
+    	        
+            </div>
+        </div>
 
     </div>
 </div>
@@ -46,13 +46,7 @@
 <!-- Select sheet -->
 
 <div class="row" ng-show="dpclassif.uploadData.uploaded">
-	<!-- <div class="col-xs-12">
-				<label class="control-label">Select sheet containing your upload data:</label>
-				<select class="form-control" ng-options="sheet.name for sheet in dpclassif.uploadData.sheetNames" ng-model="dpclassif.uploadData.sheetName" ng-change="dpclassif.specifySheet()">
-				</select>
-
-			</div>
-	</div>	 -->
+	
     <label for="tabs" class="blue"><strong class="nexa">Select the tab corresponding to the required sheet from your spreadsheet.</strong><info-box lookup="assay_file_use_template" lookupitems="cbh.messages" right="true"></info-box></label>
     <tabset>
         
@@ -66,7 +60,8 @@
                     </div>
                     <div class="pull-right">
 	            		<a ng-click="file.cancel(); cancelFile(); $flow.files=[]; dpclassif.cancelFile(); dpclassif.addingMultiple = false;" role="button" class="btn btn-danger">Cancel</a>
-	            		<a ng-click="sheet.saveSheet(sheet.metadata.id)" role="button" class="btn btn-primary">Save this sheet</a>
+	            		<a ng-click="sheet.saveSheet(sheet.metadata.id)" role="button" class="btn btn-primary" ng-disabled="sheet.listOfUnmappedFields.length > 0">Save this sheet</a>
+                        <span ng-if="sheet.listOfUnmappedFields.length > 0"><info-box freetext="You have mandatory fields for this item which need to be mapped before you can save."></info-box></span>
 	            		
 	            	</div>
 	            </div>
@@ -126,9 +121,6 @@
                             </ul>
                         </div>
 
-                <!-- <div ng-repeat="childItem in indexVM.results.hits.hits">
-                    {{childItem}}
-                </div> -->
             </div>
         </tab>
     </tabset>
