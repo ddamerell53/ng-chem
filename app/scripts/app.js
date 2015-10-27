@@ -242,6 +242,33 @@ $urlRouterProvider.when('', '/projects/list');
               }
             });
           };
+          
+          /* Global error handling popup for displaying generic error messages */
+          cbh.errorPopup = function(input_popup_data) {
+
+            $scope.popup_data = angular.copy(input_popup_data);
+            $scope.modalInstance = $modal.open({
+              templateUrl: 'views/templates/modal-error-template.html',
+              size: 'sm',
+              resolve: {
+                popup_data: function () {
+                  return $scope.popup_data;
+                },
+
+              }, 
+              controller: function($scope, $modalInstance, popup_data, $timeout) {
+                $scope.popup_data = popup_data;
+                
+                $scope.modalInstance = $modalInstance;
+
+                $scope.cancel = function () {
+                  $modalInstance.dismiss('cancel');
+                };
+
+              }
+            });
+          };
+
 
 
 
