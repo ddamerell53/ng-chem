@@ -26,6 +26,28 @@
 
 
     </div>
+    
+    <div class="row" ng-if="col_being_mapped.unmappable_rows.length > 0">
+        <div class="col-xs-12" eui-index="'cbh_attachments__' + sheetId" eui-enabled="true">
+            <small class="text-danger">You have rows with unmappable data in this field.</small>
+            <table class="table table-responsive" eui-query="ejs.IdsQuery(col_being_mapped.unmappable_rows)" eui-sort="ejs.Sort('id').order('asc')" eui-enabled="true">
+                <thead>
+                    <tr>
+                        <th>Row</th>
+                        <th>Data Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="hit in indexVM.results.hits.hits">
+                        <td>{{hit._id}}</td>
+                        <td>{{hit._source.attachment_data.project_data[col_being_mapped.elasticsearch_fieldname]}}</td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+
+        </div>
+    </div>
 
 
 </div>
