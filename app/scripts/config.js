@@ -58,6 +58,18 @@ var $http = initInjector.get("$http");
 var req = $http({  method: "get",
                     url: configuration.cbh_projects.list_endpoint,
                     params: {"schemaform": true, "limit":1000}, });
+
+var userReq = $http({  method: "get",
+                    url: configuration.users.list_endpoint,
+                    params: {"limit":1000}, });
+
+
+userReq.then(function(userData){
+  angular.module('chembiohubAssayApp').value('userList', userData.data.objects );
+});
+
+
+
 req.then(function(projData){
     angular.module('chembiohubAssayApp').value('loggedInUser',  
         projData.data.user

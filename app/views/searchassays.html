@@ -1,7 +1,7 @@
 <!-- For date range aggregation, use angular bound variables -->
 
 
-<div>
+<div >
 	<div class="row mt">
 		<div class="col-xs-12">
 			<h2 class="blue"><span class="glyphicon glyphicon-search"></span> Search Assays <br><small>Narrow down assay results using the form below</small></h2>
@@ -12,16 +12,18 @@
 
 			<!-- User search -->
 			<div class="form-group">
-				<label class="control-label">User</label>
+				<label class="control-label">Activity Created By User</label>
 				<!-- <input class="form-control" type="text" eui-query="ejs.MultiMatchQuery([dpclassif.next_level + '.project_data_all'] , querystring).type('phrase_prefix')" ng-model="querystring" eui-enabled="querystring" eui-highlight="ejs.Highlight('*').preTags('<span class=\'highlighted\'>').postTags('</span>')"/> -->
-				<select class="form-control">
-					<option>Select User</option>
-				</select>
+				<ui-select multiple ng-model="userData.useruris" theme="bootstrap" >
+				    <ui-select-match placeholder="&#9660;&nbsp;Select User...">{{$item.username}}</ui-select-match>
+				    <ui-select-choices repeat="u.resource_uri as u in users">
+				      <div ng-bind-html="u.first_name + ' ' + u.last_name + ' ' + u.username"></div>
+				    </ui-select-choices>
+				  </ui-select>
 
 			</div>
-			
-
 		</div>
+
 		<div class="col-xs-4">
 			<!-- Date start -->
 			<div class="form-group">
@@ -45,15 +47,22 @@
 
 
 	<div class="row" >
-		<div class="col-xs-4" eui-index="'cbh_queries'" eui-enabled='true' eui-filter="ejs.TermFilter('level_from', 'l0')">
+		<div class="col-xs-4" >
+
+
 
 			<!-- Project search -->
 			<div class="form-group">
 				<label class="control-label">Projects</label>
 				
-				<select class="form-control" name="l0options" id="l0options" ng-model="selections.l0" multiple>
-			      <option ng-repeat="childItem in indexVM.results.hits.hits" value="{{childItem._source.l0.resource_uri}}" ng-selected="isSelectedInUrl('l0', childItem._source.l0.resource_uri)">{{childItem._source.l0.project_data.Title}}</option>
-			    </select>
+				  <ui-select multiple ng-model="selections.l0" theme="bootstrap" eui-index="'cbh_queries'" eui-enabled='true' eui-filter="ejs.TermFilter('level_from', 'l0')" >
+				  <span eui-query="ejs.MultiMatchQuery(['l0.project_data_all'], $select.search).type('phrase_prefix')"  eui-enabled="$select.search" ></span>
+				    <ui-select-match placeholder="&#9660;&nbsp;Select Project...">{{$item._source.l0.project_data.Title}}</ui-select-match>
+				    <ui-select-choices repeat="childItem._source.l0.resource_uri as childItem in indexVM.results.hits.hits">
+				      <div ng-bind-html="childItem._source.l0.project_data.Title"></div>
+				    </ui-select-choices>
+				  </ui-select>
+
 				<span class="pull-right"><small><a ng-click="clearSelections('l0')">Clear</a></small></span>
 
 			</div>
@@ -61,31 +70,41 @@
 			
 
 		</div>
-		<div class="col-xs-4" eui-index="'cbh_queries'" eui-enabled='true' eui-filter="ejs.TermFilter('level_from', 'l1')">
+		<div class="col-xs-4" >
 			<!-- Sub Project search -->
 			<div class="form-group">
-				<span eui-enabled="selections.l0.length > 0" eui-filter="ejs.TermsFilter('l0.resource_uri.raw', selections.l0)"></span>
+				
 				<label class="control-label">Sub Projects</label>
 				
-				<select class="form-control" name="l1options" id="l1options" ng-model="selections.l1" multiple>
-			      <option ng-repeat="childItem in indexVM.results.hits.hits" value="{{childItem._source.l1.resource_uri}}" ng-selected="isSelectedInUrl('l1', childItem._source.l1.resource_uri)">{{childItem._source.l1.project_data.Title}}</option>
-			    </select>
+				<ui-select multiple ng-model="selections.l1" theme="bootstrap" eui-index="'cbh_queries'" eui-enabled='true' eui-filter="ejs.TermFilter('level_from', 'l1')">
+				<span eui-enabled="selections.l0.length > 0" eui-filter="ejs.TermsFilter('l0.resource_uri.raw', selections.l0)"></span>
+				<span eui-query="ejs.MultiMatchQuery(['l1.project_data_all'], $select.search).type('phrase_prefix')"  eui-enabled="$select.search" ></span>
+				    <ui-select-match placeholder="&#9660;&nbsp;Select Sub Project...">{{$item._source.l1.project_data.Title}}</ui-select-match>
+				    <ui-select-choices repeat="childItem._source.l1.resource_uri as childItem in indexVM.results.hits.hits">
+				      <div ng-bind-html="childItem._source.l1.project_data.Title"></div>
+				    </ui-select-choices>
+				  </ui-select>
 				<span class="pull-right"><small><a ng-click="clearSelections('l1')">Clear</a></small></span>
 			</div>
 
 
 		</div>
-		<div class="col-xs-4" eui-index="'cbh_queries'" eui-enabled='true' eui-filter="ejs.TermFilter('level_from', 'l2')">
+		<div class="col-xs-4">
 			<!-- Assay search -->
 			<div class="form-group">
-				<span eui-enabled="selections.l0.length > 0" eui-filter="ejs.TermsFilter('l0.resource_uri.raw', selections.l0)"></span>
-				<span eui-enabled="selections.l1.length > 0" eui-filter="ejs.TermsFilter('l1.resource_uri.raw', selections.l1)"></span>
+				
 
 				<label class="control-label">Assays</label>
 				
-				<select class="form-control" name="l2options" id="l2options" ng-model="selections.l2" multiple>
-			      <option ng-repeat="childItem in indexVM.results.hits.hits" value="{{childItem._source.l2.resource_uri}}" ng-selected="isSelectedInUrl('l2', childItem._source.l2.resource_uri)">{{childItem._source.l2.project_data.Title}}</option>
-			    </select>
+				<ui-select multiple ng-model="selections.l2" theme="bootstrap"  eui-index="'cbh_queries'" eui-enabled='true' eui-filter="ejs.TermFilter('level_from', 'l2')" >
+				<span eui-enabled="selections.l0.length > 0" eui-filter="ejs.TermsFilter('l0.resource_uri.raw', selections.l0)"></span>
+				<span eui-enabled="selections.l1.length > 0" eui-filter="ejs.TermsFilter('l1.resource_uri.raw', selections.l1)"></span>
+				<span eui-query="ejs.MultiMatchQuery(['l2.project_data_all'], $select.search).type('phrase_prefix')"  eui-enabled="$select.search" ></span>
+				    <ui-select-match placeholder="&#9660;&nbsp;Select Assay...     ">{{$item._source.l2.project_data.Title}}</ui-select-match>
+				    <ui-select-choices repeat="childItem._source.l2.resource_uri as childItem in indexVM.results.hits.hits">
+				      <div ng-bind-html="childItem._source.l2.project_data.Title"></div>
+				    </ui-select-choices>
+				  </ui-select>
 					<span class="pull-right"><small><a ng-click="clearSelections('l2')">Clear</a></small></span>
 					
 			</div>
@@ -93,7 +112,7 @@
 		</div>
 	</div>
 
-	<div class="row">
+	<!-- <div class="row">
 		<div class="col-xs-12" eui-index="'cbh_queries'" eui-enabled='true' >
 			<h2 class="blue">Advanced Search</h2>
 			<div class="row"  ng-repeat="custom_field in advancedSearchFields">
@@ -103,7 +122,6 @@
 							<span eui-enabled="true" eui-aggregation="ejs.TermsAggregation('advancedl1').field('l1.project_data_all')"></span>
 							<span eui-enabled="true" eui-aggregation="ejs.TermsAggregation('advancedl2').field('l2.project_data_all')"></span>
 							<span eui-enabled="true" eui-aggregation="ejs.TermsAggregation('advancedl3').field('l3.project_data_all')"></span>
-							<!-- Look up fields from project data fields -->
 							<input class="form-control" 
 							       placeholder="Field Name" 
 							       type="text" 
@@ -128,7 +146,6 @@
 								</ul>
 						</div>
 						<div class="col-xs-8">
-							<!-- Specify value - will need to change this based on value type of selected field -->
 							<input type="text" 
 							       name="custom_field_value_{{custom_field.id}}" 
 							       id="custom_field_value_{{custom_field.id}}" 
@@ -142,19 +159,18 @@
 					</div>
 				</div>
 	
-			<!-- Calculated properties here -->
 			<div class="row">
 				<div class="col-xs-12"><p><a ng-click="addCustomField()" class="btn btn-primary" role="button" ><span class="glyphicon glyphicon-plus-sign"></span> Add Custom Field</a></p>
 				</div>
 			</div>
 		</div>
-	</div>
+	</div> -->
 
 	<div class="row">
 		<div class="col-xs-12">
 			<div class="pull-right">
-				<a href="#" class="btn btn-lg btn-danger" role="button" ng-click="resetForm()"><span class="glyphicon glyphicon-remove"></span> Reset</a>
-				<a href="#" class="btn btn-lg btn-success" role="button"><span class="glyphicon glyphicon-ok"></span> Run Search</a>
+				<button  class="btn btn-lg btn-danger" role="button" ng-click="resetForm()"><span class="glyphicon glyphicon-remove"></span> Reset</button>
+				<button  class="btn btn-lg btn-success" role="button"><span class="glyphicon glyphicon-ok"></span> Run Search</button>
 			</div>
 		</div>
 	</div>
@@ -181,6 +197,7 @@
 				<span eui-enabled="dates.startES != ''" eui-filter="ejs.RangeFilter('l3.created').gte(dates.startES)"></span>
 				<span eui-enabled="dates.endES != ''" eui-filter="ejs.RangeFilter('l3.created').lte(dates.endES)"></span>
 				<span eui-enabled="cbh.textsearch" eui-query="ejs.MultiMatchQuery(['l0.project_data_all','l1.project_data_all','l2.project_data_all','l3.project_data_all'], cbh.textsearch).type('phrase_prefix')" ></span>
+				<span eui-enabled="userData.useruris.length > 0" eui-filter="ejs.TermsFilter('created_by.raw', userData.useruris)"></span>
 				<span eui-enabled="true" eui-highlight="ejs.Highlight('l0.*').preTags('<span class=\'highlighted\'>').postTags('</span>')"></span>
 
 				<!-- include filters for each advanced search field -->

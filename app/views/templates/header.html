@@ -26,10 +26,11 @@
 				<!-- eui-query="ejs.MultiMatchQuery(['l0.project_data.Title','l1.project_data.Title','l2.project_data.Title','l3.project_data.Title'], cbh.textsearch).type('phrase_prefix')" -->
 				<!--eui-aggregation="ejs.TermsAggregation('title_filtering').field('l1.project_data_all').size(10)"-->
 				<ul class="list-inline pull-right text-center">
-					
+
+			
 					<li style="vertical-align:top; margin-top:10px;">
 						<!-- Query to pull in titles -->
-						<span eui-enabled="cbh.textsearch" eui-query="ejs.MultiMatchQuery(['l0.project_data.Title','l1.project_data.Title','l2.project_data.Title','l3.project_data.Title'], cbh.textsearch).type('phrase_prefix')" eui-highlight="ejs.Highlight('*').preTags('<span class=\'highlighted\'>').postTags('</span>')"></span>
+						<span eui-enabled="cbh.textsearch" eui-query="ejs.BoolQuery().should(ejs.BoolQuery().must(ejs.MultiMatchQuery(['l0.project_data.Title'], cbh.textsearch).type('phrase_prefix')).must(ejs.TermQuery('level_from', 'l0'))).should(ejs.BoolQuery().must(ejs.MultiMatchQuery(['l1.project_data.Title'], cbh.textsearch).type('phrase_prefix')).must(ejs.TermQuery('level_from', 'l1'))).should(ejs.BoolQuery().must(ejs.MultiMatchQuery(['l2.project_data.Title'], cbh.textsearch).type('phrase_prefix')).must(ejs.TermQuery('level_from', 'l2')))" eui-highlight="ejs.Highlight('*').preTags('<span class=\'highlighted\'>').postTags('</span>')"></span>
 						
 						<!-- Terms aggregation to uniquely group Titles and limit each to the appropriate level -->
 						<span eui-enabled="cbh.textsearch" eui-aggregation="ejs.TermsAggregation('title_filtering_l0').field('l0.project_data.Title.raw').agg(ejs.TermsAggregation('l0_uri').field('l0.resource_uri.raw')).size(5).agg(ejs.FilterAggregation('L0agg').filter(ejs.TermFilter('level_from', 'l0')))"></span>
@@ -42,21 +43,25 @@
 								<!-- <li ng-repeat="item in indexVM.results.hits.hits" role="presentation">
 									<a ng-click="console.log('whee')">{{item._source.l0.project_data.Title}} &gt;&gt; {{item._source.l1.project_data.Title}} &gt;&gt; {{item._source.l2.project_data.Title}}</a>
 								</li> -->
-								<li ng-repeat="thing in indexVM.results.aggregations.title_filtering_l2.buckets" role="presentation" ng-if="indexVM.results.aggregations.title_filtering_l2.buckets[0].L2agg.doc_count > 0">
-									<a ui-sref="cbh.search_assays({l2: thing.l2_uri.buckets[0].key})">{{thing.key}}</a>
-								</li>
-								<li ng-if="indexVM.results.aggregations.title_filtering_l1.buckets[0].L1agg.doc_count > 0"><hr></li>
-								<li ng-repeat="thing in indexVM.results.aggregations.title_filtering_l1.buckets" role="presentation" ng-if="indexVM.results.aggregations.title_filtering_l1.buckets[0].L1agg.doc_count > 0">
-									<a ui-sref="cbh.search_assays({l1: thing.l1_uri.buckets[0].key})">{{thing.key}}</a>
-								</li>
-								<li ng-if="indexVM.results.aggregations.title_filtering_l0.buckets[0].L0agg.doc_count > 0"><hr></li>
-								<li ng-repeat="thing in indexVM.results.aggregations.title_filtering_l0.buckets" role="presentation" ng-if="indexVM.results.aggregations.title_filtering_l0.buckets[0].L0agg.doc_count > 0">
-									<a ui-sref="cbh.search_assays({l0: thing.l0_uri.buckets[0].key})">{{thing.key}}</a>
-								</li>
-								<li ng-if="indexVM.results.aggregations.title_filtering_l0.buckets[0].L0agg.doc_count > 0"><hr></li>
 								<li role="presentation">
 									<a ui-sref="cbh.search_assays({textsearch: cbh.textsearch})">Search AssayReg for "{{cbh.textsearch}}"</a>
 								</li>
+								<li ng-if="indexVM.results.aggregations.title_filtering_l2.buckets[0].L2agg.doc_count > 0"><hr></li>
+								<li ng-repeat="thing in indexVM.results.aggregations.title_filtering_l2.buckets" role="presentation" ng-if="indexVM.results.aggregations.title_filtering_l2.buckets[0].L2agg.doc_count > 0">
+									<a ui-sref="cbh.search_assays({l2: thing.l2_uri.buckets[0].key})"><small><span style="color:#eee; background-color:#002147; padding:5px; border-radius:5px;" >Assay</span></small>&nbsp;{{thing.key}}</a>
+								</li>
+								<li ng-if="indexVM.results.aggregations.title_filtering_l1.buckets[0].L1agg.doc_count > 0"><hr></li>
+								<li ng-repeat="thing in indexVM.results.aggregations.title_filtering_l1.buckets" role="presentation" ng-if="indexVM.results.aggregations.title_filtering_l1.buckets[0].L1agg.doc_count > 0">
+									<a ui-sref="cbh.search_assays({l1: thing.l1_uri.buckets[0].key})"><small><span style="color:#eee; background-color:#002147; padding:5px; border-radius:5px;" >Sub-Project</span></small>&nbsp;{{thing.key}}</a>
+								</li>
+								<li ng-if="indexVM.results.aggregations.title_filtering_l0.buckets[0].L0agg.doc_count > 0"><hr></li>
+								<li ng-repeat="thing in indexVM.results.aggregations.title_filtering_l0.buckets" role="presentation" ng-if="indexVM.results.aggregations.title_filtering_l0.buckets[0].L0agg.doc_count > 0">
+									<a ui-sref="cbh.search_assays({l0: thing.l0_uri.buckets[0].key})"><small><span style="color:#eee; background-color:#002147; padding:5px; border-radius:5px;" >Project</span></small>&nbsp;{{thing.key}}</a>
+								</li>
+								
+								<!-- <li role="presentation">
+									<a ui-sref="cbh.search_assays({textsearch: cbh.textsearch})">Search AssayReg for "{{cbh.textsearch}}"</a>
+								</li> -->
 								<li><hr></li>
 								<li role="presentation">
 									<a href="https://www.ncbi.nlm.nih.gov/pcassay/?term={{cbh.textsearch}}" target="_blank">Search PubChem for "{{cbh.textsearch}}"</a>

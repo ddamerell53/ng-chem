@@ -8,7 +8,7 @@
  * Controller of the chembiohubAssayApp
  */
 angular.module('chembiohubAssayApp')
-  .controller('SearchAssaysCtrl', ['$scope', '$filter', '$modal', 'urlConfig', '$stateParams', function ($scope, $filter, $modal, urlConfig, $stateParams) {
+  .controller('SearchAssaysCtrl', ['$scope', '$filter', '$modal', 'urlConfig', '$stateParams', '$state','$location','userList', function ($scope, $filter, $modal, urlConfig, $stateParams, $state, $location, userList) {
     
   	//need to be able to pull in, via this controller or a service:
 
@@ -19,14 +19,56 @@ angular.module('chembiohubAssayApp')
 
   	//and populate into scope models to be used in filters and aggregations on the page
     
+    $scope.users = userList;
+    $scope.userData = {useruris : []};
   	$scope.cbh.textsearch = $stateParams.textsearch;
-    $scope.selections = {
+    
+$scope.$watch(
+              function( $scope ) {
+                        return $scope.cbh.textsearch;
+               },
+                function( newValue ) {
+                      $stateParams.textsearch = newValue;
+                      $state.params.textsearch = newValue;
+                      $location.search('textsearch', newValue);
+
+                    }
+                );
+
+    
+
+   $scope.selections = {
       'l0': [],
       'l1': [],
       'l2': [],
 
     };
 
+
+
+
+     //do we have any search params? 
+    //for levels they will be URIs in the URL
+    if ($stateParams.l0) {
+
+      $scope.selections.l0 = decodeURIComponent($stateParams.l0).split(",");
+    }
+    if ($stateParams.l1) {
+      $scope.selections.l1 = decodeURIComponent($stateParams.l1).split(",");
+    }
+    if ($stateParams.l2) {
+      //console.log('decoded',decodeURIComponent($stateParams.l2))
+      $scope.selections.l2 = decodeURIComponent($stateParams.l2).split(",");
+    }
+    if ($stateParams.useruris) {
+      //console.log('decoded',decodeURIComponent($stateParams.l2))
+      $scope.userData.useruris = decodeURIComponent($stateParams.useruris).split(",");
+
+    }
+
+
+    
+   
     $scope.dates = {
       'start': '',
       'end': '',
@@ -34,23 +76,81 @@ angular.module('chembiohubAssayApp')
       'endES': '',
     }
 
+
+
     $scope.modalInstance = {};
     $scope.popup_data = {};
 
     $scope.indexVMOnInit = [];
 
-    //do we have any search params? 
-    //for levels they will be URIs in the URL
-    if ($stateParams.l0) {
-      $scope.selections.l0.push(decodeURIComponent($stateParams.l0));
-    }
-    if ($stateParams.l1) {
-      $scope.selections.l1.push(decodeURIComponent($stateParams.l1));
-    }
-    if ($stateParams.l2) {
-      //console.log('decoded',decodeURIComponent($stateParams.l2))
-      $scope.selections.l2.push(decodeURIComponent($stateParams.l2));
-    }
+   
+function arraysEqual(a, b) {
+  if (a === b) return true;
+  if (a == null || b == null) return false;
+  if (a.length != b.length) return false;
+
+  // If you don't care about the order of the elements inside
+  // the array, you should sort both arrays here.
+
+  for (var i = 0; i < a.length; ++i) {
+    if (a[i] !== b[i]) return false;
+  }
+  return true;
+}
+    $scope.$watch(
+              function( $scope ) {
+                        return $scope.selections.l0;
+               },
+                function( newValue , oldvalue) {
+                      if (!arraysEqual(newValue , oldvalue)){
+                        
+                        $stateParams.l0 = newValue;
+                        $state.params.l0 = newValue;
+                        $location.search('l0', newValue.join());
+                      }
+                    }, true
+                );
+    $scope.$watch(
+              function( $scope ) {
+                        return $scope.selections.l1;
+               },
+                function( newValue , oldvalue) {
+                      if (!arraysEqual(newValue , oldvalue)){
+                        
+                        $stateParams.l1 = newValue;
+                        $state.params.l1 = newValue;
+                        $location.search('l1', newValue.join());
+                      }
+                    }, true
+                );
+    $scope.$watch(
+              function( $scope ) {
+                        return $scope.selections.l2;
+               },
+                function( newValue , oldvalue) {
+                      if (!arraysEqual(newValue , oldvalue)){
+                        
+                        $stateParams.l2 = newValue;
+                        $state.params.l2 = newValue;
+                        $location.search('l2', newValue.join());
+                      }
+                    }, true
+                );
+
+    $scope.$watch(
+              function( $scope ) {
+                        return $scope.userData.useruris;
+               },
+                function( newValue , oldvalue) {
+                      if (!arraysEqual(newValue , oldvalue)){
+                        
+                        $stateParams.useruris = newValue;
+                        $state.params.useruris = newValue;
+                        $location.search('useruris', newValue.join());
+                      }
+                    }, true
+                );
+
 
     //console.log($scope.indexVMOnInit);
     $scope.searchFieldsCount = 0;
@@ -89,6 +189,7 @@ angular.module('chembiohubAssayApp')
 
     $scope.isSelectedInUrl = function(level, uri){
       angular.forEach($scope.selections[level], function(item){
+        console.log(level);
         if(item == uri) {
           return true;
         }
@@ -107,24 +208,34 @@ angular.module('chembiohubAssayApp')
       if (oldDate != '') {
         var dateObj = new Date(oldDate);
 
+
         $scope.dates[startOrEnd + 'ES'] = $filter('date')(dateObj, 'yyyy-MM-dd');
       }
       else {
         $scope.dates[startOrEnd + 'ES'] = '';
       }
-      
+      $stateParams[startOrEnd] = oldDate;
+      $state.params[startOrEnd] = oldDate;
+      $location.search(startOrEnd, oldDate);
 
     }
 
+    angular.forEach(['start', 'end'], function(startOrEnd){
+      if($stateParams[startOrEnd]){
+        $scope.dates[startOrEnd] = $stateParams[startOrEnd];
+        $scope.dateHandler(startOrEnd);
+      }
+    });
     $scope.resetForm = function() {
-      angular.forEach($scope.selections, function(val, key){
-        $scope.selections[key] = [];
+
+      $state.go('cbh.search_assays',{
+        'l0': undefined,
+        'l1': undefined,
+        'l2': undefined,
+        'start': undefined,
+        'textsearch': undefined,
+        'end': undefined
       });
-      $scope.dates.start = '';
-      $scope.dates.end = '';
-      $scope.dates.startES = '';
-      $scope.dates.endES = '';
-      $scope.cbh.textsearch = '';
 
     }
 
