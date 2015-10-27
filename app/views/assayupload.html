@@ -61,8 +61,8 @@
             <div class="row" ng-if="sheet.metadata.resource_uri">
             	<div class="col-xs-12">
 	            	<div class="pull-left">
-                        <div ng-if="dataoverviewctrl.listOfUnmappedFields.length > 0" class="alert-warning" style="padding:10px;"><span class="glyphicon glyphicon-warning-sign"></span> <small>There are unmapped fields in your file</small></div>
-                        <div ng-if="dataoverviewctrl.listOfUnmappedFields.length == 0" class="alert-success" style="padding:10px;"><span class="glyphicon glyphicon-ok"></span> <small>All fields mapped</small></div>
+                        <div ng-if="sheet.listOfUnmappedFields.length > 0" class="alert-warning" style="padding:10px;"><span class="glyphicon glyphicon-warning-sign"></span> <small>There are unmapped fields in your file</small></div>
+                        <div ng-if="sheet.listOfUnmappedFields.length == 0" class="alert-success" style="padding:10px;"><span class="glyphicon glyphicon-ok"></span> <small>All fields mapped</small></div>
                     </div>
                     <div class="pull-right">
 	            		<a ng-click="file.cancel(); cancelFile(); $flow.files=[]; dpclassif.cancelFile(); dpclassif.addingMultiple = false;" role="button" class="btn btn-danger">Cancel</a>
@@ -79,15 +79,13 @@
                             
                             <thead>
                                 <tr>
-                                    <!-- <th ng-repeat="bottomlevelfield in dpclassif.next_level_cfc.project_data_fields"> -->
-                                    <!-- <th ng-repeat="(key, value) in indexVM.results.hits.hits[0]._source.attachment_data.project_data"> -->
                                     <th class="text-center" ng-repeat="item in sheet.metadata.attachment_custom_field_config.project_data_fields track by item.position">
 
                                         <small>
                                             {{ item.elasticsearch_fieldname | removeSpaces }}
                                         </small><br>
-                                        <!-- {{sheet.metadata.attachment_custom_field_config}} -->
-                                        <button class="tableFilter btn btn-default" ng-click="dataoverviewctrl.showMappingPopup(sheet.metadata.titleMap, item, sheet.metadata.id)"><span class="glyphicon glyphicon-random" ng-class="{'text-success': item.attachment_field_mapped_to, 'text-warning': !item.attachment_field_mapped_to}"></span></button>
+                                        
+                                        <button class="tableFilter btn btn-default" ng-click="dataoverviewctrl.showMappingPopup(sheet.metadata.titleMap, item, sheet)"><span class="glyphicon glyphicon-random" ng-class="{'text-success': item.attachment_field_mapped_to, 'text-warning': !item.attachment_field_mapped_to}"></span></button>
                                     </th>
                                 </tr>
                             </thead>

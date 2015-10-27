@@ -5,10 +5,6 @@
 
     <div class="row">
 
-        <!-- project_fields -->
-        <!-- file_field -->
-
-
         <div class="col-xs-12" >
             <div aria-hidden="false">
                 
@@ -28,7 +24,7 @@
     </div>
     
     <div class="row" ng-if="col_being_mapped.unmappable_rows.length > 0">
-        <div class="col-xs-12" eui-index="'cbh_attachments__' + sheetId" eui-enabled="true">
+        <div class="col-xs-12" eui-index="'cbh_attachments__' + sheet.metadata.id" eui-enabled="true">
             <small class="text-danger">You have rows with unmappable data in this field.</small>
             <table class="table table-responsive" eui-query="ejs.IdsQuery(col_being_mapped.unmappable_rows)" eui-sort="ejs.Sort('id').order('asc')" eui-enabled="true">
                 <thead>
