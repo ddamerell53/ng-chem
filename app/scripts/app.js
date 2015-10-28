@@ -370,7 +370,7 @@ $urlRouterProvider.when('', '/projects/list');
         }],
       },
       templateUrl: 'views/help.html',
-      controller: function($scope, $rootScope) {
+      controller: function($scope, $rootScope, $anchorScroll, $location) {
         $scope.slides = [{
           image: "images/add-compounds-v2.gif",
           text: "Adding compounds"
@@ -382,6 +382,11 @@ $urlRouterProvider.when('', '/projects/list');
           text: "Searching by structure"
         }, ];
         $rootScope.projName = "";
+
+        $scope.scrollTo = function(id) {
+          $location.hash(id);
+          $anchorScroll();
+        }
       }
     })
 
