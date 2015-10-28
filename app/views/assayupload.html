@@ -53,7 +53,6 @@
         <tab ng-repeat="sheet in dpclassif.uploadData.sheets" select="sheet.specifySheet()">
             <tab-heading>{{sheet.name}}</tab-heading>
             <div class="row" ng-if="sheet.metadata.resource_uri">
-                {{sheet.listOfUnmappedMandatoryFields}}
             	<div class="col-xs-12">
 	            	<div class="pull-left">
                         <div ng-if="sheet.listOfUnmappedMandatoryFields.length > 0" class="alert-warning" style="padding:10px;"><span class="glyphicon glyphicon-warning-sign"></span> <small>There are unmapped mandatory fields in your file</small></div>

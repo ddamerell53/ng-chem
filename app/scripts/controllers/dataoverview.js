@@ -153,7 +153,6 @@ angular.module('chembiohubAssayApp')
                         sheet.listOfUnmappedFields = sheet.getListOfUnmappedFields(result.attachment_custom_field_config.project_data_fields, result.titleMap)
                         sheet.listOfUnmappedMandatoryFields = sheet.getListOfUnmappedMandatoryFields(result.attachment_custom_field_config.project_data_fields, result.titleMap)
 
-                        console.log('listOfUnmappedFields',sheet.listOfUnmappedFields)
                         dataoverviewctrl.currentlyLoading = false;
                       });
                  }
@@ -430,9 +429,9 @@ angular.module('chembiohubAssayApp')
 
         }, 
         controller: function($scope, $modalInstance, project_fields, col_being_mapped, sheet, $timeout, $filter) {
-          $scope.project_fields = angular.copy(project_fields);
-          $scope.modded_project_fields = [$scope.project_fields[0]];
 
+          $scope.project_fields = angular.copy(project_fields);
+          $scope.modded_project_fields = [];
           $scope.col_being_mapped = col_being_mapped;
           
           $scope.modalInstance = $modalInstance;
@@ -441,12 +440,10 @@ angular.module('chembiohubAssayApp')
 
           $scope.sheet = sheet;
 
-          $scope.warningMessage = "You have rows with unmappable data in this field.";
-          $scope.messageClass = "text-danger";
 
           if(col_being_mapped.attachment_field_mapped_to) {
             //find the project field where the URI is the value
-            angular.forEach(project_fields, function(field){
+            angular.forEach($scope.project_fields, function(field){
               if(field.value == col_being_mapped.attachment_field_mapped_to){
                 $scope.mapping = field;
               }
@@ -454,7 +451,7 @@ angular.module('chembiohubAssayApp')
           }
 
           //limit project_field options to those which are not selected elsewhere, but still include the currently selected one (!)
-          angular.forEach(project_fields, function(field){
+          angular.forEach($scope.project_fields, function(field){
             if(sheet.listOfUnmappedFields.indexOf(field.value) > -1){
               $scope.modded_project_fields.push(field);
             }
@@ -467,8 +464,21 @@ angular.module('chembiohubAssayApp')
 
 
           })
-
           
+          $scope.setWarningMessage = function(){
+            var set = false;
+            angular.forEach($scope.modded_project_fields, function(field){
+              if(col_being_mapped.attachment_field_unmappable_to == field.value){
+                $scope.warningMessage = "Attemped to map this field to " + field.name + " but there are rows with unmappable data.";
+                $scope.messageClass = "text-danger";
+                set = true;
+              }
+            });
+
+          }
+
+          $scope.setWarningMessage();
+
           $scope.cancel = function () {
             $modalInstance.dismiss('cancel');
           };
@@ -478,21 +488,18 @@ angular.module('chembiohubAssayApp')
             console.log('someMappingFunction being called');
             var old_attachment_field_mapped_to = col_being_mapped.attachment_field_mapped_to;
             var name_of_field = $scope.mapping.name;
-            if(col_being_mapped.attachment_field_mapped_to){
-              sheet.listOfUnmappedFields.splice(sheet.listOfUnmappedFields.indexOf(col_being_mapped.attachment_field_mapped_to), 1);  
-              if(col_being_mapped.required){
-                sheet.listOfUnmappedMandatoryFields.splice(sheet.listOfUnmappedMandatoryFields.indexOf(col_being_mapped.attachment_field_mapped_to), 1);  
-              }
-            }
+            
             var promise = $http.patch(  col_being_mapped.resource_uri ,       
                   col_being_mapped
                 ).then(
                 function(data){
                     $scope.setNewMapping();
+                    col_being_mapped = data.data;
+                    
                     if(data.data.attachment_field_unmappable_to){
+                      $scope.setWarningMessage();
                       //we can't map this field.
                       //re-add the field to the list of unmapped fields
-                      console.log('getting here');
                       //if(col_being_mapped.required) {
                         sheet.listOfUnmappedFields.push(old_attachment_field_mapped_to)
                         $scope.sheet.listOfUnmappedFields.push(old_attachment_field_mapped_to)
@@ -503,9 +510,8 @@ angular.module('chembiohubAssayApp')
                         }
                       
                       //change the error message to say you still can't map that field
-                      $scope.mapping = $scope.project_fields[0];
-                      $scope.messageClass = "text-danger";
-                      $scope.warningMessage = "You cannot map to " + name_of_field;
+                      $scope.mapping = $scope.modded_project_fields[0];
+                      $scope.clearMapping();
                       //blur the select box to refresh
                       var selectBox = document.getElementById('field-selector');
                       angular.element(selectBox).blur();
@@ -513,6 +519,12 @@ angular.module('chembiohubAssayApp')
                     else {
                       $scope.messageClass = "text-success";
                       $scope.warningMessage = "Mapping saved";
+                      if(col_being_mapped.attachment_field_mapped_to){
+                          sheet.listOfUnmappedFields.splice(sheet.listOfUnmappedFields.indexOf(col_being_mapped.attachment_field_mapped_to), 1);  
+                          if(col_being_mapped.required){
+                            sheet.listOfUnmappedMandatoryFields.splice(sheet.listOfUnmappedMandatoryFields.indexOf(col_being_mapped.attachment_field_mapped_to), 1);  
+                          }
+                        }
                       return data.data;
                     }
                     
