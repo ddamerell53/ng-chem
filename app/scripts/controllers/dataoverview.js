@@ -151,6 +151,8 @@ angular.module('chembiohubAssayApp')
                         //dataoverviewctrl.listOfUnmappedFields = dataoverviewctrl.getListOfUnmappedFields(result.attachment_custom_field_config.project_data_fields, result.attachment_custom_field_config.titleMap);
                         //console.log('result.titleMap',result)
                         sheet.listOfUnmappedFields = sheet.getListOfUnmappedFields(result.attachment_custom_field_config.project_data_fields, result.titleMap)
+                        sheet.listOfUnmappedMandatoryFields = sheet.getListOfUnmappedMandatoryFields(result.attachment_custom_field_config.project_data_fields, result.titleMap)
+
                         console.log('listOfUnmappedFields',sheet.listOfUnmappedFields)
                         dataoverviewctrl.currentlyLoading = false;
                       });
@@ -197,8 +199,8 @@ angular.module('chembiohubAssayApp')
               sheet.getListOfUnmappedMandatoryFields = function(fields, map){
                 
                 var fieldList = []
-                console.log('fields', fields);
-                console.log('map', map);
+                console.log('unmappedfields', fields);
+                console.log('unmappedmap', map);
                 //check each entry in title map - if it has no corresponding entry in any attachment field config, add it to the list
                 angular.forEach(map, function(item){
 
@@ -214,7 +216,7 @@ angular.module('chembiohubAssayApp')
                     }
 
                   });
-                  if(!hasEntry && field.required){
+                  if(!hasEntry && item.required){
                     fieldList.push(item.value)
                   }
 
