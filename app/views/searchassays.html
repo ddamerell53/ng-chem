@@ -197,7 +197,7 @@
 				<span eui-enabled="dates.startES != ''" eui-filter="ejs.RangeFilter('l3.created').gte(dates.startES)"></span>
 				<span eui-enabled="dates.endES != ''" eui-filter="ejs.RangeFilter('l3.created').lte(dates.endES)"></span>
 				<span eui-enabled="cbh.textsearch" eui-query="ejs.MultiMatchQuery(['l0.project_data_all','l1.project_data_all','l2.project_data_all','l3.project_data_all'], cbh.textsearch).type('phrase_prefix')" ></span>
-				<span eui-enabled="userData.useruris.length > 0" eui-filter="ejs.TermsFilter('created_by.raw', userData.useruris)"></span>
+				<span eui-enabled="userData.useruris.length > 0" eui-filter="ejs.TermsFilter('l3.created_by.raw', userData.useruris)"></span>
 				<span eui-enabled="true" eui-highlight="ejs.Highlight('l0.*').preTags('<span class=\'highlighted\'>').postTags('</span>')"></span>
 
 				<!-- include filters for each advanced search field -->
