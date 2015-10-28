@@ -8,8 +8,8 @@
         <div class="col-xs-12" >
             <div aria-hidden="false">
                 
-                
-                <select id="field-selector" ng-options="field.name for field in modded_project_fields track by field.value" ng-model="mapping" ng-required="col_being_mapped.required" class="form-control" ng-change="someMappingFunction(col_being_mapped);" style="width:100%" ng-class="'text-success'">
+                {{modded_project_fields}}
+                <select id="field-selector"  ng-options="field.name for field in modded_project_fields" ng-model="mapping" ng-required="col_being_mapped.required" class="form-control" ng-change="someMappingFunction();" style="width:100%" ng-class="'text-success'">
                 </select>
 
                 <a ng-click="clearMapping(col_being_mapped.required)" class="pull-right">Clear selection</a><br>
@@ -29,7 +29,7 @@
             <table class="table table-responsive" eui-query="ejs.IdsQuery(col_being_mapped.unmappable_rows)" eui-sort="ejs.Sort('id').order('asc')" eui-enabled="true">
                 <thead>
                     <tr>
-                        <th>Row</th>
+                        <th>Excel Row Number</th>
                         <th>Data Value</th>
                     </tr>
                 </thead>
