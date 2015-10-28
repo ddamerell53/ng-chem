@@ -1,6 +1,6 @@
 <div flow-init="flowinit"
     flow-name="dpclassif.filedata.flow"
-    flow-files-submitted="$flow.upload()"
+    flow-files-submitted="$flow.upload();dataoverviewctrl.setLoadingMessageHeight();dataoverviewctrl.currentlyLoading = true;"
     flow-file-success="dpclassif.getSheetsForFile($file.uniqueIdentifier)" 
     flow-upload-started="dpclassif.filesUploading=true" 
     flow-complete="dpclassif.filesUploading=false"> 

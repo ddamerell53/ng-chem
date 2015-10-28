@@ -112,6 +112,8 @@ angular.module('chembiohubAssayApp')
       // dataoverviewctrl.currentlyLoading = true;
       var FlowDF = FlowFileFactory.cbhFlowfile;
         dpc.uploadData.fileId = fileId;
+        dataoverviewctrl.setLoadingMessageHeight();
+        dataoverviewctrl.currentlyLoading = true;
         var fdfresult = FlowDF.get({'fileId': fileId});
         fdfresult.$promise.then(function(result){
           //dpc.uploadData.sheet_names = result.sheet_names;
@@ -125,6 +127,8 @@ angular.module('chembiohubAssayApp')
               sheet.listOfUnmappedFields = [];
               sheet.listOfUnmappedMandatoryFields = [];
             sheet.specifySheet = function() {
+              dataoverviewctrl.setLoadingMessageHeight();
+              dataoverviewctrl.currentlyLoading = true;
                  if(!angular.isDefined(sheet.metadata)){
                       
                       //we now have sheetName.name, pass to the specified webservice
@@ -363,7 +367,7 @@ angular.module('chembiohubAssayApp')
 
     $scope.no_l0 = false;
     dataoverviewctrl.fetchData = function(){
-      $scope.iamloading = true;
+      
       
        AddDataFactory.nestedDataClassification.get({
         "project_key": $scope.assayctrl.proj.project_key, 
@@ -375,6 +379,7 @@ angular.module('chembiohubAssayApp')
 
             $scope.getAnnotations(dataoverviewctrl.l0_object);
             $scope.iterate_children(dataoverviewctrl.l0_object);
+
           }else{
             $scope.no_l0 = true;
             dataoverviewctrl.l0_object = angular.copy($scope.assayctrl.l0_dfc.template_data_point_classification);
@@ -488,11 +493,13 @@ angular.module('chembiohubAssayApp')
             console.log('someMappingFunction being called');
             var old_attachment_field_mapped_to = col_being_mapped.attachment_field_mapped_to;
             var name_of_field = $scope.mapping.name;
-            
+            dataoverviewctrl.setLoadingMessageHeight();
+            dataoverviewctrl.currentlyLoading = true;
             var promise = $http.patch(  col_being_mapped.resource_uri ,       
                   col_being_mapped
                 ).then(
                 function(data){
+                    dataoverviewctrl.currentlyLoading = false;
                     $scope.setNewMapping();
                     col_being_mapped = data.data;
                     
