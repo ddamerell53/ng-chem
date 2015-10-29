@@ -11,7 +11,8 @@
                 <select id="field-selector"  ng-options="field.name for field in modded_project_fields" ng-model="mapping" ng-required="dataoverviewctrl.col_being_mapped.required" class="form-control" ng-change="someMappingFunction();" style="width:100%" ng-class="'text-success'">
                 </select>
 
-                <a ng-click="clearMapping(dataoverviewctrl.col_being_mapped.required)" class="pull-right">Unmap this field</a><br>
+                <a ng-show="dataoverviewctrl.col_being_mapped.attachment_field_mapped_to" ng-click="clearMapping(dataoverviewctrl.col_being_mapped.required)" class="pull-right">Unmap this field</a><br>
+                <a ng-show="dataoverviewctrl.col_being_mapped.unmappable_rows.length > 0" ng-click="clearMapping(dataoverviewctrl.col_being_mapped.required)" class="pull-right">Ignore this field for now</a><br>
 
                 <div class="pull-right">Why is this list limited? <info-box freetext="The dropdown list shows fields which don't currently have a mapping. If you want to re-map a column, you need to click Clear Selection on the column that currently has that mapping to free it up." right="true"></info-box>
                 </div>
