@@ -297,6 +297,7 @@ angular.module('ngChemApp')
                       {knownBy: "Project",data: "project", readOnly: true, className: "htCenter htMiddle ", renderer: "projectRenderer"}
 
                   ]);
+                   allCols = allCols.concat(customCols);
 
                   if(!scope.cbh.editMode){
                     allCols = allCols.concat([
@@ -316,7 +317,7 @@ angular.module('ngChemApp')
                     //allCols = allCols.concat(scope.plugins.map(function(plugin){return plugin.handsontable_column}));
                   
                      
-                    allCols = allCols.concat(customCols);
+                    
                 }
                 if(angular.isDefined(scope.excluded)){
                   var theCols = [];
