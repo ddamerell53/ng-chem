@@ -112,8 +112,6 @@ angular.module('chembiohubAssayApp')
       // dataoverviewctrl.currentlyLoading = true;
       var FlowDF = FlowFileFactory.cbhFlowfile;
         dpc.uploadData.fileId = fileId;
-        dataoverviewctrl.setLoadingMessageHeight();
-        dataoverviewctrl.currentlyLoading = true;
         var fdfresult = FlowDF.get({'fileId': fileId});
         fdfresult.$promise.then(function(result){
           //dpc.uploadData.sheet_names = result.sheet_names;
@@ -127,8 +125,6 @@ angular.module('chembiohubAssayApp')
               sheet.listOfUnmappedFields = [];
               sheet.listOfUnmappedMandatoryFields = [];
             sheet.specifySheet = function() {
-              dataoverviewctrl.setLoadingMessageHeight();
-              dataoverviewctrl.currentlyLoading = true;
                  if(!angular.isDefined(sheet.metadata)){
                       
                       //we now have sheetName.name, pass to the specified webservice
@@ -156,7 +152,6 @@ angular.module('chembiohubAssayApp')
                         sheet.listOfUnmappedFields = sheet.getListOfUnmappedFields(result.attachment_custom_field_config.project_data_fields, result.titleMap)
                         sheet.listOfUnmappedMandatoryFields = sheet.getListOfUnmappedMandatoryFields(result.attachment_custom_field_config.project_data_fields, result.titleMap)
 
-                        dataoverviewctrl.currentlyLoading = false;
                       });
                  }
 
@@ -257,33 +252,12 @@ angular.module('chembiohubAssayApp')
             //Default to the first in the list for thios but reset it every time that someone 
             dpc.setChosenDataFormConfig(dpc.dfc_full.permitted_children[0], false);
             dpc.addingChild = false;
-            // if (dpc.dfc_full.permitted_children.length == 1){
-            //   if (dpc.children.length ==0){
-            //     dpc.addingChild = true;
-            //   }
-            // }
+
           }
 
 
           
-          // dpc.setForm = function(defaults){
-          //   $timeout(function(){
-          //     dpc.new_next_level_model = angular.copy(defaults);
-          //     dpc.new_next_level_model.id = null;
-          //     dpc.resource_uri = null;
-          //     dpc.next_level_edit_form = [];
-          //     dpc.next_level_edit_schema = { "type": "object", 'properties' : {}, 'required': [] };
-          //     angular.forEach(dpc.next_level_cfc.project_data_fields, function(proj_data){
-          //         //pull out the edit_form.form and edit_schema.schema
-          //         var form = angular.copy(proj_data.edit_form.form[0]);
-          //         form.htmlClass = "col-xs-3";
-          //         dpc.next_level_edit_form.push(form);
-          //         angular.extend(dpc.next_level_edit_schema.properties, angular.copy(proj_data.edit_schema.properties));
-          //       });
-          //   }); 
-          // }
 
-          
           dpc.addDataToForm = function(data){
             dpc.addingChild = true;
             dpc.setForm(data);
@@ -433,7 +407,7 @@ angular.module('chembiohubAssayApp')
         controller: function($scope, $modalInstance, project_fields, col_being_mapped, sheet, $timeout, $filter) {
 
           $scope.project_fields = angular.copy(project_fields);
-          $scope.modded_project_fields = [$scope.project_fields[0]];
+          $scope.modded_project_fields = [];
           $scope.col_being_mapped = col_being_mapped;
           
           $scope.modalInstance = $modalInstance;
@@ -451,21 +425,20 @@ angular.module('chembiohubAssayApp')
               $scope.modded_project_fields.push(field);
             }
             //is it this mapping?
-            if($scope.col_being_mapped.attachment_field_mapped_to){
-              if(field.value == $scope.col_being_mapped.attachment_field_mapped_to){
+              if(field.value == col_being_mapped.attachment_field_mapped_to || field.value==null){
                 $scope.modded_project_fields.push(field);
               }
-            }
+            
 
           });
           $scope.mapping = $scope.modded_project_fields[0];
 
           
-          if($scope.col_being_mapped.attachment_field_mapped_to) {
+          if(col_being_mapped.attachment_field_mapped_to) {
             //find the project field where the URI is the value
             var set = false;
             angular.forEach($scope.project_fields, function(field){
-              if(field.value == $scope.col_being_mapped.attachment_field_mapped_to){
+              if(field.value == col_being_mapped.attachment_field_mapped_to){
                 $scope.mapping = field;
                 $scope.oldRequired = angular.copy($scope.mapping.required);
               }
@@ -477,7 +450,7 @@ angular.module('chembiohubAssayApp')
           $scope.setWarningMessage = function(){
             var set = false;
             angular.forEach($scope.modded_project_fields, function(field){
-              if($scope.col_being_mapped.attachment_field_unmappable_to == field.value){
+              if(col_being_mapped.attachment_field_unmappable_to == field.value){
                 $scope.warningMessage = "Attemped to map this field to " + field.name + " but there are rows with unmappable data.";
                 $scope.messageClass = "text-danger";
                 set = true;
@@ -502,44 +475,50 @@ angular.module('chembiohubAssayApp')
                     $scope.sheet.listOfUnmappedMandatoryFields.splice(sheet.listOfUnmappedMandatoryFields.indexOf($scope.mapping.value), 1);  
                 }
             }
-             if($scope.col_being_mapped.attachment_field_mapped_to != $scope.mapping.value ){
-                $scope.sheet.listOfUnmappedFields.push($scope.col_being_mapped.attachment_field_mapped_to);  
-                sheet.listOfUnmappedFields.push($scope.col_being_mapped.attachment_field_mapped_to);  
+             if(col_being_mapped.attachment_field_mapped_to != $scope.mapping.value ){
+                if(col_being_mapped.attachment_field_mapped_to != null){
+                  $scope.sheet.listOfUnmappedFields.push(col_being_mapped.attachment_field_mapped_to);  
+                sheet.listOfUnmappedFields.push(col_being_mapped.attachment_field_mapped_to);  
                 if($scope.oldRequired){
-                  sheet.listOfUnmappedMandatoryFields.push($scope.col_being_mapped.attachment_field_mapped_to);
-                    $scope.sheet.listOfUnmappedMandatoryFields.push($scope.col_being_mapped.attachment_field_mapped_to);  
+                  sheet.listOfUnmappedMandatoryFields.push(col_being_mapped.attachment_field_mapped_to);
+                    $scope.sheet.listOfUnmappedMandatoryFields.push(col_being_mapped.attachment_field_mapped_to);  
                 }
+                }
+                
             }
             
             
-            var old_attachment_field_mapped_to = $scope.col_being_mapped.attachment_field_mapped_to;
+            var old_attachment_field_mapped_to = col_being_mapped.attachment_field_mapped_to;
             var name_of_field = $scope.mapping.name;
 
             $scope.setNewMapping();
             $scope.oldRequired = angular.copy($scope.mapping.required);
-            var promise = $http.patch(  $scope.col_being_mapped.resource_uri ,       
-                  $scope.col_being_mapped
+            var promise = $http.patch(  col_being_mapped.resource_uri ,       
+                  col_being_mapped
                 ).then(
                 function(data){
                     
-                    $scope.col_being_mapped = data.data;
+                    col_being_mapped = data.data;
                     
                     if(data.data.attachment_field_unmappable_to){
                       $scope.setWarningMessage();
                       //we can't map this field.
                       //re-add the field to the list of unmapped fields
                       //if($scope.col_being_mapped.required) {
-                        sheet.listOfUnmappedFields.push(old_attachment_field_mapped_to)
-                        $scope.sheet.listOfUnmappedFields.push(old_attachment_field_mapped_to)
-                      //}
-                        if($scope.mapping.required) {
-                          sheet.listOfUnmappedMandatoryFields.push(old_attachment_field_mapped_to)
-                          $scope.sheet.listOfUnmappedMandatoryFields.push(old_attachment_field_mapped_to)
+                        if(old_attachment_field_mapped_to != null){
+                          sheet.listOfUnmappedFields.push(old_attachment_field_mapped_to)
+                          $scope.sheet.listOfUnmappedFields.push(old_attachment_field_mapped_to)
+                        //}
+                          if($scope.mapping.required) {
+                            sheet.listOfUnmappedMandatoryFields.push(old_attachment_field_mapped_to)
+                            $scope.sheet.listOfUnmappedMandatoryFields.push(old_attachment_field_mapped_to)
+                          }
                         }
+                        
                       
                       //change the error message to say you still can't map that field
                       $scope.mapping = $scope.modded_project_fields[0];
-                      $scope.clearMapping($scope.col_being_mapped.required);
+                      $scope.clearMapping(col_being_mapped.required);
                       //blur the select box to refresh
                       var selectBox = document.getElementById('field-selector');
                       angular.element(selectBox).blur();
@@ -560,7 +539,7 @@ angular.module('chembiohubAssayApp')
           };
 
           $scope.setNewMapping = function(){
-            $scope.col_being_mapped.attachment_field_mapped_to = $scope.mapping.value
+            col_being_mapped.attachment_field_mapped_to = $scope.mapping.value
           };
 
           $scope.clearMapping = function(isRequiredField){
@@ -568,7 +547,7 @@ angular.module('chembiohubAssayApp')
             
             $scope.mapping = $scope.modded_project_fields[0];
             //clear the URI indicating the mapping from the file column
-            $scope.someMappingFunction($scope.col_being_mapped);
+            $scope.someMappingFunction(col_being_mapped);
 
           }
 
