@@ -8,7 +8,6 @@
         <div class="col-xs-12" >
             <div aria-hidden="false">
                 
-                {{modded_project_fields}}
                 <select id="field-selector"  ng-options="field.name for field in modded_project_fields" ng-model="mapping" ng-required="col_being_mapped.required" class="form-control" ng-change="someMappingFunction();" style="width:100%" ng-class="'text-success'">
                 </select>
 
