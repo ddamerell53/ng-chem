@@ -423,7 +423,6 @@ angular.module('chembiohubAssayApp')
 
 
           
-
           //limit project_field options to those which are not selected elsewhere, but still include the currently selected one (!)
           angular.forEach($scope.project_fields, function(field){
             var added = false;
@@ -472,20 +471,19 @@ angular.module('chembiohubAssayApp')
           $scope.someMappingFunction = function() {
             //store a copy of the field being mapped to in case we lose it after patching
              if($scope.mapping.value ){
-                $scope.sheet.listOfUnmappedFields.splice(sheet.listOfUnmappedFields.indexOf($scope.mapping.value), 1);  
+              var splicing = sheet.listOfUnmappedFields.indexOf($scope.mapping.value);
+
                 sheet.listOfUnmappedFields.splice(sheet.listOfUnmappedFields.indexOf($scope.mapping.value), 1); 
+
                 if($scope.mapping.required){
                   sheet.listOfUnmappedMandatoryFields.splice(sheet.listOfUnmappedMandatoryFields.indexOf($scope.mapping.value), 1);  
-                    $scope.sheet.listOfUnmappedMandatoryFields.splice(sheet.listOfUnmappedMandatoryFields.indexOf($scope.mapping.value), 1);  
                 }
             }
              if(col_being_mapped.attachment_field_mapped_to != $scope.mapping.value ){
                 if(col_being_mapped.attachment_field_mapped_to != null){
-                  $scope.sheet.listOfUnmappedFields.push(col_being_mapped.attachment_field_mapped_to);  
                 sheet.listOfUnmappedFields.push(col_being_mapped.attachment_field_mapped_to);  
                 if($scope.oldRequired){
                   sheet.listOfUnmappedMandatoryFields.push(col_being_mapped.attachment_field_mapped_to);
-                    $scope.sheet.listOfUnmappedMandatoryFields.push(col_being_mapped.attachment_field_mapped_to);  
                 }
                 }
                 
@@ -501,6 +499,7 @@ angular.module('chembiohubAssayApp')
                   col_being_mapped
                 ).then(
                 function(data){
+                  console.log(sheet.listOfUnmappedFields);
                     
                     col_being_mapped = data.data;
                     
@@ -511,11 +510,9 @@ angular.module('chembiohubAssayApp')
                       //if($scope.col_being_mapped.required) {
                         if(old_attachment_field_mapped_to != null){
                           sheet.listOfUnmappedFields.push(old_attachment_field_mapped_to)
-                          $scope.sheet.listOfUnmappedFields.push(old_attachment_field_mapped_to)
                         //}
                           if($scope.mapping.required) {
                             sheet.listOfUnmappedMandatoryFields.push(old_attachment_field_mapped_to)
-                            $scope.sheet.listOfUnmappedMandatoryFields.push(old_attachment_field_mapped_to)
                           }
                         }
                         
