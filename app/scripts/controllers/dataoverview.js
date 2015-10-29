@@ -112,8 +112,6 @@ angular.module('chembiohubAssayApp')
       // dataoverviewctrl.currentlyLoading = true;
       var FlowDF = FlowFileFactory.cbhFlowfile;
         dpc.uploadData.fileId = fileId;
-        dataoverviewctrl.setLoadingMessageHeight();
-        dataoverviewctrl.currentlyLoading = true;
         var fdfresult = FlowDF.get({'fileId': fileId});
         fdfresult.$promise.then(function(result){
           //dpc.uploadData.sheet_names = result.sheet_names;
@@ -128,7 +126,6 @@ angular.module('chembiohubAssayApp')
               sheet.listOfUnmappedMandatoryFields = [];
             sheet.specifySheet = function() {
               dataoverviewctrl.setLoadingMessageHeight();
-              dataoverviewctrl.currentlyLoading = true;
                  if(!angular.isDefined(sheet.metadata)){
                       
                       //we now have sheetName.name, pass to the specified webservice
@@ -156,7 +153,6 @@ angular.module('chembiohubAssayApp')
                         sheet.listOfUnmappedFields = sheet.getListOfUnmappedFields(result.attachment_custom_field_config.project_data_fields, result.titleMap)
                         sheet.listOfUnmappedMandatoryFields = sheet.getListOfUnmappedMandatoryFields(result.attachment_custom_field_config.project_data_fields, result.titleMap)
 
-                        dataoverviewctrl.currentlyLoading = false;
                       });
                  }
 
