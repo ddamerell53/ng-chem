@@ -15,9 +15,15 @@
 				<label class="control-label">Activity Created By User</label>
 				<!-- <input class="form-control" type="text" eui-query="ejs.MultiMatchQuery([dpclassif.next_level + '.project_data_all'] , querystring).type('phrase_prefix')" ng-model="querystring" eui-enabled="querystring" eui-highlight="ejs.Highlight('*').preTags('<span class=\'highlighted\'>').postTags('</span>')"/> -->
 				<ui-select multiple ng-model="userData.useruris" theme="bootstrap" >
-				    <ui-select-match placeholder="&#9660;&nbsp;Select User...">{{$item.username}}</ui-select-match>
+				    <!-- <ui-select-match placeholder="&#9660;&nbsp;Select User...">{{$item.first_name + ' ' + $item.last_name || $item.username }}</ui-select-match> -->
+				    <ui-select-match placeholder="&#9660;&nbsp;Select User..."><span ng-if="$item.first_name != '' && $item.last_name != ''">{{$item.first_name + ' ' + $item.last_name }}</span><span ng-if="$item.first_name == '' && $item.last_name == ''">{{$item.username }}</span></ui-select-match>
 				    <ui-select-choices repeat="u.resource_uri as u in users">
-				      <div ng-bind-html="u.first_name + ' ' + u.last_name + ' ' + u.username"></div>
+				      <div ng-if="u.first_name != '' && u.last_name != ''">
+					      <div ng-bind-html="u.first_name + ' ' + u.last_name"></div>
+					  </div>
+					  <div ng-if="u.first_name == '' && u.last_name == ''">
+					      <div ng-bind-html="u.username"></div>
+					  </div>
 				    </ui-select-choices>
 				  </ui-select>
 

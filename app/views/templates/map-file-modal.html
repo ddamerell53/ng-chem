@@ -41,6 +41,25 @@
                     
                 </tbody>
             </table>
+            <div class="text-center" ng-show="indexVM.pageCount > 1">
+                                
+
+                <ul class="pager">
+
+                    <li ng-class="{disabled:indexVM.page <= 1}"><a href="" ng-click="indexVM.page=1">&lt;&lt;</a></li>
+                    <li ng-class="{disabled:indexVM.page <= 1}"><a href="" ng-click="indexVM.page=indexVM.page - 1">&lt;</a></li>
+                    
+                    <li ng-class="{disabled:indexVM.pageCount <= indexVM.page}"><a href="" ng-click="indexVM.page=indexVM.page + 1">&gt;</a></li>
+                    <li ng-class="{disabled:indexVM.pageCount <= indexVM.page}"><a href="" ng-click="indexVM.page=indexVM.pageCount">&gt;&gt;</a></li>
+                    <!-- <li>
+                        <select ng-model="indexVM.pageSize">
+                            <option ng-repeat="item in [5, 10, 20]">{{item}}</option>
+                        </select>
+                        per page
+                    </li> -->
+                </ul>
+                <p><small>{{indexVM.results.hits.total}} results - Page {{indexVM.page}} of {{indexVM.pageCount}}</small></p>
+            </div>
 
         </div>
     </div>
