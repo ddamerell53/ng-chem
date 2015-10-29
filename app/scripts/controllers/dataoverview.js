@@ -476,12 +476,15 @@ angular.module('chembiohubAssayApp')
                 }
             }
              if(col_being_mapped.attachment_field_mapped_to != $scope.mapping.value ){
-                $scope.sheet.listOfUnmappedFields.push(col_being_mapped.attachment_field_mapped_to);  
+                if(col_being_mapped.attachment_field_mapped_to != null){
+                  $scope.sheet.listOfUnmappedFields.push(col_being_mapped.attachment_field_mapped_to);  
                 sheet.listOfUnmappedFields.push(col_being_mapped.attachment_field_mapped_to);  
                 if($scope.oldRequired){
                   sheet.listOfUnmappedMandatoryFields.push(col_being_mapped.attachment_field_mapped_to);
                     $scope.sheet.listOfUnmappedMandatoryFields.push(col_being_mapped.attachment_field_mapped_to);  
                 }
+                }
+                
             }
             
             
@@ -502,13 +505,16 @@ angular.module('chembiohubAssayApp')
                       //we can't map this field.
                       //re-add the field to the list of unmapped fields
                       //if($scope.col_being_mapped.required) {
-                        sheet.listOfUnmappedFields.push(old_attachment_field_mapped_to)
-                        $scope.sheet.listOfUnmappedFields.push(old_attachment_field_mapped_to)
-                      //}
-                        if($scope.mapping.required) {
-                          sheet.listOfUnmappedMandatoryFields.push(old_attachment_field_mapped_to)
-                          $scope.sheet.listOfUnmappedMandatoryFields.push(old_attachment_field_mapped_to)
+                        if(old_attachment_field_mapped_to != null){
+                          sheet.listOfUnmappedFields.push(old_attachment_field_mapped_to)
+                          $scope.sheet.listOfUnmappedFields.push(old_attachment_field_mapped_to)
+                        //}
+                          if($scope.mapping.required) {
+                            sheet.listOfUnmappedMandatoryFields.push(old_attachment_field_mapped_to)
+                            $scope.sheet.listOfUnmappedMandatoryFields.push(old_attachment_field_mapped_to)
+                          }
                         }
+                        
                       
                       //change the error message to say you still can't map that field
                       $scope.mapping = $scope.modded_project_fields[0];
