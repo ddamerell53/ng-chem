@@ -407,7 +407,7 @@ angular.module('chembiohubAssayApp')
         controller: function($scope, $modalInstance, project_fields, col_being_mapped, sheet, $timeout, $filter) {
 
           $scope.project_fields = angular.copy(project_fields);
-          $scope.modded_project_fields = [$scope.project_fields[0]];
+          $scope.modded_project_fields = [];
           $scope.col_being_mapped = col_being_mapped;
           
           $scope.modalInstance = $modalInstance;
@@ -425,11 +425,10 @@ angular.module('chembiohubAssayApp')
               $scope.modded_project_fields.push(field);
             }
             //is it this mapping?
-            if(col_being_mapped.attachment_field_mapped_to){
-              if(field.value == col_being_mapped.attachment_field_mapped_to){
+              if(field.value == col_being_mapped.attachment_field_mapped_to || field.value==null){
                 $scope.modded_project_fields.push(field);
               }
-            }
+            
 
           });
           $scope.mapping = $scope.modded_project_fields[0];
