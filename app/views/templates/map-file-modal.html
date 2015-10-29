@@ -1,5 +1,5 @@
 <div class="modal-header">
-    <h3 class="modal-title blue">Map {{col_being_mapped.elasticsearch_fieldname | removeSpaces }} to column:</h3>
+    <h3 class="modal-title blue">Map {{dataoverviewctrl.col_being_mapped.elasticsearch_fieldname | removeSpaces }} to column:</h3>
 </div>
 <div class="modal-body">
 
@@ -8,10 +8,10 @@
         <div class="col-xs-12" >
             <div aria-hidden="false">
                 
-                <select id="field-selector"  ng-options="field.name for field in modded_project_fields" ng-model="mapping" ng-required="col_being_mapped.required" class="form-control" ng-change="someMappingFunction();" style="width:100%" ng-class="'text-success'">
+                <select id="field-selector"  ng-options="field.name for field in modded_project_fields" ng-model="mapping" ng-required="dataoverviewctrl.col_being_mapped.required" class="form-control" ng-change="someMappingFunction();" style="width:100%" ng-class="'text-success'">
                 </select>
 
-                <a ng-click="clearMapping(col_being_mapped.required)" class="pull-right">Clear selection</a><br>
+                <a ng-click="clearMapping(dataoverviewctrl.col_being_mapped.required)" class="pull-right">Unmap this field</a><br>
 
                 <div class="pull-right">Why is this list limited? <info-box freetext="The dropdown list shows fields which don't currently have a mapping. If you want to re-map a column, you need to click Clear Selection on the column that currently has that mapping to free it up." right="true"></info-box>
                 </div>
@@ -22,10 +22,10 @@
 
     </div>
     
-    <div class="row" ng-if="col_being_mapped.unmappable_rows.length > 0">
+    <div class="row" ng-if="dataoverviewctrl.col_being_mapped.unmappable_rows.length > 0">
         <div class="col-xs-12" eui-index="'cbh_attachments__{{sheet.metadata.id}}'" eui-enabled="true">
-            <small class="text-danger">{{warningMessage}}</small>
-            <table class="table table-responsive" eui-query="ejs.IdsQuery(col_being_mapped.unmappable_rows)" eui-sort="ejs.Sort('id').order('asc')" eui-enabled="true">
+            <small class="text-danger">{{dataoverviewctrl.col_being_mapped.warningMessage}}</small>
+            <table class="table table-responsive" eui-query="ejs.IdsQuery(dataoverviewctrl.col_being_mapped.unmappable_rows)" eui-sort="ejs.Sort('id').order('asc')" eui-enabled="true">
                 <thead>
                     <tr>
                         <th>Excel Row Number</th>
@@ -35,7 +35,7 @@
                 <tbody>
                     <tr ng-repeat="hit in indexVM.results.hits.hits">
                         <td>{{hit._id}}</td>
-                        <td>{{hit._source.attachment_data.project_data[col_being_mapped.elasticsearch_fieldname]}}</td>
+                        <td>{{hit._source.attachment_data.project_data[dataoverviewctrl.col_being_mapped.elasticsearch_fieldname]}}</td>
                     </tr>
                     
                 </tbody>
