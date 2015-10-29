@@ -185,7 +185,9 @@ angular.module('chembiohubAssayApp')
 
                   });
                   if(!hasEntry){
-                    fieldList.push(item.value)
+                    if(item.value){
+                      fieldList.push(item.value)
+                    }
                   }
 
                 })
@@ -201,7 +203,8 @@ angular.module('chembiohubAssayApp')
 
                   var hasEntry = false;
                   angular.forEach(fields, function(field) {
-                    if(field.attachment_field_mapped_to){
+
+                    if(field.attachment_field_mapped_to != null){
                       
                       if (field.attachment_field_mapped_to == item.value || !item.value){
                         hasEntry = true;
@@ -212,7 +215,9 @@ angular.module('chembiohubAssayApp')
 
                   });
                   if(!hasEntry && item.required){
-                    fieldList.push(item.value)
+                    if(item.value){
+                      fieldList.push(item.value)
+                    }
                   }
 
                 })
@@ -421,20 +426,21 @@ angular.module('chembiohubAssayApp')
 
           //limit project_field options to those which are not selected elsewhere, but still include the currently selected one (!)
           angular.forEach($scope.project_fields, function(field){
+            var added = false;
             if(sheet.listOfUnmappedFields.indexOf(field.value) > -1){
               $scope.modded_project_fields.push(field);
+              added = true;
             }
             //is it this mapping?
-              if(field.value == col_being_mapped.attachment_field_mapped_to || field.value==null){
+              if(!added && field.value == col_being_mapped.attachment_field_mapped_to || field.value==null){
                 $scope.modded_project_fields.push(field);
               }
             
-
           });
           $scope.mapping = $scope.modded_project_fields[0];
 
           
-          if(col_being_mapped.attachment_field_mapped_to) {
+          if(col_being_mapped.attachment_field_mapped_to != null) {
             //find the project field where the URI is the value
             var set = false;
             angular.forEach($scope.project_fields, function(field){
@@ -442,9 +448,7 @@ angular.module('chembiohubAssayApp')
                 $scope.mapping = field;
                 $scope.oldRequired = angular.copy($scope.mapping.required);
               }
-            })
-            
-            
+            });
           }
           
           $scope.setWarningMessage = function(){

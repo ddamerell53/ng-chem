@@ -60,7 +60,8 @@
                     </div>
                     <div class="pull-right">
 	            		<a ng-click="file.cancel(); cancelFile(); $flow.files=[]; dpclassif.cancelFile(); dpclassif.addingMultiple = false;" role="button" class="btn btn-danger">Cancel</a>
-	            		<a ng-click="sheet.saveSheet(sheet.metadata.id)" role="button" class="btn btn-primary" ng-disabled="sheet.listOfUnmappedMandatoryFields.length > 0">Save this sheet</a>
+	            		<a ng-if="sheet.listOfUnmappedMandatoryFields.length == 0" ng-click="sheet.saveSheet(sheet.metadata.id)" role="button" class="btn btn-primary">Save this sheet</a>
+                        <a ng-if="sheet.listOfUnmappedMandatoryFields.length > 0" ng-click="sheet.saveSheet(sheet.metadata.id)" role="button" class="btn btn-primary" ng-disabled="true">Save this sheet</a>
                         <span ng-if="sheet.listOfUnmappedMandatoryFields.length > 0"><info-box freetext="You have mandatory fields for this item which need to be mapped before you can save."></info-box></span>
 	            		
 	            	</div>
