@@ -7,7 +7,7 @@
  * # HandsOnCompoundTable
  */
 angular.module('chembiohubAssayApp')
-  .directive('handsoncompoundtable',["$timeout","$compile","renderers","$rootScope","$filter", function ($timeout,$compile, renderers, $rootScope, $filter) {
+  .directive('handsoncompoundtable',["$timeout","$compile","renderers","$rootScope","$filter","$modal", function ($timeout,$compile, renderers, $rootScope, $filter, $modal) {
     return {
       template: '<div  ></div>',
       restrict: 'E',
@@ -83,6 +83,84 @@ angular.module('chembiohubAssayApp')
                       col.typeahead = response.data;
                   });
               }
+
+              function buildButton(col) {
+                var button = document.createElement('BUTTON');
+                var inactiveStr = "";
+                console.log('col in buildButton', col);
+                if(col.noSort){
+                  inactiveStr = " lightgrey"
+                }
+                button.innerHTML = '<span class="glyphicon glyphicon-filter' + inactiveStr + '"></span>';
+                button.className = 'tableFilter';
+
+                return button;
+              }
+
+              function buildInfoSpans(col){
+                
+                var mappingOptions = document.createElement('span');
+                if(col.mappingOptions && !col.copyto){
+                  mappingOptions.className = 'pull-right alert-danger'
+                  mappingOptions.style.marginRight = "20px;"
+                  mappingOptions.innerHTML = 'Unmapped <info-box lookup="unmapped_values_written" lookupitems="cbh.messages" right="true"></info-box>'
+                }
+                else if(col.mappingOptions && col.copyto){
+                  var automappedSpan = '<span></span>';
+                  if(col.automapped == true){
+                    automappedSpan = '<span>(auto)</span>';
+                  }
+                  mappingOptions.className = 'pull-right alert-success'
+                  mappingOptions.style.marginRight = "20px;"
+                  mappingOptions.innerHTML = '<span class="glyphicon glyphicon-arrow-right"></span>' + col.copyto + automappedSpan + '<info-box lookup="mapped_values_written" lookupitems="cbh.messages" right="true"></info-box></span>';
+                }
+                console.log('mappingOptions', mappingOptions)
+                return mappingOptions;
+              }
+
+              function addButtonMenuEvent(button, col) {
+                Handsontable.Dom.addEvent(button, 'click', function (event) {
+
+                  event.preventDefault();
+                  event.stopImmediatePropagation();
+
+                  //need to pass in the column here to get data out
+                  //trigger call to cbh object to build modal window
+                  //should take care ove everything from there.
+                  //cbh scope can't see the correct variables to trigger filtering so need to try it here
+                  
+                    scope.col = angular.copy(col);
+                    scope.modalInstance = $modal.open({
+                      templateUrl: 'views/templates/compound-table-filter.html',
+                      size: 'md',
+                      resolve: {
+                        col: function () {
+                          return scope.col;
+                        },
+                        cbh: function() {
+                          return scope.cbh;
+                        }
+
+                      }, 
+                      controller: function($scope, $modalInstance, col, cbh, $timeout) {
+                        $scope.col = col;
+                        
+                        $scope.modalInstance = $modalInstance;
+
+                        //need to resolve the cbh object so that the filter selection triggers a reload
+                        $scope.cbh = cbh;
+
+                        $scope.cancel = function () {
+                          $modalInstance.dismiss('cancel');
+                        };
+
+                      }
+                    });
+                
+                });
+              }
+             
+
 
 
               redraw = function(){
@@ -220,6 +298,7 @@ angular.module('chembiohubAssayApp')
                       {knownBy: "Project",data: "project", readOnly: true, className: "htCenter htMiddle ", renderer: "projectRenderer"}
 
                   ]);
+                   allCols = allCols.concat(customCols);
 
                   if(!scope.cbh.editMode){
                     allCols = allCols.concat([
@@ -236,7 +315,6 @@ angular.module('chembiohubAssayApp')
                         ]);
                   }
                      
-                    allCols = allCols.concat(customCols);
                 }
                 if(angular.isDefined(scope.excluded)){
                   var theCols = [];
@@ -264,6 +342,27 @@ angular.module('chembiohubAssayApp')
                     data: scope.compounds,
                     colHeaders: columnHeaders,
                     columns: allCols, 
+                    //afterGetColHeader is a function that is called when the html of the header has already been set
+                    //which allows DOM manipulation after the TH has been created
+                    //there are lots of useful hooks provided by Handsontable
+                    //http://docs.handsontable.com/0.15.0-beta3/Hooks.html
+                    afterGetColHeader: function(col, TH) {
+                      var instance = this,
+                      button = buildButton(allCols[col]),
+                      infospans = buildInfoSpans(allCols[col]);
+
+                      addButtonMenuEvent(button, allCols[col]);
+
+                      if (TH.firstChild.lastChild.nodeName === 'BUTTON') {
+                        TH.firstChild.removeChild(TH.firstChild.lastChild);
+                      }
+                      TH.firstChild.appendChild(button);
+                      TH.firstChild.appendChild(infospans);
+                      //now we need to build in the warnings...
+                      //<span style="margin-right:20px" ng-show="(col.mappingOptions.length > 0 &amp;&amp; !col.copyto)" class="pull-right alert-danger">Unmapped <info-box lookup="unmapped_values_written" lookupitems="cbh.messages" right="!$last"></info-box></span>
+                      
+                      TH.style['white-space'] = 'normal';
+                    },
                     maxRows: scope.compounds.length,
                     fillHandle: "vertical"
                   }
@@ -274,7 +373,7 @@ angular.module('chembiohubAssayApp')
                       hotObj.cells = function (row, col, prop) { 
                           if (prop =="properties.action"){
                               var comp = scope.compounds[row];
-                              if(comp.warnings.parseError || comp.warnings.smilesParseError){
+                              if(comp.warnings.parseError || comp.warnings.smilesParseError || comp.warnings.inchiCreationError){
                                 return {readOnly:true};
                               }  
                           }
@@ -333,15 +432,7 @@ angular.module('chembiohubAssayApp')
             var elem = $(scope.hotId);
 
             $timeout(function(){
-              // var html = "<tr></tr>";
-              // $(elem[0].children[0].firstChild.firstChild.firstChild.firstChild.children[1].firstChild).replaceWith(html);
-              // $(elem[0].children[1].firstChild.firstChild.firstChild.firstChild.children[1].firstChild).replaceWith(html);
-              // var data=["test","test2"];
-              // var s = $("<select id=\"selectId\" name=\"selectName\" />");
-              // for(var val in data) {
-              //     $("<option />", {value: val, text: data[val]}).appendTo(s);
-              // }
-              elem.wrap("<div id='myid' style='' class='handsontable'></div>");
+              elem.wrap("<div id='myid' style='overflow-x:scroll' class='handsontable'></div>");
               scope.width = 0;
 
               angular.forEach(hotObj.columns, function(c, index){
@@ -411,7 +502,6 @@ angular.module('chembiohubAssayApp')
                  //then do the reverse of the custom-field-to-table
                  scope.$on('custom-field-to-table', function(event, data) {
                       if(col.knownBy == data.newValue.split("|")[0]) {
-                        console.log("COLUMN MATCH KLAXON");
                         if(data.addOrRemove == "add") {
                           console.log("col.searchForm.search_custom_fields__kv_any",col.searchForm.search_custom_fields__kv_any)
                           var match = $filter('filter')(col.searchForm.search_custom_fields__kv_any, function(value, index) { return value == data.newValue })
@@ -426,7 +516,7 @@ angular.module('chembiohubAssayApp')
                           }
                         }
                         else if(data.addOrRemove == "remove"){
-                          //becuase there are watches on both the schemas, we need to ensure that on the return journey, no more items are removed.
+                          //because there are watches on both the schemas, we need to ensure that on the return journey, no more items are removed.
                           var diffs = $filter('filter')(col.searchForm.search_custom_fields__kv_any, function(value, index) { return value == data.newValue })
                           if(diffs.length > 0){
                             col.searchForm.search_custom_fields__kv_any.splice(col.searchForm.search_custom_fields__kv_any.indexOf(data.newValue), 1);
@@ -436,9 +526,6 @@ angular.module('chembiohubAssayApp')
                         
 
                       }
-                      /*$scope.searchForm.search_custom_fields__kv_any = data.newValue;
-                      $scope.searchFormSchema.schema.properties.search_custom_fields__kv_any.items = $scope.searchForm.search_custom_fields__kv_any.map(function(i){return {value : i, label : i}});
-                      $scope.$broadcast("schemaFormRedraw");*/
 
                   });  
                 
@@ -446,7 +533,6 @@ angular.module('chembiohubAssayApp')
                   if(newValue !== oldValue){
                     //broadcast the newValue
                     var broadcastObj = scope.cbh.createCustomFieldTransport(newValue, oldValue, "obj");
-                    console.log("from table", broadcastObj)
                     $rootScope.$broadcast('custom-field-from-table', broadcastObj);
                   }
                 }, true);
@@ -457,15 +543,15 @@ angular.module('chembiohubAssayApp')
                    var minHeight = 200 + customCols.length *30;
                    $("#myid").css("min-height", minHeight + "px");
               }
-              if(!scope.cbh.editMode){
+              //if(!scope.cbh.editMode){
                 $("#myid").doubleScroll();
-              }
+              //}
               
-              var header = document.createElement('DIV');
-              var head = angular.element(header);
-              head.html('<div  ng-include="&apos;views/templates/compound-table-header.html&apos;"></div>');
+              //removing recompiled HTML header - IE compat issues
+              /*var header = document.createElement('DIV');*/
+              /*head.html('<div  ng-include="&apos;views/templates/compound-table-header.html&apos;"></div>');
               var compiled = $compile(head.contents())(scope);
-              $("#myid").prepend(compiled);              
+              $("#myid").prepend(compiled);*/              
 
               $('.btn-toggle').dropdown();
               scope.elem = $("#myid");
@@ -476,8 +562,6 @@ angular.module('chembiohubAssayApp')
               if(scrollTop){
                 $(window).scrollTop(scrollTop);
               }
-              
-              //scope.cbh.repaintUiselect();
 
             });
            

@@ -1,163 +1,135 @@
-            <div style="width:{{width /16 }}em; border-right: 1px solid #CCC; border-left: 1px solid #CCC">
-                <div class=""  style="  background-color: #f5f5f5; box-sizing:border-box;
-      -moz-box-sizing:border-box; padding: 0 {{(400 / (width))}}% 0 {{(400 / (width))}}%;
-      -webkit-box-sizing:border-box; border-right:1px solid #CCC;border-bottom:0px;display:inline-block; width:{{(($first) ? (col.myColWidth -1)*100 / width  : (col.myColWidth ) *100 / (width)  )}}%; display:inline-block; margin-bottom:0px; border-radius:0; min-height:104px ;" ng-repeat="col in columns"> 
-                        <div class="row" >
-                            <div class="col-xs-12">
-                            <label class="pull-left">{{col.knownBy}}
-
-                            </label>
-                            
-
-
-                        </div>
-                        <small><span style="margin-right:20px" ng-show="(!angular.isDefined(col.mappingOptions))" class="">&nbsp;</span></small>
-                        <small><span style="margin-right:20px" ng-show="(col.mappingOptions.length > 0 &amp;&amp; !col.copyto)" class="pull-right alert-danger">Unmapped <info-box lookup="unmapped_values_written" lookupitems="cbh.messages" right="!$last"></info-box></span></small>
-                        <small><span  style=" margin-right:20px" ng-show="(col.copyto)" class="pull-right alert-success">
-                            <span class="glyphicon glyphicon-arrow-right"></span>   {{col.copyto}} <span ng-show="col.automapped==true">&nbsp;(auto)</span><info-box lookup="mapped_values_written" lookupitems="cbh.messages" right="!$last"></info-box></span></small>
-                        </div>
-                        <div  >
-
-                            <div class="pull-left" ng-if="col.data =='properties.archived'">
-                                <div class="dropdown"  aria-hidden="false">
-                                    <button  class="btn btn-default btn-toggle mt-8" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                        <span  class="glyphicon " ng-class="cbh.archiveFilter ? 'glyphicon-filter' : 'glyphicon-filter lightgrey'"></span>
-                                        
-                                    <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu wide-dropdown" ng-class="(!$first ? 'pull-right' : '')"  role="menu" aria-labelledby="userBtn">
-                                        <li>
-                                            <a class="relative" ng-click="cbh.toggleArchiveFilter()" tabindex="0">
-                                                <strong class="nexa">
-                                                    <span class="glyphicon glyphicon-filter"></span>
-                                                                    &nbsp;Show only archived 
-                                                    <span class="glyphicon rightglyph" ng-class="(cbh.archiveFilter) ? 'glyphicon-check':'glyphicon-unchecked'"></span>
-                                                </strong>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a class="relative" ng-click="cbh.toggleArchiveFilter()" tabindex="0">
-                                                <strong class="nexa">
-                                                    <span class="glyphicon glyphicon-filter"></span>
-                                                                    &nbsp;Show records not archived 
-                                                    <span class="glyphicon rightglyph" ng-class="(cbh.archiveFilter) ? 'glyphicon-unchecked': 'glyphicon-check'"></span>
-                                                </strong>
-                                            </a>
-                                        </li>
-                                    </ul>
-                            </div>
-                            </div>
-                            <div class="pull-left" ng-if="!col.noSort">
-                                <div class="dropdown"  aria-hidden="false">
-                                    <button  class="btn btn-default btn-toggle mt-8" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                        <span ng-if="col.searchForm" class="glyphicon " ng-class="cbh.isCustomFieldFiltered(col.knownBy) || col.showBlank==true || col.showNonBlank==true ? 'glyphicon-filter' : 'glyphicon-filter lightgrey'"></span>
-                                        <span class="glyphicon " ng-class="{'asc': 'glyphicon-sort-by-alphabet', 'desc': 'glyphicon-sort-by-alphabet-alt', 'none': 'glyphicon-sort lightgrey'}[col.sortOrder]">
-                                        </span>
-                                    <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu wide-dropdown" ng-class="(!$first ? 'pull-right' : '')"  role="menu" aria-labelledby="userBtn">
-                                        
-                                        <li role="presentation">
-                                            <a class="relative" ng-click="cbh.addSort(col.data, 'asc')"><strong class="nexa">
-                                                <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+<div style="width:{{width /16 }}em; border-right: 1px solid #CCC; border-left: 1px solid #CCC">
+    <div class="" style="  background-color: #f5f5f5; box-sizing:border-box;
+                -moz-box-sizing:border-box; padding: 0 {{(400 / (width))}}% 0 {{(400 / (width))}}%;
+                -webkit-box-sizing:border-box; border-right:1px solid #CCC;border-bottom:0px;display:inline-block; width:{{(($first) ? (col.myColWidth -1)*100 / width  : (col.myColWidth ) *100 / (width)  )}}%; display:inline-block; margin-bottom:0px; border-radius:0; min-height:104px ;" ng-repeat="col in columns">
+        <div class="row">
+            <div class="col-xs-12">
+                <label class="pull-left">{{col.knownBy}}
+                </label>
+            </div>
+            <small><span style="margin-right:20px" ng-show="(!angular.isDefined(col.mappingOptions))" class="">&nbsp;</span></small>
+            <small><span style="margin-right:20px" ng-show="(col.mappingOptions.length > 0 &amp;&amp; !col.copyto)" class="pull-right alert-danger">Unmapped <info-box lookup="unmapped_values_written" lookupitems="cbh.messages" right="!$last"></info-box></span></small>
+            <small><span  style=" margin-right:20px" ng-show="(col.copyto)" class="pull-right alert-success">
+                        <span class="glyphicon glyphicon-arrow-right"></span>   {{col.copyto}} <span ng-show="col.automapped==true">&nbsp;(auto)</span><info-box lookup="mapped_values_written" lookupitems="cbh.messages" right="!$last"></info-box></span></small>
+        </div>
+        <div>
+            <div class="pull-left" ng-if="col.data =='properties.archived'">
+                <div class="dropdown" aria-hidden="false">
+                    <button class="btn btn-default btn-toggle mt-8" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        <span class="glyphicon " ng-class="cbh.archiveFilter ? 'glyphicon-filter' : 'glyphicon-filter lightgrey'"></span>
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu wide-dropdown" ng-class="(!$first ? 'pull-right' : '')" role="menu" aria-labelledby="userBtn">
+                        <li>
+                            <a class="relative" ng-click="cbh.toggleArchiveFilter()" tabindex="0">
+                                <strong class="nexa">
+                                                <span class="glyphicon glyphicon-filter"></span>
+                                                &nbsp;Show only archived 
+                                                <span class="glyphicon rightglyph" ng-class="(cbh.archiveFilter) ? 'glyphicon-check':'glyphicon-unchecked'"></span>
+                                            </strong>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="relative" ng-click="cbh.toggleArchiveFilter()" tabindex="0">
+                                <strong class="nexa">
+                                                <span class="glyphicon glyphicon-filter"></span>
+                                                &nbsp;Show records not archived 
+                                                <span class="glyphicon rightglyph" ng-class="(cbh.archiveFilter) ? 'glyphicon-unchecked': 'glyphicon-check'"></span>
+                                            </strong>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="pull-left" ng-if="!col.noSort">
+                <div class="dropdown" aria-hidden="false">
+                    <button class="btn btn-default btn-toggle mt-8" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        <span ng-if="col.searchForm" class="glyphicon " ng-class="cbh.isCustomFieldFiltered(col.knownBy) || col.showBlank==true || col.showNonBlank==true ? 'glyphicon-filter' : 'glyphicon-filter lightgrey'"></span>
+                        <span class="glyphicon " ng-class="{'asc': 'glyphicon-sort-by-alphabet', 'desc': 'glyphicon-sort-by-alphabet-alt', 'none': 'glyphicon-sort lightgrey'}[col.sortOrder]">
+                                    </span>
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu wide-dropdown" ng-class="(!$first ? 'pull-right' : '')" role="menu" aria-labelledby="userBtn">
+                        <li role="presentation">
+                            <a class="relative" ng-click="cbh.addSort(col.data, 'asc')"><strong class="nexa">
+                                            <span class="glyphicon glyphicon-sort-by-alphabet"></span>
                                             &nbsp;Sort A-Z 
                                             <span  class=" glyphicon rightglyph" ng-class="(col.sortOrder=='asc') ? 'glyphicon-check':'glyphicon-unchecked'"></span>
                                         </strong></a>
-                                        </li>
-                                        <li role="presentation">
-                                            <a class="relative" ng-click="cbh.addSort(col.data, 'desc')"><strong class="nexa"><span class="glyphicon glyphicon-sort-by-alphabet-alt"></span>
+                        </li>
+                        <li role="presentation">
+                            <a class="relative" ng-click="cbh.addSort(col.data, 'desc')"><strong class="nexa"><span class="glyphicon glyphicon-sort-by-alphabet-alt"></span>
                                             &nbsp;Sort Z-A 
                                             <span  class="rightglyph glyphicon " ng-class="(col.sortOrder=='desc') ? 'glyphicon-check':'glyphicon-unchecked'"></span>
 
                                         </strong>
-                                            
-                                        </a>
-
-                                        </li>
-
-                                            
-                                            
-                                                
-                                            <li ng-if="col.searchForm" role="presentation" class="divider"></li>
-
-                                            <li ng-if="col.searchForm" role="presentation">
-                                                
-                                                <a class="" ng-click="cbh.blanksFilter(col, 'blanks');col.showBlank=!col.showBlank;col.showNonBlank=null;"><strong class="nexa">
-                                                <span class="glyphicon glyphicon-filter" ng-class=""></span>
-                                                &nbsp;Show only blanks</strong>
-                                                <span class="glyphicon pull-right" ng-class="(col.showBlank==true) ? 'glyphicon-check':'glyphicon-unchecked'"></span>
-                                                </a>
-                                            </li>
-                                            <li ng-if="col.searchForm" role="presentation">
-                                                
-                                                <a class="" ng-click="cbh.blanksFilter(col, 'nonblanks');col.showNonBlank=!col.showNonBlank;col.showBlank=null;"><strong class="nexa">
-                                                <span class="glyphicon glyphicon-filter" ng-class=""></span>
-                                                &nbsp;Show only non-blanks</strong>
-                                                <span class="glyphicon pull-right" ng-class="(col.showNonBlank==true) ? 'glyphicon-check':'glyphicon-unchecked'"></span>
-                                                </a>
-                                            </li>
-                                            <li ng-if="col.searchForm"  role="presentation" class="divider"></li>
-                                            <li ng-if="col.searchForm" role="presentation">
-                                                <span class="input-in-dropdown" ng-click="$event.stopPropagation();$event.preventDefault();">
-                                                   
-                                                        <div ng-click="$event.stopPropagation();$event.preventDefault();" class="form-group column-header-form" >
-                                                            <div class="input-group">
-
-                                                            <ui-select  multiple 
-                                                            ng-model="col.searchformSchema.schema.properties.search_custom_fields__kv_any.items" 
-                                                            theme="bootstrap"  
-                                                            class="col.searchformSchema.cf_form[0].htmlClass"
-                                                            >
-                                                              <ui-select-match placeholder="Filter {{col.knownBy}}...">{{$item.label}}</ui-select-match>
-                                                              <ui-select-choices repeat="item in col.typeahead | filter: $select.search track by item.value" refresh-delay="col.searchformSchema.cf_form[0].options.refreshDelay" refresh="refreshSingleCustField(col,$select.search)" style="top: 32px;">
-                                                                <div ng-bind-html="item.label | highlight: $select.search"></div>
-                                                                
-                                                            </ui-select-choices>
-                                                            </ui-select>
-                                                              <span class="input-group-addon" id="basic-addon2" ng-click="cbh.runSearch(false)"><span class=" glyphicon glyphicon-filter" ></span>Apply</span>
-
-                                                        </div>
-
-                                                        </div>
-                                                    
-                                                </span>
-                                            </li>
-                                            
-                                        </div>
                                         
-        
-                        
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="pull-right" ng-if="(col.mappingOptions.length > 0)">
-                                <div class="dropdown pull-right"  aria-hidden="false">
-                                    <button  class="btn btn-default btn-toggle mt-8" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                        {{(col.copyto !='' ? 'Remap' : 'Map')}}
-                                        <span class="glyphicon glyphicon-random" ng-class="col.copyto =='' ? 'lightgrey' : ''"></span>
-                                            
-                                    <span class="caret"></span></button>
-                                    <ul class="dropdown-menu wide-dropdown"  role="menu" aria-labelledby="userBtn">
-                                       
-                                        <li ng-repeat="opt in col.mappingOptions" role="presentation">
+                                    </a>
+                        </li>
+                        <li ng-if="col.searchForm" role="presentation" class="divider"></li>
+                        <li ng-if="col.searchForm" role="presentation">
+                            <a class="" ng-click="cbh.blanksFilter(col, 'blanks');col.showBlank=!col.showBlank;col.showNonBlank=null;"><strong class="nexa">
+                                        <span class="glyphicon glyphicon-filter" ng-class=""></span>
+                                        &nbsp;Show only blanks</strong>
+                                        <span class="glyphicon pull-right" ng-class="(col.showBlank==true) ? 'glyphicon-check':'glyphicon-unchecked'"></span>
+                                    </a>
+                        </li>
+                        <li ng-if="col.searchForm" role="presentation">
+                            <a class="" ng-click="cbh.blanksFilter(col, 'nonblanks');col.showNonBlank=!col.showNonBlank;col.showBlank=null;"><strong class="nexa">
+                                        <span class="glyphicon glyphicon-filter" ng-class=""></span>
+                                        &nbsp;Show only non-blanks</strong>
+                                        <span class="glyphicon pull-right" ng-class="(col.showNonBlank==true) ? 'glyphicon-check':'glyphicon-unchecked'"></span>
+                                    </a>
+                        </li>
+                        <li ng-if="col.searchForm" role="presentation" class="divider"></li>
+                        <li ng-if="col.searchForm" role="presentation">
+                            <span class="input-in-dropdown" ng-click="$event.stopPropagation();$event.preventDefault();">
+                                     
+                                        <div ng-click="$event.stopPropagation();$event.preventDefault();" class="form-group column-header-form" >
+                                            <div class="input-group">
+
+                                                <ui-select  multiple 
+                                                ng-model="col.searchformSchema.schema.properties.search_custom_fields__kv_any.items" 
+                                                theme="bootstrap"  
+                                                class="col.searchformSchema.cf_form[0].htmlClass"
+                                                >
+                                                <ui-select-match placeholder="Filter {{col.knownBy}}...">{{$item.label}}</ui-select-match>
+                                                <ui-select-choices repeat="item in col.typeahead | filter: $select.search track by item.value" refresh-delay="col.searchformSchema.cf_form[0].options.refreshDelay" refresh="refreshSingleCustField(col,$select.search)" style="top: 32px;">
+                                                <div ng-bind-html="item.label | highlight: $select.search"></div>
                                                 
-                                                <a class="relative" ng-if="opt.uiClass" class="" ng-click="$event.stopPropagation(); cbh.toggleMappedFieldInDirective($index,col.knownBy);"><strong class="nexa">
-                                                <span ng-bind-html="opt.icon"></span>
-                                                &nbsp;{{opt.title}}</strong>
-                                                <span ng-if="opt.uiClass" class="glyphicon  rightglyph" ng-class="opt.uiClass"></span>
-                                                </a>
-                                                <a disabled ng-if="!opt.uiClass" class="" ng-click="$event.stopPropagation();"><strong class="nexa lightgrey">
-                                                <span ng-bind-html="opt.icon"></span>
-                                                &nbsp;{{opt.title}}</strong>
-                                                
-                                                </a>
-                                            </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    
-                    
+                                            </ui-select-choices>
+                                        </ui-select>
+                                        <span class="input-group-addon" id="basic-addon2" ng-click="cbh.runSearch(false)"><span class=" glyphicon glyphicon-filter" ></span>Apply</span>
                 </div>
             </div>
-        
+            </span>
+            </li>
+        </div>
+        </ul>
+    </div>
+</div>
+<div class="pull-right" ng-if="(col.mappingOptions.length > 0)">
+    <div class="dropdown pull-right" aria-hidden="false">
+        <button class="btn btn-default btn-toggle mt-8" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            {{(col.copyto !='' ? 'Remap' : 'Map')}}
+            <span class="glyphicon glyphicon-random" ng-class="col.copyto =='' ? 'lightgrey' : ''"></span>
+            <span class="caret"></span></button>
+        <ul class="dropdown-menu wide-dropdown" role="menu" aria-labelledby="userBtn">
+            <li ng-repeat="opt in col.mappingOptions" role="presentation">
+                <a class="relative" ng-if="opt.uiClass" class="" ng-click="$event.stopPropagation(); cbh.toggleMappedFieldInDirective($index,col.knownBy);"><strong class="nexa">
+                                <span ng-bind-html="opt.icon"></span>
+                                &nbsp;{{opt.title}}</strong>
+                                <span ng-if="opt.uiClass" class="glyphicon  rightglyph" ng-class="opt.uiClass"></span>
+                            </a>
+                <a disabled ng-if="!opt.uiClass" class="" ng-click="$event.stopPropagation();"><strong class="nexa lightgrey">
+                                <span ng-bind-html="opt.icon"></span>
+                                &nbsp;{{opt.title}}</strong>
+                                
+                            </a>
+            </li>
+        </ul>
+    </div>
+</div>
+</div>
+</div>
+</div>

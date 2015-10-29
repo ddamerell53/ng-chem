@@ -44,6 +44,10 @@
                 <div ng-if="(datasets[current_dataset_id].config.type==='file')" class="alert alert-danger" ng-repeat="error in datasets[current_dataset_id].config.errors">
                     {{error}}
                 </div>
+                <div ng-if="(datasets[current_dataset_id].config.type==='file') && datasets[current_dataset_id].config.errors.length > 0" class="alert alert-primary">
+                    If you would like more information about why this file may be erroring, please contact <a href="mailto:adam.hendry@chembiohub.ox.ac.uk?subject=ChemBioHub%20ChemReg%20file%20upload%20problem" class="btn btn-primary"><span class="glyphicon glyphicon-envelope"></span> Adam Hendry</a>. Please remember to include the file or files you are experiencing difficulty with.
+                </div>
+
                 </div>
                 <div class="col-sm-3 col-lg-2">
                     <span flow-btn name="file_input" role="btn" class="btn btn-primary btn-sm pull-right nexa" ng-show="$flow.files.length < 1">Upload</span>

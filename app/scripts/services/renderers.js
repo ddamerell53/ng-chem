@@ -108,6 +108,7 @@ angular.module('chembiohubAssayApp')
                 var html = "<ul class='noindent'>";
                  var errors = [["parseError", "<li ><span class='alert-danger'>Data not processable</span></li>"],
                  ["smilesParseError", "<li ><span class='alert-danger'>SMILES not processable: </span><br><small class='blue'>SMILESHERE</small></li>"],
+                 ["inchiCreationError", "<li ><span class='alert-danger'>Could not generate InChi: </span><br><small class='blue'>SMILESHERE</small></li>"],
                     ["duplicate", "<li ><span class='alert-warning'>Duplicated record</span></li>"],
                     ["new", "<li ><span class='alert-success'>New</span></li>"],
                     ["overlap", "<li ><span class='alert-info'>Overlap</span></li>"]];
@@ -320,29 +321,7 @@ angular.module('chembiohubAssayApp')
         
         
         
-        if(angular.isDefined(c.copyto)){
-           return "<div class='well'><label style='min-width:240px'>"+ c.knownBy + c.copyto +  "</label></div>";
-
-        }
-        if(c.data.indexOf("uncurated")==0){
-          return "<div class='well'><label style='min-width:240px'>"+ c.knownBy + " Unmapped</label></div>";
-
-        }
-       
-        else{
-          return "<div class='well'><label style='min-width:80px' >"+ c.knownBy + " un</label></div>";
-
-        }
-
-    //     var warningFilterHTML = "";
-    //     if(c.warningsFilter){
-    //       warningFilterHTML = renderFilter(scope.warningsFilter, c.data, "");
-    //     }
-
-    //     //Return a piece of html including an onclick event that
-    //     //will pass to the appropriate function that mujst be implemented in the above controller
-        
-    //     return html
+        return "<label style='min-width:80px' >"+ c.knownBy + "</label>";
         
       },
       renderFilterLink : function(warningsFilter, fieldKey, title){
