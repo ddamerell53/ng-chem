@@ -1,25 +1,256 @@
 <div class="row mt">
-	<div class="col-xs-12">
+	<div class="col-sm-8 col-sm-offset-2"  style="padding-left:15px;">
+		
 		<h2 class="blue">AssayReg Help section<br><small>How-tos, information and FAQs</small></h2>	
+			
 	</div>
 
 </div>
 
+
+
 <div class="row">
-	<div class="col-xs-12">
-		<p class="nexa">Help will be populated fully in due course.</p>
-		<p class="nexa">Currently, the system allows the adding and viewing of data base on projects that the user has access to.</p>
-		<p class="nexa">To View data, go to <a href="/view">View</a> which shows all the sub projects and their corresponding assays and activity data points.</p>
-		<p class="nexa">One end-to-end <em>Data Classification</em> (the full chain of study, assay and activity) can be viewed by clicking the View Data button nex to each classification.</p>
+	<div class="col-sm-8 col-sm-offset-2" data-spy="scroll" style="position: relative;">
+
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="well text-center">
+					<em>Jump to</em>: <a ng-click="scrollTo('overview')"><strong class="nexa">Data Overview</strong></a> | <a ng-click="scrollTo('adding-data')"><strong class="nexa">Adding data</strong></a> | <a ng-click="scrollTo('chembl')"><strong class="nexa">Depositing data to Chembl</strong></a> | <a ng-click="scrollTo('searching')"><strong class="nexa">Searching AssayReg</strong></a>
+				</div>
+				
+				
+				<h2 class="blue" id="problem">What to do if you have a problem</h2>
+				<p><strong class="nexa blue">If you encounter a problem with anything to do with AssayReg, and this help document does not provide the answer you need, please contact ChemBio Hub by email at <a href="mailto:info@chembiohub.ox.ac.uk">info@chembiohub.ox.ac.uk</a></strong></p>
+
+				<h2 class="blue" id="loggingin">Logging in and initial screen</h2>
+				<p>When you first successfully log onto AssayReg, you will see a list of available projects. A system administrator is responsible for adding you to projects, which will then be displayed in this list. If you think you should be able to access a project via this list and can't, please contact ChemBio Hub.</p>
+				<p>Each project has a number of options available to you:
+					<img src="images/help/project-list-item.png" class="img img-responsive">
+					<ul>
+						<li><strong>Project Overview</strong> - click the project title to be taken to the Project Overview page;</li>
+						<li><strong>Add</strong> - Add data to the project via the Project Overview page, subject to the correct access permisions;</li>
+						<li><strong>Search</strong> - Search data in the project via the search page - the project will be preselected, enabling you to filter results further.</li>
+					</ul>
+				</p>
+
+				<h2 class="blue" id="overview">Project Data Overview</h2>
+				<p>For each project, there is a data overview page. This displays all of the data present in the project, separated out into three levels: <strong>Study</strong>, <strong>Assay</strong> and <strong>Activity</strong>.</p>
+
+				<h3 class="blue" id="sections-explained">Project sections - an explanation</h3>
+				<p>Each Project contains 3 sections:
+					<ul>
+						<li><strong>Study</strong> - A study normally holds details for a collection of different assays, for example a set of different Characterisation experiments on a particular drug target.</li>
+						<li><strong>Assay</strong> - An assay normally holds details of experimental protocols and method development, for example data which needs to be provided to make the assay reproducible. Assays can belong to multiple different studies.</li>
+						<li><strong>Activity</strong> - An activity holds the outcome of one pass of an assay, usually machine readouts or more qualitative data. Activity data is specific to a given Assay.</li>
+					</ul>
+				</p>
+
+				<h3 class="blue" id="show-details">Show details</h3>
+				<p>You can see the data for a particular level by clicking the appropriate Actions button and clicking View Details. This will open a popup window with the data loaded.</p>
+				<img src="images/help/view-details.png" class="img img-responsive"> <img src="images/help/details-modal.png" class="img img-responsive">
+				<p></p>
+
+				<h3 class="blue" id="show-details">Activity</h3>
+				<p>Activity data for a particular assay is displayed as a table. You can page through the data easily using the buttons at the bottom of the table. If your table contains a lot of data, you can use the scrollbar at the bottom of the table to slide the table from side to side to see all the data.</p>
+				<p>Each row of the Activities table contains a <strong>Duplicate</strong> link in the first column. Clicking this allows you to add a new Activity data point via the Add Single Activity form, with the data from this row prepopulated into the form. Adding Data is discussed in more depth below.</p>
+				<p>If your Activity data contains a UOX ID as used in ChemReg, the system will attempt to load a structure image of that identifier into the table.</p>
+
+				<h3 class="blue" id="show-details">Filtering activities</h3>
+				<img src="images/help/filter-and-download.png" class="img img-responsive">
+				<p></p> 
+				<p>At the top of the Activities section, there is a text box which allows you to filter the Activities based on text entered here. So for example, if you type "dichloro" into the text box, the Activities table will only show rows that contain "dichloro" in any of the columns.</p>
+
+				<h3 class="blue" id="show-details">Export</h3>
+				<p>Next to the text box on the activities table, there is a Download button. This allows you to download all the results in the table as an Excel file. The downloaded file will include any text filtering you have added - so if you have typed "dichloro" into the search box, your downloaded results will contain only results with "dichloro" in any of the fields. To download unfiltered results, just delete any text from the text box.</p>
+
+				<h2 class="blue" id="adding-data">Adding data</h2>
+				<p>If you have the correct permissions, you can add data to the system through the AssayReg user interface.</p>
+
+				<h3 class="blue" id="show-details">Single record</h3>
+				<p>Adding a single record is the simplest means of getting data into the system. Click <strong>Add Single Activity</strong> and select the correct Assay template to use from the list shown.</p>
+				<p>A form is then displayed with blank fields, each field has a brief explanation of what it represents. Specific datatypes may have special inputs - dates for example may show a datepicker/calendar field.</p>
+				<img src="images/help/single-activity.png" class="img img-responsive">
+				<p>When you have added the necessary data, click the Submit button. Your data will be saved and you will be able to view it in the data overview page.</p>
+
+				<h3 class="blue" id="show-details">Multiple records (via upload)</h3>
+				<p>To add multiple records to AssayReg in one go, you will need your data in an Excel format. You are able to download a template of the data format by clicking <strong>Upload Multiple Activities</strong> then click <strong>Download (activity) Template</strong> if you would like all of the fields which have been set up for the Assay listed. You can then use this to add your data for a smooth upload.</p>
+
+				<p>If instead you have data within another spreadsheet, for example from another lab or from machine outputs, with extra fields that are not required for the Assay you're adding data to, you can also upload that data but you may need to map your data, which is explained later in this document. </p>
+
+				<p>For simple file uploads, follow these steps:<br>
+					<ul>
+						<li>
+							Select the Sub-project and Assay you wish to register the data to. Select ‘Upload multiple activities’. Select the Assay definition you wish to submit your data to.<br>
+							<img src="images/help/multiple-activities-1.png" class="img img-responsive"><br>
+						</li>	
+						<li>
+							Select the Assay definition you wish to submit your data to.<br>
+						</li>	
+						<li>
+							A file upload dialog should now be shown. Click upload and choose your data file.<br>
+							<img src="images/help/multiple-activities-2.png" class="img img-responsive"><br>
+						</li>	
+						<li>
+							If your file contains multiple tabs, select the appropriate one. The data will be previewed below.<br>
+							<img src="images/help/multiple-activities-3.png" class="img img-responsive"><br>
+						</li>	
+						<li>
+							If there are no unmapped required fields for this upload, you can click ‘Save this sheet’. Your data is now registered to your project in AssayReg. <br>
+							<img src="images/help/multiple-activities-4.png" class="img img-responsive"><br>
+						</li>
+					</ul>
+				</p>
+
+				<h3 class="blue" id="show-details">Data mapping</h3>
+				<p>If you are uploading data for your Activities from a file containing lots of supplementary data, you may have to specify which columns in your file correspond to which Activity columns. This is especially important where there are <em>mandatory</em> fields for the specified Activity - that is to say, fields which cannot be empty for a single result.</p>
+
+				<p>AssayReg uses data mapping to help with data integrity and also to allow conversion to formats required by public databases such as <a href="https://pubchem.ncbi.nlm.nih.gov/about.html" target="_blank">PubChem</a> and <a href="https://www.ebi.ac.uk/chembl/" target="_blank">ChEMBL</a>.</p>
+
+				<h3 class="blue" id="show-details">Auto mapping</h3>
+				<p>AssayReg will attempt to "automap" your columns to the Activity columns. Columns in your file which match columns in the Activity correctly have a green mapping icon <span class="glyphicon glyphicon-random text-success"></span> . Columns in your file which cannot be automapped have a yellow mapping icon <span class="glyphicon glyphicon-random text-warning"></span> .</p>
+
+				<p>You may want to map a column in your file to an Activity column manually if the names are slightly different - for example, you may have a column called "1st Run" in your file and a column called "1st Observation" in the Activity table. They have the same meaning for your work but have been labelled differently. To do this, click the mapping icon in the column you want to map.<br>
+					<!-- image -->
+				</p>
+
+				<h3 class="blue" id="show-details">Unmappable fields</h3>
+				<p>Unmappable fields are caused by</p>
+
+				<h3 class="blue" id="show-details">Save</h3>
+				<p>Stuff here</p>
+
+				<h2 class="blue" id="chembl">Depositing data to ChEMBL</h2>
+				<p>
+					<ul>
+						<li>To view data in a ChEMBL format select the search ‘Go’ icon.</li>
+						<li>You are now in the AssayReg serach page. Select ‘View as ChEMBL data’</li>
+						<li>Your activity data should now be visible as a JSON schema form. This is the format in which it will be deposited to ChEMBL.</li>
+					</ul>
+				</p>
+
+				<h2 class="blue" id="searching">Search page</h2>
+				<p>Stuff here</p>
+
+				<h3 class="blue" id="show-details">Filters</h3>
+				<p>Stuff here</p>
+
+				<h3 class="blue" id="show-details">Dates</h3>
+				<p>Stuff here</p>
+
+				<h3 class="blue" id="show-details">User</h3>
+				<p>Stuff here</p>
+
+				<h3 class="blue" id="show-details">Project / Study / Assay filtering</h3>
+				<p>Stuff here</p>
+
+
+			</div>
+		</div>
+
 	</div>
+	<!-- <div class="col-xs-3">
+		<nav class="docs-sidebar hidden-print hidden-xs hidden-sm affix">
+			<ul class="nav docs-sidenav">
+				<li>
+					<a ng-click="scrollTo('problem')">What to do if you have a problem (contact section)</a>
+				</li>
+				<li>
+					<a ng-click="scrollTo('loggingin')">Logging in and initial screen</a>
+				</li>
+				<li>
+					<a ng-click="scrollTo('overview')" >Project Data Overview</a>
+					<ul>
+						<li>
+							<a ng-click="scrollTo('sections-explained')" >what the sections are</a>
+						</li>
+						<li>
+							<a ng-click="scrollTo('show-details')" >show details</a>
+						</li>
+						<li>
+							<a ng-click="scrollTo('problem')" >activity</a>
+						</li>
+						<li>
+							<a ng-click="scrollTo('problem')" >filtering activities</a>
+						</li>
+						<li>
+							<a ng-click="scrollTo('problem')" >export</a>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<a ng-click="scrollTo('problem')" >Adding data</a>
+					<ul>
+						<li>
+							<a ng-click="scrollTo('problem')" >single record</a>
+						</li>
+						<li>
+							<a ng-click="scrollTo('problem')" >multiple records (via upload)</a>
+							<ul>
+								<li>
+									<a ng-click="scrollTo('problem')" >data mapping</a>
+									<ul>
+
+										<li>
+											<a ng-click="scrollTo('problem')" >auto mapping</a>
+										</li>
+										<li>
+											<a ng-click="scrollTo('problem')" >unmappable fields</a>
+										</li>
+									</ul>
+								</li>
+								<li>
+									<a ng-click="scrollTo('problem')" >save</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<a ng-click="scrollTo('problem')" >Depositing data to Chembl</a>
+				</li>
+				<li>
+					<a ng-click="scrollTo('problem')" >Search page</a>
+					<ul>				
+						<li>
+							<a ng-click="scrollTo('problem')" >Filters</a>
+							<ul>
+								<li>
+									<a ng-click="scrollTo('problem')" >dates</a>
+								</li>
+								<li>
+									<a ng-click="scrollTo('problem')" >user</a>
+								</li>
+								<li>
+									<a ng-click="scrollTo('problem')" >project/study/assay filtering</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</nav>
+	</div> -->
 </div>
 
 <div class="spacer"></div>
 
-<script type="text/javascript">
+
+
+
+<!-- Uncomment this if we use any gif movies of functionality -->
+<!-- <script type="text/javascript">
 
 $(document).ready(function(){
 	Gifffer();
 });
 
-</script>
+</script> -->
+
+
+
+		
+		
+		
+
+
+
