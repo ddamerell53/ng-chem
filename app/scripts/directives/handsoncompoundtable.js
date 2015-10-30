@@ -84,6 +84,7 @@ angular.module('chembiohubAssayApp')
                   });
               }
 
+
               function buildButton(col) {
                 var button = document.createElement('BUTTON');
                 var inactiveStr = "";
@@ -160,8 +161,6 @@ angular.module('chembiohubAssayApp')
                 });
               }
              
-
-
 
               redraw = function(){
  
@@ -310,11 +309,15 @@ angular.module('chembiohubAssayApp')
                   }
                  if (showCompounds){
                     allCols = allCols.concat([
-                      {knownBy: "Mol Weight",data: "molecularWeight", readOnly: true, className: "htCenter htMiddle ", renderer: "centeredNumericRenderer"},
+                      //{knownBy: "Mol Weight",data: "molecularWeight", readOnly: true, className: "htCenter htMiddle ", renderer: "centeredNumericRenderer"},
 
                         ]);
                   }
+
+                    //allCols = allCols.concat(scope.plugins.map(function(plugin){return plugin.handsontable_column}));
+                  
                      
+                    
                 }
                 if(angular.isDefined(scope.excluded)){
                   var theCols = [];
@@ -333,12 +336,12 @@ angular.module('chembiohubAssayApp')
                   allCols = theCols;
                 }
 
-
+                console.log("allCols", allCols);
                 var columnHeaders = allCols.map(function(c){
                     return renderers.getColumnLabel(c, scope);
                 });
                 var hotObj = {
-                    // colWidths:200,
+                     colWidths:150,
                     data: scope.compounds,
                     colHeaders: columnHeaders,
                     columns: allCols, 
@@ -384,9 +387,6 @@ angular.module('chembiohubAssayApp')
                           scope.cbh.saveChangesToCompoundDataInController(data, sourceOfChange);
                       };
                       hotObj.beforeAutofill = function(start, end, data){
-                        // console.log(start);
-                        // console.log(end);
-                        // console.log(data);
                         
                         for (var colNo = start.col; colNo <= end.col; colNo++){
                             if(allCols[colNo].field_type == "uiselecttags"){
@@ -432,6 +432,7 @@ angular.module('chembiohubAssayApp')
             var elem = $(scope.hotId);
 
             $timeout(function(){
+              
               elem.wrap("<div id='myid' style='overflow-x:scroll' class='handsontable'></div>");
               scope.width = 0;
 
@@ -502,8 +503,8 @@ angular.module('chembiohubAssayApp')
                  //then do the reverse of the custom-field-to-table
                  scope.$on('custom-field-to-table', function(event, data) {
                       if(col.knownBy == data.newValue.split("|")[0]) {
+                        
                         if(data.addOrRemove == "add") {
-                          console.log("col.searchForm.search_custom_fields__kv_any",col.searchForm.search_custom_fields__kv_any)
                           var match = $filter('filter')(col.searchForm.search_custom_fields__kv_any, function(value, index) { return value == data.newValue })
                           if(match.length == 0){
                             if(col.searchForm.search_custom_fields__kv_any){
@@ -533,6 +534,7 @@ angular.module('chembiohubAssayApp')
                   if(newValue !== oldValue){
                     //broadcast the newValue
                     var broadcastObj = scope.cbh.createCustomFieldTransport(newValue, oldValue, "obj");
+                    //console.log("from table", broadcastObj)
                     $rootScope.$broadcast('custom-field-from-table', broadcastObj);
                   }
                 }, true);
@@ -543,15 +545,17 @@ angular.module('chembiohubAssayApp')
                    var minHeight = 200 + customCols.length *30;
                    $("#myid").css("min-height", minHeight + "px");
               }
-              //if(!scope.cbh.editMode){
+              //removing double scroll - IE compat issues
+              /*if(!scope.cbh.editMode){
                 $("#myid").doubleScroll();
-              //}
+              }*/
               
               //removing recompiled HTML header - IE compat issues
-              /*var header = document.createElement('DIV');*/
-              /*head.html('<div  ng-include="&apos;views/templates/compound-table-header.html&apos;"></div>');
+              /*var header = document.createElement('DIV');
+              var head = angular.element(header);
+              head.html('<div  ng-include="&apos;views/templates/compound-table-header.html&apos;"></div>');
               var compiled = $compile(head.contents())(scope);
-              $("#myid").prepend(compiled);*/              
+              $("#myid").prepend(compiled);   */           
 
               $('.btn-toggle').dropdown();
               scope.elem = $("#myid");
@@ -598,6 +602,7 @@ angular.module('chembiohubAssayApp')
         "showBlanks": "=",
         "showNonBlanks": "=",
         "messages": "=",
+        "plugins": "=",
       }
     };
   }]);

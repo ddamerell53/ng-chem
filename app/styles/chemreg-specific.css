@@ -46,7 +46,7 @@ background-color: #FFFF00;
         position: static !important;
   }
 
-.htCore thead th {
+/*.htCore thead th {
   overflow:hidden;
   height:0;
 }
@@ -56,7 +56,7 @@ background-color: #FFFF00;
   margin-top:-10px;
   margin-bottom:-10px;
 
-}
+}*/
 /* handsontable - htNumeric right align overrides htCenter center alignment */
 td.htCenter.htNumeric {
   text-align: center;
