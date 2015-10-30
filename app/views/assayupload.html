@@ -36,6 +36,7 @@
                     <a ng-click="file.cancel(); cancelFile(); $flow.files=[]; dpclassif.cancelFile(); dpclassif.addingMultiple = false;" class="btn btn-sm btn-danger" role="button">Cancel</a>
     	            <a ng-show="$flow.files.length > 0" ng-click="file.cancel(); cancelFile(); $flow.files=[]; dpclassif.cancelFile();" class="btn btn-sm btn-danger" role="button">Remove</a>
                     <span flow-btn name="file_input" role="btn" class="btn btn-primary btn-sm nexa" ng-show="$flow.files.length < 1">Upload</span>
+                    <span ng-if="iamloading" class="text-primary" style="padding:8px;">{{loadingMessage}}</span>
     	        
             </div>
         </div>

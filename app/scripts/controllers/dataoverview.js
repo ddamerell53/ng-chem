@@ -16,6 +16,7 @@ angular.module('chembiohubAssayApp')
     'l2' : "l2"
   }
   $scope.iamloading = false;
+  $scope.loadingMessage = "Loading..."
 	$scope.modalInstance = {};
     $scope.popup_data = {};
     $scope.dpcForUpload = {};
@@ -100,6 +101,8 @@ angular.module('chembiohubAssayApp')
       //FlowFileFactory.cbhFlowfile.
       // dataoverviewctrl.setLoadingMessageHeight();
       // dataoverviewctrl.currentlyLoading = true;
+      $scope.iamloading = true;
+      $scope.loadingMessage = "Loading File...";
       var FlowDF = FlowFileFactory.cbhFlowfile;
         dpc.uploadData.fileId = fileId;
         var fdfresult = FlowDF.get({'fileId': fileId});
@@ -116,8 +119,10 @@ angular.module('chembiohubAssayApp')
               sheet.listOfUnmappedMandatoryFields = [];
 
             sheet.specifySheet = function() {
+
                  if(!angular.isDefined(sheet.metadata)){
-                      
+                      $scope.iamloading = true;
+                      $scope.loadingMessage = "Loading Sheet...";
                       //we now have sheetName.name, pass to the specified webservice
                       var FlowDF = FlowFileFactory.cbhAttachments;
                       /*
@@ -143,6 +148,7 @@ angular.module('chembiohubAssayApp')
                         sheet.listOfUnmappedFields = sheet.getListOfUnmappedFields(result.attachment_custom_field_config.project_data_fields, result.titleMap)
                         sheet.listOfUnmappedMandatoryFields = sheet.getListOfUnmappedMandatoryFields(result.attachment_custom_field_config.project_data_fields, result.titleMap)
                         sheet.setTotalUnmapped();
+                        $scope.iamloading = false;
                       });
                  }
 
@@ -177,8 +183,10 @@ angular.module('chembiohubAssayApp')
 
               
               sheet.saveSheet = function(sheet_id) {
-                
+                $scope.iamloading = true;
+                $scope.loadingMessage = "Saving Sheet " + sheet.name + "...";
                 $http.get('/'+ prefix + '/datastore/cbh_attachments/save_temporary_data?sheetId=' + sheet_id ).then(function(response){
+                     $scope.iamloading = false;
                      $state.go($state.current, $stateParams, {reload: true});
                  });
               }
@@ -248,6 +256,7 @@ angular.module('chembiohubAssayApp')
             dpc.uploadData.sheets.push(sheet);
           })
           dpc.uploadData.uploaded = true;
+
 
         });
 
