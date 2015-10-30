@@ -277,7 +277,7 @@ angular.module('chembiohubAssayApp')
                           //console.log(errorData.statusText + ": " + errorData.data.error);
                           //launch a popup
                           //$scope.loadingMessage = errorData.statusText + ": " + errorData.data.error;
-                          dataoverviewctrl.errorPopup(errorData.statusText + ": " + errorData.data.error + ". Please note only Excel files are permitted.");
+                          dataoverviewctrl.errorPopup(errorData.data.error + ". Please note only Excel files are permitted.");
                           $scope.iamloading = false;
                         });
 
