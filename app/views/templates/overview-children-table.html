@@ -47,7 +47,8 @@
                                 </a>
                             </td>
                             <td ng-show="assayctrl.proj.project_type.show_compounds">
-                                <img ng-src="data:image/png;base64,{{childItem._source.imgSrc}}"></img>
+                                <img ng-if="childItem._source.imgSrc" ng-src="data:image/png;base64,{{childItem._source.imgSrc}}"></img>
+                                <img ng-if="!childItem._source.imgSrc" ng-src="images/no-structure.png"></img>
 
                             </td>
                             <td style="line-height:0.9 !important;" ng-repeat="field in dpclassif.next_level_cfc.project_data_fields" >
