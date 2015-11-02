@@ -9,7 +9,14 @@
  */
 angular.module('chembiohubAssayApp')
     .controller('DataOverviewCtrl', ['$scope', 'AddDataFactory', '$modal', '$resource', '$stateParams', '$state', '$timeout', 'prefix', 'urlConfig', '$cookies', 'FlowFileFactory',
+        
+
         function($scope, AddDataFactory, $modal, $resource, $stateParams, $state, $timeout, prefix, urlConfig, $cookies, FlowFileFactory) {
+            var destroying = false;
+            $scope.$on('$destroy', function() {
+                destroying = true;
+            });
+
             var dataoverviewctrl = this;
             var classes = {
                 'l1': "l1",
@@ -131,7 +138,8 @@ angular.module('chembiohubAssayApp')
                                 sheet.listOfUnmappedMandatoryFields = [];
 
                                 sheet.specifySheet = function() {
-
+                                      
+                                  if(!destroying) {
                                     if (!angular.isDefined(sheet.metadata)) {
                                         $scope.iamloading = true;
                                         $scope.loadingMessage = "Loading Sheet...";
@@ -163,8 +171,7 @@ angular.module('chembiohubAssayApp')
                                             $scope.iamloading = false;
                                         });
                                     }
-
-
+                                  }
                                 }
 
                                 sheet.setTotalUnmapped = function() {
@@ -197,11 +204,16 @@ angular.module('chembiohubAssayApp')
                                 sheet.saveSheet = function(sheet_id) {
                                         $scope.iamloading = true;
                                         $scope.loadingMessage = "Saving Sheet " + sheet.name + "...";
+                                        angular.forEach(dpc.sheets, function(s){
+                                          s.specifySheet = null;
+                                        })
                                         $http.get('/' + prefix + '/datastore/cbh_attachments/save_temporary_data?sheetId=' + sheet_id).then(function(response) {
                                             $scope.iamloading = false;
                                             $state.go($state.current, $stateParams, {
                                                 reload: true
                                             });
+
+
                                         });
                                     }
                                     //create a list of fields which still need a mapping
