@@ -202,6 +202,10 @@ function arraysEqual(a, b) {
       $scope.selections[level] = [];
     }
 
+    $scope.clearUserSelections = function() {
+      $scope.userData.useruris = [];
+    }
+
     $scope.dateHandler = function(startOrEnd) {
       //convert the date to the required format for the elasticsearch filter
       var oldDate = $scope.dates[startOrEnd];
