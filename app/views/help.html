@@ -111,10 +111,9 @@
 				<p>AssayReg uses data mapping to help with data integrity and also to allow conversion to formats required by public databases such as <a href="https://pubchem.ncbi.nlm.nih.gov/about.html" target="_blank">PubChem</a> and <a href="https://www.ebi.ac.uk/chembl/" target="_blank">ChEMBL</a>.</p>
 
 				<h3 class="blue" >Auto mapping</h3>
-				<p>AssayReg will attempt to "automap" your columns to the Activity columns. Columns in your file with a matching column in the Activity have a green mapping icon <span class="glyphicon glyphicon-random text-success"></span> . Columns in your file which cannot be automapped have a yellow mapping icon <span class="glyphicon glyphicon-random text-warning"></span> .</p>
+				<p>AssayReg will attempt to "automap" your columns to the Activity columns. Columns in your file with a matching column in the Activity have a green mapping icon <span class="glyphicon glyphicon-random text-success"></span> . Columns in your file which cannot be automapped have a red mapping icon <span class="glyphicon glyphicon-random text-danger"></span> .</p>
 
 				<p>You will need to map a column in your file to an Activity column manually if the names are slightly different - for example, you may have a column called "1st Run" in your file and a column called "1st Observation" in the Activity table. They have the same meaning for your work but have been labelled differently. To do this, click the mapping icon in the column you want to map.<br>
-					<!-- image -->
 				</p>
 				<p><img src="images/help/filter-icon.png" class="img img-responsive center-block"><br></p>
 				<p>A window wil display which will allow you to specify the field you wish to map to.</p>
@@ -143,10 +142,11 @@
 				<p>The search results page is shown when you click the <strong>Go</strong> button next to the search bar or select an option below the search bar.</p>
 
 				<h3 class="blue" >Filters</h3>
-				<p>The Search Page allows you to filter the results shown in a number of ways. Whenever a filter is used, the results are updated automatically.</p>
+				<p>The Search Page allows you to filter the results shown in a number of ways. Whenever a filter is used, the results are updated automatically. To remove all selections you've made for a single filter, click <strong>Clear</strong> underneath the box.</p>
 
 				<h3 class="blue" >Dates</h3>
-				<p>You can specify a date range for when records were added to the system - use the <strong>Activity Date From</strong> and <strong>Activity Date To</strong> calendar fields to specify your dates. Results are updated automatically.</p>
+				<p>You can specify a date range for when records were added to the system - use the <strong>Activity Date From</strong> and <strong>Activity Date To</strong> calendar fields to specify your dates. Results are updated automatically. To remove a date selection, open the date popup and click Clear.</p>
+				<p><img src="images/help/date-popup.png" class="img img-responsive center-block"></p>
 
 				<h3 class="blue" >User</h3>
 				<p>You can specify the user or users who uploaded the data you wish to see. Select the names of users from the dropdown list, and they will be displayed as a tag list in the search box. You can remove any users you have selected. Results are updated automatically.</p>
