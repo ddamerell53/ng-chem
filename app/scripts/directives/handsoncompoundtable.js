@@ -387,12 +387,60 @@ angular.module('chembiohubAssayApp')
                           scope.cbh.saveChangesToCompoundDataInController(data, sourceOfChange);
                       };
                       hotObj.beforeAutofill = function(start, end, data){
-                        
+                        //console.log("I am being called");
+                        //console.log('autofilldata', data);
                         for (var colNo = start.col; colNo <= end.col; colNo++){
                             if(allCols[colNo].field_type == "uiselecttags"){
                                 for (var rowNo = start.row; rowNo <= end.end; rowNo++){
 
                                 }
+                            }
+                            else if(allCols[colNo].knownBy == "Archive/Restore"){
+                              
+                              var projects = scope.cbh.projects.objects;
+                              var rowOne = start.row;
+                              var firstMol = this.getSourceDataAtRow(rowOne);
+                              
+                              //get the existing HTML of the cell using this.getCell(rowOne, colNo)
+                              var firstCell = this.getCell(rowOne - 1, colNo);
+                              var firstValueArchived = false;
+                              
+                              //does it have a danger class? If so, make the html of the subsequent cells the Archive button
+                              //might need to change this to traverse the DOM and find if the button has the success class
+                              // td > a > button
+                              var firstCellButton = firstCell.children[0].children[0];
+                              console.log(firstCellButton.className)
+                              if(firstCellButton.className == 'btn btn-success'){
+                                var firstValueArchived = true;
+                              }
+                               console.log('start', start.row)
+                              //angular.forEach(projects,function(myproj){
+                                for (var rowNo = start.row; rowNo <= end.row; rowNo++) {
+                                    var cellAtRow = this.getCell(rowNo, colNo);
+                                    var cellLink = cellAtRow.children[0];                               
+                                    var mol = this.getSourceDataAtRow(rowNo);
+                                    var split = mol.project.split("/");
+                                    var projid = split[split.length-1];
+                                    console.log('getting here');
+                                  
+                                    if(firstValueArchived && cellLink.children[0].className == ('btn btn-danger')){
+                                      //cellButton.className = ('btn btn-success');
+                                      console.log('entering First Loop')
+                                      cellLink.innerHTML = "<button class='btn btn-success'><span class=' glyphicon glyphicon-ok'></span>&nbsp;Restore</button>"
+                                      mol.toArchive = true;
+                                      mol.properties.archived=true;
+                                      cellLink.click();
+                                    }
+                                    else if(!firstValueArchived && cellLink.children[0].className == ('btn btn-success')) {
+                                      //cellButton.className = ('btn btn-danger');
+                                      console.log('entering Second Loop')
+                                      cellLink.innerHTML = "<button class='btn btn-danger'><span class='glyphicon glyphicon-remove'></span>&nbsp;Archive</button>";
+                                      mol.toArchive = false;
+                                      mol.properties.archived=false;
+                                      cellLink.click();
+                                    }
+
+                                };
                             }
                         }
                         

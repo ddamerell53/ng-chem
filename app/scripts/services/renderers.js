@@ -163,7 +163,7 @@ angular.module('chembiohubAssayApp')
                       }
                       var a = document.createElement('a');
                       a.innerHTML = escaped;
-                      Handsontable.Dom.addEvent(a, 'mousedown', function (e){
+                      Handsontable.Dom.addEvent(a, 'click', function (e){
                           // e.preventDefault(); // prevent selection quirk
                           mol.properties.archived=toArchive;
                           mol.projectKey= myproj.project_key;
