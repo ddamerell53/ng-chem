@@ -1,4 +1,4 @@
-<div class="container" style="margin-bottom:30px;">
+<div class="container-flex" style="margin-bottom:30px;">
 	<div class="row" style="margin-top:10px;">
 		<div class="col-sm-12">
 			<h2 class="blue pull-left"><span class="glyphicon glyphicon-search"></span> Search </h2>
@@ -10,7 +10,7 @@
 
 	<form novalidate name="inputForm" role="form"  >
 		<div class="row">
-			<div class="col-sm-5">
+			<div class="col-md-3">
 				<div class="row">
 					<chemdoodle-window sketch-molfile="sketchMolfile" fetch-data="fetchData()" molecule="searchForm.molecule"></chemdoodle-window>
 					<div id="sketcher_output"></div>
@@ -21,9 +21,11 @@
 
 			</div>
 
-			<div class="col-sm-7">
+			<div class="col-md-9">
 				
-				<div sf-schema="searchFormSchema.schema" sf-form="searchFormSchema.form" sf-model="searchForm"></div>
+				<div class="row" sf-schema="searchFormSchema.schema" sf-form="searchFormSchema.form" sf-model="searchForm"></div>
+
+
 				<!-- <div ng-include="'views/search_custom_fields.html'"></div> -->
 				<div class="row"></div>
 			<!-- Buttons -->

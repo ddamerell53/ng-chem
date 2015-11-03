@@ -30,6 +30,10 @@ angular.module('chembiohubAssayApp')
             };
 
             searchForm.molecule.molfileChanged = function() {};
+            if (angular.isDefined(stateParams.created_by)){
+                searchForm.created_by = stateParams.created_by.split(",");
+
+            }
             searchForm.fpValue = stateParams.fpValue;
             searchForm.dateStart = stateParams.created__gte;
             searchForm.dateEnd = stateParams.created__lte;
@@ -87,6 +91,9 @@ angular.module('chembiohubAssayApp')
                     }
                 });
             };
+            if(searchForm.created_by){
+                params["created_by"] = searchForm.created_by.join(",");
+            }
             if (searchForm.project__project_key__in) {
                 params["project__project_key__in"] = searchForm.project__project_key__in.join(",");
             }
@@ -155,7 +162,7 @@ angular.module('chembiohubAssayApp')
             var paramsUrl = multiple_batch_frag + project_frag + func_group_frag + flexmatch_frag + related_molregno__chembl__chembl_id__in_frag + with_substructure_frag + similar_to_frag + fpValue_frag + created__gte_frag + created__lte_frag + cust_field_frag;
 
 
-
+            console.log(searchForm)
             return {
                 "searchForm": searchForm,
                 "params": params,

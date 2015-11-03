@@ -22,7 +22,7 @@ angular.module('chembiohubAssayApp')
     $scope.searchForm = angular.copy(pf.searchForm);
     $scope.searchFormSchema.form[0].options.async.call = $scope.refresh;
     //need to repeat this for the custom field lookup
-    $scope.searchFormSchema.form[1].$validators = {
+    $scope.searchFormSchema.form[2].$validators = {
       notEnough: function(value) {
         if(!angular.isDefined(value)){
             return false;
