@@ -361,13 +361,6 @@ angular.module('chembiohubAssayApp')
            
         });
         
-        /*angular.forEach($scope.projects, function(proj){
-            console.log('proj', proj)
-            if(proj.project_type.name != 'inventory'){
-                onlyInv = false;
-            }
-        });
-        console.log('onlyInvProject being called', onlyInv);*/
         return onlyInv;
     }
     
