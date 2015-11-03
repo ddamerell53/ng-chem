@@ -1,9 +1,10 @@
 <div class="row">
     <div class="col-xs-6 col-sm-3" ng-repeat="project in projects">
-        <div class="well projectbox {{project.project_type.show_compounds == false ? 'nonchem' : ''}}" style="padding-bottom:10px">
-            <img src="images/chemical-icon.png" ng-if="project.project_type.show_compounds == true" class="pull-right" alt="{{project.project_type.name}} project" title="{{project.project_type.name}} project">
-            <img src="images/inventory-icon.png" ng-if="project.project_type.show_compounds == false" class="pull-right" alt="{{project.project_type.name}} project" title="{{project.project_type.name}} project">
-            <img src="images/assay-icon.png" class="pull-right" alt="{{project.project_type.name}} project" title="{{project.project_type.name}} project">
+        
+        <div class="well projectbox {{project.project_type.name == 'inventory' ? 'nonchem' : ''}}" style="padding-bottom:10px">
+            <img src="images/chemical-icon.png" ng-if="project.project_type.name == 'chemical'" class="pull-right" alt="{{project.project_type.name}} project" title="{{project.project_type.name}} project">
+            <img src="images/inventory-icon.png" ng-if="project.project_type.name == 'inventory'" class="pull-right" alt="{{project.project_type.name}} project" title="{{project.project_type.name}} project">
+            <img src="images/assay-icon.png" class="pull-right" alt="{{project.project_type.name}} project" title="Assay project">
             <p class="nexa" style="margin-bottom:0;">
                 <strong><a ui-sref="cbh.projects.project.assay.data_overview({projectKey: project.project_key})"><span title="{{ project.name }}">{{ project.name | limitTo : 16 }}</span><span ng-show="project.name.length > 16">...</span></a>
                 </strong>
@@ -25,28 +26,6 @@
                     </ul>
                 </div>
             </p>
-            <!--  <a ng-if="!project.editor" disabled title="You do not have permission to edit {{project.project_type.show_compounds == true ? 'compounds' : 'items' }} on this project. Please ask an administrator for details." role="button" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-plus-sign"></span> Add {{project.project_type.show_compounds == true ? 'compounds' : 'items' }}</a> -->
         </div>
     </div>
 </div>
-<!-- <div class="row" ng-show="!toggleDataSummary.showFlag && projects.length > 4">
-<div><h2 class="blue centered">...</h2> </div></div>
- -->
-<!-- <div class="row" >
-  <div class="col-xs-6 col-sm-3" ng-repeat="project in projects">
-    <div class="well projectbox {{project.project_type.show_compounds == false ? 'nonchem' : ''}}">
-      <img src="images/chemical-icon.png" ng-if="project.project_type.show_compounds == true" class="pull-right" alt="{{project.project_type.name}} project" title="{{project.project_type.name}} project">
-                  <img src="images/inventory-icon.png" ng-if="project.project_type.show_compounds == false" class="pull-right" alt="{{project.project_type.name}} project" title="{{project.project_type.name}} project">
-      <p class="nexa"><strong><a ui-sref="cbh.projects.project.compounds({projectKey: project.project_key, page:1, sorts:[]})"><span title="{{ project.name }}">{{ project.name | limitTo : 20 }}</span><span ng-show="project.name.length > 20">...</span></a></strong><br/>
-        <span class="glyphicon glyphicon-time"></span> <small>Last modified: {{ project.modified | date }}</small>
-
-        
-        
-                <a ng-if="project.editor" ui-sref="cbh.projects.project.addcompounds({projectKey: project.project_key})" role="button" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-plus-sign"></span> Add {{project.project_type.show_compounds == true ? 'compounds' : 'items' }}</a>
-                <a ng-if="!project.editor" disabled title="You do not have permission to edit {{project.project_type.show_compounds == true ? 'compounds' : 'items' }} on this project. Please ask an administrator for details." role="button" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-plus-sign"></span> Add {{project.project_type.show_compounds == true ? 'compounds' : 'items' }}</a>
-                
-      </p>
-    </div>
-
-  </div>
-</div>  -->
