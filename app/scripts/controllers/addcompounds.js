@@ -307,9 +307,8 @@ angular.module('chembiohubAssayApp')
                         $scope.dataReady = true;
                         $scope.compoundBatches.uncuratedHeaders = data.data.headers;
                        
-                        CBHCompoundBatch.getImages( data.data.objects, 75, "imageSrc"); 
-                        CBHCompoundBatch.getImages( data.data.objects, 400, "bigImageSrc", $scope.imageCallback); 
 
+                        $scope.imageCallback();
                         $scope.compoundBatches.data =data.data.objects;
                         $scope.compoundBatches.savestats = data.data.savestats;
                         $scope.totalCompoundBatches = data.data.batchstats.total;
@@ -525,9 +524,8 @@ angular.module('chembiohubAssayApp')
 
                 if(result.data.objects.length > 0){
                     var size = ($scope.listOrGallery.choice=="gallery") ? 100 : 75;
-                    CBHCompoundBatch.getImages( result.data.objects, size, "imageSrc" , $scope.imageCallback); 
-                    CBHCompoundBatch.getImages(result.data.objects, 400, "bigImageSrc");
 
+                    $scope.imageCallback();
                 }else if( ( $scope.pagination.current * parseInt($scope.pagination.compoundBatchesPerPage.value)) > $scope.totalCompoundBatches){
                     if($scope.pagination.current != 1){
                         $scope.pageChanged(1);

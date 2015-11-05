@@ -235,7 +235,7 @@ angular.module('chembiohubAssayApp')
           if(angular.isDefined(callback)) {
                 callback();                        
           }
-          
+          callback();
           return data
 
           

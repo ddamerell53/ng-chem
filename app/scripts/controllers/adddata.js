@@ -40,7 +40,6 @@ angular.module('chembiohubAssayApp')
   		adfresult.$promise.then(function(result){
   			$scope.dc_data = angular.copy(result);
   			$scope.clone = angular.copy(result);
-  			console.log($scope.clone);
   			
   			//we now need to reset three variables - the dataclassification URI, the level URI and the dataclassification ID
   			//this will ensure that when we post back, we will have new objects created and associated with that dataClassification
@@ -56,7 +55,6 @@ angular.module('chembiohubAssayApp')
           var new_level = "l" + (parseInt(level[1]) + 1).toString();
           context_level_uri = $scope.dc_data[new_level];  
         }
-  			console.log('level_uri', level_uri);
 
   			if(level) {
 				//var level_data = AddDataFactory.level.get({'lev': level});
@@ -77,10 +75,6 @@ angular.module('chembiohubAssayApp')
             $scope.level_datapoint.id=null;
             $scope.level_datapoint.resource_uri = null;
 						//now get the custom field config from this datapoint
-
-
-            
-
 							$scope.custom_field_config = res
 							$scope.edit_form =  []
 							$scope.edit_schema = { "type": "object", 'properties' : {}, 'required': [] };

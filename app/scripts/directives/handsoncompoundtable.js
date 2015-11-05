@@ -88,7 +88,7 @@ angular.module('chembiohubAssayApp')
               function buildButton(col) {
                 var button = document.createElement('BUTTON');
                 var inactiveStr = "";
-                //console.log('col in buildButton', col);
+
                 if(col.noSort){
                   inactiveStr = " lightgrey"
                 }
@@ -122,6 +122,7 @@ angular.module('chembiohubAssayApp')
                   mappingOptions.innerHTML = 'Unmapped <info-box lookup="unmapped_values_written" lookupitems="cbh.messages" right="true"></info-box>'
                 }
                 console.log('mappingOptions', mappingOptions)
+
                 return mappingOptions;
               }
 
@@ -273,7 +274,7 @@ angular.module('chembiohubAssayApp')
                   if (showCompounds){
 
                   allCols = [
-                      {noSort:true, knownBy: "Structure",data: "properties.imageSrc", renderer: "coverRenderer", readOnly: true,  className: "htCenter htMiddle "} ,
+                      {noSort:true, knownBy: "Structure",data: "image", renderer: "coverRenderer", readOnly: true,  className: "htCenter htMiddle "} ,
                       { sortOrder : "none", knownBy: "Row",data: "id",  readOnly: true,  className: "htCenter htMiddle "} ,
                       { noSort:true, readOnly:true, knownBy: "Info", data:"originalSmiles", renderer: "infoRenderer"},
                       { sortOrder : "none",knownBy: "Action",data: "properties.action", type:"dropdown", source: ["New Batch","Ignore"], className: "htCenter htMiddle "} ,
@@ -294,7 +295,7 @@ angular.module('chembiohubAssayApp')
                     ];
                   }
                   if (showCompounds){
-                    allCols = allCols.concat([{noSort:true, knownBy: "Structure",data: "properties.imageSrc", renderer: "coverRenderer", readOnly: true,  className: "htCenter htMiddle "},
+                    allCols = allCols.concat([{noSort:true, knownBy: "Structure",data: "image", renderer: "coverRenderer", readOnly: true,  className: "htCenter htMiddle "},
 
                         ]);
                   }
@@ -342,7 +343,6 @@ angular.module('chembiohubAssayApp')
                   allCols = theCols;
                 }
 
-                console.log("allCols", allCols);
                 var columnHeaders = allCols.map(function(c){
                     return renderers.getColumnLabel(c, scope);
                 });
@@ -626,7 +626,7 @@ angular.module('chembiohubAssayApp')
 
               }, true);
 
-              scope.$on("updateListView", function(){console.log("signal");redraw();});
+              scope.$on("updateListView", function(){redraw();});
 
 
                             // original by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)

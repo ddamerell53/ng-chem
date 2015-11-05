@@ -239,20 +239,7 @@ angular.module('chembiohubAssayApp')
 
         
         $scope.compoundBatches.redraw ++;
-        $timeout(function(){
-            if($scope.totalCompoundBatches > 0 && $stateParams.doScroll){
-                $location.hash('search-bottom');
-                $anchorScroll();
-            }
-            else if(angular.isDefined($stateParams.scrollTop),$stateParams.scrollTop >0){
-                $(window).scrollTop($stateParams.scrollTop);
-            }else{
-                $(window).scrollTop(0);
-            }
-        
-                    $("#myid").scrollLeft($stateParams.scroll);
-
-        },100);
+       
 
     }
     function getAllUncuratedHeaders(data) {
@@ -364,8 +351,19 @@ angular.module('chembiohubAssayApp')
         return onlyInv;
     }
     
+    $scope.searchFormSchema= angular.copy($scope.cbh.projects.searchform);
+    var pf = searchUrlParams.setup($stateParams, {molecule: {}});
+    if($state.current.name=="cbh.search"){
+        $scope.searchForm = angular.copy(pf.searchForm);
+
+    }else{
+        $scope.searchForm = false;
+    }
+    var custFieldFormItem = $filter('filter')($scope.searchFormSchema.cf_form, {key:'search_custom_fields__kv_any'}, true);
+    custFieldFormItem[0].options.async.call = $scope.refreshCustFields;
     
-    function getResultsPage(pageNumber) {
+    $scope.watcher = null;
+function getResultsPage(pageNumber) {
         filters.limit = $scope.pagination.compoundBatchesPerPage.value;
         filters.offset = (pageNumber -1) * $scope.pagination.compoundBatchesPerPage.value;
         filters.sorts = $stateParams.sorts;
@@ -384,25 +382,14 @@ angular.module('chembiohubAssayApp')
             $scope.compoundBatches.data =result.objects;
             $scope.compoundBatches.backup = angular.copy(result.objects);
 
-            $scope.searchFormSchema= angular.copy($scope.cbh.projects.searchform);
-            var pf = searchUrlParams.setup($stateParams, {molecule: {}});
-            if($state.current.name=="cbh.search"){
-                $scope.searchForm = angular.copy(pf.searchForm);
 
-            }else{
-                $scope.searchForm = false;
-            }
-            var custFieldFormItem = $filter('filter')($scope.searchFormSchema.cf_form, {key:'search_custom_fields__kv_any'}, true);
-            custFieldFormItem[0].options.async.call = $scope.refreshCustFields;
 
             //$scope.compoundBatches.uncuratedHeaders = getAllUncuratedHeaders(result.objects);
 
             if(result.objects.length > 0){
-                var size = ($scope.listOrGallery.choice=="gallery") ? 100 : 75;
-                CBHCompoundBatch.getImages(result.objects, 400, "bigImageSrc");
-                CBHCompoundBatch.getImages( result.objects, size, "imageSrc", $scope.imageCallback); 
+                $scope.imageCallback();
 
-            }else if( ( $scope.pagination.current * parseInt($scope.pagination.compoundBatchesPerPage.value)) > $scope.totalCompoundBatches){
+            }else if( ( $scope.pagination.current * parseInt($scope.pagination.compoundBatchesPerPage.value)) > ($scope.totalCompoundBatches + $scope.pagination.compoundBatchesPerPage.value) ){
                 $scope.pageChanged(1);
                 $scope.imageCallback();
             }
@@ -420,7 +407,7 @@ angular.module('chembiohubAssayApp')
             if(angular.isDefined($stateParams.showNonBlanks)){
                 $scope.compoundBatches.showNonBlanks = JSON.parse($stateParams.showNonBlanks)
             }
-            
+            $scope.watcher = $scope.$watch("quartz", function () {});
             
        });        
     }
@@ -428,16 +415,16 @@ angular.module('chembiohubAssayApp')
 
 
         $scope.cbh.changeSearchParams = function(newParams, notify){
-            newParams.scroll = $("#myid").scrollLeft();
-            newParams.scrollTop = $(window).scrollTop();
-            newParams.page = 1;
+            // newParams.scroll = $("#myid").scrollLeft();
+            // newParams.scrollTop = $(window).scrollTop();
+            // newParams.page = 1;
                 $scope.pagination.current = 1;
-                $state.transitionTo($state.current.name, 
-                                        newParams,
-                                        { location: true, 
-                                            inherit: false, 
-                                            relative: undefined, 
-                                            notify: true });
+                $state.params = newParams;
+                $stateParams = newParams;
+
+                $location.search(newParams);
+               getResultsPage(1);
+                
             
                 
                
@@ -572,9 +559,6 @@ angular.module('chembiohubAssayApp')
                 $scope.compoundBatches.sorts = JSON.parse($stateParams.sorts);
             }
 
-             if (angular.isDefined($stateParams.mb_id)){
-                getResultsPage($scope.pagination.current);
-            }
             
         // getResultsPage($scope.pagination.current);
 
