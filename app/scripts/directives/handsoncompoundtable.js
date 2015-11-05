@@ -88,7 +88,7 @@ angular.module('chembiohubAssayApp')
               function buildButton(col) {
                 var button = document.createElement('BUTTON');
                 var inactiveStr = "";
-                console.log('col in buildButton', col);
+                //console.log('col in buildButton', col);
                 if(col.noSort){
                   inactiveStr = " lightgrey"
                 }
@@ -114,6 +114,12 @@ angular.module('chembiohubAssayApp')
                   mappingOptions.className = 'pull-right alert-success'
                   mappingOptions.style.marginRight = "20px;"
                   mappingOptions.innerHTML = '<span class="glyphicon glyphicon-arrow-right"></span>' + col.copyto + automappedSpan + '<info-box lookup="mapped_values_written" lookupitems="cbh.messages" right="true"></info-box></span>';
+                }
+                else {
+
+                  mappingOptions.className = 'pull-right alert-danger'
+                  mappingOptions.style.marginRight = "20px;"
+                  mappingOptions.innerHTML = 'Unmapped <info-box lookup="unmapped_values_written" lookupitems="cbh.messages" right="true"></info-box>'
                 }
                 console.log('mappingOptions', mappingOptions)
                 return mappingOptions;
@@ -373,14 +379,9 @@ angular.module('chembiohubAssayApp')
                       hotObj.afterChange = function(data,sourceOfChange){
                           scope.cbh.saveChangesToTemporaryDataInController(data, sourceOfChange);
                       };
-                      hotObj.cells = function (row, col, prop) { 
-                          if (prop =="properties.action"){
-                              var comp = scope.compounds[row];
-                              if(comp.warnings.parseError || comp.warnings.smilesParseError || comp.warnings.inchiCreationError){
-                                return {readOnly:true};
-                              }  
-                          }
-                      };
+                      //removing hotobj.cells to allow users to override Ignore and register molecules as a batch, even if it has no structure.
+                      //put a warning in the structure column if this is the case.
+                      
                   }else{
 
                       hotObj.afterChange = function(data,sourceOfChange){
