@@ -355,9 +355,22 @@ angular.module('ngChemApp')
                       infospans = buildInfoSpans(allCols[col]);
 
                       addButtonMenuEvent(button, allCols[col]);
+                      var buttonAlready = false;
+                      /*for (var i=0; i<TH.firstChild.children.length; i++){
+                        if()
+                      }*/
+                      angular.forEach(TH.firstChild.children, function(childNode){
+                        if(childNode.className='tableFilter'){
+                          buttonAlready = true;
+                        }
+                      });
 
-                      if (TH.firstChild.lastChild.nodeName === 'BUTTON') {
-                        TH.firstChild.removeChild(TH.firstChild.lastChild);
+                      if (buttonAlready) {
+                        while (TH.firstChild.lastChild != TH.firstChild.firstChild) {
+                          console.log('here I am');
+                            TH.firstChild.removeChild(TH.firstChild.lastChild);
+                        }
+                        //TH.firstChild.removeChild(TH.firstChild.lastChild);
                       }
                       TH.firstChild.appendChild(button);
                       TH.firstChild.appendChild(infospans);
@@ -373,14 +386,14 @@ angular.module('ngChemApp')
                       hotObj.afterChange = function(data,sourceOfChange){
                           scope.cbh.saveChangesToTemporaryDataInController(data, sourceOfChange);
                       };
-                      hotObj.cells = function (row, col, prop) { 
+                      /*hotObj.cells = function (row, col, prop) { 
                           if (prop =="properties.action"){
                               var comp = scope.compounds[row];
                               if(comp.warnings.parseError || comp.warnings.smilesParseError || comp.warnings.inchiCreationError){
                                 return {readOnly:true};
                               }  
                           }
-                      };
+                      };*/
                   }else{
 
                       hotObj.afterChange = function(data,sourceOfChange){
