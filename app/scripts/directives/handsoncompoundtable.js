@@ -114,13 +114,13 @@ angular.module('chembiohubAssayApp')
                   mappingOptions.className = 'pull-right alert-success'
                   mappingOptions.style.marginRight = "20px;"
                   mappingOptions.innerHTML = '<span class="glyphicon glyphicon-arrow-right"></span>' + col.copyto + automappedSpan + '<info-box lookup="mapped_values_written" lookupitems="cbh.messages" right="true"></info-box></span>';
-                }
+                }/*
                 else {
 
                   mappingOptions.className = 'pull-right alert-danger'
                   mappingOptions.style.marginRight = "20px;"
                   mappingOptions.innerHTML = 'Unmapped <info-box lookup="unmapped_values_written" lookupitems="cbh.messages" right="true"></info-box>'
-                }
+                }*/
                 console.log('mappingOptions', mappingOptions)
 
                 return mappingOptions;
@@ -350,7 +350,7 @@ angular.module('chembiohubAssayApp')
                      colWidths:150,
                     data: scope.compounds,
                     colHeaders: columnHeaders,
-                    columns: allCols, 
+                    columns: allCols,
                     //afterGetColHeader is a function that is called when the html of the header has already been set
                     //which allows DOM manipulation after the TH has been created
                     //there are lots of useful hooks provided by Handsontable
@@ -373,7 +373,6 @@ angular.module('chembiohubAssayApp')
 
                       if (buttonAlready) {
                         while (TH.firstChild.lastChild != TH.firstChild.firstChild) {
-                          console.log('here I am');
                             TH.firstChild.removeChild(TH.firstChild.lastChild);
                         }
                         //TH.firstChild.removeChild(TH.firstChild.lastChild);
@@ -431,7 +430,7 @@ angular.module('chembiohubAssayApp')
                               //angular.forEach(projects,function(myproj){
                                 for (var rowNo = start.row; rowNo <= end.row; rowNo++) {
                                     var cellAtRow = this.getCell(rowNo, colNo);
-                                    var cellLink = cellAtRow.children[0];                               
+                                    var cellLink = cellAtRow.children[0];
                                     var mol = this.getSourceDataAtRow(rowNo);
                                     var split = mol.project.split("/");
                                     var projid = split[split.length-1];
@@ -604,8 +603,8 @@ angular.module('chembiohubAssayApp')
               });
               if(customCols){
                 //Ensuring there is enough height for the menu bars to sit in
-                   var minHeight = 200 + customCols.length *30;
-                   $("#myid").css("min-height", minHeight + "px");
+                   // var minHeight = 200 + customCols.length *30;
+                   // $("#myid").css("min-height", minHeight + "px");
               }
               //removing double scroll - IE compat issues
               /*if(!scope.cbh.editMode){
