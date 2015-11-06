@@ -16,6 +16,7 @@ angular.module('chembiohubAssayApp')
             $scope.$on('$destroy', function() {
                 destroying = true;
             });
+                $scope.cbh.appName = "AssayReg";
 
             var dataoverviewctrl = this;
             var classes = {

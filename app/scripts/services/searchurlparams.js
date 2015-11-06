@@ -10,7 +10,7 @@
 
 
 angular.module('chembiohubAssayApp')
-    .factory('searchUrlParams', function($filter) {
+    .factory('searchUrlParams', function($filter, $state) {
 
         // Private variables
 
@@ -21,7 +21,7 @@ angular.module('chembiohubAssayApp')
 
 
         SearchUrlParams.setup = function(stateParams, searchForm) {
-
+            console.log($state.current.name)
             function setStructure(key) {
                 searchForm.molecule.molfile = stateParams[key];
                 if (stateParams[key].indexOf("ChemDoodle") < 0) {
@@ -29,7 +29,7 @@ angular.module('chembiohubAssayApp')
                 }
             };
 
-            searchForm.molecule.molfileChanged = function() {};
+           
             if (angular.isDefined(stateParams.created_by)){
                 searchForm.created_by = stateParams.created_by.split(",");
 
@@ -79,9 +79,10 @@ angular.module('chembiohubAssayApp')
             return this.fromForm(searchForm);
       }
 
-      SearchUrlParams.fromForm = function(searchForm){
+      SearchUrlParams.fromForm = function(searchForm, textsearch){
 
             var params = {}
+            
             function resetStructure(key) {
                 //remove struc data from everything which is not the structure search type in key
                 var struc_search_types = ['with_substructure', 'flexmatch', 'similar_to'];
@@ -91,6 +92,9 @@ angular.module('chembiohubAssayApp')
                     }
                 });
             };
+            if(angular.isDefined(textsearch)){
+                params.textsearch = textsearch;
+            }
             if(searchForm.created_by){
                 params["created_by"] = searchForm.created_by.join(",");
             }
@@ -119,6 +123,10 @@ angular.module('chembiohubAssayApp')
                 params[searchForm.substruc] = searchForm.molecule.molfile;
                 //now need to reset the other structure search types so they do not contain molecular data
                 resetStructure(searchForm.substruc);
+            }else {
+                console.log("here")
+                params[searchForm.substruc] = undefined;
+                // resetStructure(searchForm.substruc);
             }
 
             if (!angular.equals([], searchForm.search_custom_fields__kv_any) && angular.isDefined(searchForm.search_custom_fields__kv_any)) {
@@ -128,7 +136,7 @@ angular.module('chembiohubAssayApp')
                 params.search_custom_fields__kv_any = encodedCustFields;
             }
             else {
-                delete searchForm.search_custom_fields__kv_any; 
+                 searchForm.search_custom_fields__kv_any = [];
                 params.search_custom_fields__kv_any = "";
             }
 
@@ -159,7 +167,8 @@ angular.module('chembiohubAssayApp')
             // var smiles_frag = (params.smiles) ? ("smiles=" + params.smiles + "&") : "";
             var cust_field_frag = (params.search_custom_fields__kv_any) ? ("search_custom_fields__kv_any=" + params.search_custom_fields__kv_any + "&") : "";
             var related_molregno__chembl__chembl_id__in_frag = (params.related_molregno__chembl__chembl_id__in) ? ("related_molregno__chembl__chembl_id__in=" + params.related_molregno__chembl__chembl_id__in + "&") : "";
-            var paramsUrl = multiple_batch_frag + project_frag + func_group_frag + flexmatch_frag + related_molregno__chembl__chembl_id__in_frag + with_substructure_frag + similar_to_frag + fpValue_frag + created__gte_frag + created__lte_frag + cust_field_frag;
+            var textsearch_part = (angular.isDefined(textsearch)) ? "textsearch=" + textsearch : "";
+            var paramsUrl = multiple_batch_frag + project_frag + func_group_frag + flexmatch_frag + related_molregno__chembl__chembl_id__in_frag + with_substructure_frag + similar_to_frag + fpValue_frag + created__gte_frag + created__lte_frag + cust_field_frag + textsearch_part;
 
 
             console.log(searchForm)

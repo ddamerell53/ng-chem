@@ -32,7 +32,9 @@ $urlRouterProvider.when('', '/projects/list');
         abstract: true,
 
         controller: function($scope, $rootScope, $state, $location, $modal, urlConfig, loggedInUser, projectList, prefix, $compile, MessageFactory, skinConfig) {
+
           var cbh = this;
+          cbh.appName = "Platform"
           cbh.logged_in_user = loggedInUser;
           cbh.projects = projectList;
           cbh.skinning = skinConfig.objects[0];
@@ -316,7 +318,7 @@ $urlRouterProvider.when('', '/projects/list');
 
 
     .state('cbh.search', {
-      url: '/search??created_by=editMode=&archived=&projectFrom=&scroll=&scrollTop=&sorts=&page=&compoundBatchesPerPage=&project__project_key__in&functional_group&flexmatch&related_molregno__chembl__chembl_id__in&with_substructure&similar_to&fpValue&created__gte&created__lte&molfile&smiles&search_custom_fields__kv_any&multiple_batch_id=&viewType=&doScroll=&showBlanks=&showNonBlanks=&limit&offset',
+      url: '/search?textsearch=created_by=editMode=&archived=&projectFrom=&scroll=&scrollTop=&sorts=&page=&compoundBatchesPerPage=&project__project_key__in&functional_group&flexmatch&related_molregno__chembl__chembl_id__in&with_substructure&similar_to&fpValue&created__gte&created__lte&molfile&smiles&search_custom_fields__kv_any&multiple_batch_id=&viewType=&doScroll=&showBlanks=&showNonBlanks=&limit&offset',
       //url: '/search',
       //params: ['project__project_key', 'flexmatch', 'with_substructure', 'similar_to', 'fpValue', 'created__gte', 'created__lte', 'molfile', 'smiles', 'limit', 'offset', 'random'],
       resolve: {
@@ -485,6 +487,8 @@ $urlRouterProvider.when('', '/projects/list');
       url: '/list',
       templateUrl: 'views/projects-list.html',
       controller: function($rootScope, $state, $stateParams, $scope) {
+        $scope.cbh.appName = "Platform";
+
         $rootScope.headline = $scope.cbh.skinning.project_alias + " List";
         $rootScope.subheading = "Click a " + $scope.cbh.skinning.project_alias + " title to see more details and add data to that " + $scope.cbh.skinning.project_alias;
         $rootScope.help_lookup = "";
@@ -768,6 +772,7 @@ $urlRouterProvider.when('', '/projects/list');
             var assayctrl = this;
             assayctrl.dfc_lookup  = {};
             assayctrl.proj = project_with_forms.objects[0];
+            $scope.cbh.appName = "AssayReg";
 
             angular.forEach(assayctrl.proj.data_form_configs, function(dfc){
               dfc.get_main_schema = function(){

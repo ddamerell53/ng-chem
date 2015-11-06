@@ -13,7 +13,7 @@ var lightApp = angular.module('lightApp', [
 
 var chembiohubAssayApp =  angular.module('chembiohubAssayApp', [
     'lightApp',
-    // 'ngAnimate',
+    'ngAnimate',
     'ngAria',
     'ngCookies',
     'ngMessages',

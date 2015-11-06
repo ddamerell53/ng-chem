@@ -1,53 +1,49 @@
 <div class="container-flex" style="margin-bottom:30px;">
-	<div class="row" style="margin-top:10px;">
-		<div class="col-sm-12">
-			<h2 class="blue pull-left"><span class="glyphicon glyphicon-search"></span> Search </h2>
+	<div >
+		<div class="row" style="margin-top:10px;">
+			<div class="col-sm-12">
+				<h2 class="blue pull-left"><span class="glyphicon glyphicon-search"></span> Search </h2>
+			</div>
+			<div ng-if="projectFrom" class="col-sm-12 alert alert-success">
+				Your saved {{projectFrom.project_type.show_compounds == true ? 'compounds' : 'items' }} are shown below. Use the tools to search these {{projectFrom.project_type.show_compounds == true ? 'compounds' : 'items' }} and others in this project <button ui-sref="cbh.projects.project.addcompounds({projectKey: projectFrom})" class=" pull-right btn btn-primary add more compounds">Add more {{projectFrom.project_type.show_compounds == true ? 'compounds' : 'items' }}</button>
+			</div>
 		</div>
-		<div ng-if="projectFrom" class="col-sm-12 alert alert-success">
-			Your saved {{projectFrom.project_type.show_compounds == true ? 'compounds' : 'items' }} are shown below. Use the tools to search these {{projectFrom.project_type.show_compounds == true ? 'compounds' : 'items' }} and others in this project <button ui-sref="cbh.projects.project.addcompounds({projectKey: projectFrom})" class=" pull-right btn btn-primary add more compounds">Add more {{projectFrom.project_type.show_compounds == true ? 'compounds' : 'items' }}</button>
-		</div>
-	</div>
-
-	<form novalidate name="inputForm" role="form"  >
-		<div class="row">
-			<div class="col-md-3">
+			<form novalidate name="inputForm" role="form"  style="width:95%; display: table;
+    margin: 0 auto;">
 				<div class="row">
-					<chemdoodle-window sketch-molfile="sketchMolfile" fetch-data="fetchData()" molecule="searchForm.molecule"></chemdoodle-window>
-					<div id="sketcher_output"></div>
+					<div class="col-md-3">
+						<div class="row">
+							<chemdoodle-window sketch-molfile="sketchMolfile" fetch-data="fetchData()" molecule="cbh.searchForm.molecule"></chemdoodle-window>
+							<div id="sketcher_output"></div>
+						</div>	
+					</div>
+
+					<div class="col-md-9">
+						
+						<div class="row" sf-schema="searchFormSchema.schema" sf-form="searchFormSchema.form" sf-model="cbh.searchForm"></div>
+
+
+						<!-- <div ng-include="'views/search_custom_fields.html'"></div> -->
+						<div class="row"></div>
+					<!-- Buttons -->
+
 				</div>
-					
-					
-					
-
-			</div>
-
-			<div class="col-md-9">
-				
-				<div class="row" sf-schema="searchFormSchema.schema" sf-form="searchFormSchema.form" sf-model="searchForm"></div>
+						
 
 
-				<!-- <div ng-include="'views/search_custom_fields.html'"></div> -->
-				<div class="row"></div>
-			<!-- Buttons -->
+					</div>
+					<a id="search-bottom"></a>
 
-		</div>
-				
+					<div  class="pull-right" style="margin-top:-70px;">
+					<button type="cancel" ng-click="cancel()" class="btn btn-lg btn-danger "><span class="glyphicon glyphicon-close"></span> Reset</button>
 
+					<button ng-click="cbh.runSearch(true)" type="submit" class="btn btn-lg btn-primary "><span class="glyphicon glyphicon-search"></span> Run search</button>
 
+				</div>
 
-			</div>
-			<a id="search-bottom"></a>
+				</div>
 
-			<div class="pull-right">
-			<button type="cancel" ng-click="cancel()" class="btn btn-lg btn-danger "><span class="glyphicon glyphicon-close"></span> Reset</button>
+			</form>
 
-			<button ng-click="cbh.runSearch(true)" type="submit" class="btn btn-lg btn-primary "><span class="glyphicon glyphicon-search"></span> Run search</button>
-
-		</div>
-
-		</div>
-
-	</form>
-	
-
+</div>
 </div>

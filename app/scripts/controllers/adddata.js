@@ -10,6 +10,8 @@
 angular.module('chembiohubAssayApp')
   .controller('AddDataCtrl',['$scope', '$stateParams', '$resource', 'AddDataFactory', function ($scope, $stateParams, $resource, AddDataFactory) {
 
+                $scope.cbh.appName = "AssayReg";
+
   	//we need:
   	var addctrl = this;
   	//method to generate the form for a given level of a given datapoint classification

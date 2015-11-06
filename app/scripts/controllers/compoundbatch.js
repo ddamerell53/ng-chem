@@ -21,109 +21,111 @@ angular.module('chembiohubAssayApp')
         }
       });
     
-    $scope.listOrGallery = {
-        choice: "list",
-    };
-    if($stateParams.viewType) {
-        $scope.listOrGallery.choice = $stateParams.viewType;
-    }
-    var listPerPage = [
-        { label: "10/page", value: "10" },
-        { label: "20/page", value: "20" },
-        { label: "50/page", value: "50" },
-    ];
-
-    var galleryPerPage = {
-        largeScreen : [
-            { label: "40/page", value: "40" },
-            { label: "80/page", value: "80" },
-            { label: "120/page", value: "120" },
-        ],
-        smallScreen: [
-            { label: "30/page", value: "30" },
-            { label: "60/page", value: "60" },
-            { label: "90/page", value: "90" },
-        ],
-    } 
-     if (angular.isDefined($stateParams.sorts)){
-                $scope.compoundBatches.sorts = JSON.parse($stateParams.sorts);
+    $scope.cbh.setUpPageNumbers = function(){
+            $scope.listOrGallery = {
+                choice: "list",
+            };
+            if($stateParams.viewType) {
+                $scope.listOrGallery.choice = $stateParams.viewType;
             }
-    if(angular.isDefined($stateParams.showBlanks)){
-        $scope.showBlanks = $stateParams.showBlanks;
-    }
+            var listPerPage = [
+                { label: "10/page", value: "10" },
+                { label: "20/page", value: "20" },
+                { label: "50/page", value: "50" },
+            ];
 
-    if(angular.isDefined($stateParams.showNonBlanks)){
-        $scope.showNonBlanks = $stateParams.showNonBlanks;
-    }
-    //initialise this as list first
-    if(angular.isDefined($stateParams.viewType)) {
-        if($stateParams.viewType == 'list') {
-            $scope.itemsPerPage = angular.copy(listPerPage);
-        }
-        else if($stateParams.viewType == 'gallery'){
-            
-            var w = angular.element($window);
-            if(w.width() > 1200) {
-                $scope.itemsPerPage = angular.copy(galleryPerPage.largeScreen);
+            var galleryPerPage = {
+                largeScreen : [
+                    { label: "40/page", value: "40" },
+                    { label: "80/page", value: "80" },
+                    { label: "120/page", value: "120" },
+                ],
+                smallScreen: [
+                    { label: "30/page", value: "30" },
+                    { label: "60/page", value: "60" },
+                    { label: "90/page", value: "90" },
+                ],
+            } 
+             if (angular.isDefined($stateParams.sorts)){
+                        $scope.compoundBatches.sorts = JSON.parse($stateParams.sorts);
+                    }
+            if(angular.isDefined($stateParams.showBlanks)){
+                $scope.showBlanks = $stateParams.showBlanks;
+            }
 
+            if(angular.isDefined($stateParams.showNonBlanks)){
+                $scope.showNonBlanks = $stateParams.showNonBlanks;
+            }
+            //initialise this as list first
+            if(angular.isDefined($stateParams.viewType)) {
+                if($stateParams.viewType == 'list') {
+                    $scope.itemsPerPage = angular.copy(listPerPage);
+                }
+                else if($stateParams.viewType == 'gallery'){
+                    
+                    var w = angular.element($window);
+                    if(w.width() > 1200) {
+                        $scope.itemsPerPage = angular.copy(galleryPerPage.largeScreen);
+
+                    }
+                    else {
+                        $scope.itemsPerPage = angular.copy(galleryPerPage.smallScreen);
+                    }
+                }
             }
             else {
-                $scope.itemsPerPage = angular.copy(galleryPerPage.smallScreen);
+                $scope.itemsPerPage = angular.copy(listPerPage);
             }
-        }
-    }
-    else {
-        $scope.itemsPerPage = angular.copy(listPerPage);
-    }
-    $scope.pagination = {
-        current: 1,
-        compoundBatchesPerPage: $scope.itemsPerPage[0],
-    };
-    if(angular.isDefined($stateParams.compoundBatchesPerPage)){
-       var filtered = $filter("filter")($scope.itemsPerPage, $stateParams.compoundBatchesPerPage, true);
-       if(filtered[0]) {
-            if(onlyInvProjects() == true){
-               $scope.pagination.compoundBatchesPerPage = { label: "50/page", value: "50" }; 
-            } 
+            $scope.pagination = {
+                current: 1,
+                compoundBatchesPerPage: $scope.itemsPerPage[0],
+            };
+            if(angular.isDefined($stateParams.compoundBatchesPerPage)){
+               var filtered = $filter("filter")($scope.itemsPerPage, $stateParams.compoundBatchesPerPage, true);
+               if(filtered[0]) {
+                    if(onlyInvProjects() == true){
+                       $scope.pagination.compoundBatchesPerPage = { label: "50/page", value: "50" }; 
+                    } 
+                    else {
+                        $scope.pagination.compoundBatchesPerPage = filtered[0]; 
+                    }
+                
+               }
+               else if(angular.isDefined($scope.projects)){
+                    
+                    if(onlyInvProjects() == true){
+
+                       $scope.pagination.compoundBatchesPerPage = { label: "50/page", value: "50" }; 
+                    } 
+                }
+               else {
+                $scope.pagination.compoundBatchesPerPage = $scope.itemsPerPage[0];
+               }
+            }
+            //is there a project selected and if so is it an inventory project
+            else if(angular.isDefined($scope.proj)){
+                if($scope.proj.project_type.name == 'inventory'){
+
+                    $scope.pagination.compoundBatchesPerPage = { label: "50/page", value: "50" };
+                }
+            }
             else {
-                $scope.pagination.compoundBatchesPerPage = filtered[0]; 
+                $scope.pagination.compoundBatchesPerPage = $scope.itemsPerPage[0];
             }
-        
-       }
-       else if(angular.isDefined($scope.projects)){
-            
-            if(onlyInvProjects() == true){
+            if(angular.isDefined($stateParams.page)){
+               $scope.pagination.current = $stateParams.page;  
 
-               $scope.pagination.compoundBatchesPerPage = { label: "50/page", value: "50" }; 
-            } 
-        }
-       else {
-        $scope.pagination.compoundBatchesPerPage = $scope.itemsPerPage[0];
-       }
-    }
-    //is there a project selected and if so is it an inventory project
-    else if(angular.isDefined($scope.proj)){
-        if($scope.proj.project_type.name == 'inventory'){
-
-            $scope.pagination.compoundBatchesPerPage = { label: "50/page", value: "50" };
-        }
-    }
-    else {
-        $scope.pagination.compoundBatchesPerPage = $scope.itemsPerPage[0];
-    }
-    if(angular.isDefined($stateParams.page)){
-       $scope.pagination.current = $stateParams.page;  
-
+            }
     }
     
-    var filters = { };
-
+    
+    
     var multiple_batch_id = $stateParams.multiple_batch_id;
     $scope.baseDownloadUrl = paramsAndForm.paramsUrl;
     //..
 
     
-    filters = paramsAndForm.params;
+    
       
     $scope.cbh.patchRecord = function(mol){
         $scope.compoundBatches.backup = angular.copy($scope.compoundBatches.data);
@@ -192,7 +194,9 @@ angular.module('chembiohubAssayApp')
         newParams.compoundBatchesPerPage = $scope.pagination.compoundBatchesPerPage.value;
         newParams.doScroll = 'true';
         newParams.archived = ($scope.cbh.archiveFilter).toString();
-        $state.go($state.current.name,newParams);
+        $scope.cbh.changeSearchParams(newParams, false);
+ 
+
     }
    
    $scope.cbh.toggleEditMode = function(){
@@ -202,32 +206,45 @@ angular.module('chembiohubAssayApp')
         newParams.compoundBatchesPerPage = $scope.pagination.compoundBatchesPerPage.value;
         newParams.doScroll = 'true';
         newParams.editMode = ($scope.cbh.editMode).toString();
-        $state.go($state.current.name,newParams);
+                   $scope.cbh.changeSearchParams(newParams, false);
+
+
     }
    
     $scope.changeNumberPerPage = function(viewType) {
-        var newParams = angular.copy($stateParams);
+         var newParams = angular.copy($stateParams);
         newParams.page = 1;
         newParams.compoundBatchesPerPage = $scope.pagination.compoundBatchesPerPage.value;
-        newParams.viewType = viewType;
         newParams.doScroll = 'true';
-        $state.go($state.current.name,newParams);
+        $scope.cbh.changeSearchParams(newParams, false);
+
+          
     };
     $scope.pageChanged = function(newPage) {
         var newParams = angular.copy($stateParams);
         newParams.page = newPage;
+
         newParams.compoundBatchesPerPage = $scope.pagination.compoundBatchesPerPage.value;
         newParams.doScroll = 'true';
-        $state.go($state.current.name,newParams);
+
+        $scope.cbh.changeSearchParams(newParams);
+
     };
+
     $scope.pageChanged2 = function(newPage) {
         var newParams = angular.copy($stateParams);
         newParams.page = newPage;
         newParams.compoundBatchesPerPage = $scope.pagination.compoundBatchesPerPage.value;
-        $state.go($state.current.name,newParams);
+        newParams.doScroll = 'false';
+        $scope.cbh.changeSearchParams(newParams);
+
     };
+
     var childScope;
 
+
+   
+    var searching = false;
     $scope.imageCallback = function() {
         
         // console.log("call");
@@ -237,8 +254,9 @@ angular.module('chembiohubAssayApp')
         //     $anchorScroll();
         // }
 
-        
+        var searching = false;
         $scope.compoundBatches.redraw ++;
+
        
 
     }
@@ -362,13 +380,15 @@ angular.module('chembiohubAssayApp')
     var custFieldFormItem = $filter('filter')($scope.searchFormSchema.cf_form, {key:'search_custom_fields__kv_any'}, true);
     custFieldFormItem[0].options.async.call = $scope.refreshCustFields;
     
-    $scope.watcher = null;
-function getResultsPage(pageNumber) {
+
+
+function getResultsPage(pageNumber, filters) {
         filters.limit = $scope.pagination.compoundBatchesPerPage.value;
         filters.offset = (pageNumber -1) * $scope.pagination.compoundBatchesPerPage.value;
         filters.sorts = $stateParams.sorts;
         filters.archived = $stateParams.archived;
         filters.showBlanks = $stateParams.showBlanks;
+        filters.textsearch = $stateParams.textsearch;
         if(filters.showBlanks){
             filters.showBlanks = filters.showBlanks.replace("customFields", "custom_fields")
         }
@@ -388,6 +408,7 @@ function getResultsPage(pageNumber) {
 
             if(result.objects.length > 0){
                 $scope.imageCallback();
+                $scope.noData = "";
 
             }else if( ( $scope.pagination.current * parseInt($scope.pagination.compoundBatchesPerPage.value)) > ($scope.totalCompoundBatches + $scope.pagination.compoundBatchesPerPage.value) ){
                 $scope.pageChanged(1);
@@ -407,26 +428,42 @@ function getResultsPage(pageNumber) {
             if(angular.isDefined($stateParams.showNonBlanks)){
                 $scope.compoundBatches.showNonBlanks = JSON.parse($stateParams.showNonBlanks)
             }
-            $scope.watcher = $scope.$watch("quartz", function () {});
             
-       });        
+       });
+
     }
    
+
+$scope.cbh.setUpPageNumbers();   
 
 
         $scope.cbh.changeSearchParams = function(newParams, notify){
             // newParams.scroll = $("#myid").scrollLeft();
             // newParams.scrollTop = $(window).scrollTop();
             // newParams.page = 1;
-                $scope.pagination.current = 1;
+                if(notify){
+                    $scope.pagination.current = 1;
+                }
+                
+                
+
+                // 
                 $state.params = newParams;
                 $stateParams = newParams;
-
-                $location.search(newParams);
-               getResultsPage(1);
+                // $location.search(newParams);
+                $state.go('cbh.search',newParams,{
+                    // prevent the events onStart and onSuccess from firing
+                    notify:false,
+                    // prevent reload of the current state
+                    reload:false, 
+                    // replace the last record when changing the params so you don't hit the back button and get old params
+                    location:'replace', 
+                    // inherit the current params on the url
+                    inherit:true
+                });
                 
-            
-                
+               getResultsPage($scope.pagination.current, newParams);
+                  
                
         }
  $scope.nullSorts = function(){
@@ -434,13 +471,11 @@ function getResultsPage(pageNumber) {
              var newParams = angular.copy($stateParams);
             newParams.page = 1;
             newParams.sorts = undefined;
-            $state.transitionTo($state.current.name, 
-                                        newParams,
-                                        { location: true, 
-                                            inherit: false, 
-                                            relative: $state.$current, 
-                                            notify: false });
-            $stateParams = newParams;
+            
+            $state.params = newParams;
+                $stateParams = newParams;
+
+                $location.search(newParams);
             $scope.initialise();
         };
         $scope.cbh.addSort =  function(sortColumn, order){
@@ -468,7 +503,7 @@ function getResultsPage(pageNumber) {
                 }else{
                     newParams.sorts = undefined;
                 }
-                $scope.cbh.changeSearchParams(newParams);
+                $scope.cbh.changeSearchParams(newParams, true);
                 
             };
 
@@ -565,7 +600,7 @@ function getResultsPage(pageNumber) {
 
     }   
 
-    getResultsPage($scope.pagination.current);
+    getResultsPage($scope.pagination.current, paramsAndForm.params);
 
 
   }]);

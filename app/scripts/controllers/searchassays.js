@@ -18,7 +18,8 @@ angular.module('chembiohubAssayApp')
   	//assays available to the selected studies
 
   	//and populate into scope models to be used in filters and aggregations on the page
-    
+        $scope.cbh.appName = "AssayReg";
+
     $scope.users = userList;
     $scope.userData = {useruris : []};
   	$scope.cbh.textsearch = $stateParams.textsearch;
