@@ -163,8 +163,8 @@ angular.module('ngChemApp')
                       }
                       var a = document.createElement('a');
                       a.innerHTML = escaped;
-                      Handsontable.Dom.addEvent(a, 'mousedown', function (e){
-                          // e.preventDefault(); // prevent selection quirk
+                      Handsontable.Dom.addEvent(a, 'click', function (e){
+                          e.preventDefault(); // prevent selection quirk
                           mol.properties.archived=toArchive;
                           mol.projectKey= myproj.project_key;
                           scope.cbh.patchRecord(mol);

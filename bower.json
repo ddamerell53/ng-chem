@@ -35,7 +35,7 @@
     "angular-schema-form-ui-select": "https://github.com/thesgc/angular-schema-form-ui-select.git#0.1.5",
     "angular-info-box": "https://github.com/paulbarrett79/angular-info-box.git#v0.0.4",
     "angular-utils-pagination": "~0.7.0",
-    "handsontable": "https://github.com/thesgc/handsontable.git#master",
+    "handsontable": "~0.20.0",
     "angular-ui-ace": "bower"
   },
   "devDependencies": {
