@@ -58,6 +58,8 @@ angular.module('chembiohubAssayApp')
             }
             if (stateParams.multiple_batch_id) {
                 searchForm.multiple_batch_id = stateParams.multiple_batch_id;   
+            }else{
+                searchForm.multiple_batch_id = undefined;   
             }
             var myschema = {};
             var myform = {};
@@ -97,12 +99,16 @@ angular.module('chembiohubAssayApp')
             }
             if(searchForm.created_by){
                 params["created_by"] = searchForm.created_by.join(",");
+            }else{
+                params["created_by"] = undefined;
             }
             if (searchForm.project__project_key__in) {
                 params["project__project_key__in"] = searchForm.project__project_key__in.join(",");
             }
             if (searchForm.multiple_batch_id) {
                 params["multiple_batch_id"] = searchForm.multiple_batch_id;
+            }else{
+                 params["multiple_batch_id"] = undefined;
             }
             if (searchForm.related_molregno__chembl__chembl_id__in) {
                 params["related_molregno__chembl__chembl_id__in"] = searchForm.related_molregno__chembl__chembl_id__in.join(",");
