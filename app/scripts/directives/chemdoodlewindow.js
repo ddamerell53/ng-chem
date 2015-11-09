@@ -38,13 +38,10 @@ angular.module('chembiohubAssayApp')
             //Check if the molecule is the standard methane and ignore
             if (scope.localMolfile !== "Molecule from ChemDoodle Web Components\n\nhttp://www.ichemlabs.com\n  1  0  0  0  0  0            999 V2000\n    0.0000    0.0000    0.0000 C   0  0  0  0  0  0\nM  END"){
                  var mol = ChemDoodle.writeMOL(element.getMolecule()).valueOf();
-              if (scope.localMolfile.valueOf() != mol || scope.molecule.molfile != mol){
                 
                 scope.localMolfile = ChemDoodle.writeMOL(element.getMolecule()).valueOf();
                 scope.molecule.molfile = ChemDoodle.writeMOL(element.getMolecule()).valueOf();
-              } else{
-                   console.log("test", ChemDoodle.writeMOL(element.getMolecule()).valueOf())
-              }           
+                      
               
               
             }else{
@@ -54,27 +51,23 @@ angular.module('chembiohubAssayApp')
             }
 
           },
-          // 'keyup' : function() {              
+          'keyup' : function() {              
                  
-          //   //Check if the molecule is the standard methane and ignore
-          //   if (scope.localMolfile !== "Molecule from ChemDoodle Web Components\n\nhttp://www.ichemlabs.com\n  1  0  0  0  0  0            999 V2000\n    0.0000    0.0000    0.0000 C   0  0  0  0  0  0\nM  END"){
-          //     var mol = ChemDoodle.writeMOL(element.getMolecule()).valueOf();
-          //     if (scope.localMolfile.valueOf() != mol || scope.molecule.molfile != mol){
-          //       console.log("set3")
-          //       scope.localMolfile = ChemDoodle.writeMOL(element.getMolecule()).valueOf();
-          //      scope.molecule.molfile = ChemDoodle.writeMOL(element.getMolecule()).valueOf();
+            //Check if the molecule is the standard methane and ignore
+              if (scope.localMolfile !== "Molecule from ChemDoodle Web Components\n\nhttp://www.ichemlabs.com\n  1  0  0  0  0  0            999 V2000\n    0.0000    0.0000    0.0000 C   0  0  0  0  0  0\nM  END"){
+               
+                scope.localMolfile = ChemDoodle.writeMOL(element.getMolecule()).valueOf();
+                scope.molecule.molfile = ChemDoodle.writeMOL(element.getMolecule()).valueOf();
+                  
+              
+              
+            }else{
+              scope.localMolfile = "";
+              scope.molecule.molfile = "";
 
-          //     } 
-             
-          //   }else{
-          //     console.log("set4")
-          //     scope.localMolfile = "";
-          //     scope.molecule.molfile = "";
-
-          //   }
-           
-          // }
-        }); 
+            }
+        }}
+        ); 
 
         $timeout(function(){redraw(500)});  
         function redraw(doIt){

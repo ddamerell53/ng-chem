@@ -121,8 +121,12 @@ angular.module('chembiohubAssayApp')
     $scope.cancel = function(){
         //$location.url('/search?limit=&offset=');
         //$scope.cbh.searchPage();
-        $scope.cbh.searchForm = {};
-        $state.transitionTo('cbh.search', {location: true, inherit:false, relative:null, notify:true});
+        $state.params = {};
+        $stateParams = {};
+        var pf = searchUrlParams.setup({}, {molecule: {}});
+        $scope.cbh.searchForm = angular.copy(pf.searchForm);
+        $state.transitionTo('cbh.search', {location: true, inherit:false, relative:null, notify:true, reload:true});
+        $state.go($state.current.name, $state.params, { reload: true });
     }
 
     $scope.cbh.runSearch = function(doScroll){
