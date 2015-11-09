@@ -33,52 +33,60 @@ angular.module('chembiohubAssayApp')
         scope.mols = [];
 
         element.bind({
-          'click': function() {
-
-           $timeout(function(){
-              
+          'click': function() {              
                  
             //Check if the molecule is the standard methane and ignore
             if (scope.localMolfile !== "Molecule from ChemDoodle Web Components\n\nhttp://www.ichemlabs.com\n  1  0  0  0  0  0            999 V2000\n    0.0000    0.0000    0.0000 C   0  0  0  0  0  0\nM  END"){
-              if (scope.localMolfile.valueOf() != ChemDoodle.writeMOL(element.getMolecule()).valueOf()){
+                 var mol = ChemDoodle.writeMOL(element.getMolecule()).valueOf();
+              if (scope.localMolfile.valueOf() != mol || scope.molecule.molfile != mol){
+                
                 scope.localMolfile = ChemDoodle.writeMOL(element.getMolecule()).valueOf();
-                // scope.molecule.molfile = ChemDoodle.writeMOL(element.getMolecule()).valueOf();
-              }                  // scope.molecule.molfileChanged();
+                scope.molecule.molfile = ChemDoodle.writeMOL(element.getMolecule()).valueOf();
+              } else{
+                   console.log("test", ChemDoodle.writeMOL(element.getMolecule()).valueOf())
+              }           
+              
+              
             }else{
               scope.localMolfile = "";
               scope.molecule.molfile = "";
-              // scope.molecule.molfileChanged();
 
             }
-
-            },100);
 
           },
-          'keyup' : function() {
-            $timeout(function(){
-              
+          // 'keyup' : function() {              
                  
-            //Check if the molecule is the standard methane and ignore
-            if (scope.localMolfile !== "Molecule from ChemDoodle Web Components\n\nhttp://www.ichemlabs.com\n  1  0  0  0  0  0            999 V2000\n    0.0000    0.0000    0.0000 C   0  0  0  0  0  0\nM  END"){
-              if (scope.localMolfile.valueOf() != ChemDoodle.writeMOL(element.getMolecule()).valueOf()){
-                scope.localMolfile = ChemDoodle.writeMOL(element.getMolecule()).valueOf();
-                // scope.molecule.molfile = ChemDoodle.writeMOL(element.getMolecule()).valueOf();
-              }                  // scope.molecule.molfileChanged();
-            }else{
-              scope.localMolfile = "";
-              scope.molecule.molfile = "";
-              // scope.molecule.molfileChanged();
+          //   //Check if the molecule is the standard methane and ignore
+          //   if (scope.localMolfile !== "Molecule from ChemDoodle Web Components\n\nhttp://www.ichemlabs.com\n  1  0  0  0  0  0            999 V2000\n    0.0000    0.0000    0.0000 C   0  0  0  0  0  0\nM  END"){
+          //     var mol = ChemDoodle.writeMOL(element.getMolecule()).valueOf();
+          //     if (scope.localMolfile.valueOf() != mol || scope.molecule.molfile != mol){
+          //       console.log("set3")
+          //       scope.localMolfile = ChemDoodle.writeMOL(element.getMolecule()).valueOf();
+          //      scope.molecule.molfile = ChemDoodle.writeMOL(element.getMolecule()).valueOf();
 
-            }
+          //     } 
+             
+          //   }else{
+          //     console.log("set4")
+          //     scope.localMolfile = "";
+          //     scope.molecule.molfile = "";
 
-            },100);
+          //   }
            
-          }
+          // }
         }); 
 
         $timeout(function(){redraw(500)});  
         function redraw(doIt){
-           if (jQuery('#chemdoodle-holder').is(":visible") ){
+          console.log("red")
+            var noredraw = false;
+            if(angular.isDefined(element.molecules)){
+                var mol = ChemDoodle.writeMOL(element.getMolecule()).valueOf();
+                if (scope.molecule.molfile == mol && scope.localMolfile == mol){
+                    noredraw = true;
+                }
+            }
+           if (jQuery('#chemdoodle-holder').is(":visible") && !noredraw ){
 
               var cd_width = jQuery('#chemdoodle-holder').width();
               if(doIt && !cd_width){

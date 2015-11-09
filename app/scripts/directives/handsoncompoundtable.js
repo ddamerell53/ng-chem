@@ -91,7 +91,7 @@ angular.module('chembiohubAssayApp')
                 if(col.noSort){
                   inactiveStr = " lightgrey"
                 }
-                button.innerHTML = '<span class="glyphicon glyphicon-filter' + inactiveStr + '"></span>';
+                button.innerHTML = '<span class="glyphicon glyphicon-sort' + inactiveStr + '"></span>';
                 button.className = 'tableFilter';
 
                 return button;
@@ -539,52 +539,53 @@ angular.module('chembiohubAssayApp')
               scope.columns = hotObj.columns;
               
               
-              angular.forEach(scope.columns, function(col, index){
-                var watchString = "columns[" + index + "].searchformSchema.schema.properties.search_custom_fields__kv_any.items";
-                //retrieve the current search form to apply custom field filters from URL
-                //we have already cloned the search form elements to build the models for the initial load.
-                //this needs to be at an overall level
-                 //look up the correct column's knownBy
-                 //then do the reverse of the custom-field-to-table
-                 scope.$on('custom-field-to-table', function(event, data) {
-                      if(col.knownBy == data.newValue.split("|")[0]) {
+              // angular.forEach(scope.columns, function(col, index){
+              //   var watchString = "columns[" + index + "].searchformSchema.schema.properties.search_custom_fields__kv_any.items";
+              //   //retrieve the current search form to apply custom field filters from URL
+              //   //we have already cloned the search form elements to build the models for the initial load.
+              //   //this needs to be at an overall level
+              //    //look up the correct column's knownBy
+              //    //then do the reverse of the custom-field-to-table
+              //    scope.$on('custom-field-to-table', function(event, data) {
+              //         if(col.knownBy == data.newValue.split("|")[0]) {
                         
-                        if(data.addOrRemove == "add") {
-                          var match = $filter('filter')(col.searchForm.search_custom_fields__kv_any, function(value, index) { return value == data.newValue })
-                          if(match.length == 0){
-                            if(col.searchForm.search_custom_fields__kv_any){
-                              col.searchForm.search_custom_fields__kv_any.push(data.newValue);  
-                            }
-                            else {
-                              col.searchForm.search_custom_fields__kv_any = [(data.newValue)]; 
-                            }
-                            col.searchformSchema.schema.properties.search_custom_fields__kv_any.items = col.searchForm.search_custom_fields__kv_any.map(function(i){return {value : i, label : labelifyCustomField(i)}});
-                          }
-                        }
-                        else if(data.addOrRemove == "remove"){
-                          //because there are watches on both the schemas, we need to ensure that on the return journey, no more items are removed.
-                          var diffs = $filter('filter')(col.searchForm.search_custom_fields__kv_any, function(value, index) { return value == data.newValue })
-                          if(diffs.length > 0){
-                            col.searchForm.search_custom_fields__kv_any.splice(col.searchForm.search_custom_fields__kv_any.indexOf(data.newValue), 1);
-                            col.searchformSchema.schema.properties.search_custom_fields__kv_any.items = col.searchForm.search_custom_fields__kv_any.map(function(i){return {value : i, label : labelifyCustomField(i)}});
-                          }
-                        }
+              //           if(data.addOrRemove == "add") {
+              //             var match = $filter('filter')(col.searchForm.search_custom_fields__kv_any, function(value, index) { return value == data.newValue })
+              //             if(match.length == 0){
+              //               if(col.searchForm.search_custom_fields__kv_any){
+              //                 col.searchForm.search_custom_fields__kv_any.push(data.newValue);  
+              //               }
+              //               else {
+              //                 col.searchForm.search_custom_fields__kv_any = [(data.newValue)]; 
+              //               }
+              //               col.searchformSchema.schema.properties.search_custom_fields__kv_any.items = col.searchForm.search_custom_fields__kv_any.map(function(i){return {value : i, label : labelifyCustomField(i)}});
+              //             }
+              //           }
+              //           else if(data.addOrRemove == "remove"){
+              //             //because there are watches on both the schemas, we need to ensure that on the return journey, no more items are removed.
+              //             var diffs = $filter('filter')(col.searchForm.search_custom_fields__kv_any, function(value, index) { return value == data.newValue })
+              //             if(diffs.length > 0){
+              //               col.searchForm.search_custom_fields__kv_any.splice(col.searchForm.search_custom_fields__kv_any.indexOf(data.newValue), 1);
+              //               col.searchformSchema.schema.properties.search_custom_fields__kv_any.items = col.searchForm.search_custom_fields__kv_any.map(function(i){return {value : i, label : labelifyCustomField(i)}});
+              //             }
+              //           }
                         
 
-                      }
+              //         }
 
-                  });  
+              //     });  
                 
-                scope.$watch(watchString, function(newValue, oldValue){
-                  if(newValue !== oldValue){
-                    //broadcast the newValue
-                    var broadcastObj = scope.cbh.createCustomFieldTransport(newValue, oldValue, "obj");
-                    //console.log("from table", broadcastObj)
-                    $rootScope.$broadcast('custom-field-from-table', broadcastObj);
-                  }
-                }, true);
+              //   scope.$watch(watchString, function(newValue, oldValue){
+              //     if(newValue !== oldValue){
+              //       //broadcast the newValue
+              //       var broadcastObj = scope.cbh.createCustomFieldTransport(newValue, oldValue, "obj");
+              //       //console.log("from table", broadcastObj)
+              //       $rootScope.$broadcast('custom-field-from-table', broadcastObj);
+              //     }
+              //   }, true);
                 
-              });
+              // });
+
               if(customCols){
                 //Ensuring there is enough height for the menu bars to sit in
                    var minHeight = 200 + customCols.length *30;

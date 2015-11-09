@@ -6,18 +6,20 @@
             <img src="images/inventory-icon.png" ng-if="project.project_type.name == 'inventory'" class="pull-right" alt="{{project.project_type.name}} project" title="{{project.project_type.name}} project">
             <img src="images/assay-icon.png" class="pull-right" alt="{{project.project_type.name}} project" title="Assay project">
             <p class="nexa" style="margin-bottom:0;">
-                <strong><a ui-sref="cbh.projects.project.assay.data_overview({projectKey: project.project_key})"><span title="{{ project.name }}">{{ project.name | limitTo : 16 }}</span><span ng-show="project.name.length > 16">...</span></a>
+                <strong ng-if="cbh.logged_in_user.can_view_assayreg"><a ui-sref="cbh.projects.project.assay.data_overview({projectKey: project.project_key})"><span title="{{ project.name }}">{{ project.name | limitTo : 16 }}</span><span ng-show="project.name.length > 16">...</span></a>
+                </strong>
+                <strong ng-if="!cbh.logged_in_user.can_view_assayreg && cbh.logged_in_user.can_view_chemreg"><a ui-sref="cbh.search({project__project_key__in: project.project_key})"><span title="{{ project.name }}">{{ project.name | limitTo : 16 }}</span><span ng-show="project.name.length > 16">...</span></a>
                 </strong>
                 <br>
                 <span class="glyphicon glyphicon-time"></span> <small>Last modified: {{ project.modified | date }}</small>
-                <div class="col-xs-6 pull-left">
+                <div ng-if="cbh.logged_in_user.can_view_assayreg" class="col-xs-6 pull-left">
                     <button id="{{project.id}}" role="button" data-toggle="dropdown" dropdown-toggle class="btn btn-sm btn-primary btn-toggle"> Assay <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="{{project.id}}" style="width:250px;">
                         <li role="menuitem" style="width:100%"><a ui-sref="cbh.projects.project.assay.data_overview({projectKey: project.project_key})">Data Overview</a></li>
                     </ul>
                 </div>
-                <div class="col-xs-6 pull-right">
+                <div ng-if="cbh.logged_in_user.can_view_chemreg" ng-if="cbh.logged_in_user.can_view_chemreg" class="col-xs-6 pull-right">
                     <button id="{{project.id}}_2" role="button" data-toggle="dropdown" dropdown-toggle class="btn btn-sm btn-primary btn-toggle "> Chem <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu " role="menu" aria-labelledby="{{project.id}}_2"  style="width:250px;">

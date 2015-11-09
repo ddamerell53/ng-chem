@@ -43,19 +43,19 @@
 								<!-- <li ng-repeat="item in indexVM.results.hits.hits" role="presentation">
 									<a ng-click="console.log('whee')">{{item._source.l0.project_data.Title}} &gt;&gt; {{item._source.l1.project_data.Title}} &gt;&gt; {{item._source.l2.project_data.Title}}</a>
 								</li> -->
-								<li role="presentation">
+								<li ng-if="cbh.logged_in_user.can_view_assayreg" role="presentation">
 									<a ui-sref="cbh.search_assays({textsearch: cbh.textsearch})">Search AssayReg for "{{cbh.textsearch}}"</a>
 								</li>
-								<li role="presentation">
+								<li ng-if="cbh.logged_in_user.can_view_chemreg" role="presentation">
 									<a ui-sref="cbh.search({textsearch: cbh.textsearch})">Search ChemReg for "{{cbh.textsearch}}"</a>
 								</li>
 								<li ng-if="indexVM.results.aggregations.title_filtering_l2.buckets[0].L2agg.doc_count > 0"><hr></li>
-								<li ng-repeat="thing in indexVM.results.aggregations.title_filtering_l2.buckets" role="presentation" ng-if="indexVM.results.aggregations.title_filtering_l2.buckets[0].L2agg.doc_count > 0">
+								<li ng-if="cbh.logged_in_user.can_view_assayreg" ng-repeat="thing in indexVM.results.aggregations.title_filtering_l2.buckets" role="presentation" ng-if="indexVM.results.aggregations.title_filtering_l2.buckets[0].L2agg.doc_count > 0">
 <!-- 									Set the text search to undefined to stop the search being run for this assay AND whatever prefix the user has typed
  -->									<a ui-sref="cbh.search_assays({l2: thing.l2_uri.buckets[0].key, textsearch:undefined})"><small><span style="color:#eee; background-color:#002147; padding:5px; border-radius:5px;" >Assay</span></small>&nbsp;{{thing.key}}</a>
 								</li>
 								<li ng-if="indexVM.results.aggregations.title_filtering_l1.buckets[0].L1agg.doc_count > 0"><hr></li>
-								<li ng-repeat="thing in indexVM.results.aggregations.title_filtering_l1.buckets" role="presentation" ng-if="indexVM.results.aggregations.title_filtering_l1.buckets[0].L1agg.doc_count > 0">
+								<li ng-if="cbh.logged_in_user.can_view_assayreg"  ng-repeat="thing in indexVM.results.aggregations.title_filtering_l1.buckets" role="presentation" ng-if="indexVM.results.aggregations.title_filtering_l1.buckets[0].L1agg.doc_count > 0">
 									<a ui-sref="cbh.search_assays({l1: thing.l1_uri.buckets[0].key,  textsearch:undefined})"><small><span style="color:#eee; background-color:#002147; padding:5px; border-radius:5px;" >Sub-Project</span></small>&nbsp;{{thing.key}}</a>
 								</li>
 								<li ng-if="indexVM.results.aggregations.title_filtering_l0.buckets[0].L0agg.doc_count > 0"><hr></li>
@@ -67,10 +67,10 @@
 									<a ui-sref="cbh.search_assays({textsearch: cbh.textsearch})">Search AssayReg for "{{cbh.textsearch}}"</a>
 								</li> -->
 								<li><hr></li>
-								<li role="presentation">
+								<li ng-if="cbh.logged_in_user.can_view_assayreg" role="presentation">
 									<a href="https://www.ncbi.nlm.nih.gov/pcassay/?term={{cbh.textsearch}}" target="_blank">Search PubChem BioAssay for "{{cbh.textsearch}}"</a>
 								</li>
-								<li role="presentation">
+								<li ng-if="cbh.logged_in_user.can_view_chemreg" role="presentation">
 									<a href="https://www.ncbi.nlm.nih.gov/pccompound?term={{cbh.textsearch}}" target="_blank">Search PubChem Compound for "{{cbh.textsearch}}"</a>
 								</li>
 							
@@ -79,8 +79,8 @@
 
 					</li>
 					
-					<li class="text-center" style="color:white; margin-right:10px;"><a ui-sref="cbh.search_assays({'textsearch': cbh.textsearch})" style="color:white;"><span class="glyphicon glyphicon-equalizer" style="font-size:30px;"></span><br><strong class="nexa"><small>search activities</small></strong></a></li>
-					<li class="text-center" style="color:white; margin-right:10px;"><a ui-sref="cbh.search({'textsearch': cbh.textsearch})" style="color:white;"><span class="glyphicon glyphicon-search" style="font-size:30px;"></span><br><strong class="nexa"><small>search compounds</small></strong></a></li>
+					<li ng-if="cbh.logged_in_user.can_view_assayreg" class="text-center" style="color:white; margin-right:10px;"><a ui-sref="cbh.search_assays({'textsearch': cbh.textsearch})" style="color:white;"><span class="glyphicon glyphicon-equalizer" style="font-size:30px;"></span><br><strong class="nexa"><small>search activities</small></strong></a></li>
+					<li ng-if="cbh.logged_in_user.can_view_chemreg" class="text-center" style="color:white; margin-right:10px;"><a ui-sref="cbh.search({'textsearch': cbh.textsearch})" style="color:white;"><span class="glyphicon glyphicon-search" style="font-size:30px;"></span><br><strong class="nexa"><small>search compounds</small></strong></a></li>
 					<li class="text-center" style="color:white; margin-right:10px;"><a ui-sref="cbh.help" style="color:white;"><span class="glyphicon glyphicon-question-sign" style="font-size:30px;"></span><br><strong class="nexa"><small>help</small></strong></a></li>
 				</ul>
 				<div></div>

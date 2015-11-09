@@ -24,7 +24,15 @@
 
 
 						<!-- <div ng-include="'views/search_custom_fields.html'"></div> -->
-						<div class="row"></div>
+						<div class="row mt">
+							<div  >
+					
+					<button ng-click="cbh.runSearch(true)" type="submit" class="btn btn-lg btn-primary "><span class="glyphicon glyphicon-search"></span> Run structure search</button>
+<button type="cancel" ng-click="cancel()" class="btn btn-lg btn-danger pull-right"><span class="glyphicon glyphicon-close"></span> Reset</button>
+
+				</div>
+
+						</div>
 					<!-- Buttons -->
 
 				</div>
@@ -34,13 +42,7 @@
 					</div>
 					<a id="search-bottom"></a>
 
-					<div  class="pull-right" style="margin-top:-70px;">
-					<button type="cancel" ng-click="cancel()" class="btn btn-lg btn-danger "><span class="glyphicon glyphicon-close"></span> Reset</button>
-
-					<button ng-click="cbh.runSearch(true)" type="submit" class="btn btn-lg btn-primary "><span class="glyphicon glyphicon-search"></span> Run search</button>
-
-				</div>
-
+					
 				</div>
 
 			</form>
