@@ -81,10 +81,10 @@ angular.module('chembiohubAssayApp')
                                             notify: true }
                                         );
 
+                    }, function(error){
+                        $scope.currentlyLoading = false;
                     }
-                ).error(function(error){
-                    $scope.currentlyLoading = false;
-                })       
+                )       
         }
 
         $scope.cbh.saveChangesToTemporaryDataInController = function(changes, sourceOfChange){

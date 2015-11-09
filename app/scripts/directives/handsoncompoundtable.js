@@ -88,6 +88,7 @@ angular.module('chembiohubAssayApp')
               function buildButton(col) {
                 var button = document.createElement('BUTTON');
                 var inactiveStr = "";
+
                 if(col.noSort){
                   inactiveStr = " lightgrey"
                 }
@@ -113,7 +114,15 @@ angular.module('chembiohubAssayApp')
                   mappingOptions.className = 'pull-right alert-success'
                   mappingOptions.style.marginRight = "20px;"
                   mappingOptions.innerHTML = '<span class="glyphicon glyphicon-arrow-right"></span>' + col.copyto + automappedSpan + '<info-box lookup="mapped_values_written" lookupitems="cbh.messages" right="true"></info-box></span>';
-                }
+                }/*
+                else {
+
+                  mappingOptions.className = 'pull-right alert-danger'
+                  mappingOptions.style.marginRight = "20px;"
+                  mappingOptions.innerHTML = 'Unmapped <info-box lookup="unmapped_values_written" lookupitems="cbh.messages" right="true"></info-box>'
+                }*/
+                console.log('mappingOptions', mappingOptions)
+
                 return mappingOptions;
               }
 
@@ -341,7 +350,7 @@ angular.module('chembiohubAssayApp')
                      colWidths:150,
                     data: scope.compounds,
                     colHeaders: columnHeaders,
-                    columns: allCols, 
+                    columns: allCols,
                     //afterGetColHeader is a function that is called when the html of the header has already been set
                     //which allows DOM manipulation after the TH has been created
                     //there are lots of useful hooks provided by Handsontable
@@ -352,9 +361,21 @@ angular.module('chembiohubAssayApp')
                       infospans = buildInfoSpans(allCols[col]);
 
                       addButtonMenuEvent(button, allCols[col]);
+                      var buttonAlready = false;
+                      /*for (var i=0; i<TH.firstChild.children.length; i++){
+                        if()
+                      }*/
+                      angular.forEach(TH.firstChild.children, function(childNode){
+                        if(childNode.className='tableFilter'){
+                          buttonAlready = true;
+                        }
+                      });
 
-                      if (TH.firstChild.lastChild.nodeName === 'BUTTON') {
-                        TH.firstChild.removeChild(TH.firstChild.lastChild);
+                      if (buttonAlready) {
+                        while (TH.firstChild.lastChild != TH.firstChild.firstChild) {
+                            TH.firstChild.removeChild(TH.firstChild.lastChild);
+                        }
+                        //TH.firstChild.removeChild(TH.firstChild.lastChild);
                       }
                       TH.firstChild.appendChild(button);
                       TH.firstChild.appendChild(infospans);
@@ -370,14 +391,9 @@ angular.module('chembiohubAssayApp')
                       hotObj.afterChange = function(data,sourceOfChange){
                           scope.cbh.saveChangesToTemporaryDataInController(data, sourceOfChange);
                       };
-                      hotObj.cells = function (row, col, prop) { 
-                          if (prop =="properties.action"){
-                              var comp = scope.compounds[row];
-                              if(comp.warnings.parseError || comp.warnings.smilesParseError || comp.warnings.inchiCreationError){
-                                return {readOnly:true};
-                              }  
-                          }
-                      };
+                      //removing hotobj.cells to allow users to override Ignore and register molecules as a batch, even if it has no structure.
+                      //put a warning in the structure column if this is the case.
+                      
                   }else{
 
                       hotObj.afterChange = function(data,sourceOfChange){
@@ -414,7 +430,7 @@ angular.module('chembiohubAssayApp')
                               //angular.forEach(projects,function(myproj){
                                 for (var rowNo = start.row; rowNo <= end.row; rowNo++) {
                                     var cellAtRow = this.getCell(rowNo, colNo);
-                                    var cellLink = cellAtRow.children[0];                               
+                                    var cellLink = cellAtRow.children[0];
                                     var mol = this.getSourceDataAtRow(rowNo);
                                     var split = mol.project.split("/");
                                     var projid = split[split.length-1];
@@ -588,8 +604,8 @@ angular.module('chembiohubAssayApp')
 
               if(customCols){
                 //Ensuring there is enough height for the menu bars to sit in
-                   var minHeight = 200 + customCols.length *30;
-                   $("#myid").css("min-height", minHeight + "px");
+                   // var minHeight = 200 + customCols.length *30;
+                   // $("#myid").css("min-height", minHeight + "px");
               }
               //removing double scroll - IE compat issues
               /*if(!scope.cbh.editMode){
