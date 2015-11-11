@@ -435,8 +435,10 @@ angular.module('chembiohubAssayApp')
     custFieldFormItem[0].options.async.call = $scope.refreshCustFields;
     
 
-
+var timeSearched;
 function getResultsPage(pageNumber, filters) {
+        timeSearched = String(Date.now()); 
+        var localTimeSearched = String(timeSearched);
         filters.limit = $scope.pagination.compoundBatchesPerPage.value;
         filters.offset = (pageNumber -1) * $scope.pagination.compoundBatchesPerPage.value;
         filters.sorts = $stateParams.sorts;
@@ -452,36 +454,39 @@ function getResultsPage(pageNumber, filters) {
         }
 
         CBHCompoundBatch.query(filters).then(function(result) {
-            $scope.totalCompoundBatches = result.meta.totalCount;
-            $scope.compoundBatches.data =result.objects;
-            $scope.compoundBatches.backup = angular.copy(result.objects);
+            if(timeSearched==localTimeSearched){
+                  $scope.totalCompoundBatches = result.meta.totalCount;
+                $scope.compoundBatches.data =result.objects;
+                $scope.compoundBatches.backup = angular.copy(result.objects);
 
 
 
-            //$scope.compoundBatches.uncuratedHeaders = getAllUncuratedHeaders(result.objects);
+                //$scope.compoundBatches.uncuratedHeaders = getAllUncuratedHeaders(result.objects);
 
-            if(result.objects.length > 0){
-                $scope.imageCallback();
-                $scope.noData = "";
+                if(result.objects.length > 0){
+                    $scope.imageCallback();
+                    $scope.noData = "";
 
-            }else if( ( $scope.pagination.current * parseInt($scope.pagination.compoundBatchesPerPage.value)) > ($scope.totalCompoundBatches + $scope.pagination.compoundBatchesPerPage.value) ){
-                $scope.pageChanged(1);
-                $scope.imageCallback();
-            }
-            else{
-                $scope.imageCallback();
-                if($state.current.name==="cbh.search"){
-                    $scope.noData = "No Compounds Found. Why not try amending your search?";
-                }else{
-                     $scope.noData = "No Compounds Found. To add compounds use the link above.";
+                }else if( ( $scope.pagination.current * parseInt($scope.pagination.compoundBatchesPerPage.value)) > ($scope.totalCompoundBatches + $scope.pagination.compoundBatchesPerPage.value) ){
+                    $scope.pageChanged(1);
+                    $scope.imageCallback();
                 }
+                else{
+                    $scope.imageCallback();
+                    if($state.current.name==="cbh.search"){
+                        $scope.noData = "No Compounds Found. Why not try amending your search?";
+                    }else{
+                         $scope.noData = "No Compounds Found. To add compounds use the link above.";
+                    }
+                }
+                if(angular.isDefined($stateParams.showBlanks)){
+                    $scope.compoundBatches.showBlanks = JSON.parse($stateParams.showBlanks)
+                }
+                if(angular.isDefined($stateParams.showNonBlanks)){
+                    $scope.compoundBatches.showNonBlanks = JSON.parse($stateParams.showNonBlanks)
+                }      
             }
-            if(angular.isDefined($stateParams.showBlanks)){
-                $scope.compoundBatches.showBlanks = JSON.parse($stateParams.showBlanks)
-            }
-            if(angular.isDefined($stateParams.showNonBlanks)){
-                $scope.compoundBatches.showNonBlanks = JSON.parse($stateParams.showNonBlanks)
-            }
+          
             
        });
 
