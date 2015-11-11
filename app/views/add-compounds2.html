@@ -89,7 +89,9 @@
             <div class="alert alert-info text-center">
                 <div class="pull-right" style="margin-top:-6px;">
                     <button ng-click="cancelFile()" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> Start again</button>
-                    <button ng-show="stateName == 'cbh.projects.project.addcompounds'"  ng-click="saveTemporaryCompoundData()" class="btn btn-success"><span class="glyphicon glyphicon-ok"></span> Save these records
+                    <button ng-show="stateName == 'cbh.projects.project.addcompounds'" ng-hide="compoundBatches.savestats.newbatches == 0"  ng-click="saveTemporaryCompoundData()" class="btn btn-success"><span class="glyphicon glyphicon-ok"></span> Save these records
+                    </button>
+                    <button ng-show="stateName == 'cbh.projects.project.addcompounds'" disabled ng-hide="compoundBatches.savestats.newbatches > 0" ng-click="saveTemporaryCompoundData()" class="btn btn-success"><span class="glyphicon glyphicon-ok"></span> Save these records
                     </button>
                     
                 </div>
