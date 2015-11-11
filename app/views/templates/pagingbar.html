@@ -1,9 +1,9 @@
 <div class="row"  >
-    <div class="col-xs-3" ng-show="stateName == 'cbh.projects.project.addcompounds'" >
-        <button ng-disabled="compoundBatches.sorts.length ==0" ng-click="nullSorts()" class="btn btn-primary ">
+    <div ng-show="stateName == 'cbh.projects.project.addcompounds'" class="col-xs-3" >
+        <button ng-disabled="compoundBatches.sorts.length ==0" ng-click="nullSorts()" class="btn btn-default ">
             Remove Sorts
         </button>
-        <button  ng-disabled="warningsFilter==''" ng-click="cbh.toggleWarningsFilter('')" class="btn btn-primary ">
+        <button  ng-show="stateName == 'cbh.projects.project.addcompounds'" ng-disabled="warningsFilter==''" ng-click="cbh.toggleWarningsFilter('')" class="btn btn-default ">
             Remove Filters
         </button>
     </div>
@@ -12,6 +12,9 @@
         <div class="form-group" >
             <div class="col-xs-5 col-sm-5" style="padding:0 3px;">
                 <div class="btn-group">
+                    <button ng-disabled="compoundBatches.sorts.length ==0" ng-click="nullSorts()" class="btn btn-default ">
+                        Remove Sorts
+                    </button>
                     <label class="btn btn-default" ng-class="{ active: listOrGallery.choice === 'list' }" >
                         <input type="radio" ng-model="listOrGallery.choice" value="list" id="list-btn" name="listOrGallery" style="display:none;" ng-change="changeNumberPerPage('list')"><span class="glyphicon glyphicon-list-alt"></span><span class="hidden-xs hidden-sm"> List</span>
                     </label>

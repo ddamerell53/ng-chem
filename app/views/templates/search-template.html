@@ -1,14 +1,21 @@
-<div class="container-flex" style="margin-bottom:30px;">
+<div class="container-flex" >
 	<div >
 		<div class="row" style="margin-top:10px;">
 			<div class="col-sm-12">
 				<h2 class="blue pull-left"><span class="glyphicon glyphicon-search"></span> Search </h2>
 			</div>
-			<div ng-if="projectFrom" class="col-sm-12 alert alert-success">
-				Your saved {{projectFrom.project_type.show_compounds == true ? 'compounds' : 'items' }} are shown below. Use the tools to search these {{projectFrom.project_type.show_compounds == true ? 'compounds' : 'items' }} and others in this project <button ui-sref="cbh.projects.project.addcompounds({projectKey: projectFrom})" class=" pull-right btn btn-primary add more compounds">Add more {{projectFrom.project_type.show_compounds == true ? 'compounds' : 'items' }}</button>
+			<div ng-if="projectFrom" class="col-sm-12 alert alert-success mb">
+				Your saved {{projectFrom.project_type.show_compounds == true ? 'compounds' : 'items' }} are shown below. You can now either view the full project or add more items. 
+				<button ui-sref="cbh.search({project__project_key_in: projectFrom, projectFrom:undefined, multiple_batch_id:undefined})" ng-click="cbh.hideSearchForm=false;" class="  btn btn-primary ">View full project</button>
+				<button ui-sref="cbh.projects.project.addcompounds({projectKey: projectFrom})" class=" btn btn-primary">Add more {{projectFrom.project_type.show_compounds == true ? 'compounds' : 'items' }}</button>
+
 			</div>
+
 		</div>
-			<form novalidate name="inputForm" role="form"  style="width:95%; display: table;
+		<div  ng-if="projectFrom" class="row mt">
+		</div>
+		
+			<form ng-if="!cbh.hideSearchForm" novalidate name="inputForm" role="form"  style="width:95%; display: table;
     margin: 0 auto;">
 				<div class="row">
 					<div class="col-md-3">

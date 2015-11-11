@@ -72,6 +72,7 @@ angular.module('chembiohubAssayApp')
 
             CBHCompoundBatch.saveMultiBatchMolecules($scope.datasets[$scope.current_dataset_id].config).then(
                     function(data){
+                        $scope.cbh.hideSearchForm=true;
                         $state.transitionTo("cbh.search", 
                                         {multiple_batch_id: $scope.datasets[$scope.current_dataset_id].config.multiplebatch, 
                             projectFrom: projectKey, project__project_key__in: projectKey},
