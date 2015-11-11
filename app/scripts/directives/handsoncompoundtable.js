@@ -88,7 +88,6 @@ angular.module('ngChemApp')
               function buildButton(col) {
                 var button = document.createElement('BUTTON');
                 var inactiveStr = "";
-                console.log('col in buildButton', col);
                 if(col.noSort){
                   inactiveStr = " lightgrey"
                 }
@@ -115,7 +114,7 @@ angular.module('ngChemApp')
                   mappingOptions.style.marginRight = "20px;"
                   mappingOptions.innerHTML = '<span class="glyphicon glyphicon-arrow-right"></span>' + col.copyto + automappedSpan + '<info-box lookup="mapped_values_written" lookupitems="cbh.messages" right="true"></info-box></span>';
                 }
-                console.log('mappingOptions', mappingOptions)
+                //console.log('mappingOptions', mappingOptions)
                 return mappingOptions;
               }
 
