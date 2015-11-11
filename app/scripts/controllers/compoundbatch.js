@@ -84,7 +84,8 @@ angular.module('chembiohubAssayApp')
                var filtered = $filter("filter")($scope.itemsPerPage, $stateParams.compoundBatchesPerPage, true);
                if(filtered[0]) {
                     if(onlyInvProjects() == true){
-                       $scope.pagination.compoundBatchesPerPage = { label: "50/page", value: "50" }; 
+                        console.log('onlyInvProjects', onlyInvProjects())
+                       $scope.pagination.compoundBatchesPerPage = $scope.itemsPerPage[2];
                     } 
                     else {
                         $scope.pagination.compoundBatchesPerPage = filtered[0]; 
@@ -94,8 +95,8 @@ angular.module('chembiohubAssayApp')
                else if(angular.isDefined($scope.projects)){
                     
                     if(onlyInvProjects() == true){
-
-                       $scope.pagination.compoundBatchesPerPage = { label: "50/page", value: "50" }; 
+                       console.log('onlyInvProjects', onlyInvProjects())
+                       $scope.pagination.compoundBatchesPerPage = $scope.itemsPerPage[2]; 
                     } 
                 }
                else {
@@ -106,7 +107,12 @@ angular.module('chembiohubAssayApp')
             else if(angular.isDefined($scope.proj)){
                 if($scope.proj.project_type.name == 'inventory'){
 
-                    $scope.pagination.compoundBatchesPerPage = { label: "50/page", value: "50" };
+                    $scope.pagination.compoundBatchesPerPage = $scope.itemsPerPage[2];
+                }
+            }
+            else if(angular.isDefined($stateParams.project__project_key__in)){
+                if(onlyInvProjects() == true){
+                   $scope.pagination.compoundBatchesPerPage = $scope.itemsPerPage[2]; 
                 }
             }
             else {
@@ -389,16 +395,21 @@ angular.module('chembiohubAssayApp')
     };
 
     function onlyInvProjects(){
+
+        console.log('onlyInInvProjects Being called');
         var onlyInv = true;
         if(!angular.isDefined($stateParams.project__project_key__in)){
-            return false;
+            //we have a project via the url - single project view
+            if($scope.proj.project_type.name.toLowerCase() != 'inventory'){
+                onlyInv = false;
+            }
         }
         angular.forEach($stateParams.project__project_key__in,function(myprojname){
-            
+            console.log('myprojname', myprojname)
             angular.forEach($scope.projects, function(proj){
                 
                 if(proj.project_key == myprojname){
-                    if(proj.project_type.name != 'inventory'){
+                    if(proj.project_type.name.toLowerCase() != 'inventory'){
                         onlyInv = false;
                     }
                 }
