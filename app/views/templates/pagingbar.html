@@ -8,7 +8,6 @@
         </button>
     </div>
     <div class="col-xs-5" ng-show="stateName != 'cbh.projects.project.addcompounds'">
-
         <div class="form-group" >
             <div class="col-xs-6 col-sm-6" style="padding:0 3px;">
                 <div class="btn-group">
@@ -23,14 +22,12 @@
                     </label>
                     <label ng-if="editModeUnreachable()" class="btn btn-default" disabled title="{{cbh.messages.edit_mode_unavailable_projects}}">
                         <span class="glyphicon glyphicon-pencil"></span><span class="hidden-xs hidden-sm"> Edit</span>
-
                     </label>
                     <label ng-if="!editModeUnreachable() && cbh.projAddingTo.project_type.show_compounds == false" class="btn btn-default" ng-class="{ active: addingData === true }" >
                         <input type="radio"  ng-click="toggleAddData()" id="list-btn"  style="display:none;"  ><span class="glyphicon glyphicon-plus"></span><span class="hidden-xs hidden-sm"> Add</span>
                     </label>
                     <label ng-if="editModeUnreachable()" class="btn btn-default" disabled title="{{cbh.messages.edit_mode_unavailable_projects}}">
                         <span class="glyphicon glyphicon-plus"></span><span class="hidden-xs hidden-sm"> Add</span>
-
                     </label>
                     <label ng-if="cbh.projAddingTo.project_type.show_compounds == true" class="btn btn-default" ui-sref="cbh.projects.project.addcompounds({projectKey: cbh.projAddingTo.project_key})">
                         <span class="glyphicon glyphicon-plus"></span><span class="hidden-xs hidden-sm"> Add</span>
@@ -50,25 +47,17 @@
                 </select>
             </div>
         </div>
-
-    </div>
-
-    
+    </div> 
     <div class="col-xs-4">
-        
             <dir-pagination-controls on-page-change="pageChanged(newPageNumber)" max-size="5">
             </dir-pagination-controls>
-        
-
     </div>
     <div  ng-show="stateName != 'cbh.projects.project.addcompounds'" class="col-xs-1" >
             <input  type="text" ng-model="cbh.textsearch" />
     </div>
-    <div ng-if="baseDownloadUrl" class="col-xs-2 col-sm-2 pull-right">
-        
+    <div ng-if="baseDownloadUrl" class="col-xs-2 col-sm-2 pull-right"> 
         <div class="{{dropclass}}  pull-right" >
            <div ng-include="'views/templates/download-buttons.html'"></div>
-            
         </div>
     </div>
 </div>
