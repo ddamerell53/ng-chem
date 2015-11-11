@@ -23,8 +23,8 @@
                     <button id="{{project.id}}_2" role="button" data-toggle="dropdown" dropdown-toggle class="btn btn-sm btn-primary btn-toggle "> Chem <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu " role="menu" aria-labelledby="{{project.id}}_2"  style="width:250px;">
-                        <li role="menuitem" ng-if="project.editor" style="width:100%"><a ui-sref="cbh.projects.project.addcompounds({projectKey: project.project_key})"><span class="glyphicon glyphicon-plus-sign"></span> Add {{project.project_type.show_compounds == true ? 'compounds' : 'Inventory items' }}</a></li>
-                        <li role="menuitem" style="width:100%"><a ui-sref="cbh.search({project__project_key__in: project.project_key})"><span class="glyphicon glyphicon-search"></span> Search {{project.project_type.show_compounds == true ? 'compounds' : 'inventory items' }}</a></li>
+                        <li role="menuitem" ng-if="project.editor" style="width:100%"><a  ui-sref="cbh.projects.project.addcompounds({projectKey: project.project_key})"><span class="glyphicon glyphicon-plus-sign"></span> Add multiple {{project.project_type.show_compounds == true ? 'compounds' : 'Inventory items' }}</a></li>
+                        <li role="menuitem" style="width:100%"><a ng-click="cbh.hideSearchForm=true;" ui-sref="cbh.search({project__project_key__in: project.project_key})"><span class="glyphicon glyphicon-search"></span> View / add single {{project.project_type.show_compounds == true ? 'compounds' : 'inventory items' }}</a></li>
                     </ul>
                 </div>
             </p>

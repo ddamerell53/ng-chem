@@ -62,7 +62,13 @@ angular.module('chembiohubAssayApp')
                   }
         }, true);
 
-    var updating = false;
+    $scope.cbh.setUpdating = function(){
+        $scope.cbh.updating = true;
+        $timeout(function(){
+                            $scope.cbh.updating = false;
+        }, 150);
+    }
+    $scope.cbh.updating = false;
     $scope.$on("sf-render-finished", function(){
         $timeout(function(){$rootScope.$broadcast("schemaFormValidate");
             $scope.cbh.watcher = $scope.$watch(
@@ -70,8 +76,8 @@ angular.module('chembiohubAssayApp')
                         return $scope.cbh.textsearch;
                },
                 function( newValue , oldvalue) {
-                    if (newValue != oldvalue){
-
+                    if ((newValue != oldvalue) && !$scope.cbh.updating){
+                        $scope.cbh.setUpdating();
                         $scope.cbh.runSearch();
                         }
                     }
@@ -89,12 +95,10 @@ angular.module('chembiohubAssayApp')
                         return newObj;
                },
                 function( newValue , oldvalue) {
-                    if(!updating){
-                        updating = true;
+                    if(!$scope.cbh.updating){
+                        $scope.cbh.setUpdating();
                         $scope.cbh.runSearch();
-                        $timeout(function(){
-                            updating = false;
-                        }, 150);
+                        
                     }
                         
                     

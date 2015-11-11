@@ -2,7 +2,8 @@
 	<div >
 		<div class="row" style="margin-top:10px;">
 			<div class="col-sm-12">
-				<h2 class="blue pull-left"><span class="glyphicon glyphicon-search"></span> Search </h2>
+				<h2 class="blue pull-left"><span class="glyphicon glyphicon-search"></span> Search &nbsp;<button class="btn btn-default pull-right " ng-if="!cbh.hideSearchForm" ng-click="cbh.hideSearchForm=true;">Hide Search From</button>
+            <button class="btn btn-default pull-right " ng-if="cbh.hideSearchForm" ng-click="cbh.hideSearchForm=false;">Show Search From</button></h2>
 			</div>
 			<div ng-if="projectFrom" class="col-sm-12 alert alert-success mb">
 				Your saved {{projectFrom.project_type.show_compounds == true ? 'compounds' : 'items' }} are shown below. You can now either view the full project or add more items. 
