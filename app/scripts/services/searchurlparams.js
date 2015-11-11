@@ -30,8 +30,8 @@ angular.module('chembiohubAssayApp')
             };
 
            
-            if (angular.isDefined(stateParams.creator)){
-                searchForm.creator = decodeURIComponent(stateParams.creator).split(",");
+            if (angular.isDefined(stateParams.creator_uri)){
+                searchForm.creator_uri = decodeURIComponent(stateParams.creator_uri).split(",");
 
             }
             if (angular.isDefined(stateParams.archived)){
@@ -102,10 +102,10 @@ angular.module('chembiohubAssayApp')
             if(angular.isDefined(textsearch)){
                 params.textsearch = textsearch;
             }
-            if(searchForm.creator){
-                params["creator"] = searchForm.creator.join(",");
+            if(searchForm.creator_uri){
+                params["creator_uri"] = searchForm.creator_uri.join(",");
             }else{
-                params["creator"] = undefined;
+                params["creator_uri"] = undefined;
             }
             if (searchForm.project__project_key__in) {
                 params["project__project_key__in"] = searchForm.project__project_key__in.join(",");
@@ -181,13 +181,13 @@ angular.module('chembiohubAssayApp')
             var fpValue_frag = (params.fpValue) ? ("fpValue=" + params.fpValue + "&") : "";
             var created__gte_frag = (params.created__gte) ? ("created__gte=" + params.created__gte + "&") : "";
             var created__lte_frag = (params.created__lte) ? ("created__lte=" + params.created__lte + "&") : "";
-            var creator_str = (params.creator) ? ("creator=" + params.creator + "&") : "";
+            var creator_uri_str = (params.creator_uri) ? ("creator_uri=" + params.creator_uri + "&") : "";
             var archived_str = "archived=" + params.archived;
             // var smiles_frag = (params.smiles) ? ("smiles=" + params.smiles + "&") : "";
             var cust_field_frag = (params.search_custom_fields__kv_any) ? ("search_custom_fields__kv_any=" + params.search_custom_fields__kv_any + "&") : "";
             var related_molregno__chembl__chembl_id__in_frag = (params.related_molregno__chembl__chembl_id__in) ? ("related_molregno__chembl__chembl_id__in=" + params.related_molregno__chembl__chembl_id__in + "&") : "";
             var textsearch_part = (angular.isDefined(textsearch)) ? "textsearch=" + textsearch : "";
-            var paramsUrl = creator_str + multiple_batch_frag + project_frag + func_group_frag + flexmatch_frag + related_molregno__chembl__chembl_id__in_frag + with_substructure_frag + similar_to_frag + fpValue_frag + created__gte_frag + created__lte_frag + cust_field_frag + textsearch_part + archived_str;
+            var paramsUrl = creator_uri_str + multiple_batch_frag + project_frag + func_group_frag + flexmatch_frag + related_molregno__chembl__chembl_id__in_frag + with_substructure_frag + similar_to_frag + fpValue_frag + created__gte_frag + created__lte_frag + cust_field_frag + textsearch_part + archived_str;
 
 
             console.log(searchForm)
