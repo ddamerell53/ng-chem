@@ -84,7 +84,8 @@ angular.module('chembiohubAssayApp')
                var filtered = $filter("filter")($scope.itemsPerPage, $stateParams.compoundBatchesPerPage, true);
                if(filtered[0]) {
                     if(onlyInvProjects() == true){
-                       $scope.pagination.compoundBatchesPerPage = { label: "50/page", value: "50" }; 
+                        console.log('onlyInvProjects', onlyInvProjects())
+                       $scope.pagination.compoundBatchesPerPage = $scope.itemsPerPage[2];
                     } 
                     else {
                         $scope.pagination.compoundBatchesPerPage = filtered[0]; 
@@ -94,8 +95,8 @@ angular.module('chembiohubAssayApp')
                else if(angular.isDefined($scope.projects)){
                     
                     if(onlyInvProjects() == true){
-
-                       $scope.pagination.compoundBatchesPerPage = { label: "50/page", value: "50" }; 
+                       console.log('onlyInvProjects', onlyInvProjects())
+                       $scope.pagination.compoundBatchesPerPage = $scope.itemsPerPage[2]; 
                     } 
                 }
                else {
@@ -106,7 +107,7 @@ angular.module('chembiohubAssayApp')
             else if(angular.isDefined($scope.proj)){
                 if($scope.proj.project_type.name == 'inventory'){
 
-                    $scope.pagination.compoundBatchesPerPage = { label: "50/page", value: "50" };
+                    $scope.pagination.compoundBatchesPerPage = $scope.itemsPerPage[2];
                 }
             }
             else {
