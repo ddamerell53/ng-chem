@@ -34,6 +34,11 @@ angular.module('chembiohubAssayApp')
                 searchForm.creator = decodeURIComponent(stateParams.creator).split(",");
 
             }
+            if (angular.isDefined(stateParams.archived)){
+                searchForm.archived = stateParams.archived;
+            }else{
+                searchForm.archived = "false";
+            }
             searchForm.fpValue = stateParams.fpValue;
             searchForm.dateStart = stateParams.created__gte;
             searchForm.dateEnd = stateParams.created__lte;
@@ -135,6 +140,12 @@ angular.module('chembiohubAssayApp')
                 // resetStructure(searchForm.substruc);
             }
 
+            if(searchForm.archived){
+                params["archived"] = searchForm.archived
+            }else{
+                params["archived"] = "false"
+            }
+
             if (!angular.equals([], searchForm.search_custom_fields__kv_any) && angular.isDefined(searchForm.search_custom_fields__kv_any)) {
                 //var encodedCustFields = btoa(JSON.stringify(searchForm.custom_fields));
                 var encodedCustFields = "";
@@ -171,11 +182,12 @@ angular.module('chembiohubAssayApp')
             var created__gte_frag = (params.created__gte) ? ("created__gte=" + params.created__gte + "&") : "";
             var created__lte_frag = (params.created__lte) ? ("created__lte=" + params.created__lte + "&") : "";
             var creator_str = (params.creator) ? ("creator=" + params.creator + "&") : "";
+            var archived_str = "archived=" + params.archived;
             // var smiles_frag = (params.smiles) ? ("smiles=" + params.smiles + "&") : "";
             var cust_field_frag = (params.search_custom_fields__kv_any) ? ("search_custom_fields__kv_any=" + params.search_custom_fields__kv_any + "&") : "";
             var related_molregno__chembl__chembl_id__in_frag = (params.related_molregno__chembl__chembl_id__in) ? ("related_molregno__chembl__chembl_id__in=" + params.related_molregno__chembl__chembl_id__in + "&") : "";
             var textsearch_part = (angular.isDefined(textsearch)) ? "textsearch=" + textsearch : "";
-            var paramsUrl = creator_str + multiple_batch_frag + project_frag + func_group_frag + flexmatch_frag + related_molregno__chembl__chembl_id__in_frag + with_substructure_frag + similar_to_frag + fpValue_frag + created__gte_frag + created__lte_frag + cust_field_frag + textsearch_part;
+            var paramsUrl = creator_str + multiple_batch_frag + project_frag + func_group_frag + flexmatch_frag + related_molregno__chembl__chembl_id__in_frag + with_substructure_frag + similar_to_frag + fpValue_frag + created__gte_frag + created__lte_frag + cust_field_frag + textsearch_part + archived_str;
 
 
             console.log(searchForm)
