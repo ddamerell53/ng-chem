@@ -52,10 +52,10 @@ angular.module('chembiohubAssayApp')
         }
     }
    updateFields();
-    $scope.cbh.includedProjectKeys = ($scope.cbh.searchForm.project__project_key__in.length > 0) ? $scope.cbh.searchForm.project__project_key__in : $scope.cbh.projects.objects.map(function(p){return p.project_key});
        
 
     $scope.cbh.setUpdating = function(){
+
         $scope.cbh.updating = true;
         $timeout(function(){
                             $scope.cbh.updating = false;
@@ -71,8 +71,7 @@ angular.module('chembiohubAssayApp')
                 function( newValue , oldvalue) {
 
                         if (newValue  !=oldvalue){
-                            console.log("new", newValue)
-                            console.log("old", oldvalue)
+                           
                             $scope.cbh.runSearch();
                         }
                         
@@ -94,8 +93,9 @@ angular.module('chembiohubAssayApp')
                 function( newValue , oldvalue) {
 
                         if (JSON.stringify(newValue)  !=JSON.stringify(oldvalue)){
-                            console.log("new", newValue)
-                            console.log("old", oldvalue)
+                            if((newValue.project__project_key__in.length != 1) && $scope.cbh.editMode){
+                                $scope.cbh.toggleEditMode();
+                            }
                             $scope.cbh.runSearch();
                         }
                         

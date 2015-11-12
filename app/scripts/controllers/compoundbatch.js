@@ -20,7 +20,36 @@ angular.module('chembiohubAssayApp')
           $scope.proj = proj;
         }
       });
-    
+             $scope.cbh.changeSearchParams = function(newParams, notify){
+            // newParams.scroll = $("#myid").scrollLeft();
+            // newParams.scrollTop = $(window).scrollTop();
+            // newParams.page = 1;
+            $scope.cbh.setUpdating();
+                if(notify){
+                    $scope.pagination.current = 1;
+                }
+                
+                
+
+                // 
+                $state.params = newParams;
+                $stateParams = newParams;
+                // $location.search(newParams);
+                $state.go('cbh.search',newParams,{
+                    // prevent the events onStart and onSuccess from firing
+                    notify:false,
+                    // prevent reload of the current state
+                    reload:false, 
+                    // replace the last record when changing the params so you don't hit the back button and get old params
+                    location:'replace', 
+                    // inherit the current params on the url
+                    inherit:true
+                });
+                
+               getResultsPage($scope.pagination.current, newParams);
+                  
+               
+        }
     $scope.cbh.setUpPageNumbers = function(){
             $scope.listOrGallery = {
                 choice: "list",
@@ -149,7 +178,55 @@ angular.module('chembiohubAssayApp')
     }else{
             $scope.cbh.archiveFilter = false;
     }
-    $scope.editModeUnreachable = function(){
+    $scope.cbh.setUpPageNumbers();  
+     $scope.blankForm = function(toggleAddingOff) {
+            if(angular.isDefined($scope.cbh.projAddingTo)){
+                 var myform = angular.copy($scope.cbh.projAddingTo.schemaform.form);
+            //we may need to replicate this within the search form...
+            angular.forEach(myform, function(item) {
+              item['feedback'] = false;
+              item['disableSuccessState'] = true;
+
+            });
+            $scope.myschema = angular.copy($scope.cbh.projAddingTo.schemaform.schema);
+            $scope.formChunks = myform.chunk(Math.ceil($scope.cbh.projAddingTo.schemaform.form.length / 3));
+           
+              $scope.newMol = {
+                "customFields": {}
+              };
+              //need to also make the form pristine and remove (usually incorrect) validation cues...
+              //we've removed the feedback because it is broken in angular schema form and therefore inconsistent.
+              angular.forEach($scope.formChunks, function(chunk) {
+                chunk.$pristine = true;
+              });
+              if(toggleAddingOff){
+                $scope.addingData = false;
+                $scope.cbh.hideSearchForm = false;
+              }
+            }
+           
+
+            };
+
+       $scope.cbh.toggleEditMode = function(){
+       $scope.cbh.editMode = !$scope.cbh.editMode;
+       if($scope.cbh.editMode){
+            $anchorScroll();
+            $scope.cbh.hideSearchForm=true;
+       }else{
+             $anchorScroll();
+            $scope.cbh.hideSearchForm=false;
+       }
+       var newParams = angular.copy($stateParams);
+        newParams.page = 1;
+        newParams.compoundBatchesPerPage = $scope.pagination.compoundBatchesPerPage.value;
+        newParams.doScroll = 'true';
+        newParams.editMode = ($scope.cbh.editMode).toString();
+        $scope.cbh.changeSearchParams(newParams, false);
+
+
+    }
+     $scope.editModeUnreachable = function(){
        var noEdit = true;
         angular.forEach($rootScope.projects,function(myproj, index){
                 
@@ -180,35 +257,9 @@ angular.module('chembiohubAssayApp')
         $scope.cbh.editMode = false;
       
     }
+  
     $scope.addingData = false;
-     $scope.blankForm = function(toggleAddingOff) {
-            if(angular.isDefined($scope.cbh.projAddingTo)){
-                 var myform = angular.copy($scope.cbh.projAddingTo.schemaform.form);
-            //we may need to replicate this within the search form...
-            angular.forEach(myform, function(item) {
-              item['feedback'] = false;
-              item['disableSuccessState'] = true;
-
-            });
-            $scope.myschema = angular.copy($scope.cbh.projAddingTo.schemaform.schema);
-            $scope.formChunks = myform.chunk(Math.ceil($scope.cbh.projAddingTo.schemaform.form.length / 3));
-           
-              $scope.newMol = {
-                "customFields": {}
-              };
-              //need to also make the form pristine and remove (usually incorrect) validation cues...
-              //we've removed the feedback because it is broken in angular schema form and therefore inconsistent.
-              angular.forEach($scope.formChunks, function(chunk) {
-                chunk.$pristine = true;
-              });
-              if(toggleAddingOff){
-                $scope.addingData = false;
-                $scope.cbh.hideSearchForm = false;
-              }
-            }
-           
-
-            };
+    
     $scope.saveSingleCompound = function(toggleAddingOff) {
               CBHCompoundBatch.saveSingleCompound($scope.cbh.projAddingTo.project_key, '', $scope.newMol.customFields).then(
                 function(data) {
@@ -246,21 +297,7 @@ angular.module('chembiohubAssayApp')
 
     }
    
-   $scope.cbh.toggleEditMode = function(){
-       $scope.cbh.editMode = !$scope.cbh.editMode;
-       if($scope.cbh.editMode){
-            $anchorScroll();
-            $scope.cbh.hideSearchForm=true;
-       }
-       var newParams = angular.copy($stateParams);
-        newParams.page = 1;
-        newParams.compoundBatchesPerPage = $scope.pagination.compoundBatchesPerPage.value;
-        newParams.doScroll = 'true';
-        newParams.editMode = ($scope.cbh.editMode).toString();
-        $scope.cbh.changeSearchParams(newParams, false);
 
-
-    }
    
     $scope.changeNumberPerPage = function(viewType) {
          var newParams = angular.copy($stateParams);
@@ -396,16 +433,9 @@ angular.module('chembiohubAssayApp')
 
     function onlyInvProjects(){
 
-        console.log('onlyInInvProjects Being called');
         var onlyInv = true;
-        if(!angular.isDefined($stateParams.project__project_key__in)){
-            //we have a project via the url - single project view
-            if($scope.proj.project_type.name.toLowerCase() != 'inventory'){
-                onlyInv = false;
-            }
-        }
+
         angular.forEach($stateParams.project__project_key__in,function(myprojname){
-            console.log('myprojname', myprojname)
             angular.forEach($scope.projects, function(proj){
                 
                 if(proj.project_key == myprojname){
@@ -437,6 +467,8 @@ angular.module('chembiohubAssayApp')
 
 var timeSearched;
 function getResultsPage(pageNumber, filters) {
+        $scope.cbh.includedProjectKeys = ($scope.cbh.searchForm.project__project_key__in.length > 0) ? $scope.cbh.searchForm.project__project_key__in : $scope.cbh.projects.objects.map(function(p){return p.project_key});
+
         timeSearched = String(Date.now()); 
         var localTimeSearched = String(timeSearched);
         filters.limit = $scope.pagination.compoundBatchesPerPage.value;
@@ -493,39 +525,10 @@ function getResultsPage(pageNumber, filters) {
     }
    
 
-$scope.cbh.setUpPageNumbers();   
+ 
 
 
-        $scope.cbh.changeSearchParams = function(newParams, notify){
-            // newParams.scroll = $("#myid").scrollLeft();
-            // newParams.scrollTop = $(window).scrollTop();
-            // newParams.page = 1;
-            $scope.cbh.setUpdating();
-                if(notify){
-                    $scope.pagination.current = 1;
-                }
-                
-                
 
-                // 
-                $state.params = newParams;
-                $stateParams = newParams;
-                // $location.search(newParams);
-                $state.go('cbh.search',newParams,{
-                    // prevent the events onStart and onSuccess from firing
-                    notify:false,
-                    // prevent reload of the current state
-                    reload:false, 
-                    // replace the last record when changing the params so you don't hit the back button and get old params
-                    location:'replace', 
-                    // inherit the current params on the url
-                    inherit:true
-                });
-                
-               getResultsPage($scope.pagination.current, newParams);
-                  
-               
-        }
  $scope.nullSorts = function(){
             $scope.compoundBatches.sorts =[];
              var newParams = angular.copy($stateParams);
