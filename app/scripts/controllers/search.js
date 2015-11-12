@@ -64,8 +64,6 @@ angular.module('chembiohubAssayApp')
     $scope.cbh.updating = false;
     $scope.$on("sf-render-finished", function(){
         $timeout(function(){$rootScope.$broadcast("schemaFormValidate");
-        var filterTextTimeout;
-
         $scope.cbh.watcher = $scope.$watch(
               function( $scope ) {
                    return $scope.cbh.textsearch;
@@ -73,19 +71,16 @@ angular.module('chembiohubAssayApp')
                 function( newValue , oldvalue) {
 
                         if (newValue  !=oldvalue){
-                            if (filterTextTimeout) $timeout.cancel(filterTextTimeout);
-                            filterTextTimeout = $timeout(function() {
-                                $scope.cbh.runSearch();
-                            }, 150);
-                            
-                            
+                            console.log("new", newValue)
+                            console.log("old", oldvalue)
+                            $scope.cbh.runSearch();
                         }
                         
                     },
                     true
                 );
 
-        var searchObjTimeout;
+
          $scope.cbh.watcher2 = $scope.$watch(
               function( $scope ) {
                     var newObj = {};
@@ -99,10 +94,9 @@ angular.module('chembiohubAssayApp')
                 function( newValue , oldvalue) {
 
                         if (JSON.stringify(newValue)  !=JSON.stringify(oldvalue)){
-                            if (searchObjTimeout) $timeout.cancel(searchObjTimeout);
-                            searchObjTimeout = $timeout(function() {
-                                $scope.cbh.runSearch();
-                            }, 150);
+                            console.log("new", newValue)
+                            console.log("old", oldvalue)
+                            $scope.cbh.runSearch();
                         }
                         
                     },

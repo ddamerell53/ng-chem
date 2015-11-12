@@ -347,7 +347,6 @@ angular.module('chembiohubAssayApp')
                     return renderers.getColumnLabel(c, scope);
                 });
                 var hotObj = {
-                     colWidths:150,
                     data: scope.compounds,
                     colHeaders: columnHeaders,
                     columns: allCols,
@@ -621,13 +620,15 @@ angular.module('chembiohubAssayApp')
 
               $('.btn-toggle').dropdown();
               scope.elem = $("#myid");
-
-              if(scroll){
-                scope.elem.scrollLeft(scroll);
+             if(!scope.cbh.editMode){
+                $("#myid").doubleScroll();
               }
-              if(scrollTop){
-                $(window).scrollTop(scrollTop);
-              }
+              // if(scroll){
+              //   scope.elem.scrollLeft(scroll);
+              // }
+              // if(scrollTop){
+              //   $(window).scrollTop(scrollTop);
+              // }
 
             });
            
@@ -636,6 +637,7 @@ angular.module('chembiohubAssayApp')
               }
               scope.$watch("redraw", function(newValue, oldValue){
                 redraw();
+
 
               }, true);
 
