@@ -53,31 +53,39 @@ angular.module('chembiohubAssayApp')
     }
    updateFields();
     $scope.cbh.includedProjectKeys = ($scope.cbh.searchForm.project__project_key__in.length > 0) ? $scope.cbh.searchForm.project__project_key__in : $scope.cbh.projects.objects.map(function(p){return p.project_key});
-       $scope.$watch('cbh.searchForm.search_custom_fields__kv_any', function(newValue, oldValue){
-                  if(newValue !== oldValue){
-                    //broadcast the newValue
-                    var broadcastObj = $scope.cbh.createCustomFieldTransport(newValue, oldValue, "string");
-                    $rootScope.$broadcast('custom-field-to-table', broadcastObj);
-                    $scope.cbh.runSearch();
-                  }
-        }, true);
+       
 
-    var updating = false;
+    $scope.cbh.setUpdating = function(){
+        $scope.cbh.updating = true;
+        $timeout(function(){
+                            $scope.cbh.updating = false;
+        });
+    }
+    $scope.cbh.updating = false;
     $scope.$on("sf-render-finished", function(){
         $timeout(function(){$rootScope.$broadcast("schemaFormValidate");
-            $scope.cbh.watcher = $scope.$watch(
+        var filterTextTimeout;
+
+        $scope.cbh.watcher = $scope.$watch(
               function( $scope ) {
-                        return $scope.cbh.textsearch;
+                   return $scope.cbh.textsearch;
                },
                 function( newValue , oldvalue) {
-                    if (newValue != oldvalue){
 
-                        $scope.cbh.runSearch();
+                        if (newValue  !=oldvalue){
+                            if (filterTextTimeout) $timeout.cancel(filterTextTimeout);
+                            filterTextTimeout = $timeout(function() {
+                                $scope.cbh.runSearch();
+                            }, 150);
+                            
+                            
                         }
-                    }
-
+                        
+                    },
+                    true
                 );
 
+        var searchObjTimeout;
          $scope.cbh.watcher2 = $scope.$watch(
               function( $scope ) {
                     var newObj = {};
@@ -89,16 +97,14 @@ angular.module('chembiohubAssayApp')
                         return newObj;
                },
                 function( newValue , oldvalue) {
-                    if(!updating){
-                        updating = true;
-                        $scope.cbh.runSearch();
-                        $timeout(function(){
-                            updating = false;
-                        }, 150);
-                    }
+
+                        if (JSON.stringify(newValue)  !=JSON.stringify(oldvalue)){
+                            if (searchObjTimeout) $timeout.cancel(searchObjTimeout);
+                            searchObjTimeout = $timeout(function() {
+                                $scope.cbh.runSearch();
+                            }, 150);
+                        }
                         
-                    
-                    
                     },
                     true
                 );

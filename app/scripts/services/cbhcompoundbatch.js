@@ -140,11 +140,15 @@ angular.module('chembiohubAssayApp')
 
     CBHCompoundBatch.saveSingleCompound = function(projectKey, molfile, customFields, stereoSelected) {
         //Add a property to the molfile to say that this molecule has been hand drawn
+        var post_data =  {"projectKey": projectKey ,ctab:molfile, "customFields":customFields , "stereoSelected" : "As Drawn"};
         if(molfile !=''){
-          molfile += '\n>  <_drawingBondsWedged>\nTrue\n\n$$$$';
+          post_data.molfile += '\n>  <_drawingBondsWedged>\nTrue\n\n$$$$';
+        }else{
+          //Set the batch as blinded by using a placeholder id - see save method of CBHCompoundBatch on other end
+          post_data.blinded_batch_id = "EMPTY_ID";
         }
         
-        return $http.post( urlConfig.cbh_compound_batches.list_endpoint +"/" , {"projectKey": projectKey ,ctab:molfile, "customFields":customFields , "stereoSelected" : "As Drawn"});
+        return $http.post( urlConfig.cbh_compound_batches.list_endpoint +"/" ,post_data);
 
     };
 

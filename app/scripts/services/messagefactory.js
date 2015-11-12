@@ -63,9 +63,9 @@ angular.module('chembiohubAssayApp')
         //},
 
         //"batch_reg":{
-            edit_mode_unavailable_projects: "Edit mode is only available when editing one project at a time where you have editor rights on that project.",
+            edit_mode_unavailable_projects: "Edit and Add are only available when editing one project at a time where you have editor rights on that project.",
 
-            edit_mode: "When in Edit mode, individual fields can be edited using the pencil icon and data can be filled down like in Excel. Edit mode is only available when editing one project at a time where you have editor rights on that project.",
+            edit_mode: "When in Edit mode, individual fields can be edited using the pencil icon and data can be filled down like in Excel. Edit and Add are only available when searching for one project at a time where you have editor rights on that project.",
             batch_reg_total_processed_0: "No substances were processed.",
             batch_reg_total_processed_1: "One substance was processed and:",
             batch_reg_total_processed_other : "substances were processed of which:",

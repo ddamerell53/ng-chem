@@ -150,37 +150,25 @@ angular.module('chembiohubAssayApp')
             $scope.cbh.archiveFilter = false;
     }
     $scope.editModeUnreachable = function(){
-        var noEdit =true;
-        if(angular.isDefined($stateParams.projectKey)){
-            angular.forEach($rootScope.projects,function(myproj){
-                     if(myproj.project_key == $stateParams.projectKey ){
-                    if(myproj.editor){
-                            noEdit = false;
-                          }
-                        }  
-        });
-            return noEdit;
-        };
-
-        if($scope.cbh.includedProjectKeys.length != 1 || $stateParams.project__project_key__in.split(",").length !=1 ){
-
-            return true;
-        }else{
-            
-            angular.forEach($rootScope.projects,function(myproj){
+       var noEdit = true;
+        angular.forEach($rootScope.projects,function(myproj, index){
                 
                      if(myproj.project_key == $stateParams.project__project_key__in ){
                     if(myproj.editor){
                             noEdit = false;
+                            $scope.cbh.projAddingTo = $scope.cbh.projects.objects[index];
                           }
                         }
                 
 
                
-            });
+        });
+        if(noEdit){
+            $scope.blankForm(true);
+        }
             return noEdit;
         }
-    };
+    
     if( $stateParams.editMode == "true" || $stateParams.editMode ==true){
         $scope.cbh.editMode = true;
         if($scope.editModeUnreachable()){
@@ -191,6 +179,59 @@ angular.module('chembiohubAssayApp')
     }else{
         $scope.cbh.editMode = false;
       
+    }
+    $scope.addingData = false;
+     $scope.blankForm = function(toggleAddingOff) {
+            if(angular.isDefined($scope.cbh.projAddingTo)){
+                 var myform = angular.copy($scope.cbh.projAddingTo.schemaform.form);
+            //we may need to replicate this within the search form...
+            angular.forEach(myform, function(item) {
+              item['feedback'] = false;
+              item['disableSuccessState'] = true;
+
+            });
+            $scope.myschema = angular.copy($scope.cbh.projAddingTo.schemaform.schema);
+            $scope.formChunks = myform.chunk(Math.ceil($scope.cbh.projAddingTo.schemaform.form.length / 3));
+           
+              $scope.newMol = {
+                "customFields": {}
+              };
+              //need to also make the form pristine and remove (usually incorrect) validation cues...
+              //we've removed the feedback because it is broken in angular schema form and therefore inconsistent.
+              angular.forEach($scope.formChunks, function(chunk) {
+                chunk.$pristine = true;
+              });
+              if(toggleAddingOff){
+                $scope.addingData = false;
+                $scope.cbh.hideSearchForm = false;
+              }
+            }
+           
+
+            };
+    $scope.saveSingleCompound = function(toggleAddingOff) {
+              CBHCompoundBatch.saveSingleCompound($scope.cbh.projAddingTo.project_key, '', $scope.newMol.customFields).then(
+                function(data) {
+                  CBHCompoundBatch.reindexModifiedCompound(data.data.id).then(function(reindexed) {
+                    $scope.pageChanged(1);
+                    $scope.blankForm(toggleAddingOff); 
+
+                  });
+                }
+              );
+            };
+
+    $scope.toggleAddData = function(){
+        if(!$scope.addingData){
+            $scope.cbh.hideSearchForm = true;
+
+            $anchorScroll();
+            $scope.addingData = true;
+            $scope.blankForm(); 
+        }else{
+            $scope.cbh.hideSearchForm = false;
+            $scope.addingData = false;
+        }
     }
 
     $scope.cbh.toggleArchiveFilter = function(){
@@ -207,12 +248,16 @@ angular.module('chembiohubAssayApp')
    
    $scope.cbh.toggleEditMode = function(){
        $scope.cbh.editMode = !$scope.cbh.editMode;
+       if($scope.cbh.editMode){
+            $anchorScroll();
+            $scope.cbh.hideSearchForm=true;
+       }
        var newParams = angular.copy($stateParams);
         newParams.page = 1;
         newParams.compoundBatchesPerPage = $scope.pagination.compoundBatchesPerPage.value;
         newParams.doScroll = 'true';
         newParams.editMode = ($scope.cbh.editMode).toString();
-                   $scope.cbh.changeSearchParams(newParams, false);
+        $scope.cbh.changeSearchParams(newParams, false);
 
 
     }
@@ -229,10 +274,8 @@ angular.module('chembiohubAssayApp')
     $scope.pageChanged = function(newPage) {
         var newParams = angular.copy($stateParams);
         newParams.page = newPage;
-
         newParams.compoundBatchesPerPage = $scope.pagination.compoundBatchesPerPage.value;
         newParams.doScroll = 'true';
-
         $scope.cbh.changeSearchParams(newParams);
 
     };
@@ -392,8 +435,10 @@ angular.module('chembiohubAssayApp')
     custFieldFormItem[0].options.async.call = $scope.refreshCustFields;
     
 
-
+var timeSearched;
 function getResultsPage(pageNumber, filters) {
+        timeSearched = String(Date.now()); 
+        var localTimeSearched = String(timeSearched);
         filters.limit = $scope.pagination.compoundBatchesPerPage.value;
         filters.offset = (pageNumber -1) * $scope.pagination.compoundBatchesPerPage.value;
         filters.sorts = $stateParams.sorts;
@@ -409,36 +454,39 @@ function getResultsPage(pageNumber, filters) {
         }
 
         CBHCompoundBatch.query(filters).then(function(result) {
-            $scope.totalCompoundBatches = result.meta.totalCount;
-            $scope.compoundBatches.data =result.objects;
-            $scope.compoundBatches.backup = angular.copy(result.objects);
+            if(timeSearched==localTimeSearched){
+                  $scope.totalCompoundBatches = result.meta.totalCount;
+                $scope.compoundBatches.data =result.objects;
+                $scope.compoundBatches.backup = angular.copy(result.objects);
 
 
 
-            //$scope.compoundBatches.uncuratedHeaders = getAllUncuratedHeaders(result.objects);
+                //$scope.compoundBatches.uncuratedHeaders = getAllUncuratedHeaders(result.objects);
 
-            if(result.objects.length > 0){
-                $scope.imageCallback();
-                $scope.noData = "";
+                if(result.objects.length > 0){
+                    $scope.imageCallback();
+                    $scope.noData = "";
 
-            }else if( ( $scope.pagination.current * parseInt($scope.pagination.compoundBatchesPerPage.value)) > ($scope.totalCompoundBatches + $scope.pagination.compoundBatchesPerPage.value) ){
-                $scope.pageChanged(1);
-                $scope.imageCallback();
-            }
-            else{
-                $scope.imageCallback();
-                if($state.current.name==="cbh.search"){
-                    $scope.noData = "No Compounds Found. Why not try amending your search?";
-                }else{
-                     $scope.noData = "No Compounds Found. To add compounds use the link above.";
+                }else if( ( $scope.pagination.current * parseInt($scope.pagination.compoundBatchesPerPage.value)) > ($scope.totalCompoundBatches + $scope.pagination.compoundBatchesPerPage.value) ){
+                    $scope.pageChanged(1);
+                    $scope.imageCallback();
                 }
+                else{
+                    $scope.imageCallback();
+                    if($state.current.name==="cbh.search"){
+                        $scope.noData = "No Compounds Found. Why not try amending your search?";
+                    }else{
+                         $scope.noData = "No Compounds Found. To add compounds use the link above.";
+                    }
+                }
+                if(angular.isDefined($stateParams.showBlanks)){
+                    $scope.compoundBatches.showBlanks = JSON.parse($stateParams.showBlanks)
+                }
+                if(angular.isDefined($stateParams.showNonBlanks)){
+                    $scope.compoundBatches.showNonBlanks = JSON.parse($stateParams.showNonBlanks)
+                }      
             }
-            if(angular.isDefined($stateParams.showBlanks)){
-                $scope.compoundBatches.showBlanks = JSON.parse($stateParams.showBlanks)
-            }
-            if(angular.isDefined($stateParams.showNonBlanks)){
-                $scope.compoundBatches.showNonBlanks = JSON.parse($stateParams.showNonBlanks)
-            }
+          
             
        });
 
@@ -452,6 +500,7 @@ $scope.cbh.setUpPageNumbers();
             // newParams.scroll = $("#myid").scrollLeft();
             // newParams.scrollTop = $(window).scrollTop();
             // newParams.page = 1;
+            $scope.cbh.setUpdating();
                 if(notify){
                     $scope.pagination.current = 1;
                 }
@@ -517,14 +566,16 @@ $scope.cbh.setUpPageNumbers();
                 $scope.cbh.changeSearchParams(newParams, true);
                 
             };
-
-            $scope.changesToUndo = [];
+            if(!angular.isDefined($scope.cbh.changesToUndo)){
+                $scope.cbh.changesToUndo = [];
+            }
+            
 
             $scope.undoChanges = function(){
                 console.log("test")
                 $scope.currentlyLoading = true;
                 $scope.compoundBatches.data = angular.copy($scope.compoundBatches.backup);
-                var itemsToChange = $scope.changesToUndo.map(function(item){
+                var itemsToChange = $scope.cbh.changesToUndo.map(function(item){
                     return $scope.compoundBatches.data[item[0]]
                 });
                 CBHCompoundBatch.patchList({"objects" :itemsToChange}, $rootScope.projects).then(function(data){
@@ -545,7 +596,7 @@ $scope.cbh.setUpPageNumbers();
 
             $scope.cbh.saveChangesToCompoundDataInController = function(changes, sourceOfChange){
                 //set the backup before updating
-                $scope.changesToUndo = [];
+                $scope.cbh.changesToUndo = [];
                 if(angular.isDefined(changes)){
                     if( changes && changes.length > 0){
                         // $scope.compoundBatches.backup = angular.copy($scope.compoundBatches.data);
@@ -557,7 +608,7 @@ $scope.cbh.setUpPageNumbers();
                             return $scope.compoundBatches.data[item[0]]
                         });
                         
-                        $scope.changesToUndo = changes;
+                        $scope.cbh.changesToUndo = changes;
                         var patchData = {};
                         patchData.objects = itemsToChange;
                         CBHCompoundBatch.patchList(patchData, $rootScope.projects).then(function(data){
