@@ -29,7 +29,7 @@
                     <label ng-if="editModeUnreachable()" class="btn btn-default" disabled title="{{cbh.messages.edit_mode_unavailable_projects}}">
                         <span class="glyphicon glyphicon-plus"></span><span class="hidden-xs hidden-sm"> Add</span>
                     </label>
-                    <label ng-if="cbh.projAddingTo.project_type.show_compounds == true" class="btn btn-default" ui-sref="cbh.projects.project.addcompounds({projectKey: cbh.projAddingTo.project_key})">
+                    <label ng-if="!editModeUnreachable() && cbh.projAddingTo.project_type.show_compounds == true" class="btn btn-default" ui-sref="cbh.projects.project.addcompounds({projectKey: cbh.projAddingTo.project_key})">
                         <span class="glyphicon glyphicon-plus"></span><span class="hidden-xs hidden-sm"> Add</span>
 
                     </label>
@@ -55,7 +55,7 @@
     <div  ng-show="stateName != 'cbh.projects.project.addcompounds'" class="col-xs-1" >
             <input size="10" type="text" ng-model="cbh.textsearch" />
     </div>
-    <div ng-if="baseDownloadUrl" class="col-xs-2 "> 
+    <div ng-if="cbh.baseDownloadUrl" class="col-xs-2 "> 
         <div class="{{dropclass}}  " >
            <div ng-include="'views/templates/download-buttons.html'"></div>
         </div>
