@@ -114,14 +114,7 @@ angular.module('chembiohubAssayApp')
                   mappingOptions.className = 'pull-right alert-success'
                   mappingOptions.style.marginRight = "20px;"
                   mappingOptions.innerHTML = '<span class="glyphicon glyphicon-arrow-right"></span>' + col.copyto + automappedSpan + '<info-box lookup="mapped_values_written" lookupitems="cbh.messages" right="true"></info-box></span>';
-                }/*
-                else {
-
-                  mappingOptions.className = 'pull-right alert-danger'
-                  mappingOptions.style.marginRight = "20px;"
-                  mappingOptions.innerHTML = 'Unmapped <info-box lookup="unmapped_values_written" lookupitems="cbh.messages" right="true"></info-box>'
-                }*/
-                console.log('mappingOptions', mappingOptions)
+                }
 
                 return mappingOptions;
               }

@@ -7,7 +7,7 @@
             Remove Filters
         </button>
     </div>
-    <div class="col-xs-5" ng-show="stateName != 'cbh.projects.project.addcompounds'">
+    <div class="col-xs-6" ng-show="stateName != 'cbh.projects.project.addcompounds'">
         <div class="form-group" >
             <div class="col-xs-6 col-sm-6" style="padding:0 3px;">
                 <div class="btn-group">
@@ -29,7 +29,7 @@
                     <label ng-if="editModeUnreachable()" class="btn btn-default" disabled title="{{cbh.messages.edit_mode_unavailable_projects}}">
                         <span class="glyphicon glyphicon-plus"></span><span class="hidden-xs hidden-sm"> Add</span>
                     </label>
-                    <label ng-if="cbh.projAddingTo.project_type.show_compounds == true" class="btn btn-default" ui-sref="cbh.projects.project.addcompounds({projectKey: cbh.projAddingTo.project_key})">
+                    <label ng-if="!editModeUnreachable() && cbh.projAddingTo.project_type.show_compounds == true" class="btn btn-default" ui-sref="cbh.projects.project.addcompounds({projectKey: cbh.projAddingTo.project_key})">
                         <span class="glyphicon glyphicon-plus"></span><span class="hidden-xs hidden-sm"> Add</span>
 
                     </label>
@@ -48,15 +48,15 @@
             </div>
         </div>
     </div> 
-    <div class="col-xs-4">
+    <div class="col-xs-3">
             <dir-pagination-controls on-page-change="pageChanged(newPageNumber)" max-size="5">
             </dir-pagination-controls>
     </div>
     <div  ng-show="stateName != 'cbh.projects.project.addcompounds'" class="col-xs-1" >
-            <input  type="text" ng-model="cbh.textsearch" />
+            <input size="10" type="text" ng-model="cbh.textsearch" />
     </div>
-    <div ng-if="baseDownloadUrl" class="col-xs-2 col-sm-2 pull-right"> 
-        <div class="{{dropclass}}  pull-right" >
+    <div ng-if="cbh.baseDownloadUrl" class="col-xs-2 "> 
+        <div class="{{dropclass}}  " >
            <div ng-include="'views/templates/download-buttons.html'"></div>
         </div>
     </div>

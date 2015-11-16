@@ -21,7 +21,6 @@ angular.module('chembiohubAssayApp')
 
 
         SearchUrlParams.setup = function(stateParams, searchForm) {
-            console.log($state.current.name)
             function setStructure(key) {
                 searchForm.molecule.molfile = stateParams[key];
                 if (stateParams[key].indexOf("ChemDoodle") < 0) {
@@ -187,14 +186,14 @@ angular.module('chembiohubAssayApp')
             var cust_field_frag = (params.search_custom_fields__kv_any) ? ("search_custom_fields__kv_any=" + params.search_custom_fields__kv_any + "&") : "";
             var related_molregno__chembl__chembl_id__in_frag = (params.related_molregno__chembl__chembl_id__in) ? ("related_molregno__chembl__chembl_id__in=" + params.related_molregno__chembl__chembl_id__in + "&") : "";
             var textsearch_part = (angular.isDefined(textsearch)) ? "textsearch=" + textsearch : "";
-            var paramsUrl = creator_uri_str + multiple_batch_frag + project_frag + func_group_frag + flexmatch_frag + related_molregno__chembl__chembl_id__in_frag + with_substructure_frag + similar_to_frag + fpValue_frag + created__gte_frag + created__lte_frag + cust_field_frag + textsearch_part + archived_str;
+            var paramsUrlWithoutCF = creator_uri_str + multiple_batch_frag + project_frag + func_group_frag + flexmatch_frag + related_molregno__chembl__chembl_id__in_frag + with_substructure_frag + similar_to_frag + fpValue_frag + created__gte_frag + created__lte_frag +  textsearch_part + archived_str;
+            var paramsUrlWithCF = paramsUrlWithoutCF + cust_field_frag;
 
-
-            console.log(searchForm)
             return {
                 "searchForm": searchForm,
                 "params": params,
-                "paramsUrl": paramsUrl
+                "paramsUrl": paramsUrlWithCF,
+                "paramsUrlWithoutCF" : paramsUrlWithoutCF
             };
 
         };

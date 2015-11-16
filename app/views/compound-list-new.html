@@ -11,8 +11,8 @@
             <span ng-if="warningsFilter"> (filtered)</span>
             <span ng-if="noData">&nbsp; &nbsp; - &nbsp; &nbsp;{{noData}}</span>
             <button class="btn btn-danger " ng-if="cbh.searchForm.archived=='true'" ng-click="cbh.searchForm.archived='false';">Exit Archive Mode</button>
-            <button class="btn btn-default pull-right " ng-if="!cbh.hideSearchForm" ng-click="cbh.hideSearchForm=true;">Hide Search From</button>
-            <button class="btn btn-default pull-right " ng-if="cbh.hideSearchForm" ng-click="cbh.hideSearchForm=false;">Show Search From</button>
+            <button ng-show="stateName != 'cbh.projects.project.addcompounds'" class="btn btn-default pull-right " ng-if="!cbh.hideSearchForm" ng-click="cbh.hideSearchForm=true;">Hide Search Form</button>
+            <button ng-show="stateName != 'cbh.projects.project.addcompounds'"  class="btn btn-default pull-right " ng-if="cbh.hideSearchForm" ng-click="cbh.hideSearchForm=false;">Show Search Form</button>
 
         </h2>
     </div>
@@ -50,7 +50,7 @@
             </div>
             <div class="row"><div class="col-xs-12">
                 <div class="pull-right" >
-                                                <button ng-click="blankForm(true);" class="btn btn-danger"><span class="glyphicon glyphicon-ban-circle"></span>&nbsp;Cancel</button>
+                                                <button ng-click="blankForm(true);" class="btn btn-primary"><span class="glyphicon glyphicon-ban-circle"></span>&nbsp;Close</button>
                                                 <button ng-click="blankForm()" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span>&nbsp;Clear Form</button>
                                                 <button  ng-click="saveSingleCompound(true)" class="btn btn-success"><span class="glyphicon glyphicon-ok"></span>&nbsp;Save
                                                 </button>

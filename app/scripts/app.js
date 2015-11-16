@@ -329,19 +329,6 @@ $urlRouterProvider.when('', '/projects/list');
           return ProjectFactory;
         }],
 
-        projectKey: ['$stateParams', function($stateParams) {
-          //There is no project key but this needs to be here to stop us breaking the batch controller
-          return "";
-        }],
-
-
-        paramsAndForm: ['$stateParams', 'searchUrlParams',
-          function($stateParams, searchUrlParams) {
-            return searchUrlParams.setup($stateParams, {
-              molecule: {}
-            });
-          }
-        ],
         messages: ['MessageFactory', function(MessageFactory) {
           return MessageFactory.getMessages();
         }],
