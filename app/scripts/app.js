@@ -755,7 +755,7 @@ $urlRouterProvider.when('', '/projects/list');
 
         ]
       },
-      controller:  function($scope, $stateParams, $rootScope, AddDataFactory, project_with_forms, projectKey) {
+      controller:  function($scope, $stateParams, $rootScope, AddDataFactory, project_with_forms, projectKey, CustomFieldConfig) {
             var assayctrl = this;
             assayctrl.dfc_lookup  = {};
             assayctrl.proj = project_with_forms.objects[0];
@@ -763,23 +763,12 @@ $urlRouterProvider.when('', '/projects/list');
 
             angular.forEach(assayctrl.proj.data_form_configs, function(dfc){
               dfc.get_main_schema = function(){
-                var edit_schema = { "type": "object", 'properties' : {}, 'required': [] };
-                angular.forEach(dfc[dfc.last_level].project_data_fields, function(field){
-                  angular.extend(edit_schema.properties, angular.copy(field.edit_schema.properties));
-                });
-                return edit_schema;
+                return CustomFieldConfig.getSchema(dfc[dfc.last_level].project_data_fields);
+                
               };
               dfc.get_main_form = function(){
-                var edit_form = [];
-                angular.forEach(dfc[dfc.last_level].project_data_fields, function(field){
-                  var form = angular.copy(field.edit_form.form[0]);
-                  form.htmlClass = "col-xs-3";
-                  edit_form.push(form);
-                });
-                return edit_form;
+                return CustomFieldConfig.getForm(dfc[dfc.last_level].project_data_fields);
               }
-
-
               assayctrl.dfc_lookup[dfc.resource_uri] = dfc;
               if(dfc.last_level == "l0"){
                 assayctrl.l0_dfc = dfc;
@@ -845,20 +834,19 @@ $urlRouterProvider.when('', '/projects/list');
 
 
 
-  }).run(function($http, $cookies, $rootScope, $document, $state, $urlMatcherFactory, LoginService, ProjectFactory, urlConfig, prefix) {
+  }).run(function($http, $cookies, $rootScope, $document, $state, $urlMatcherFactory, LoginService, projectList, urlConfig, prefix) {
     var pref = prefix.split("/")[0];
     $http.defaults.headers.post['X-CSRFToken'] = $cookies[pref + "csrftoken"];
     $http.defaults.headers.patch['X-CSRFToken'] = $cookies[pref + "csrftoken"];
     $http.defaults.headers.put['X-CSRFToken'] = $cookies[pref + "csrftoken"];
 
 
-    var projs = ProjectFactory.get().$promise;
-    projs.then(function(data) {
-      var projectList = data.objects.map(function(item) {
+    
+      var projKeys = projectList.objects.map(function(item) {
         return item.project_key;
       });
-      $rootScope.urlMatcher = $urlMatcherFactory.compile("/{projectKey:" + projectList.join('|') + "}/?limit&offset");
-    });
+      $rootScope.urlMatcher = $urlMatcherFactory.compile("/{projectKey:" + projKeys.join('|') + "}/?limit&offset");
+    
 
 
     $rootScope.$on('$stateChangeSuccess', function(e, to) {

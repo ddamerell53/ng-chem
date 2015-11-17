@@ -209,7 +209,13 @@ $scope.tagFunction = function(content){
           },
 
           projectsWithCustomFieldData: ['ProjectFactory', function(ProjectFactory){
-                 return ProjectFactory.get({"id": $scope.mol.project_id, "schemaform" : true}).$promise;
+                var p;
+                angular.forEach($scope.cbh.projects.objects, function(proj){
+                    if (proj.id==$scope.mol.project_id){
+                      p = proj;
+                    }
+                });  
+                return p
           }],
 
 

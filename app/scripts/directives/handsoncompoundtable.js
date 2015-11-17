@@ -187,11 +187,11 @@ angular.module('chembiohubAssayApp')
                         if (myproj.project_type.show_compounds){
                           showCompounds = true;
                         }
-
                         angular.forEach(myproj.schemaform.form, function(i){
+
                           if(cNames.indexOf( i.key) < 0){
                              var hotColumn = {
-                                knownBy: i.key, 
+                                knownBy: i.title, 
                                 data: "customFields." + i.key, 
                                 readOnly:!scope.cbh.editMode, 
                                 className: "htCenter htMiddle ", 

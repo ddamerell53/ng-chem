@@ -54,7 +54,6 @@ var $http = initInjector.get("$http");
 
 
 
-
 var req = $http({  method: "get",
                     url: configuration.cbh_projects.list_endpoint,
                     params: {"schemaform": true, "limit":1000}, });
@@ -68,9 +67,78 @@ userReq.then(function(userData){
   angular.module('chembiohubAssayApp').value('userList', userData.data.objects );
 });
 
+var schemaGetter = function(project_data_fields){
+            var edit_schema = { "type": "object", 'properties' : {}, 'required': [] };
+                angular.forEach(project_data_fields, function(field){
+                  angular.extend(edit_schema.properties, angular.copy(field.edit_schema.properties));
+                });
+            return edit_schema;
+        };
 
+
+var formGetter = function(project_data_fields, htmlClass, project){
+            if(!angular.isDefined(htmlClass)){
+              htmlClass = "col-xs-3";
+            }
+            var edit_form = [];
+            angular.forEach(project_data_fields, function(field){
+              var form = angular.copy(field.edit_form.form[0]);
+              form.htmlClass = htmlClass;
+              if(angular.isDefined(form.options)){
+    
+                 if(angular.isDefined(form.options.async)){
+
+                    
+                    form.options.async.call =  function(schema, options, search) {
+                      form.timeSearched = String(Date.now());
+                      var localTimeSearched = String(form.timeSearched);
+                      var url = form.options.async.url + "?custom__field__startswith=" + search;
+                      if(angular.isDefined(project)){
+                        url += ("&custom_field=" + form.key);
+                        url += ("&project__project_key__in=" + project.project_key);
+
+                      }
+                      return $http.get( url ).then( function(data){
+                          if(localTimeSearched == form.timeSearched){
+                            if(search){
+                              data.data.unshift({"label": search + " (adding new)", "value": search, "decription":"", "group": ""});
+                            }
+                            // console.log(data)
+                            return data;
+                          }
+                          
+                      });
+                    }
+                 }
+              }
+              edit_form.push(form);
+            });
+            return edit_form;
+        }
+angular.module('chembiohubAssayApp')
+  .factory('CustomFieldConfig', function () {
+    // Service logic
+    // ...
+
+    
+
+    // Public API here
+    return {
+        getSchema: schemaGetter,
+        getForm: formGetter
+
+    };
+  });
 
 req.then(function(projData){
+    angular.forEach(projData.data.objects, function(project){
+        project.schemaform = {
+          "form" : formGetter(project.custom_field_config.project_data_fields, "col-xs-6", project),
+          "schema" : schemaGetter(project.custom_field_config.project_data_fields)
+        }
+    });
+
+    
     angular.module('chembiohubAssayApp').value('loggedInUser',  
         projData.data.user
     );
@@ -101,22 +169,3 @@ angular.module('chembiohubAssayApp').constant('euiHost',
    arr[0] + "//" + arr[2] + "/" + part + "/datastore"
 );
 
-
-
- 
-
-
-// var uis = angular.module('ui.select')
-
-// .constant('uiSelectConfig', {
-//   theme: 'bootstrap',
-//   searchEnabled: true,
-//   sortable: false,
-//   placeholder: 'Choose...', // Empty by default, like HTML tag <select>
-//   refreshDelay: 0, // In milliseconds
-//   closeOnSelect: false,
-//   generateId: function() {
-//     return latestId++;
-//   },
-//   appendToBody: false
-// });
