@@ -17,28 +17,33 @@ angular.module('chembiohubAssayApp')
                 return $http.get(options.async.url + "?chembl_id__chembl_id__startswith=" + search);
             }
             $scope.refreshCustFields = function(schema, options, search) {
-                return $http.get(options.async.url + "?custom__field__startswith=" + search);
+                var urlToSearch = $scope.cbh.withoutCustomFieldsUrl + "&custom__field__startswith=" + search;
+                return $http.get(options.async.url + "?" + urlToSearch );
             }
             var pf = searchUrlParams.setup($stateParams, {
                 molecule: {}
             });
-            $scope.cbh.pf = pf;
             $scope.cbh.searchForm = angular.copy(pf.searchForm);
-            $scope.cbh.baseDownloadUrl = pf.paramsUrl;
-
+            $scope.cbh.pf = pf;
+            $scope.cbh.setupParams = function(paramsAndForm){
+                
+                $scope.cbh.baseDownloadUrl = paramsAndForm.paramsUrl;
+                $scope.cbh.withoutCustomFieldsUrl = paramsAndForm.paramsUrlWithoutCF;
+            }
+            $scope.cbh.setupParams(pf);
             $scope.searchFormSchema.form[0].options.async.call = $scope.refresh;
             // need to repeat this for the custom field lookup
-            $scope.searchFormSchema.form[2].$validators = {
-                notEnough: function(value) {
-                    if (!angular.isDefined(value)) {
-                        return false;
-                    }
-                    if (value.length == 0) {
-                        return false;
-                    }
-                    return true
-                }
-            }
+            // $scope.searchFormSchema.form[2].$validators = {
+            //     notEnough: function(value) {
+            //         if (!angular.isDefined(value)) {
+            //             return false;
+            //         }
+            //         if (value.length == 0) {
+            //             return false;
+            //         }
+            //         return true
+            //     }
+            // }
             $scope.custFieldFormItem = $filter('filter')($scope.searchFormSchema.form, {
                 key: 'search_custom_fields__kv_any'
             }, true);
@@ -70,7 +75,7 @@ angular.module('chembiohubAssayApp')
 
             $scope.$on("sf-render-finished", function() {
                 $timeout(function() {
-                    $rootScope.$broadcast("schemaFormValidate");
+                    // $rootScope.$broadcast("schemaFormValidate");
                     $scope.cbh.watcher = $scope.$watch(
                         function($scope) {
                             return $scope.cbh.textsearch;

@@ -27,17 +27,7 @@ angular.module('chembiohubAssayApp')
             });
 
 
-            var pf = searchUrlParams.setup($stateParams, {
-                molecule: {}
-            });
-            $scope.cbh.searchForm = angular.copy(pf.searchForm);
-
-            $scope.cbh.setupParams = function(paramsAndForm){
-                
-                $scope.cbh.baseDownloadUrl = paramsAndForm.paramsUrl;
-                $scope.cbh.withoutCustomFieldsUrl = paramsAndForm.paramsUrlWithoutCF;
-            }
-            $scope.cbh.setupParams(pf);
+            
             
             $scope.cbh.changeSearchParams = function(newParams, notify) {
                 //General function to search and move to a new URL
@@ -332,6 +322,7 @@ angular.module('chembiohubAssayApp')
 
             $scope.imageCallback = function() {
                 $scope.compoundBatches.redraw++;
+                $scope.cbh.repaintUiselect();
             }
 
             function getAllUncuratedHeaders(data) {
