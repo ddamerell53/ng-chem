@@ -697,7 +697,7 @@ span.date-number {
   width: 50px;
 }
 .symp-stat {
-  padding: 10px 0;
+  padding-top: 10px;
   text-align: center;
 }
 .symp-stat h2 {
@@ -779,6 +779,14 @@ div.modal-header, div.modal-footer {
 }
 div.modal-body table td, div.modal-body table th{
   font-size: 1em;
+}
+
+.proj-list-header {
+    background-color: #002148;
+    padding: 5px;
+}
+.no-padding {
+  padding:0;
 }
 
 
