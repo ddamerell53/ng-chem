@@ -1,11 +1,13 @@
 <div class="row"  >
-    <div ng-show="stateName == 'cbh.projects.project.addcompounds'" class="col-xs-3" >
+    <div ng-show="stateName == 'cbh.projects.project.addcompounds'" class="col-xs-6" >
         <button ng-disabled="compoundBatches.sorts.length ==0" ng-click="nullSorts()" class="btn btn-default ">
             Remove Sorts
         </button>
         <button  ng-show="stateName == 'cbh.projects.project.addcompounds'" ng-disabled="warningsFilter==''" ng-click="cbh.toggleWarningsFilter('')" class="btn btn-default ">
             Remove Filters
         </button>
+        <!-- Add button launching popup to explain the different compound statuses -->
+        <a ng-click="cbh.openStatusExplanation()" role="button" class="btn btn-default"><span class="glyphicon glyphicon-question-sign"></span> What do the different statuses mean?</a>
     </div>
     <div class="col-xs-6" ng-show="stateName != 'cbh.projects.project.addcompounds'">
         <div class="form-group" >

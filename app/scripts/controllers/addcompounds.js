@@ -22,6 +22,7 @@ angular.module('chembiohubAssayApp')
     'MessageFactory',
     'renderers',
     'searchUrlParams',
+    '$modal',
     function ($scope, 
         $state, 
         $stateParams,
@@ -35,7 +36,8 @@ angular.module('chembiohubAssayApp')
         CBHCompoundBatch,
         MessageFactory,
         renderers,
-        searchUrlParams) {
+        searchUrlParams,
+        $modal) {
 
         $scope.csrftoken = $cookies[prefix.split("/")[0] + "csrftoken"];
        $scope.flowinit = {
@@ -130,6 +132,20 @@ angular.module('chembiohubAssayApp')
                                             notify: false });
             $stateParams = newParams;
             $scope.initialise();
+        }
+
+
+        $scope.cbh.openStatusExplanation = function(){
+            console.log('being called');
+          $scope.modalInstance = $modal.open({
+            templateUrl: 'views/statuses.html',
+            size: 'md',
+            controller: function($scope, $modalInstance, MessageFactory) {
+              $scope.modalInstance = $modalInstance;
+              $scope.legends = MessageFactory.getStatuses();
+              $scope.actions = MessageFactory.getUploadActions();
+            }
+          });
         }
 
  
