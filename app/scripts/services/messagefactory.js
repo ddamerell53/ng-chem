@@ -34,6 +34,12 @@ angular.module('chembiohubAssayApp')
     MessageFactory.getLegends = function() {
         return legends;
     }
+    MessageFactory.getStatuses = function() {
+        return statuses;
+    }
+    MessageFactory.getUploadActions = function() {
+        return upload_actions;
+    }
 
     //we can maybe use this factory in the future for amdinistrering / editing messages?
     //move the message text to a backend service?
@@ -112,28 +118,53 @@ angular.module('chembiohubAssayApp')
 
     }
 
+    var statuses = {
+        status_1: {
+            name: "New",
+            explanation: "The data has not been added to the system previously."
+        },
+        status_2: {
+            name: "Duplicated record",
+            explanation: "This data has been added previously with the exact same fields and values."
+        },
+        status_3: {
+            name: "Could not generate InChi",
+            explanation: "For compound records, this indicates that the structure was recognised but contains bond types which are incompatible with the way we generate UOX IDs."
+        },
+        status_4: {
+            name: "Data not processable",
+            explanation: "For compound records in ChemDraw or SDF format, this indicates that the structure was incompatible with our conversion software and could not be recognised in the format inputted."
+        },
+        status_5: {
+            name: "SMILES not processable",
+            explanation: "For compound records in Excel format, the autodetected SMILES column for this record contained an invalid SMILES string and could not be processed."
+        },
+        status_6: {
+            name: "Overlap",
+            explanation: "For compound records, this indicates that an identical structure has been added to the system previously with different metadata or by another user where you have permission to see their uploaded data."
+        },
+    }
+
+    var upload_actions = {
+        action_1 : {
+            name: "New Batch",
+            explanation: "This record will be added to the database when you click 'Save these records'"
+        },
+        action_2 : {
+            name: "Ignore",
+            explanation: "This record will not be added to the database when you click 'Save these records'. Records which are automatically set to 'Ignore' contain incorrect or unprocessable structural data. You can choose to add these records as blinded compounds - the structural posrtion will be ignored but a record will be created containing any additional data fields associated with the structure."
+        }
+    }
+
     var legends = {
         legend_uox_id: {
             name: "UOx ID",
             explanation: "A unique identifier for this compound in this project. For each UOx ID there can be multiple batches."
         },
-        // legend_alogp: {
-        //     name: "alogP",
-        //     explanation: "Legend text for alogp"
-        // },
-        // legend_rotatable_bonds: {
-        //     name: "Rotatable Bonds",
-        //     explanation: "Legend text for Rotatable BondsLegend text for Rotatable BondsLegend text for Rotatable BondsLegend text for Rotatable BondsLegend text for Rotatable Bonds"
-        // },
         legend_batch_id: {
             name: "Batch ID",
             explanation: "A sample of this compound - each time you re-register a compound you get a new batch. Batch IDs will soon be sequential per UOx ID. For each UOx ID there can be multiple batches"
         },
-        // legend_medchem_friendly: {
-        //     name: "MedChem Friendly",
-        //     explanation: "Legend text for MedChem Friendly"
-        // },
-        //create more in this format here
     }
 
     return MessageFactory;
