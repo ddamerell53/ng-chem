@@ -35,7 +35,7 @@
     "angular-schema-form-ui-select": "git@github.com:thesgc/angular-schema-form-ui-select.git#0.1.5",
     "angular-info-box": "git@github.com:paulbarrett79/angular-info-box.git#v0.0.4",
     "angular-utils-pagination": "~0.7.0",
-    "handsontable": "~0.20.0",
+    "handsontable": "~0.16.1",
     "angular-ui-ace": "bower",
     "elasticsearch.angular.min": "https://raw.githubusercontent.com/elastic/bower-elasticsearch-js/master/elasticsearch.angular.min.js",
     "elasticui": "git@github.com:strets123/ElasticUI.git#master"
