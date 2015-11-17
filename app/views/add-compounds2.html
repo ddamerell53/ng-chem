@@ -100,13 +100,22 @@
                     
                 </div>
                    
-                <div><strong class="nexa"><ng-pluralize count="compoundBatches.savestats.newbatches"
-                                when="{'0': '0 new batches',
-                                 'one': '1 new batch',
-                                  'other': '{} new batches'}"></ng-pluralize> will be saved to the database and <ng-pluralize count="compoundBatches.savestats.ignoring"
-                                when="{'0': '0 batches',
-                                 'one': '1 batch',
-                                  'other': '{} new batches'}"></ng-pluralize> will be ignored.</strong></div>
+                <div>
+                    <strong class="nexa"><ng-pluralize count="compoundBatches.savestats.newbatches"
+                            when="{'0': '0 new batches',
+                             'one': '1 new batch',
+                              'other': '{} new batches'}"></ng-pluralize> will be saved to the database and <ng-pluralize count="compoundBatches.savestats.ignoring"
+                            when="{'0': '0 batches',
+                             'one': '1 batch',
+                              'other': '{} new batches'}"></ng-pluralize> will be ignored.
+                    </strong>
+                </div>
+                <!-- Add a statement here if there are no records selected to upload explaining why save button disabled -->
+                <div ng-hide="compoundBatches.savestats.newbatches > 0">
+                    <strong class="nexa">
+                        You must select at least 1 record as New Batch to be able to click Save.
+                    </strong>
+                </div>
             </div>
 
     </div>
