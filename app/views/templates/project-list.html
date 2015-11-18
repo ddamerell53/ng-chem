@@ -1,33 +1,32 @@
-<div class="row">
-    <div class="col-xs-6 col-sm-3" ng-repeat="project in projects">
-        
-        <div class="well projectbox {{project.project_type.name == 'inventory' ? 'nonchem' : ''}}" style="padding-bottom:10px">
-            <img src="images/chemical-icon.png" ng-if="project.project_type.name == 'chemical'" class="pull-right" alt="{{project.project_type.name}} project" title="{{project.project_type.name}} project">
-            <img src="images/inventory-icon.png" ng-if="project.project_type.name == 'inventory'" class="pull-right" alt="{{project.project_type.name}} project" title="{{project.project_type.name}} project">
-            <img src="images/assay-icon.png" class="pull-right" alt="{{project.project_type.name}} project" title="Assay project">
-            <p class="nexa" style="margin-bottom:0;">
-                <strong ng-if="cbh.logged_in_user.can_view_assayreg"><a ui-sref="cbh.projects.project.assay.data_overview({projectKey: project.project_key})"><span title="{{ project.name }}">{{ project.name | limitTo : 16 }}</span><span ng-show="project.name.length > 16">...</span></a>
+<div class="container">
+    
+        <div class="row grey-to-white" ng-repeat="project in projects" style="margin-bottom:15px; border-radius:10px;">
+            <div class="col-sm-4 proj-list-header" style="height:100%">
+
+                <h3>
+                    {{project.name}}
+                </h3>
+                
+                <strong ng-if="cbh.logged_in_user.can_view_assayreg"><a ui-sref="cbh.projects.project.assay.data_overview({projectKey: project.project_key})">{{project.name}}</a>
                 </strong>
-                <strong ng-if="!cbh.logged_in_user.can_view_assayreg && cbh.logged_in_user.can_view_chemreg"><a ui-sref="cbh.search({project__project_key__in: project.project_key})"><span title="{{ project.name }}">{{ project.name | limitTo : 16 }}</span><span ng-show="project.name.length > 16">...</span></a>
+                <strong ng-if="!cbh.logged_in_user.can_view_assayreg && cbh.logged_in_user.can_view_chemreg"><a ui-sref="cbh.search({project__project_key__in: project.project_key})">{{project.name}}</a>
                 </strong>
                 <br>
-                <span class="glyphicon glyphicon-time"></span> <small>Last modified: {{ project.modified | date }}</small>
-                <div ng-if="cbh.logged_in_user.can_view_assayreg" class="col-xs-6 pull-left">
-                    <button id="{{project.id}}" role="button" data-toggle="dropdown" dropdown-toggle class="btn btn-sm btn-primary btn-toggle"> Assay <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu" role="menu" aria-labelledby="{{project.id}}" style="width:250px;">
-                        <li role="menuitem" style="width:100%"><a ui-sref="cbh.projects.project.assay.data_overview({projectKey: project.project_key})">Data Overview</a></li>
-                    </ul>
+                <small class="last-mod"><span class="glyphicon glyphicon-time"></span> <span class="nexa">Last modified: {{ project.modified | date }}</span></small>
+                <div class="pull-right">
+                    <img src="images/chemical-icon-white.png" ng-if="project.project_type.name == 'chemical'" alt="{{project.project_type.name}} project" title="{{project.project_type.name}} project">
+                    <img src="images/inventory-icon-white.png" ng-if="project.project_type.name == 'inventory'" alt="{{project.project_type.name}} project" title="{{project.project_type.name}} project">
+                    <img src="images/assay-icon-white.png" alt="{{project.project_type.name}} project" title="Assay project">
                 </div>
-                <div ng-if="cbh.logged_in_user.can_view_chemreg" ng-if="cbh.logged_in_user.can_view_chemreg" class="col-xs-6 pull-right">
-                    <button id="{{project.id}}_2" role="button" data-toggle="dropdown" dropdown-toggle class="btn btn-sm btn-primary btn-toggle "> Chem <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu " role="menu" aria-labelledby="{{project.id}}_2"  style="width:250px;">
-                        <li role="menuitem" ng-if="project.editor" style="width:100%"><a  ui-sref="cbh.projects.project.addcompounds({projectKey: project.project_key})"><span class="glyphicon glyphicon-plus-sign"></span> Add multiple {{project.project_type.show_compounds == true ? 'compounds' : 'Inventory items' }}</a></li>
-                        <li role="menuitem" style="width:100%"><a ng-click="cbh.hideSearchForm=true;" ui-sref="cbh.search({project__project_key__in: project.project_key})"><span class="glyphicon glyphicon-search"></span> View / add single {{project.project_type.show_compounds == true ? 'compounds' : 'inventory items' }}</a></li>
-                    </ul>
-                </div>
-            </p>
+            </div>
+
+            <div class="col-sm-8" style="padding:10px 10px 0 10px;">
+                <p class="nexa"><strong>Assay Data</strong> <a role="button" class="btn btn-sm btn-primary" ui-sref="cbh.projects.project.assay.data_overview({projectKey: project.project_key})">Data Overview</a>
+                <p class="nexa"><strong>{{project.project_type.name != 'inventory' ? 'Chemical' : 'Inventory' }} Data</strong> <a role="button" class="btn btn-sm btn-primary"  ng-if="project.editor" ui-sref="cbh.projects.project.addcompounds({projectKey: project.project_key})"><span class="glyphicon glyphicon-plus-sign"></span> Add multiple {{project.project_type.name != 'inventory' ? 'compounds' : 'inventory items' }}</a> <a role="button" class="btn btn-sm btn-primary"  ng-click="cbh.hideSearchForm=true;" ui-sref="cbh.search({project__project_key__in: project.project_key})"><span class="glyphicon glyphicon-search"></span> View / add single {{project.project_type.name != 'inventory' ? 'compounds' : 'inventory items' }}</a></p>
+            </div>
+
+
+
+            
         </div>
-    </div>
 </div>
