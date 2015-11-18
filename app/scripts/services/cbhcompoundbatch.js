@@ -189,63 +189,7 @@ angular.module('chembiohubAssayApp')
     };
 
 
-    CBHCompoundBatch.getImages = function(objects, imageSize, name, callback){
-         var defer = $q.defer();
-        var promises = [];
 
-
-        angular.forEach(objects, function(obj){
-            var siz = imageSize;
-            if(name=="bigImageSrc"){
-              if(obj.molecularWeight< 300){
-                siz = 200;
-              }
-            }
-            if(angular.isDefined(obj.ctab)){
-              var params = {
-                  size: siz,
-                  ctab: obj.ctab,
-                }
-              }else{
-                var params = {
-                  size: siz,
-                  ctab: "",
-                }
-              }
-            
-            if(angular.isDefined(obj.properties)){
-              if(angular.isDefined(obj.properties.substructureMatch)){
-                params.smarts = obj.properties.substructureMatch;
-              }
-            }
-            
-            promises.push($http({method:"POST", 
-                url: "https://chembiohub.ox.ac.uk/utils/ctab2image",
-                data: params, 
-                headers: {'X-CSRFToken': undefined}}));
-
-        });
-        $q.all(promises).then(function(data){
-          var index = 0;
-          angular.forEach(data, function(d){
-            if(d.data.toString()){
-              objects[index].properties[name] = "data:image/png;base64," + d.data;
-            }else{
-              objects[index].properties[name] = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEsAAABLCAYAAAA4TnrqAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3wYBDScCJFPWhQAAABl0RVh0Q29tbWVudABDcmVhdGVkIHdpdGggR0lNUFeBDhcAAAS3SURBVHja7Zrbb1RVFIe/PVPaTgUsTFt6myIBRHvhEgQkakgMBEiNICA3G1IJRHyQF/8OXzAGYmqChIgJJiRiEIsCocFUoJZOO05bWgotBAsNbSkzZdopy4dtGWunnaMihHT9kpOcs88+a6/5cvbaa68zRkQElSO5FIHCUlgKS2EpLIWlCBSWwlJYCkthKSxFoLAUlsJSWApLYSkChaWwFNYzpKQnOZj4G6CmFvJyoa4e+vqgwAdvrcVkz4j1i0bhbBU0BOB+CPLzYPVKTE72xIEFYIJNSHIy7NwBaWnQ0gpfHEI+2oOZOgURgYOHYVo6lG2D59KgtQ0OHkbe24Ip8E2caShTJsPmDRjvdIwnFVNSBAvnw6Ua26E+ACKwYR0mw4vxeDDFhbDpHTh2fILFrJxszKRJI9uys6Dzjj1vuwaFL2OMGdln9izo6kIikQkEKynOzHe5YGjIng8NgcvEmb/GHg8f6mr4SAU+aG4Z3d7eAVOnYjwehfVIixZA333ku5NITy8yMIA0XYEjR2Fd6cRaDROulm43srscKk/D/goIh2yqsWUjZtYLT9c3/cuRZvAKS2EpLIWlsP7V/q4+gBw5+mT3lE9hzMfzZkWjse3Jk9LTGNNpniW1dVB1Hu52Q3o6FBfCitdh337ovQeDg7Z8ArD7fei8DbV1kOEFfwDcLljxBnhS4bIfs2P7SPs1tdB0BbN9s72ORODHM9DYDA8ewMwCWLMSk5GBfLJv7DET2BZ/Q1y/zLJXkKEhqPoZ/PUQCoMvH9auwni9zjN4aWm1xbdN6yEr0xbgzp6DGzcxH++1IANBTNnW2DOdtzGBILJ8KezdA8YF/WG4eSvxFItG4UAFvDTP1rlSkiHYBN+eQMrLxh3T0RsRzy+Ar7+B5ElQthVSPdB6FSq+RHaVY7zTHW53uu7aUoov316npMDG9Yl/9LR0eLsU43bbhjQP4gAW1RchNwezemWsbfEiezyOeBfPr8Zm6OmFD3dhXH9Go5IiW3ys/Am2veswZs0vgt57yKf7keMnkMZmZGAgsVczsmIO/RNdb4d5L/5/wSaeX03NsLAkBmpYc2bDjZvOp6FJS4MPdiI9vdaovwGOHUc2rcPMnTPOcuEav1Y1ImD/pU0k/rMJlycHtsfyq7sHLtQgladH3xuOi45iVigESUmY9Odh2RJYtgQJNsG58zB3DrjddnVyoswMuNOFiIysfnbcGF3DKi4c2068MZ3YHku5OZCXi1n15n9MHc6cgwMVSHsHMjiI9PXBb412RRl2svO2vdfdPf4UzcoE73T4vhIJhZD+B0j1RcyFS7E+y5fC9XbkbBUS7rd26wPIoa+Q4cpovDGd2B5Lr70KtXVI9QUkHEYiEaTtGvLZ58jVNuepg0SjNm0INMKt3yE1BRaUwJpVmORk2+fkKfjlIky2HyDo7oFfL2PKy0a/qf39cPIUBIJ2isyeBfm5cKszljqE++GHUxBshkgEfHlQumbE56+/j2l8+Qlti79hbL9679lnr7TYtCQvD5YuhgUlo78BaD1L94YKS2EpLIWlUlgKS2EpLIWlsFQKS2EpLIWlsBSWSmEpLIWlsBSWwlIpLIWlsBTWM6Y/ABTkAj8U37PQAAAAAElFTkSuQmCC";
-            }
-
-            index ++;
-          });
-          if(angular.isDefined(callback)) {
-                callback();                        
-          }
-          callback();
-          return data
-
-          
-        });
-        return defer.promise;
-    }
 
     var patch = function(data, projectKey){
         var promise = $http.patch(  urlConfig.cbh_compound_batches.list_endpoint + '/' + data.id + '/' ,       

@@ -52,6 +52,7 @@ var initInjector = angular.injector(["ng"]);
 
 var $http = initInjector.get("$http");
 
+var $timeout = initInjector.get("$timeout");
 
 var req = $http({  method: "get",
                     url: configuration.cbh_projects.list_endpoint,
@@ -89,8 +90,7 @@ var formGetter = function(project_data_fields, htmlClass, project){
 
                     
                     form.options.async.call =  function(schema, options, search) {
-                      form.timeSearched = String(Date.now());
-                      var localTimeSearched = String(form.timeSearched);
+                    
                       var url = form.options.async.url + "?custom__field__startswith=" + search;
                       if(angular.isDefined(project)){
                         url += ("&custom_field=" + form.key);
@@ -98,13 +98,30 @@ var formGetter = function(project_data_fields, htmlClass, project){
 
                       }
                       return $http.get( url ).then( function(data){
-                          if(localTimeSearched == form.timeSearched){
+                            
+
                             if(search){
-                              data.data.unshift({"label": search + " (adding new)", "value": search, "decription":"", "group": ""});
+                              data.data.unshift({"isTag": true, "label": search, "value": search});
                             }
+                            if(form.permanent_items){
+                              angular.forEach(form.permanent_items,function(item){
+                                data.data.unshift(angular.copy(item));
+                              });
+                            }
+                            console.log(schema);
+                            var foundWords = [];
+                            var deDuped = [];
+                            data.data.reverse();
+                            angular.forEach(data.data, function(d){
+                                if(foundWords.indexOf(d.value) == -1){
+                                  deDuped.push(d);
+                                  foundWords.push(d.value);
+                                }
+                            });
+
                             // console.log(data)
-                            return data;
-                          }
+                            return {"data" : deDuped};
+                          
                           
                       });
                     }
@@ -135,6 +152,26 @@ req.then(function(projData){
           "form" : formGetter(project.custom_field_config.project_data_fields, "col-xs-6", project),
           "schema" : schemaGetter(project.custom_field_config.project_data_fields)
         }
+        project.updateCustomFields = function(){
+          
+          $timeout(function(){
+            project.recentlyUpdated = false;
+          }, 1000);
+          if (!project.recentlyUpdated){
+            project.recentlyUpdated = true;
+            angular.forEach(project.schemaform.form, function(item){
+            if(angular.isDefined(item.options)){
+              if (angular.isDefined(item.options.async)){
+                  item.options.async.call({}, item.options, "").then(function(data){
+                      project.schemaform.schema.properties[item.key].items = data.data;
+                  });
+              }
+            }
+          });
+          }
+        }
+        // project.updateCustomFields();
+        
     });
 
     
