@@ -100,15 +100,15 @@ var formGetter = function(project_data_fields, htmlClass, project){
                       return $http.get( url ).then( function(data){
                             
 
-                            if(search){
-                              data.data.unshift({"isTag": true, "label": search, "value": search});
-                            }
+                            
                             if(form.permanent_items){
                               angular.forEach(form.permanent_items,function(item){
                                 data.data.unshift(angular.copy(item));
                               });
                             }
-                            console.log(schema);
+                            if(search){
+                              data.data.unshift({"isTag": true, "label": search + " (adding new)", "value": search});
+                            }
                             var foundWords = [];
                             var deDuped = [];
                             data.data.reverse();
