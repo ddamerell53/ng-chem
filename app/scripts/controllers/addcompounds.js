@@ -194,6 +194,13 @@ angular.module('chembiohubAssayApp')
             $scope.setup();
         }
 
+
+$scope.changeView = function(){
+                $stateParams.viewType = $scope.listOrGallery.choice;
+                $state.params.viewType = $scope.listOrGallery.choice;
+                $location.search($state.params);
+            }
+
         $scope.setup = function(){
             $scope.inputData = {inputstring : ""};
             $scope.filedata = {};
@@ -205,11 +212,16 @@ angular.module('chembiohubAssayApp')
             $scope.listOrGallery = {
                     choice: "list",
             };
+            if ($stateParams.viewType) {
+                    $scope.listOrGallery.choice = $stateParams.viewType;
+                }
 
              $scope.listPerPage = [
                     { label: "10/page", value: "10" },
                     { label: "20/page", value: "20" },
                     { label: "50/page", value: "50" },
+                    { label: "100/page", value: "100" },
+
             ];
 
             $scope.compoundBatches = {data:[], 
@@ -220,7 +232,7 @@ angular.module('chembiohubAssayApp')
             $scope.itemsPerPage = angular.copy($scope.listPerPage);
             $scope.pagination = {
                     current: 1,
-                    compoundBatchesPerPage: $scope.itemsPerPage[0],
+                    compoundBatchesPerPage: $scope.itemsPerPage[2],
                 };
             
             var filters = { };

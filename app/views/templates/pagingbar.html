@@ -17,7 +17,7 @@
                         Remove Sorts
                     </button>
                     <label class="btn btn-default" ng-class="{ active: listOrGallery.choice === 'list' }" >
-                        <input type="radio" ng-model="listOrGallery.choice" value="list" id="list-btn" name="listOrGallery" style="display:none;" ng-change="changeNumberPerPage('list')"><span class="glyphicon glyphicon-list-alt"></span><span class="hidden-xs hidden-sm"> List</span>
+                        <input type="radio" ng-model="listOrGallery.choice" value="list" id="list-btn" name="listOrGallery" style="display:none;" ng-change="changeView()"><span class="glyphicon glyphicon-list-alt"></span><span class="hidden-xs hidden-sm"> List</span>
                     </label>
                     <label ng-if="!editModeUnreachable()" class="btn btn-default" ng-class="{ active: cbh.editMode === true }" >
                         <input type="radio"  ng-click="cbh.toggleEditMode()" id="list-btn"  style="display:none;"  ><span class="glyphicon glyphicon-pencil"></span><span class="hidden-xs hidden-sm"> Edit</span>
@@ -41,7 +41,7 @@
             </div>
             <div class="col-xs-2 col-sm-2" style="padding:0 3px;">
                 <label class="btn btn-default" ng-class="{ active: listOrGallery.choice === 'gallery' }">
-                    <input type="radio" ng-model="listOrGallery.choice" value="gallery" id="gallery-btn" name="listOrGallery" style="display:none;" ng-change="changeNumberPerPage('gallery')"><span class="glyphicon glyphicon-picture"></span><span class="hidden-xs hidden-sm"> Gallery</span>
+                    <input type="radio" ng-model="listOrGallery.choice" value="gallery" id="gallery-btn" name="listOrGallery" style="display:none;" ng-change="changeView()" ><span class="glyphicon glyphicon-picture"></span><span class="hidden-xs hidden-sm"> Gallery</span>
                 </label>
             </div>
             <div class="col-xs-4 col-sm-3 text-center" style="padding:0;">

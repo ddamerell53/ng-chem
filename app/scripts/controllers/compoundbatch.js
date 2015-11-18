@@ -64,6 +64,12 @@ angular.module('chembiohubAssayApp')
                 getResultsPage($scope.pagination.current, newParams);
             }
 
+            $scope.changeView = function(){
+                $stateParams.viewType = $scope.listOrGallery.choice;
+                $state.params.viewType = $scope.listOrGallery.choice;
+                $location.search($state.params);
+            }
+
             $scope.cbh.setUpPageNumbers = function() {
                 // complicated way of deciding number per page
                 $scope.listOrGallery = {
