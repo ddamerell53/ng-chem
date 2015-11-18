@@ -198,6 +198,7 @@ angular.module('chembiohubAssayApp')
                         if (myproj.editor) {
                             noEdit = false;
                             $scope.cbh.projAddingTo = $scope.cbh.projects.objects[index];
+                            $scope.cbh.projAddingTo.updateCustomFields();
                         }
                     }
                 });

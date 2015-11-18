@@ -167,6 +167,7 @@ $urlRouterProvider.when('', '/projects/list');
               windowClass: editingClass,
               controller: ['$scope', '$rootScope', '$modalInstance', '$timeout', 'CBHCompoundBatch', 'ProjectFactory',
                 function($scope, $rootScope, $modalInstance, $timeout, CBHCompoundBatch, ProjectFactory) {
+
                   $scope.isNewCompoundsInterface = isNewCompoundsInterface;
                   $scope.editMode = false;
                   $scope.mol = angular.copy(mol);
@@ -176,6 +177,7 @@ $urlRouterProvider.when('', '/projects/list');
                   angular.forEach($rootScope.projects, function(myproj) {
                     if (myproj.id.toString() == projid) {
                       $scope.projectWithCustomFieldData = myproj;
+                      $scope.projectWithCustomFieldData.updateCustomFields();
                       $scope.projectObj = myproj;
                     }
                   });
@@ -191,6 +193,7 @@ $urlRouterProvider.when('', '/projects/list');
 
 
                   var myform = $scope.projectWithCustomFieldData.schemaform.form;
+
                   var len = Math.ceil(myform.length / 2);
                   $scope.firstForm = angular.copy(myform).splice(0, len);
                   $scope.secondForm = angular.copy(myform).splice(len);
@@ -227,21 +230,27 @@ $urlRouterProvider.when('', '/projects/list');
                   $scope.init();
 
 
+
                   $scope.removeAlert = function() {
                     $scope.update_success = false;
                   }
                   cbh.isUpdated = false;
                   $scope.updateBatch = function(instance) {
+
                     CBHCompoundBatch.patch({
                       "customFields": $scope.mol.customFields,
                       "projectKey": $scope.projectWithCustomFieldData.project_key,
                       "id": $scope.mol.id
                     }).then(
                       function(data) {
+
                         $scope.mol.customFields = data.customFields;
                         mol.customFields = data.customFields;
                         //reindex the compound
-                        CBHCompoundBatch.reindexModifiedCompound($scope.mol.id);
+                        CBHCompoundBatch.reindexModifiedCompound($scope.mol.id).then(function(d){
+                          //Make sure all the custom fields have been updated
+                          
+                        });
                         $scope.update_success = true;
                         $scope.editMode = false;
                         $scope.init();
@@ -256,9 +265,6 @@ $urlRouterProvider.when('', '/projects/list');
                   }
                   $scope.myschema = $scope.projectWithCustomFieldData.schemaform.schema;
                   $scope.modalInstance = $modalInstance;
-                  // $scope.$watch('mol', function(n,o), true){
-                  //   $scope.pointers = n;
-                  // });    
 
                 }
               ]
@@ -644,102 +650,102 @@ $urlRouterProvider.when('', '/projects/list');
 
 
 
- .state('cbh.projects.project.compounds', {
-      url: "compounds/?editMode=archived=?page=&compoundBatchesPerPage=&viewType=&doScroll=&sorts=",
-      resolve: {
-        projectKey: ['$stateParams', function($stateParams) {
-          return $stateParams.projectKey;
-        }],
-        paramsAndForm: ['$stateParams', 'searchUrlParams',
-          function($stateParams, searchUrlParams) {
-            return searchUrlParams.fromForm({
-              "project__project_key__in": [$stateParams.projectKey, ]
-            });
-          }
-        ]
+ // .state('cbh.projects.project.compounds', {
+ //      url: "compounds/?editMode=archived=?page=&compoundBatchesPerPage=&viewType=&doScroll=&sorts=",
+ //      resolve: {
+ //        projectKey: ['$stateParams', function($stateParams) {
+ //          return $stateParams.projectKey;
+ //        }],
+ //        paramsAndForm: ['$stateParams', 'searchUrlParams',
+ //          function($stateParams, searchUrlParams) {
+ //            return searchUrlParams.fromForm({
+ //              "project__project_key__in": [$stateParams.projectKey, ]
+ //            });
+ //          }
+ //        ]
 
-      },
+ //      },
 
-      views: {
-        '': {
-          templateUrl: 'views/project-compounds.html',
-          controller: function($scope, $state, projectKey, CBHCompoundBatch) {
-            $scope.projects = $scope.cbh.projects.objects;
-            angular.forEach($scope.projects, function(proj) {
-              if (proj.project_key == projectKey) {
-                $scope.proj = proj;
-                $scope.cbh.includedProjectKeys = [$scope.proj.project_key];
+ //      views: {
+ //        '': {
+ //          templateUrl: 'views/project-compounds.html',
+ //          controller: function($scope, $state, projectKey, CBHCompoundBatch) {
+ //            $scope.projects = $scope.cbh.projects.objects;
+ //            angular.forEach($scope.projects, function(proj) {
+ //              if (proj.project_key == projectKey) {
+ //                $scope.proj = proj;
+ //                $scope.cbh.includedProjectKeys = [$scope.proj.project_key];
 
-              }
-            });
-          }
-        },
-        "projectsummary@cbh.projects.project.compounds": {
-          templateUrl: 'views/project-summary.html',
-          controller: function($scope, $state, projectKey, CBHCompoundBatch) {
-            $scope.projects = $scope.cbh.projects.objects;
-            angular.forEach($scope.projects, function(proj) {
-              if (proj.project_key == projectKey) {
-                $scope.proj = proj;
-                $scope.cbh.includedProjectKeys = [$scope.proj.project_key];
+ //              }
+ //            });
+ //          }
+ //        },
+ //        "projectsummary@cbh.projects.project.compounds": {
+ //          templateUrl: 'views/project-summary.html',
+ //          controller: function($scope, $state, projectKey, CBHCompoundBatch) {
+ //            $scope.projects = $scope.cbh.projects.objects;
+ //            angular.forEach($scope.projects, function(proj) {
+ //              if (proj.project_key == projectKey) {
+ //                $scope.proj = proj;
+ //                $scope.cbh.includedProjectKeys = [$scope.proj.project_key];
 
-              }
-            });
-            var myform = angular.copy($scope.proj.schemaform.form);
-            //we may need to replicate this within the search form...
-            angular.forEach(myform, function(item) {
-              item['feedback'] = false;
-              item['disableSuccessState'] = true;
+ //              }
+ //            });
+ //            var myform = angular.copy($scope.proj.schemaform.form);
+ //            //we may need to replicate this within the search form...
+ //            angular.forEach(myform, function(item) {
+ //              item['feedback'] = false;
+ //              item['disableSuccessState'] = true;
 
-            });
-            $scope.myschema = angular.copy($scope.proj.schemaform.schema);
-            $scope.formChunks = myform.chunk(Math.ceil($scope.proj.schemaform.form.length / 3));
-            $scope.blankForm = function() {
-              $scope.newMol = {
-                "customFields": {}
-              };
-              //need to also make the form pristine and remove (usually incorrect) validation cues...
-              //we've removed the feedback because it is broken in angular schema form and therefore inconsistent.
-              angular.forEach($scope.formChunks, function(chunk) {
-                chunk.$pristine = true;
-              });
-
-
-            };
-            $scope.blankForm();
-            $scope.saveSingleCompound = function() {
-              CBHCompoundBatch.saveSingleCompound(projectKey, '', $scope.newMol.customFields).then(
-                function(data) {
-                  CBHCompoundBatch.reindexModifiedCompound(data.data.id).then(function(reindexed) {
-                    $state.go($state.current, {
-                      "page": 1,
-                      "sorts": [],
-                      "filters": undefined
-                    }, {
-                      reload: true
-                    });
-                  });
-                }
-              );
-            }
+ //            });
+ //            $scope.myschema = angular.copy($scope.proj.schemaform.schema);
+ //            $scope.formChunks = myform.chunk(Math.ceil($scope.proj.schemaform.form.length / 3));
+ //            $scope.blankForm = function() {
+ //              $scope.newMol = {
+ //                "customFields": {}
+ //              };
+ //              //need to also make the form pristine and remove (usually incorrect) validation cues...
+ //              //we've removed the feedback because it is broken in angular schema form and therefore inconsistent.
+ //              angular.forEach($scope.formChunks, function(chunk) {
+ //                chunk.$pristine = true;
+ //              });
 
 
-            $scope.cbh.searchPage = function() {
-              $state.go('cbh.search', {
-                "project__project_key__in": $scope.proj.project_key
-              }, {
-                reload: true
-              });
-            };
-          },
-        },
-        'newresults@cbh.projects.project.compounds': {
-          templateUrl: 'views/compound-list-new.html',
-          controller: 'CompoundbatchCtrl'
-        },
-      }
+ //            };
+ //            $scope.blankForm();
+ //            $scope.saveSingleCompound = function() {
+ //              CBHCompoundBatch.saveSingleCompound(projectKey, '', $scope.newMol.customFields).then(
+ //                function(data) {
+ //                  CBHCompoundBatch.reindexModifiedCompound(data.data.id).then(function(reindexed) {
+ //                    $state.go($state.current, {
+ //                      "page": 1,
+ //                      "sorts": [],
+ //                      "filters": undefined
+ //                    }, {
+ //                      reload: true
+ //                    });
+ //                  });
+ //                }
+ //              );
+ //            }
 
-    })
+
+ //            $scope.cbh.searchPage = function() {
+ //              $state.go('cbh.search', {
+ //                "project__project_key__in": $scope.proj.project_key
+ //              }, {
+ //                reload: true
+ //              });
+ //            };
+ //          },
+ //        },
+ //        'newresults@cbh.projects.project.compounds': {
+ //          templateUrl: 'views/compound-list-new.html',
+ //          controller: 'CompoundbatchCtrl'
+ //        },
+ //      }
+
+ //    })
 
 
     .state('cbh.projects.project.assay', {
