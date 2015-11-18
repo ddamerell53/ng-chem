@@ -53,7 +53,6 @@ var initInjector = angular.injector(["ng"]);
 var $http = initInjector.get("$http");
 
 
-
 var req = $http({  method: "get",
                     url: configuration.cbh_projects.list_endpoint,
                     params: {"schemaform": true, "limit":1000}, });

@@ -187,6 +187,7 @@ angular.module('chembiohubAssayApp')
                         if (myproj.project_type.show_compounds){
                           showCompounds = true;
                         }
+
                         angular.forEach(myproj.schemaform.form, function(i){
 
                           if(cNames.indexOf( i.key) < 0){

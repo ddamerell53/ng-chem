@@ -23,8 +23,9 @@ angular.module('chembiohubAssayApp')
             var pf = searchUrlParams.setup($stateParams, {
                 molecule: {}
             });
-            $scope.cbh.searchForm = angular.copy(pf.searchForm);
             $scope.cbh.pf = pf;
+            $scope.cbh.searchForm = angular.copy(pf.searchForm);
+
             $scope.cbh.setupParams = function(paramsAndForm){
                 
                 $scope.cbh.baseDownloadUrl = paramsAndForm.paramsUrl;
