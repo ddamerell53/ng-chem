@@ -547,82 +547,15 @@ angular.module('chembiohubAssayApp')
               
               scope.columns = hotObj.columns;
               
-              
-              // angular.forEach(scope.columns, function(col, index){
-              //   var watchString = "columns[" + index + "].searchformSchema.schema.properties.search_custom_fields__kv_any.items";
-              //   //retrieve the current search form to apply custom field filters from URL
-              //   //we have already cloned the search form elements to build the models for the initial load.
-              //   //this needs to be at an overall level
-              //    //look up the correct column's knownBy
-              //    //then do the reverse of the custom-field-to-table
-              //    scope.$on('custom-field-to-table', function(event, data) {
-              //         if(col.knownBy == data.newValue.split("|")[0]) {
-                        
-              //           if(data.addOrRemove == "add") {
-              //             var match = $filter('filter')(col.searchForm.search_custom_fields__kv_any, function(value, index) { return value == data.newValue })
-              //             if(match.length == 0){
-              //               if(col.searchForm.search_custom_fields__kv_any){
-              //                 col.searchForm.search_custom_fields__kv_any.push(data.newValue);  
-              //               }
-              //               else {
-              //                 col.searchForm.search_custom_fields__kv_any = [(data.newValue)]; 
-              //               }
-              //               col.searchformSchema.schema.properties.search_custom_fields__kv_any.items = col.searchForm.search_custom_fields__kv_any.map(function(i){return {value : i, label : labelifyCustomField(i)}});
-              //             }
-              //           }
-              //           else if(data.addOrRemove == "remove"){
-              //             //because there are watches on both the schemas, we need to ensure that on the return journey, no more items are removed.
-              //             var diffs = $filter('filter')(col.searchForm.search_custom_fields__kv_any, function(value, index) { return value == data.newValue })
-              //             if(diffs.length > 0){
-              //               col.searchForm.search_custom_fields__kv_any.splice(col.searchForm.search_custom_fields__kv_any.indexOf(data.newValue), 1);
-              //               col.searchformSchema.schema.properties.search_custom_fields__kv_any.items = col.searchForm.search_custom_fields__kv_any.map(function(i){return {value : i, label : labelifyCustomField(i)}});
-              //             }
-              //           }
-                        
 
-              //         }
-
-              //     });  
-                
-              //   scope.$watch(watchString, function(newValue, oldValue){
-              //     if(newValue !== oldValue){
-              //       //broadcast the newValue
-              //       var broadcastObj = scope.cbh.createCustomFieldTransport(newValue, oldValue, "obj");
-              //       //console.log("from table", broadcastObj)
-              //       $rootScope.$broadcast('custom-field-from-table', broadcastObj);
-              //     }
-              //   }, true);
-                
-              // });
-
-              if(customCols){
-                //Ensuring there is enough height for the menu bars to sit in
-                   // var minHeight = 200 + customCols.length *30;
-                   // $("#myid").css("min-height", minHeight + "px");
-              }
-              //removing double scroll - IE compat issues
-              /*if(!scope.cbh.editMode){
-                $("#myid").doubleScroll();
-              }*/
-              
-              //removing recompiled HTML header - IE compat issues
-              /*var header = document.createElement('DIV');
-              var head = angular.element(header);
-              head.html('<div  ng-include="&apos;views/templates/compound-table-header.html&apos;"></div>');
-              var compiled = $compile(head.contents())(scope);
-              $("#myid").prepend(compiled);   */           
+                      
 
               $('.btn-toggle').dropdown();
               scope.elem = $("#myid");
              if(!scope.cbh.editMode){
                 $("#myid").doubleScroll();
               }
-              // if(scroll){
-              //   scope.elem.scrollLeft(scroll);
-              // }
-              // if(scrollTop){
-              //   $(window).scrollTop(scrollTop);
-              // }
+
 
             });
            
@@ -636,10 +569,6 @@ angular.module('chembiohubAssayApp')
               }, true);
 
               scope.$on("updateListView", function(){redraw();});
-
-
-                            // original by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
-
              
               
 

@@ -229,11 +229,13 @@ $scope.changeView = function(){
                 excluded: [],
                 redraw: 0,
                 columns: []};
+
             $scope.itemsPerPage = angular.copy($scope.listPerPage);
             $scope.pagination = {
                     current: 1,
                     compoundBatchesPerPage: $scope.itemsPerPage[2],
                 };
+            console.log($scope.pagination)
             
             var filters = { };
             
@@ -426,11 +428,11 @@ $scope.changeView = function(){
                 $scope.pagination.compoundBatchesPerPage = filtered[0]; 
                }
                else {
-                $scope.pagination.compoundBatchesPerPage = $scope.itemsPerPage[0];
+                $scope.pagination.compoundBatchesPerPage = $scope.itemsPerPage[2];
                }
             }
             else {
-                $scope.pagination.compoundBatchesPerPage = $scope.itemsPerPage[0];
+                $scope.pagination.compoundBatchesPerPage = $scope.itemsPerPage[2];
             }
             if(angular.isDefined($stateParams.page)){
                $scope.pagination.current = $stateParams.page;  
