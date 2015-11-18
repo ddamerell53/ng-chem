@@ -6,11 +6,11 @@
                 <h3>
                     {{project.name}}
                 </h3>
-                
+                <!-- 
                 <strong ng-if="cbh.logged_in_user.can_view_assayreg"><a ui-sref="cbh.projects.project.assay.data_overview({projectKey: project.project_key})">{{project.name}}</a>
                 </strong>
                 <strong ng-if="!cbh.logged_in_user.can_view_assayreg && cbh.logged_in_user.can_view_chemreg"><a ui-sref="cbh.search({project__project_key__in: project.project_key})">{{project.name}}</a>
-                </strong>
+                </strong> -->
                 <br>
                 <small class="last-mod"><span class="glyphicon glyphicon-time"></span> <span class="nexa">Last modified: {{ project.modified | date }}</span></small>
                 <div class="pull-right">
