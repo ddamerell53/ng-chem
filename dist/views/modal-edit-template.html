@@ -1,0 +1,9 @@
+<div class="modal-header"> <h3 class="modal-title blue">More Information</h3> </div> <div class="modal-body"> <!-- <dl class="dl-horizontal" ng-repeat="(key, value) in popup_data">
+														
+				  <dt>{{key}}</dt>
+				  <dd>{{value}}</dd>
+				
+			</dl> --> <!-- <div class="row" ng-repeat="(key, value) in popup_data">
+                <div class="col-xs-4">{{key}}</div>
+                <div class="col-xs-8">{{value}}</div>
+            </div> --> <div class="row"> <div class="col-xs-12"> <div class="form-group" sf-schema="popup_data.this_level_edit_schema" sf-form="popup_data.this_level_edit_form" sf-model="popup_data.main_data.project_data"></div> </div> </div> </div> <div class="modal-footer"> <button type="button" class="btn btn-danger" ng-click="cancel()"><span class="glyphicon glyphicon-remove-circle"></span> Close and Discard Changes</button> <button type="submit" class="btn btn-primary" ng-click="saveEdits()"><span class="glyphicon glyphicon-share"></span> Update and Close</button> </div>

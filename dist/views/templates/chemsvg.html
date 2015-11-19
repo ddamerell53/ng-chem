@@ -1,0 +1,1 @@
+<img ng-if="src" style="width:80%" ng-show="src" ng-src="data:image/png;base64,{{src}}"> <img ng-if="!src && properties.imageSrc" style="width:80%" ng-src="{{properties.imageSrc}}"> <a href="#" ng-if="cdxml && src" clip-copy="cdxml" clip-click="e.preventDefault()" role="button" class="btn btn-xs btn-primary pull-right">Copy CDXML</a>
