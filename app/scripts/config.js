@@ -112,12 +112,21 @@ var formGetter = function(project_data_fields, htmlClass, project){
                             var foundWords = [];
                             var deDuped = [];
                             data.data.reverse();
+                            var exactMatch;
                             angular.forEach(data.data, function(d){
                                 if(foundWords.indexOf(d.value) == -1){
-                                  deDuped.push(d);
-                                  foundWords.push(d.value);
+                                  if (d.value==search){
+                                    exactMatch = d
+                                  }else{
+                                     deDuped.push(d);
+                                      foundWords.push(d.value);
+                                  }
+                                 
                                 }
                             });
+                            if(exactMatch){
+                              deDuped.unshift(exactMatch);
+                            }
 
                             // console.log(data)
                             return {"data" : deDuped};
