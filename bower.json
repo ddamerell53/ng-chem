@@ -37,7 +37,6 @@
     "angular-utils-pagination": "~0.7.0",
     "handsontable": "~0.16.1",
     "angular-ui-ace": "bower",
-    "elasticsearch.angular.min": "https://raw.githubusercontent.com/elastic/bower-elasticsearch-js/master/elasticsearch.angular.min.js",
     "elasticui": "git@github.com:strets123/ElasticUI.git#master"
   },
   "devDependencies": {
