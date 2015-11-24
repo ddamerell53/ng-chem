@@ -1,6 +1,6 @@
 <div class="container">
-    
-        <div class="row grey-to-white {{project.project_type.name == 'inventory' ? 'nonchem' : ''}}" ng-repeat="project in projects" style="margin-bottom:15px; border-radius:10px;">
+        
+        <div class="row grey-to-white {{project.project_type.name == 'inventory' ? 'nonchem' : ''}}" ng-repeat="project in projects | filter:search:strict" style="margin-bottom:15px; border-radius:10px;">
             <div class="col-sm-4 proj-list-header" style="height:100%">
 
                 <h3>
