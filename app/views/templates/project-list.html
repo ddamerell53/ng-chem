@@ -1,9 +1,9 @@
 <div class="container">
         
         <div class="row grey-to-white {{project.project_type.name == 'inventory' ? 'nonchem' : ''}}" ng-repeat="project in projects | filter:search:strict" style="margin-bottom:15px; border-radius:10px;">
-            <div class="col-sm-4 proj-list-header" style="height:100%">
+            <div class="col-sm-4 proj-list-header {{project.project_type.name == 'inventory' ? 'nonchem' : ''}}" style="height:100%">
 
-                <h3>
+                <h3 class="blue">
                     {{project.name}}
                 </h3>
                 <!-- 
@@ -13,16 +13,16 @@
                 </strong> -->
                 <br>
                 <small class="last-mod"><span class="glyphicon glyphicon-time"></span> <span class="nexa">Last modified: {{ project.modified | date }}</span></small>
-                <div class="pull-right">
-                    <img src="images/chemical-icon-white.png" ng-if="project.project_type.name == 'chemical'" alt="{{project.project_type.name}} project" title="{{project.project_type.name}} project">
-                    <img src="images/inventory-icon-white.png" ng-if="project.project_type.name == 'inventory'" alt="{{project.project_type.name}} project" title="{{project.project_type.name}} project">
-                    <img src="images/assay-icon-white.png" alt="{{project.project_type.name}} project" title="Assay project">
+                <div>
+                    <img src="images/chemical-icon.png" ng-if="project.project_type.name == 'chemical'" alt="{{project.project_type.name}} project" title="{{project.project_type.name}} project">
+                    <img src="images/inventory-icon.png" ng-if="project.project_type.name == 'inventory'" alt="{{project.project_type.name}} project" title="{{project.project_type.name}} project">
+                    <img src="images/assay-icon.png" alt="{{project.project_type.name}} project" title="Assay project">
                 </div>
             </div>
 
             <div class="col-sm-8" style="padding:10px 10px 0 10px;">
-                <p class="nexa"><strong>Assay Data</strong> <a role="button" class="btn btn-sm btn-primary" ui-sref="cbh.projects.project.assay.data_overview({projectKey: project.project_key})">Data Overview</a></p>
-                <p class="nexa" ng-if="project.project_type.name == 'chemical' || project.project_type.name == 'inventory' "><strong>{{project.project_type.name != 'inventory' ? 'Chemical' : 'Inventory' }} Data</strong> <a role="button" class="btn btn-sm btn-primary"  ng-if="project.editor" ui-sref="cbh.projects.project.addcompounds({projectKey: project.project_key})"><span class="glyphicon glyphicon-plus-sign"></span> Add multiple {{project.project_type.name != 'inventory' ? 'compounds' : 'inventory items' }}</a> <a role="button" class="btn btn-sm btn-primary"  ng-click="cbh.hideSearchForm=true;" ui-sref="cbh.search({project__project_key__in: project.project_key})"><span class="glyphicon glyphicon-search"></span> View / add single {{project.project_type.name != 'inventory' ? 'compounds' : 'inventory items' }}</a></p>
+                <p class="nexa"><strong>Assay Data</strong> <a role="button" class="btn btn-sm btn-default" ui-sref="cbh.projects.project.assay.data_overview({projectKey: project.project_key})">Data Overview</a></p>
+                <p class="nexa" ng-if="project.project_type.name == 'chemical' || project.project_type.name == 'inventory' "><strong>{{project.project_type.name != 'inventory' ? 'Chemical' : 'Inventory' }} Data</strong> <a role="button" class="btn btn-sm btn-default"  ng-if="project.editor" ui-sref="cbh.projects.project.addcompounds({projectKey: project.project_key})"><span class="glyphicon glyphicon-plus-sign"></span> Add multiple {{project.project_type.name != 'inventory' ? 'compounds' : 'inventory items' }}</a> <a role="button" class="btn btn-sm btn-default"  ng-click="cbh.hideSearchForm=true;" ui-sref="cbh.search({project__project_key__in: project.project_key})"><span class="glyphicon glyphicon-search"></span> View / add single {{project.project_type.name != 'inventory' ? 'compounds' : 'inventory items' }}</a></p>
             </div>
 
 
