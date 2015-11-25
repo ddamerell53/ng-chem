@@ -132,12 +132,6 @@ var formGetter = function(project_data_fields, htmlClass, project){
         }
 angular.module('chembiohubAssayApp')
   .factory('CustomFieldConfig', function () {
-    // Service logic
-    // ...
-
-    
-
-    // Public API here
     return {
         getSchema: schemaGetter,
         getForm: formGetter
@@ -162,9 +156,9 @@ var userReq = $http({  method: "get",
 
 
 $q.all([skinReq, projReq, userReq]).then(function(data){
-  skinData = data[0];
-  projData = data[1];
-  userData = data[2];
+  var skinObj = data[0];
+  var projData = data[1];
+  var userData = data[2];
   angular.module('chembiohubAssayApp').value('skinConfig',  
           skinObj.data
     );
