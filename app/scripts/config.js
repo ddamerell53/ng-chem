@@ -55,18 +55,7 @@ var $q = initInjector.get("$q");
 
 var $timeout = initInjector.get("$timeout");
 
-var req = $http({  method: "get",
-                    url: configuration.cbh_projects.list_endpoint,
-                    params: {"schemaform": true, "limit":1000}, });
 
-var userReq = $http({  method: "get",
-                    url: configuration.users.list_endpoint,
-                    params: {"limit":1000}, });
-
-
-userReq.then(function(userData){
-  angular.module('chembiohubAssayApp').value('userList', userData.data.objects );
-});
 
 var schemaGetter = function(project_data_fields){
             var edit_schema = { "type": "object", 'properties' : {}, 'required': [] };
@@ -156,8 +145,32 @@ angular.module('chembiohubAssayApp')
     };
   });
 
-req.then(function(projData){
-    angular.forEach(projData.data.objects, function(project){
+var skinReq = $http({  method: "get",
+                    url: configuration.cbh_skinning.list_endpoint
+                  });
+
+
+
+var projReq = $http({  method: "get",
+                    url: configuration.cbh_projects.list_endpoint,
+                    params: {"schemaform": true, "limit":1000}, });
+
+var userReq = $http({  method: "get",
+                    url: configuration.users.list_endpoint,
+                    params: {"limit":1000}, });
+
+
+
+$q.all([skinReq, projReq, userReq]).then(function(data){
+  skinData = data[0];
+  projData = data[1];
+  userData = data[2];
+  angular.module('chembiohubAssayApp').value('skinConfig',  
+          skinObj.data
+    );
+  angular.module('chembiohubAssayApp').value('userList', userData.data.objects );
+
+  angular.forEach(projData.data.objects, function(project){
         project.schemaform = {
           "form" : formGetter(project.custom_field_config.project_data_fields, "col-xs-6", project),
           "schema" : schemaGetter(project.custom_field_config.project_data_fields)
@@ -200,15 +213,10 @@ req.then(function(projData){
     angular.element(document).ready(function() {
         angular.bootstrap(angular.element( document.querySelector( '#bodytest' ) ), ["chembiohubAssayApp"]);
     });
-    });
-var skin = $http({  method: "get",
-                    url: configuration.cbh_skinning.list_endpoint
-                  });
-skin.then(function(skinObj){
-  angular.module('chembiohubAssayApp').value('skinConfig',  
-          skinObj.data
-    );
-})
+});
+
+
+
 
 
 angular.module('chembiohubAssayApp').constant('euiHost',  
