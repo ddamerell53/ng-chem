@@ -479,7 +479,7 @@ $urlRouterProvider.when('', '/projects/list');
     .state('cbh.projects.list', {
       url: '/list',
       templateUrl: 'views/projects-list.html',
-      controller: function($rootScope, $state, $stateParams, $scope) {
+      controller: function($rootScope, $state, $stateParams, $scope, AddDataFactory) {
         $scope.cbh.appName = "Platform";
 
         $rootScope.headline = $scope.cbh.skinning.project_alias + " List";
@@ -509,6 +509,28 @@ $urlRouterProvider.when('', '/projects/list');
             'page': 1,
             'sorts': []
           });
+        };
+        /* Provide a link from the project list page to the assayreg page for items in this project which have been added by this user */
+        $scope.cbh.searchForUserWithProjectKey = function(projKey){
+          AddDataFactory.nestedDataClassification.get({
+                        "project_key": projKey,
+                    },
+                    function(data) {
+                        if (data.objects.length >= 1) {
+                          //forward to the assayreg search with this project and this user prepopulated
+                            $state.go('cbh.search_assays', {
+                              'useruris': [ $scope.cbh.logged_in_user.resource_uri ],
+                              'l0': [ data.objects[0].l0.resource_uri ],
+                            })
+
+                        } else {
+                          //there's no data for that assayreg project - just let them search their name
+                            $state.go('cbh.search_assays', {
+                              'useruris': [ $scope.cbh.logged_in_user.resource_uri ]
+                            })
+                        }
+                    }
+                );
         };
 
       }

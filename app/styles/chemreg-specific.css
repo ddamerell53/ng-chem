@@ -794,17 +794,17 @@ div.modal-body table td, div.modal-body table th{
     /*background-color: mistyrose;*/
 }
 .grey-to-white{
-  /*background: -webkit-linear-gradient(lightcyan, #fff);*/ /* For Safari 5.1 to 6.0 */
-  /*background: -o-linear-gradient(lightcyan, #fff);*/ /* For Opera 11.1 to 12.0 */
-  /*background: -moz-linear-gradient(lightcyan, #fff);*/ /* For Firefox 3.6 to 15 */
-  /*background: linear-gradient(lightcyan, #fff);*/ /* Standard syntax */
+  background: -webkit-linear-gradient(lightcyan, #fff); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(lightcyan, #fff); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(lightcyan, #fff); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(lightcyan, #fff); /* Standard syntax */
   border: 2px solid #002148;
 }
 .grey-to-white.nonchem {
-  /*background: -webkit-linear-gradient(mistyrose, #fff);*/ /* For Safari 5.1 to 6.0 */
-  /*background: -o-linear-gradient(mistyrose, #fff);*/ /* For Opera 11.1 to 12.0 */
-  /*background: -moz-linear-gradient(mistyrose, #fff);*/ /* For Firefox 3.6 to 15 */
-  /*background: linear-gradient(mistyrose, #fff);*/ /* Standard syntax */
+  background: -webkit-linear-gradient(mistyrose, #fff); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(mistyrose, #fff); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(mistyrose, #fff); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(mistyrose, #fff); /* Standard syntax */
   border: 2px solid rgb(190,15,52);
 }
 .no-padding {
