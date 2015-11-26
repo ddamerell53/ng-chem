@@ -11,9 +11,10 @@
             </div>
 
             <div class="col-sm-4" style="padding:10px 10px 0 10px;">
-                <p class="nexa"><strong>Assay Data</strong> 
+                <p ng-show="project.assays_configured" class="nexa"><strong>Assay Data</strong> 
                     <br> 
-                    <small>
+
+                    <small >
                         <a ui-sref="cbh.projects.project.assay.data_overview({projectKey: project.project_key})"><span class="glyphicon glyphicon-tasks"></span> Data Overview</a><br>
                         <a ng-click="cbh.searchForUserWithProjectKey(project.project_key)"><span class="glyphicon glyphicon-user"></span> My Data</a>
                         <br>
@@ -22,7 +23,7 @@
             </div>
 
             <div class="col-sm-4" style="padding:10px 10px 0 10px;">
-                <p class="nexa" ng-if="project.project_type.name == 'chemical' || project.project_type.name == 'inventory' || project.project_type.show_compounds ">
+                <p class="nexa" ng-if="project.project_type.name == 'chemical' || project.project_type.name.toLowerCase() == 'inventory' || project.project_type.show_compounds ">
                     <strong>{{project.project_type.show_compounds ? 'Chemical' : 'Inventory' }} Data</strong> 
                     <br>
                     <small>
@@ -35,9 +36,9 @@
                 </p>
             </div>
             <div class="col-xs-12 pull-left clearfix" style="margin: -20px 0 5px -4px;">
-                <img src="images/chemical-icon.png" ng-if="project.project_type.show_compounds" alt="{{project.project_type.name}} project" title="{{project.project_type.name}} project">
-                <img src="images/inventory-icon.png" ng-if="project.project_type.name == 'inventory'" alt="{{project.project_type.name}} project" title="{{project.project_type.name}} project">
-                <img src="images/assay-icon.png" ng-if="project.project_type.assays_configured" alt="{{project.project_type.name}} project" title="Assay project">
+                <img src="images/chemical-icon.png" ng-if="project.project_type.show_compounds" alt="Project with compounds" title="Project with compounds">
+                <img src="images/inventory-icon.png" ng-if="project.project_type.name.toLowerCase() == 'inventory'" alt="{{project.project_type.name}} project" title="{{project.project_type.name}} project">
+                <img src="images/assay-icon.png" ng-if="project.assays_configured" alt="{{project.project_type.name}} project" title="Assay project">
             </div>
 
 

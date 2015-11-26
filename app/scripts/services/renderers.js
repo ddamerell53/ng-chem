@@ -297,6 +297,7 @@ angular.module('chembiohubAssayApp')
                   //if(value != "") {
                     img.src = "data:image/png;base64," + value;
                     img.style.cursor = "pointer";
+                    img.style.width = "75px";
                   //}
                   //img.src = value;
               
