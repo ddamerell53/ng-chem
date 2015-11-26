@@ -401,6 +401,7 @@ angular.module('chembiohubAssayApp')
             }
 
             $scope.no_l0 = false;
+            dataoverviewctrl.no_l0_dfc = false;
             dataoverviewctrl.fetchData = function() {
 
 
@@ -410,6 +411,7 @@ angular.module('chembiohubAssayApp')
                     function(data) {
                         if (data.objects.length >= 1) {
                             $scope.no_l0 = false;
+                            dataoverviewctrl.no_l0_dfc = false;
                             dataoverviewctrl.l0_object = data.objects[0];
 
                             $scope.getAnnotations(dataoverviewctrl.l0_object);
@@ -417,7 +419,15 @@ angular.module('chembiohubAssayApp')
 
                         } else {
                             $scope.no_l0 = true;
-                            dataoverviewctrl.l0_object = angular.copy($scope.assayctrl.l0_dfc.template_data_point_classification);
+                            
+                            if(!$scope.assayctrl.l0_dfc) {
+                                console.log('getting here');
+                                dataoverviewctrl.no_l0_dfc = true;
+                            }
+                            else {
+                                dataoverviewctrl.l0_object = angular.copy($scope.assayctrl.l0_dfc.template_data_point_classification);
+                            }
+                            
                         }
 
                     }

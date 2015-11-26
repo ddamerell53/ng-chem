@@ -24,7 +24,8 @@
 			<div  >
 				<div  class="row" >
 					<div ng-show="no_l0" class="col-xs-12 bg-success" style="border: 1px solid #444; padding:10px; border-radius:5px; margin-bottom:20px;">
-						<h2 class="nexa blue"><small><span class="glyphicon glyphicon-plus"></span>&nbsp;To get  started, add more details about this project</small></h2>
+						<h2 ng-hide="dataoverviewctrl.no_l0_dfc" class="nexa blue"><small><span class="glyphicon glyphicon-plus"></span>&nbsp;To get started, add more details about this project here </small></h2>
+						<h2 ng-show="dataoverviewctrl.no_l0_dfc"  class="nexa blue"><small><span class="glyphicon glyphicon-plus"></span>&nbsp;This project needs to be set up correctly in order to add data to it - please contact an administrator </small></h2>
 						<div class="row">
 					        <div class="col-xs-12">
 					            <div class="form-group" sf-schema="assayctrl.l0_schema" sf-form="assayctrl.l0_form" sf-model="dataoverviewctrl.l0_object.l0.project_data"></div>
@@ -34,7 +35,8 @@
 					        <div class="col-xs-12">
 					            <div class="form-group pull-right">
 					                <button type="button" class="btn btn-danger" ng-click="dataoverviewctrl.l0_object.cancel()"><span class="glyphicon glyphicon-remove-circle"></span> Cancel</button>
-					                <button type='submit' class="btn btn-primary" ng-click="dataoverviewctrl.save_dpc(dataoverviewctrl.l0_object)"><span class="glyphicon glyphicon-share"></span> Submit</button>
+					                <button ng-show="dataoverviewctrl.no_l0_dfc" disabled type='submit' class="btn btn-primary" ng-click="dataoverviewctrl.save_dpc(dataoverviewctrl.l0_object)"><span class="glyphicon glyphicon-share"></span> Submit</button>
+					                <button ng-hide="dataoverviewctrl.no_l0_dfc" type='submit' class="btn btn-primary" ng-click="dataoverviewctrl.save_dpc(dataoverviewctrl.l0_object)"><span class="glyphicon glyphicon-share"></span> Submit</button>
 					            </div>
 					        </div>
 					    </div>
