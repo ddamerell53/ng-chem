@@ -395,7 +395,6 @@ angular.module('chembiohubAssayApp')
                         $scope.getAnnotations(child);
                         $scope.iterate_children(child);
 
-
                     }
                 });
             }
@@ -421,7 +420,6 @@ angular.module('chembiohubAssayApp')
                             $scope.no_l0 = true;
                             
                             if(!$scope.assayctrl.l0_dfc) {
-                                console.log('getting here');
                                 dataoverviewctrl.no_l0_dfc = true;
                             }
                             else {
@@ -429,6 +427,7 @@ angular.module('chembiohubAssayApp')
                             }
                             
                         }
+
 
                     }
                 );
@@ -754,9 +753,20 @@ angular.module('chembiohubAssayApp')
                 );
             }
 
+            //to apply double scroll to each of these elements:
+            //use ng-init in the template to register when data has been laoded - table doesn't exist until this
+            //give each table an ID based on the data being loaded - to allow double scroll to be called on one element as it is loaded
+            //call another function within the timeout which initiates double scroll with enough time to load fully
 
-
+            dataoverviewctrl.tableLoaded = function(nl_cfc){
+                $timeout(function(){dataoverviewctrl.initDblScroll(nl_cfc);}, 2000);
+            }
+            dataoverviewctrl.initDblScroll = function(id){
+                $('#table-' + id).doubleScroll();
+            }
 
 
         }
+
+
     ]);
