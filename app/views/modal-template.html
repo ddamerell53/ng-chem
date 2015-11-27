@@ -4,11 +4,11 @@
         </div>
         <div class="modal-body">
             
-            <table class="table table-striped" ng-if="popup_data.main_cfc != 'chembl'">
+            <table class="table table-striped" style="table-layout:fixed;"  ng-if="popup_data.main_cfc != 'chembl'">
                 
                 <tr ng-repeat="form in popup_data.main_cfc.project_data_fields">
                     <th>{{form.name}}</th>
-                    <td>{{popup_data.main_data.project_data[form.elasticsearch_fieldname]}}</td>
+                    <td style="word-wrap:break-word;">{{popup_data.main_data.project_data[form.elasticsearch_fieldname]}}</td>
                 </tr>
                 
             </table>
