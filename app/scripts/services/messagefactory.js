@@ -121,11 +121,11 @@ angular.module('chembiohubAssayApp')
     var statuses = {
         status_1: {
             name: "New",
-            explanation: "The data has not been added to the system previously."
+            explanation: "The data has not been added to any project you have access to previously."
         },
         status_2: {
             name: "Duplicated record",
-            explanation: "This data has been added previously with the exact same fields and values."
+            explanation: "This data has been added previously with the exact same fields and values to this project."
         },
         status_3: {
             name: "Could not generate InChi",
@@ -152,7 +152,7 @@ angular.module('chembiohubAssayApp')
         },
         action_2 : {
             name: "Ignore",
-            explanation: "This record will not be added to the database when you click 'Save these records'. Records which are automatically set to 'Ignore' contain incorrect or unprocessable structural data. You can choose to add these records as blinded compounds - the structural posrtion will be ignored but a record will be created containing any additional data fields associated with the structure."
+            explanation: "This record will not be added to the database when you click 'Save these records'. Records which are automatically set to 'Ignore' contain incorrect or unprocessable structural data. You can choose to add these records as blinded compounds - the structural position will be ignored but a record will be created containing any additional data fields associated with the structure."
         }
     }
 
