@@ -78,9 +78,20 @@
    
 
     <!-- build:js(.) scripts/vendor.js -->
-<script src="http://cdnjs.cloudflare.com/ajax/libs/raven.js/1.0.8/raven.min.js"></script>
 
-   
+    <script src="bower_components/raven-js/dist/raven.js"></script>
+
+
+
+   <script>
+Raven.config('http://fc809c4af52d4022abea608aa81f3136@163.1.63.22/3', {
+  logger: 'javascript',
+  whitelistUrls: [
+    "chembiohub\.ox\.ac\.uk"
+ ]
+}).install();
+
+</script>
     <script src="bower_components/jquery/dist/jquery.js"></script>
 
     <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/affix.js"></script>      
@@ -125,7 +136,6 @@
     <script src="bower_components/angular-grid/build/ng-grid.js"></script>
     <script src="bower_components/ng-flow/dist/ng-flow.js"></script>
     <script src="bower_components/zeroclipboard/dist/ZeroClipboard.js"></script>
-    <script src="bower_components/raven-js/dist/raven.js"></script>
     <script src="bower_components/angular-translate/angular-translate.js"></script>
 
     <script src="bower_components/ng-clip/src/ngClip.js"></script>
@@ -167,12 +177,6 @@
 
 
 
-<script>
-Raven.config('http://fc809c4af52d4022abea608aa81f3136@163.1.63.22/3', {
-    // we highly recommend restricting exceptions to a domain in order to filter out clutter
-    whitelistUrls: ['staging.chembiohub.ox.ac.uk/']
-}).install()
-</script>
 <script src="bower_components/angular-raven/angular-raven.js"></script>
 
 

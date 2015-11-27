@@ -19,9 +19,7 @@ $urlRouterProvider.when('', '/projects/list');
     $urlRouterProvider.otherwise('/404');
 
     // the known route, with missing '/' - let's create alias
-
 // the unknown
-
     $urlMatcherFactoryProvider.defaultSquashPolicy("slash");
     var modalInstance;
     $stateProvider
@@ -888,9 +886,7 @@ $urlRouterProvider.when('', '/projects/list');
 
 
 
-  }).config(['ngClipProvider', function(ngClipProvider) {
-    ngClipProvider.setPath("bower_components/zeroclipboard/dist/ZeroClipboard.swf");
-  }])
+  })
   .factory('authHttpResponseInterceptor', ['$q', '$location', 'urlConfig', function($q, $location, urlConfig) {
     return {
       response: function(response) {
@@ -908,8 +904,30 @@ $urlRouterProvider.when('', '/projects/list');
         return $q.reject(rejection);
       }
     }
+  }]).config(['ngClipProvider', function(ngClipProvider) {
+    ngClipProvider.setPath("bower_components/zeroclipboard/dist/ZeroClipboard.swf");
   }])
+    //Here we define our interceptor
+    .factory('globalInterceptor', function($q, $raven){
+        //When the interceptor runs, it is passed a promise object
+
+        return {
+            response: function(response) {
+
+              return response || $q.when(response);
+            },
+            responseError: function(rejection) {
+              if (["4", "5"].indexOf(rejection.status.toString().substring(0,1) ) > -1) {
+                //Capture all 4 and 500 errors passing the extra data 
+               Raven.captureException(JSON.stringify(rejection.config),{"extra": rejection});
+              }
+              return $q.reject(rejection);
+            }
+        }
+        
+    })
   .config(['$httpProvider', function($httpProvider) {
     //Http Intercpetor to check auth failures for xhr requests
     $httpProvider.interceptors.push('authHttpResponseInterceptor');
+    $httpProvider.interceptors.push('globalInterceptor');
   }]);
