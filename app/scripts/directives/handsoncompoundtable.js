@@ -344,6 +344,12 @@ angular.module('chembiohubAssayApp')
                     data: scope.compounds,
                     colHeaders: columnHeaders,
                     columns: allCols,
+                    //there is a minCols parameter to force rendering of all possible columns
+                    //seems to be a known issue where some rows do not have data populated in every column
+                    //so we can force-set the minimum number of columns to be the length of the allCols item
+                    //https://github.com/handsontable/handsontable/issues/3008
+                    minCols: allCols.length,
+
                     //afterGetColHeader is a function that is called when the html of the header has already been set
                     //which allows DOM manipulation after the TH has been created
                     //there are lots of useful hooks provided by Handsontable

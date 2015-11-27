@@ -48,6 +48,7 @@ angular.module('chembiohubAssayApp')
         //"home": {
             wizard_intro_text: "To upload multiple compounds you will need a list of SMILES; an InChI key or list of InChI keys; or either a SD, ChemDraw or Excel file.",
             projects_help: "Clicking a project title will take you to the overview page for that project.",
+            project_list_filter_help: "Narrow down the project list using this quick search box. Results will filter on project name and project type.",
 
         //},
         //"add": {
@@ -121,11 +122,11 @@ angular.module('chembiohubAssayApp')
     var statuses = {
         status_1: {
             name: "New",
-            explanation: "The data has not been added to the system previously."
+            explanation: "The data has not been added to any project you have access to previously."
         },
         status_2: {
             name: "Duplicated record",
-            explanation: "This data has been added previously with the exact same fields and values."
+            explanation: "This data has been added previously with the exact same fields and values to this project."
         },
         status_3: {
             name: "Could not generate InChi",
@@ -152,7 +153,7 @@ angular.module('chembiohubAssayApp')
         },
         action_2 : {
             name: "Ignore",
-            explanation: "This record will not be added to the database when you click 'Save these records'. Records which are automatically set to 'Ignore' contain incorrect or unprocessable structural data. You can choose to add these records as blinded compounds - the structural posrtion will be ignored but a record will be created containing any additional data fields associated with the structure."
+            explanation: "This record will not be added to the database when you click 'Save these records'. Records which are automatically set to 'Ignore' contain incorrect or unprocessable structural data. You can choose to add these records as blinded compounds - the structural position will be ignored but a record will be created containing any additional data fields associated with the structure."
         }
     }
 
