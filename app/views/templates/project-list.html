@@ -16,7 +16,7 @@
 
                     <small >
                         <a ui-sref="cbh.projects.project.assay.data_overview({projectKey: project.project_key})"><span class="glyphicon glyphicon-tasks"></span> Data Overview</a><br>
-                        <a ng-click="cbh.searchForUserWithProjectKey(project.project_key)"><span class="glyphicon glyphicon-user"></span> My Data</a>
+                        <a ng-click="cbh.searchForUserWithProjectKey(project.project_key)"><span class="glyphicon glyphicon-user"></span> Search My Data</a>
                         <br>
                     </small>
                 </p>
@@ -26,18 +26,22 @@
                 <p class="nexa" ng-if="project.project_type.name == 'chemical' || project.project_type.name.toLowerCase() == 'inventory' || project.project_type.show_compounds ">
                     <strong>{{project.project_type.show_compounds ? 'Chemical' : 'Inventory' }} Data</strong> 
                     <br>
+                    <!--   View all compounds, My data, and Add compounds options in that order. -->
                     <small>
+                        <a ng-click="cbh.hideSearchForm=true;" ui-sref="cbh.search({project__project_key__in: project.project_key})"><span class="glyphicon glyphicon-search"></span> Search all {{project.project_type.show_compounds ? 'compounds' : 'inventory items' }}</a>
+                        <br>
+                        <a ui-sref="cbh.search({creator_uri: cbh.logged_in_user.resource_uri, project__project_key__in: project.project_key })"><span class="glyphicon glyphicon-user"></span> Search my {{project.project_type.show_compounds ? 'compounds' : 'inventory items' }}</a>
+                        <br>
+                        <a ng-click="cbh.hideSearchForm=true;" ui-sref="cbh.search({project__project_key__in: project.project_key})"><span class="glyphicon glyphicon-plus-sign"></span> Add single {{project.project_type.show_compounds ? 'compounds' : 'inventory items' }}</a>
+                        <br>
                         <a ng-if="project.editor" ui-sref="cbh.projects.project.addcompounds({projectKey: project.project_key})"><span class="glyphicon glyphicon-plus-sign"></span> Add multiple {{project.project_type.show_compounds ? 'compounds' : 'inventory items' }}</a>
                         <br>
-                        <a ng-click="cbh.hideSearchForm=true;" ui-sref="cbh.search({project__project_key__in: project.project_key})"><span class="glyphicon glyphicon-search"></span> View / add single {{project.project_type.show_compounds ? 'compounds' : 'inventory items' }}</a>
-                        <br>
-                        <a ui-sref="cbh.search({creator_uri: cbh.logged_in_user.resource_uri, project__project_key__in: project.project_key })"><span class="glyphicon glyphicon-user"></span> My Data</a>
                     </small>
                 </p>
             </div>
             <div class="col-xs-12 pull-left clearfix" style="margin: -20px 0 5px -4px;">
                 <img src="images/chemical-icon.png" ng-if="project.project_type.show_compounds" alt="Project with compounds" title="Project with compounds">
-                <img src="images/inventory-icon.png" ng-if="project.project_type.name.toLowerCase() == 'inventory'" alt="{{project.project_type.name}} project" title="{{project.project_type.name}} project">
+                <img src="images/inventory-icon.png" ng-if="!project.project_type.show_compounds" alt="{{project.project_type.name}} project" title="{{project.project_type.name}} project">
                 <img src="images/assay-icon.png" ng-if="project.assays_configured" alt="{{project.project_type.name}} project" title="Assay project">
             </div>
 
