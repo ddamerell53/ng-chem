@@ -816,8 +816,9 @@ div.modal-body table td, div.modal-body table th{
     margin-bottom: -30px;
 }
 
-.current-page {
+.current-page, .list-inline > li.clickable:hover {
   border-bottom: 11px solid #ddd;
+  transition: all .15s ease-in-out;
 }
 
 
