@@ -299,6 +299,14 @@ $urlRouterProvider.when('', '/projects/list');
             });
           };
 
+          cbh.currentPageClass = function(state_to_match) {
+            if ($state.includes(state_to_match)) {
+              return 'current-page';
+            } else {
+              return '';
+            }
+          }
+
 
 
 

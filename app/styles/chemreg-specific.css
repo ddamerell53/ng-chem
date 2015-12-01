@@ -811,6 +811,15 @@ div.modal-body table td, div.modal-body table th{
   padding:0;
 }
 
+.list-inline > li {
+    padding-bottom: 10px;
+    margin-bottom: -30px;
+}
+
+.current-page {
+  border-bottom: 11px solid #ddd;
+}
+
 
 /* 16-column bootstrap grid classes */
 /*!
