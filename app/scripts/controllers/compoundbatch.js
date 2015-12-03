@@ -449,7 +449,7 @@ angular.module('chembiohubAssayApp')
                     dirObj[sortColumn] = {
                         "order": order,
                         "missing": "_last",
-                        "ignore_unmapped": true
+                        "unmapped_type": "string"
                     };
                     $scope.compoundBatches.sorts.unshift(dirObj);
                 }
