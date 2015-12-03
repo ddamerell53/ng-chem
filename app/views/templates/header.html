@@ -12,6 +12,7 @@
 							<ul class="dropdown-menu ng-animate" role="menu" aria-labelledby="projectsBtn" style="width:210px;">
 								<li role="presentation" style="background-color:#ddd; padding:0 8px;"><span class="glyphicon glyphicon-user"></span> <strong class="nexa"><span>{{cbh.logged_in_user.first_name || cbh.logged_in_user.username}}</span></strong></li>
 								<li role="presentation" ng-if="cbh.logged_in_user.is_superuser" style="padding: 0 8px;"><a ng-href="{{cbh.api_base}}/admin"><span class="glyphicon glyphicon-cog"></span> <strong class="nexa">Admin Panel</strong></a></li>
+								<li role="presentation" style="padding: 0 8px;"><a ng-click="cbh.invitationPopup()"><span class="glyphicon glyphicon-comment"></span> <strong class="nexa">Send an Invitation</strong></a></li>
 								<li role="presentation" style="padding:0 8px;"><a href="http://goo.gl/forms/y6e4achfUE" onclick='return !window.open(this.href);'><span class="glyphicon glyphicon-exclamation-sign"></span> <strong class="nexa">Report an issue</strong></a></li>
 								<li role="presentation" style="padding:0 8px;"><a href="{{ getUrlBase() }}logout"><span class="glyphicon glyphicon-off"></span> <strong class="nexa">Log Out</strong></a></li>
 							</ul>

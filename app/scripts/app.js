@@ -29,7 +29,7 @@ $urlRouterProvider.when('', '/projects/list');
         templateUrl: 'views/cbh.html',
         abstract: true,
 
-        controller: function($scope, $rootScope, $state, $location, $modal, urlConfig, loggedInUser, projectList, prefix, $compile, MessageFactory, skinConfig) {
+        controller: function($scope, $rootScope, $state, $location, $modal, urlConfig, loggedInUser, projectList, prefix, $compile, MessageFactory, skinConfig, InvitationFactory) {
 
           var cbh = this;
           cbh.appName = "Platform"
@@ -294,6 +294,79 @@ $urlRouterProvider.when('', '/projects/list');
                 $scope.cancel = function () {
                   $modalInstance.dismiss('cancel');
                 };
+
+              }
+            });
+          };
+          /* 
+             Global invitation popup for inviting external users to use the system.
+             Creates a new user with the details supplied here and emails the invitee.
+           */
+          cbh.invitationPopup = function() {
+
+            //$scope.popup_data = angular.copy(input_popup_data);
+            $scope.modalInstance = $modal.open({
+              templateUrl: 'views/templates/modal-invitation-template.html',
+              size: 'md',
+              controller: function($scope, $modalInstance, InvitationFactory) {
+                
+                
+                $scope.modalInstance = $modalInstance;
+                $scope.invite = {
+                  firstName:'',
+                  lastName:'',
+                  email: '',
+                  projects_selected: [],
+                };
+                $scope.projects = cbh.projects.objects;
+                $scope.validationMessage = "";
+
+                $scope.cancel = function () {
+                  $scope.validationMessage = "";
+                  $modalInstance.dismiss('cancel');
+                };
+
+                $scope.sendInvite = function() {
+                  //check fields are filled in
+                  //send info to backend to set up new users
+
+                  if($scope.invite.email == ""){
+                    $scope.validationMessage = "Please enter an email address so we can send the invitation.";
+                  }
+                  else if($scope.invite.projects_selected.length == 0) {
+                    $scope.validationMessage = "Please select at least one project to add this user to.";
+                  }
+                  else {
+                    //OK we have the info we need - send the invite!
+                    $scope.validationMessage = "";
+                    //send via some form of service
+                    
+                    InvitationFactory.invite.save($scope.invite,
+                        function(data) {
+                            console.log(data);
+
+                            $scope.validationMessage = "Invite sent!";
+                        }
+                    );
+                    //when the response comes back display a message to say if there was a problem
+                    //things to possibly warn about:
+                    //user exists?
+                    //user already invited?
+                    //if no problem, suggest to the user that they may wish to invite someone else
+                  }
+
+
+                };
+
+                $scope.clearForm = function(){
+                  $scope.invite = {
+                    firstName:'',
+                    lastName:'',
+                    email: '',
+                    projects_selected: [],
+                  };
+                  $scope.validationMessage = "";
+                }
 
               }
             });
