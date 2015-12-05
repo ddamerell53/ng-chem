@@ -310,16 +310,19 @@ $urlRouterProvider.when('', '/projects/list');
               size: 'md',
               controller: function($scope, $modalInstance, InvitationFactory) {
                 
-                
+                $scope.clearForm = function(){
+                  $scope.invite = {
+                    firstName:'',
+                    lastName:'',
+                    email: '',
+                    projects_selected: [],
+                  };
+                  $scope.validationMessage = "";
+                }
+
                 $scope.modalInstance = $modalInstance;
-                $scope.invite = {
-                  firstName:'',
-                  lastName:'',
-                  email: '',
-                  projects_selected: [],
-                };
+                $scope.clearForm();
                 $scope.projects = cbh.projects.objects;
-                $scope.validationMessage = "";
 
                 $scope.cancel = function () {
                   $scope.validationMessage = "";
@@ -358,16 +361,7 @@ $urlRouterProvider.when('', '/projects/list');
 
                 };
 
-                $scope.clearForm = function(){
-                  $scope.invite = {
-                    firstName:'',
-                    lastName:'',
-                    email: '',
-                    projects_selected: [],
-                  };
-                  $scope.validationMessage = "";
-                }
-
+                
               }
             });
           };
@@ -1000,7 +994,7 @@ $urlRouterProvider.when('', '/projects/list');
             responseError: function(rejection) {
               if (["4", "5"].indexOf(rejection.status.toString().substring(0,1) ) > -1) {
                 //Capture all 4 and 500 errors passing the extra data 
-               Raven.captureException(JSON.stringify(rejection.config),{"extra": rejection});
+               Raven.captureException(JSON.stringify(rejection.config),{"extra": rejection.data});
               }
               return $q.reject(rejection);
             }
