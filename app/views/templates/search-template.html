@@ -15,9 +15,12 @@
 		<div  ng-if="projectFrom" class="row mt">
 		</div>
 		
-			<form ng-if="!cbh.hideSearchForm" novalidate name="inputForm" role="form"  style="width:95%; display: table;
-    margin: 0 auto;">
-				<div class="row">
+			<form  novalidate name="inputForm" role="form"  style="width:95%; display: table; margin: 0 auto;">
+    			
+				<div class="row" sf-schema="searchFormSchema.simple_schema" sf-form="searchFormSchema.simple_form" sf-model="cbh.searchForm">
+
+				</div>
+				<div class="row" ng-if="!cbh.hideSearchForm">
 					<div class="col-sm-5 ">
 						<div class="row">
 							<chemdoodle-window sketch-molfile="sketchMolfile" fetch-data="fetchData()" molecule="cbh.searchForm.molecule"></chemdoodle-window>
