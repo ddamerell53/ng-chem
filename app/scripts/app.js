@@ -320,13 +320,14 @@ $urlRouterProvider.when('', '/projects/list');
 
                   };
 
-                  $scope.validationMessage = "";
+                $scope.validationMessage = "";
                 }
+                
+                $scope.modalInstance = $modalInstance;
+                $scope.clearForm();
                 $scope.$watch("invite.email", function(old,newob){
                     $scope.invite.remind  = false;
                 });
-                $scope.modalInstance = $modalInstance;
-                $scope.clearForm();
                 $scope.projects = cbh.projects.objects;
 
                 $scope.cancel = function () {
@@ -351,11 +352,14 @@ $urlRouterProvider.when('', '/projects/list');
                     
                     InvitationFactory.invite.save($scope.invite,
                         function(data) {
-                            $scope.validationMessage = "Invite sent successfully, would you like to invite anyone else?";
+                            $scope.validationMessage = data.data.message;
                             $scope.invite.email="";
+                            $scope.invite.remind = false;
+
                         },
                         function(error){
                           if(error.status == 409){
+                                //http conflict means we have the invitee in the db already but no reminder has been asked for
                                $scope.validationMessage = error.data.error;
                                $scope.invite.remind = true;
                           }else{
@@ -364,11 +368,6 @@ $urlRouterProvider.when('', '/projects/list');
                           
                         }
                     );
-                    //when the response comes back display a message to say if there was a problem
-                    //things to possibly warn about:
-                    //user exists?
-                    //user already invited?
-                    //if no problem, suggest to the user that they may wish to invite someone else
                   }
 
 
