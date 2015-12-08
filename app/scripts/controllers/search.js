@@ -32,7 +32,12 @@ angular.module('chembiohubAssayApp')
                 $scope.cbh.withoutCustomFieldsUrl = paramsAndForm.paramsUrlWithoutCF;
             }
             $scope.cbh.setupParams(pf);
-            $scope.searchFormSchema.form[0].options.async.call = $scope.refresh;
+            //$scope.searchFormSchema.form[0].options.async.call = $scope.refresh;
+            //refactor this to use a filter
+            $scope.uoxFormItem = $filter('filter')($scope.searchFormSchema.form, {
+                key: 'related_molregno__chembl__chembl_id__in'
+            }, true);
+            $scope.uoxFormItem[0].options.async.call = $scope.refresh;
             // need to repeat this for the custom field lookup
             // $scope.searchFormSchema.form[2].$validators = {
             //     notEnough: function(value) {
@@ -45,7 +50,7 @@ angular.module('chembiohubAssayApp')
             //         return true
             //     }
             // }
-            $scope.custFieldFormItem = $filter('filter')($scope.searchFormSchema.form, {
+            $scope.custFieldFormItem = $filter('filter')($scope.searchFormSchema.simple_form, {
                 key: 'search_custom_fields__kv_any'
             }, true);
             $scope.custFieldFormItem[0].options.async.call = $scope.refreshCustFields;
