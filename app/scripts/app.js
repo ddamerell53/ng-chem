@@ -316,10 +316,15 @@ $urlRouterProvider.when('', '/projects/list');
                     lastName:'',
                     email: '',
                     projects_selected: [],
+                    remind: false
+
                   };
+
                   $scope.validationMessage = "";
                 }
-
+                $scope.$watch("invite.email", function(old,newob){
+                    $scope.invite.remind  = false;
+                });
                 $scope.modalInstance = $modalInstance;
                 $scope.clearForm();
                 $scope.projects = cbh.projects.objects;
@@ -346,9 +351,17 @@ $urlRouterProvider.when('', '/projects/list');
                     
                     InvitationFactory.invite.save($scope.invite,
                         function(data) {
-                            console.log(data);
-
-                            $scope.validationMessage = "Invite sent!";
+                            $scope.validationMessage = "Invite sent successfully, would you like to invite anyone else?";
+                            $scope.invite.email="";
+                        },
+                        function(error){
+                          if(error.status == 409){
+                               $scope.validationMessage = error.data.error;
+                               $scope.invite.remind = true;
+                          }else{
+                              $scope.validationMessage = "There was a problem sending your invitation, please contact the ChemBio Hub team.";
+                          }
+                          
                         }
                     );
                     //when the response comes back display a message to say if there was a problem
