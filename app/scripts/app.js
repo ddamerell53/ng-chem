@@ -325,10 +325,14 @@ $urlRouterProvider.when('', '/projects/list');
                 
                 $scope.modalInstance = $modalInstance;
                 $scope.clearForm();
-                $scope.$watch("invite.email", function(old,newob){
-                    $scope.invite.remind  = false;
-                    $scope.validationMessage = "";
-                });
+                $scope.setWatcher = function(){
+                  $scope.watch = $scope.$watch("invite.email", function(old,newob){
+                    if(old != newob){
+                      $scope.invite.remind  = false;
+                    }
+                  });
+                }
+                $scope.setWatcher();
                 $scope.projects = cbh.projects.objects;
 
                 $scope.cancel = function () {
@@ -339,6 +343,7 @@ $urlRouterProvider.when('', '/projects/list');
                 $scope.sendInvite = function() {
                   //check fields are filled in
                   //send info to backend to set up new users
+                    $scope.validationMessage = "";
 
                   if($scope.invite.email == ""){
                     $scope.validationMessage = "Please enter an email address so we can send the invitation.";
@@ -353,9 +358,15 @@ $urlRouterProvider.when('', '/projects/list');
                     
                     InvitationFactory.invite.save($scope.invite,
                         function(data) {
-                            $scope.validationMessage = data.message;
+                            console.log(data.message);
+                            $scope.watch();
                             $scope.invite.email="";
-                            $scope.invite.remind = false;
+
+                            $scope.validationMessage = data.message;
+                            $timeout(function(){
+                              $scope.setWatcher();
+                            },100);
+                            
 
                         },
                         function(error){
