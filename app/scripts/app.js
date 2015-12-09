@@ -327,6 +327,7 @@ $urlRouterProvider.when('', '/projects/list');
                 $scope.clearForm();
                 $scope.$watch("invite.email", function(old,newob){
                     $scope.invite.remind  = false;
+                    $scope.validationMessage = "";
                 });
                 $scope.projects = cbh.projects.objects;
 
@@ -347,12 +348,13 @@ $urlRouterProvider.when('', '/projects/list');
                   }
                   else {
                     //OK we have the info we need - send the invite!
-                    $scope.validationMessage = "";
+                    
                     //send via some form of service
                     
                     InvitationFactory.invite.save($scope.invite,
                         function(data) {
-                            $scope.validationMessage = data.data.message;
+                          console.log(data.message);
+                            $scope.validationMessage = data.message;
                             $scope.invite.email="";
                             $scope.invite.remind = false;
 
