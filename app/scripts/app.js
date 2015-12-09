@@ -353,7 +353,6 @@ $urlRouterProvider.when('', '/projects/list');
                     
                     InvitationFactory.invite.save($scope.invite,
                         function(data) {
-                          console.log(data.message);
                             $scope.validationMessage = data.message;
                             $scope.invite.email="";
                             $scope.invite.remind = false;
