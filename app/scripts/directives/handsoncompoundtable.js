@@ -355,24 +355,36 @@ angular.module('chembiohubAssayApp')
                     //there are lots of useful hooks provided by Handsontable
                     //http://docs.handsontable.com/0.15.0-beta3/Hooks.html
                     afterGetColHeader: function(col, TH) {
+
                       var instance = this,
                       button = buildButton(allCols[col]),
                       infospans = buildInfoSpans(allCols[col]);
 
                       addButtonMenuEvent(button, allCols[col]);
                       var buttonAlready = false;
-                      /*for (var i=0; i<TH.firstChild.children.length; i++){
-                        if()
-                      }*/
-                      angular.forEach(TH.firstChild.children, function(childNode){
+                      for (var i=0; i<TH.firstChild.children.length; i++){
+                        //
+                        /*var span = TH.firstChild.children[i];
+                        if(span.className='tableFilter'){
+                          buttonAlready = true;
+                        }*/
+                        buttonAlready = true;
+                      }
+                      //angular's forEach is somehow breaking the handsontable
+                      //need to do this in vanilla js
+                      /*TH.firstChild.children.forEach(function(childNode){
                         if(childNode.className='tableFilter'){
                           buttonAlready = true;
                         }
-                      });
+                      });*/
+                      /*var firstChildChildren = TH.firstChild.children;
+                      console.log('children', firstChildChildren);*/
+                      
 
                       if (buttonAlready) {
                         while (TH.firstChild.lastChild != TH.firstChild.firstChild) {
                             TH.firstChild.removeChild(TH.firstChild.lastChild);
+
                         }
                         //TH.firstChild.removeChild(TH.firstChild.lastChild);
                       }
@@ -437,7 +449,7 @@ angular.module('chembiohubAssayApp')
                                   
                                     if(firstValueArchived && cellLink.children[0].className == ('btn btn-danger')){
                                       //cellButton.className = ('btn btn-success');
-                                      console.log('entering First Loop')
+                                      //console.log('entering First Loop')
                                       cellLink.innerHTML = "<button class='btn btn-success'><span class=' glyphicon glyphicon-ok'></span>&nbsp;Restore</button>"
                                       mol.toArchive = true;
                                       mol.properties.archived=true;
@@ -445,7 +457,7 @@ angular.module('chembiohubAssayApp')
                                     }
                                     else if(!firstValueArchived && cellLink.children[0].className == ('btn btn-success')) {
                                       //cellButton.className = ('btn btn-danger');
-                                      console.log('entering Second Loop')
+                                      //console.log('entering Second Loop')
                                       cellLink.innerHTML = "<button class='btn btn-danger'><span class='glyphicon glyphicon-remove'></span>&nbsp;Archive</button>";
                                       mol.toArchive = false;
                                       mol.properties.archived=false;
