@@ -310,16 +310,26 @@ $urlRouterProvider.when('', '/projects/list');
               size: 'md',
               controller: function($scope, $modalInstance, InvitationFactory) {
                 
+                $scope.clearForm = function(){
+                  $scope.invite = {
+                    firstName:'',
+                    lastName:'',
+                    email: '',
+                    projects_selected: [],
+                    remind: false
+
+                  };
+
+                $scope.validationMessage = "";
+                }
                 
                 $scope.modalInstance = $modalInstance;
-                $scope.invite = {
-                  firstName:'',
-                  lastName:'',
-                  email: '',
-                  projects_selected: [],
-                };
+                $scope.clearForm();
+                $scope.$watch("invite.email", function(old,newob){
+                    $scope.invite.remind  = false;
+                    $scope.validationMessage = "";
+                });
                 $scope.projects = cbh.projects.objects;
-                $scope.validationMessage = "";
 
                 $scope.cancel = function () {
                   $scope.validationMessage = "";
@@ -338,36 +348,33 @@ $urlRouterProvider.when('', '/projects/list');
                   }
                   else {
                     //OK we have the info we need - send the invite!
-                    $scope.validationMessage = "";
+                    
                     //send via some form of service
                     
                     InvitationFactory.invite.save($scope.invite,
                         function(data) {
-                            console.log(data);
+                            $scope.validationMessage = data.message;
+                            $scope.invite.email="";
+                            $scope.invite.remind = false;
 
-                            $scope.validationMessage = "Invite sent!";
+                        },
+                        function(error){
+                          if(error.status == 409){
+                                //http conflict means we have the invitee in the db already but no reminder has been asked for
+                               $scope.validationMessage = error.data.error;
+                               $scope.invite.remind = true;
+                          }else{
+                              $scope.validationMessage = "There was a problem sending your invitation, please contact the ChemBio Hub team.";
+                          }
+                          
                         }
                     );
-                    //when the response comes back display a message to say if there was a problem
-                    //things to possibly warn about:
-                    //user exists?
-                    //user already invited?
-                    //if no problem, suggest to the user that they may wish to invite someone else
                   }
 
 
                 };
 
-                $scope.clearForm = function(){
-                  $scope.invite = {
-                    firstName:'',
-                    lastName:'',
-                    email: '',
-                    projects_selected: [],
-                  };
-                  $scope.validationMessage = "";
-                }
-
+                
               }
             });
           };
@@ -1000,7 +1007,7 @@ $urlRouterProvider.when('', '/projects/list');
             responseError: function(rejection) {
               if (["4", "5"].indexOf(rejection.status.toString().substring(0,1) ) > -1) {
                 //Capture all 4 and 500 errors passing the extra data 
-               Raven.captureException(JSON.stringify(rejection.config),{"extra": rejection});
+               Raven.captureException(JSON.stringify(rejection.config),{"extra": rejection.data});
               }
               return $q.reject(rejection);
             }

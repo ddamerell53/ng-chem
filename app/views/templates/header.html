@@ -8,7 +8,7 @@
 					<div class="row pull-right">
 						
 						<div class="dropdown" ng-show="isLoggedIn()" style="background-color:rgb(68,104,125); margin-top:-7px; padding:16px; height:76px; max-height:76px;">
-							<strong class="text-center nexa" style="padding-top:5px; color:white;"><img src="bower_components/chembiohub-theme/img/CBH_2_2_LowRes.png" style="height:45px">{{cbh.appName}}</strong>&nbsp;<span class="caret" style="color:white;"></span>
+							<strong class="text-center nexa" style="padding-top:5px; color:white;"><img src="https://chembiohub.ox.ac.uk/hub/bower_components/chembiohub-theme/img/CBH_2_2_LowRes.png" style="height:45px">{{cbh.appName}}</strong>&nbsp;<span class="caret" style="color:white;"></span>
 							<ul class="dropdown-menu ng-animate" role="menu" aria-labelledby="projectsBtn" style="width:210px;">
 								<li role="presentation" style="background-color:#ddd; padding:0 8px;"><span class="glyphicon glyphicon-user"></span> <strong class="nexa"><span>{{cbh.logged_in_user.first_name || cbh.logged_in_user.username}}</span></strong></li>
 								<li role="presentation" ng-if="cbh.logged_in_user.is_superuser" style="padding: 0 8px;"><a ng-href="{{cbh.api_base}}/admin"><span class="glyphicon glyphicon-cog"></span> <strong class="nexa">Admin Panel</strong></a></li>
@@ -27,7 +27,7 @@
 				<!-- eui-query="ejs.MultiMatchQuery(['l0.project_data.Title','l1.project_data.Title','l2.project_data.Title','l3.project_data.Title'], cbh.textsearch).type('phrase_prefix')" -->
 				<!--eui-aggregation="ejs.TermsAggregation('title_filtering').field('l1.project_data_all').size(10)"-->
 				<ul class="list-inline pull-right text-center">
-					<li class="text-center clickable" style="color:white; margin-right:10px;" ng-class="cbh.currentPageClass('cbh.projects.list')" ><a ui-sref="cbh.projects.list" style="color:white;" ><img src="/images/header-projects.png"><br><strong class="nexa"><small>projects</small></strong></a></li>
+					<li class="text-center clickable" style="color:white; margin-right:10px;" ng-class="cbh.currentPageClass('cbh.projects.list')" ><a ui-sref="cbh.projects.list" style="color:white;" ><img src="images/header-projects.png"><br><strong class="nexa"><small>projects</small></strong></a></li>
 			
 					<li style="vertical-align:top; margin-top:10px;">
 						<!-- Query to pull in titles -->
@@ -80,9 +80,9 @@
 
 					</li>
 					
-					<li ng-if="cbh.logged_in_user.can_view_assayreg" class="text-center clickable"  style="color:white;" ng-class="cbh.currentPageClass('cbh.search_assays')" ><a ui-sref="cbh.search_assays({'textsearch': cbh.textsearch})" style="color:white;"><img src="/images/search-activities.png"><br><strong class="nexa"><small>search activities</small></strong></a></li>
-					<li ng-if="cbh.logged_in_user.can_view_chemreg" class="text-center clickable" style="color:white; " ng-class="cbh.currentPageClass('cbh.search')" ><a ui-sref="cbh.search({'textsearch': cbh.textsearch})" style="color:white;"><img src="/images/search-compounds.png"><br><strong class="nexa"><small>search compounds</small></strong></a></li>
-					<li class="text-center clickable" style="color:white;" ng-class="cbh.currentPageClass('cbh.help')"><a ui-sref="cbh.help" style="color:white;"><img src="/images/header-help.png"><br><strong class="nexa"><small>help</small></strong></a></li>
+					<li ng-if="cbh.logged_in_user.can_view_assayreg" class="text-center clickable"  style="color:white;" ng-class="cbh.currentPageClass('cbh.search_assays')" ><a ui-sref="cbh.search_assays({'textsearch': cbh.textsearch})" style="color:white;"><img src="images/search-activities.png"><br><strong class="nexa"><small>search activities</small></strong></a></li>
+					<li ng-if="cbh.logged_in_user.can_view_chemreg" class="text-center clickable" style="color:white; " ng-class="cbh.currentPageClass('cbh.search')" ><a ui-sref="cbh.search({'textsearch': cbh.textsearch})" style="color:white;"><img src="images/search-compounds.png"><br><strong class="nexa"><small>search compounds</small></strong></a></li>
+					<li class="text-center clickable" style="color:white;" ng-class="cbh.currentPageClass('cbh.help')"><a ui-sref="cbh.help" style="color:white;"><img src="images/header-help.png"><br><strong class="nexa"><small>help</small></strong></a></li>
 				</ul>
 				<div></div>
 				<div></div>
