@@ -358,10 +358,9 @@ $urlRouterProvider.when('', '/projects/list');
                     
                     InvitationFactory.invite.save($scope.invite,
                         function(data) {
-                            console.log(data.message);
                             $scope.watch();
                             $scope.invite.email="";
-
+                            $scope.invite.remind  = false;
                             $scope.validationMessage = data.message;
                             $timeout(function(){
                               $scope.setWatcher();
@@ -376,6 +375,12 @@ $urlRouterProvider.when('', '/projects/list');
                                $scope.invite.remind = true;
                           }else{
                               $scope.validationMessage = "There was a problem sending your invitation, please contact the ChemBio Hub team.";
+
+                              if(error.data){
+                                if(error.data.error){
+                                  $scope.validationMessage = error.data.error;
+                                }
+                              }
                           }
                           
                         }
