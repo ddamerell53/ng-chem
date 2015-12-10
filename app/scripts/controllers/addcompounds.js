@@ -44,6 +44,9 @@ angular.module('chembiohubAssayApp')
                 target: urlConfig.instance_path.url_frag + 'flow/upload/',
                 headers: {
                     'X-CSRFToken': $scope.csrftoken
+                },
+                generateUniqueIdentifier: function (file) {
+                    return file.name + "-" + file.size + "-" + Date.now();
                 }
             };
         //build an object to hold all of the changed information each time the user does something
@@ -352,14 +355,14 @@ $scope.changeView = function(){
 
 
                         //Here we change the URL without changing the state
-                         $state.transitionTo ($state.current.name, 
+                         $state.go ($state.current.name, 
                                 {"mb_id" : $scope.datasets[$scope.current_dataset_id].config.multiplebatch,
                                 "projectKey": $stateParams.projectKey}, 
                                 { location: true, 
                                     inherit: false, 
                                     relative: $state.$current, 
-                                    notify: false });
-                        $stateParams.mb_id = $scope.datasets[$scope.current_dataset_id].config.multiplebatch;
+                                    notify: true });
+                        // $stateParams.mb_id = $scope.datasets[$scope.current_dataset_id].config.multiplebatch;
 
                         //returns a multiple batch id and a status
                         //Run a second get request to get a list of compounds

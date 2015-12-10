@@ -19,7 +19,10 @@ angular.module('chembiohubAssayApp')
 		    target: urlConfig.instance_path.url_frag + 'flow/upload/',
 		    headers: {
 		        'X-CSRFToken': $scope.csrftoken
-		    }
+		    },
+		    generateUniqueIdentifier: function (file) {
+        		return file.name + "-" + file.size + "-" + Date.now();
+      		}
 		};
 
 		//object containing user config, selected options and flowfile metadata returned from ws callls
