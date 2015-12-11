@@ -23,6 +23,7 @@ angular.module('chembiohubAssayApp')
     'renderers',
     'searchUrlParams',
     '$modal',
+    'skinConfig',
     function ($scope, 
         $state, 
         $stateParams,
@@ -37,7 +38,10 @@ angular.module('chembiohubAssayApp')
         MessageFactory,
         renderers,
         searchUrlParams,
-        $modal) {
+        $modal,
+        skinConfig
+        ) {
+        $scope.skinConfig = skinConfig.objects[0];
 
         $scope.csrftoken = $cookies[prefix.split("/")[0] + "csrftoken"];
        $scope.flowinit = {
@@ -375,6 +379,10 @@ $scope.changeView = function(){
                             }
                             else{
                                 $scope.datasets[$scope.current_dataset_id].config.errors = [MessageFactory.getMessage("file_error")];
+                            }
+                            if($scope.skinConfig.file_errors_from_backend){
+                                $scope.datasets[$scope.current_dataset_id].config.errors[0] = error.data.error;
+
                             }
                         }
                         if($scope.datasets[$scope.current_dataset_id].config.type == "smilesdata"){
