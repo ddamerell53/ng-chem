@@ -37,7 +37,8 @@
     "angular-utils-pagination": "~0.7.0",
     "handsontable": "~0.20.2",
     "angular-ui-ace": "bower",
-    "elasticui": "git://github.com/strets123/ElasticUI.git#master"
+    "elasticui": "git://github.com/strets123/ElasticUI.git#master",
+    "chemdoodle-angular": "https://github.com/strets123/chemdoodle-angular.git#master"
   },
   "devDependencies": {
     "angular-mocks": "~1.3.0",

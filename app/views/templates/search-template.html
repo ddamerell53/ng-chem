@@ -23,8 +23,11 @@
 				<div class="row" ng-if="!cbh.hideSearchForm">
 					<div class="col-sm-5 ">
 						<div class="row">
-							<chemdoodle-window sketch-molfile="sketchMolfile" fetch-data="fetchData()" molecule="cbh.searchForm.molecule"></chemdoodle-window>
-							<div id="sketcher_output"></div>
+							<chemdoodlewrapper  molfile="cbh.searchForm.molecule.molfile" elementid="'chemdoodle'">
+						      <canvas id="chemdoodle"></canvas>
+						   </chemdoodlewrapper>
+							<!-- <chemdoodle-window sketch-molfile="sketchMolfile" fetch-data="fetchData()" molecule="cbh.searchForm.molecule"></chemdoodle-window>
+							<div id="sketcher_output"></div> -->
 						</div>	
 					</div>
 
