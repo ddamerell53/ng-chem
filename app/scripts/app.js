@@ -338,7 +338,7 @@ $urlRouterProvider.when('', '/projects/list');
                   if(proj.editor){
                     $scope.projects.push(proj);
                   }
-                })
+                });
 
                 $scope.cancel = function () {
                   $scope.validationMessage = "";
