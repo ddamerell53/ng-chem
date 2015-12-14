@@ -333,7 +333,12 @@ $urlRouterProvider.when('', '/projects/list');
                   });
                 }
                 $scope.setWatcher();
-                $scope.projects = cbh.projects.objects;
+                $scope.projects = [];
+                angular.forEach(cbh.projects.objects, function(proj){
+                  if(proj.editor){
+                    $scope.projects.push(proj);
+                  }
+                })
 
                 $scope.cancel = function () {
                   $scope.validationMessage = "";
