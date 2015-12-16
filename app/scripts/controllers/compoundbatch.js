@@ -44,7 +44,6 @@ angular.module('chembiohubAssayApp')
                 var pf = searchUrlParams.fromForm($scope.cbh.searchForm, $scope.cbh.textsearch);
                 $scope.cbh.setupParams(pf);
                 
-                console.log($scope.cbh.withoutCustomFieldsUrl);
                 if (notify) {
                     $scope.pagination.current = 1;
                 }
@@ -197,8 +196,7 @@ angular.module('chembiohubAssayApp')
                     if (myproj.project_key == $stateParams.project__project_key__in) {
                         if (myproj.editor) {
                             noEdit = false;
-                            $scope.cbh.projAddingTo = $scope.cbh.projects.objects[index];
-                            $scope.cbh.projAddingTo.updateCustomFields();
+                            
                         }
                     }
                 });
@@ -232,10 +230,19 @@ angular.module('chembiohubAssayApp')
 
             $scope.toggleAddData = function() {
                 if (!$scope.addingData) {
-                    $scope.cbh.hideSearchForm = true;
                     $scope.addingData = true;
                     $scope.blankForm();
+                    angular.forEach($rootScope.projects, function(myproj, index) {
+                        if (myproj.project_key == $stateParams.project__project_key__in) {
+                            if (myproj.editor) {
+                                // $scope.cbh.projAddingTo = $scope.cbh.projects.objects[index];
+                                // $scope.cbh.projAddingTo.updateCustomFields();
+                            }
+                        }
+                    });
+                    
                 } else {
+                    
                     $scope.cbh.hideSearchForm = false;
                     $scope.addingData = false;
                 }
