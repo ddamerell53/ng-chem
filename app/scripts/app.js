@@ -765,6 +765,11 @@ $urlRouterProvider.when('', '/projects/list');
         controller: 'AddCompoundsCtrl',
         // reloadOnSearch: false
       })
+      .state('cbh.projects.project.addsingle', {
+        url: 'addsingle/?mb_id=&warningsFilter=',
+        templateUrl: 'views/add-single-compound.html',
+        controller: 'AddSingleCompoundCtrl',
+      })
 
     .state('cbh.projects.add', {
       url: 'add',
