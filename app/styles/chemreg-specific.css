@@ -18,31 +18,36 @@ div::-webkit-scrollbar {
 }
 
 div::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px #002147;
-    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 1px #002147;
 }
 
 div::-webkit-scrollbar-thumb {
     width:8px;
-    border-radius: 15px;
-    -webkit-box-shadow: inset 0 0 6px white;
-    background-color:  #002147;
+    -webkit-box-shadow: inset 0 0 1px white;
+    background-color:  lightgrey;
 }
 
 .ht_clone_top.handsontable {
     padding-bottom: 12px;
 }
 
-tr:first-child td {
-  padding-top: 12px !important;
+.htCore tr:first-child td {
+  padding-top: 15px !important;
+}
+.handsontable th {
+  min-height:75px !important;
 }
 /*.ht_clone_top.handsontable {
     min-height: 50px;
 }
 table.htCore {
   margin-top:10px !important;
-}*/
+}
 
+/*.wtHider {
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+}*/
 .highlighted {
 background-color: #FFFF00;
 }
