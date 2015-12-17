@@ -1,4 +1,5 @@
 'use strict';
+
 function svgify(){
     jQuery('img.svg').each(function(){
         var $img = jQuery(this);

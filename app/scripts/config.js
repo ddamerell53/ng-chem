@@ -78,10 +78,8 @@ var formGetter = function(project_data_fields, htmlClass, project){
               if(angular.isDefined(form.options)){
     
                  if(angular.isDefined(form.options.async)){
-
-                    
                     form.options.async.call =  function(schema, options, search) {
-                    
+
                       var url = form.options.async.url + "?custom__field__startswith=" + search;
                       if(angular.isDefined(project)){
                         url += ("&custom_field=" + form.key);

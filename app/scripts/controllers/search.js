@@ -153,12 +153,16 @@ angular.module('chembiohubAssayApp')
             }
 
             $scope.cbh.runSearch = function(doScroll) {
-                var newParams = searchUrlParams.fromForm($scope.cbh.searchForm, $scope.cbh.textsearch);
-                newParams.params.doScroll = doScroll;
-                newParams.params.sorts = $stateParams.sorts;
-                newParams.params.showNonBlanks = $stateParams.showNonBlanks;
-                newParams.params.showBlanks = $stateParams.showBlanks;
-                $scope.cbh.changeSearchParams(newParams.params, true);
+                $rootScope.$broadcast("fetchMolecule");
+                $timeout (function(){
+                    var newParams = searchUrlParams.fromForm($scope.cbh.searchForm, $scope.cbh.textsearch);
+                    newParams.params.doScroll = doScroll;
+                    newParams.params.sorts = $stateParams.sorts;
+                    newParams.params.showNonBlanks = $stateParams.showNonBlanks;
+                    newParams.params.showBlanks = $stateParams.showBlanks;
+                    $scope.cbh.changeSearchParams(newParams.params, true);
+                },10);
+                
             }
 
             $scope.cbh.isCustomFieldFiltered = function(knownBy) {
