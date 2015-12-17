@@ -8,17 +8,22 @@
  * Controller of the ngChemApp
  */
 angular.module('chembiohubAssayApp')
-    .controller('AddSingleCompoundCtrl', ['$scope', '$rootScope', '$timeout', '$filter', 'CBHCompoundBatch', 'ProjectFactory', 'projectKey', function($scope, $rootScope, $timeout, $filter, CBHCompoundBatch, ProjectFactory, projectKey) {
+    .controller('AddSingleCompoundCtrl', ['$scope', '$rootScope', '$timeout', '$filter', '$state', 'CBHCompoundBatch', 'ProjectFactory', 'MessageFactory', 'projectKey', function($scope, $rootScope, $timeout, $filter, $state, CBHCompoundBatch, ProjectFactory, MessageFactory, projectKey) {
 
             //need a combination of the initial setup of the add compounds page and the edit part of the single mol popup
 
             $scope.editMode = false;
             $scope.mol = {
             	molecule: "",
-            	customFields: [],
+            	customFields: {},
             	supplementaryFields: [],
             }
-            $scope.readyToSave = false;
+            $scope.dataReady = false;
+            $scope.compoundBatches = {data:[], 
+                sorts:[],
+                excluded: [],
+                redraw: 0,
+                columns: []};
             var orderBy = $filter('orderBy');
 
             var projid = projectKey;
@@ -30,14 +35,6 @@ angular.module('chembiohubAssayApp')
                     $scope.projectObj = myproj;
                 }
             });
-            /*$scope.singleForm = false;
-
-            angular.forEach($scope.projectWithCustomFieldData.schemaform.form, function(formItem) {
-            	
-                $scope.singleForm = [angular.copy(formItem)];
-            
-            });*/
-
 
             var myform = $scope.projectWithCustomFieldData.schemaform.form;
 
@@ -45,7 +42,8 @@ angular.module('chembiohubAssayApp')
             $scope.firstForm = angular.copy(myform).splice(0, len);
             $scope.secondForm = angular.copy(myform).splice(len);
             $scope.myform2 = angular.copy(myform);
-            $scope.init = function() {
+
+            /*$scope.init = function() {
                 $scope.keyValues = $scope.myform2.map(
 
                     function(item) {
@@ -74,40 +72,95 @@ angular.module('chembiohubAssayApp')
                 $scope.secondList = $scope.keyValues;
 
             };
-            $scope.init();
+            $scope.init();*/
+
+            $scope.createMultiBatch = function(){
+                $scope.currentlyLoading = true;
+                CBHCompoundBatch.createMultiBatch(
+                    $scope.dataset).then(
+                        function(data){
+                            $scope.currentlyLoading = false;
+                            $scope.filesInProcessing = false;
+                            $scope.dataset.config = data.data;
+                            $scope.dataReady = true;
+                            //$scope.compoundBatches.uncuratedHeaders = data.data.headers;
+                           
+
+                            //$scope.imageCallback();
+                            $scope.compoundBatches.data =data.data.objects;
+                            $scope.compoundBatches.savestats = data.data.savestats;
+                            //$scope.totalCompoundBatches = data.data.batchstats.total;
+
+
+                            //Here we change the URL without changing the state
+                             /*$state.go ($state.current.name, 
+                                    {"mb_id" : $scope.dataset.config.multiplebatch,
+                                    "projectKey": $stateParams.projectKey}, 
+                                    { location: true, 
+                                        inherit: false, 
+                                        relative: $state.$current, 
+                                        notify: true });*/
+                            // $stateParams.mb_id = $scope.datasets[$scope.current_dataset_id].config.multiplebatch;
+
+                            //returns a multiple batch id and a status
+                            //Run a second get request to get a list of compounds
+                        },
+                        function(error){
+                            
+                            $scope.dataset.config.errors = [MessageFactory.getMessage("data_not_processed")];
+                            
+                            $scope.dataset.config.status = "add";
+                            $scope.dataReady = false;
+                            $scope.currentlyLoading = false;
+
+                 }); 
+            }
 
 
 
             $scope.removeAlert = function() {
                 $scope.update_success = false;
             }
-            $scope.updateBatch = function(instance) {
 
-                CBHCompoundBatch.patch({
-                    "customFields": $scope.mol.customFields,
-                    "projectKey": $scope.projectWithCustomFieldData.project_key,
-                    "id": $scope.mol.id
-                }).then(
-                    function(data) {
+            //validate the drawn compound using the same mechanism as validation from file
+            $scope.validateDrawn  = function(){
+                var conf = {
+                        "multiplebatch": null,
+                        "sketch": $scope.mol.molecule,
+                        "type": "sketch",
+                        "customFields": $scope.mol.customFields,
+                        "supplementaryFields": $scope.mol.supplementaryFields,
+                        "projectKey" : projectKey,
+                        "struccol" : "",
+                        "state" : "validate"};
+                //also need to get the project and supplementary field data through
+                $scope.dataset = {
+                    "config": conf,
+                    "cancellers" : []
+                };
+                $scope.createMultiBatch();
+            }
 
-                        $scope.mol.customFields = data.customFields;
-                        //mol.customFields = data.customFields;
-                        //reindex the compound
-                        CBHCompoundBatch.reindexModifiedCompound($scope.mol.id).then(function(d) {
-                            //Make sure all the custom fields have been updated
+            $scope.saveTemporaryCompoundData = function(){
+                $scope.currentlyLoading = true;
 
-                        });
-                        $scope.update_success = true;
-                        $scope.editMode = false;
-                        $scope.init();
-                        $timeout($scope.removeAlert, 5000);
-                        cbh.isUpdated = true;
-                        if (angular.isDefined(instance)) {
-                            instance.dismiss('cancel');
+                CBHCompoundBatch.saveMultiBatchMolecules($scope.dataset.config).then(
+                        function(data){
+                            //$scope.cbh.hideSearchForm=true;
+                            console.log('yes...')
+                            $state.transitionTo("cbh.search", 
+                                            {multiple_batch_id: $scope.dataset.config.multiplebatch, 
+                                projectFrom: projectKey, project__project_key__in: projectKey},
+                                { location: true, 
+                                    inherit: false, 
+                                    relative: null, 
+                                    notify: true }
+                                );
+
+                        }, function(error){
+                            $scope.currentlyLoading = false;
                         }
-
-                    }
-                );
+                    )       
             }
 
             $scope.addSupplementaryField = function(){
@@ -155,11 +208,5 @@ angular.module('chembiohubAssayApp')
             }
             $scope.myschema = $scope.projectWithCustomFieldData.schemaform.schema;
 
-
-        /*}).result.finally(function() {
-            if (cbh.isUpdated) {
-                $rootScope.$broadcast("updateListView");
-            }
-        });*/
 
     }]);

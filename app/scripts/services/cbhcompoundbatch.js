@@ -131,6 +131,15 @@ angular.module('chembiohubAssayApp')
                                          
                             });
         }
+        if(currentDataset.config.type == "sketch"){
+          promise = $http.post(urlConfig.cbh_compound_batches.list_endpoint + "/validate_drawn/"
+                            ,currentDataset.config  ,
+                            {
+                              
+                              timeout: canceller.promise,
+                                         
+                            });
+        }
         
         return  promise;
                   
