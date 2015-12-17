@@ -45,10 +45,10 @@
                 <div class="col-xs-12 ">
                     <h2 class="nexa blue ">Project Data 
     <button ng-disabled="!projectObj.editor" class="btn btn-warning" ng-model="editMode" btn-checkbox btn-checkbox-true="1" ng-click="init()" btn-checkbox-false="0">Toggle Edit Mode</button>
- <button class="btn btn-primary"  ng-show="editMode" ng-click="updateBatch()">Update Batch Project Data</button>
+ <button class="btn btn-primary"  ng-show="editMode" ng-click="updateBatch()">Update Project Data</button>
 </h2>
                 </div>
-                <div class="alert alert-success" ng-show="update_success">Batch Project Data Updated Successfully</div>
+                <div class="alert alert-success" ng-show="update_success">Project Data Updated Successfully</div>
                 <div class="col-xs-12 col-md-6" ng-hide="editMode">
                     <div ng-repeat="item in firstList track by item.key">
                         <button-input copy-model="item.value" disabled="true" label="::item.key"></button-input>
