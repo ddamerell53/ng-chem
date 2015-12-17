@@ -2,15 +2,4 @@
                              'one': '1 new batch',
                               'other': '{} new batches'}"></ng-pluralize> will be saved to the database and <ng-pluralize count="compoundBatches.savestats.ignoring" when="{'0': '0 batches',
                              'one': '1 batch',
-                              'other': '{} new batches'}"></ng-pluralize> will be ignored. </strong> </div> <!-- Add a statement here if there are no records selected to upload explaining why save button disabled --> <div ng-hide="compoundBatches.savestats.newbatches > 0"> <strong class="nexa"> You must select at least 1 record as New Batch to be able to click Save. </strong> </div> </div> </div> </div> </div> <div class="row"> <h2 class="nexa blue"><span class="glyphicon glyphicon-pencil"></span>&nbsp;Edit and save your data below</h2> <div class="col-xs-12" ng-include="'views/compound-list-new.html'"> </div> </div> </div> </tab> <!--  <tab ng-disabled="true" heading="">
-                <div class="col-xs-5">
-                <div class ="pull-left">
-                    <label for="text_input" class="blue text-center"><strong class="nexa">Draw a molecule here >>></strong></label>
-                </div>
-                </div>
-                <div class="col-xs-7 col-md-5">
-        <div class="pull-right">
-        <chemdoodle-window sketch-molfile="sketchMolfile" fetch-data="fetchData()" molecule="molecule"></chemdoodle-window>
-    </div>
-    </div>
-    </tab> --> </tabset> </div> </div>
+                              'other': '{} new batches'}"></ng-pluralize> will be ignored. </strong> </div> <!-- Add a statement here if there are no records selected to upload explaining why save button disabled --> <div ng-hide="compoundBatches.savestats.newbatches > 0"> <strong class="nexa"> You must select at least 1 record as New Batch to be able to click Save. </strong> </div> </div> </div> </div> </div> <div class="row"> <h2 class="nexa blue"><span class="glyphicon glyphicon-pencil"></span>&nbsp;Edit and save your data below</h2> <div class="col-xs-12" ng-include="'views/compound-list-new.html'"> </div> </div> </div> </tab> </tabset> </div> </div>
