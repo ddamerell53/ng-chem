@@ -13,11 +13,11 @@
                 	<img src="images/inventory-icon-white.png" ng-if="proj.project_type.show_compounds == false">
                 	<!-- <img ng-src="{{proj.project_type.show_compounds && '/images/chemical-icon-white.png'
                 	|| '/images/inventory-icon-white.png'}} " alt="{{proj.project_type.name}} project" title="{{proj.project_type.name}} project"> --> {{proj.project_type.name}}</small>
+                    {
                     
                 </div>
                 
         </h2>
-
         <div class="show-animate" ng-show="toggleSingleForm.showFlag && proj.project_type.show_compounds == false">
             <div ng-repeat="form in formChunks" class="col-xs-12 col-sm-4">
                 <div  class=" form-group" sf-schema="::myschema" sf-form="::form" sf-model="newMol.customFields"></div>
