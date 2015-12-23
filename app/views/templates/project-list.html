@@ -32,7 +32,7 @@
                         <br>
                         <a ui-sref="cbh.search({creator_uri: cbh.logged_in_user.resource_uri, project__project_key__in: project.project_key })"><span class="glyphicon glyphicon-user"></span> Search my {{project.project_type.show_compounds ? 'compounds' : 'inventory items' }}</a>
                         <br ng-if="project.editor && !project.project_type.show_compounds">
-                        <a ng-if="project.editor && !project.project_type.show_compounds" ng-click="cbh.hideSearchForm=true;" ui-sref="cbh.search({project__project_key__in: project.project_key})"><span class="glyphicon glyphicon-plus-sign"></span> Add single {{project.project_type.show_compounds ? 'compound' : 'inventory item' }}</a>
+                        <a ng-if="project.editor && !project.project_type.show_compounds" ng-click="toggleSingleForm.showFlag = !toggleSingleForm.showFlag" ui-sref="cbh.search({project__project_key__in: project.project_key})"><span class="glyphicon glyphicon-plus-sign"></span> Add single {{project.project_type.show_compounds ? 'compound' : 'inventory item' }}</a>
                         <br>
                         <a ng-if="!project.editor" disabled title="You do not have permission to edit {{project.project_type.show_compounds == true ? 'compounds' : 'items' }} on this project. Please ask an administrator for details." role="button" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-plus"></span> Add {{project.project_type.show_compounds == true ? 'compound' : 'item' }}</a>
                         <a ng-if="project.editor && project.project_type.show_compounds" ui-sref="cbh.projects.project.addsingle({projectKey: project.project_key})" ><span class="glyphicon glyphicon-pencil"></span> Draw compound</a>

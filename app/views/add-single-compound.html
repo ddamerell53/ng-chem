@@ -1,7 +1,7 @@
 <div class="container-flex">
     <div class="row">
         <div class="col-xs-12" style="margin:20px;">
-            <h2 class="blue">Add Single Compound<br><small>If you want to add more than one compound at a time via SD or Excel, please use <a href="#">this form</a></small></h2>
+            <h2 class="blue">Add Single Compound<br><small>If you want to add more than one compound at a time via SD or Excel, please use <a ui-sref="cbh.projects.project.addcompounds({projectKey: projectKey})">this form</a></small></h2>
         </div>
     </div>
     <div class="row">
@@ -37,9 +37,9 @@
                     </div>
                 </div>
                 <div class="col-sm-7 ">
-                    <div class="row">
+                    <div class="row" ng-if="myschema.properties">
                         <div class="col-xs-12 ">
-                            <h2 class="blue">Project Fields<br><small>Add data specific to this project here. This data WILL be searchable within the ChemBio Hub Platform</small> </h3>
+                            <h2 class="blue">Project Fields<br><small>Add data specific to this project here. This data WILL be searchable within the ChemBio Hub Platform.<br>If you make any changes to these fields after clicking Validate, you will have to click Validate again for these changes to be submitted.</small> </h3>
                         <div class="col-xs-12">
                             <div class=" form-group" sf-schema="myschema" sf-form="myform" sf-model="mol.customFields"></div>
                         </div>

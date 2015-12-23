@@ -55,6 +55,13 @@ angular.module('chembiohubAssayApp')
             }, true);
             $scope.custFieldFormItem[0].options.async.call = $scope.refreshCustFields;
             $scope.projectFrom = $stateParams.projectFrom;
+            $scope.projectObj = {}
+            //we need the project pbject for this key
+            angular.forEach($rootScope.projects, function(myproj) {
+                if (myproj.project_key == $scope.projectFrom) {
+                    $scope.projectObj = myproj;
+                }
+            });
 
             function updateFields() {
                 if ($scope.cbh.searchForm.related_molregno__chembl__chembl_id__in) {
