@@ -11,8 +11,8 @@
             <span ng-if="warningsFilter"> (filtered)</span>
             <span ng-if="noData">&nbsp; &nbsp; - &nbsp; &nbsp;{{noData}}</span>
             <button class="btn btn-danger " ng-if="cbh.searchForm.archived=='true'" ng-click="cbh.searchForm.archived='false';">Exit Archive Mode</button>
-            <button ng-show="stateName != 'cbh.projects.project.addcompounds'" class="btn btn-default pull-right " ng-if="!cbh.hideSearchForm" ng-click="cbh.hideSearchForm=true;">Hide Search Form</button>
-            <button ng-show="stateName != 'cbh.projects.project.addcompounds'"  class="btn btn-default pull-right " ng-if="cbh.hideSearchForm" ng-click="cbh.hideSearchForm=false;">Show Search Form</button>
+            <button ng-show="stateName != 'cbh.projects.project.addcompounds'" class="btn btn-sm btn-default pull-right " ng-if="!cbh.hideSearchForm" ng-click="cbh.hideSearchForm=true;">Hide Advanced and Structure Search</button>
+            <button ng-show="stateName != 'cbh.projects.project.addcompounds'"  class="btn btn-sm btn-default pull-right " ng-if="cbh.hideSearchForm" ng-click="cbh.hideSearchForm=false;">Show Advanced and Structure Search</button>
 
         </h2>
     </div>

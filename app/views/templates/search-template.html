@@ -1,8 +1,8 @@
 <div class="container-flex">
 		<div class="row" style="margin-top:10px;">
 			<div class="col-sm-12">
-				<h2 id="searchtop" class="blue pull-left"><span class="glyphicon glyphicon-search"></span> Search &nbsp;<button class="btn btn-default pull-right " ng-if="!cbh.hideSearchForm" ng-click="cbh.hideSearchForm=true;">Hide Search Form</button>
-            <button class="btn btn-default pull-right " ng-if="cbh.hideSearchForm" ng-click="cbh.hideSearchForm=false;">Show Search Form</button></h2>
+				<h2 id="searchtop" class="blue pull-left"><span class="glyphicon glyphicon-search"></span> Search &nbsp;<button class="btn btn-sm btn-default pull-right " ng-if="!cbh.hideSearchForm" ng-click="cbh.hideSearchForm=true;">Hide Advanced and Structure Search</button>
+            <button class="btn btn-sm btn-default pull-right " ng-if="cbh.hideSearchForm" ng-click="cbh.hideSearchForm=false;">Show Advanced and Structure Search</button></h2>
 			</div>
 			<div ng-if="projectFrom" class="col-sm-12 alert alert-success mb">
 				Your saved {{projectObj.project_type.show_compounds == true ? 'compounds' : 'items' }} are shown below. You can now either view the full project or add more items. 
