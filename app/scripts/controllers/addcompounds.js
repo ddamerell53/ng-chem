@@ -143,7 +143,6 @@ angular.module('chembiohubAssayApp')
 
 
         $scope.cbh.openStatusExplanation = function(){
-            console.log('being called');
           $scope.modalInstance = $modal.open({
             templateUrl: 'views/statuses.html',
             size: 'md',
@@ -242,7 +241,6 @@ $scope.changeView = function(){
                     current: 1,
                     compoundBatchesPerPage: $scope.itemsPerPage[2],
                 };
-            console.log($scope.pagination)
             
             var filters = { };
             

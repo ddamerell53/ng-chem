@@ -30,7 +30,9 @@ angular.module('chembiohubAssayApp')
     //       /project/:projectId
     var projUrl = "";
 
-    return $resource(urlConfig.cbh_projects.list_endpoint + '/:projectId', {projectId:'@projectId'}, { });
+    return $resource(urlConfig.cbh_projects.list_endpoint + '/:projectId', {projectId:'@projectId'}, {
+        'update': { method:'PATCH' }
+    });
 
 
   });
