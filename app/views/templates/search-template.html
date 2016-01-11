@@ -23,6 +23,9 @@
 				</div>
 				<div class="row" ng-if="!cbh.hideSearchForm">
 					<div class="col-sm-5 ">
+						<div ng-show="cbh.isIE" class = "alert-warning">
+							It looks like you are using Internet Explorer, for a better experience with ChemDoodle on ChemBio Hub we reccomend using a different browser as only single bonds and typing atoms are vailable in Explorer.
+						</div>
 						<div class="row">
 							<chemdoodlewrapper  molfile="cbh.searchForm.molecule.molfile" elementid="'chemdoodle'">
 						      <canvas id="chemdoodle"></canvas>

@@ -7,6 +7,8 @@
  * # SearchCtrl
  * Controller of the chembiohubAssayApp
  */
+
+
 angular.module('chembiohubAssayApp')
     .controller('SearchCtrl', ['$scope', '$http', '$rootScope', '$filter', '$stateParams', '$location', '$state', '$timeout', 'projectFactory', 'gridconfig', 'CBHCompoundBatch', 'urlConfig', 'searchUrlParams',
         function($scope, $http, $rootScope, $filter, $stateParams, $location, $state, $timeout, projectFactory, gridconfig, CBHCompoundBatch, urlConfig, searchUrlParams) {
@@ -25,7 +27,7 @@ angular.module('chembiohubAssayApp')
             });
             $scope.cbh.pf = pf;
             $scope.cbh.searchForm = angular.copy(pf.searchForm);
-
+            
             $scope.cbh.setupParams = function(paramsAndForm){
                 
                 $scope.cbh.baseDownloadUrl = paramsAndForm.paramsUrl;
