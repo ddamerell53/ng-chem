@@ -32,6 +32,9 @@
                         <span class="glyphicon glyphicon-plus"></span><span class="hidden-xs hidden-sm"> Add Single</span>
                     </label>
                     <label ng-if="editModeUnreachable()" class="btn btn-default" disabled title="{{cbh.messages.edit_mode_unavailable_projects}}">
+                        <span class="glyphicon glyphicon-plus"></span><span class="hidden-xs hidden-sm"> Add Single</span>
+                    </label>
+                    <label ng-if="editModeUnreachable()" class="btn btn-default" disabled title="{{cbh.messages.edit_mode_unavailable_projects}}">
                         <span class="glyphicon glyphicon-plus"></span><span class="hidden-xs hidden-sm"> Add Multiple</span>
                     </label>
                     <label ng-if="!editModeUnreachable()" class="btn btn-default" ui-sref="cbh.projects.project.addcompounds({projectKey: cbh.projAddingTo.project_key})">
