@@ -8,6 +8,35 @@
  *
  * Main module of the application.
  */
+
+
+function detectIE() {
+    var ua = window.navigator.userAgent;
+
+    var msie = ua.indexOf('MSIE ');
+    if (msie > 0) {
+        // IE 10 or older => return version number
+        return parseInt(ua.substring(msie + 5, ua.indexOf('.', msie)), 10);
+    }
+
+    var trident = ua.indexOf('Trident/');
+    if (trident > 0) {
+        // IE 11 => return version number
+        var rv = ua.indexOf('rv:');
+        return parseInt(ua.substring(rv + 3, ua.indexOf('.', rv)), 10);
+    }
+
+    var edge = ua.indexOf('Edge/');
+    if (edge > 0) {
+       // Edge (IE 12+) => return version number
+       return parseInt(ua.substring(edge + 5, ua.indexOf('.', edge)), 10);
+    }
+
+    // other browser
+    return false;
+}
+
+ 
 angular.module('chembiohubAssayApp')
 
 
@@ -32,6 +61,7 @@ $urlRouterProvider.when('', '/projects/list');
         controller: function($scope, $rootScope, $state, $location, $modal, urlConfig, loggedInUser, projectList, prefix, $compile, MessageFactory, skinConfig, InvitationFactory) {
 
           var cbh = this;
+          cbh.isIE = detectIE();
           cbh.appName = "Platform"
           cbh.logged_in_user = loggedInUser;
           cbh.projects = projectList;
@@ -586,7 +616,31 @@ $urlRouterProvider.when('', '/projects/list');
     .state('cbh.projects.list', {
       url: '/list',
       templateUrl: 'views/projects-list.html',
-      controller: function($rootScope, $state, $stateParams, $scope, AddDataFactory) {
+      controller: function($rootScope, $state, $stateParams, $scope, AddDataFactory, $modal, ProjectFactory) {
+        $scope.openProjectWindow = function(index){
+          $scope.modalInstance = $modal.open({
+            templateUrl: 'views/modal-edit-project.html',
+            size: 'ld',
+            controller: function($scope, $modalInstance, MessageFactory) {
+              $scope.modalInstance = $modalInstance;
+              var pid = $rootScope.projects[index].id;
+              $scope.proj = ProjectFactory.get({"projectId": pid});
+              $scope.projectForm = ["name"];
+              $scope.projectSchema = {"type": "object", "properties": {"name":{"title": "name", "type": "string"}}};
+              $scope.cancel = function () {
+                  $modalInstance.dismiss('cancel');
+                };
+              $scope.saveChanges = function(){
+                  ProjectFactory.update({"projectId": pid}, $scope.proj);
+                  $rootScope.projects[index] = $scope.proj;
+                  $modalInstance.dismiss('cancel');
+              };
+            }
+          });
+   
+        }
+
+       
         $scope.cbh.appName = "Platform";
 
         $rootScope.headline = $scope.cbh.skinning.project_alias + " List";
@@ -607,16 +661,9 @@ $urlRouterProvider.when('', '/projects/list');
         $scope.toggleSingleForm = {
           showFlag: false,
         };
-        $scope.addSingleRecord = function(projKey) {
-          console.log('hello');
-          $scope.toggleSingleForm.showFlag = true;
-          console.log(projKey);
-          $state.go('cbh.projects.list.project', {
-            'projectKey': projKey,
-            'page': 1,
-            'sorts': []
-          });
-        };
+        
+
+       
         /* Provide a link from the project list page to the assayreg page for items in this project which have been added by this user */
         $scope.cbh.searchForUserWithProjectKey = function(projKey){
           AddDataFactory.nestedDataClassification.get({
@@ -652,90 +699,7 @@ $urlRouterProvider.when('', '/projects/list');
 
     // })
 
-    .state('cbh.projects.list.project', {
-      url: window.projectUrlMatcher + "?editMode=archived=?page=&compoundBatchesPerPage=&viewType=&doScroll=&sorts=",
-      resolve: {
-        projectKey: ['$stateParams', function($stateParams) {
-          return $stateParams.projectKey;
-        }],
-        paramsAndForm: ['$stateParams', 'searchUrlParams',
-          function($stateParams, searchUrlParams) {
-            return searchUrlParams.fromForm({
-              "project__project_key__in": [$stateParams.projectKey, ]
-            });
-          }
-        ]
-
-      },
-
-      views: {
-        projectsummary: {
-          templateUrl: 'views/project-summary.html',
-          controller: function($scope, $state, projectKey, CBHCompoundBatch) {
-            $scope.projects = $scope.cbh.projects.objects;
-            angular.forEach($scope.projects, function(proj) {
-              if (proj.project_key == projectKey) {
-                $scope.proj = proj;
-                $scope.cbh.includedProjectKeys = [$scope.proj.project_key];
-
-              }
-            });
-            var myform = angular.copy($scope.proj.schemaform.form);
-            //we may need to replicate this within the search form...
-            angular.forEach(myform, function(item) {
-              item['feedback'] = false;
-              item['disableSuccessState'] = true;
-
-            });
-            $scope.myschema = angular.copy($scope.proj.schemaform.schema);
-            $scope.formChunks = myform.chunk(Math.ceil($scope.proj.schemaform.form.length / 3));
-            $scope.blankForm = function() {
-              $scope.newMol = {
-                "customFields": {}
-              };
-              //need to also make the form pristine and remove (usually incorrect) validation cues...
-              //we've removed the feedback because it is broken in angular schema form and therefore inconsistent.
-              angular.forEach($scope.formChunks, function(chunk) {
-                chunk.$pristine = true;
-              });
-
-
-            };
-            $scope.blankForm();
-            $scope.saveSingleCompound = function() {
-              CBHCompoundBatch.saveSingleCompound(projectKey, '', $scope.newMol.customFields).then(
-                function(data) {
-                  CBHCompoundBatch.reindexModifiedCompound(data.data.id).then(function(reindexed) {
-                    $state.go($state.current, {
-                      "page": 1,
-                      "sorts": [],
-                      "filters": undefined
-                    }, {
-                      reload: true
-                    });
-                  });
-                }
-              );
-            }
-
-
-            $scope.cbh.searchPage = function() {
-              $state.go('cbh.search', {
-                "project__project_key__in": $scope.proj.project_key
-              }, {
-                reload: true
-              });
-            };
-          },
-        },
-        'newresults': {
-          templateUrl: 'views/compound-list-new.html',
-          controller: 'CompoundbatchCtrl'
-        },
-      }
-
-    })
-
+ 
 
     
     .state('cbh.projects.project', {

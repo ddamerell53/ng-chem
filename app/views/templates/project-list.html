@@ -3,16 +3,18 @@
         <div class="row grey-to-white {{!project.project_type.show_compounds ? 'nonchem' : ''}}" ng-repeat="project in projects | filter:search:strict" style="margin-bottom:15px; border-radius:10px;">
             <div class="col-sm-4 proj-list-header {{!project.project_type.show_compounds ? 'nonchem' : ''}}" style="height:100%">
 
-                <h2 class="blue">
-                    {{project.name}}
+                <h2 class="blue" style="display:inline-block">
+                    {{project.name}}                
+
                 </h2>
+                &nbsp; <p class="nexa" style="display:inline-block"><small><a ng-click="openProjectWindow($index)"><span class="glyphicon glyphicon-pencil"></span> Edit configuration</a></small></p>
+
                 <br>
                 <!-- <small class="last-mod"><span class="glyphicon glyphicon-time"></span> <span class="nexa">Last modified: {{ project.modified | date }}</span></small> -->
             </div>
 
             <div class="col-sm-4" style="padding:10px 10px 0 10px;">
                 <p ng-show="project.assays_configured" class="nexa"><strong>Assay Data</strong> 
-                    <br> 
 
                     <small >
                         <a ui-sref="cbh.projects.project.assay.data_overview({projectKey: project.project_key})"><span class="glyphicon glyphicon-tasks"></span> Data Overview</a><br>
@@ -31,12 +33,13 @@
                         <a ng-click="cbh.hideSearchForm=true;" ui-sref="cbh.search({project__project_key__in: project.project_key})"><span class="glyphicon glyphicon-search"></span> Search all {{project.project_type.show_compounds ? 'compounds' : 'inventory items' }}</a>
                         <br>
                         <a ui-sref="cbh.search({creator_uri: cbh.logged_in_user.resource_uri, project__project_key__in: project.project_key })"><span class="glyphicon glyphicon-user"></span> Search my {{project.project_type.show_compounds ? 'compounds' : 'inventory items' }}</a>
-                        <br ng-if="project.editor && !project.project_type.show_compounds">
-                        <a ng-if="project.editor && !project.project_type.show_compounds" ng-click="toggleSingleForm.showFlag = !toggleSingleForm.showFlag" ui-sref="cbh.search({project__project_key__in: project.project_key})"><span class="glyphicon glyphicon-plus-sign"></span> Add single {{project.project_type.show_compounds ? 'compound' : 'inventory item' }}</a>
-                        <br>
+                        <br ng-if="project.editor && !project.project_type.show_compounds" >
+                        <a ng-if="project.editor && !project.project_type.show_compounds" ng-click="toggleSingleForm.showFlag = !toggleSingleForm.showFlag; cbh.showSingle = true" ui-sref="cbh.search({project__project_key__in: project.project_key})"><span class="glyphicon glyphicon-plus-sign"></span> Add single {{project.project_type.show_compounds ? 'compound' : 'inventory item' }}</a>
+                        <br ng-if="!project.editor">
                         <a ng-if="!project.editor" disabled title="You do not have permission to edit {{project.project_type.show_compounds == true ? 'compounds' : 'items' }} on this project. Please ask an administrator for details." role="button" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-plus"></span> Add {{project.project_type.show_compounds == true ? 'compound' : 'item' }}</a>
+                        <br ng-if="project.editor && project.project_type.show_compounds">
                         <a ng-if="project.editor && project.project_type.show_compounds" ui-sref="cbh.projects.project.addsingle({projectKey: project.project_key})" ><span class="glyphicon glyphicon-pencil"></span> Draw compound</a>
-                        <br>
+                        <br  ng-if="project.editor">
                         <a ng-if="project.editor" ui-sref="cbh.projects.project.addcompounds({projectKey: project.project_key})"><span class="glyphicon glyphicon-plus-sign"></span> Add multiple {{project.project_type.show_compounds ? 'compounds' : 'inventory items' }}</a>
                         <br>
                     </small>

@@ -8,9 +8,12 @@
         <form novalidate name="inputForm" role="form" style="width:95%; display: table; margin: 0 auto;">
             <div class="row">
                 <div class="col-sm-5 ">
+                    <div ng-show="cbh.isIE" class = "alert-warning">
+                            It looks like you are using Internet Explorer, for a better experience with ChemDoodle on ChemBio Hub we reccomend using a different browser as only the single bonds and typing atoms features are available in Explorer.
+                        </div>
                     <div class="row">
-                        <chemdoodlewrapper molfile="mol.molecule" elementid="'chemdoodle'" fulldatabind="true">
-                            <canvas id="chemdoodle"></canvas>
+                        <chemdoodlewrapper molfile="mol.molecule" elementid="'chemdoodle_compound_adder'" fulldatabind="true">
+                            <canvas id="chemdoodle_compound_adder"></canvas>
                         </chemdoodlewrapper>
                     </div>
                     <div class="row" id="warnings" ng-if="dataset.config.errors.length > 0">
