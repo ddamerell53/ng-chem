@@ -1,6 +1,6 @@
  		<div class="modal-header">
             <button  type="button" class="close pull-right" data-dismiss="alert" aria-label="Close" ng-click="cancel()"><span  class="glyphicon glyphicon-remove-circle"></span></button>
-            <h3 class="modal-title">More Information</h3>
+            <h3 class="modal-title">Details</h3>
         </div>
         <div class="modal-body">
             
@@ -8,7 +8,8 @@
                 
                 <tr ng-repeat="form in popup_data.main_cfc.project_data_fields">
                     <th>{{form.name}}</th>
-                    <td style="word-wrap:break-word;">{{popup_data.main_data.project_data[form.elasticsearch_fieldname]}}</td>
+                    <!-- <td style="word-wrap:break-word;">{{popup_data.main_data.project_data[form.elasticsearch_fieldname]}}</td> -->
+                    <td style="word-wrap:break-word;"><span ng-bind-html='popup_data.main_data.project_data[form.elasticsearch_fieldname]'></span></td>
                 </tr>
                 
             </table>
