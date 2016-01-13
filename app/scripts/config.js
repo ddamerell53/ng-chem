@@ -69,7 +69,7 @@ var schemaGetter = function(project_data_fields){
 
 var formGetter = function(project_data_fields, htmlClass, project){
             if(!angular.isDefined(htmlClass)){
-              htmlClass = "col-xs-3";
+              htmlClass = "col-xs-12";
             }
             var edit_form = [];
             angular.forEach(project_data_fields, function(field){

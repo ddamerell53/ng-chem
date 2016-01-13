@@ -688,7 +688,7 @@ angular.module('chembiohubAssayApp')
                         angular.forEach(popup_data.main_cfc.project_data_fields, function(proj_data) {
                             //pull out the edit_form.form and edit_schema.schema
                             var form = angular.copy(proj_data.edit_form.form[0]);
-                            form.htmlClass = "col-xs-6";
+                            form.htmlClass = "col-xs-12";
                             $scope.popup_data.this_level_edit_form.push(form);
                             angular.extend($scope.popup_data.this_level_edit_schema.properties, angular.copy(proj_data.edit_schema.properties));
                         });
