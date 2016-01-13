@@ -7,10 +7,12 @@
                     {{project.name}}                
 
                 </h2>
-                &nbsp; <p class="nexa" style="display:inline-block"><small><a ng-click="openProjectWindow($index)"><span class="glyphicon glyphicon-pencil"></span> Edit configuration</a></small></p>
-
+                &nbsp; <p class="nexa" style="display:inline-block"><small><a ng-if="project.owner" ng-click="openProjectWindow($index)"><span class="glyphicon glyphicon-pencil"></span> Edit configuration</a></small>
+                <small><a class="disabled" ng-if="!project.owner" disabled  ><span class="glyphicon glyphicon-pencil"></span> Edit configuration</a></small>
+                <info-box ng-if="!project.owner" freetext="You do not have permission to edit the configuration on this project as you are {{(project.editor ? 'an editor' : 'a viewer')}} not an owner. Please ask an administrator for details." right="true">
+            </p>
+                
                 <br>
-                <!-- <small class="last-mod"><span class="glyphicon glyphicon-time"></span> <span class="nexa">Last modified: {{ project.modified | date }}</span></small> -->
             </div>
 
             <div class="col-sm-4" style="padding:10px 10px 0 10px;">
@@ -36,7 +38,6 @@
                         <br ng-if="project.editor && !project.project_type.show_compounds" >
                         <a ng-if="project.editor && !project.project_type.show_compounds" ng-click="toggleSingleForm.showFlag = !toggleSingleForm.showFlag; cbh.showSingle = true" ui-sref="cbh.search({project__project_key__in: project.project_key})"><span class="glyphicon glyphicon-plus-sign"></span> Add single {{project.project_type.show_compounds ? 'compound' : 'inventory item' }}</a>
                         <br ng-if="!project.editor">
-                        <a ng-if="!project.editor" disabled title="You do not have permission to edit {{project.project_type.show_compounds == true ? 'compounds' : 'items' }} on this project. Please ask an administrator for details." role="button" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-plus"></span> Add {{project.project_type.show_compounds == true ? 'compound' : 'item' }}</a>
                         <br ng-if="project.editor && project.project_type.show_compounds">
                         <a ng-if="project.editor && project.project_type.show_compounds" ui-sref="cbh.projects.project.addsingle({projectKey: project.project_key})" ><span class="glyphicon glyphicon-pencil"></span> Draw compound</a>
                         <br  ng-if="project.editor">

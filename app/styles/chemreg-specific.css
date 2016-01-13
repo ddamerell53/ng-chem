@@ -48,6 +48,15 @@ table.htCore {
   padding-bottom: 0px;
   margin-bottom: 0px;
 }*/
+
+a.disabled
+{
+    color: grey;
+    a:hover, a:focus {
+    color: grey;
+    }
+}
+
 .highlighted {
 background-color: #FFFF00;
 }

@@ -617,34 +617,53 @@ $urlRouterProvider.when('', '/projects/list');
       url: '/list',
       templateUrl: 'views/projects-list.html',
       controller: function($rootScope, $state, $stateParams, $scope, AddDataFactory, $modal, ProjectFactory) {
+
+
+
         $scope.openProjectWindow = function(index){
           $scope.modalInstance = $modal.open({
             templateUrl: 'views/modal-edit-project.html',
             size: 'ld',
-            controller: function($scope, $modalInstance, MessageFactory) {
+            controller: function($scope, $modalInstance) {
+
               $scope.modalInstance = $modalInstance;
-              var pid = $rootScope.projects[index].id;
-              $scope.proj = ProjectFactory.get({"projectId": pid});
+              if(index == -1){
+                $scope.operation = "add";
+                $scope.proj = {};
+              }else{
+                var pid = $rootScope.projects[index].id;
+                $scope.proj = ProjectFactory.get({"projectId": pid});
+                $scope.operation = "update";
+              }
               $scope.projectForm = ["name"];
               $scope.projectSchema = {"type": "object", "properties": {"name":{"title": "name", "type": "string"}}};
               $scope.cancel = function () {
                   $modalInstance.dismiss('cancel');
                 };
               $scope.saveChanges = function(){
-                  ProjectFactory.update({"projectId": pid}, $scope.proj);
-                  $rootScope.projects[index] = $scope.proj;
-                  $modalInstance.dismiss('cancel');
+                  var promise;
+                  if($scope.operation = "add"){
+                    promise = ProjectFactory.save($scope.proj);
+                  }else{
+                    promise = ProjectFactory.update({"projectId": pid}, $scope.proj);
+                  }
+                  promise.then(function(data){
+                    $rootScope.projects[index] = $scope.proj;
+                    $modalInstance.dismiss('cancel');
+                    window.location.reload(true);
+                  });
+                  
               };
             }
           });
    
         }
 
-       
+        
         $scope.cbh.appName = "Platform";
 
         $rootScope.headline = $scope.cbh.skinning.project_alias + " List";
-        $rootScope.subheading = "Click a " + $scope.cbh.skinning.project_alias + " title to see more details and add data to that " + $scope.cbh.skinning.project_alias;
+        $rootScope.subheading = "A list of all of the projects you have access to.";
         $rootScope.help_lookup = "";
         $rootScope.projectKey = $scope.cbh.skinning.project_alias + "s";
         $rootScope.projName = $scope.cbh.skinning.project_alias + "s";
@@ -734,118 +753,6 @@ $urlRouterProvider.when('', '/projects/list');
         templateUrl: 'views/add-single-compound.html',
         controller: 'AddSingleCompoundCtrl',
       })
-
-    .state('cbh.projects.add', {
-      url: 'add',
-      templateUrl: 'views/projects-add.html',
-      controller: function($rootScope) {
-        $rootScope.headline = "Add a new Project"
-        $rootScope.subheading = ""
-        $rootScope.help_lookup = ""
-        $rootScope.glyphicon = "folder-open";
-      }
-    })
-
-
-
- // .state('cbh.projects.project.compounds', {
- //      url: "compounds/?editMode=archived=?page=&compoundBatchesPerPage=&viewType=&doScroll=&sorts=",
- //      resolve: {
- //        projectKey: ['$stateParams', function($stateParams) {
- //          return $stateParams.projectKey;
- //        }],
- //        paramsAndForm: ['$stateParams', 'searchUrlParams',
- //          function($stateParams, searchUrlParams) {
- //            return searchUrlParams.fromForm({
- //              "project__project_key__in": [$stateParams.projectKey, ]
- //            });
- //          }
- //        ]
-
- //      },
-
- //      views: {
- //        '': {
- //          templateUrl: 'views/project-compounds.html',
- //          controller: function($scope, $state, projectKey, CBHCompoundBatch) {
- //            $scope.projects = $scope.cbh.projects.objects;
- //            angular.forEach($scope.projects, function(proj) {
- //              if (proj.project_key == projectKey) {
- //                $scope.proj = proj;
- //                $scope.cbh.includedProjectKeys = [$scope.proj.project_key];
-
- //              }
- //            });
- //          }
- //        },
- //        "projectsummary@cbh.projects.project.compounds": {
- //          templateUrl: 'views/project-summary.html',
- //          controller: function($scope, $state, projectKey, CBHCompoundBatch) {
- //            $scope.projects = $scope.cbh.projects.objects;
- //            angular.forEach($scope.projects, function(proj) {
- //              if (proj.project_key == projectKey) {
- //                $scope.proj = proj;
- //                $scope.cbh.includedProjectKeys = [$scope.proj.project_key];
-
- //              }
- //            });
- //            var myform = angular.copy($scope.proj.schemaform.form);
- //            //we may need to replicate this within the search form...
- //            angular.forEach(myform, function(item) {
- //              item['feedback'] = false;
- //              item['disableSuccessState'] = true;
-
- //            });
- //            $scope.myschema = angular.copy($scope.proj.schemaform.schema);
- //            $scope.formChunks = myform.chunk(Math.ceil($scope.proj.schemaform.form.length / 3));
- //            $scope.blankForm = function() {
- //              $scope.newMol = {
- //                "customFields": {}
- //              };
- //              //need to also make the form pristine and remove (usually incorrect) validation cues...
- //              //we've removed the feedback because it is broken in angular schema form and therefore inconsistent.
- //              angular.forEach($scope.formChunks, function(chunk) {
- //                chunk.$pristine = true;
- //              });
-
-
- //            };
- //            $scope.blankForm();
- //            $scope.saveSingleCompound = function() {
- //              CBHCompoundBatch.saveSingleCompound(projectKey, '', $scope.newMol.customFields).then(
- //                function(data) {
- //                  CBHCompoundBatch.reindexModifiedCompound(data.data.id).then(function(reindexed) {
- //                    $state.go($state.current, {
- //                      "page": 1,
- //                      "sorts": [],
- //                      "filters": undefined
- //                    }, {
- //                      reload: true
- //                    });
- //                  });
- //                }
- //              );
- //            }
-
-
- //            $scope.cbh.searchPage = function() {
- //              $state.go('cbh.search', {
- //                "project__project_key__in": $scope.proj.project_key
- //              }, {
- //                reload: true
- //              });
- //            };
- //          },
- //        },
- //        'newresults@cbh.projects.project.compounds': {
- //          templateUrl: 'views/compound-list-new.html',
- //          controller: 'CompoundbatchCtrl'
- //        },
- //      }
-
- //    })
-
-
     .state('cbh.projects.project.assay', {
       url: 'assay/',
       controllerAs: 'assayctrl',
@@ -893,12 +800,6 @@ $urlRouterProvider.when('', '/projects/list');
 
     })
 
-    .state('cbh.projects.project.assay.upload', {
-      url: 'upload/',
-      templateUrl: 'views/assayupload.html',
-      controller: 'AssayUploadCtrl',
-      controllerAs: 'uploadctrl',
-    })
 
     /* ASSAYREG IMPLEMENTATION */
     .state('cbh.projects.project.assay.add_data', {
