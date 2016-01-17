@@ -1,15 +1,26 @@
         <div class="modal-header">
             <button  type="button" class="close pull-right" data-dismiss="alert" aria-label="Close" ng-click="cancel()"><span  class="glyphicon glyphicon-remove-circle"></span></button>
-            <h3 class="modal-title blue">Editing {{proj.name}}</h3>
+            <h3 ng-if="operation=='update'" class="modal-title blue">Editing {{proj.name}}</h3>
+            <h3 ng-if="operation=='add'" class="modal-title blue">Adding a new project</h3>
+
         </div>
         <div class="modal-body">
             <div class="row">
                 <div class="col-xs-12">
                     <div class="form-group" sf-form="projectForm" sf-schema="projectSchema" sf-model="proj"></div>
+                    
                 </div>
+                <div ng-if="errormess" class="col-xs-12">
+                    <div class="col-xs-12 has-error">
+                <div class="help-block ">{{errormess}}
+                    </div>
+                    </div>
+                     </div>
             </div>
         </div>
+                    
+
         <div class="modal-footer">
             <button type="button" class="btn btn-danger" ng-click="cancel()"><span class="glyphicon glyphicon-remove-circle"></span> Close and Discard Changes</button>
-            <button type='submit' class="btn btn-primary" ng-click="saveChanges()"><span class="glyphicon glyphicon-share"></span> Update and Close</button>
+            <button type='submit' class="btn btn-primary" ng-click="saveChanges()"><span class="glyphicon glyphicon-share"></span>{{(operation=='add' ? 'Save Changes and ' : 'Update and ')}}Close</button>
         </div>

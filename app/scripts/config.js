@@ -21,6 +21,8 @@ var configuration = {
     "cbh_batch_upload": 
     {"list_endpoint": path + "cbh_batch_upload", 
     "schema": path + "cbh_batch_upload/schema"}, 
+    "cbh_project_types": {"list_endpoint": path + 
+    "cbh_project_types", "schema": path + "cbh_project_types/schema"},
     "cbh_projects": {"list_endpoint": path + 
     "cbh_projects", "schema": path + "cbh_projects/schema"},
     "cbh_skinning": {"list_endpoint": path + 

@@ -616,43 +616,295 @@ $urlRouterProvider.when('', '/projects/list');
     .state('cbh.projects.list', {
       url: '/list',
       templateUrl: 'views/projects-list.html',
-      controller: function($rootScope, $state, $stateParams, $scope, AddDataFactory, $modal, ProjectFactory) {
+      controller: function($rootScope, $state, $stateParams, $scope, AddDataFactory, $modal, ProjectFactory, ProjectTypeFactory) {
+      var chemical_type = "";
 
+        var refreshProjectTypes = function(){
+                ProjectTypeFactory.get({}, function(data){
+                  $rootScope.projectTypes = data.objects.map(function(pType){
+                      
+                      if(pType.name=="chemical"){
+                        chemical_type = pType;
+                      }
+                      return {"name": pType.name, "value" : pType};
+                    });
+                  
+                  });
+                
+              }
+        refreshProjectTypes();
 
 
         $scope.openProjectWindow = function(index){
           $scope.modalInstance = $modal.open({
             templateUrl: 'views/modal-edit-project.html',
-            size: 'ld',
+            size: 'lg',
             controller: function($scope, $modalInstance) {
-
+              var pid;
               $scope.modalInstance = $modalInstance;
               if(index == -1){
+
+                  
+              
                 $scope.operation = "add";
-                $scope.proj = {};
+                $scope.proj = {
+                  "project_type": chemical_type,
+                  "custom_field_config":{
+                    "project_data_fields": [{"required":false, "field_type": "char", "open_or_restricted": "open"},]
+
+                  }
+                  
+               };
               }else{
-                var pid = $rootScope.projects[index].id;
-                $scope.proj = ProjectFactory.get({"projectId": pid});
-                $scope.operation = "update";
+                 pid= $rootScope.projects[index].id;
+                ProjectFactory.get({"projectId": pid}, function(data){
+                  $scope.proj = data;
+                  $scope.operation = "update";
+                //Set the object reference for projectType
+                  $rootScope.projectTypes.forEach(function(pType){
+                      if(pType.value.id==$scope.proj.project_type.id){
+                        $scope.proj.project_type = pType.value;
+                      }
+                  });
+                });
+
+                
               }
-              $scope.projectForm = ["name"];
-              $scope.projectSchema = {"type": "object", "properties": {"name":{"title": "name", "type": "string"}}};
+              var field_types = [{"name": "Short text", "value": "char"},  
+              {"name": "Full text", "value": "textarea"}, 
+              {"name": "Choice", "value": "uiselect"}, 
+              {"name": "Integer field", "value": "integer"},
+               {"name": "Decimal field", "value": "number"}, 
+               {"name": "Choice allowing create", "value": "uiselecttag"}, 
+               {"name": "Tags field allowing create", "value": "uiselecttags"}, 
+               {"name": "Percentage field", "value": "percentage"},
+                {"name": "Date Field", "value": "date"}, 
+                {"name": "Link to server or external", "value": "href"}, 
+                {"name": "Image link to embed", "value": "imghref"}, 
+                {"name": "Decimal field", "value": "decimal"}, 
+                {"name": "checkbox", "value": "boolean"}];
+              var restrictions = [
+                {"value": "open","name":"Open"},
+                {"value": "restricted","name":"Restricted to editors"}
+              ];
+
+
+              $scope.projectForm = [
+                  {"key":"name",
+                    "htmlClass": "col-sm-5",
+                    "disableSuccessState":true,
+                    "title": "Project Name",
+                    "required": true,
+                    "feedback": false,
+                    onChange: function(modelValue,form) {
+                        $scope.proj.custom_field_config.name = $scope.proj.name + "__config";
+                    }
+                  },
+                    
+                  {
+                    "key": "project_type",
+                    "title": "Project Type",
+                    "type": "radiobuttons",
+                    "titleMap": $rootScope.projectTypes,
+                    "htmlClass": "col-sm-5",
+                    "disableSuccessState":true,
+                    "feedback": false
+
+                },
+                {
+                    "key": "custom_field_config.project_data_fields",
+                    "title": "Project Data Fields",
+                    "type": "array",
+
+                    "items": [
+                    {"type":"section",
+                    "htmlClass": "row",
+                    "items":[
+                      {"key":"custom_field_config.project_data_fields[].name",
+                    "htmlClass": "col-sm-2",
+                           "disableSuccessState":true,
+                    "feedback": false,
+                      "title": "Name",
+                      "required": true,
+                      "isReadOnly" : function(value){
+                        var readonly = false;
+                        angular.forEach($scope.proj.custom_field_config.project_data_fields, function(item){
+                          if(item.name==value){
+                            if(item.id){
+                              readonly = true;
+                            }
+                          }
+                        });
+                        return readonly;
+                      }
+
+
+                    },
+                      {"title": "Required",
+                      "type":"select",
+                      "disableSuccessState":true,
+                        "key":"custom_field_config.project_data_fields[].required",
+                        "default":false,
+                        "titleMap": [{"value":true, "name":"Yes"}, {"value":false, "name":"No"}],
+                    "htmlClass": "col-sm-2"},
+                      {"title": "Field Type",
+                        "key":"custom_field_config.project_data_fields[].field_type",
+                        "titleMap": field_types
+                        ,
+                        "disableSuccessState":true,
+                        "type":"select",
+                    "htmlClass": "col-sm-2",
+                    
+                      },
+                      {"title":"Description",
+                        "key":"custom_field_config.project_data_fields[].description",
+                        "htmlClass": "col-sm-2",
+                        "disableSuccessState":true,
+                        "feedback": false,
+                    },
+                    {"title": "Visibility",
+                        "key":"custom_field_config.project_data_fields[].open_or_restricted",
+                        "titleMap": restrictions ,
+                        "disableSuccessState":true,
+                        "type":"select",
+                    "htmlClass": "col-sm-3"
+                      },
+                
+                       
+                    ]
+                  },{"type":"section",
+                    "htmlClass": "row",
+                    "items":[
+                                {  "htmlClass": "col-sm-6",
+                        "key":"default",
+                        "title": "Default Value",
+                       "condition": "model.custom_field_config.project_data_fields[arrayIndex].required"
+                     }, 
+                      {  "htmlClass": "col-sm-6",
+                        "key":"allowed_values",
+                        "title": "Allowed values (comma-separated)",
+                       "condition": "(model.custom_field_config.project_data_fields[arrayIndex].field_type == 'uiselect' || model.custom_field_config.project_data_fields[arrayIndex].field_type == 'uiselecttags' || model.custom_field_config.project_data_fields[arrayIndex].field_type == 'uiselecttag')"
+                     }
+                    ]
+                  },
+
+                  
+                      
+                    ],
+                    "htmlClass": "col-sm-12"
+                }
+
+                ];
+              $scope.projectSchema = {"type": "object", 
+                                        "properties": 
+                                        {"name":
+                                          {
+                                            "title": "Project Name", 
+                                            "type": "string",
+                                            "pattern": "^[a-zA-Z0-9_]*$",
+                                             "validationMessage" : {202: "Only letters, numbers, dashes and underscores in project names"},
+
+                                          },
+                                          "project_type":
+                                            {
+                                              "title": "Project Type", 
+                                              "type": "string",
+                                              "enum": $rootScope.projectTypes.map(
+                                                function(pT){
+                                                    return pT.value
+                                                }),
+                                              "default": chemical_type,
+
+                                            },
+
+                                          "custom_field_config":
+                                                { "type": "object","properties":{
+
+                                                  "project_data_fields":
+                                                  {
+                                                    "type": "array",
+                                                    "items": {
+                                                      "type": "object",
+                                                      "properties": {
+                                                        "name": { "type": "string", "default":"", "pattern": "^[^./\"',]*$" , "validationMessage" : {202: "Dots, commas, quotes and slashes not permitted in field names"}},
+                                                        "description": { "type": "string" },
+                                                        "required": { "type": "boolean","default":false},
+                                                        "field_type": {"type":"string",
+                                                        "default": "char",
+                                                        "enum":field_types.map(function(r){
+                                                          return r.value
+                                                        })
+                                                          },
+                                                        "open_or_restricted":{"type":"string",
+                                                        "enum":restrictions.map(function(r){
+                                                          return r.value
+                                                        }),
+                                                        "default" : "open"
+                                                          },
+                                                          "allowed_values":{
+                                                            "type":"string",
+
+                                                          },
+                                                            "default":{
+                                                            "type":"string",
+
+                                                          }
+
+                                                        
+                                                      }
+                                                    }
+                                                  }}
+                                          }
+                                        }
+                                      };
+              
               $scope.cancel = function () {
                   $modalInstance.dismiss('cancel');
                 };
-              $scope.saveChanges = function(){
-                  var promise;
-                  if($scope.operation = "add"){
-                    promise = ProjectFactory.save($scope.proj);
-                  }else{
-                    promise = ProjectFactory.update({"projectId": pid}, $scope.proj);
+             $scope.errormess = "";
+              var checkForDuplicateNames= function(){
+                 var names = {};
+                 var dupes = [];
+                  angular.forEach($scope.proj.custom_field_config.project_data_fields, function(f, index){
+                    if(angular.isUndefined(f.name)){
+                      f.name="";
+                    }
+                    if(f.name){
+                      if(!angular.isUndefined(names[f.name])){
+                        names[f.name].push(index);
+                        dupes.push(f.name);
+                      }else{
+                        names[f.name] = [index];
+                        
+                      }
+                    }
+                    
+                  });
+                  console.log(dupes)
+                  console.log(names)
+                  
+                  if(dupes.length>0){
+                    $scope.errormess = "Duplicate names found:   " + dupes.join(", ");
                   }
-                  promise.then(function(data){
+              }
+
+              $scope.saveChanges = function(){
+                  var callback = function(data){
                     $rootScope.projects[index] = $scope.proj;
                     $modalInstance.dismiss('cancel');
-                    window.location.reload(true);
-                  });
-                  
+                    location.reload(true);
+                  };
+                  checkForDuplicateNames();
+                  $scope.$broadcast('schemaFormValidate');
+                    if($scope.projectForm.$valid && !$scope.errormess ){
+                      if($scope.operation = "add"){
+                       ProjectFactory.save($scope.proj, callback);
+                      }else{
+                        ProjectFactory.update({"projectId": $scope.proj.id}, $scope.proj, callback);
+                      }
+                    }else{
+
+                    }
               };
             }
           });
