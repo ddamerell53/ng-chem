@@ -23,6 +23,8 @@ var configuration = {
     "schema": path + "cbh_batch_upload/schema"}, 
     "cbh_project_types": {"list_endpoint": path + 
     "cbh_project_types", "schema": path + "cbh_project_types/schema"},
+    "cbh_permissions": {"list_endpoint": path + 
+    "cbh_permissions", "schema": path + "cbh_permissions/schema"},
     "cbh_projects": {"list_endpoint": path + 
     "cbh_projects", "schema": path + "cbh_projects/schema"},
     "cbh_skinning": {"list_endpoint": path + 
