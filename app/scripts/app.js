@@ -801,8 +801,8 @@ $urlRouterProvider.when('', '/projects/list');
                                           {
                                             "title": "Project Name", 
                                             "type": "string",
-                                            "pattern": "^[a-zA-Z0-9_]*$",
-                                             "validationMessage" : {202: "Only letters, numbers, dashes and underscores in project names"},
+                                            "pattern": "^[a-zA-Z0-9_\s/&]*$",
+                                             "validationMessage" : {202: "Only letters, spaces, numbers, dashes, slashes, & signs and underscores in project names"},
 
                                           },
                                           "project_type":
