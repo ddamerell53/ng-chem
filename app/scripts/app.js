@@ -672,16 +672,16 @@ $urlRouterProvider.when('', '/projects/list');
                     }
                   },
                     
-                //   {
-                //     "key": "project_type",
-                //     "title": "Project Type",
-                //     "type": "radiobuttons",
-                //     "titleMap": $rootScope.projectTypes,
-                //     "htmlClass": "col-sm-5",
-                //     "disableSuccessState":true,
-                //     "feedback": false
+                  {
+                    "key": "project_type",
+                    "title": "Project Type",
+                    "type": "radiobuttons",
+                    "titleMap": $rootScope.projectTypes,
+                    "htmlClass": "col-sm-5",
+                    "disableSuccessState":true,
+                    "feedback": false
 
-                // },
+                },
                 {
                     "key": "custom_field_config.project_data_fields",
                     "title": "Project Data Fields",
@@ -776,17 +776,17 @@ $urlRouterProvider.when('', '/projects/list');
                                              "validationMessage" : {202: "Only letters, spaces, numbers, dashes, slashes, & signs and underscores in project names"},
 
                                           },
-                                          // "project_type":
-                                          //   {
-                                          //     "title": "Project Type", 
-                                          //     "type": "string",
-                                          //     "enum": $rootScope.projectTypes.map(
-                                          //       function(pT){
-                                          //           return pT.value
-                                          //       }),
-                                          //     "default": chemical_type,
+                                          "project_type":
+                                            {
+                                              "title": "Project Type", 
+                                              "type": "object",
+                                              "enum": $rootScope.projectTypes.map(
+                                                function(pT){
+                                                    return pT.value
+                                                }),
+                                              "default": chemical_type,
 
-                                          //   },
+                                            },
 
                                           "custom_field_config":
                                                 { "type": "object","properties":{
