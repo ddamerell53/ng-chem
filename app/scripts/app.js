@@ -636,41 +636,13 @@ $urlRouterProvider.when('', '/projects/list');
 
 
         $scope.openProjectWindow = function(index){
+
+
           $scope.modalInstance = $modal.open({
             templateUrl: 'views/modal-edit-project.html',
             size: 'lg',
             controller: function($scope, $modalInstance) {
-              var pid;
-              $scope.modalInstance = $modalInstance;
-              if(index == -1){
-
-                  
-              
-                $scope.operation = "add";
-                $scope.proj = {
-                  "project_type": chemical_type,
-                  "custom_field_config":{
-                    "project_data_fields": [{"required":false, "field_type": "char", "open_or_restricted": "open"},]
-
-                  }
-                  
-               };
-              }else{
-                 pid= $rootScope.projects[index].id;
-                ProjectFactory.get({"projectId": pid}, function(data){
-                  $scope.proj = data;
-                  $scope.operation = "update";
-                //Set the object reference for projectType
-                  $rootScope.projectTypes.forEach(function(pType){
-                      if(pType.value.id==$scope.proj.project_type.id){
-                        $scope.proj.project_type = pType.value;
-                      }
-                  });
-                });
-
-                
-              }
-              var field_types = [{"name": "Short text", "value": "char"},  
+               var field_types = [{"name": "Short text", "value": "char"},  
               {"name": "Full text", "value": "textarea"}, 
               {"name": "Choice", "value": "uiselect"}, 
               {"name": "Integer field", "value": "integer"},
@@ -687,9 +659,8 @@ $urlRouterProvider.when('', '/projects/list');
                 {"value": "open","name":"Open"},
                 {"value": "restricted","name":"Restricted to editors"}
               ];
-
-
-              $scope.projectForm = [
+              var setForms = function(){
+                 $scope.projectForm = [
                   {"key":"name",
                     "htmlClass": "col-sm-5",
                     "disableSuccessState":true,
@@ -701,16 +672,16 @@ $urlRouterProvider.when('', '/projects/list');
                     }
                   },
                     
-                  {
-                    "key": "project_type",
-                    "title": "Project Type",
-                    "type": "radiobuttons",
-                    "titleMap": $rootScope.projectTypes,
-                    "htmlClass": "col-sm-5",
-                    "disableSuccessState":true,
-                    "feedback": false
+                //   {
+                //     "key": "project_type",
+                //     "title": "Project Type",
+                //     "type": "radiobuttons",
+                //     "titleMap": $rootScope.projectTypes,
+                //     "htmlClass": "col-sm-5",
+                //     "disableSuccessState":true,
+                //     "feedback": false
 
-                },
+                // },
                 {
                     "key": "custom_field_config.project_data_fields",
                     "title": "Project Data Fields",
@@ -805,17 +776,17 @@ $urlRouterProvider.when('', '/projects/list');
                                              "validationMessage" : {202: "Only letters, spaces, numbers, dashes, slashes, & signs and underscores in project names"},
 
                                           },
-                                          "project_type":
-                                            {
-                                              "title": "Project Type", 
-                                              "type": "string",
-                                              "enum": $rootScope.projectTypes.map(
-                                                function(pT){
-                                                    return pT.value
-                                                }),
-                                              "default": chemical_type,
+                                          // "project_type":
+                                          //   {
+                                          //     "title": "Project Type", 
+                                          //     "type": "string",
+                                          //     "enum": $rootScope.projectTypes.map(
+                                          //       function(pT){
+                                          //           return pT.value
+                                          //       }),
+                                          //     "default": chemical_type,
 
-                                            },
+                                          //   },
 
                                           "custom_field_config":
                                                 { "type": "object","properties":{
@@ -857,6 +828,46 @@ $urlRouterProvider.when('', '/projects/list');
                                           }
                                         }
                                       };
+
+              }
+             
+
+
+              var pid;
+              $scope.modalInstance = $modalInstance;
+              if(index == -1){
+
+                  
+              
+                $scope.operation = "add";
+                $scope.proj = {
+                  "project_type": chemical_type,
+                  "custom_field_config":{
+                    "project_data_fields": [{"required":false, "field_type": "char", "open_or_restricted": "open"},]
+
+                  }
+                 
+                  
+               };
+                setForms();
+              }else{
+                 pid= $rootScope.projects[index].id;
+                ProjectFactory.get({"projectId": pid}, function(data){
+                  $scope.proj = data;
+                  $scope.operation = "update";
+                //Set the object reference for projectType
+                  $rootScope.projectTypes.forEach(function(pType){
+                      if(pType.value.id==$scope.proj.project_type.id){
+                        $scope.proj.project_type = pType.value;
+                      }
+                  });
+                  setForms();
+                });
+
+                
+              }
+
+
               
               $scope.cancel = function () {
                   $modalInstance.dismiss('cancel');
@@ -888,7 +899,7 @@ $urlRouterProvider.when('', '/projects/list');
                   }
               }
 
-              $scope.saveChanges = function(){
+              $scope.saveChanges = function(myForm){
                   var callback = function(data){
                     $rootScope.projects[index] = $scope.proj;
                     $modalInstance.dismiss('cancel');
@@ -896,14 +907,14 @@ $urlRouterProvider.when('', '/projects/list');
                   };
                   checkForDuplicateNames();
                   $scope.$broadcast('schemaFormValidate');
-                    if($scope.projectForm.$valid && !$scope.errormess ){
+                    if(myForm.$valid && !$scope.errormess ){
                       if($scope.operation = "add"){
                        ProjectFactory.save($scope.proj, callback);
                       }else{
                         ProjectFactory.update({"projectId": $scope.proj.id}, $scope.proj, callback);
                       }
                     }else{
-
+                      console.log(myForm);
                     }
               };
             }

@@ -7,7 +7,7 @@
         <div class="modal-body">
             <div class="row">
                 <div class="col-xs-12">
-                    <div class="form-group" sf-form="projectForm" sf-schema="projectSchema" sf-model="proj"></div>
+                    <form class="form-group" sf-form="projectForm" sf-schema="projectSchema" sf-model="proj"></form>
                     
                 </div>
                 <div ng-if="errormess" class="col-xs-12">
@@ -21,6 +21,11 @@
                     
 
         <div class="modal-footer">
-            <button type="button" class="btn btn-danger" ng-click="cancel()"><span class="glyphicon glyphicon-remove-circle"></span> Close and Discard Changes</button>
-            <button type='submit' class="btn btn-primary" ng-click="saveChanges()"><span class="glyphicon glyphicon-share"></span>{{(operation=='add' ? 'Save Changes and ' : 'Update and ')}}Close</button>
+           
+            <form ng-submit="saveChanges(myForm)" sf-form="[]" sf-schema="projectSchema" sf-model="proj" name="myForm">
+                 <button type="button" class="btn btn-danger" ng-click="cancel()"><span class="glyphicon glyphicon-remove-circle"></span> Close and Discard Changes</button>
+                <button type='submit' class="btn btn-primary" ng-click=""><span class="glyphicon glyphicon-share"></span>Save Changes and Close</button>
+            </form>
+            
+            
         </div>
