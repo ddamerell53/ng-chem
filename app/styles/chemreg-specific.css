@@ -54,10 +54,11 @@ table.htCore {
 a.disabled
 {
     color: grey;
-    a:hover, a:focus {
-    color: grey;
-    }
+    
 }
+a.disabled:hover, a.disabled:focus {
+    color: grey;
+ }
 
 .highlighted {
 background-color: #FFFF00;
