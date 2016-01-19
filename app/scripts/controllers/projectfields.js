@@ -8,8 +8,8 @@
  * Controller of the ngChemApp
  */
 angular.module('chembiohubAssayApp')
-  .controller('ProjectfieldsCtrl', ["$scope", "$modalInstance", "$rootScope", "ProjectFactory", "projectId", "chemical_type", "projectTypes",
-    function($scope, $modalInstance, $rootScope, ProjectFactory,  projectId, chemical_type, projectTypes) {
+  .controller('ProjectfieldsCtrl', ["$scope", "$modalInstance", "$rootScope", "ProjectFactory", "projectId", "chemical_type", "projectTypes","isClone",
+    function($scope, $modalInstance, $rootScope, ProjectFactory,  projectId, chemical_type, projectTypes, isClone) {
     
             var field_types = [{"name": "Short text", "value": "char"},  
               {"name": "Full text", "value": "textarea"}, 
@@ -220,8 +220,28 @@ angular.module('chembiohubAssayApp')
                 setForms();
               }else{
                 ProjectFactory.get({"projectId": projectId}, function(data){
+                  if(isClone){
+                    $scope.operation = "add";
+                    data.id = undefined;
+                    data.resource_uri = undefined;
+                    data.pk = undefined;
+                    data.name = "";
+                    data.custom_field_config.name = undefined;
+                    data.custom_field_config.id = undefined;
+                    data.custom_field_config.pk = undefined;
+                    data.custom_field_config.resource_uri = undefined;
+
+                    angular.forEach(data.custom_field_config.project_data_fields, function(item){
+                        item.id = undefined;
+                        item.resource_uri = undefined;
+                        item.pk = undefined;
+                    });
+                  }else{
+                    $scope.operation = "update";
+                  }
+
                   $scope.proj = data;
-                  $scope.operation = "update";
+                  
                 //Set the object reference for projectType
                   projectTypes.forEach(function(pType){
                       if(pType.value.id==$scope.proj.project_type.id){
@@ -258,9 +278,7 @@ angular.module('chembiohubAssayApp')
                     }
                     
                   });
-                  console.log(dupes)
-                  console.log(names)
-                  
+
                   if(dupes.length>0){
                     $scope.errormess = "Duplicate names found:   " + dupes.join(", ");
                   }
@@ -272,13 +290,15 @@ angular.module('chembiohubAssayApp')
                     $modalInstance.dismiss('cancel');
                     location.reload(true);
                   };
+                  
                   checkForDuplicateNames();
                   $scope.$broadcast('schemaFormValidate');
                     if(myForm.$valid && !$scope.errormess ){
                       if($scope.operation = "add"){
-                       ProjectFactory.save($scope.proj, callback);
+                         ProjectFactory.save($scope.proj, callback);
+
                       }else{
-                        ProjectFactory.update({"projectId": $scope.proj.id}, $scope.proj, callback);
+                         ProjectFactory.update({"projectId": $scope.proj.id}, $scope.proj, callback);
                       }
                     }else{
                       console.log(myForm);

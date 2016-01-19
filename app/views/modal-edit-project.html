@@ -21,9 +21,9 @@
                     
 
         <div class="modal-footer">
-           
-            <form ng-submit="saveChanges(myForm)" sf-form="[]" sf-schema="projectSchema" sf-model="proj" name="myForm">
-                 <button type="button" class="btn btn-danger" ng-click="cancel()"><span class="glyphicon glyphicon-remove-circle"></span> Close and Discard Changes</button>
+           <button type="button" class="btn btn-danger" ng-click="cancel()"><span class="glyphicon glyphicon-remove-circle"></span> Close and Discard Changes</button>
+            <form style="display:inline-block" ng-submit="saveChanges(myForm)" sf-form="[]" sf-schema="projectSchema" sf-model="proj" name="myForm">
+                 
                 <button type='submit' class="btn btn-primary" ng-click=""><span class="glyphicon glyphicon-share"></span>Save Changes and Close</button>
             </form>
             

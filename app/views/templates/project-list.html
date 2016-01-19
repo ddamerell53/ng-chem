@@ -4,19 +4,20 @@
             <div class="col-sm-4 proj-list-header {{!project.project_type.show_compounds ? 'nonchem' : ''}}" style="height:100%">
 
                 <h2 class="blue" style="display:inline-block">
-                    {{project.name}}                
-
+                                  
+                    {{project.name | limitTo:20}} 
                 </h2>
                 
                 
             </div>
 
             <div class="col-sm-4" style="padding:10px 10px 0 10px;">
-                <p ng-show="project.assays_configured" class="nexa"><strong>Assay Data</strong> 
-                    <br>
-                    <small >
-                        <a ui-sref="cbh.projects.project.assay.data_overview({projectKey: project.project_key})"><span class="glyphicon glyphicon-tasks"></span> Data Overview</a><br>
-                        <a ng-click="cbh.searchForUserWithProjectKey(project.project_key)"><span class="glyphicon glyphicon-user"></span> Search My Data</a>
+                <p ng-if="project.assays_configured" class="nexa">
+                    <strong style="line-height:40px">    <img style="padding-top:5px;" class="pull-left" src="images/assay-icon.png" ng-if="project.assays_configured" alt="{{project.project_type.name}} project" title="Assay project"> &nbsp;
+Assay Data<br></strong> 
+                    <small style="text-indent:20px; padding-top:10px">
+                                           <a ng-if="project.assays_configured" ui-sref="cbh.projects.project.assay.data_overview({projectKey: project.project_key})"><span class="glyphicon glyphicon-tasks"></span> Data Overview</a><br>
+                        <a ng-if="project.assays_configured" ng-click="cbh.searchForUserWithProjectKey(project.project_key)"><span class="glyphicon glyphicon-user"></span> Search My Data</a>
                         <br>
                     </small>
                 </p>
@@ -24,12 +25,12 @@
 
             <div class="col-sm-4" style="padding:10px 10px 0 10px;">
                 <p class="nexa" ng-if="project.project_type.name == 'chemical' || project.project_type.name.toLowerCase() == 'inventory' || project.project_type.show_compounds ">
-                    <strong>{{project.project_type.show_compounds ? 'Chemical' : 'Inventory' }} Data</strong> 
-                    <br>
-                    <!--   View all compounds, My data, and Add compounds options in that order. -->
-                    <small>
+                    <strong style="line-height:40px"><img class="pull-left" style="padding-top:5px;" src="images/chemical-icon.png" ng-if="project.project_type.show_compounds" alt="Project with compounds" title="Project with compounds">
+                <img class="pull-left" style="padding-top:5px;" src="images/inventory-icon.png" ng-if="!project.project_type.show_compounds" alt="{{project.project_type.name}} project" title="{{project.project_type.name}} project">&nbsp;{{project.project_type.show_compounds ? 'Chemical' : 'Inventory' }} Data<br></strong> 
+                   <!--   View all compounds, My data, and Add compounds options in that order. -->
+                    <small style="text-indent:20px; padding-top:10px">
                         <a ng-click="cbh.hideSearchForm=true;" ui-sref="cbh.search({project__project_key__in: project.project_key})"><span class="glyphicon glyphicon-search"></span> Search all {{project.project_type.show_compounds ? 'compounds' : 'inventory items' }}</a>
-                        <br>
+                        <br> 
                         <a ui-sref="cbh.search({creator_uri: cbh.logged_in_user.resource_uri, project__project_key__in: project.project_key })"><span class="glyphicon glyphicon-user"></span> Search my {{project.project_type.show_compounds ? 'compounds' : 'inventory items' }}</a>
                         <br ng-if="project.editor && !project.project_type.show_compounds" >
                         <a ng-if="project.editor && !project.project_type.show_compounds" ng-click="toggleSingleForm.showFlag = !toggleSingleForm.showFlag; cbh.showSingle = true" ui-sref="cbh.search({project__project_key__in: project.project_key})"><span class="glyphicon glyphicon-plus-sign"></span> Add single {{project.project_type.show_compounds ? 'compound' : 'inventory item' }}</a>
@@ -43,9 +44,7 @@
                 </p>
             </div>
             <div class="col-xs-12 pull-left clearfix" style="margin: -20px 0 5px -4px;">
-                <img src="images/chemical-icon.png" ng-if="project.project_type.show_compounds" alt="Project with compounds" title="Project with compounds">
-                <img src="images/inventory-icon.png" ng-if="!project.project_type.show_compounds" alt="{{project.project_type.name}} project" title="{{project.project_type.name}} project">
-                <img src="images/assay-icon.png" ng-if="project.assays_configured" alt="{{project.project_type.name}} project" title="Assay project">
+               
                 <p class="nexa" style="margin-bottom:0px; display:inline-block;"><small><a ng-if="project.owner" ng-click="openProjectWindow(project.id)"><span class="glyphicon glyphicon-pencil"></span> Edit configuration</a></small>
                 <small><a class="disabled" ng-if="!project.owner" disabled  ><span class="glyphicon glyphicon-pencil"></span> Edit configuration</a></small>
 
@@ -53,9 +52,10 @@
                 </p>
                 <p class="nexa" style="margin-bottom:0px; display:inline-block;"><small><a ng-if="project.owner" ng-click="openEditPermissions(project.id)"><span class="glyphicon glyphicon-user"></span> Edit user roles</a></small>
                 <small><a class="disabled" ng-if="!project.owner" disabled  ><span class="glyphicon glyphicon-user"></span> Edit user roles</a></small>
-
                 <info-box ng-if="!project.owner" freetext="You do not have permission to edit the users on this project as you are {{(project.editor ? 'an editor' : 'a viewer')}} not an owner. Please ask an administrator for details." right="true">
                 </p>
+               <!--  <p class="nexa" style="margin-bottom:0px; display:inline-block;"><small><a ng-click="openProjectWindow(project.id, true)"><span class="glyphicon glyphicon-pencil"></span> Clone project definition</a></small>
+                </p> -->
             </div>
 
 
