@@ -8,8 +8,8 @@
  * Controller of the ngChemApp
  */
 angular.module('chembiohubAssayApp')
-  .controller('ProjectfieldsCtrl', ["$scope", "$modalInstance", "$rootScope", "ProjectFactory", "projectId", "chemical_type", "projectTypes","isClone",
-    function($scope, $modalInstance, $rootScope, ProjectFactory,  projectId, chemical_type, projectTypes, isClone) {
+  .controller('ProjectfieldsCtrl', ["$scope", "$modalInstance", "$rootScope", "ProjectFactory", "projectId", "chemical_type", "projectTypes",
+    function($scope, $modalInstance, $rootScope, ProjectFactory,  projectId, chemical_type, projectTypes) {
     
             var field_types = [{"name": "Short text", "value": "char"},  
               {"name": "Full text", "value": "textarea"}, 
@@ -220,25 +220,9 @@ angular.module('chembiohubAssayApp')
                 setForms();
               }else{
                 ProjectFactory.get({"projectId": projectId}, function(data){
-                  if(isClone){
-                    $scope.operation = "add";
-                    data.id = undefined;
-                    data.resource_uri = undefined;
-                    data.pk = undefined;
-                    data.name = "";
-                    data.custom_field_config.name = undefined;
-                    data.custom_field_config.id = undefined;
-                    data.custom_field_config.pk = undefined;
-                    data.custom_field_config.resource_uri = undefined;
-
-                    angular.forEach(data.custom_field_config.project_data_fields, function(item){
-                        item.id = undefined;
-                        item.resource_uri = undefined;
-                        item.pk = undefined;
-                    });
-                  }else{
+                  
                     $scope.operation = "update";
-                  }
+                  
 
                   $scope.proj = data;
                   
@@ -256,6 +240,27 @@ angular.module('chembiohubAssayApp')
 
 
               
+              var requestCopyFields = function(copyProjectId){
+
+                    data.id = undefined;
+                    data.resource_uri = undefined;
+                    data.pk = undefined;
+                    data.name = "";
+                    data.custom_field_config.name = undefined;
+                    data.custom_field_config.id = undefined;
+                    data.custom_field_config.pk = undefined;
+                    data.custom_field_config.resource_uri = undefined;
+
+                    angular.forEach(data.custom_field_config.project_data_fields, function(item){
+                        item.id = undefined;
+                        item.resource_uri = undefined;
+                        item.pk = undefined;
+                    });
+                  
+              }
+
+
+
               $scope.cancel = function () {
                   $modalInstance.dismiss('cancel');
                 };

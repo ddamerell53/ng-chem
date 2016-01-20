@@ -42,7 +42,7 @@ angular.module('chembiohubAssayApp')
                 },
                 projectTypes: function(){
                     return $scope.projectTypes;
-                },
+                }
             }, 
             controller: "ProjectfieldsCtrl"
           });
