@@ -47,7 +47,7 @@ angular.module('chembiohubAssayApp')
     var messages = {
         //"home": {
             wizard_intro_text: "To upload multiple compounds you will need a list of SMILES; an InChI key or list of InChI keys; or either a SD, ChemDraw or Excel file.",
-            projects_help: "Clicking a project title will take you to the overview page for that project.",
+            projects_help: "For each project you can view assay, inventory and chemical data dependent on the setup of the project. Editors can edit data, owners are able to invite new users to a project and change the usable fields or nominate other owners.",
             project_list_filter_help: "Narrow down the project list using this quick search box. Results will filter on project name and project type.",
 
         //},

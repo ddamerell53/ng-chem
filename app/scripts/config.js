@@ -21,6 +21,10 @@ var configuration = {
     "cbh_batch_upload": 
     {"list_endpoint": path + "cbh_batch_upload", 
     "schema": path + "cbh_batch_upload/schema"}, 
+    "cbh_project_types": {"list_endpoint": path + 
+    "cbh_project_types", "schema": path + "cbh_project_types/schema"},
+    "cbh_permissions": {"list_endpoint": path + 
+    "cbh_permissions", "schema": path + "cbh_permissions/schema"},
     "cbh_projects": {"list_endpoint": path + 
     "cbh_projects", "schema": path + "cbh_projects/schema"},
     "cbh_skinning": {"list_endpoint": path + 
@@ -151,7 +155,7 @@ var projReq = $http({  method: "get",
 
 var userReq = $http({  method: "get",
                     url: configuration.users.list_endpoint,
-                    params: {"limit":1000}, });
+                    params: {"limit":10000}, });
 
 
 
@@ -163,7 +167,16 @@ $q.all([skinReq, projReq, userReq]).then(function(data){
           skinObj.data
     );
   angular.module('chembiohubAssayApp').value('userList', userData.data.objects );
-
+var login = null;
+      angular.forEach(userData.data.objects, function(u){
+          if(u.is_logged_in){
+            login = u;
+          }
+      });
+    angular.module('chembiohubAssayApp').value('loggedInUser',  
+              login
+     );
+    
   angular.forEach(projData.data.objects, function(project){
         project.schemaform = {
           "form" : formGetter(project.custom_field_config.project_data_fields, "col-xs-6", project),
@@ -190,11 +203,7 @@ $q.all([skinReq, projReq, userReq]).then(function(data){
         // project.updateCustomFields();
         
     });
-
-    
-    angular.module('chembiohubAssayApp').value('loggedInUser',  
-        projData.data.user
-    );
+      
     angular.module('chembiohubAssayApp').value('projectList',  
           projData.data
     );

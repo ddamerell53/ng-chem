@@ -30,7 +30,9 @@ div::-webkit-scrollbar-thumb {
 .ht_clone_top.handsontable {
     padding-bottom: 12px;
 }
-
+.has-feedback .form-control {
+    padding-right: 0px;
+}
 .htCore tr:first-child td {
   padding-top: 15px !important;
 }
@@ -48,6 +50,16 @@ table.htCore {
   padding-bottom: 0px;
   margin-bottom: 0px;
 }*/
+
+a.disabled
+{
+    color: grey;
+    
+}
+a.disabled:hover, a.disabled:focus {
+    color: grey;
+ }
+
 .highlighted {
 background-color: #FFFF00;
 }

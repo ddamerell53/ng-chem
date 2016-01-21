@@ -9,17 +9,6 @@
  */
 angular.module('chembiohubAssayApp')
   .factory('ProjectFactory' ,function ($resource, urlConfig) {
-    // Service logic
-    // ...
-
-    /*var meaningOfLife = 42;
-
-    // Public API here
-    return {
-      someMethod: function () {
-        return meaningOfLife;
-      }
-    };*/
 
     //need to  - 
     //create a page which shows a list of projects available to the user
