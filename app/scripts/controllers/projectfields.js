@@ -203,6 +203,14 @@ angular.module('chembiohubAssayApp')
 
 
               $scope.modalInstance = $modalInstance;
+              $scope.setProjectType = function(){
+                //ensures that there is object equality for the project type
+                projectTypes.forEach(function(pType){
+                      if(pType.value.id==$scope.proj.project_type.id){
+                        $scope.proj.project_type = pType.value;
+                      }
+                  });
+              }
               if(projectId == -1){
 
                   
@@ -225,13 +233,9 @@ angular.module('chembiohubAssayApp')
                   
 
                   $scope.proj = data;
-                  
+                  $scope.setProjectType();
                 //Set the object reference for projectType
-                  projectTypes.forEach(function(pType){
-                      if(pType.value.id==$scope.proj.project_type.id){
-                        $scope.proj.project_type = pType.value;
-                      }
-                  });
+                  
                   setForms();
                 });
 
@@ -240,23 +244,27 @@ angular.module('chembiohubAssayApp')
 
 
               
-              var requestCopyFields = function(copyProjectId){
-
-                    data.id = undefined;
-                    data.resource_uri = undefined;
-                    data.pk = undefined;
-                    data.name = "";
-                    data.custom_field_config.name = undefined;
-                    data.custom_field_config.id = undefined;
-                    data.custom_field_config.pk = undefined;
-                    data.custom_field_config.resource_uri = undefined;
-
+              $scope.copyProjectDefinition = function(copyProjectId){
+                ProjectFactory.get({"projectId": copyProjectId}, function(data){
+                    //Set the project type from the copy
+                    $scope.proj.project_type = data.project_type;
+                    //Ensure this matches the list project type
+                    $scope.setProjectType();
+                    //If there is only one item left in the custom field configs check it is not blank, if not then append the fields from that project
+                    if($scope.proj.custom_field_config.project_data_fields.length == 1){
+                          if($scope.proj.custom_field_config.project_data_fields[0].name==="" || angular.isUndefined($scope.proj.custom_field_config.project_data_fields[0].name)){
+                            $scope.proj.custom_field_config.project_data_fields = [];
+                          }
+                        }
+                    //Push all of the fields into the $scope.proj definition
                     angular.forEach(data.custom_field_config.project_data_fields, function(item){
                         item.id = undefined;
                         item.resource_uri = undefined;
                         item.pk = undefined;
+                        $scope.proj.custom_field_config.project_data_fields.push(item);
                     });
                   
+                });
               }
 
 
@@ -291,7 +299,6 @@ angular.module('chembiohubAssayApp')
 
               $scope.saveChanges = function(myForm){
                   var callback = function(data){
-                    $rootScope.projects[index] = $scope.proj;
                     $modalInstance.dismiss('cancel');
                     location.reload(true);
                   };

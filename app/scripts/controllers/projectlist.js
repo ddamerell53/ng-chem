@@ -8,7 +8,17 @@
  * Controller of the ngChemApp
  */
 angular.module('chembiohubAssayApp')
-  .controller('ProjectlistCtrl',function($rootScope, $state, $stateParams, $scope, AddDataFactory, $modal, ProjectFactory, ProjectTypeFactory, Projectpermissions, userList) {
+  .controller('ProjectlistCtrl',function($rootScope, 
+    $state, 
+    $stateParams, 
+    $scope, 
+    AddDataFactory, 
+    $modal, 
+    ProjectFactory, 
+    ProjectTypeFactory, 
+    Projectpermissions, 
+    userList, 
+    ProjectPermissionAllRoles) {
       $scope.chemical_type = "";
 
         var refreshProjectTypes = function(){
@@ -50,43 +60,19 @@ angular.module('chembiohubAssayApp')
         }
 
         
-        $scope.openEditPermissions = function(projectId, proj){
+        $scope.openEditPermissions = function(proj){
             //Note same template because we are using angular schema form
-            $scope.projectId = projectId;
+            $scope.projectId = proj.id;
             $scope.proj = proj;
             $scope.modalInstance = $modal.open({
             templateUrl: 'views/modal-edit-project-permissions.html',
-            size: 'lg',
+            size: 'md',
             resolve: {
                 proj: function(){
                   return $scope.proj;
                 },
-                projectId: function () {
-                  return $scope.projectId;
-                },
-                permissions: function(){
-                  var data = {
-                                roles: ["owner", "editor", "viewer"],
-                              };
-                  angular.forEach(data.roles, function(role){
-                    data[role] = Projectpermissions.get({"codename": projectId + "__" + role});
-                    data[role + "_user_tagfunction"] = function(tagggedEmail){
-                        // We return a "user" object that will also be edited in the invitations section of the page
-                        
-                          return {
-                                  "username": tagggedEmail, 
-                                  "external": true, 
-                                  "first_name": "", 
-                                  "last_name": "",
-                                  "email" : tagggedEmail,
-                                  "inviting" : true,
-                                  "resource_uri" : tagggedEmail
-                                 }
-                        
-                        
-                    }
-                  });
-                  return data
+                permissions:function(){
+                  return  ProjectPermissionAllRoles.get_for_project($scope.projectId);
                 }
             }, 
             controller: "ProjectpermissionsCtrl"
