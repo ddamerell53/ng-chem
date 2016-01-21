@@ -8,10 +8,10 @@
  * Controller of the ngChemApp
  */
 angular.module('chembiohubAssayApp')
-    .controller('DataOverviewCtrl', ['$scope', 'AddDataFactory', '$modal', '$resource', '$stateParams', '$state', '$timeout', 'prefix', 'urlConfig', '$cookies', 'FlowFileFactory',
+    .controller('DataOverviewCtrl', ['$scope', 'AddDataFactory', '$modal', '$resource', '$stateParams', '$state', '$timeout', '$interval', 'prefix', 'urlConfig', '$cookies', 'FlowFileFactory', 'DraftFactory', 'projectKey', '$filter',
         
 
-        function($scope, AddDataFactory, $modal, $resource, $stateParams, $state, $timeout, prefix, urlConfig, $cookies, FlowFileFactory) {
+        function($scope, AddDataFactory, $modal, $resource, $stateParams, $state, $timeout, $interval, prefix, urlConfig, $cookies, FlowFileFactory, DraftFactory, projectKey, $filter) {
             var destroying = false;
             $scope.$on('$destroy', function() {
                 destroying = true;
@@ -54,7 +54,12 @@ angular.module('chembiohubAssayApp')
                     dpc.next_level_searchnames = dpc.next_level_cfc.project_data_fields.map(function(field) {
                         return dpc.next_level_dfc.last_level + ".project_data." + field.elasticsearch_fieldname;
                     })
+                    /*if(adding){
+                        dataoverviewctrl.autosave = $interval(function(){dataoverviewctrl.saveDraft(dpc.new_next_level_model.project_data);}, 60000);    
+                    }*/
+                    
                 }
+
 
                 //setting up a method for setting up dfc for file upload
                 //don't know what I do and don't need from this
@@ -311,6 +316,7 @@ angular.module('chembiohubAssayApp')
                         dpc.setChosenDataFormConfig(dpc.dfc_full.permitted_children[0]);
                     }
                     dpc.addingChild = false
+                    //$interval.cancel(dataoverviewctrl.autosave);
 
                 }
 
@@ -326,6 +332,7 @@ angular.module('chembiohubAssayApp')
 
                 dpc.addDataToForm = function(data) {
                         dpc.addingChild = true;
+
                         dpc.setForm(data);
 
                     }
@@ -377,6 +384,24 @@ angular.module('chembiohubAssayApp')
                         });
                     });
                 }
+
+                dpc.saveDraft = function(form_data){
+                    console.log("Saving draft");
+                    //save the contents of the form to either a django object or a redis cache object
+                    var df = DraftFactory.save_draft
+                    var dfresult = df.get({
+                        //put the draft content to save here
+                        'content': form_data
+                    });
+                    dfresult.$promise.then(function(data) {
+                        //do stuff here to indicate draft has been saved (if the message comes back correctly)
+                        console.log('dpc draft saved', data);
+                    });
+
+                }
+
+                
+
                 if (dpc.next_level_dfc.human_added) {
                     dpc.childrenTemplate = "views/templates/overview-children-table.html";
                 } else {
@@ -402,7 +427,7 @@ angular.module('chembiohubAssayApp')
             $scope.no_l0 = false;
             dataoverviewctrl.no_l0_dfc = false;
             dataoverviewctrl.fetchData = function() {
-
+                 
 
                 AddDataFactory.nestedDataClassification.get({
                         "project_key": $scope.assayctrl.proj.project_key,
@@ -667,6 +692,39 @@ angular.module('chembiohubAssayApp')
             dataoverviewctrl.openEditDetail = function(input_popup_data) {
 
                 $scope.popup_data = angular.copy(input_popup_data);
+                $scope.youAreInModal = true;
+
+                $scope.success = function(file, form_key){
+                    //can I access the model for the attachment field? Yes
+                    console.log('being found')
+                    //build a URL for this upload so that calling it from the view redirects through the correct resource
+                    //in order to check for project permissions, user permissions etc.
+                    var url_string = urlConfig.instance_path.url_frag + 'datastore/cbh_base_attachments/' + projectKey + "/" + form_key + "/" + file.uniqueIdentifier + "?mime-type=" + file.file.type;
+                    //now add parts to the url indicating project, file.uniqueIdentifier, field name (and filename?)
+                    //add this to an object also containing mimetype data?
+                    //populate the object
+                    var attachment_obj = {
+                        url: url_string,
+                        printName: file.name,
+                        mimeType: file.file.type,
+                        uniqueIdentifier: file.uniqueIdentifier,
+                    }
+
+                    if($scope.popup_data.main_data.project_data[form_key[0]] == ""){
+                        $scope.popup_data.main_data.project_data[form_key[0]] = {'attachments': []}
+                    }
+                    $scope.popup_data.main_data.project_data[form_key[0]].attachments.push(attachment_obj);
+
+                }
+                $scope.removeFile = function(form_key, index, uniqueIdentifier){
+                    //can I access the model for the attachment field? Yes
+                    if($scope.popup_data.main_data.project_data[form_key[0]] == ""){
+                        $scope.popup_data.main_data.project_data[form_key[0]] = {'attachments': []}
+                    }
+                    //$scope.popup_data.main_data.project_data[form_key[0]].attachments.splice(index, 1);
+                    $scope.popup_data.main_data.project_data[form_key[0]].attachments = $filter('filter')($scope.popup_data.main_data.project_data[form_key[0]].attachments, function(value, index) {return value.uniqueIdentifier !== uniqueIdentifier;})
+
+                }
                 $scope.modalInstance = $modal.open({
                     templateUrl: 'views/modal-edit-template.html',
                     size: 'lg',
@@ -674,10 +732,24 @@ angular.module('chembiohubAssayApp')
                         popup_data: function() {
                             return $scope.popup_data;
                         },
+                        youAreInModal: function() {
+                            return $scope.youAreInModal;
+                        },
+                        success: function(){
+                            return $scope.success;
+                        },
+                        removeFile: function(){
+                            return $scope.removeFile;
+                        },
+
 
                     },
-                    controller: function($scope, $modalInstance, popup_data, $timeout) {
+                    controller: function($scope, $modalInstance, popup_data, $timeout, youAreInModal, success, removeFile) {
                         $scope.popup_data = popup_data;
+                        $scope.youAreInModal = youAreInModal;
+                        $scope.success = success;
+                        $scope.removeFile = removeFile;
+                        $scope.dataoverviewctrl = dataoverviewctrl;
                         $scope.popup_data.this_level_edit_form = [];
                         $scope.popup_data.this_level_edit_schema = {
                             "type": "object",
@@ -695,6 +767,7 @@ angular.module('chembiohubAssayApp')
                         $scope.modalInstance = $modalInstance;
 
                         $scope.cancel = function() {
+                            //$interval.cancel($scope.autosave);
                             $modalInstance.dismiss('cancel');
                         };
                         $scope.saveEdits = function() {
@@ -710,6 +783,7 @@ angular.module('chembiohubAssayApp')
                                 clone.$update({
                                     'dc': $scope.popup_data.id
                                 }, function(data) {
+                                    //$interval.cancel($scope.autosave);
                                     $modalInstance.dismiss('saved');
                                     $state.go($state.current, $stateParams, {
                                         reload: true
@@ -719,10 +793,83 @@ angular.module('chembiohubAssayApp')
                                 //TODO error handling
                             });
                         }
+                        /*$scope.saveDraft = function(form_data){
+                            console.log("Saving draft");
+                            //save the contents of the form to either a django cache object or a redis cache 
+                            var df = DraftFactory.save_draft
+                            var dfresult = df.get({
+                                //put the draft content to save here
+                                'content': form_data
+                            });
+                            dfresult.$promise.then(function(data) {
+                                //do stuff here to indicate draft has been saved (if the message comes back correctly)
+                                console.log('edit draft saved', data);
+                            });
+
+                        };
+                        $scope.autosave = $interval(function(){$scope.saveDraft($scope.popup_data.main_data);}, 60000);
+                        $scope.displayDraftList = false;
+                        $scope.draftList = []
+                        $scope.toggleDraftList = function(){
+                            $scope.displayDraftList = !$scope.displayDraftList;
+                            //have we switched on the draft list? Refresh here
+                            
+                        }
+                        $scope.loadDraft = function(draft_key){
+                            var df = DraftFactory.get_draft;
+                            var dfresult = df.get({
+                                'draft_key': draft_key
+                            });
+                            dfresult.$promise.then(function(data) {
+                                //put the loaded data into the form's model
+                                console.log('modal edit load draft', data);
+                            });
+                        }
+
+                        $scope.loadDraftList = function(){
+                            var df = DraftFactory.list;
+                            var dfresult = df.get();
+                            dfresult.$promise.then(function(data) {
+                                //put the loaded data into the form's model
+                                $scope.draftList = data;
+                            });
+                        }*/
                     }
                 });
             };
+            //this method is called when the angular schema form file upload template has uploaded a file
+            //get the file identifier and add to the schema form model
+            $scope.success = function(file, form_key){
+                //can I access the model for the attachment field? Yes
+                
+                //build a URL for this upload so that calling it from the view redirects through the correct resource
+                //in order to check for project permissions, user permissions etc.
+                var url_string = urlConfig.instance_path.url_frag + 'datastore/cbh_base_attachments/' + projectKey + "/" + form_key + "/" + file.uniqueIdentifier + "?mime-type=" + file.file.type;
+                //now add parts to the url indicating project, file.uniqueIdentifier, field name (and filename?)
+                //add this to an object also containing mimetype data?
+                //populate the object
+                var attachment_obj = {
+                    url: url_string,
+                    printName: file.name,
+                    mimeType: file.file.type,
+                    uniqueIdentifier: file.uniqueIdentifier,
+                }
 
+                if(dataoverviewctrl.l0_object.new_next_level_model.project_data[form_key[0]] == ""){
+                    dataoverviewctrl.l0_object.new_next_level_model.project_data[form_key[0]] = {'attachments': []}
+                }
+                dataoverviewctrl.l0_object.new_next_level_model.project_data[form_key[0]].attachments.push(attachment_obj);
+
+            }
+            $scope.removeFile = function(form_key, index, uniqueIdentifier){
+                //can I access the model for the attachment field? Yes
+
+                if(dataoverviewctrl.l0_object.new_next_level_model.project_data[form_key[0]] == ""){
+                    dataoverviewctrl.l0_object.new_next_level_model.project_data[form_key[0]] = {'attachments': []}
+                }
+                dataoverviewctrl.l0_object.new_next_level_model.project_data[form_key[0]].attachments = $filter('filter')(dataoverviewctrl.l0_object.new_next_level_model.project_data[form_key[0]].attachments, function(value, index) {return value.uniqueIdentifier !== uniqueIdentifier;})
+
+            }
             $scope.csrftoken = $cookies[prefix.split("/")[0] + "csrftoken"];
             $scope.flowinit = {
                 //need to change target to the new WS path provided by Andy
@@ -731,6 +878,7 @@ angular.module('chembiohubAssayApp')
                     'X-CSRFToken': $scope.csrftoken
                 }
             };
+            dataoverviewctrl.flowinit = $scope.flowinit;
             dataoverviewctrl.fetchData();
 
             dataoverviewctrl.setLoadingMessageHeight = function() {
@@ -752,7 +900,58 @@ angular.module('chembiohubAssayApp')
                     }
                 );
             }
+            /*dataoverviewctrl.saveDraft = function(form_data){
+                //console.log("saving new object draft");
+                var df = DraftFactory.save_draft;
+                var dfresult = df.get({
+                    //put the draft content to save here
+                    'content': form_data
+                });
+                dfresult.$promise.then(function(data) {
+                    //do stuff here to indicate draft has been saved (if the message comes back correctly)
+                    console.log('dataoverviewctrl save draft', data);
+                });
+            }
+            dataoverviewctrl.displayDraftList = false;
+            dataoverviewctrl.draftList = []
+            dataoverviewctrl.toggleDraftList = function(){
+                dataoverviewctrl.displayDraftList = !dataoverviewctrl.displayDraftList;
+                //have we switched on the draft list? Refresh here
 
+            }
+            dataoverviewctrl.loadDraft = function(draft_key){
+                var df = DraftFactory.get_draft;
+                var dfresult = df.get({
+                    'draft_key': draft_key
+                });
+                dfresult.$promise.then(function(data) {
+                    //put the loaded data into the form's model
+                    console.log('dataoverviewctrl save draft', data);
+                });
+            }
+            dataoverviewctrl.loadDraftList = function(){
+                var df = DraftFactory.list;
+                var dfresult = df.get();
+                dfresult.$promise.then(function(data) {
+                    //put the loaded data into the form's model
+                    dataoverviewctrl.draftList = data;
+                });
+            }*/
+
+            //dataoverviewctrl.turnOnAutosave = false;
+            /*if(dataoverviewctrl.addingChild){
+                dataoverviewctrl.autosave = $interval(function(){$scope.saveDraft();}, 2000);    
+            }
+            $scope.$watch("dataoverviewctrl.addingChild",function handleChange( newValue, oldValue ) {
+                        console.log("addingChild has changed");
+                        if(newValue == true){
+                            dataoverviewctrl.autosave = $interval(function(){dataoverviewctrl.saveDraft();}, 2000);  
+                        }
+                        else{
+                            $interval.cancel(dataoverviewctrl.autosave);
+                        }
+                    })*/
+            
             //to apply double scroll to each of these elements:
             //use ng-init in the template to register when data has been laoded - table doesn't exist until this
             //give each table an ID based on the data being loaded - to allow double scroll to be called on one element as it is loaded

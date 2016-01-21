@@ -29,6 +29,7 @@ var configuration = {
     "cbh_compound_batches", "schema": path + "cbh_compound_batches/schema"}, 
     "users": {"list_endpoint": path + "users", "schema": path + "users/schema"},
     "invitations": {"list_endpoint": path + "invitations", "schema": path + "invitations/schema"},
+    "cbh_draft_data": {"list_endpoint": path + "datastore/cbh_draft_data", "schema": path + "datastore/cbh_draft_data/schema"},
     "cbh_multiple_batches": {"list_endpoint": path + "cbh_multiple_batches", "schema": path + "cbh_multiple_batches/schema"},
 	"instance_path" : {"url_frag": path, "base" : base, "bit": bit} ,
 

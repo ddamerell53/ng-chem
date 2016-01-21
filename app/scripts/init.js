@@ -37,4 +37,5 @@ var chembiohubAssayApp =  angular.module('chembiohubAssayApp', [
     'angularUtils.directives.dirPagination',
     'angular-info-box',
     'elasticui',
+    'schemaForm-file-upload',
   ]);

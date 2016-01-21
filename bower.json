@@ -40,7 +40,8 @@
     "elasticui": "git://github.com/strets123/ElasticUI.git#master",
     "chemdoodle-angular": "https://github.com/strets123/chemdoodle-angular.git#master",
     "gifffer": "*",
-    "angular-schema-form-ckeditor": "*"
+    "angular-schema-form-ckeditor": "*",
+    "schema-form-file-upload":"https://github.com/PaulBarrett79/schema-form-file-upload.git#master"
   },
   "devDependencies": {
     "angular-mocks": "~1.3.0",

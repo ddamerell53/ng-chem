@@ -75,7 +75,18 @@
 
 	<div ng-show="dataoverviewctrl.l0_object.addingChild" >
 	    <div class="row">
+	    	<!-- <div class="form-group">
+	    		<div class="col-xs-12">
+	    			<button class="btn btn-primary" ng-click="dataoverviewctrl.saveDraft(dataoverviewctrl.l0_object.new_next_level_model.project_data)"><span class="glyphicon glyphicon-floppy-save"></span> Save Draft</button>
+		    		<small><a ng-click="dataoverviewctrl.toggleDraftList()"><span class="glyphicon glyphicon-time"></span> <span ng-show="dataoverviewctrl.displayDraftList == true">Hide draft history</span> <span ng-show="dataoverviewctrl.displayDraftList == false">Show draft history</span> </a></small>
+		    		<ul ng-if="dataoverviewctrl.displayDraftList == true" class="draft-list list-unstyled">
+		    			<li ng-repeat="draft in dataoverviewctrl.draftList" ng-click="dataoverviewctrl.loadDraft(draft.draft_key)"><span class="btn btn-primary">Saved {{draft.draft_key | date : shortTime}}</span></li>
+		    			<li ng-if="dataoverviewctrl.draftList.length == 0"><span class="text-default">No drafts saved</span></li>
+		    		</ul>
+		    	</div>
+	    	</div> -->
 	        <div class="col-xs-12">
+	        	
 	            <div class="form-group" sf-schema="dataoverviewctrl.l0_object.next_level_edit_schema" sf-form="dataoverviewctrl.l0_object.next_level_edit_form" sf-model="dataoverviewctrl.l0_object.new_next_level_model.project_data"></div>
 	        </div>
 	    </div>

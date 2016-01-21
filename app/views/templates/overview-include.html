@@ -5,7 +5,7 @@
                     <div class="pull-right"><div class="btn-group" >
                                             
                                             <button id="{{dpclassif.id}}" data-toggle="dropdown" dropdown-toggle class="btn btn-sm btn-primary">
-                                                <span class="glyphicon glyphicon-plus-sign"></span> <span class="hidden-xs hidden-sm" title="Add {{dpclassif.next_level_cfc.data_type.name}}">Add Single {{dpclassif.next_data_type_name}} <span class="caret"></span></span>
+                                                <span class="glyphicon glyphicon-plus-sign"></span> <span class="hidden-xs hidden-sm" title="Add {{dpclassif.next_level_cfc.data_type.name}}">Add Single {{dpclassif.next_data_type_name}} </span><span class="caret"></span>
                                             </button>
                                             
                                             <ul style="margin-top: -8px" class="dropdown-menu pull-right" role="menu" aria-labelledby="{{dpclassif.id}}">
@@ -60,6 +60,7 @@
                             </div>
                         </div>
                         <div class="row mt">
+                            
                             <div class="col-xs-12">
                                 <div class="form-group" sf-schema="dpclassif.next_level_edit_schema" sf-form="dpclassif.next_level_edit_form" sf-model="dpclassif.new_next_level_model.project_data"></div>
                             </div>

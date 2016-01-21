@@ -844,6 +844,17 @@ div.modal-body table td, div.modal-body table th{
   transition: all .15s ease-in-out;
 }
 
+ul.draft-list {
+  padding:10px; 
+  border:1px solid #ddd; 
+  /*border-radius:5px; */
+  margin-top:10px;
+}
+ul.draft-list li span {
+  padding:10px;
+  border-radius:5px;
+}
+
 
 /* 16-column bootstrap grid classes */
 /*!
