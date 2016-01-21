@@ -708,6 +708,7 @@ angular.module('chembiohubAssayApp')
                         printName: file.name,
                         mimeType: file.file.type,
                         uniqueIdentifier: file.uniqueIdentifier,
+                        //add caption?
                     }
 
                     if($scope.popup_data.main_data.project_data[form_key[0]] == ""){

@@ -26,10 +26,9 @@ angular.module('chembiohubAssayApp')
       sheet_name: "@sheetname",
     });
 
-    var cbhBaseAttachment = $resource(urlConfig.instance_path.url_frag + 'datastore/cbh_attachments', {
+    var cbhBaseAttachment = $resource(urlConfig.instance_path.url_frag + 'datastore/cbh_base_attachments', {
       flowfile: urlConfig.instance_path.url_frag + 'datastore/cbh_flowfiles/' + '@flowfile',
       data_point_classification:  "@data_point_classification",
-      chosen_data_form_config: "@chosen_data_form_config",
     });
 
     var cbhSaveAttachment = $resource(urlConfig.instance_path.url_frag + 'datastore/cbh_attachments/save_temporary_data/', {sheetId: '@sheetId'})
