@@ -7,116 +7,127 @@
  * # DataoverviewCtrl
  * Controller of the ngChemApp
  */
-angular.module('chembiohubAssayApp')
-    .controller('DataOverviewCtrl', ['$scope', 'AddDataFactory', '$modal', '$resource', '$stateParams', '$state', '$timeout', '$interval', 'prefix', 'urlConfig', '$cookies', 'FlowFileFactory', 'DraftFactory', 'projectKey', '$filter',
-        
+var showMappingPopupController = function($scope, $modalInstance, project_fields, sheet, $timeout, $filter, dataoverviewctrl) {
+                        $scope.dataoverviewctrl = dataoverviewctrl;
+                        $scope.project_fields = angular.copy(project_fields);
+                        $scope.modded_project_fields = [];
+                        $scope.modalInstance = $modalInstance;
+                        $scope.sheet = sheet;
+                        //limit project_field options to those which are not selected elsewhere, but still include the currently selected one (!)
+                        angular.forEach($scope.project_fields, function(field) {
+                            var added = false;
+                            if (sheet.listOfUnmappedFields.indexOf(field.value) > -1) {
+                                $scope.modded_project_fields.push(field);
+                                added = true;
+                            }
+                            //is it this mapping?
+                            if (field.value == dataoverviewctrl.col_being_mapped.attachment_field_mapped_to || (!added && field.value == null)) {
+                                $scope.modded_project_fields.push(field);
+                            }
+                        });
+                        // $scope.mapping = $scope.modded_project_fields[0];
+                        //find the project field where the URI is the value
+                        angular.forEach($scope.modded_project_fields, function(field) {
 
-        function($scope, AddDataFactory, $modal, $resource, $stateParams, $state, $timeout, $interval, prefix, urlConfig, $cookies, FlowFileFactory, DraftFactory, projectKey, $filter) {
-            var destroying = false;
-            $scope.$on('$destroy', function() {
-                destroying = true;
-            });
-                $scope.cbh.appName = "AssayReg";
-
-            var dataoverviewctrl = this;
-            var classes = {
-                'l1': "l1",
-                'l2': "l2"
-            }
-            $scope.iamloading = false;
-            $scope.loadingMessage = "Loading..."
-            $scope.modalInstance = {};
-            $scope.popup_data = {};
-            $scope.dpcForUpload = {};
-            $scope.getAnnotations = function(dpc) {
-                dpc.dfc_full = $scope.assayctrl.dfc_lookup[dpc.data_form_config];
-                dpc.main_cfc = dpc.dfc_full[dpc.level_from];
-                dpc.main_data = dpc[dpc.level_from];
-                dpc.htmlClassName = classes[dpc.level_from];
-                dpc.setChosenDataFormConfig = function(dfc_uri, adding, templateData) {
-                    dpc.addingChild = adding;
-                    dpc.next_level_dfc = $scope.assayctrl.dfc_lookup[dfc_uri];
-                    dpc.next_level_cfc = dpc.next_level_dfc[dpc.next_level_dfc.last_level];
-                    if (!angular.isDefined(templateData)) {
-                        templateData = {
-                            'project_data': {},
-                            'custom_field_config': dpc.next_level_cfc.resource_uri
+                            if (field.value == dataoverviewctrl.col_being_mapped.attachment_field_mapped_to) {
+                                $scope.mapping = field;
+                                $scope.oldRequired = angular.copy($scope.mapping.required);
+                            }
+                        });
+                        $scope.setWarningMessage = function() {
+                            var set = false;
+                            angular.forEach($scope.modded_project_fields, function(field) {
+                                if ($scope.dataoverviewctrl.col_being_mapped.attachment_field_unmappable_to == field.value) {
+                                    $scope.dataoverviewctrl.col_being_mapped.warningMessage = "Attemped to map this field to " + angular.copy(field.name) + " but there are rows with unmappable data. Please correct and re-upload.";
+                                    $scope.dataoverviewctrl.col_being_mapped.messageClass = "text-danger";
+                                }
+                            });
+                        }
+                        $scope.setWarningMessage();
+                        $scope.cancel = function() {
+                            $modalInstance.dismiss('cancel');
                         };
-                    } else {
-                        templateData.id = null;
-                        templateData.resource_uri = null;
-                    }
-                    dpc.default_data = templateData;
-                    dpc.next_level_edit_form = dpc.next_level_dfc.get_main_form();
-                    dpc.next_level_edit_schema = dpc.next_level_dfc.get_main_schema();
-                    dpc.new_next_level_model = angular.copy(dpc.default_data);
-                    dpc.next_data_type_name = dpc.next_level_dfc[dpc.next_level_dfc.last_level].data_type.name;
-                    dpc.next_level_searchnames = dpc.next_level_cfc.project_data_fields.map(function(field) {
-                        return dpc.next_level_dfc.last_level + ".project_data." + field.elasticsearch_fieldname;
-                    })
-                    /*if(adding){
-                        dataoverviewctrl.autosave = $interval(function(){dataoverviewctrl.saveDraft(dpc.new_next_level_model.project_data);}, 60000);    
-                    }*/
-                    
-                }
+                        $scope.someMappingFunction = function() {
+                            //store a copy of the field being mapped to in case we lose it after patching
+                            if (!$scope.justChanged) {
+                                if ($scope.mapping.value) {
+                                    var splicing = sheet.listOfUnmappedFields.indexOf($scope.mapping.value);
+                                    sheet.listOfUnmappedFields.splice(sheet.listOfUnmappedFields.indexOf($scope.mapping.value), 1);
+                                    if ($scope.mapping.required) {
+                                        sheet.listOfUnmappedMandatoryFields.splice(sheet.listOfUnmappedMandatoryFields.indexOf($scope.mapping.value), 1);
+                                    }
+                                }
+                                if (dataoverviewctrl.col_being_mapped.attachment_field_mapped_to != $scope.mapping.value) {
+                                    if (dataoverviewctrl.col_being_mapped.attachment_field_mapped_to != null) {
+                                        sheet.listOfUnmappedFields.push(dataoverviewctrl.col_being_mapped.attachment_field_mapped_to);
+                                        if ($scope.oldRequired) {
+                                            sheet.listOfUnmappedMandatoryFields.push(dataoverviewctrl.col_being_mapped.attachment_field_mapped_to);
+                                        }
+                                    }
+                                }
+                                var name_of_field = $scope.mapping.name;
+                                var copyToSend = angular.copy($scope.dataoverviewctrl.col_being_mapped);
+                                copyToSend.attachment_field_mapped_to = $scope.mapping.value;
+                                copyToSend.attachment_field_unmappable_to = null;
+                                copyToSend.unmappable_rows = [];
+                                $scope.dataoverviewctrl.col_being_mapped.unmappable_rows = [];
+                                $scope.dataoverviewctrl.col_being_mapped.attachment_field_unmappable_to = null;
+                                $scope.oldRequired = angular.copy($scope.mapping.required);
+                                var promise = $http.patch(copyToSend.resource_uri,
+                                    copyToSend
+                                ).then(
+                                function(data) {
+                                        if (data.data.attachment_field_unmappable_to) {
+                                            $scope.setWarningMessage();
+                                            //we can't map this field.
+                                            //re-add the field to the list of unmapped fields
+                                            //if($scope.col_being_mapped.required) {
+                                            if (copyToSend.attachment_field_mapped_to != null) {
+                                                sheet.listOfUnmappedFields.push(angular.copy(copyToSend.attachment_field_mapped_to));
+                                                if ($scope.mapping.required) {
+                                                    sheet.listOfUnmappedMandatoryFields.push(angular.copy(copyToSend.attachment_field_mapped_to));
+                                                }
+                                            }
+                                            //change the error message to say you still can't map that field
+                                            $scope.mapping = $scope.modded_project_fields[0];
+                                            //blur the select box to refresh
+                                            sheet.setNewMapping(data.data);
+                                            var selectBox = document.getElementById('field-selector');
+                                            angular.element(selectBox).blur();
+                                            // dataoverviewctrl.setNewMapping($scope.mapping.value);
+                                            return data.data;
+                                        } else {
+                                            $scope.dataoverviewctrl.col_being_mapped.messageClass = "text-success";
+                                            $scope.dataoverviewctrl.col_being_mapped.warningMessage = "Mapping saved";
+                                            sheet.setNewMapping(data.data);
+                                            return data.data;
+                                        }
+                                    },
+                                    function(errorData) {
+
+                                    }
+                                );
+                                return promise;
+                            };
+                        }
 
 
-                //setting up a method for setting up dfc for file upload
-                //don't know what I do and don't need from this
-                dpc.setChosenDataFormConfigMultiple = function(dfc_uri, adding, templateData) {
 
 
+                        $scope.clearMapping = function(isRequiredField) {
+                            //deselct the items from the ngmodel of the select box
 
-                    dpc.addingMultiple = adding;
-                    dpc.next_level_dfc = $scope.assayctrl.dfc_lookup[dfc_uri];
-                    dpc.next_level_cfc = dpc.next_level_dfc[dpc.next_level_dfc.last_level];
-                    if (!angular.isDefined(templateData)) {
-                        templateData = {
-                            'project_data': {},
-                            'custom_field_config': dpc.next_level_cfc.resource_uri
-                        };
-                    } else {
-                        templateData.id = null;
-                        templateData.resource_uri = null;
-                    }
-                    dpc.default_data = templateData;
-                    dpc.next_level_edit_form = dpc.next_level_dfc.get_main_form();
-                    dpc.next_level_edit_schema = dpc.next_level_dfc.get_main_schema();
-                    dpc.new_next_level_model = angular.copy(dpc.default_data);
-                    dpc.next_data_type_name = dpc.next_level_dfc[dpc.next_level_dfc.last_level].data_type.name;
-                    /*
-                    ************************ 
-                    STUFF FOR FILE UPLOAD UI
-                    ************************ 
-                    */
+                            $scope.mapping = $scope.modded_project_fields[0];
 
-                    dpc.inputData = {
-                        inputstring: ""
-                    };
-                    dpc.filedata = {};
-                    dpc.filesUploading = false;
-                    dpc.dataReady = false;
-
-
-                    //object containing user config, selected options and flowfile metadata returned from ws callls
-                    dpc.initUpload = function() {
-                        dpc.uploadData = {
-
-                            'uploaded': false,
-                            'fileId': '',
-                            'resource_uri': '',
-                            'sheets': []
+                            //clear the URI indicating the mapping from the file column
+                            $scope.someMappingFunction();
 
                         }
-                    }
-                    dpc.initUpload();
 
-
-                    dpc.cancelFile = function() {
-                        dpc.setChosenDataFormConfigMultiple(dfc_uri, adding, templateData);
                     }
 
-                    dpc.getSheetsForFile = function(fileId) {
+
+var getSheetsByFile = function(dpc,fileId, $scope, FlowFileFactory, destroying, prefix, dataoverviewctrl) {
                         //perform get request to get list of sheets
                         //probably best to create a resource here - we will need it for other types of upload (img etc)
                         //FlowFileFactory.cbhFlowfile.
@@ -126,11 +137,23 @@ angular.module('chembiohubAssayApp')
                         $scope.loadingMessage = "Loading File...";
                         var FlowDF = FlowFileFactory.cbhFlowfile;
                         dpc.uploadData.fileId = fileId;
+
                         var fdfresult = FlowDF.get({
                             'fileId': fileId
                         });
                         fdfresult.$promise.then(function(result) {
                             //dpc.uploadData.sheet_names = result.sheet_names;
+                            if (fdfresult.original_filename.indexOf(".xlsx") ==-1){
+                                dataoverviewctrl.errorPopup( "Incorrect file format. Please note only XLSX files are permitted.");
+                                $scope.iamloading = false;
+                                return
+                            }
+                            if( result.sheet_names.length == 0){
+                                dataoverviewctrl.errorPopup( "No sheets found in file.");
+                                $scope.iamloading = false;
+                                return
+                            }
+                                
                             angular.forEach(result.sheet_names, function(sheet_name) {
                                 /*newobj = {}
                                 newobj.name = sheet_name*/
@@ -150,7 +173,7 @@ angular.module('chembiohubAssayApp')
                                         $scope.iamloading = true;
                                         $scope.loadingMessage = "Loading Sheet...";
                                         //we now have sheetName.name, pass to the specified webservice
-                                        var FlowDF = FlowFileFactory.cbhAttachments;
+                                        var AttachmentFactory = FlowFileFactory.cbhAttachments;
                                         /*
                                         flowfile: '@flowfile',
                                         data_point_classification:  "@data_point_classification",
@@ -160,7 +183,7 @@ angular.module('chembiohubAssayApp')
                                         //Resource URIs are not obvious here - the flowfile one cannot be sent from backend as it proports to contain session id which must be kept private
                                         //The data point classification one is from the "nested resource" so is wrong
 
-                                        var fdfresult = FlowDF.save({
+                                        var AttachmentFactory = FlowDF.save({
                                             'flowfile': '/' + prefix + '/datastore/cbh_flowfiles/' + dpc.uploadData.fileId,
                                             'data_point_classification': '/' + prefix + '/datastore/cbh_datapoint_classifications/' + dpc.id, //dpc
                                             'chosen_data_form_config': dpc.next_level_dfc.resource_uri,
@@ -295,10 +318,143 @@ angular.module('chembiohubAssayApp')
                           //console.log(errorData.statusText + ": " + errorData.data.error);
                           //launch a popup
                           //$scope.loadingMessage = errorData.statusText + ": " + errorData.data.error;
-                          dataoverviewctrl.errorPopup(errorData.data.error + ". Please note only Excel files are permitted.");
+                          dataoverviewctrl.errorPopup(errorData.data.error + ". Please note only XLSX files are permitted.");
                           $scope.iamloading = false;
                         });
 
+                    }
+
+
+
+angular.module('chembiohubAssayApp')
+    .controller('DataOverviewCtrl', ['$scope', 'AddDataFactory', '$modal', '$resource', '$stateParams', '$state', '$timeout', '$interval', 'prefix', 'urlConfig', '$cookies', 'FlowFileFactory', 'DraftFactory', 'projectKey', '$filter',
+        
+
+        function($scope, AddDataFactory, $modal, $resource, $stateParams, $state, $timeout, $interval, prefix, urlConfig, $cookies, FlowFileFactory, DraftFactory, projectKey, $filter) {
+           var dataoverviewctrl = this;
+
+            var destroying = false;
+            $scope.$on('$destroy', function() {
+                destroying = true;
+            });
+                $scope.cbh.appName = "AssayReg";
+
+            
+            var classes = {
+                'l1': "l1",
+                'l2': "l2"
+            }
+            $scope.iamloading = false;
+            $scope.loadingMessage = "Loading..."
+            $scope.modalInstance = {};
+            $scope.popup_data = {};
+            $scope.dpcForUpload = {};
+            dataoverviewctrl.currentlyAddingTo = null;
+
+            $scope.getAnnotations = function(dpc) {
+                dpc.dfc_full = $scope.assayctrl.dfc_lookup[dpc.data_form_config];
+                dpc.main_cfc = dpc.dfc_full[dpc.level_from];
+                dpc.main_data = dpc[dpc.level_from];
+                dpc.htmlClassName = classes[dpc.level_from];
+                dpc.setChosenDataFormConfig = function(dfc_uri, adding, templateData) {
+                    if(dataoverviewctrl.currentlyAddingTo != null && adding){
+                        dataoverviewctrl.errorPopup("You are already adding to a different dataset or by a different method. Please cancel that form before continuing.")
+                        return;
+                    }
+                    if(adding){
+                        dataoverviewctrl.currentlyAddingTo = dpc;
+                    }
+                     
+                    dpc.addingChild = adding;
+                    dpc.next_level_dfc = $scope.assayctrl.dfc_lookup[dfc_uri];
+                    dpc.next_level_cfc = dpc.next_level_dfc[dpc.next_level_dfc.last_level];
+                    if (!angular.isDefined(templateData)) {
+                        templateData = {
+                            'project_data': {},
+                            'custom_field_config': dpc.next_level_cfc.resource_uri
+                        };
+                    } else {
+                        templateData.id = null;
+                        templateData.resource_uri = null;
+                    }
+                    dpc.default_data = templateData;
+                    dpc.next_level_edit_form = dpc.next_level_dfc.get_main_form();
+                    dpc.next_level_edit_schema = dpc.next_level_dfc.get_main_schema();
+                    dpc.new_next_level_model = angular.copy(dpc.default_data);
+                    dpc.next_data_type_name = dpc.next_level_dfc[dpc.next_level_dfc.last_level].data_type.name;
+                    dpc.next_level_searchnames = dpc.next_level_cfc.project_data_fields.map(function(field) {
+                        return dpc.next_level_dfc.last_level + ".project_data." + field.elasticsearch_fieldname;
+                    })
+                    /*if(adding){
+                        dataoverviewctrl.autosave = $interval(function(){dataoverviewctrl.saveDraft(dpc.new_next_level_model.project_data);}, 60000);    
+                    }*/
+                    
+                }
+
+
+                //setting up a method for setting up dfc for file upload
+                //don't know what I do and don't need from this
+                dpc.setChosenDataFormConfigMultiple = function(dfc_uri, adding, templateData) {
+                    if(dataoverviewctrl.currentlyAddingTo != null && adding){
+                        dataoverviewctrl.errorPopup("You are already adding to a different dataset or by a different method. Please cancel that form before continuing.");
+                         return;
+                    }
+                    if(adding){
+                        dataoverviewctrl.currentlyAddingTo = dpc;
+                    }
+
+                    dpc.addingMultiple = adding;
+                    dpc.next_level_dfc = $scope.assayctrl.dfc_lookup[dfc_uri];
+                    dpc.next_level_cfc = dpc.next_level_dfc[dpc.next_level_dfc.last_level];
+                    if (!angular.isDefined(templateData)) {
+                        templateData = {
+                            'project_data': {},
+                            'custom_field_config': dpc.next_level_cfc.resource_uri
+                        };
+                    } else {
+                        templateData.id = null;
+                        templateData.resource_uri = null;
+                    }
+                    dpc.default_data = templateData;
+                    dpc.next_level_edit_form = dpc.next_level_dfc.get_main_form();
+                    dpc.next_level_edit_schema = dpc.next_level_dfc.get_main_schema();
+                    dpc.new_next_level_model = angular.copy(dpc.default_data);
+                    dpc.next_data_type_name = dpc.next_level_dfc[dpc.next_level_dfc.last_level].data_type.name;
+                    /*
+                    ************************ 
+                    STUFF FOR FILE UPLOAD UI
+                    ************************ 
+                    */
+
+                    dpc.inputData = {
+                        inputstring: ""
+                    };
+                    dpc.filedata = {};
+                    dpc.filesUploading = false;
+                    dpc.dataReady = false;
+
+
+                    //object containing user config, selected options and flowfile metadata returned from ws callls
+                    dpc.initUpload = function() {
+                        dpc.uploadData = {
+
+                            'uploaded': false,
+                            'fileId': '',
+                            'resource_uri': '',
+                            'sheets': []
+
+                        }
+                    }
+                    dpc.initUpload();
+
+
+                    dpc.cancelFile = function() {
+                        dpc.setChosenDataFormConfigMultiple(dfc_uri, false, templateData);
+                        dataoverviewctrl.currentlyAddingTo = null;
+                    }
+
+                    dpc.getSheetsForFile = function(fileId){
+                        getSheetsByFile(dpc, fileId, $scope, FlowFileFactory, destroying, prefix, dataoverviewctrl);
                     }
 
 
@@ -316,6 +472,7 @@ angular.module('chembiohubAssayApp')
                         dpc.setChosenDataFormConfig(dpc.dfc_full.permitted_children[0]);
                     }
                     dpc.addingChild = false
+                    dataoverviewctrl.currentlyAddingTo = null;
                     //$interval.cancel(dataoverviewctrl.autosave);
 
                 }
@@ -530,160 +687,7 @@ angular.module('chembiohubAssayApp')
                         }
 
                     },
-                    controller: function($scope, $modalInstance, project_fields, sheet, $timeout, $filter, dataoverviewctrl) {
-                        $scope.dataoverviewctrl = dataoverviewctrl;
-                        $scope.project_fields = angular.copy(project_fields);
-                        $scope.modded_project_fields = [];
-
-                        $scope.modalInstance = $modalInstance;
-
-
-
-                        $scope.sheet = sheet;
-
-
-
-                        //limit project_field options to those which are not selected elsewhere, but still include the currently selected one (!)
-                        angular.forEach($scope.project_fields, function(field) {
-
-                            var added = false;
-                            if (sheet.listOfUnmappedFields.indexOf(field.value) > -1) {
-                                $scope.modded_project_fields.push(field);
-                                added = true;
-                            }
-                            //is it this mapping?
-                            if (field.value == dataoverviewctrl.col_being_mapped.attachment_field_mapped_to || (!added && field.value == null)) {
-                                $scope.modded_project_fields.push(field);
-                            }
-
-                        });
-                        // $scope.mapping = $scope.modded_project_fields[0];
-
-
-
-                        //find the project field where the URI is the value
-                        angular.forEach($scope.modded_project_fields, function(field) {
-
-                            if (field.value == dataoverviewctrl.col_being_mapped.attachment_field_mapped_to) {
-                                $scope.mapping = field;
-                                $scope.oldRequired = angular.copy($scope.mapping.required);
-                            }
-                        });
-
-
-                        $scope.setWarningMessage = function() {
-
-                            var set = false;
-                            angular.forEach($scope.modded_project_fields, function(field) {
-                                if ($scope.dataoverviewctrl.col_being_mapped.attachment_field_unmappable_to == field.value) {
-
-                                    $scope.dataoverviewctrl.col_being_mapped.warningMessage = "Attemped to map this field to " + angular.copy(field.name) + " but there are rows with unmappable data. Please correct and re-upload.";
-                                    $scope.dataoverviewctrl.col_being_mapped.messageClass = "text-danger";
-                                }
-                            });
-
-                        }
-
-                        $scope.setWarningMessage();
-
-                        $scope.cancel = function() {
-                            $modalInstance.dismiss('cancel');
-                        };
-
-                        $scope.someMappingFunction = function() {
-                            //store a copy of the field being mapped to in case we lose it after patching
-                            if (!$scope.justChanged) {
-                                if ($scope.mapping.value) {
-                                    var splicing = sheet.listOfUnmappedFields.indexOf($scope.mapping.value);
-
-                                    sheet.listOfUnmappedFields.splice(sheet.listOfUnmappedFields.indexOf($scope.mapping.value), 1);
-
-                                    if ($scope.mapping.required) {
-                                        sheet.listOfUnmappedMandatoryFields.splice(sheet.listOfUnmappedMandatoryFields.indexOf($scope.mapping.value), 1);
-                                    }
-                                }
-                                if (dataoverviewctrl.col_being_mapped.attachment_field_mapped_to != $scope.mapping.value) {
-                                    if (dataoverviewctrl.col_being_mapped.attachment_field_mapped_to != null) {
-                                        sheet.listOfUnmappedFields.push(dataoverviewctrl.col_being_mapped.attachment_field_mapped_to);
-                                        if ($scope.oldRequired) {
-                                            sheet.listOfUnmappedMandatoryFields.push(dataoverviewctrl.col_being_mapped.attachment_field_mapped_to);
-                                        }
-                                    }
-
-                                }
-
-
-                                var name_of_field = $scope.mapping.name;
-
-
-                                var copyToSend = angular.copy($scope.dataoverviewctrl.col_being_mapped);
-                                copyToSend.attachment_field_mapped_to = $scope.mapping.value;
-                                copyToSend.attachment_field_unmappable_to = null;
-                                copyToSend.unmappable_rows = [];
-                                $scope.dataoverviewctrl.col_being_mapped.unmappable_rows = [];
-                                $scope.dataoverviewctrl.col_being_mapped.attachment_field_unmappable_to = null;
-
-                                $scope.oldRequired = angular.copy($scope.mapping.required);
-                                var promise = $http.patch(copyToSend.resource_uri,
-                                    copyToSend
-                                ).then(
-                                    function(data) {
-
-                                        if (data.data.attachment_field_unmappable_to) {
-                                            $scope.setWarningMessage();
-                                            //we can't map this field.
-                                            //re-add the field to the list of unmapped fields
-                                            //if($scope.col_being_mapped.required) {
-                                            if (copyToSend.attachment_field_mapped_to != null) {
-                                                sheet.listOfUnmappedFields.push(angular.copy(copyToSend.attachment_field_mapped_to));
-                                                //}
-                                                if ($scope.mapping.required) {
-                                                    sheet.listOfUnmappedMandatoryFields.push(angular.copy(copyToSend.attachment_field_mapped_to));
-                                                }
-                                            }
-
-
-                                            //change the error message to say you still can't map that field
-                                            $scope.mapping = $scope.modded_project_fields[0];
-                                            //blur the select box to refresh
-                                            sheet.setNewMapping(data.data);
-                                            var selectBox = document.getElementById('field-selector');
-                                            angular.element(selectBox).blur();
-                                            // dataoverviewctrl.setNewMapping($scope.mapping.value);
-                                            return data.data;
-                                        } else {
-
-                                            $scope.dataoverviewctrl.col_being_mapped.messageClass = "text-success";
-                                            $scope.dataoverviewctrl.col_being_mapped.warningMessage = "Mapping saved";
-                                            sheet.setNewMapping(data.data);
-
-                                            return data.data;
-                                        }
-
-                                    },
-                                    function(errorData) {
-
-
-                                    }
-                                );
-                                return promise;
-                            };
-                        }
-
-
-
-
-                        $scope.clearMapping = function(isRequiredField) {
-                            //deselct the items from the ngmodel of the select box
-
-                            $scope.mapping = $scope.modded_project_fields[0];
-
-                            //clear the URI indicating the mapping from the file column
-                            $scope.someMappingFunction();
-
-                        }
-
-                    }
+                    controller: showMappingPopupController
                 });
             };
 
@@ -845,15 +849,21 @@ angular.module('chembiohubAssayApp')
                 
                 //build a URL for this upload so that calling it from the view redirects through the correct resource
                 //in order to check for project permissions, user permissions etc.
-                var url_string = urlConfig.instance_path.url_frag + 'datastore/cbh_base_attachments/' + projectKey + "/" + form_key + "/" + file.uniqueIdentifier + "?mime-type=" + file.file.type;
                 //now add parts to the url indicating project, file.uniqueIdentifier, field name (and filename?)
                 //add this to an object also containing mimetype data?
                 //populate the object
+                var AttachmentFactory = FlowFileFactory.cbhBaseAttachment;
+
+                var fdfresult = AttachmentFactory.save({
+                                            'flowfile': '/' + prefix + '/datastore/cbh_flowfiles/' + file.uniqueIdentifier,
+                                            'data_point_classification': '/' + prefix + '/datastore/cbh_datapoint_classifications/' + dataoverviewctrl.currentlyAddingTo.id, //dpc
+                                        },function (data){
+                                            url_string : data.resource_uri
+                                        });
                 var attachment_obj = {
                     url: url_string,
                     printName: file.name,
                     mimeType: file.file.type,
-                    uniqueIdentifier: file.uniqueIdentifier,
                 }
 
                 if(dataoverviewctrl.l0_object.new_next_level_model.project_data[form_key[0]] == ""){
