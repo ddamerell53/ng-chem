@@ -633,9 +633,27 @@ angular.module('chembiohubAssayApp')
 
                         $scope.modalInstance = $modalInstance;
 
+                        $scope.expanded = ''
+
                         $scope.cancel = function() {
                             $modalInstance.dismiss('cancel');
                         };
+                        $scope.toggleExpand = function(printName){
+                            if($scope.expanded == printName){
+                                $scope.expanded = '';
+                            }
+                            else {
+                                $scope.expanded = printName;
+                            }
+                                                        
+                        }
+
+                        $scope.fetchImage = function(url){
+                            //get the image from the backend
+                            //using FlowFileFactory cbhBaseAttachment
+                            //for now, return a static url placeholder
+                            return "images/accepted-browsers.png"
+                        }
 
                     }
                 });
@@ -853,6 +871,7 @@ angular.module('chembiohubAssayApp')
                 //add this to an object also containing mimetype data?
                 //populate the object
                 var AttachmentFactory = FlowFileFactory.cbhBaseAttachment;
+                var url_string = ""
 
                 var fdfresult = AttachmentFactory.save({
                                             'flowfile': '/' + prefix + '/datastore/cbh_flowfiles/' + file.uniqueIdentifier,
