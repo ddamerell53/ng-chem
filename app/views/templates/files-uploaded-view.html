@@ -14,7 +14,7 @@
 
 	<div ng-repeat="upload in uploads" ng-animate ng-class="expanded == upload.printName ? 'col-xs-12' : 'col-xs-4'">
 		<div class="img-thumbnail text-center" style="min-height:150px; width:100%;">
-			<img class="img-responsive" ng-src="{{ imageFunction('url') }}" style="min-width:100px; margin: 0 auto;" ng-class="expanded == upload.printName ? '' : 'max-height-100'" ng-click="clickFunction(upload.printName)" />
+			<img class="img-responsive" ng-src="{{ imageFunction(upload.url) }}" style="min-width:100px; margin: 0 auto;" ng-class="expanded == upload.printName ? '' : 'max-height-100'" ng-click="clickFunction(upload.printName)" />
 			<div style="width:100px; margin:0 auto;"><span style="font-size: 0.8em; word-wrap: break-word;">{{upload.printName}}</span><br></div>
 		</div>
 	</div>
