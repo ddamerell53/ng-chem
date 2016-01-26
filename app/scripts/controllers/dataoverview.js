@@ -357,21 +357,21 @@ angular.module('chembiohubAssayApp')
                                                 mimeType: file.file.type,
                                             }
 
-                                            if(angular.isUndefined(dataoverviewctrl.l0_object.new_next_level_model.project_data[form_key[0]])){
-                                                dataoverviewctrl.currentlyAddingTo.new_next_level_model.project_data[form_key[0]] = {'attachments': []}
+                                            if(angular.isUndefined(dataoverviewctrl.currentlyAddingTo.new_next_level_model.project_data[form_key[0]])){
+                                                dataoverviewctrl.currentlyAddingTo.new_next_level_model.project_data[form_key[0]] = {'attachments': []};
                                             }
                                             dataoverviewctrl.currentlyAddingTo.new_next_level_model.project_data[form_key[0]].attachments.push(attachment_obj);
 
                                         });
                 
             }
-            dataoverviewctrl.removeFile = function(form_key, index, uniqueIdentifier){
+            dataoverviewctrl.removeFile = function(form_key, index, url){
                 //can I access the model for the attachment field? Yes
 
                 if( angular.isUndefined(dataoverviewctrl.currentlyAddingTo.new_next_level_model.project_data[form_key[0]])){
                     dataoverviewctrl.currentlyAddingTo.new_next_level_model.project_data[form_key[0]] = {'attachments': []};
                 }
-                dataoverviewctrl.currentlyAddingTo.new_next_level_model.project_data[form_key[0]].attachments = $filter('filter')(dataoverviewctrl.currentlyAddingTo.new_next_level_model.new_next_level_model.project_data[form_key[0]].attachments, function(value, index) {return value.uniqueIdentifier !== uniqueIdentifier;})
+                dataoverviewctrl.currentlyAddingTo.new_next_level_model.project_data[form_key[0]].attachments  = $filter('filter')(dataoverviewctrl.currentlyAddingTo.new_next_level_model.project_data[form_key[0]].attachments, function(value, index) {return value.url !== url;})
 
             }
 
@@ -828,20 +828,20 @@ angular.module('chembiohubAssayApp')
                                                     }
 
                                                     if( angular.isUndefined($scope.popup_data.main_data.project_data[form_key[0]])){
-                                                        $scope.popup_data.main_data.project_data[form_key[0]] = {'attachments': []}
+                                                        $scope.popup_data.main_data.project_data[form_key[0]] = {'attachments': []};
                                                     }
                                                     $scope.popup_data.main_data.project_data[form_key[0]].attachments.push(attachment_obj);
 
                                                 });
                         
                     }
-                    $scope.removeFile = function(form_key, index, uniqueIdentifier){
+                    $scope.removeFile = function(form_key, index, url){
                         //can I access the model for the attachment field? Yes
-
                         if( angular.isUndefined($scope.popup_data.main_data.project_data[form_key[0]])){
+                            console.log("setting to null")
                             $scope.popup_data.main_data.project_data[form_key[0]] = {'attachments': []}
                         }
-                        $scope.popup_data.main_data.project_data[form_key[0]].attachments = $filter('filter')($scope.popup_data.main_data.project_data[form_key[0]].attachments, function(value, index) {return value.uniqueIdentifier !== uniqueIdentifier;})
+                        $scope.popup_data.main_data.project_data[form_key[0]].attachments = $filter('filter')($scope.popup_data.main_data.project_data[form_key[0]].attachments, function(value, index) {return value.url !== url;})
 
                     }
 
