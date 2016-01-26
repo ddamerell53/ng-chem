@@ -288,7 +288,14 @@ angular.module('chembiohubAssayApp')
               },
 
                coverRenderer : function(instance, td, row, col, prop, value, cellProperties) {
-                if(value==null){
+                if(value==null  || value===""){
+                  td.innerHTML = "No Image";
+                  td.className  += "htCenter htMiddle ";
+                  Handsontable.Dom.addEvent(td, 'mousedown', function (e){
+                    // e.preventDefault(); // prevent selection quirk
+                    var mol = instance.getSourceDataAtRow(row);
+                    scope.cbh.openSingleMol(mol, isNewCompoundsInterface);
+                  });
                   return td;
                 }
                 var escaped = Handsontable.helper.stringify(value),
