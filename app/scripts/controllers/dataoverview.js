@@ -900,6 +900,22 @@ angular.module('chembiohubAssayApp')
                 dataoverviewctrl.l0_object.new_next_level_model.project_data[form_key[0]].attachments = $filter('filter')(dataoverviewctrl.l0_object.new_next_level_model.project_data[form_key[0]].attachments, function(value, index) {return value.uniqueIdentifier !== uniqueIdentifier;})
 
             }
+            $scope.toggleExpand = function(printName){
+                if($scope.expanded == printName){
+                    $scope.expanded = '';
+                }
+                else {
+                    $scope.expanded = printName;
+                }
+                                            
+            }
+
+            $scope.fetchImage = function(url){
+                //get the image from the backend
+                //using FlowFileFactory cbhBaseAttachment
+                //for now, return a static url placeholder
+                return "images/accepted-browsers.png"
+            }
             $scope.csrftoken = $cookies[prefix.split("/")[0] + "csrftoken"];
             $scope.flowinit = {
                 //need to change target to the new WS path provided by Andy
