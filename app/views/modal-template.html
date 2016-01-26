@@ -3,17 +3,18 @@
             <h3 class="modal-title">Details</h3>
         </div>
         <div class="modal-body">
+
             <table class="table table-striped" style="table-layout:fixed;"  ng-if="popup_data.main_cfc != 'chembl'">
                 
                 <tr ng-repeat="form in popup_data.main_cfc.project_data_fields">
                     <th colspan="1">{{form.name}}</th>
                     <!-- <td style="word-wrap:break-word;">{{popup_data.main_data.project_data[form.elasticsearch_fieldname]}}</td> -->
                     <td colspan="2" style="word-wrap:break-word;">
-                        <div ng-if="form.edit_schema.properties[form.name].format == 'file_upload'"
+                        <div ng-if="form.edit_schema.properties[form.elasticsearch_fieldname].format == 'file_upload'"
                              ng-init="uploads = popup_data.main_data.project_data[form.elasticsearch_fieldname].attachments; clickFunction = toggleExpand; imageFunction = fetchImage;"
                              ng-include="'views/templates/files-uploaded-view.html'">
                         </div>
-                        <span ng-if="form.edit_schema.properties[form.name].format != 'file_upload'" ng-bind-html='popup_data.main_data.project_data[form.elasticsearch_fieldname]'></span>
+                        <span ng-if="form.edit_schema.properties[form.elasticsearch_fieldname].format != 'file_upload'" ng-bind-html='popup_data.main_data.project_data[form.elasticsearch_fieldname]'></span>
                     </td>
                 </tr>
                 

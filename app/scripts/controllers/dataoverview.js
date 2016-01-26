@@ -9,6 +9,8 @@
  */
 var showMappingPopupController = function($scope, $modalInstance, project_fields, sheet, $timeout, $filter, dataoverviewctrl) {
                         $scope.dataoverviewctrl = dataoverviewctrl;
+
+
                         $scope.project_fields = angular.copy(project_fields);
                         $scope.modded_project_fields = [];
                         $scope.modalInstance = $modalInstance;
@@ -333,6 +335,48 @@ angular.module('chembiohubAssayApp')
         function($scope, AddDataFactory, $modal, $resource, $stateParams, $state, $timeout, $interval, prefix, urlConfig, $cookies, FlowFileFactory, DraftFactory, projectKey, $filter) {
            var dataoverviewctrl = this;
 
+           dataoverviewctrl.success = function(file, form_key){
+                //can I access the model for the attachment field? Yes
+                
+                //build a URL for this upload so that calling it from the view redirects through the correct resource
+                //in order to check for project permissions, user permissions etc.
+                //now add parts to the url indicating project, file.uniqueIdentifier, field name (and filename?)
+                //add this to an object also containing mimetype data?
+                //populate the object
+                var AttachmentFactory = FlowFileFactory.cbhBaseAttachment;
+                var url_string = ""
+
+                var fdfresult = AttachmentFactory.save({
+                                            'flowfile': '/' + prefix + '/datastore/cbh_flowfiles/' + file.uniqueIdentifier,
+                                            'data_point_classification': '/' + prefix + '/datastore/cbh_datapoint_classifications/' + dataoverviewctrl.currentlyAddingTo.id, //dpc
+                                        },function (data){
+                                            url_string = data.resource_uri
+                                            var attachment_obj = {
+                                                url: url_string,
+                                                printName: file.name,
+                                                mimeType: file.file.type,
+                                            }
+
+                                            if(angular.isUndefined(dataoverviewctrl.currentlyAddingTo.new_next_level_model.project_data[form_key[0]])){
+                                                dataoverviewctrl.currentlyAddingTo.new_next_level_model.project_data[form_key[0]] = {'attachments': []};
+                                            }
+                                            dataoverviewctrl.currentlyAddingTo.new_next_level_model.project_data[form_key[0]].attachments.push(attachment_obj);
+
+                                        });
+                
+            }
+            dataoverviewctrl.removeFile = function(form_key, index, url){
+                //can I access the model for the attachment field? Yes
+
+                if( angular.isUndefined(dataoverviewctrl.currentlyAddingTo.new_next_level_model.project_data[form_key[0]])){
+                    dataoverviewctrl.currentlyAddingTo.new_next_level_model.project_data[form_key[0]] = {'attachments': []};
+                }
+                dataoverviewctrl.currentlyAddingTo.new_next_level_model.project_data[form_key[0]].attachments  = $filter('filter')(dataoverviewctrl.currentlyAddingTo.new_next_level_model.project_data[form_key[0]].attachments, function(value, index) {return value.url !== url;})
+
+            }
+
+
+
             var destroying = false;
             $scope.$on('$destroy', function() {
                 destroying = true;
@@ -652,7 +696,7 @@ angular.module('chembiohubAssayApp')
                             //get the image from the backend
                             //using FlowFileFactory cbhBaseAttachment
                             //for now, return a static url placeholder
-                            return "images/accepted-browsers.png"
+                            return url;
                         }
 
                     }
@@ -716,38 +760,7 @@ angular.module('chembiohubAssayApp')
                 $scope.popup_data = angular.copy(input_popup_data);
                 $scope.youAreInModal = true;
 
-                $scope.success = function(file, form_key){
-                    //can I access the model for the attachment field? Yes
-                    console.log('being found')
-                    //build a URL for this upload so that calling it from the view redirects through the correct resource
-                    //in order to check for project permissions, user permissions etc.
-                    var url_string = urlConfig.instance_path.url_frag + 'datastore/cbh_base_attachments/' + projectKey + "/" + form_key + "/" + file.uniqueIdentifier + "?mime-type=" + file.file.type;
-                    //now add parts to the url indicating project, file.uniqueIdentifier, field name (and filename?)
-                    //add this to an object also containing mimetype data?
-                    //populate the object
-                    var attachment_obj = {
-                        url: url_string,
-                        printName: file.name,
-                        mimeType: file.file.type,
-                        uniqueIdentifier: file.uniqueIdentifier,
-                        //add caption?
-                    }
 
-                    if($scope.popup_data.main_data.project_data[form_key[0]] == ""){
-                        $scope.popup_data.main_data.project_data[form_key[0]] = {'attachments': []}
-                    }
-                    $scope.popup_data.main_data.project_data[form_key[0]].attachments.push(attachment_obj);
-
-                }
-                $scope.removeFile = function(form_key, index, uniqueIdentifier){
-                    //can I access the model for the attachment field? Yes
-                    if($scope.popup_data.main_data.project_data[form_key[0]] == ""){
-                        $scope.popup_data.main_data.project_data[form_key[0]] = {'attachments': []}
-                    }
-                    //$scope.popup_data.main_data.project_data[form_key[0]].attachments.splice(index, 1);
-                    $scope.popup_data.main_data.project_data[form_key[0]].attachments = $filter('filter')($scope.popup_data.main_data.project_data[form_key[0]].attachments, function(value, index) {return value.uniqueIdentifier !== uniqueIdentifier;})
-
-                }
                 $scope.modalInstance = $modal.open({
                     templateUrl: 'views/modal-edit-template.html',
                     size: 'lg',
@@ -769,6 +782,10 @@ angular.module('chembiohubAssayApp')
                     },
                     controller: function($scope, $modalInstance, popup_data, $timeout, youAreInModal, success, removeFile) {
                         $scope.popup_data = popup_data;
+
+
+
+
                         $scope.youAreInModal = youAreInModal;
                         $scope.success = success;
                         $scope.removeFile = removeFile;
@@ -787,6 +804,48 @@ angular.module('chembiohubAssayApp')
                             $scope.popup_data.this_level_edit_form.push(form);
                             angular.extend($scope.popup_data.this_level_edit_schema.properties, angular.copy(proj_data.edit_schema.properties));
                         });
+
+                        $scope.success = function(file, form_key){
+                        //can I access the model for the attachment field? Yes
+                        
+                        //build a URL for this upload so that calling it from the view redirects through the correct resource
+                        //in order to check for project permissions, user permissions etc.
+                        //now add parts to the url indicating project, file.uniqueIdentifier, field name (and filename?)
+                        //add this to an object also containing mimetype data?
+                        //populate the object
+                        var AttachmentFactory = FlowFileFactory.cbhBaseAttachment;
+                        var url_string = ""
+
+                        var fdfresult = AttachmentFactory.save({
+                                                    'flowfile': '/' + prefix + '/datastore/cbh_flowfiles/' + file.uniqueIdentifier,
+                                                    'data_point_classification': '/' + prefix + '/datastore/cbh_datapoint_classifications/' + $scope.popup_data.id, //dpc
+                                                },function (data){
+                                                    url_string = data.resource_uri
+                                                    var attachment_obj = {
+                                                        url: url_string,
+                                                        printName: file.name,
+                                                        mimeType: file.file.type,
+                                                    }
+
+                                                    if( angular.isUndefined($scope.popup_data.main_data.project_data[form_key[0]])){
+                                                        $scope.popup_data.main_data.project_data[form_key[0]] = {'attachments': []};
+                                                    }
+                                                    $scope.popup_data.main_data.project_data[form_key[0]].attachments.push(attachment_obj);
+
+                                                });
+                        
+                    }
+                    $scope.removeFile = function(form_key, index, url){
+                        //can I access the model for the attachment field? Yes
+                        if( angular.isUndefined($scope.popup_data.main_data.project_data[form_key[0]])){
+                            console.log("setting to null")
+                            $scope.popup_data.main_data.project_data[form_key[0]] = {'attachments': []}
+                        }
+                        $scope.popup_data.main_data.project_data[form_key[0]].attachments = $filter('filter')($scope.popup_data.main_data.project_data[form_key[0]].attachments, function(value, index) {return value.url !== url;})
+
+                    }
+
+
                         $scope.modalInstance = $modalInstance;
 
                         $scope.cancel = function() {
@@ -862,60 +921,10 @@ angular.module('chembiohubAssayApp')
             };
             //this method is called when the angular schema form file upload template has uploaded a file
             //get the file identifier and add to the schema form model
-            $scope.success = function(file, form_key){
-                //can I access the model for the attachment field? Yes
-                
-                //build a URL for this upload so that calling it from the view redirects through the correct resource
-                //in order to check for project permissions, user permissions etc.
-                //now add parts to the url indicating project, file.uniqueIdentifier, field name (and filename?)
-                //add this to an object also containing mimetype data?
-                //populate the object
-                var AttachmentFactory = FlowFileFactory.cbhBaseAttachment;
-                var url_string = ""
 
-                var fdfresult = AttachmentFactory.save({
-                                            'flowfile': '/' + prefix + '/datastore/cbh_flowfiles/' + file.uniqueIdentifier,
-                                            'data_point_classification': '/' + prefix + '/datastore/cbh_datapoint_classifications/' + dataoverviewctrl.currentlyAddingTo.id, //dpc
-                                        },function (data){
-                                            url_string : data.resource_uri
-                                        });
-                var attachment_obj = {
-                    url: url_string,
-                    printName: file.name,
-                    mimeType: file.file.type,
-                }
-
-                if(dataoverviewctrl.l0_object.new_next_level_model.project_data[form_key[0]] == ""){
-                    dataoverviewctrl.l0_object.new_next_level_model.project_data[form_key[0]] = {'attachments': []}
-                }
-                dataoverviewctrl.l0_object.new_next_level_model.project_data[form_key[0]].attachments.push(attachment_obj);
-
-            }
-            $scope.removeFile = function(form_key, index, uniqueIdentifier){
-                //can I access the model for the attachment field? Yes
-
-                if(dataoverviewctrl.l0_object.new_next_level_model.project_data[form_key[0]] == ""){
-                    dataoverviewctrl.l0_object.new_next_level_model.project_data[form_key[0]] = {'attachments': []}
-                }
-                dataoverviewctrl.l0_object.new_next_level_model.project_data[form_key[0]].attachments = $filter('filter')(dataoverviewctrl.l0_object.new_next_level_model.project_data[form_key[0]].attachments, function(value, index) {return value.uniqueIdentifier !== uniqueIdentifier;})
-
-            }
-            $scope.toggleExpand = function(printName){
-                if($scope.expanded == printName){
-                    $scope.expanded = '';
-                }
-                else {
-                    $scope.expanded = printName;
-                }
-                                            
-            }
-
-            $scope.fetchImage = function(url){
-                //get the image from the backend
-                //using FlowFileFactory cbhBaseAttachment
-                //for now, return a static url placeholder
-                return "images/accepted-browsers.png"
-            }
+            $scope.success = dataoverviewctrl.success;
+            $scope.removeFile = dataoverviewctrl.removeFile;
+            
             $scope.csrftoken = $cookies[prefix.split("/")[0] + "csrftoken"];
             $scope.flowinit = {
                 //need to change target to the new WS path provided by Andy
