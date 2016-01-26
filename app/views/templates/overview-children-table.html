@@ -58,6 +58,10 @@
                                 <small ng-hide="childItem.highlight[dpclassif.next_level + '.project_data.' + field.elasticsearch_fieldname]">
                                     {{childItem._source[dpclassif.next_level].project_data[field.elasticsearch_fieldname]}}
                                 </small>
+                                <div ng-if="field.edit_schema.properties[form.elasticsearch_fieldname].format == 'file_upload'"
+                                     ng-init="uploads = childItem._source[dpclassif.next_level].project_data[field.elasticsearch_fieldname].attachments; clickFunction = toggleExpand; imageFunction = fetchImage;"
+                                     ng-include="'views/templates/files-uploaded-view.html'">
+                                </div>
                                 
                             </td>
                         </tr>
