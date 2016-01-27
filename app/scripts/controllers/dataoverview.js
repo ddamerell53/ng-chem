@@ -921,6 +921,7 @@ angular.module('chembiohubAssayApp')
             };
             //this method is called when the angular schema form file upload template has uploaded a file
             //get the file identifier and add to the schema form model
+
             $scope.success = dataoverviewctrl.success;
             $scope.removeFile = dataoverviewctrl.removeFile;
             

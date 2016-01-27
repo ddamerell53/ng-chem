@@ -10,8 +10,8 @@
 
 
 angular.module('chembiohubAssayApp')
-    .controller('SearchCtrl', ['$scope', '$http', '$rootScope', '$filter', '$stateParams', '$location', '$state', '$timeout', 'projectFactory', 'gridconfig', 'CBHCompoundBatch', 'urlConfig', 'searchUrlParams',
-        function($scope, $http, $rootScope, $filter, $stateParams, $location, $state, $timeout, projectFactory, gridconfig, CBHCompoundBatch, urlConfig, searchUrlParams) {
+    .controller('SearchCtrl', ['$scope', '$http', '$rootScope', '$filter', '$stateParams', '$location', '$state', '$timeout', 'projectFactory', 'gridconfig', 'CBHCompoundBatch', 'urlConfig', 'searchUrlParams', '$modal',
+        function($scope, $http, $rootScope, $filter, $stateParams, $location, $state, $timeout, projectFactory, gridconfig, CBHCompoundBatch, urlConfig, searchUrlParams, $modal) {
             $scope.cbh.appName = "ChemReg";
             $scope.searchFormSchema = angular.copy($scope.cbh.projects.searchform);
             $scope.cbh.textsearch = $stateParams.textsearch;
@@ -187,6 +187,93 @@ angular.module('chembiohubAssayApp')
             $scope.cbh.repaintUiselect = function() {
                 updateFields();
                 $rootScope.$broadcast('schemaFormRedraw');
+            }
+
+            /* SAVED SEARCH STUFF */
+
+            $scope.openNewSavedSearchPopup = function(){
+                //get the current search
+                //setup a model for the entry form
+                $scope.newSavedSearchModel = { }
+                $scope.modalInstance = $modal.open({
+                  templateUrl: 'views/templates/new-saved-search-modal.html',
+                  size: 'md',
+                  resolve: {
+                    newSavedSearchModel: function () {
+                      return $scope.newSavedSearchModel;
+                    },
+                    searchFormSchema: function(){
+                        return $scope.searchFormSchema;
+                    }
+
+                  }, 
+                  controller: function($scope, $modalInstance, newSavedSearchModel, searchFormSchema) {
+                    $scope.newSavedSearchModel = newSavedSearchModel;
+                    $scope.searchFormSchema = searchFormSchema;
+                    
+                    $scope.modalInstance = $modalInstance;
+
+                    $scope.cancel = function () {
+                      $modalInstance.dismiss('cancel');
+                    };
+
+                    //save the details added in the form
+                    $scope.saveSearch = function(item){
+                        //the current search is in scope.cbh
+                    }
+
+                  }
+                });
+            }
+
+            $scope.openMySavedSearchPopup = function(){
+                //$scope.popup_data = angular.copy(input_popup_data);
+                $scope.links = [
+                //this will be the result of a return from a web service call via SavedSearchFactory
+
+                    {
+                        alias: "test string here",
+                        added: "2016-01-01",
+                        search_url: "url here",
+
+
+                    },
+                    {
+                        alias: "test string here",
+                        added: "2016-01-01",
+                        search_url: "url here",
+
+
+                    },
+                ]
+                $scope.modalInstance = $modal.open({
+                  templateUrl: 'views/templates/my-searches-modal.html',
+                  size: 'md',
+                  resolve: {
+                    links: function () {
+                      return $scope.links;
+                    },
+
+                  }, 
+                  controller: function($scope, $modalInstance, links) {
+                    $scope.links = links;
+                    
+                    $scope.modalInstance = $modalInstance;
+
+                    $scope.cancel = function () {
+                      $modalInstance.dismiss('cancel');
+                    };
+
+                    //more functions here
+
+                    //determine the permissions on the link and send back and appropriate string: 
+                    //user, group, project etc 
+                    $scope.personalOrGroup = function(item){
+                        return "personal"
+                    }
+
+                  }
+                });
             }
 
         }
