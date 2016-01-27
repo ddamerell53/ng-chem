@@ -17,7 +17,7 @@ angular.module('chembiohubAssayApp')
     ProjectFactory, 
     ProjectTypeFactory, 
     Projectpermissions, 
-    userList, 
+    userList,
     ProjectPermissionAllRoles) {
       $scope.chemical_type = "";
 
@@ -126,5 +126,28 @@ angular.module('chembiohubAssayApp')
                     }
                 );
         };
+        //change this to a service call
+        $scope.links = [
+                    //this will be the result of a return from a web service call via SavedSearchFactory
+                    {
+                        alias: "test string here",
+                        added: "2016-01-01",
+                        search_url: "url here",
+                        owner_key: "paul",
+                        to_remove: false,
+
+
+                    },
+                    {
+                        alias: "other string here",
+                        added: "2016-01-01",
+                        search_url: "url here",
+                        owner_key: "vagrant",
+                        to_remove: false,
+
+
+                    },
+                ];
+        $scope.loggedInUser = $scope.cbh.loggedInUser;
 
       } );

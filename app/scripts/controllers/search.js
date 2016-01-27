@@ -294,49 +294,51 @@ angular.module('chembiohubAssayApp')
 
             $scope.saveSearch = function(){
                         
-                        //from the project type service get saved_search_project_template (specify project_type.saved_search == true)
-                        //from what is returned, set the name and the name on the custom field config to (alias + timestamp) for uniqueness
-                        //set compound_batch.customFields.Url to be search url
-                        //set compound_batch.customFields.Alias to be alias
-                        //post to the create project resource
-                        //from what is returned get the resource_uri and project_key
-                        //set blinded_batch_id = "EMPTY_STRING"
-                        //send back to the savedsearch service
-                        console.log('still being found');
-                        ProjectTypeFactory.get({"saved_search_project_type": true}, function(data){
-                          
-                          $scope.savedSearchType = data.objects[0];
-                          var template = $scope.savedSearchType.project_template;
-                          var d = new Date();
-                          template.name = $scope.newSavedSearchModel.alias + d.getTime().toString();
-                          template.custom_field_config.name = $scope.newSavedSearchModel.alias + d.getTime().toString();
+                //from the project type service get saved_search_project_template (specify project_type.saved_search == true)
+                //from what is returned, set the name and the name on the custom field config to (alias + timestamp) for uniqueness
+                //set compound_batch.customFields.Url to be search url
+                //set compound_batch.customFields.Alias to be alias
+                //post to the create project resource
+                //from what is returned get the resource_uri and project_key
+                //set blinded_batch_id = "EMPTY_STRING"
+                //send back to the savedsearch service
+                console.log('still being found');
+                ProjectTypeFactory.get({"saved_search_project_type": true}, function(data){
+                  
+                  $scope.savedSearchType = data.objects[0];
+                  var template = $scope.savedSearchType.project_template;
+                  var d = new Date();
+                  template.name = $scope.newSavedSearchModel.alias + d.getTime().toString();
+                  template.custom_field_config.name = $scope.newSavedSearchModel.alias + d.getTime().toString();
 
-                            projectFactory.save(template, function(data){
-                                var resource_uri = data.resource_uri;
-                                var savedSearcObj = {
-                                    project: data.resource_uri,
-                                    projectKey: data.project_key,
-                                    customFields: {
-                                        Alias: $scope.newSavedSearchModel.alias,
-                                        Url: window.location.href,
-                                    }
-                                }
+                    projectFactory.save(template, function(data){
+                        var resource_uri = data.resource_uri;
+                        var savedSearchObj = {
+                            project: data.resource_uri,
+                            projectKey: data.project_key,
+                            customFields: {
+                                Alias: $scope.newSavedSearchModel.alias,
+                                Url: window.location.href,
+                            }
+                        }
 
-                                SavedSearchFactory.save(savedSearcObj, function(data){
-                                    //search is now saved - close the modal
-                                    $scope.cancel();
-                                });
+                        SavedSearchFactory.save(savedSearchObj, function(data){
+                            //search is now saved - close the modal
+                            //TODO - make sure reindex is called on the correct thing within data
+                            //CBHCompoundBatch.reindex_compound(data)
+                            $scope.cancel();
+                        });
 
-                                
-                            });
-
-                            
-                          });
                         
+                    });
 
-                        $scope.newSavedSearchModel.search_url = window.location.href;
+                    
+                  });
+                
 
-                    }
+                //$scope.newSavedSearchModel.search_url = window.location.href;
+
+            }
 
         }
     ]);
