@@ -50,6 +50,10 @@
 								<li ng-if="cbh.logged_in_user.can_view_chemreg" role="presentation" ng-class="cbh.currentPageClass('cbh.search')">
 									<a ui-sref="cbh.search({textsearch: cbh.textsearch})">Search ChemReg for "{{cbh.textsearch}}"</a>
 								</li>
+
+								<!-- SAVED SEARCHES APPEAR HERE - same template as the My Saved Search list html?
+									 what will provide the saved searches? Indexed in elasticsearch? -->
+
 								<li ng-if="indexVM.results.aggregations.title_filtering_l2.buckets[0].L2agg.doc_count > 0"><hr></li>
 								<li ng-if="cbh.logged_in_user.can_view_assayreg" ng-repeat="thing in indexVM.results.aggregations.title_filtering_l2.buckets" role="presentation" ng-if="indexVM.results.aggregations.title_filtering_l2.buckets[0].L2agg.doc_count > 0">
 <!-- 									Set the text search to undefined to stop the search being run for this assay AND whatever prefix the user has typed

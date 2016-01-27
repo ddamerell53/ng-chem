@@ -1,14 +1,24 @@
 <div class="row">
 	<div class="col-xs-12">
 		<div class="form-group pull-right">
-			<div class="pull-right">
-				<button class="btn btn-primary" ng-click="clearSavedSearch()"><span class="glyphicon glyphicon-remove"></span> (Search applied)</button>
-				<button class="btn btn-success" ng-click="openNewSavedSearchPopup()"><span class="glyphicon glyphicon-save-floppy"></span> Save this search</button>
-				<button class="btn btn-primary" ng-click="openMySavedSearchPopup()"><span class="glyphicon glyphicon-pencil"></span> My Saved Searches</button>
-			</div>
-			<p class="help-block"><small>Perform a search over and over again? Use the saved search feature to save time.</small></p>
+
+				<p class="help-block"><small>Perform a search over and over again? Use the saved search feature to save time.</small></p>
+				<div class="dropdown pull-right">
+					<button class="btn btn-primary"><span class="glyphicon glyphicon-remove" ng-click="cancel()"></span> (Search applied)</button>
+				  <button id="savedSearchOptions" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-primary">
+				    Saved Search...
+				    <span class="caret"></span>
+				  </button>
+				  <ul class="dropdown-menu pull-right" aria-labelledby="savedSearchOptions">
+				    <li><a ng-click="openNewSavedSearchPopup()" ng-if="hasSearchBeenPerformed() == true"><span class="glyphicon glyphicon-save-floppy"></span> <span>Save This Search</span></a></li>
+				    <li><a ng-click="openMySavedSearchPopup()"><span class="glyphicon glyphicon-save-pencil"></span> <span>My Saved Searches</span></a></li>
+				  </ul>
+				</div>
+				
 
 		</div>
+		
+
 		
 	</div>
 	<div class="col-xs-12">

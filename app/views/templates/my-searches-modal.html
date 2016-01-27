@@ -1,27 +1,14 @@
- 		<div class="modal-header">
-            <button  type="button" class="close pull-right" data-dismiss="alert" aria-label="Close" ng-click="cancel()"><span  class="glyphicon glyphicon-remove-circle"></span></button>
-            <h3 class="modal-title">My Saved Searches</h3>
-        </div>
-        <div class="modal-body">
-            
-            <!-- content here via template? -->
-            <div class="row" ng-repeat="link in links">
-                <div class="col-xs-9">
-                    <p class="nexa">
-                        <strong><a href="">{{ link.alias }}</a></strong><br>
-                        <small><span class="glyphicon glyphicon-time"></span> date added: {{ link.added | date }} | <span class="glyphicon glyphicon-user"></span> {{ personalOrGroup(link) }}</small>
-                    </p>
-                </div>
-                <div class="col-xs-3 text-right">
-                    <p>
-                        <a href="#"><span class="glyphicon glyphicon-pencil" title="edit"></span></a>&nbsp;
-                        <a href="#"><span class="glyphicon glyphicon-remove" title="remove"></span></a>&nbsp;
-                    </p>
-                </div>
-            </div>
+<div class="modal-header">
+    <button  type="button" class="close pull-right" data-dismiss="alert" aria-label="Close" ng-click="cancel()"><span  class="glyphicon glyphicon-remove-circle"></span></button>
+    <h3 class="modal-title">My Saved Searches</h3>
+</div>
+<div class="modal-body">
+    
+    <!-- content here via template? -->
+    <div ng-include="'views/templates/my-searches-list.html'" ng-init="links = links;"></div>
 
-        </div>
-        <div class="modal-footer">
-            <button class="btn btn-danger" type="button" ng-click="cancel()">Discard Changes and Close</button>
-            <button class="btn btn-success" type="button" ng-click="saveChanges()">Save Changes</button>
-        </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-danger" type="button" ng-click="cancel()">Discard Changes and Close</button>
+    <button class="btn btn-success" type="button" ng-click="saveChanges()">Save Changes</button>
+</div>
