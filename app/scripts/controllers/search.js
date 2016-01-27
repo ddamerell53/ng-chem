@@ -237,30 +237,36 @@ angular.module('chembiohubAssayApp')
 
             $scope.openMySavedSearchPopup = function(){
                 //$scope.popup_data = angular.copy(input_popup_data);
+                //Test data looks like:
                 $scope.links = [
                     //this will be the result of a return from a web service call via SavedSearchFactory
                     {
-                        alias: "test string here",
-                        added: "2016-01-01",
-                        search_url: "url here",
-                        owner_key: "paul",
-                        to_remove: false,
-
+                        custom_fields : {
+                            Alias: "test string here",
+                            added: "2016-01-01",
+                            Url: "url here",
+                            owner_key: "paul",
+                            to_remove: false,
+                        }
+                        
 
                     },
                     {
-                        alias: "other string here",
-                        added: "2016-01-01",
-                        search_url: "url here",
-                        owner_key: "vagrant",
-                        to_remove: false,
-
+                        custom_fields : {
+                            Alias: "other string here",
+                            added: "2016-01-01",
+                            Url: "url here",
+                            owner_key: "paul",
+                            to_remove: false,
+                        }
+                        
 
                     },
                 ]
                 //This is what the SavedSearchFactory get links method will look like
                 /*SavedSearchFactory.get(function(data){
-                    $scope.links = data;
+                    $scope.links = data.objects;
+                    //data we need is in customFields.Alias and customFields.URL
                 });*/
                 $scope.modalInstance = $modal.open({
                   templateUrl: 'views/templates/my-searches-modal.html',
@@ -285,6 +291,7 @@ angular.module('chembiohubAssayApp')
                     //determine the permissions on the link and send back and appropriate string: 
                     //user, group, project etc 
                     $scope.personalOrGroup = function(item){
+                        //this maight not be useful now since the permissions have changed
                         return "personal"
                     }
 
@@ -324,8 +331,10 @@ angular.module('chembiohubAssayApp')
 
                         SavedSearchFactory.save(savedSearchObj, function(data){
                             //search is now saved - close the modal
-                            //TODO - make sure reindex is called on the correct thing within data
-                            //CBHCompoundBatch.reindex_compound(data)
+                            //make sure reindex is called on the correct thing within data
+                            var params = {"id": data.id}
+                            $http.post( urlConfig.cbh_compound_batches.list_endpoint  + "/reindex_compound/" , params)
+                            //close modal
                             $scope.cancel();
                         });
 
@@ -334,9 +343,6 @@ angular.module('chembiohubAssayApp')
 
                     
                   });
-                
-
-                //$scope.newSavedSearchModel.search_url = window.location.href;
 
             }
 
