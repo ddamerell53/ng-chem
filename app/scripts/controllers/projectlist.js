@@ -19,6 +19,7 @@ angular.module('chembiohubAssayApp')
     Projectpermissions, 
     userList,
     urlConfig,
+    loggedInUser,
     ProjectPermissionAllRoles) {
       $scope.default_project_type = "";
 
@@ -130,16 +131,19 @@ angular.module('chembiohubAssayApp')
         //change this to a service call
         $scope.links = [];
                     //this will be the result of a return from a web service call via SavedSearchFactory
-        $http.get( urlConfig.cbh_saved_search.list_endpoint  + "/get_list_elasticsearch/").then(function(data){
-                    
-                    $scope.links = data.data.objects;
-                    
-                })
+                    console.log(loggedInUser);
+        var params = {'creator_uri': loggedInUser.resource_uri};
+
+        $http.get( urlConfig.cbh_saved_search.list_endpoint  + "/get_list_elasticsearch/", {'params': params}).then(function(data){
+            
+            $scope.links = data.data.objects;
+            
+        })
         //This is what the SavedSearchFactory get links method will look like
                 /*SavedSearchFactory.get(function(data){
                     $scope.links = data.objects;
                     //data we need is in customFields.Alias and customFields.URL
                 });*/
-        $scope.loggedInUser = $scope.cbh.loggedInUser;
+        //$scope.loggedInUser = $scope.cbh.loggedInUser;
 
       } );

@@ -250,7 +250,9 @@ angular.module('chembiohubAssayApp')
                     $scope.links = data.objects;
 
                 });*/
-                $http.get( urlConfig.cbh_saved_search.list_endpoint  + "/get_list_elasticsearch/").then(function(data){
+                var params = {'creator_uri': loggedInUser.resource_uri};
+
+                $http.get( urlConfig.cbh_saved_search.list_endpoint  + "/get_list_elasticsearch/", {'params': params}).then(function(data){
                     
                     $scope.links = data.data.objects;
                     $scope.modalInstance = $modal.open({
