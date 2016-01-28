@@ -10,8 +10,8 @@
 
 
 angular.module('chembiohubAssayApp')
-    .controller('SearchCtrl', ['$scope', '$http', '$rootScope', '$filter', '$stateParams', '$location', '$state', '$timeout', 'projectFactory', 'gridconfig', 'CBHCompoundBatch', 'urlConfig', 'searchUrlParams', '$modal',
-        function($scope, $http, $rootScope, $filter, $stateParams, $location, $state, $timeout, projectFactory, gridconfig, CBHCompoundBatch, urlConfig, searchUrlParams, $modal) {
+    .controller('SearchCtrl', ['$scope', '$http', '$rootScope', '$filter', '$stateParams', '$location', '$state', '$timeout', 'projectFactory', 'gridconfig', 'CBHCompoundBatch', 'urlConfig', 'searchUrlParams', '$modal', 'loggedInUser', 'ProjectTypeFactory', 'SavedSearchFactory',
+        function($scope, $http, $rootScope, $filter, $stateParams, $location, $state, $timeout, projectFactory, gridconfig, CBHCompoundBatch, urlConfig, searchUrlParams, $modal, loggedInUser, ProjectTypeFactory, SavedSearchFactory) {
             $scope.cbh.appName = "ChemReg";
             $scope.searchFormSchema = angular.copy($scope.cbh.projects.searchform);
             $scope.cbh.textsearch = $stateParams.textsearch;
@@ -190,6 +190,12 @@ angular.module('chembiohubAssayApp')
             }
 
             /* SAVED SEARCH STUFF */
+            $scope.hasSearchBeenPerformed = function(){
+                if($state.params == {}){
+                    return false;
+                }
+                return true;
+            }
 
             $scope.openNewSavedSearchPopup = function(){
                 //get the current search
@@ -204,12 +210,20 @@ angular.module('chembiohubAssayApp')
                     },
                     searchFormSchema: function(){
                         return $scope.searchFormSchema;
+                    },
+                    saveSearch: function(){
+                        return $scope.saveSearch;
+                    },
+                    projectFactory: function(){
+                        return projectFactory;
                     }
 
                   }, 
-                  controller: function($scope, $modalInstance, newSavedSearchModel, searchFormSchema) {
+                  controller: function($scope, $modalInstance, newSavedSearchModel, searchFormSchema, ProjectTypeFactory, projectFactory, SavedSearchFactory, saveSearch) {
                     $scope.newSavedSearchModel = newSavedSearchModel;
                     $scope.searchFormSchema = searchFormSchema;
+
+                    $scope.saveSearch = saveSearch;
                     
                     $scope.modalInstance = $modalInstance;
 
@@ -217,47 +231,55 @@ angular.module('chembiohubAssayApp')
                       $modalInstance.dismiss('cancel');
                     };
 
-                    //save the details added in the form
-                    $scope.saveSearch = function(item){
-                        //the current search is in scope.cbh
-                    }
-
                   }
                 });
             }
 
             $scope.openMySavedSearchPopup = function(){
                 //$scope.popup_data = angular.copy(input_popup_data);
+                //Test data looks like:
                 $scope.links = [
-                //this will be the result of a return from a web service call via SavedSearchFactory
-
+                    //this will be the result of a return from a web service call via SavedSearchFactory
                     {
-                        alias: "test string here",
-                        added: "2016-01-01",
-                        search_url: "url here",
-
+                        custom_fields : {
+                            Alias: "test string here",
+                            added: "2016-01-01",
+                            Url: "url here",
+                            owner_key: "paul",
+                            to_remove: false,
+                        }
+                        
 
                     },
                     {
-                        alias: "test string here",
-                        added: "2016-01-01",
-                        search_url: "url here",
-
+                        custom_fields : {
+                            Alias: "other string here",
+                            added: "2016-01-01",
+                            Url: "url here",
+                            owner_key: "paul",
+                            to_remove: false,
+                        }
+                        
 
                     },
                 ]
+                //This is what the SavedSearchFactory get links method will look like
+                /*SavedSearchFactory.get(function(data){
+                    $scope.links = data.objects;
+                    //data we need is in customFields.Alias and customFields.URL
+                });*/
                 $scope.modalInstance = $modal.open({
                   templateUrl: 'views/templates/my-searches-modal.html',
                   size: 'md',
                   resolve: {
                     links: function () {
                       return $scope.links;
-                    },
+                    }
 
                   }, 
-                  controller: function($scope, $modalInstance, links) {
+                  controller: function($scope, $modalInstance, links, loggedInUser) {
                     $scope.links = links;
-                    
+                    $scope.loggedInUser = loggedInUser;
                     $scope.modalInstance = $modalInstance;
 
                     $scope.cancel = function () {
@@ -269,11 +291,59 @@ angular.module('chembiohubAssayApp')
                     //determine the permissions on the link and send back and appropriate string: 
                     //user, group, project etc 
                     $scope.personalOrGroup = function(item){
+                        //this maight not be useful now since the permissions have changed
                         return "personal"
                     }
 
                   }
                 });
+            }
+
+            $scope.saveSearch = function(){
+                        
+                //from the project type service get saved_search_project_template (specify project_type.saved_search == true)
+                //from what is returned, set the name and the name on the custom field config to (alias + timestamp) for uniqueness
+                //set compound_batch.customFields.Url to be search url
+                //set compound_batch.customFields.Alias to be alias
+                //post to the create project resource
+                //from what is returned get the resource_uri and project_key
+                //set blinded_batch_id = "EMPTY_STRING"
+                //send back to the savedsearch service
+                console.log('still being found');
+                ProjectTypeFactory.get({"saved_search_project_type": true}, function(data){
+                  
+                  $scope.savedSearchType = data.objects[0];
+                  var template = $scope.savedSearchType.project_template;
+                  var d = new Date();
+                  template.name = $scope.newSavedSearchModel.alias + d.getTime().toString();
+                  template.custom_field_config.name = $scope.newSavedSearchModel.alias + d.getTime().toString();
+
+                    projectFactory.save(template, function(data){
+                        var resource_uri = data.resource_uri;
+                        var savedSearchObj = {
+                            project: data.resource_uri,
+                            projectKey: data.project_key,
+                            customFields: {
+                                Alias: $scope.newSavedSearchModel.alias,
+                                Url: window.location.href,
+                            }
+                        }
+
+                        SavedSearchFactory.save(savedSearchObj, function(data){
+                            //search is now saved - close the modal
+                            //make sure reindex is called on the correct thing within data
+                            var params = {"id": data.id}
+                            $http.post( urlConfig.cbh_compound_batches.list_endpoint  + "/reindex_compound/" , params)
+                            //close modal
+                            $scope.cancel();
+                        });
+
+                        
+                    });
+
+                    
+                  });
+
             }
 
         }

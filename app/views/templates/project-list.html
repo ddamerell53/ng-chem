@@ -1,7 +1,6 @@
-<div class="container">
-        
-        <div class="row grey-to-white {{!project.project_type.show_compounds ? 'nonchem' : ''}}" ng-repeat="project in projects | filter:search:strict" style="margin-bottom:15px; border-radius:10px;">
-            <div class="col-sm-4 proj-list-header {{!project.project_type.show_compounds ? 'nonchem' : ''}}" style="height:100%">
+    
+        <div class="row row-flex grey-to-white {{!project.project_type.show_compounds ? 'nonchem' : ''}}" ng-repeat="project in projects | filter:search:strict" style="margin-bottom:15px; margin-left:10px; border-radius:10px;">
+            <div class="col-sm-3 proj-list-header {{!project.project_type.show_compounds ? 'nonchem' : ''}}" style="height:100%">
 
                 <h2 class="blue" style="display:inline-block">
                                   
@@ -11,7 +10,7 @@
                 
             </div>
 
-            <div class="col-sm-4" style="padding:10px 10px 0 10px;">
+            <div class="col-sm-3" style="padding:10px 10px 0 10px;">
                 <p ng-if="project.assays_configured" class="nexa">
                     <strong style="line-height:40px">    <img style="padding-top:5px;" class="pull-left" src="images/assay-icon.png" ng-if="project.assays_configured" alt="{{project.project_type.name}} project" title="Assay project"> &nbsp;
 Assay Data<br></strong> 
@@ -23,7 +22,7 @@ Assay Data<br></strong>
                 </p>
             </div>
 
-            <div class="col-sm-4" style="padding:10px 10px 0 10px;">
+            <div class="col-sm-3" style="padding:10px 10px 0 10px;">
                 <p class="nexa" ng-if="project.project_type.name == 'chemical' || project.project_type.name.toLowerCase() == 'inventory' || project.project_type.show_compounds ">
                     <strong style="line-height:40px"><img class="pull-left" style="padding-top:5px;" src="images/chemical-icon.png" ng-if="project.project_type.show_compounds" alt="Project with compounds" title="Project with compounds">
                 <img class="pull-left" style="padding-top:5px;" src="images/inventory-icon.png" ng-if="!project.project_type.show_compounds" alt="{{project.project_type.name}} project" title="{{project.project_type.name}} project">&nbsp;{{project.project_type.show_compounds ? 'Chemical' : 'Inventory' }} Data<br></strong> 
@@ -43,7 +42,8 @@ Assay Data<br></strong>
                     </small>
                 </p>
             </div>
-            <div class="col-xs-12 pull-left clearfix" style="margin: -20px 0 5px -4px;">
+
+            <div class="col-xs-3" style="padding:10px 10px 0 10px;">
                
                 <p class="nexa" style="margin-bottom:0px; display:inline-block;"><small><a ng-if="project.owner" ng-click="openProjectWindow(project.id)"><span class="glyphicon glyphicon-pencil"></span> Edit configuration</a></small>
                 <small><a class="disabled" ng-if="!project.owner" disabled  ><span class="glyphicon glyphicon-pencil"></span> Edit configuration</a></small>
@@ -61,4 +61,5 @@ Assay Data<br></strong>
 
             
         </div>
-</div>
+
+            

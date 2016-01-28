@@ -1,0 +1,18 @@
+<div class="row" ng-repeat="link in links">
+    <div class="col-xs-9">
+        <p class="nexa" ng-class="link.custom_fields.to_remove == true ? 'strikethrough' : ''">
+            <!-- using an inplace editor library http://vitalets.github.io/angular-xeditable/#overview -->
+            <strong>
+                <a ng-click="textBtnForm{{$index}}.$show()" ng-hide="textBtnForm{{$index}}.$visible"><span class="glyphicon glyphicon-pencil" title="edit" ng-if="loggedInUser.username == link.custom_fields.owner_key && link.custom_fields.to_remove == false"></span></a>&nbsp;
+                <span editable-text="link.custom_fields.Alias" e-form="textBtnForm{{$index}}"><a href="{{ link.custom_fields.Url }}">{{ link.custom_fields.Alias }}</a></span>
+            </strong><br>
+
+            <small><span class="glyphicon glyphicon-time"></span> date added: {{ link.added | date }} | <span class="glyphicon glyphicon-user"></span> {{ personalOrGroup(link) }}</small>
+        </p>
+    </div>
+    <div class="col-xs-3 text-right">
+        <p>
+            <a ng-click="link.custom_fields.to_remove = !link.custom_fields.to_remove;"><span class="glyphicon " ng-class="link.custom_fields.to_remove == false ? 'glyphicon-remove' : 'glyphicon-repeat'" title="remove"></span></a>
+        </p>
+    </div>
+</div>

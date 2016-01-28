@@ -1,28 +1,44 @@
-<div class="container">
+<div class="container-flex">
 
 <div class="row" style="margin-top:10px;">
-        <div class="col-xs-12">
+    <div class="col-xs-9">
 
 
-            <h2 class="blue nexa" style="display:inline-block"><a ng-click="topLink()" style="text-transform: capitalize;"><span class='glyphicon glyphicon-{{glyphicon}}'></span> &nbsp;{{headline}}</a> 
-            </h2>
-            <p class="nexa" style="display:inline-block;margin-bottom:0px;">
-                <small>
-                    <a ng-if="cbh.logged_in_user.can_create_and_own_projects" ng-click="openProjectWindow(-1)"><span class="glyphicon glyphicon-plus"></span> Add Project</a>
-                    <a ng-if="!cbh.logged_in_user.can_create_and_own_projects" disabled class="disabled"><span class="glyphicon glyphicon-plus"></span> Add Project</a>
-                    <info-box ng-if="!cbh.logged_in_user.can_create_and_own_projects" freetext="You do not have permission to create projects at this time. Please ask an administrator for details." right="true">
-                </small>
-            </p>
-            <h2 class="blue nexa">
-                <small>{{subheading}} <info-box lookup="projects_help" lookupitems="cbh.messages" right="true"></info-box></small></h2>
+        <h2 class="blue nexa" style="display:inline-block"><a ng-click="topLink()" style="text-transform: capitalize;"><span class='glyphicon glyphicon-{{glyphicon}}'></span> &nbsp;{{headline}}</a> 
+        </h2>
+        <p class="nexa" style="display:inline-block;margin-bottom:0px;">
+            <small>
+                <a ng-if="cbh.logged_in_user.can_create_and_own_projects" ng-click="openProjectWindow(-1)"><span class="glyphicon glyphicon-plus"></span> Add Project</a>
+                <a ng-if="!cbh.logged_in_user.can_create_and_own_projects" disabled class="disabled"><span class="glyphicon glyphicon-plus"></span> Add Project</a>
+                <info-box ng-if="!cbh.logged_in_user.can_create_and_own_projects" freetext="You do not have permission to create projects at this time. Please ask an administrator for details." right="true">
+            </small>
+        </p>
+        <h2 class="blue nexa">
+            <small>{{subheading}} <info-box lookup="projects_help" lookupitems="cbh.messages" right="true"></info-box></small></h2>
 
 
-            <span class="pull-right" style="margin-top: -40px; margin-right: -30px;"><label >Filter project list: </label><input ng-model="search.name"><info-box lookup="project_list_filter_help" lookupitems="cbh.messages" left="true"></info-box></span>
+        <span class="pull-right" style="margin-top: -40px; margin-right: -10px;"><label >Filter project list: </label><input ng-model="search.name"><info-box lookup="project_list_filter_help" lookupitems="cbh.messages" left="true"></info-box></span>
 
+    </div>
+    
+    
+    <div class="col-xs-3">
+        
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-9">
+        <project-list></project-list>
+    </div>
+    <div class="col-xs-3">
+        <h2 class="blue">Saved Searches</h2>
+        <div class="row grey-to-white" style="margin-bottom:15px; margin-left:10px; margin-right:10px; border-radius:10px;">
+            <div class="col-xs-12">
+                <div ng-include="'views/templates/my-searches-list.html'" ng-init="links = links;"></div>
+            </div>
         </div>
     </div>
-
-<project-list></project-list>
+</div>
 <div ng-if="" ng-include="'views/no-projects.html'"></div>
             <a id="search-bottom"></a>
 
