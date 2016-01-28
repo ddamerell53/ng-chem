@@ -8,9 +8,9 @@
  * Controller of the ngChemApp
  */
 angular.module('chembiohubAssayApp')
-  .controller('ProjectfieldsCtrl', ["$scope", "$modalInstance", "$rootScope", "ProjectFactory", "projectId", "chemical_type", "projectTypes",
-    function($scope, $modalInstance, $rootScope, ProjectFactory,  projectId, chemical_type, projectTypes) {
-    
+  .controller('ProjectfieldsCtrl', ["$scope", "$modalInstance", "$rootScope", "ProjectFactory", "projectId", "default_project_type", "projectTypes",
+    function($scope, $modalInstance, $rootScope, ProjectFactory,  projectId, default_project_type, projectTypes) {
+            $scope.isIE = detectIE();
             var field_types = [{"name": "Short text", "value": "char"},  
               {"name": "Full text", "value": "textarea"}, 
               {"name": "Choice", "value": "uiselect"}, 
@@ -55,6 +55,7 @@ angular.module('chembiohubAssayApp')
                     "key": "custom_field_config.project_data_fields",
                     "title": "Project Data Fields",
                     "type": "array",
+                    "description": "Fields that will be displayed for this project. Drag a field to change the order it is displayed in. The order of existing fields can be changed but they cannot be removed or renamed.",
 
                     "items": [
                     {"type":"section",
@@ -66,15 +67,17 @@ angular.module('chembiohubAssayApp')
                     "feedback": false,
                       "title": "Name",
                       "required": true,
-                      "isReadOnly" : function(value){
+                      "isReadOnly" : function(key){
+                        //This function takes the key of the individual copy of this form that is in the array of forms in schema form
+                        //The function is called because of a modification to the default template of angular schema form found in 
+                        //cbh_angular_schema_form_extension.js We iterate the object path to find the model value for the project data field in question
+                        //If this value has an ID then the user is NOT ALLOWED to change the field any more
                         var readonly = false;
-                        angular.forEach($scope.proj.custom_field_config.project_data_fields, function(item){
-                          if(item.name==value){
-                            if(item.id){
-                              readonly = true;
-                            }
-                          }
-                        });
+                        var current=$scope.proj; 
+                        angular.forEach(key.slice(0,-1), function(p){ current = current[p]; }); 
+                        if(current.id){
+                          readonly=true;
+                        }
                         return readonly;
                       }
 
@@ -153,7 +156,7 @@ angular.module('chembiohubAssayApp')
                                                 function(pT){
                                                     return pT.value
                                                 }),
-                                              "default": chemical_type,
+                                              "default": default_project_type,
 
                                             },
 
@@ -217,7 +220,7 @@ angular.module('chembiohubAssayApp')
               
                 $scope.operation = "add";
                 $scope.proj = {
-                  "project_type": chemical_type,
+                  "project_type": default_project_type,
                   "custom_field_config":{
                     "project_data_fields": [{"required":false, "field_type": "char", "open_or_restricted": "open"},]
 
@@ -298,14 +301,16 @@ angular.module('chembiohubAssayApp')
               }
 
               $scope.saveChanges = function(myForm){
-                  var callback = function(data){
+                  $scope.$broadcast("schemaFormValidate");
+                  $scope.errormess = "";
+                  if(myForm.$valid){
+                     var callback = function(data){
                     $modalInstance.dismiss('cancel');
                     location.reload(true);
                   };
                   
                   checkForDuplicateNames();
-                  $scope.$broadcast('schemaFormValidate');
-                    if(myForm.$valid && !$scope.errormess ){
+                    if( !$scope.errormess ){
                       if($scope.operation = "add"){
                          ProjectFactory.save($scope.proj, callback);
 
@@ -315,5 +320,10 @@ angular.module('chembiohubAssayApp')
                     }else{
                       console.log(myForm);
                     }
+
+                  }else{
+                    $scope.errormess = "Please correct the errors above in order to save this project.";
+                  }
+                 
               };
 }]);

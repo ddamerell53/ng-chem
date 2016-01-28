@@ -19,14 +19,14 @@ angular.module('chembiohubAssayApp')
     Projectpermissions, 
     userList, 
     ProjectPermissionAllRoles) {
-      $scope.chemical_type = "";
+      $scope.default_project_type = "";
 
         var refreshProjectTypes = function(){
-                ProjectTypeFactory.get({}, function(data){
+                ProjectTypeFactory.get({"saved_search_project_type": false}, function(data){
                   $scope.projectTypes = data.objects.map(function(pType){
                       
-                      if(pType.name=="chemical"){
-                        $scope.chemical_type = pType;
+                      if(pType.set_as_default){
+                        $scope.default_project_type = pType;
                       }
                       return {"name": pType.name, "value" : pType};
                     });
@@ -47,8 +47,8 @@ angular.module('chembiohubAssayApp')
                 projectId: function () {
                   return $scope.projectId;
                 },
-                chemical_type: function(){
-                    return $scope.chemical_type;
+                default_project_type: function(){
+                    return $scope.default_project_type;
                 },
                 projectTypes: function(){
                     return $scope.projectTypes;
