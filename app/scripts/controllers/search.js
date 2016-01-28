@@ -240,7 +240,7 @@ angular.module('chembiohubAssayApp')
                 //Test data looks like:
                 $scope.links = [];
                 //This is what the SavedSearchFactory get links method will look like
-                var ssf = SavedSearchFactory.list_es;
+                /*var ssf = SavedSearchFactory.list_es;
 
 
                 ssf.get(function(data){
@@ -249,36 +249,42 @@ angular.module('chembiohubAssayApp')
                     
                     $scope.links = data.objects;
 
-                });
-                $scope.modalInstance = $modal.open({
-                  templateUrl: 'views/templates/my-searches-modal.html',
-                  size: 'md',
-                  resolve: {
-                    links: function () {
-                      return $scope.links;
-                    }
+                });*/
+                $http.get( urlConfig.cbh_saved_search.list_endpoint  + "/get_list_elasticsearch/").then(function(data){
+                    
+                    $scope.links = data.data.objects;
+                    $scope.modalInstance = $modal.open({
+                      templateUrl: 'views/templates/my-searches-modal.html',
+                      size: 'md',
+                      resolve: {
+                        links: function () {
+                          //console.log('links',$scope.links);
+                          return $scope.links;
+                        }
 
-                  }, 
-                  controller: function($scope, $modalInstance, links, loggedInUser) {
-                    $scope.links = links;
-                    $scope.loggedInUser = loggedInUser;
-                    $scope.modalInstance = $modalInstance;
+                      }, 
+                      controller: function($scope, $modalInstance, links, loggedInUser) {
+                        $scope.links = links;
+                        $scope.loggedInUser = loggedInUser;
+                        $scope.modalInstance = $modalInstance;
 
-                    $scope.cancel = function () {
-                      $modalInstance.dismiss('cancel');
-                    };
+                        $scope.cancel = function () {
+                          $modalInstance.dismiss('cancel');
+                        };
 
-                    //more functions here
+                        //more functions here
 
-                    //determine the permissions on the link and send back and appropriate string: 
-                    //user, group, project etc 
-                    $scope.personalOrGroup = function(item){
-                        //this maight not be useful now since the permissions have changed
-                        return "personal"
-                    }
+                        //determine the permissions on the link and send back and appropriate string: 
+                        //user, group, project etc 
+                        $scope.personalOrGroup = function(item){
+                            //this maight not be useful now since the permissions have changed
+                            return "personal"
+                        }
 
-                  }
-                });
+                      }
+                    });
+                })
+
             }
 
             $scope.saveSearch = function(){
