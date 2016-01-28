@@ -22,6 +22,7 @@
                     <form ng-submit="saveChanges(myForm)" name="myForm" id="myForm">
                         <div class="form-group" sf-form="projectForm" sf-schema="projectSchema" sf-model="proj" ></div>
                         <div ng-if="isIE" class="pull-right">
+                            <!-- ngSubmit outside the form object does not work on IE therefore put it inside the form-->
            <button type="button" class="btn btn-danger" ng-click="cancel()"><span class="glyphicon glyphicon-remove-circle"></span> Close and Discard Changes</button>
 
             <button type='submit' value="Submit" class="btn btn-primary" form="myForm" ><span class="glyphicon glyphicon-share"></span>Save Changes and Close</button>
