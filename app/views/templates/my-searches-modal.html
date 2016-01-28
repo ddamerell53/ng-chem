@@ -12,7 +12,7 @@
                 <!-- using an inplace editor library http://vitalets.github.io/angular-xeditable/#overview -->
                 <strong>
                     <a ng-click="textBtnForm{{$index}}.$show()" ng-hide="textBtnForm{{$index}}.$visible"><span class="glyphicon glyphicon-pencil" title="edit" ng-if="loggedInUser.username == link.custom_fields.owner_key && link.custom_fields.to_remove == false"></span></a>&nbsp;
-                    <span editable-text="link.custom_fields.Alias" e-form="textBtnForm{{$index}}"><a href="{{ link.custom_fields.search_url }}">{{ link.custom_fields.Alias }}</a></span>
+                    <span editable-text="link.custom_fields.alias" e-form="textBtnForm{{$index}}"><a href="{{ link.custom_fields.Url }}">{{ link.custom_fields.alias }}</a></span>
                 </strong><br>
 
                 <small><span class="glyphicon glyphicon-time"></span> date added: {{ link.added | date }} | <span class="glyphicon glyphicon-user"></span> {{ personalOrGroup(link) }}</small>

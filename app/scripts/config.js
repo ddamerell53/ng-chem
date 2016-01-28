@@ -27,10 +27,11 @@ var configuration = {
     "cbh_permissions", "schema": path + "cbh_permissions/schema"},
     "cbh_projects": {"list_endpoint": path + 
     "cbh_projects", "schema": path + "cbh_projects/schema"},
+    "cbh_saved_search": {"list_endpoint":path + "cbh_saved_search", "schema": path + "cbh_saved_search/schema"},
     "cbh_skinning": {"list_endpoint": path + 
     "cbh_skinning", "schema": path + "cbh_skinning/schema"}, 
     "cbh_compound_batches": {"list_endpoint": path + 
-    "cbh_compound_batches", "schema": path + "cbh_compound_batches/schema"}, 
+    "cbh_compound_batches", "schema": path + "cbh_compound_batches/schema"},
     "users": {"list_endpoint": path + "users", "schema": path + "users/schema"},
     "invitations": {"list_endpoint": path + "invitations", "schema": path + "invitations/schema"},
     "cbh_draft_data": {"list_endpoint": path + "datastore/cbh_draft_data", "schema": path + "datastore/cbh_draft_data/schema"},

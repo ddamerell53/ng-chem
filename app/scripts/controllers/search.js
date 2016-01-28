@@ -238,36 +238,18 @@ angular.module('chembiohubAssayApp')
             $scope.openMySavedSearchPopup = function(){
                 //$scope.popup_data = angular.copy(input_popup_data);
                 //Test data looks like:
-                $scope.links = [
-                    //this will be the result of a return from a web service call via SavedSearchFactory
-                    {
-                        custom_fields : {
-                            Alias: "test string here",
-                            added: "2016-01-01",
-                            Url: "url here",
-                            owner_key: "paul",
-                            to_remove: false,
-                        }
-                        
-
-                    },
-                    {
-                        custom_fields : {
-                            Alias: "other string here",
-                            added: "2016-01-01",
-                            Url: "url here",
-                            owner_key: "paul",
-                            to_remove: false,
-                        }
-                        
-
-                    },
-                ]
+                $scope.links = [];
                 //This is what the SavedSearchFactory get links method will look like
-                /*SavedSearchFactory.get(function(data){
+                var ssf = SavedSearchFactory.list_es;
+
+
+                ssf.get(function(data){
+                    //search is now saved - close the modal
+                    //make sure reindex is called on the correct thing within data
+                    
                     $scope.links = data.objects;
-                    //data we need is in customFields.Alias and customFields.URL
-                });*/
+
+                });
                 $scope.modalInstance = $modal.open({
                   templateUrl: 'views/templates/my-searches-modal.html',
                   size: 'md',
@@ -313,29 +295,39 @@ angular.module('chembiohubAssayApp')
                 ProjectTypeFactory.get({"saved_search_project_type": true}, function(data){
                   
                   $scope.savedSearchType = data.objects[0];
-                  var template = $scope.savedSearchType.project_template;
+                  //var template = $scope.savedSearchType.project_template;
                   var d = new Date();
-                  template.name = $scope.newSavedSearchModel.alias + d.getTime().toString();
-                  template.custom_field_config.name = $scope.newSavedSearchModel.alias + d.getTime().toString();
+                  $scope.savedSearchType.project_template.name = $scope.newSavedSearchModel.alias + d.getTime().toString();
+                  $scope.savedSearchType.project_template.custom_field_config.name = $scope.newSavedSearchModel.alias + d.getTime().toString();
 
-                    projectFactory.save(template, function(data){
+                    projectFactory.save($scope.savedSearchType.project_template, function(data){
                         var resource_uri = data.resource_uri;
                         var savedSearchObj = {
-                            project: data.resource_uri,
-                            projectKey: data.project_key,
-                            customFields: {
-                                Alias: $scope.newSavedSearchModel.alias,
-                                Url: window.location.href,
-                            }
+                            "project": data.resource_uri,
+                            "projectKey": data.project_key,
+                            "blindedBatchId": "EMPTY_STRING",
+                            "customFields": {
+                                alias: $scope.newSavedSearchModel.alias,
+                                url: window.location.href,
+                            },
+                            "uncuratedFields":{},
+                            "warnings" :{}, 
+                            "properties" :{},  
+                            "errors" :{}
                         }
+                        console.log(savedSearchObj)
 
-                        SavedSearchFactory.save(savedSearchObj, function(data){
+                        var ssf = SavedSearchFactory.list;
+
+
+                        ssf.save(savedSearchObj, function(data){
                             //search is now saved - close the modal
                             //make sure reindex is called on the correct thing within data
+                            console.log('inside save');
                             var params = {"id": data.id}
-                            $http.post( urlConfig.cbh_compound_batches.list_endpoint  + "/reindex_compound/" , params)
-                            //close modal
-                            $scope.cancel();
+
+                            $http.post( urlConfig.cbh_saved_search.list_endpoint  + "/reindex_compound/" , params)
+
                         });
 
                         
