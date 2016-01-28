@@ -119,12 +119,16 @@ angular.module('chembiohubAssayApp')
                     "htmlClass": "row",
                     "items":[
                                 {  "htmlClass": "col-sm-6",
-                        "key":"default",
+                        "key":"custom_field_config.project_data_fields[].default",
                         "title": "Default Value",
+                        "disableSuccessState":true,
+                        "feedback": false,
                        "condition": "model.custom_field_config.project_data_fields[arrayIndex].required"
                      }, 
                       {  "htmlClass": "col-sm-6",
-                        "key":"allowed_values",
+                        "key":"custom_field_config.project_data_fields[].allowed_values",
+                        "disableSuccessState":true,
+                        "feedback": false,
                         "title": "Allowed values (comma-separated)",
                        "condition": "(model.custom_field_config.project_data_fields[arrayIndex].field_type == 'uiselect' || model.custom_field_config.project_data_fields[arrayIndex].field_type == 'uiselecttags' || model.custom_field_config.project_data_fields[arrayIndex].field_type == 'uiselecttag')"
                      }
@@ -161,42 +165,28 @@ angular.module('chembiohubAssayApp')
                                             },
 
                                           "custom_field_config":
-                                                { "type": "object","properties":{
+                                                { "type": "object",
 
-                                                  "project_data_fields":
-                                                  {
-                                                    "type": "array",
-                                                    "items": {
-                                                      "type": "object",
-                                                      "properties": {
-                                                        "name": { "type": "string", "default":"", "pattern": "^[^./\"',]*$" , "validationMessage" : {202: "Dots, commas, quotes and slashes not permitted in field names"}},
-                                                        "description": { "type": "string" },
-                                                        "required": { "type": "boolean","default":false},
-                                                        "field_type": {"type":"string",
-                                                        "default": "char",
-                                                        "enum":field_types.map(function(r){
-                                                          return r.value
-                                                        })
-                                                          },
-                                                        "open_or_restricted":{"type":"string",
-                                                        "enum":restrictions.map(function(r){
-                                                          return r.value
-                                                        }),
-                                                        "default" : "open"
-                                                          },
-                                                          "allowed_values":{
-                                                            "type":"string",
 
-                                                          },
-                                                            "default":{
-                                                            "type":"string",
+                                                    "properties":{
 
+                                                        "project_data_fields":
+                                                        {
+                                                          "type": "array",
+                                                          "items": {
+                                                            "type": "object",
+                                                            "properties": {
+                                                              "name": { "type": "string", "default":"", "pattern": "^[^./\"',]*$" , "validationMessage" : {202: "Dots, commas, quotes and slashes not permitted in field names"}},
+                                                              "description": { "type": "string" },
+                                                              "required": { "type": "boolean","default":false},
+                                                              "field_type": {"type":"string", "default": "char","enum":field_types.map(function(r){  return r.value})},
+                                                              "open_or_restricted":{"type":"string", "enum":restrictions.map(function(r){ return r.value}),"default" : "open" },
+                                                              "allowed_values":{ "type":"string" , "default": "" },
+                                                             "default":{ "type":"string", "default": "" }    
+                                                            }
                                                           }
-
-                                                        
-                                                      }
-                                                    }
-                                                  }}
+                                                        }
+                                                }
                                           }
                                         }
                                       };
