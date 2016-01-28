@@ -1,18 +1,22 @@
 <div class="row" ng-repeat="link in links">
-    <div class="col-xs-9">
-        <p class="nexa" ng-class="link.customFields.to_remove == true ? 'strikethrough' : ''">
-            <!-- using an inplace editor library http://vitalets.github.io/angular-xeditable/#overview -->
-            <strong>
-                <a ng-click="textBtnForm{{$index}}.$show()" ng-hide="textBtnForm{{$index}}.$visible"><span class="glyphicon glyphicon-pencil" title="edit" ng-if="loggedInUser.username == link.customFields.owner_key && link.customFields.to_remove == false"></span></a>&nbsp;
-                <span editable-text="link.customFields.alias" e-form="textBtnForm{{$index}}"><a href="{{ link.customFields.url }}">{{ link.customFields.alias }}</a></span>
-            </strong><br>
+        <div class="col-xs-9">
+            <p class="nexa" ng-class="link.customFields.to_remove == true ? 'strikethrough' : ''">
+                <!-- using an inplace editor library http://vitalets.github.io/angular-xeditable/#overview -->
+                <strong>
+                    <a ng-click="textBtnForm{{$index}}.$show()" ng-hide="textBtnForm{{$index}}.$visible"><span class="glyphicon glyphicon-pencil" title="edit" ng-if="loggedInUser.username == link.customFields.owner_key && link.customFields.to_remove == false"></span></a>&nbsp;
+                    <span editable-text="link.customFields.alias" e-form="textBtnForm{{$index}}">{{ link.customFields.alias }}</span>&nbsp;
+                    <span><a href="{{ link.customFields.url }}">Use this search</a> </span>
+                </strong><br>
 
-            <small><span class="glyphicon glyphicon-time"></span> date added: {{ link.added | date }} | <span class="glyphicon glyphicon-user"></span> {{ personalOrGroup(link) }}</small>
-        </p>
+                <small><span class="glyphicon glyphicon-time"></span> date added: {{ link.created | date }}</small>
+            </p>
+        </div>
+        <div class="col-xs-3 text-right">
+            <!-- <p>
+                <a ng-click="link.customFields.to_remove = !link.customFields.to_remove;"><span class="glyphicon " ng-class="link.customFields.to_remove == false ? 'glyphicon-remove' : 'glyphicon-repeat'" title="remove"></span></a>
+            </p> -->
+        </div>
     </div>
-    <div class="col-xs-3 text-right">
-        <p>
-            <a ng-click="link.customFields.to_remove = !link.customFields.to_remove;"><span class="glyphicon " ng-class="link.customFields.to_remove == false ? 'glyphicon-remove' : 'glyphicon-repeat'" title="remove"></span></a>
-        </p>
+    <div class="row" ng-if="links.length == 0">
+        You don't have any saved searches
     </div>
-</div>

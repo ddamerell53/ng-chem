@@ -17,18 +17,21 @@
                     <span><a href="{{ link.customFields.url }}" ng-click="cancel()">Use this search</a> </span>
                 </strong><br>
 
-                <small><span class="glyphicon glyphicon-time"></span> date added: {{ link.added | date }} | <span class="glyphicon glyphicon-user"></span> {{ personalOrGroup(link) }}</small>
+                <small><span class="glyphicon glyphicon-time"></span> date added: {{ link.created | date }}</small>
             </p>
         </div>
         <div class="col-xs-3 text-right">
-            <p>
+            <!-- <p>
                 <a ng-click="link.customFields.to_remove = !link.customFields.to_remove;"><span class="glyphicon " ng-class="link.customFields.to_remove == false ? 'glyphicon-remove' : 'glyphicon-repeat'" title="remove"></span></a>
-            </p>
+            </p> -->
         </div>
+    </div>
+    <div class="row" ng-if="links.length == 0">
+        You don't have any saved searches
     </div>
 
 </div>
 <div class="modal-footer">
-    <button class="btn btn-danger" type="button" ng-click="cancel()">Discard Changes and Close</button>
-    <button class="btn btn-success" type="button" ng-click="saveChanges()">Save Changes</button>
+    <button class="btn btn-danger" type="button" ng-click="cancel()">Close</button>
+    <!-- <button class="btn btn-success" type="button" ng-click="saveChanges()">Save Changes</button> -->
 </div>
