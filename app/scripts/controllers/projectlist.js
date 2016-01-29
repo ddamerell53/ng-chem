@@ -14,6 +14,7 @@ angular.module('chembiohubAssayApp')
     $scope, 
     AddDataFactory, 
     $modal, 
+    $timeout, 
     ProjectFactory, 
     ProjectTypeFactory, 
     Projectpermissions, 
@@ -22,6 +23,7 @@ angular.module('chembiohubAssayApp')
     loggedInUser,
     ProjectPermissionAllRoles) {
       $scope.default_project_type = "";
+      $scope.links = [];
 
         var refreshProjectTypes = function(){
                 ProjectTypeFactory.get({"saved_search_project_type": false}, function(data){
@@ -36,8 +38,24 @@ angular.module('chembiohubAssayApp')
                   });
                 
               }
+
+        $scope.loadSavedSearches = function(){
+            
+            var params = {'creator_uri': loggedInUser.resource_uri};
+
+
+            $http.get( urlConfig.cbh_saved_search.list_endpoint  + "/get_list_elasticsearch/", {'params': params}).then(function(data){
+                
+                $scope.links = data.data.objects;
+                console.log($scope.links);
+                $scope.$apply();
+                
+            });
+        };
         
         refreshProjectTypes();
+        $scope.loadSavedSearches();
+
 
         $scope.openProjectWindow = function(projectId){
 
@@ -128,22 +146,6 @@ angular.module('chembiohubAssayApp')
                     }
                 );
         };
-        //change this to a service call
-        $scope.links = [];
-                    //this will be the result of a return from a web service call via SavedSearchFactory
-                    console.log(loggedInUser);
-        var params = {'creator_uri': loggedInUser.resource_uri};
-
-        $http.get( urlConfig.cbh_saved_search.list_endpoint  + "/get_list_elasticsearch/", {'params': params}).then(function(data){
-            
-            $scope.links = data.data.objects;
-            
-        })
-        //This is what the SavedSearchFactory get links method will look like
-                /*SavedSearchFactory.get(function(data){
-                    $scope.links = data.objects;
-                    //data we need is in customFields.Alias and customFields.URL
-                });*/
-        //$scope.loggedInUser = $scope.cbh.loggedInUser;
+        //$timeout(function(){ $scope.loadSavedSearches();});
 
       } );
