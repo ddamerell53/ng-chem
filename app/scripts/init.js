@@ -15,7 +15,7 @@ var chembiohubAssayApp =  angular.module('chembiohubAssayApp', [
     'chemdoodleAngular',
     'lightApp',
     'ngAnimate',
-    'ngAria',
+    // 'ngAria',
     'ngCookies',
     'ngMessages',
     'ngResource',

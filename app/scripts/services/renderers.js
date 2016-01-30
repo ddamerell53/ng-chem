@@ -8,7 +8,7 @@
  * Factory in the chembiohubAssayApp.
  */
 angular.module('chembiohubAssayApp')
-  .factory('renderers', function ($timeout, $compile) {
+  .factory('renderers', function ($timeout, $compile, $state) {
     // Service logi
     // ...
     function strip_tags(input, allowed) {
@@ -181,7 +181,33 @@ angular.module('chembiohubAssayApp')
                 
               },
 
+               cloneRenderer : function(instance, td, row, col, prop, value, cellProperties) {
+                var projects = scope.cbh.projects.objects;
+                var mol = instance.getSourceDataAtRow(row);
+                var split = mol.project.split("/");
+                var projid = split[split.length-1]; 
+                angular.forEach(projects,function(myproj){
+                    if(myproj.id == projid){
+                      var toArchive = false ;
+                      var escaped = "<button class='btn btn-primary'><span class=' glyphicon glyphicon-copy'></span>&nbsp;Clone/Add Structure</button>";
+                      
+                      var a = document.createElement('a');
+                      a.innerHTML = escaped;
+                      Handsontable.Dom.addEvent(a, 'click', function (e){
+                          e.preventDefault(); // prevent selection quirk
+                          $state.go("cbh.projects.project.addsingle",{"projectKey" : myproj.project_key, "idToClone": mol.id} , { reload: true });
 
+                      });
+                      Handsontable.Dom.empty(td);
+                      td.className  += "htCenter htMiddle";
+                      td.appendChild(a);
+                      return td;
+                    }
+                      
+                  });
+
+                
+              },
               modalLinkRenderer : function(instance, td, row, col, prop, value, cellProperties) {
                 if(value==null){
                   return td;

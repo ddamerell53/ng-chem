@@ -250,7 +250,7 @@ $urlRouterProvider.when('', '/projects/list');
         // reloadOnSearch: false
       })
       .state('cbh.projects.project.addsingle', {
-        url: 'addsingle/?mb_id=&warningsFilter=',
+        url: 'addsingle/?mb_id=&warningsFilter=&idToClone=',
         templateUrl: 'views/add-single-compound.html',
         controller: 'AddSingleCompoundCtrl',
       })

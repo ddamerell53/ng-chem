@@ -197,7 +197,20 @@ angular.module('chembiohubAssayApp')
         return promise;
     };
 
-
+    CBHCompoundBatch.get = function(id) {
+      
+         var promise = $http( 
+            {
+                url: urlConfig.cbh_compound_batches.list_endpoint + "/" + id,
+                method: 'GET',
+            }
+            ).then(
+            function(data){
+                return data.data;
+            }
+        );
+        return promise;
+    };
 
 
     var patch = function(data, projectKey){

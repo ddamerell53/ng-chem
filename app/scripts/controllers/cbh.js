@@ -173,7 +173,12 @@ angular.module('chembiohubAssayApp')
               windowClass: editingClass,
               controller: ['$scope', '$rootScope', '$modalInstance', '$timeout', 'CBHCompoundBatch', 'ProjectFactory',
                 function($scope, $rootScope, $modalInstance, $timeout, CBHCompoundBatch, ProjectFactory) {
+                  $scope.openClone = function(){
+                    $modalInstance.dismiss("cancel");
+                    $state.go("cbh.projects.project.addsingle", {'projectKey':$scope.projectObj.project_key, idToClone: $scope.mol.id}, { reload: true });
 
+
+                  }
                   $scope.isNewCompoundsInterface = isNewCompoundsInterface;
                   $scope.editMode = false;
                   $scope.mol = angular.copy(mol);

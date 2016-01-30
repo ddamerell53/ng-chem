@@ -351,7 +351,17 @@ angular.module('chembiohubAssayApp')
                                 renderer: "archivedRenderer",
                                 readOnly: true,
                                 className: "htCenter htMiddle "
-                            }];
+                            },
+                            {
+                                noSort: true,
+                                knownBy: "Clone/Add Structure",
+                                data: "",
+                                renderer: "cloneRenderer",
+                                readOnly: true,
+                                className: "htCenter htMiddle "
+                            }
+
+                            ];
                         }
                         if (showCompounds) {
                             allCols = allCols.concat([{
