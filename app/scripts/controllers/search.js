@@ -226,9 +226,22 @@ angular.module('chembiohubAssayApp')
                     $scope.saveSearch = saveSearch;
                     
                     $scope.modalInstance = $modalInstance;
+                    $scope.errormess = "";
 
                     $scope.cancel = function () {
                       $modalInstance.dismiss('cancel');
+                    };
+                    $scope.doValidation = function(myForm){
+                        console.log('doValidation being called', myForm)
+                        if(myForm.$valid && $scope.newSavedSearchModel.alias != "" && !myForm.$pristine){
+                            $scope.saveSearch();
+                            $modalInstance.dismiss('cancel');
+                        }
+                        else if(myForm.$pristine){
+                            $scope.errormess = "You must add a title";
+                    
+                        }
+
                     };
 
                   }
@@ -236,21 +249,11 @@ angular.module('chembiohubAssayApp')
             }
 
             $scope.openMySavedSearchPopup = function(){
-                //$scope.popup_data = angular.copy(input_popup_data);
                 //Test data looks like:
                 $scope.links = [];
-                //This is what the SavedSearchFactory get links method will look like
-                /*var ssf = SavedSearchFactory.list_es;
+                var params = {'creator_uri': loggedInUser.resource_uri};
 
-
-                ssf.get(function(data){
-                    //search is now saved - close the modal
-                    //make sure reindex is called on the correct thing within data
-                    
-                    $scope.links = data.objects;
-
-                });*/
-                $http.get( urlConfig.cbh_saved_search.list_endpoint  + "/get_list_elasticsearch/").then(function(data){
+                $http.get( urlConfig.cbh_saved_search.list_endpoint  + "/get_list_elasticsearch/", {'params': params}).then(function(data){
                     
                     $scope.links = data.data.objects;
                     $scope.modalInstance = $modal.open({
@@ -288,7 +291,7 @@ angular.module('chembiohubAssayApp')
             }
 
             $scope.saveSearch = function(){
-                        
+                //$scope.errormess = ""
                 //from the project type service get saved_search_project_template (specify project_type.saved_search == true)
                 //from what is returned, set the name and the name on the custom field config to (alias + timestamp) for uniqueness
                 //set compound_batch.customFields.Url to be search url
@@ -297,50 +300,58 @@ angular.module('chembiohubAssayApp')
                 //from what is returned get the resource_uri and project_key
                 //set blinded_batch_id = "EMPTY_STRING"
                 //send back to the savedsearch service
-                console.log('still being found');
-                ProjectTypeFactory.get({"saved_search_project_type": true}, function(data){
-                  
-                  $scope.savedSearchType = data.objects[0];
-                  //var template = $scope.savedSearchType.project_template;
-                  var d = new Date();
-                  $scope.savedSearchType.project_template.name = $scope.newSavedSearchModel.alias + d.getTime().toString();
-                  $scope.savedSearchType.project_template.custom_field_config.name = $scope.newSavedSearchModel.alias + d.getTime().toString();
 
-                    projectFactory.save($scope.savedSearchType.project_template, function(data){
-                        var resource_uri = data.resource_uri;
-                        var savedSearchObj = {
-                            "project": data.resource_uri,
-                            "projectKey": data.project_key,
-                            "blindedBatchId": "EMPTY_STRING",
-                            "customFields": {
-                                alias: $scope.newSavedSearchModel.alias,
-                                url: window.location.href,
-                            },
-                            "uncuratedFields":{},
-                            "warnings" :{}, 
-                            "properties" :{},  
-                            "errors" :{}
-                        }
-                        console.log(savedSearchObj)
+                //if(myForm.$valid){
+                     
+                    console.log('still being found');
+                    ProjectTypeFactory.get({"saved_search_project_type": true}, function(data){
+                      
+                      $scope.savedSearchType = data.objects[0];
+                      //var template = $scope.savedSearchType.project_template;
+                      var d = new Date();
+                      $scope.savedSearchType.project_template.name = $scope.newSavedSearchModel.alias + d.getTime().toString();
+                      $scope.savedSearchType.project_template.custom_field_config.name = $scope.newSavedSearchModel.alias + d.getTime().toString();
 
-                        var ssf = SavedSearchFactory.list;
+                        projectFactory.save($scope.savedSearchType.project_template, function(data){
+                            var resource_uri = data.resource_uri;
+                            var savedSearchObj = {
+                                "project": data.resource_uri,
+                                "projectKey": data.project_key,
+                                "blindedBatchId": "EMPTY_STRING",
+                                "customFields": {
+                                    alias: $scope.newSavedSearchModel.alias,
+                                    url: window.location.href,
+                                },
+                                "uncuratedFields":{},
+                                "warnings" :{}, 
+                                "properties" :{},  
+                                "errors" :{}
+                            }
+                            console.log(savedSearchObj)
+
+                            var ssf = SavedSearchFactory.list;
 
 
-                        ssf.save(savedSearchObj, function(data){
-                            //search is now saved - close the modal
-                            //make sure reindex is called on the correct thing within data
-                            console.log('inside save');
-                            var params = {"id": data.id}
+                            ssf.save(savedSearchObj, function(data){
+                                //search is now saved - close the modal
+                                //make sure reindex is called on the correct thing within data
+                                console.log('inside save');
+                                var params = {"id": data.id}
 
-                            $http.post( urlConfig.cbh_saved_search.list_endpoint  + "/reindex_compound/" , params)
+                                $http.post( urlConfig.cbh_saved_search.list_endpoint  + "/reindex_compound/" , params)
 
+                            });
+
+                            
                         });
 
                         
-                    });
-
-                    
-                  });
+                      });
+                //}
+                //else{
+                //    $scope.errormess = "You must add a title";
+                //    console.log("assigning");
+                //}
 
             }
 
