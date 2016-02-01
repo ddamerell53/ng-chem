@@ -10,9 +10,17 @@
 
 
 angular.module('chembiohubAssayApp')
-    .controller('AddSingleCompoundCtrl', ['$scope', '$rootScope', '$timeout', '$filter', '$state', '$stateParams', 'CBHCompoundBatch', 'ProjectFactory', 'MessageFactory', 'projectKey', function($scope, $rootScope, $timeout, $filter, $state, $stateParams, CBHCompoundBatch, ProjectFactory, MessageFactory, projectKey) {
+    .controller('AddSingleCompoundCtrl', ['$scope', '$rootScope', '$timeout', '$filter', '$state', '$stateParams', 'CBHCompoundBatch', 'ProjectFactory', 'MessageFactory', 'projectKey', 'mol', function($scope, $rootScope, $timeout, $filter, $state, $stateParams, CBHCompoundBatch, ProjectFactory, MessageFactory, projectKey, mol) {
 
             //need a combination of the initial setup of the add compounds page and the edit part of the single mol popup
+              $scope.clonedMol = angular.copy(mol);
+                    mol.molecule = mol.ctab;
+                    mol.id = null;
+                    $scope.mol = mol;
+                 if($scope.clonedMol.id){
+                    $scope.idToClone = $scope.clonedMol.id;
+                 }
+
             $scope.editMode = false;
             var detectIE =function() {
                 var ua = window.navigator.userAgent;

@@ -253,6 +253,24 @@ $urlRouterProvider.when('', '/projects/list');
         url: 'addsingle/?mb_id=&warningsFilter=&idToClone=',
         templateUrl: 'views/add-single-compound.html',
         controller: 'AddSingleCompoundCtrl',
+        resolve: {
+            mol: ['CBHCompoundBatch', '$stateParams', function(CBHCompoundBatch, $stateParams) {
+              if($stateParams.idToClone){
+                return CBHCompoundBatch.get( $stateParams.idToClone ).then(function(data){
+                  return data
+                });
+                }
+                else{
+                    return {
+                        molecule: "",
+                        customFields: {},
+                        supplementaryFields: [],
+                    }
+                }
+            }],
+        }
+
+
       })
     .state('cbh.projects.project.assay', {
       url: 'assay/',
