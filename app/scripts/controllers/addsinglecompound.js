@@ -14,61 +14,27 @@ angular.module('chembiohubAssayApp')
 
             //need a combination of the initial setup of the add compounds page and the edit part of the single mol popup
               $scope.clonedMol = angular.copy(mol);
-                    mol.molecule = mol.ctab;
-                    mol.id = null;
-                    $scope.mol = mol;
+                    
+                    $scope.mol = angular.copy(mol);
+                    $scope.mol.molecule = $scope.mol.ctab;
+                    $scope.mol.id = null;
                  if($scope.clonedMol.id){
                     $scope.idToClone = $scope.clonedMol.id;
+                 }else{
+                    $scope.idToClone = null;
                  }
 
+
+
             $scope.editMode = false;
-            var detectIE =function() {
-                var ua = window.navigator.userAgent;
-                console.log(ua)
-                var msie = ua.indexOf('MSIE ');
-                if (msie > 0) {
-                    // IE 10 or older => return version number
-                    return parseInt(ua.substring(msie + 5, ua.indexOf('.', msie)), 10);
-                }
 
-                var trident = ua.indexOf('Trident/');
-                if (trident > 0) {
-                    // IE 11 => return version number
-                    var rv = ua.indexOf('rv:');
-                    return parseInt(ua.substring(rv + 3, ua.indexOf('.', rv)), 10);
-                }
 
-                var edge = ua.indexOf('Edge/');
-                if (edge > 0) {
-                   // Edge (IE 12+) => return version number
-                   return parseInt(ua.substring(edge + 5, ua.indexOf('.', edge)), 10);
-                }
-
-                // other browser
-                return false;
-            }
-            $scope.isIE = detectIE();
-
-            if($stateParams.idToClone){
-                $scope.idToClone = $stateParams.idToClone;
-                CBHCompoundBatch.get( $stateParams.idToClone ).then(function(data){
-                    $scope.clonedMol = angular.copy(data);
-                    data.molecule = data.ctab;
-                    data.id = null;
-                    $scope.mol = data;
-                    if($scope.mol.blindedBatchId){
-                        $scope.previousId = angular.copy($scope.mol.blindedBatchId);
-                    }else{
-                        $scope.previousId = angular.copy($scope.mol.chemblId);
-                    }
-                    $scope.$broadcast("fetchMolecule");
-                });
-            }else{
-                $scope.mol = {
-                    molecule: "",
-                    customFields: {},
-                    supplementaryFields: [],
-                }
+            $scope.revert = function(){
+                $scope.mol = angular.copy($scope.clonedMol);
+                $scope.mol.molecule = $scope.mol.ctab;
+                $scope.mol.id = null;
+                $rootScope.$broadcast("setMolecule");
+                $rootScope.$broadcast("setMolecule");
             }
             
             $scope.dataReady = false;
@@ -81,7 +47,7 @@ angular.module('chembiohubAssayApp')
 
             var projid = projectKey;
             $scope.projectWithCustomFieldData;
-            console.log(projid);
+
             angular.forEach($rootScope.projects, function(myproj) {
                 if (myproj.project_key === projid) {
                     $scope.projectWithCustomFieldData = myproj;
@@ -97,36 +63,6 @@ angular.module('chembiohubAssayApp')
             $scope.secondForm = angular.copy(myform).splice(len);
             $scope.myform2 = angular.copy(myform);
 
-            /*$scope.init = function() {
-                $scope.keyValues = $scope.myform2.map(
-
-                    function(item) {
-                        var key = item;
-                        if (angular.isDefined(item.key)) {
-                            key = item.key
-                        };
-                        var value = "";
-                        if (angular.isDefined($scope.mol.customFields[key])) {
-
-
-                            value = $scope.mol.customFields[key]
-
-                        }
-                        if (value.constructor === Array) {
-                            value = value.join(", ");
-                        }
-                        return {
-                            'key': key,
-                            'value': value
-                        };
-                    }
-                );
-
-                $scope.firstList = $scope.keyValues.splice(0, len);
-                $scope.secondList = $scope.keyValues;
-
-            };
-            $scope.init();*/
 
             $scope.createMultiBatch = function(){
                 $scope.currentlyLoading = true;

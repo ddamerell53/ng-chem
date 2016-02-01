@@ -162,7 +162,7 @@ angular.module('chembiohubAssayApp')
             }
 
             $scope.cbh.runSearch = function(doScroll) {
-                $rootScope.$broadcast("fetchMolecule");
+                $rootScope.$broadcast("getMolecule");
                 $timeout (function(){
                     var newParams = searchUrlParams.fromForm($scope.cbh.searchForm, $scope.cbh.textsearch);
                     newParams.params.doScroll = doScroll;

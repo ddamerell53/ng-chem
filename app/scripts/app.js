@@ -254,10 +254,11 @@ $urlRouterProvider.when('', '/projects/list');
         templateUrl: 'views/add-single-compound.html',
         controller: 'AddSingleCompoundCtrl',
         resolve: {
-            mol: ['CBHCompoundBatch', '$stateParams', function(CBHCompoundBatch, $stateParams) {
+            mol: ['CBHCompoundBatch', '$stateParams', '$timeout', function(CBHCompoundBatch, $stateParams, $timeout) {
               if($stateParams.idToClone){
                 return CBHCompoundBatch.get( $stateParams.idToClone ).then(function(data){
-                  return data
+                    return data
+                  
                 });
                 }
                 else{
