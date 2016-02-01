@@ -10,9 +10,11 @@
 
 
 angular.module('chembiohubAssayApp')
-    .controller('AddSingleCompoundCtrl', ['$scope', '$rootScope', '$timeout', '$filter', '$state', '$stateParams', 'CBHCompoundBatch', 'ProjectFactory', 'MessageFactory', 'projectKey', 'mol', function($scope, $rootScope, $timeout, $filter, $state, $stateParams, CBHCompoundBatch, ProjectFactory, MessageFactory, projectKey, mol) {
+    .controller('AddSingleCompoundCtrl', ['$scope', '$rootScope', '$timeout', '$filter', '$state', '$stateParams', 'CBHCompoundBatch', 'ProjectFactory', 'MessageFactory', 'mol', 'projectList', 
+        function($scope, $rootScope, $timeout, $filter, $state, $stateParams, CBHCompoundBatch, ProjectFactory, MessageFactory, mol, projectList) {
 
             //need a combination of the initial setup of the add compounds page and the edit part of the single mol popup
+            var projectKey = $stateParams.projectKey;
               $scope.clonedMol = angular.copy(mol);
                     
                     $scope.mol = angular.copy(mol);
@@ -34,7 +36,6 @@ angular.module('chembiohubAssayApp')
                 $scope.mol.molecule = $scope.mol.ctab;
                 $scope.mol.id = null;
                 $rootScope.$broadcast("setMolecule");
-                $rootScope.$broadcast("setMolecule");
             }
             
             $scope.dataReady = false;
@@ -48,7 +49,7 @@ angular.module('chembiohubAssayApp')
             var projid = projectKey;
             $scope.projectWithCustomFieldData;
 
-            angular.forEach($rootScope.projects, function(myproj) {
+            angular.forEach(projectList.objects, function(myproj) {
                 if (myproj.project_key === projid) {
                     $scope.projectWithCustomFieldData = myproj;
                     $scope.projectWithCustomFieldData.updateCustomFields();
@@ -59,10 +60,12 @@ angular.module('chembiohubAssayApp')
             var myform = $scope.projectWithCustomFieldData.schemaform.form;
 
             var len = Math.ceil(myform.length / 2);
-            $scope.firstForm = angular.copy(myform).splice(0, len);
-            $scope.secondForm = angular.copy(myform).splice(len);
-            $scope.myform2 = angular.copy(myform);
 
+            $scope.myform = angular.copy(myform);
+            $scope.$on("moleculeChanged", function(){
+                $scope.dataReady = false;
+                $scope.dataset = undefined;
+            });
 
             $scope.createMultiBatch = function(){
                 $scope.currentlyLoading = true;
@@ -146,7 +149,7 @@ angular.module('chembiohubAssayApp')
                 CBHCompoundBatch.saveMultiBatchMolecules($scope.dataset.config).then(
                         function(data){
                             $scope.cbh.hideSearchForm=true;
-                            if($scope.previousId && doArchiveItem){
+                            if($scope.idToClone && doArchiveItem){
                                $scope.clonedMol.properties.archived = "true";
                                $scope.clonedMol.projectKey = $scope.projectWithCustomFieldData.project_key;
                                CBHCompoundBatch.patch($scope.clonedMol).then(function(data) {

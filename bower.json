@@ -38,7 +38,7 @@
     "handsontable": "~0.20.2",
     "angular-ui-ace": "bower",
     "elasticui": "git://github.com/strets123/ElasticUI.git#master",
-    "chemdoodle-angular": "https://github.com/strets123/chemdoodle-angular.git#0.1.8",
+    "chemdoodle-angular": "https://github.com/strets123/chemdoodle-angular.git#0.2.0",
     "gifffer": "*",
     "angular-schema-form-ckeditor": "*",
     "schema-form-file-upload":"https://github.com/PaulBarrett79/schema-form-file-upload.git#v0.0.9",
