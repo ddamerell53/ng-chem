@@ -146,7 +146,7 @@ angular.module('chembiohubAssayApp')
 
 
             $scope.cbh.setUpPageNumbers();
-            $scope.blankForm = function(toggleAddingOff) {
+            $scope.blankForm = function(toggleAddingOff, cloned) {
                 if (angular.isDefined($scope.cbh.projAddingTo)) {
                     var myform = angular.copy($scope.cbh.projAddingTo.schemaform.form);
                     //we may need to replicate this within the search form...
@@ -161,6 +161,11 @@ angular.module('chembiohubAssayApp')
                     $scope.newMol = {
                         "customFields": {}
                     };
+                    if(cloned){
+                        $scope.newMol.customFields = angular.copy(cloned.customFields);
+                        $scope.newMol.id = undefined;
+                        $scope.newMol.resource_uri = undefined;
+                    }
                     //need to also make the form pristine and remove (usually incorrect) validation cues...
                     //we've removed the feedback because it is broken in angular schema form and therefore inconsistent.
                     angular.forEach($scope.formChunks, function(chunk) {
@@ -168,7 +173,6 @@ angular.module('chembiohubAssayApp')
                     });
                     if (toggleAddingOff) {
                         $scope.addingData = false;
-                        $scope.cbh.hideSearchForm = false;
                     }
                 }
 
@@ -180,7 +184,7 @@ angular.module('chembiohubAssayApp')
                 if ($scope.cbh.editMode) {
                     $scope.cbh.hideSearchForm = true;
                 } else {
-                    $scope.cbh.hideSearchForm = false;
+                    //Nothing - we dont unhide the search form unles the user clicks
                 }
                 var newParams = angular.copy($stateParams);
                 newParams.page = 1;
@@ -228,15 +232,22 @@ angular.module('chembiohubAssayApp')
                 );
             };
 
+            $scope.$on("cloneAnItem", function(event, item){
+                if($scope.cbh.editMode){
+                    $scope.cbh.toggleEditMode();
+                }
+                $scope.addingData = true;
+                $scope.cbh.hideSearchForm = true;
+                $scope.blankForm(false, item);
+            })
+
             $scope.toggleAddData = function() {
                 if (!$scope.addingData) {
                     $scope.addingData = true;
                     $scope.blankForm();
-                   
-                    
+                    $scope.cbh.hideSearchForm=true;
                 } else {
                     
-                    $scope.cbh.hideSearchForm = false;
                     $scope.addingData = false;
                 }
             }
@@ -426,7 +437,7 @@ angular.module('chembiohubAssayApp')
                     //turn oon the add inventory items
                     $scope.toggleAddData();
                     $scope.cbh.showSingle = false;
-                    $scope.cbh.hideSearchForm=true;
+                    
                 }
 
             }

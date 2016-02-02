@@ -4,7 +4,7 @@
 
 <a ng-if="projectObj.project_type.show_compounds == true" href="" clip-copy="::mol.properties.cdxml" clip-click="" role="button" class="btn btn-default"><span class="glyphicon glyphicon-file"></span> Copy CDXML</a> 
 
-<button class="btn btn-primary" ng-disabled="!projectObj.editor"   ng-click="openClone()">Clone or add structure</button>
+<button class="btn btn-primary" ng-disabled="!projectObj.editor"   ng-click="openClone()">{{projectObj.project_type.copy_action_name}}</button>
 <small>
 
 
