@@ -40,7 +40,7 @@
     "elasticui": "git://github.com/strets123/ElasticUI.git#master",
     "chemdoodle-angular": "https://github.com/strets123/chemdoodle-angular.git#0.2.0",
     "gifffer": "*",
-    "angular-schema-form-ckeditor": "https://github.com/PaulBarrett79/angular-schema-form-ckeditor.git#0.0.3",
+    "angular-schema-form-ckeditor": "https://github.com/PaulBarrett79/angular-schema-form-ckeditor.git#0.0.4",
     "schema-form-file-upload":"https://github.com/PaulBarrett79/schema-form-file-upload.git#v0.0.9",
     "angular-xeditable": "*"
   },
@@ -53,8 +53,7 @@
   "appPath": "app",
   "resolutions": {
     "angular": "^1.0.8",
-    "underscore": "~1.8.2",
-    "ckeditor": "~4.5.6"
+    "underscore": "~1.8.2"
 
   }
 }
