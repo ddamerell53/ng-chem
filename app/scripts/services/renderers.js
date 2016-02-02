@@ -8,7 +8,7 @@
  * Factory in the chembiohubAssayApp.
  */
 angular.module('chembiohubAssayApp')
-  .factory('renderers', function ($timeout, $compile, $state) {
+  .factory('renderers', function ($timeout, $compile, $state, $rootScope) {
     // Service logi
     // ...
     function strip_tags(input, allowed) {
@@ -189,13 +189,18 @@ angular.module('chembiohubAssayApp')
                 angular.forEach(projects,function(myproj){
                     if(myproj.id == projid){
                       var toArchive = false ;
-                      var escaped = "<button class='btn btn-primary'><span class=' glyphicon glyphicon-copy'></span>&nbsp;Clone/Add Structure</button>";
+                      var escaped = "<button class='btn btn-primary'><span class=' glyphicon glyphicon-copy'></span>&nbsp;" + myproj.project_type.copy_action_name + "</button>";
                       
                       var a = document.createElement('a');
                       a.innerHTML = escaped;
                       Handsontable.Dom.addEvent(a, 'click', function (e){
                           e.preventDefault(); // prevent selection quirk
-                          $state.go("cbh.projects.project.addsingle",{"projectKey" : myproj.project_key, "idToClone": mol.id} , { reload: true });
+                          if(myproj.project_type.show_compounds){
+                              //If this is a compounds project redirect to compound clone page
+                              $state.go("cbh.projects.project.addsingle",{"projectKey" : myproj.project_key, "idToClone": mol.id} , { reload: true });
+                          }else{
+                              $rootScope.$broadcast("cloneAnItem", mol)
+                          }
 
                       });
                       Handsontable.Dom.empty(td);

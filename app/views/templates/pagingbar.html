@@ -19,25 +19,25 @@
                     <label class="btn btn-default" ng-class="{ active: listOrGallery.choice === 'list' }" >
                         <input type="radio" ng-model="listOrGallery.choice" value="list" id="list-btn" name="listOrGallery" style="display:none;" ng-change="changeView()"><span class="glyphicon glyphicon-list-alt"></span><span class="hidden-xs hidden-sm"> List</span>
                     </label>
-                    <label ng-if="!editModeUnreachable()" class="btn btn-default" ng-class="{ active: cbh.editMode === true }" >
+                    <label ng-if="!addingData && !editModeUnreachable()" class="btn btn-default" ng-class="{ active: cbh.editMode === true }" >
                         <input type="radio"  ng-click="cbh.toggleEditMode()" id="list-btn"  style="display:none;"  ><span class="glyphicon glyphicon-pencil"></span><span class="hidden-xs hidden-sm"> Edit</span>
                     </label>
-                    <label ng-if="editModeUnreachable()" class="btn btn-default" disabled title="{{cbh.messages.edit_mode_unavailable_projects}}">
+                    <label ng-if="addingData || editModeUnreachable()" class="btn btn-default" disabled title="{{cbh.messages.edit_mode_unavailable_projects}}">
                         <span class="glyphicon glyphicon-pencil"></span><span class="hidden-xs hidden-sm"> Edit</span>
                     </label>
-                    <label ng-if="!editModeUnreachable() && cbh.projAddingTo.project_type.show_compounds == false" class="btn btn-default" ng-class="{ active: addingData === true }" >
+                    <label ng-if="!cbh.editMode && !editModeUnreachable() && cbh.projAddingTo.project_type.show_compounds == false" class="btn btn-default" ng-class="{ active: addingData === true }" >
                         <input type="radio"  ng-click="toggleAddData()" id="list-btn"  style="display:none;"  ><span class="glyphicon glyphicon-plus"></span><span class="hidden-xs hidden-sm"> Add Single</span>
                     </label>
-                    <label  ui-sref="cbh.projects.project.addsingle({projectKey: cbh.projAddingTo.project_key})" ng-if="!editModeUnreachable() && cbh.projAddingTo.project_type.show_compounds == true" class="btn btn-default"  >
+                    <label  ui-sref="cbh.projects.project.addsingle({projectKey: cbh.projAddingTo.project_key})" ng-if="!cbh.editMode && !editModeUnreachable() && cbh.projAddingTo.project_type.show_compounds == true" class="btn btn-default"  >
                         <span class="glyphicon glyphicon-plus"></span><span class="hidden-xs hidden-sm"> Add Single</span>
                     </label>
-                    <label ng-if="editModeUnreachable()" class="btn btn-default" disabled title="{{cbh.messages.edit_mode_unavailable_projects}}">
+                    <label ng-if="editModeUnreachable() || cbh.editMode" class="btn btn-default" disabled title="{{cbh.messages.edit_mode_unavailable_projects}}">
                         <span class="glyphicon glyphicon-plus"></span><span class="hidden-xs hidden-sm"> Add Single</span>
                     </label>
-                    <label ng-if="editModeUnreachable()" class="btn btn-default" disabled title="{{cbh.messages.edit_mode_unavailable_projects}}">
+                    <label ng-if="cbh.editMode || editModeUnreachable()" class="btn btn-default" disabled title="{{cbh.messages.edit_mode_unavailable_projects}}">
                         <span class="glyphicon glyphicon-plus"></span><span class="hidden-xs hidden-sm"> Add Multiple</span>
                     </label>
-                    <label ng-if="!editModeUnreachable()" class="btn btn-default" ui-sref="cbh.projects.project.addcompounds({projectKey: cbh.projAddingTo.project_key})">
+                    <label ng-if="!cbh.editMode && !editModeUnreachable()" class="btn btn-default" ui-sref="cbh.projects.project.addcompounds({projectKey: cbh.projAddingTo.project_key})">
                         <span class="glyphicon glyphicon-plus"></span><span class="hidden-xs hidden-sm"> Add Multiple</span>
 
                     </label>
