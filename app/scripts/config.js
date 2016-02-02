@@ -180,7 +180,7 @@ var login = null;
     
   angular.forEach(projData.data.objects, function(project){
         project.schemaform = {
-          "form" : formGetter(project.custom_field_config.project_data_fields, "col-xs-6", project),
+          "form" : formGetter(project.custom_field_config.project_data_fields, "col-xs-12", project),
           "schema" : schemaGetter(project.custom_field_config.project_data_fields)
         }
         project.updateCustomFields = function(){
