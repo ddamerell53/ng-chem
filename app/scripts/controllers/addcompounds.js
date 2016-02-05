@@ -63,7 +63,7 @@ angular.module('chembiohubAssayApp')
         $scope.toggleDataSummary = {
             showFlag: true,
         }
-                $scope.cbh.appName = "ChemReg";
+                $scope.cbh.appName = "ChemiReg";
 
         $scope.topLink = function() {
             $state.go("cbh.projects.list.project", {

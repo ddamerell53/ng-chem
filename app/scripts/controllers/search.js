@@ -12,7 +12,7 @@
 angular.module('chembiohubAssayApp')
     .controller('SearchCtrl', ['$scope', '$http', '$rootScope', '$filter', '$stateParams', '$location', '$state', '$timeout', 'projectFactory', 'gridconfig', 'CBHCompoundBatch', 'urlConfig', 'searchUrlParams', '$modal', 'loggedInUser', 'ProjectTypeFactory', 'SavedSearchFactory',
         function($scope, $http, $rootScope, $filter, $stateParams, $location, $state, $timeout, projectFactory, gridconfig, CBHCompoundBatch, urlConfig, searchUrlParams, $modal, loggedInUser, ProjectTypeFactory, SavedSearchFactory) {
-            $scope.cbh.appName = "ChemReg";
+            $scope.cbh.appName = "ChemiReg";
             $scope.searchFormSchema = angular.copy($scope.cbh.projects.searchform);
             $scope.cbh.textsearch = $stateParams.textsearch;
             $scope.refresh = function(schema, options, search) {

@@ -77,10 +77,10 @@ angular.module('chembiohubAssayApp')
             batch_reg_total_processed_1: "One substance was processed and:",
             batch_reg_total_processed_other : "substances were processed of which:",
 
-            batch_reg_new_to_chemreg_other : "We check all of the projects you have access to to get this total.  If the number is zero it means all of your compounds already exist in AssayReg.",           
+            batch_reg_new_to_chemireg_other : "We check all of the projects you have access to to get this total.  If the number is zero it means all of your compounds already exist in AssayReg.",           
             batch_prereg_to_public_single: "This substance is valid and was already registered as public.  A new private batch of this will be registered in this project.",
             batch_prereg_to_project_single: "This substance is valid and was already registered to this project.  A new private batch of this will be registered in this project.",
-            batch_reg_new_to_chemreg_single: "This substance is not publically registered in ChemBio Hub AssayReg. The first batch of this substance will be registered to this project.",
+            batch_reg_new_to_chemireg_single: "This substance is not publically registered in ChemBio Hub AssayReg. The first batch of this substance will be registered to this project.",
 
         //(change)
             batch_overlaps: "Number of substances which have already been registered. New private batches will be registered in this project for each of these.",
@@ -109,9 +109,9 @@ angular.module('chembiohubAssayApp')
             no_valid_structure_values: "Records with no valid structure as interpreted by AssayReg. This type of record can still be registered and searched for inventory management purposes.",
             error_total_values: "Data records that contain errors and cannot be processed. Check your input data and the info column below.",
             inchi_matching: "Compounds submitted have been compared to each other using their InChI key to detect duplicate structures and stereoisomers.",
-            new_to_chemreg: "Compounds or items not previously registered to this project. These compounds or items may be present in other projects.",
+            new_to_chemireg: "Compounds or items not previously registered to this project. These compounds or items may be present in other projects.",
             project_match_values: "Some of your compounds or items are already registered to this project. New batches of these compounds or items will be created in this project.",
-            chemreg_match_values: "Some duplicate compounds have been detected in your data.",
+            chemireg_match_values: "Some duplicate compounds have been detected in your data.",
             duplicate_count_values: "No duplicate compounds have been detected in your data.",
 
             project_data_field_download: "Download records from the table in Excel or SDF format. Note that the export function is only available when one project is selected and you are an editor of that project.",
