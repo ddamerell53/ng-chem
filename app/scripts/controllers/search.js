@@ -19,8 +19,13 @@ angular.module('chembiohubAssayApp')
                 return $http.get(options.async.url + "?chembl_id__chembl_id__startswith=" + search);
             }
             $scope.refreshCustFields = function(schema, options, search) {
+                console.log("refreshCustFields called");
                 var urlToSearch = $scope.cbh.withoutCustomFieldsUrl + "&custom__field__startswith=" + search;
-                return $http.get(options.async.url + "?" + urlToSearch );
+                return $http.get(options.async.url + "?" + urlToSearch )
+                       /*.success(function(data){
+                            $rootScope.$broadcast('schemaFormRedraw');
+                       });*/
+
             }
             var pf = searchUrlParams.setup($stateParams, {
                 molecule: {}
@@ -56,6 +61,7 @@ angular.module('chembiohubAssayApp')
                 key: 'search_custom_fields__kv_any'
             }, true);
             $scope.custFieldFormItem[0].options.async.call = $scope.refreshCustFields;
+            //not using projectFrom any more
             $scope.projectFrom = $stateParams.projectFrom;
             $scope.projectObj = {}
             //we need the project pbject for this key
@@ -77,20 +83,25 @@ angular.module('chembiohubAssayApp')
 
                 if ($scope.cbh.searchForm.search_custom_fields__kv_any) {
                     $scope.searchFormSchema.schema.properties.search_custom_fields__kv_any.items = $scope.cbh.searchForm.search_custom_fields__kv_any.map(function(i) {
+                        
                         return {
                             value: i,
                             label: i.replace("|", ": ")
                         }
                     });
                 }
+
             }
             updateFields();
 
 
 
             $scope.$on("sf-render-finished", function() {
+                //$rootScope.$broadcast('schemaFormRedraw');
                 $timeout(function() {
                     // $rootScope.$broadcast("schemaFormValidate");
+
+                    //
                     $scope.cbh.watcher = $scope.$watch(
                         function($scope) {
                             return $scope.cbh.textsearch;
@@ -114,6 +125,7 @@ angular.module('chembiohubAssayApp')
                                 if (value != "molecule") {
                                     newObj[value] = $scope.cbh.searchForm[value];
                                 }
+
                             });
                             return newObj;
                         },
@@ -354,6 +366,11 @@ angular.module('chembiohubAssayApp')
                 //}
 
             }
+            $timeout(function(){
+                console.log("schema redraw timeout");
+                $rootScope.$broadcast('schemaFormRedraw');
+            }, 2000);
+
 
         }
     ]);
