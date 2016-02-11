@@ -887,6 +887,9 @@ img.max-height-100 {
   text-decoration: line-through;
   color: #ddd;
 }
+.animatedThumb {
+  transition:0.5s ease-in-out all;
+}
 
 
 /* 16-column bootstrap grid classes */
