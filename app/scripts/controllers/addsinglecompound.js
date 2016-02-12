@@ -139,7 +139,7 @@ angular.module('chembiohubAssayApp')
                 var callback = function(){
                     $state.transitionTo("cbh.search", 
                                         {multiple_batch_id: $scope.dataset.config.multiplebatch, 
-                            projectFrom: projectKey, project__project_key__in: projectKey},
+                            justAdded: true, project__project_key__in: projectKey},
                             { location: true, 
                                 inherit: false, 
                                 relative: null, 

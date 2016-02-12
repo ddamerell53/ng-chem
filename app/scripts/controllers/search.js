@@ -62,14 +62,25 @@ angular.module('chembiohubAssayApp')
             }, true);
             $scope.custFieldFormItem[0].options.async.call = $scope.refreshCustFields;
             //not using projectFrom any more
-            $scope.projectFrom = $stateParams.projectFrom;
+            /*$scope.projectFrom = $stateParams.projectFrom;*/
             $scope.projectObj = {}
             //we need the project pbject for this key
-            angular.forEach($rootScope.projects, function(myproj) {
-                if (myproj.project_key == $scope.projectFrom) {
-                    $scope.projectObj = myproj;
+            //console.log("project key in", $stateParams.project__project_key__in);
+            
+            if($stateParams.project__project_key__in  && $stateParams.justAdded){
+                $scope.justAdded = $stateParams.justAdded;
+                //convert the comma separated list to array
+                $scope.selected_projects = $stateParams.project__project_key__in.split(',');
+                if($scope.selected_projects.length == 1){
+                    angular.forEach($rootScope.projects, function(myproj) {
+                        if (myproj.project_key == $scope.selected_projects[0]) {
+                            $scope.projectObj = myproj;
+                        }
+                    });
                 }
-            });
+                
+            }
+            
 
             function updateFields() {
                 if ($scope.cbh.searchForm.related_molregno__chembl__chembl_id__in) {

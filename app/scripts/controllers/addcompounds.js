@@ -84,7 +84,7 @@ angular.module('chembiohubAssayApp')
                         $scope.cbh.hideSearchForm=true;
                         $state.transitionTo("cbh.search", 
                                         {multiple_batch_id: $scope.datasets[$scope.current_dataset_id].config.multiplebatch, 
-                            projectFrom: projectKey, project__project_key__in: projectKey},
+                            justAdded: true, project__project_key__in: projectKey},
                             { location: true, 
                                             inherit: false, 
                                             relative: null, 
