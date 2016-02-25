@@ -9,10 +9,18 @@
  */
 angular.module('chembiohubAssayApp')
   .controller('ProjectpermissionsCtrl', [
-    "$scope", "$q",  "$modalInstance", "$rootScope", "Projectpermissions", "proj", "permissions","userList","ProjectPermissionAllRoles",
-    function($scope, $q, $modalInstance, $rootScope, Projectpermissions,  proj, permissions, userList, ProjectPermissionAllRoles) {
+    "$scope", "$q",  "$filter","$modalInstance", "$rootScope", "Projectpermissions", "proj", "permissions","userList","ProjectPermissionAllRoles",
+    function($scope, $q, $filter, $modalInstance, $rootScope, Projectpermissions,  proj, permissions, userList, ProjectPermissionAllRoles) {
         $scope.projectPermissions = permissions;
-        $scope.allUsers = angular.copy(userList);
+        function orderPredicate(item){
+            if(item.first_name){
+                return item.first_name;
+            }
+            return item.username;
+        }
+
+        
+        $scope.allUsers = $filter('orderBy')(angular.copy(userList), "display_name");
         $scope.proj = proj;
         //$scope.tagFunction = 
         $scope.saveChanges = function(){
