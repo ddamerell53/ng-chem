@@ -1,0 +1,48 @@
+<div class="container-fluid mt">
+	<div class="col-xs-12">
+		<div class="row">
+			<h2 class="blue">Plate Maps <br><small>Plate maps curently in the system. To add a plate map, click here</small> <a ui-sref="cbh.addPlate" class="btn btn-primary" role="button">Add Plate</a></h2>
+			<span class="pull-right" style="margin-top: -40px; margin-right: -10px;"><label >Filter plate list: </label><input ng-model="search.$"><info-box lookup="plate_list_filter_help" lookupitems="cbh.messages" left="true"></info-box></span>
+
+				
+				<!-- New plate form -->
+				<div class="container-flex" ng-init="loadPlateMaps()">
+					<!-- <ul>
+						<li ng-repeat="plate in plates">{{plate.customFields.name}}</li>
+					</ul> -->
+
+					<table class="table table-responsive">
+						<thead>
+							<tr>
+								<th>Name</th>
+								<th>Description</th>
+								<th>Plate Size</th>
+								<th>Plate Type</th>
+								<th>Added on</th>
+								<th>Edit</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="plate in plates | filter:search" ng-class="editingPlateId == plate.id ? 'info' : ''">
+								<td>{{plate.customFields.name}}</td>
+								<td>{{plate.customFields.description}}</td>
+								<td>{{plate.customFields.plate_size}}</td>
+								<td>{{plate.customFields.plate_type}}</td>
+								<td>{{plate.created | date: "d MMM yyyy"}}</td>
+								<td data-plate-id="{{plate.id}}"><span class="glyphicon glyphicon-pencil" ng-click="loadPlateForEditing(plate.id)" style="cursor:pointer;"></span></td>
+							</tr>
+						</tbody>
+					</table>
+
+					<div ng-if="showEditingForm">
+						<h2 class="blue">{{editingPlate.name}}</h2>
+						
+						
+						<platemap plate="editingPlate" sfh="schemaFormHolder" cbh="cbh" save-plate-function="patchWholePlate()"></platemap>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

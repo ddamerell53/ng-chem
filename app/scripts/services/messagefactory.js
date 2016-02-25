@@ -41,7 +41,7 @@ angular.module('chembiohubAssayApp')
         return upload_actions;
     }
 
-    //we can maybe use this factory in the future for amdinistrering / editing messages?
+    //we can maybe use this factory in the future for administering / editing messages?
     //move the message text to a backend service?
 
     var messages = {
@@ -49,6 +49,7 @@ angular.module('chembiohubAssayApp')
             wizard_intro_text: "To upload multiple compounds you will need a list of SMILES; an InChI key or list of InChI keys; or either a SD, ChemDraw or Excel file.",
             projects_help: "For each project you can view assay, inventory and chemical data dependent on the setup of the project. Editors can edit data, owners are able to invite new users to a project and change the usable fields or nominate other owners.",
             project_list_filter_help: "Narrow down the project list using this quick search box. Results will filter on project name and project type.",
+            plate_list_filter_help: "Narrow down the plate list using this quick search box. Results will filter on plate name and description.",
 
         //},
         //"add": {

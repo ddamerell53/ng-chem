@@ -356,6 +356,32 @@ $urlRouterProvider.when('', '/projects/list');
       },*/
     })
 
+    /* PLATE MAP IMPLEMENTATION */
+    .state('cbh.addPlate', {
+      url: '/add_plate',
+      resolve: {
+        projectFactory: ['ProjectFactory', function(ProjectFactory) {
+          return ProjectFactory;
+        }],
+
+      },
+      templateUrl: 'views/add_plate.html',
+      controller: 'PlatemapCtrl',
+
+    })
+
+    .state('cbh.listPlates', {
+      url: '/plates?plate=',
+      resolve: {
+        projectFactory: ['ProjectFactory', function(ProjectFactory) {
+          return ProjectFactory;
+        }],
+
+      },
+      templateUrl: 'views/list_plates.html',
+      controller: 'PlatemapCtrl',
+    })
+
 
 
 

@@ -891,6 +891,66 @@ img.max-height-100 {
   transition:0.5s ease-in-out all;
 }
 
+/* Plate map CSS */
+#plate {
+  border: 2px solid #444;
+  border-radius: 5px;
+  width: 100%;
+  padding: 10px;
+  background: #ddd; /* For browsers that do not support gradients */
+  background: -webkit-linear-gradient(left top, #ddd , white); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(bottom right, #ddd, white); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(bottom right, #ddd, white); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(to bottom right, #ddd , white); /* Standard syntax */
+
+}
+#plate ul {
+  margin-left:20px;
+}
+#plate div.row {
+  margin-top:10px;
+}
+li.platewell {
+  font-family: NexaBold;
+  text-align: center;
+  vertical-align: super;
+}
+@media (min-width: 1200px) {
+  li.platewell {
+    width:3vw;
+    height:3vw;
+  }
+}
+/* Small changes to make the app look less gigantic on smaller screens */
+@media (max-width: 1201px) {
+  li.platewell {
+    width:5.5vw;
+    height:5.5vw;
+  }
+}
+
+
+
+li.platewell div {
+  background: white;
+  border:2px solid #444;
+  height:100%;
+  border-radius:50px;
+  cursor: pointer;
+  transition:0.2s ease-in-out all;
+}
+li.platewell div.contains-info{
+  background: #8CEC8C;
+  border-color: green;
+}
+li.platewell div.selection{
+  border-color: red;
+}
+
+li.platewell.header {
+  vertical-align: text-top;
+}
+
 
 /* 16-column bootstrap grid classes */
 /*!
