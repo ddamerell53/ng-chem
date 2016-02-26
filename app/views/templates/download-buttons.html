@@ -4,6 +4,5 @@
             <ul ng-if="!editModeUnreachable()" class="dropdown-menu" role="menu" aria-labelledby="downloadBtnProj">
                 <li><a ng-href="{{  urlConfig.cbh_compound_batches.list_endpoint }}/?{{cbh.baseDownloadUrl}}&format=xlsx&limit=10000">Export all to Excel</a></li>
                 <li><a ng-href="{{  urlConfig.cbh_compound_batches.list_endpoint }}/?{{cbh.baseDownloadUrl}}&format=sdf&limit=10000">Export all to SD</a></li>
-                <!-- <li ng-if="!editModeUnreachable()"><a ng-href="{{  urlConfig.cbh_projects.list_endpoint }}/?project_key={{projectFrom}}&format=xlsx">Export Data Summary</a></li> -->
             </ul>
 
