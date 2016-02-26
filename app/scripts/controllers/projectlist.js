@@ -85,7 +85,7 @@ angular.module('chembiohubAssayApp')
             $scope.projectId = proj.id;
             $scope.proj = proj;
             $scope.modalInstance = $modal.open({
-            templateUrl: 'views/modal-edit-project-permissions.html',
+            templateUrl: 'views/modal-project-permissions.html',
             size: 'md',
             resolve: {
                 proj: function(){
