@@ -63,6 +63,26 @@ module.exports = function (grunt) {
       }
     },
 
+
+    ngtemplates: {
+        "chembiohubAssayApp" : {
+            options: {
+                base: 'app',
+                module: 'chembiohubAssayApp',
+                usemin: 'scripts/scripts.js',
+                htmlmin: {
+                    collapseWhitespace:             true,
+                    removeAttributeQuotes:          true,
+                    removeEmptyAttributes:          true,
+                    removeRedundantAttributes:      true,
+                }
+                 
+            },
+            cwd: '<%= yeoman.app %>',
+            src: ["index.html", "views/templates/*.html", "views/*.html"],
+            dest: ".tmp/scripts/templateCache.js"
+        }
+    },
     // The actual grunt server settings
     connect: {
       options: {
@@ -285,6 +305,12 @@ module.exports = function (grunt) {
     //   dist: {}
     // },
 
+  // concat: {  
+  //   app:    {
+  //   src:  [ '**.js', '<%= ngtemplates.app.dest %>' ],
+  //   dest: [ 'app.js' ]
+  // }},
+
     imagemin: {
       dist: {
         files: [{
@@ -465,6 +491,9 @@ module.exports = function (grunt) {
 
   grunt.loadNpmTasks('grunt-connect-proxy');
 
+  grunt.loadNpmTasks('grunt-angular-templates');
+
+
   grunt.registerTask('server', 'DEPRECATED TASK. Use the "serve" task instead', function (target) {
     grunt.log.warn('The `server` task has been deprecated. Use `grunt serve` to start a server.');
     grunt.task.run(['serve:' + target]);
@@ -484,6 +513,7 @@ module.exports = function (grunt) {
     'useminPrepare',
     'concurrent:dist',
     'autoprefixer',
+    'ngtemplates',
     'concat',
     'ngAnnotate',
     'copy:dist',
