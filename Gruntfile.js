@@ -70,12 +70,7 @@ module.exports = function (grunt) {
                 base: 'app',
                 module: 'chembiohubAssayApp',
                 usemin: 'scripts/scripts.js',
-                htmlmin: {
-                    collapseWhitespace:             true,
-                    removeAttributeQuotes:          true,
-                    removeEmptyAttributes:          true,
-                    removeRedundantAttributes:      true,
-                }
+
                  
             },
             cwd: '<%= yeoman.app %>',
