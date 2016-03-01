@@ -58,8 +58,8 @@
                     <span flow-btn name="file_input" role="btn" class="btn btn-primary btn-sm pull-right nexa" ng-show="$flow.files.length < 1">Upload</span>
                     <a ng-show="$flow.files.length > 0" ng-click="file.cancel(); cancelFile(); $flow.files=[];"   class="btn btn-sm btn-danger pull-right" role="btn">Remove</a>
                 </div>
-                <div class="col-xs-12"><h2 class="nexa blue"><small>Not sure what to upload?&nbsp;      <a class="btn btn-default" ng-href="{{proj.custom_field_config.resource_uri}}/?format=xlsx">Download an XLSX template</a>
-                </small></h2></div>
+                <div class="col-xs-12 mt"><p class="nexa blue"><small>Not sure what to upload?&nbsp;      <a class="btn btn-default" ng-href="{{proj.custom_field_config.resource_uri}}/?format=xlsx">Download an XLSX template</a>
+                </small></p></div>
 
            
                 </div>
