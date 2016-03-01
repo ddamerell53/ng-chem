@@ -1,0 +1,34 @@
+<div class="row">
+
+	<div class="col-xs-12">
+
+		<div id="breadcrums">
+			<div class="row">
+				<div class="col-xs-12">
+					<h3 class="subheading">Filters applied</h3>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12 holder">
+
+					<fieldset>
+						<ul class="list-inline">
+							
+							<!-- need this to be able to launch the filter window too. Just use broadcast? -->
+							<li class="breadcrumb" ng-repeat="bc in breadcrumbList" >
+								<span class="bcname" ng-click="filterClicked(bc.name)">{{bc.name}}</span>
+								<span class="glyphicon glyphicon-filter"></span>
+								<span class="glyphicon glyphicon-sort" ng-if="bc.sort_direction == 'asc' || bc.sort_direction == 'desc'"></span>
+								<button type="button" class="close" aria-label="Close" ng-click="closeBreadcrumb(bc.name)"><span aria-hidden="true">&times;</span></button>
+							</li>
+
+						</ul>
+					</fieldset>
+
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+</div>
