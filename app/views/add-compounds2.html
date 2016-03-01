@@ -31,7 +31,7 @@
             <div class="row">
                 
                 <label  for="file_input" class="blue"><strong class="nexa">Drag and drop your files here</strong></label>
-                <a class="btn btn-default" ng-href="{{proj.custom_field_config.resource_uri}}/?format=xlsx">Download an XLSX template</a>
+                
                 <info-box style="margin-top:-5px; margin-right:5px" right="true" lookup="file_upload_help_text" lookupitems="cbh.messages"></info-box>
             </div>
              <div flow-drop flow-drag-enter="style={border:'4px dashed green', padding: '10px'}" flow-drag-leave="style={border:'4px dashed #ddd', padding: '10px'}" ng-style="style={border:'4px dashed #ddd', padding: '10px'}" class="col-sm-9 col-lg-10" style="min-height:50px">
@@ -58,6 +58,9 @@
                     <span flow-btn name="file_input" role="btn" class="btn btn-primary btn-sm pull-right nexa" ng-show="$flow.files.length < 1">Upload</span>
                     <a ng-show="$flow.files.length > 0" ng-click="file.cancel(); cancelFile(); $flow.files=[];"   class="btn btn-sm btn-danger pull-right" role="btn">Remove</a>
                 </div>
+                <h2 class="nexa blue"><small>Not sure what to upload?&nbsp;      <a class="btn btn-default" ng-href="{{proj.custom_field_config.resource_uri}}/?format=xlsx">Download an XLSX template</a>
+                </small></h2>
+
            
                 </div>
                 <div class ="col-sm-6" ng-show="skinConfig.enable_smiles_input" >
