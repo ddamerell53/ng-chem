@@ -71,13 +71,13 @@ module.exports = function (grunt) {
                 module: 'chembiohubAssayApp',
                 usemin: 'scripts/scripts.js',
                 htmlmin: {
-               collapseBooleanAttributes:      true,
-  collapseWhitespace:             true,
-  removeAttributeQuotes:          true,
-  removeComments:                 true, // Only if you don't use comment directives! 
-  removeEmptyAttributes:          true,
-  removeRedundantAttributes:      true,
-  removeStyleLinkTypeAttributes:  true
+                  collapseBooleanAttributes:      true,
+                  collapseWhitespace:             true,
+                  removeAttributeQuotes:          true,
+                  removeComments:                 true, // Only if you don't use comment directives! 
+                  removeEmptyAttributes:          true,
+                  removeRedundantAttributes:      true,
+                  removeStyleLinkTypeAttributes:  true
                 }
                  
             },
