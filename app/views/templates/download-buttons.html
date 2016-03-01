@@ -2,8 +2,7 @@
 <button ng-if="editModeUnreachable()" class="btn btn-primary btn-toggle" disabled><span class="glyphicon glyphicon-download"></span> <span class="hidden-xs hidden-sm">Export</span> <span class="caret"></span></button>
 <button ng-if="!editModeUnreachable()" id="downloadBtnProj" class="btn btn-primary btn-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-download"></span> <span class="hidden-xs hidden-sm">Export</span> <span class="caret"></span></button>
             <ul ng-if="!editModeUnreachable()" class="dropdown-menu" role="menu" aria-labelledby="downloadBtnProj">
-                <li><a ng-href="{{  urlConfig.cbh_compound_batches.list_endpoint }}/?{{cbh.baseDownloadUrl}}&format=xlsx&limit=10000">Export all to Excel</a></li>
-                <li><a ng-href="{{  urlConfig.cbh_compound_batches.list_endpoint }}/?{{cbh.baseDownloadUrl}}&format=sdf&limit=10000">Export all to SD</a></li>
-                <!-- <li ng-if="!editModeUnreachable()"><a ng-href="{{  urlConfig.cbh_projects.list_endpoint }}/?project_key={{projectFrom}}&format=xlsx">Export Data Summary</a></li> -->
+                <li><a ng-href="{{  urlConfig.cbh_compound_batches.list_endpoint }}/get_list_elasticsearch/?{{cbh.baseDownloadUrl}}&format=xlsx&limit=10000">Export all to Excel</a></li>
+                <li><a ng-href="{{  urlConfig.cbh_compound_batches.list_endpoint }}/get_list_elasticsearch/?{{cbh.baseDownloadUrl}}&format=sdf&limit=10000">Export all to SD</a></li>
             </ul>
 
