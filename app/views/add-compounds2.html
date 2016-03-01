@@ -1,6 +1,6 @@
 <div ng-show="currentlyLoading" id="loading-overlay"></div>
 <div ng-show="currentlyLoading" id="loading-message"><img src="images/loader.gif"></img></div>
-
+<!-- Generate your own unique identifier using generateUniqueIdentifier in ng-flow -->
 <div flow-init="flowinit"
         flow-name="filedata.flow"
         flow-files-submitted="currentlyLoading = true; $flow.upload()"

@@ -88,6 +88,43 @@ $urlRouterProvider.when('', '/projects/list');
 
     })
 
+    .state('cbh.searchv2', {
+      url: '/searchv2?creator_uri=textsearch=created_by=editMode=&archived=&scroll=&scrollTop=&sorts=&page=&compoundBatchesPerPage=&project__project_key__in&functional_group&flexmatch&related_molregno__chembl__chembl_id__in&with_substructure&similar_to&fpValue&created__gte&created__lte&molfile&smiles&search_custom_fields__kv_any&multiple_batch_id=&viewType=&doScroll=&showBlanks=&showNonBlanks=&limit&offset&justAdded=',
+      //url: '/search',
+      //params: ['project__project_key', 'flexmatch', 'with_substructure', 'similar_to', 'fpValue', 'created__gte', 'created__lte', 'molfile', 'smiles', 'limit', 'offset', 'random'],
+      resolve: {
+        gridconfig: ['CompoundListSetup', function(CompoundListSetup) {
+          return CompoundListSetup;
+        }],
+        projectFactory: ['ProjectFactory', function(ProjectFactory) {
+          return ProjectFactory;
+        }],
+
+        messages: ['MessageFactory', function(MessageFactory) {
+          return MessageFactory.getMessages();
+        }],
+
+      },
+
+      views: {
+        '': {
+          templateUrl: 'views/search.html',
+        },
+        'form@cbh.searchv2': {
+          controller: 'Searchv2Ctrl',
+          templateUrl: 'views/templates/search-templatev2.html'
+        },
+
+        'newresults@cbh.searchv2': {
+          templateUrl: 'views/compound-list-newv2.html',
+          controller: 'Compoundbatchv2Ctrl'
+        },
+
+      }
+
+
+    })
+
     .state('cbh.search_assays', {
       url: '/search-assays?textsearch=&l0=&l1=&l2=&start=&end=&useruris=',
       resolve: {
