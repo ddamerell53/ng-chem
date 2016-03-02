@@ -12,7 +12,15 @@
 
 &nbsp;&nbsp;{{projectObj.name}}</small> </h2>
 </div>
-<div class="modal-body">
+<!-- <div class="modal-body" 
+    flow-init="flowinit"
+    flow-name="dpclassif.filedata.flow"
+    flow-files-submitted="$flow.upload()"
+    flow-file-success="dpclassif.getSheetsForFile($file.uniqueIdentifier)" 
+    flow-upload-started="" 
+    flow-complete="dpclassif.filesUploading=false"> -->
+  <div class="modal-body">
+    <!-- put flowfile init stuff in here so it encapsulates the file upload element -->
     <div class="row" ng-show="isNewCompoundsInterface">
         <div class="col-xs-12">
             <img ng-if="mol.bigimage" class="col-xs-12 col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1" ng-src="data:image/png;base64,{{mol.bigimage}}"></img>
@@ -59,12 +67,32 @@
                 <div class="alert alert-success" ng-show="update_success">Project Data Updated Successfully</div>
                 <div class="col-xs-12 col-md-6" ng-hide="editMode">
                     <div ng-repeat="item in firstList track by item.key">
-                        <button-input copy-model="item.value" disabled="true" label="::item.key"></button-input>
+                        <button-input copy-model="item.value" disabled="true" label="::item.key" ng-if="item.isFileField == false"></button-input>
+                        <div class="form-group" ng-if="item.isFileField == true">
+                            <label>{{item.key}}</label>
+                            <ul class="list-unstyled">
+                                <li ng-repeat="attc in item.attachments">
+                                    <a href="{{attc.url}}">{{attc.printName}}</a>
+                                </li>
+                                <li ng-show="item.attachments.length == 0">no items</li>
+                            </ul>
+                        </div>
+                        
                     </div>
                 </div>
                 <div class="col-xs-12 col-md-6" ng-hide="editMode">
                     <div ng-repeat="item in secondList track by item.key">
-                        <button-input copy-model="item.value" disabled="true" label="::item.key"></button-input>
+                        <button-input copy-model="item.value" disabled="true" label="::item.key" ng-if="item.isFileField == false"></button-input>
+                        <div class="form-group" ng-if="item.isFileField == true">
+                            <label>{{item.key}}</label>
+                            <ul class="list-unstyled">
+                                <li ng-repeat="attc in item.attachments">
+                                    <a href="{{attc.url}}">{{attc.printName}}</a>
+                                </li>
+                                <li ng-show="item.attachments.length == 0">no items</li>
+                            </ul>
+                        </div>
+                        
                     </div>
                 </div>
                 <div ng-if="editMode" class="col-xs-12 col-md-6">

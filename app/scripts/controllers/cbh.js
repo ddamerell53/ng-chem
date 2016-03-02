@@ -167,13 +167,69 @@ angular.module('chembiohubAssayApp')
 
             var editingClass = editingOnlyProperty ? 'editing' : '';
 
+
             $scope.modalInstance = $modal.open({
               templateUrl: templateU,
               size: 'lg',
               windowClass: editingClass,
-              controller: ['$scope', '$rootScope', '$modalInstance', '$timeout', 'CBHCompoundBatch', 'ProjectFactory',
-                function($scope, $rootScope, $modalInstance, $timeout, CBHCompoundBatch, ProjectFactory) {
+              controller: ['$scope', '$rootScope', '$modalInstance', '$timeout', 'CBHCompoundBatch', 'ProjectFactory', '$cookies',
+                function($scope, $rootScope, $modalInstance, $timeout, CBHCompoundBatch, ProjectFactory, $cookies) {
                   
+                  //specify the flow init object here
+                  $scope.csrftoken = $cookies[prefix.split("/")[0] + "csrftoken"];
+                  $scope.flowinit = {
+                        //also include the current project id in the url
+                        target: urlConfig.instance_path.url_frag + 'flow/upload/',
+
+                      
+                  };
+                  $scope.success = function(file, form_key){
+                    console.log("from new success method", file);
+                  }
+                  $scope.removeFile = function(form_key, index, url){
+                    console.log("from new removeFile method", form_key);
+                  }
+
+
+                    /*$scope.success = function(file, form_key){
+                        //can I access the model for the attachment field? Yes
+                        
+                        //build a URL for this upload so that calling it from the view redirects through the correct resource
+                        //in order to check for project permissions, user permissions etc.
+                        //now add parts to the url indicating project, file.uniqueIdentifier, field name (and filename?)
+                        //add this to an object also containing mimetype data?
+                        //populate the object
+                        var AttachmentFactory = FlowFileFactory.cbhBaseAttachment;
+                        var url_string = ""
+
+                        var fdfresult = AttachmentFactory.save({
+                            'flowfile': '/' + prefix + '/datastore/cbh_flowfiles/' + file.uniqueIdentifier,
+                            'data_point_classification': '/' + prefix + '/datastore/cbh_datapoint_classifications/' + dataoverviewctrl.currentlyAddingTo.id, //dpc
+                        },function (data){
+                            url_string = data.resource_uri
+                            var attachment_obj = {
+                                url: url_string,
+                                printName: file.name,
+                                mimeType: file.file.type,
+                            }
+
+                            if(angular.isUndefined(dataoverviewctrl.currentlyAddingTo.new_next_level_model.project_data[form_key[0]])){
+                                dataoverviewctrl.currentlyAddingTo.new_next_level_model.project_data[form_key[0]] = {'attachments': []};
+                            }
+                            dataoverviewctrl.currentlyAddingTo.new_next_level_model.project_data[form_key[0]].attachments.push(attachment_obj);
+
+                        });
+                        
+                    }
+                    $scope.removeFile = function(form_key, index, url){
+                        //can I access the model for the attachment field? Yes
+
+                        if( angular.isUndefined(dataoverviewctrl.currentlyAddingTo.new_next_level_model.project_data[form_key[0]])){
+                            dataoverviewctrl.currentlyAddingTo.new_next_level_model.project_data[form_key[0]] = {'attachments': []};
+                        }
+                        dataoverviewctrl.currentlyAddingTo.new_next_level_model.project_data[form_key[0]].attachments  = $filter('filter')(dataoverviewctrl.currentlyAddingTo.new_next_level_model.project_data[form_key[0]].attachments, function(value, index) {return value.url !== url;})
+
+                    }*/
                   $scope.isNewCompoundsInterface = isNewCompoundsInterface;
                   $scope.editMode = false;
                   $scope.mol = angular.copy(mol);
@@ -233,9 +289,26 @@ angular.module('chembiohubAssayApp')
                         if (value.constructor === Array) {
                           value = value.join(", ");
                         }
+                        //need to also return the format so we can differentiate file upload fields
+                        var isFileField = false;
+                        //only file fields have the 'default' attribute (at the moment)
+                        var attachments = [];
+                        if(item.default){
+                          isFileField = true;
+                          //also need to rearrange value so it's not a string representation
+                          /*var attachment_obj = {
+                                url: url_string,
+                                printName: file.name,
+                                mimeType: file.file.type,
+                            }*/
+                            attachments = item.default.attachments;
+
+                        }
                         return {
                           'key': key,
-                          'value': value
+                          'value': value,
+                          'isFileField': isFileField,
+                          'attachments': attachments
                         };
                       }
                     );

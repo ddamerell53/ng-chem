@@ -306,6 +306,20 @@ angular.module('chembiohubAssayApp')
                 
                 return td
               },
+              fileUploadRenderer: function(instance, td, row, col, prop, value, cellProperties){
+                //build an unordered, unstyled list
+                var htmllist = "<ul class='list-unstyled'>"
+                angular.forEach(cellProperties.attachments, function(attc){
+                  htmllist = "<li>" + attc + "</li>";
+                });
+                if(cellProperties.attachments.length == 0){
+                  htmllist = "<li>no files</li>";
+                }
+                htmllist += "</ul>"
+                td.className  += "htCenter htMiddle ";
+                td.innerHTML = htmllist;
+                return td;
+              },
               bulletRenderer:  function(instance, td, row, col, prop, value, cellProperties) {
                 var classN = "glyphicon glyphicon-unchecked";
                 
