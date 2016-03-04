@@ -174,64 +174,41 @@ angular.module('chembiohubAssayApp')
               templateUrl: templateU,
               size: 'lg',
               windowClass: editingClass,
-              controller: ['$scope', '$rootScope', '$modalInstance', '$timeout', 'CBHCompoundBatch', 'ProjectFactory', '$cookies',
-                function($scope, $rootScope, $modalInstance, $timeout, CBHCompoundBatch, ProjectFactory, $cookies) {
+              controller: ['$scope', '$rootScope', '$modalInstance', '$timeout', 'CBHCompoundBatch', 'ProjectFactory', '$cookies', 'FlowFileFactory', '$filter',
+                function($scope, $rootScope, $modalInstance, $timeout, CBHCompoundBatch, ProjectFactory, $cookies, FlowFileFactory, $filter) {
                   
-                  //specify the flow init object here
-                  $scope.csrftoken = $cookies[prefix.split("/")[0] + "csrftoken"];
-                  $scope.flowinit = {
-                        //also include the current project id in the url
-                        target: urlConfig.instance_path.url_frag + 'flow/upload/',
-
-                      
-                  };
+                  /* FlowFile attachment for custom field stuff */
+                  
+                  //$scope.flowinit and csrftoken is now generated in the back end
                   $scope.success = function(file, form_key){
-                    console.log("from new success method", file);
+                    //apply the urls of the flowfile object to the correct custom field of $scope.mol.customFields - find the attachments array and add it
+                    //put a nedw method in FlowFileFactory
+                    var AttachmentFactory = FlowFileFactory.cbhChemFlowFile;
+                    AttachmentFactory.get({
+                      'identifier': file.uniqueIdentifier
+                    }, function(data){
+                      console.log("returned from CBHFlowFile view", data);
+                      //add this to attachments in the form element (find it by form key in mol.customFields)
+                      console.log('customfields = ', $scope.mol.customFields)
+                      var downloadUri = data.download_uri
+                      var attachment_obj = {
+                          url: downloadUri,
+                          printName: file.name,
+                          mimeType: file.file.type,
+                      }
+                      $scope.mol.customFields[form_key[0]].attachments.push(attachment_obj)
+                      
+                    })
+
                   }
+
                   $scope.removeFile = function(form_key, index, url){
                     console.log("from new removeFile method", form_key);
+                    $scope.mol.customFields[form_key[0]].attachments  = $filter('filter')($scope.mol.customFields[form_key[0]].attachments, function(value, index) {return value.url !== url;})
+
                   }
 
 
-                    /*$scope.success = function(file, form_key){
-                        //can I access the model for the attachment field? Yes
-                        
-                        //build a URL for this upload so that calling it from the view redirects through the correct resource
-                        //in order to check for project permissions, user permissions etc.
-                        //now add parts to the url indicating project, file.uniqueIdentifier, field name (and filename?)
-                        //add this to an object also containing mimetype data?
-                        //populate the object
-                        var AttachmentFactory = FlowFileFactory.cbhBaseAttachment;
-                        var url_string = ""
-
-                        var fdfresult = AttachmentFactory.save({
-                            'flowfile': '/' + prefix + '/datastore/cbh_flowfiles/' + file.uniqueIdentifier,
-                            'data_point_classification': '/' + prefix + '/datastore/cbh_datapoint_classifications/' + dataoverviewctrl.currentlyAddingTo.id, //dpc
-                        },function (data){
-                            url_string = data.resource_uri
-                            var attachment_obj = {
-                                url: url_string,
-                                printName: file.name,
-                                mimeType: file.file.type,
-                            }
-
-                            if(angular.isUndefined(dataoverviewctrl.currentlyAddingTo.new_next_level_model.project_data[form_key[0]])){
-                                dataoverviewctrl.currentlyAddingTo.new_next_level_model.project_data[form_key[0]] = {'attachments': []};
-                            }
-                            dataoverviewctrl.currentlyAddingTo.new_next_level_model.project_data[form_key[0]].attachments.push(attachment_obj);
-
-                        });
-                        
-                    }
-                    $scope.removeFile = function(form_key, index, url){
-                        //can I access the model for the attachment field? Yes
-
-                        if( angular.isUndefined(dataoverviewctrl.currentlyAddingTo.new_next_level_model.project_data[form_key[0]])){
-                            dataoverviewctrl.currentlyAddingTo.new_next_level_model.project_data[form_key[0]] = {'attachments': []};
-                        }
-                        dataoverviewctrl.currentlyAddingTo.new_next_level_model.project_data[form_key[0]].attachments  = $filter('filter')(dataoverviewctrl.currentlyAddingTo.new_next_level_model.project_data[form_key[0]].attachments, function(value, index) {return value.url !== url;})
-
-                    }*/
                   $scope.isNewCompoundsInterface = isNewCompoundsInterface;
                   $scope.editMode = false;
                   $scope.mol = angular.copy(mol);
@@ -328,14 +305,14 @@ angular.module('chembiohubAssayApp')
                   }
                   cbh.isUpdated = false;
                   $scope.updateBatch = function(instance) {
-
+                    console.log("updateBatch", $scope.mol.customFields)
                     CBHCompoundBatch.patch({
                       "customFields": $scope.mol.customFields,
                       "projectKey": $scope.projectWithCustomFieldData.project_key,
                       "id": $scope.mol.id
                     }).then(
                       function(data) {
-
+                        console.log("post sve customFields", data)
                         $scope.mol.customFields = data.customFields;
                         mol.customFields = data.customFields;
                         //reindex the compound

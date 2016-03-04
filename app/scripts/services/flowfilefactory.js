@@ -34,12 +34,16 @@ angular.module('chembiohubAssayApp')
     var cbhSaveAttachment = $resource(urlConfig.instance_path.url_frag + 'datastore/cbh_attachments/save_temporary_data/', {sheetId: '@sheetId'})
 
 
+    /* ChemiReg attachment stuff */
+    var cbhChemFlowFile = $resource(urlConfig.instance_path.url_frag + 'cbh_flowfiles/:identifier', {identifier: '@identifier'});
+
     return {
 
       "cbhFlowfile": cbhFlowfile,
       "cbhAttachments": cbhAttachments,
       "cbhSaveAttachment": cbhSaveAttachment,
       "cbhBaseAttachment": cbhBaseAttachment,
+      "cbhChemFlowFile": cbhChemFlowFile,
 
 
     }
