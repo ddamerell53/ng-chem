@@ -41,7 +41,7 @@
     "chemdoodle-angular": "https://github.com/strets123/chemdoodle-angular.git#0.2.0",
     "gifffer": "*",
     "angular-schema-form-ckeditor": "https://github.com/PaulBarrett79/angular-schema-form-ckeditor.git#0.0.4",
-    "schema-form-file-upload":"https://github.com/PaulBarrett79/schema-form-file-upload.git#v0.0.11",
+    "schema-form-file-upload":"https://github.com/PaulBarrett79/schema-form-file-upload.git#0.0.12",
     "angular-xeditable": "*"
   },
   "devDependencies": {
