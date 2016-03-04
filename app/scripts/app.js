@@ -89,9 +89,8 @@ $urlRouterProvider.when('', '/projects/list');
     })
 
     .state('cbh.searchv2', {
-      url: '/searchv2?creator_uri=textsearch=created_by=editMode=&archived=&scroll=&scrollTop=&sorts=&page=&compoundBatchesPerPage=&project__project_key__in&functional_group&flexmatch&related_molregno__chembl__chembl_id__in&with_substructure&similar_to&fpValue&created__gte&created__lte&molfile&smiles&search_custom_fields__kv_any&multiple_batch_id=&viewType=&doScroll=&showBlanks=&showNonBlanks=&limit&offset&justAdded=',
-      //url: '/search',
-      //params: ['project__project_key', 'flexmatch', 'with_substructure', 'similar_to', 'fpValue', 'created__gte', 'created__lte', 'molfile', 'smiles', 'limit', 'offset', 'random'],
+      url: '/searchv2?editMode=&page=&compoundBatchesPerPage=&viewType=&limit&offset&justAdded=&encoded_query=',
+
       resolve: {
         gridconfig: ['CompoundListSetup', function(CompoundListSetup) {
           return CompoundListSetup;

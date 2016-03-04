@@ -107,7 +107,7 @@ angular.module('chembiohubAssayApp')
                         inactiveStr = " lightgrey"
                     }
                     button.innerHTML = '<span class="glyphicon glyphicon-sort' + inactiveStr + '"></span>';
-                    button.className = 'tableFilter';
+                    button.className = 'tableFilter btn btn-default btn-sm';
 
                     return button;
                 }
@@ -132,47 +132,7 @@ angular.module('chembiohubAssayApp')
                     return mappingOptions;
                 }
 
-                function addButtonMenuEvent(button, col) {
-                    Handsontable.Dom.addEvent(button, 'click', function(event) {
 
-                        event.preventDefault();
-                        event.stopImmediatePropagation();
-
-                        //need to pass in the column here to get data out
-                        //trigger call to cbh object to build modal window
-                        //should take care ove everything from there.
-                        //cbh scope can't see the correct variables to trigger filtering so need to try it here
-
-                        scope.col = angular.copy(col);
-                        scope.modalInstance = $modal.open({
-                            templateUrl: 'views/templates/compound-table-filter.html',
-                            size: 'md',
-                            resolve: {
-                                col: function() {
-                                    return scope.col;
-                                },
-                                cbh: function() {
-                                    return scope.cbh;
-                                }
-
-                            },
-                            controller: function($scope, $modalInstance, col, cbh, $timeout) {
-                                $scope.col = col;
-
-                                $scope.modalInstance = $modalInstance;
-
-                                //need to resolve the cbh object so that the filter selection triggers a reload
-                                $scope.cbh = cbh;
-
-                                $scope.cancel = function() {
-                                    $modalInstance.dismiss('cancel');
-                                };
-
-                            }
-                        });
-
-                    });
-                }
 
 
                 redraw = function() {
@@ -478,7 +438,6 @@ angular.module('chembiohubAssayApp')
                                 button = buildButton(allCols[col]),
                                 infospans = buildInfoSpans(allCols[col]);
 
-                            addButtonMenuEvent(button, allCols[col]);
                             while (TH.firstChild.lastChild != TH.firstChild.firstChild) {
                                     TH.firstChild.removeChild(TH.firstChild.lastChild);
 

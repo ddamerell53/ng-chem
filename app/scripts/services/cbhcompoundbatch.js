@@ -67,7 +67,7 @@ angular.module('chembiohubAssayApp')
 
 
 
-    CBHCompoundBatch.getSearchResults = function(mb_id, limit, offset, filter, sorts){
+    CBHCompoundBatch.getAddCompoundsResults = function(mb_id, limit, offset, filter, sorts){
             var params = {
                                     "limit" : limit,
                                     "offset" : offset,
@@ -186,6 +186,22 @@ angular.module('chembiohubAssayApp')
          var promise = $http( 
             {
                 url: urlConfig.cbh_compound_batches.list_endpoint + "/get_list_elasticsearch/",
+                method: 'GET',
+                params: filters
+            }
+            ).then(
+            function(data){
+                return data.data;
+            }
+        );
+        return promise;
+    };
+
+    CBHCompoundBatch.queryv2 = function(filters) {
+      
+         var promise = $http( 
+            {
+                url: urlConfig.cbh_compound_batches_search.list_endpoint ,
                 method: 'GET',
                 params: filters
             }

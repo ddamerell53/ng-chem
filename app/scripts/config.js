@@ -39,10 +39,10 @@ var configuration = {
     "cbh_multiple_batches": {"list_endpoint": path + "cbh_multiple_batches", "schema": path + "cbh_multiple_batches/schema"},
 	"instance_path" : {"url_frag": path, "base" : base, "bit": bit} ,
 
-  "cbh_custom_field_configs": {"list_endpoint":path + "cbh_custom_field_configs", "schema": path + "cbh_custom_field_configs/schema",
+  "cbh_custom_field_configs": {"list_endpoint":path + "cbh_custom_field_configs", "schema": path + "cbh_custom_field_configs/schema"},
   "cbh_queries": {"list_endpoint":path + "cbh_queries", "schema": path + "cbh_queries/schema"},
+  "cbh_compound_batches_search" : {"list_endpoint": path + "cbh_compound_batches_search" , "schema": path + "cbh_queries/schema"},
 
-},
 "admin": {"list_endpoint": admin_url}
 
 };

@@ -39,6 +39,8 @@ angular.module('chembiohubAssayApp')
   .controller('CbhCtrl', function($scope, $rootScope, $state, $location, $modal, urlConfig, loggedInUser, projectList, prefix, $compile, MessageFactory, skinConfig, InvitationFactory) {
 
           var cbh = this;
+          
+
           cbh.isIE = detectIE();
           cbh.appName = "Platform"
           cbh.logged_in_user = loggedInUser;

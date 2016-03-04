@@ -988,8 +988,10 @@ li.breadcrumb button {
     margin-left: 5px;
 }
 div#breadcrums {
-    padding: 5px;
-    border: 2px dashed #ddd;
+/*    padding: 5px;
+*/    border: 2px dashed #ddd;
+    margin-top:-2px;
+    z-index:-1;
     -webkit-transition: max-height 0.3s ease-in-out, opacity 0.2s 0.1s ease-in-out;
     transition: max-height 0.3s ease-in-out, opacity 0.2s 0.1s ease-in-out;
 }

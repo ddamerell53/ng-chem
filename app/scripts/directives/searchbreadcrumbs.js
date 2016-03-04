@@ -34,10 +34,7 @@ angular.module('chembiohubAssayApp')
 
       	/* Close action for a breadcrumb. Remove from list */
       	$scope.closeBreadcrumb = function(bcid){
-      		//remove item from bradcrumbList via filter on name
-      		/*var toRemove = $filter('filter')($scope.breadcrumbList, {
-                name: bcid
-            }, true);*/
+      	
   			//use underscore.js differnce method to remove item from array
   			$scope.breadcrumbList = _.reject( $scope.breadcrumbList, function(item){ return item.name == bcid; })
 

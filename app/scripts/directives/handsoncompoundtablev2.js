@@ -24,88 +24,7 @@ angular.module('chembiohubAssayApp')
                 var redraw;
                 var jsonSchemaColDefs;
                 //console.log(scope.searchformSchema);
-                function labelifyCustomField(field) {
-                    //for the column uiselect filters, we don't need the column name
-                    var parts = field.split("|");
-                    return parts[1];
-                }
-
-                function checkCustomField(startsWith, fieldToCheck) {
-                    var fieldSplit = fieldToCheck.split("|");
-                    return startsWith == fieldSplit[0];
-                }
-                scope.cbh.toggleMappedFieldInDirective = function(newFieldId, unCuratedFieldName) {
-                        //console.log(newFieldId);
-                        if (newFieldId === "") {
-                            angular.forEach(scope.uncuratedHeaders,
-                                function(hdr) {
-                                    if (hdr.name == unCuratedFieldName) {
-                                        delete hdr.operations;
-                                        hdr.copyto = "";
-                                        hdr.automapped = false;
-                                    }
-                                });
-                        } else {
-                            var newField = jsonSchemaColDefs[newFieldId];
-                            var newFieldName = newField.title;
-                            angular.forEach(scope.uncuratedHeaders,
-                                function(hdr) {
-                                    if (hdr.name == unCuratedFieldName) {
-                                        if (hdr.copyto == newFieldName) {
-                                            //Already set therefore reset
-                                            hdr.copyto = "";
-                                            delete hdr.operations;
-                                            hdr.automapped = false;
-
-                                        } else {
-                                            hdr.copyto = newFieldName;
-                                            hdr.automapped = false;
-                                            var fieldJsonPatchOperations = [];
-
-                                            if (newField.type == "array") {
-                                                fieldJsonPatchOperations.push({
-                                                    "op": "split",
-                                                    "path": "/uncurated_fields/" + unCuratedFieldName
-                                                });
-                                                fieldJsonPatchOperations.push({
-                                                    "op": "move",
-                                                    "path": "/custom_fields/" + newFieldName,
-                                                    "from": "/uncurated_fields/" + unCuratedFieldName
-                                                });
-                                            } else {
-                                                var operation = {
-                                                    "op": "move",
-                                                    "path": "/custom_fields/" + newFieldName,
-                                                    "from": "/uncurated_fields/" + unCuratedFieldName
-                                                };
-                                                fieldJsonPatchOperations.push(operation);
-                                                if (newField.format == "date") {
-                                                    fieldJsonPatchOperations.push({
-                                                        "op": "convertdate",
-                                                        "path": "/custom_fields/" + newFieldName
-                                                    });
-                                                }
-                                            }
-                                            hdr.operations = fieldJsonPatchOperations;
-
-                                        }
-                                    }
-                                });
-
-
-                        }
-                        redraw();
-
-                        scope.cbh.setMappedFieldInController(newFieldName, unCuratedFieldName);
-
-                    } //setMappedFieldInDirective
-                scope.refreshSingleCustField = function(col, searchTerm, knownBy) {
-                    var url = col.searchformSchema.cf_form[0].options.async.url;
-                    $http.get(url + "?custom__field__startswith=" + searchTerm + "&custom_field=" + col.knownBy).then(function(response) {
-                        col.typeahead = response.data;
-                    });
-                }
-
+               
 
                 function buildButton(col) {
                     var button = document.createElement('BUTTON');
@@ -146,48 +65,8 @@ angular.module('chembiohubAssayApp')
                         event.preventDefault();
                         event.stopImmediatePropagation();
 
-                        //need to pass in the column here to get data out
-                        //trigger call to cbh object to build modal window
-                        //should take care ove everything from there.
-                        //cbh scope can't see the correct variables to trigger filtering so need to try it here
-
-                        //scope.column = angular.copy(col);
-                        console.log("col inside directive", col)
-                        //scope.filterFunction("arbitrary string");
-                        //scope.filterFunction(scope.column);
                         scope.sendToSearch(col)
-                        //instead of a modal here, we need to broadcast to the form section of the page
-                        //within this broadcast we need to include the form template to use and the data (col)
-                        //we may have to resolve cbh but maybe not.
-                        //might not have to clone col? In fact probably better we don't 
-
-
-                        /*scope.modalInstance = $modal.open({
-                            templateUrl: 'views/templates/compound-table-filter.html',
-                            size: 'md',
-                            resolve: {
-                                col: function() {
-                                    return scope.col;
-                                },
-                                cbh: function() {
-                                    return scope.cbh;
-                                }
-
-                            },
-                            controller: function($scope, $modalInstance, col, cbh, $timeout) {
-                                $scope.col = col;
-
-                                $scope.modalInstance = $modalInstance;
-
-                                //need to resolve the cbh object so that the filter selection triggers a reload
-                                $scope.cbh = cbh;
-
-                                $scope.cancel = function() {
-                                    $modalInstance.dismiss('cancel');
-                                };
-
-                            }
-                        });*/
+                      
 
                     });
                 }
@@ -253,226 +132,13 @@ angular.module('chembiohubAssayApp')
                     });
 
 
-                    var allCols = [];
+                    var allCols = customCols;
 
-                    if (isNewCompoundsInterface) {
-                        var uncuratedColumns = scope.uncuratedHeaders.map(function(un, index, array) {
-                            var disableSel = "";
-                            var copyto = un.copyto;
-                            var optList = angular.copy(jsonSchemaColDefs).map(function(cName, cNameIndex) {
-                                var selectedModel = "";
-                                var errorName = cName.type;
-                                if (cName.format == "date") {
-                                    errorName = "stringdate";
-
-                                }
-                                var disabledOrSelected = "";
-                                if (un.fieldErrors[errorName] === true) {
-                                    cName.disabled = true;
-                                    cName.fieldError = true;
-                                    cName.uiClass = "";
-                                    disabledOrSelected = cName;
-                                    //"<option  disabled >" +  cName.title + " (Invalid data for " + cName.friendly_field_type + ")</option>";
-                                }
-                                if (!disabledOrSelected) {
-                                    var weird = array.map(function(uncur) {
-                                        //Check for other items that have been selected in the other dropdowns
-                                        if (uncur.name != un.name) {
-                                            if (cName.title.toLowerCase() == uncur.copyto.toLowerCase()) {
-                                                cName.disabled = true;
-                                                cName.alreadyMapped = uncur.name;
-                                                cName.uiClass = "";
-                                                disabledOrSelected = cName;
-                                            }
-                                        } else {
-
-                                            if (cName.title.toLowerCase() == uncur.copyto.toLowerCase()) {
-                                                cName.uiClass = "glyphicon-check";
-                                                disabledOrSelected = cName;
-                                                copyto = cName.title;
-                                            }
-                                        }
-                                    });
-                                }
-
-                                if (disabledOrSelected) {
-                                    return disabledOrSelected;
-                                } else {
-                                    cName.uiClass = "glyphicon-unchecked";
-                                    return cName;
-                                }
-
-                            });
-                            return {
-                                sortOrder: "none",
-                                copyto: copyto,
-                                mappingOptions: optList,
-                                knownBy: un.name,
-                                data: "uncuratedFields." + un.name,
-                                readOnly: true,
-                                className: "htCenter htMiddle ",
-                                renderer: "linkRenderer",
-                                automapped: un.automapped
-                            }
-                        });
-
-                        if (showCompounds) {
-
-                            allCols = [{
-                                noSort: true,
-                                knownBy: "Structure",
-                                data: "image",
-                                renderer: "coverRenderer",
-                                readOnly: true,
-                                className: "htCenter htMiddle "
-                            }, {
-                                sortOrder: "none",
-                                knownBy: "Row",
-                                data: "id",
-                                readOnly: true,
-                                className: "htCenter htMiddle "
-                            }, {
-                                noSort: true,
-                                readOnly: true,
-                                knownBy: "Info",
-                                data: "originalSmiles",
-                                renderer: "infoRenderer"
-                            }, {
-                                sortOrder: "none",
-                                knownBy: "Action",
-                                data: "properties.action",
-                                type: "dropdown",
-                                source: ["New Batch", "Ignore"],
-                                className: "htCenter htMiddle "
-                            }, {
-                                sortOrder: "none",
-                                knownBy: "Inchi Key",
-                                data: "standardInchiKey",
-                                readonly: true,
-                                renderer: "linkRenderer"
-                            }].concat(uncuratedColumns);
-                        } else {
-                            allCols = [{
-                                sortOrder: "none",
-                                knownBy: "Row",
-                                data: "id",
-                                readOnly: true,
-                                className: "htCenter htMiddle "
-                            }, {
-                                sortOrder: "none",
-                                knownBy: "Action",
-                                data: "properties.action",
-                                type: "dropdown",
-                                source: ["New Batch", "Ignore"],
-                                className: "htCenter htMiddle "
-                            }, ].concat(uncuratedColumns);
-                        }
-                    } else {
-
-                        if (scope.cbh.editMode) {
-                            allCols = [{
-                                noSort: true,
-                                knownBy: "Archive/Restore",
-                                data: "properties.archived",
-                                renderer: "archivedRenderer",
-                                readOnly: true,
-                                className: "htCenter htMiddle "
-                            },
-                            {
-                                noSort: true,
-                                knownBy: "Clone/Add Structure",
-                                data: "",
-                                renderer: "cloneRenderer",
-                                readOnly: true,
-                                className: "htCenter htMiddle "
-                            }
-
-                            ];
-                        }
-                        if (showCompounds) {
-                            allCols = allCols.concat([{
-                                    noSort: true,
-                                    knownBy: "Structure",
-                                    data: "image",
-                                    renderer: "coverRenderer",
-                                    readOnly: true,
-                                    className: "htCenter htMiddle "
-                                },
-
-                            ]);
-                        }
-                        allCols = allCols.concat([{
-                                noSort: true,
-                                knownBy: "UOx ID",
-                                data: "chemblId",
-                                renderer: "modalLinkRenderer",
-                                readOnly: true,
-                                className: " htCenter htMiddle "
-                            }, {
-                                knownBy: "Project",
-                                data: "project",
-                                readOnly: true,
-                                className: "htCenter htMiddle ",
-                                renderer: "projectRenderer"
-                            }
-
-                        ]);
-                        allCols = allCols.concat(customCols);
-
-                        if (!scope.cbh.editMode) {
-                            allCols = allCols.concat([{
-                                noSort: true,
-                                knownBy: "Added By",
-                                data: "createdBy",
-                                readOnly: true,
-                                className: "htCenter htMiddle "
-                            }, {
-                                noSort: true,
-                                knownBy: "Date",
-                                data: "timestamp",
-                                readOnly: true,
-                                className: "htCenter htMiddle "
-                            }, {
-                                knownBy: "Batch ID",
-                                data: "id",
-                                readOnly: true,
-                                className: "htCenter htMiddle "
-                            }, {
-                                noSort: true,
-                                knownBy: "Upload ID",
-                                data: "multipleBatchId",
-                                readOnly: true,
-                                className: "htCenter htMiddle "
-                            }]);
-                        }
-                        if (showCompounds) {
-                            allCols = allCols.concat([
-                                //{knownBy: "Mol Weight",data: "molecularWeight", readOnly: true, className: "htCenter htMiddle ", renderer: "centeredNumericRenderer"},
-
-                            ]);
-                        }
-
-                        //allCols = allCols.concat(scope.plugins.map(function(plugin){return plugin.handsontable_column}));
+                   
 
 
 
-                    }
-                    if (angular.isDefined(scope.excluded)) {
-                        var theCols = [];
-                        angular.forEach(allCols, function(c) {
-                            var keep = true;
-                            angular.forEach(scope.excluded, function(ex) {
 
-                                if (ex == c.data) {
-                                    keep = false;
-                                }
-                            });
-                            if (keep) {
-                                theCols.push(c);
-                            }
-                        });
-                        allCols = theCols;
-                    }
 
                     var columnHeaders = allCols.map(function(c) {
                         return renderers.getColumnLabel(c, scope);
@@ -582,12 +248,7 @@ angular.module('chembiohubAssayApp')
                     }
 
                     var rend = renderers.getRenderers(scope, isNewCompoundsInterface);
-                    if (angular.isDefined(scope.elem)) {
-                        //if there has already been a scroll on the compound table then we fix it in place
-                        var scroll = scope.elem.scrollLeft();
-                        var scrollTop = $(window).scrollTop();
-
-                    }
+                    
                     angular.forEach(hotObj.columns, function(c) {
                         if (angular.isDefined(c.renderer)) {
 
@@ -625,73 +286,6 @@ angular.module('chembiohubAssayApp')
                     elem.wrap("<div id='myid' ></div>");
 
 
-                    $timeout(function() {
-
-
-
-                        scope.width = 0;
-
-                        angular.forEach(hotObj.columns, function(c, index) {
-                            c.myColWidth = hot1.getColWidth(index);
-                            scope.width += c.myColWidth;
-                            if (!c.noSort) {
-                                c.sortOrder = "none";
-                            }
-
-
-                            angular.forEach(scope.sorts, function(item) {
-                                if (angular.isDefined(item[c.data])) {
-                                    //If an item is in the sorted columns list
-                                    c.sortOrder = item[c.data].order;
-
-                                };
-
-                            });
-                            //set these to be a conditional of whether excludeBlanks and esxcludeFields are empty in the url
-
-                            c.showBlank = false;
-                            c.showNonBlank = false;
-                            //initialise from search parameters
-                            if (scope.showNonBlanks) {
-                                angular.forEach(scope.showNonBlanks, function(nonblank) {
-                                    //is this column a match with c.data?
-                                    if (nonblank == c.data) {
-                                        c.showNonBlank = true;
-                                    }
-                                })
-                            }
-                            if (scope.showBlanks) {
-                                angular.forEach(scope.showBlanks, function(blank) {
-                                    //is this column a match with c.data?
-                                    if (blank == c.data) {
-                                        c.showBlank = true;
-                                    }
-                                })
-                            }
-                            c.typeahead = [];
-
-                            c.searchForm = angular.copy(scope.searchForm);
-                            c.searchformSchema = angular.copy(scope.searchformSchema);
-                            if (angular.isDefined(c.searchformSchema)) {
-                                c.searchformSchema.cf_form[0].options['custom_field'] = c.knownBy;
-                                if (c.searchForm.search_custom_fields__kv_any) {
-                                    //loop through the items and only use those for this column
-                                    angular.forEach(c.searchForm.search_custom_fields__kv_any, function(field, index) {
-                                        c.searchForm.search_custom_fields__kv_any = $filter('filter')(c.searchForm.search_custom_fields__kv_any, function(value, index) {
-                                            return value.split("|")[0] == c.knownBy
-                                        })
-                                        c.searchformSchema.schema.properties.search_custom_fields__kv_any.items = c.searchForm.search_custom_fields__kv_any.map(function(i) {
-                                            return {
-                                                value: i,
-                                                label: labelifyCustomField(i)
-                                            }
-                                        });
-                                    });
-
-                                }
-                            }
-
-                        });
 
                         scope.columns = hotObj.columns;
 
@@ -703,7 +297,7 @@ angular.module('chembiohubAssayApp')
 
 
 
-                    });
+                 
 
                     scope.hot1 = hot1;
                     console.log("switch off overlay")
