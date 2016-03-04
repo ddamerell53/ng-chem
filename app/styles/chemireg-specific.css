@@ -505,6 +505,7 @@ div.reg-nav ul.nav li h2 {
 }
 strong.nexa, p.nexa strong {
   font-family:NexaBold;
+  font-weight:normal;
 }
 .col-centered{
     float: none;
