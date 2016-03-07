@@ -8,42 +8,32 @@
  * Controller of the chembiohubAssayApp
  */
 angular.module('chembiohubAssayApp')
-    .controller('Compoundbatchv2Ctrl', ['$scope', '$rootScope', '$state', '$stateParams', '$timeout', 'CBHCompoundBatch', 'urlConfig', '$window', '$location', '$anchorScroll', '$filter', 'searchUrlParams',
-        function($scope, $rootScope, $state, $stateParams, $timeout, CBHCompoundBatch, urlConfig, $window, $location, $anchorScroll, $filter, searchUrlParams) {
-            $scope.compoundBatches = {
-                data: [],
-                redraw: 0,
-                sorts: []
-            };
+    .controller('Compoundbatchv2Ctrl', ['$scope', '$rootScope', '$state', '$stateParams', '$timeout', 'CBHCompoundBatch', 'urlConfig', '$window', '$location', '$anchorScroll', '$filter', 'SearchUrlParamsV2',
+        function($scope, $rootScope, $state, $stateParams, $timeout, CBHCompoundBatch, urlConfig, $window, $location, $anchorScroll, $filter, SearchUrlParamsV2) {
+
+            $scope.resetCompoundList = function(){
+                $scope.compoundBatches = {
+                    data: [],
+                    redraw: 0,
+                    sorts: []
+                };
+            }
+            
 
             $scope.urlConfig = urlConfig;
             $scope.totalCompoundBatches = 0;
             //$scope.stateProjectKey = $stateParams.projectKey;
             $scope.projects = $scope.cbh.projects.objects;
             $scope.cbh.column = {}
-            $scope.$watch(function($scope) {
-                //anchor scroll to top when the search form is hidden or shown
-                return $scope.cbh.hideSearchForm;
-            }, function() {
-                $anchorScroll();
-            });
 
+           
 
-            var pf = searchUrlParams.setup($stateParams, {
-                molecule: {}
-            });
-            $scope.cbh.searchForm = angular.copy(pf.searchForm);
+            
 
-            $scope.cbh.setupParams = function(paramsAndForm){
-                
-                $scope.cbh.baseDownloadUrl = paramsAndForm.paramsUrl;
-                $scope.cbh.withoutCustomFieldsUrl = paramsAndForm.paramsUrlWithoutCF;
-            }
-            $scope.cbh.setupParams(pf);
             
             $scope.cbh.changeSearchParams = function(newParams, notify) {
                 //General function to search and move to a new URL
-                var pf = searchUrlParams.fromForm($scope.cbh.searchForm, $scope.cbh.textsearch);
+                var pf = searchUrlParams.fromForm($scope.cbh.searchForm);
                 $scope.cbh.setupParams(pf);
                 
                 if (notify) {
@@ -300,17 +290,7 @@ angular.module('chembiohubAssayApp')
                 $scope.compoundBatches.redraw++;
             }
 
-            function getAllUncuratedHeaders(data) {
-                //pull out and merge and uniquify all the uncurated fields
-                var uncurated_headers = []
-                angular.forEach(data, function(obj) {
-                    //get this object's uncurated fields
-                    angular.forEach(obj.uncurated_fields, function(field) {
-                        uncurated_fields.push(field);
-                    });
-                });
-                return uncurated_headers;
-            }
+
 
 
             $scope.cbh.blanksFilter = function(sortColumn, showType) {
@@ -362,45 +342,34 @@ angular.module('chembiohubAssayApp')
                 newParams.showNonBlanks = JSON.stringify(newParams.showNonBlanks);
                 $scope.cbh.changeSearchParams(newParams);
 
-                // $state.go($state.current.name, newParams, {reload:true, inherit:false});
-                //getResultsPage(newParams.page);
             };
 
 
             var timeSearched;
 
             function getResultsPage(pageNumber, filters) {
-                 angular.forEach($rootScope.projects, function(myproj, index) {
-                        if (myproj.project_key == $stateParams.project__project_key__in) {
-                            if (myproj.editor) {
-                                 $scope.cbh.projAddingTo = $scope.cbh.projects.objects[index];
-                                 $scope.cbh.projAddingTo.updateCustomFields();
-                            }
-                        }
-                    });
-                $scope.cbh.includedProjectKeys = ($scope.cbh.searchForm.project__project_key__in.length > 0) ? $scope.cbh.searchForm.project__project_key__in : $scope.cbh.projects.objects.map(function(p) {
-                    return p.project_key
-                });
+                 // angular.forEach($rootScope.projects, function(myproj, index) {
+                 //        if (myproj.project_key == $stateParams.project__project_key__in) {
+                 //            if (myproj.editor) {
+                 //                 $scope.cbh.projAddingTo = $scope.cbh.projects.objects[index];
+                 //                 $scope.cbh.projAddingTo.updateCustomFields();
+                 //            }
+                 //        }
+                 //    });
+                // $scope.cbh.includedProjectKeys = ($scope.cbh.searchForm.project__project_key__in.length > 0) ? $scope.cbh.searchForm.project__project_key__in : $scope.cbh.projects.objects.map(function(p) {
+                //     return p.project_key
+                // });
 
                 timeSearched = String(Date.now());
                 var localTimeSearched = String(timeSearched);
                 filters.limit = $scope.pagination.compoundBatchesPerPage.value;
                 filters.offset = (pageNumber - 1) * parseInt($scope.pagination.compoundBatchesPerPage.value);
                 filters.sorts = $stateParams.sorts;
-                filters.archived = $stateParams.archived;
-                filters.showBlanks = $stateParams.showBlanks;
-                filters.textsearch = $stateParams.textsearch;
-                if (filters.showBlanks) {
-                    filters.showBlanks = filters.showBlanks.replace("customFields", "custom_fields")
-                }
-                filters.showNonBlanks = $stateParams.showNonBlanks;
-                if (filters.showNonBlanks) {
-                    filters.showNonBlanks = filters.showNonBlanks.replace("customFields", "custom_fields")
-                }
+                
+                $scope.noData = "";
 
 
-
-                CBHCompoundBatch.query(filters).then(function(result) {
+                CBHCompoundBatch.queryv2(filters).then(function(result) {
                     if (timeSearched == localTimeSearched) {
                         $scope.totalCompoundBatches = result.meta.totalCount;
                         $scope.compoundBatches.data = result.objects;
@@ -408,7 +377,6 @@ angular.module('chembiohubAssayApp')
 
 
 
-                        //$scope.compoundBatches.uncuratedHeaders = getAllUncuratedHeaders(result.objects);
 
                         if (result.objects.length > 0) {
                             $scope.imageCallback();
@@ -434,7 +402,13 @@ angular.module('chembiohubAssayApp')
                     }
 
 
-                });
+                }, function(error){
+                    $scope.resetCompoundList();
+                    $scope.noData = "Sorry, there was an error with that query. No data found.";
+                                        $scope.imageCallback();
+
+                }
+                );
                 if( $scope.cbh.showSingle){
                     //turn oon the add inventory items
                     $scope.toggleAddData();
@@ -571,7 +545,7 @@ angular.module('chembiohubAssayApp')
 
             }
 
-            getResultsPage($scope.pagination.current, $scope.cbh.pf.params);
+            getResultsPage($scope.pagination.current, $scope.cbh.allSearchParams.params);
             
             $scope.differentFunction = function() {
             	console.log("filter button has been pressed!", $scope.cbh.column)

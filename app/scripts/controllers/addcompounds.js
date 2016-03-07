@@ -542,7 +542,7 @@ $scope.changeView = function(){
 
         $scope.compoundBatches.data = [];
         
-        CBHCompoundBatch.getSearchResults($stateParams.mb_id, 
+        CBHCompoundBatch.getAddCompoundsResults($stateParams.mb_id, 
             limit, 
             offset, 
             filter, 
