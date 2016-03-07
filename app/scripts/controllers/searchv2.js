@@ -49,57 +49,57 @@ angular.module('chembiohubAssayApp')
 
 
 
-            $scope.$on("sf-render-finished", function() {
-                //$rootScope.$broadcast('schemaFormRedraw');
-                $timeout(function() {
-                    // $rootScope.$broadcast("schemaFormValidate");
+            // $scope.$on("sf-render-finished", function() {
+            //     //$rootScope.$broadcast('schemaFormRedraw');
+            //     $timeout(function() {
+            //         // $rootScope.$broadcast("schemaFormValidate");
 
-                    //
-                    $scope.cbh.watcher = $scope.$watch(
-                        function($scope) {
-                            return $scope.cbh.textsearch;
-                        },
-                        function(newValue, oldvalue) {
+            //         //
+            //         $scope.cbh.watcher = $scope.$watch(
+            //             function($scope) {
+            //                 return $scope.cbh.textsearch;
+            //             },
+            //             function(newValue, oldvalue) {
 
-                            if (newValue != oldvalue) {
+            //                 if (newValue != oldvalue) {
 
-                                $scope.cbh.runSearch();
-                            }
+            //                     $scope.cbh.runSearch();
+            //                 }
 
-                        },
-                        true
-                    );
-
-
-                    $scope.cbh.watcher2 = $scope.$watch(
-                        function($scope) {
-                            var newObj = {};
-                            var array = Object.keys($scope.cbh.searchForm).map(function(value, index) {
-                                if (value != "molecule") {
-                                    newObj[value] = $scope.cbh.searchForm[value];
-                                }
-
-                            });
-                            return newObj;
-                        },
-                        function(newValue, oldvalue) {
-
-                            if (JSON.stringify(newValue) != JSON.stringify(oldvalue)) {
-                                if ((newValue.project__project_key__in.length != 1) && $scope.cbh.editMode) {
-                                    $scope.cbh.toggleEditMode();
-                                }
-                                $scope.cbh.runSearch();
-                            }
-
-                        },
-                        true
-                    );
-
-                });
+            //             },
+            //             true
+            //         );
 
 
+            //         $scope.cbh.watcher2 = $scope.$watch(
+            //             function($scope) {
+            //                 var newObj = {};
+            //                 var array = Object.keys($scope.cbh.searchForm).map(function(value, index) {
+            //                     if (value != "molecule") {
+            //                         newObj[value] = $scope.cbh.searchForm[value];
+            //                     }
 
-            })
+            //                 });
+            //                 return newObj;
+            //             },
+            //             function(newValue, oldvalue) {
+
+            //                 if (JSON.stringify(newValue) != JSON.stringify(oldvalue)) {
+            //                     if ((newValue.project__project_key__in.length != 1) && $scope.cbh.editMode) {
+            //                         $scope.cbh.toggleEditMode();
+            //                     }
+            //                     $scope.cbh.runSearch();
+            //                 }
+
+            //             },
+            //             true
+            //         );
+
+            //     });
+
+
+
+            // })
 
 
 

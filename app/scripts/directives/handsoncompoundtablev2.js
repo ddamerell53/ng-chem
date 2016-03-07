@@ -34,7 +34,7 @@ angular.module('chembiohubAssayApp')
                         inactiveStr = " lightgrey"
                     }
                     button.innerHTML = '<span class="glyphicon glyphicon-sort' + inactiveStr + '"></span>';
-                    button.className = 'tableFilter';
+                    button.className = 'tableFilter btn btn-default btn-sm';
 
                     return button;
                 }
