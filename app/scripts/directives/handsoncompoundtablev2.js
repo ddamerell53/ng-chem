@@ -80,7 +80,7 @@ angular.module('chembiohubAssayApp')
                                 el.style["color"] = "";
                             })
                         });
-                        TH.style["background"] = "linear-gradient(lightcyan, rgb(255,255,255))";
+                        TH.style["background"] = "linear-gradient(lightcyan, #eee)";
                         TH.style["color"] = "#002147";
 
 
@@ -89,7 +89,7 @@ angular.module('chembiohubAssayApp')
 
                     });
                     if(col.showFilters){
-                        TH.style["background"] = "linear-gradient(lightcyan, rgb(255,255,255))";
+                        TH.style["background"] = "linear-gradient(lightcyan, #eee)";
                         TH.style["color"] = "#002147";
                     }
                 }
