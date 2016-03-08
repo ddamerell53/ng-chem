@@ -990,13 +990,22 @@ li.breadcrumb span.bcname {
 li.breadcrumb button {
     margin-left: 5px;
 }
-div#breadcrums {
-/*    padding: 5px;
-*/    border: 2px dashed #ddd;
+
+fieldset.breadcrumbs {
+  border: 2px dashed #ddd;
     margin-top:-2px;
     z-index:-1;
     -webkit-transition: max-height 0.3s ease-in-out, opacity 0.2s 0.1s ease-in-out;
     transition: max-height 0.3s ease-in-out, opacity 0.2s 0.1s ease-in-out;
+}
+fieldset.breadcrumbs legend {
+    border-bottom: none;
+    width: inherit;
+    padding: 0 10px;
+    font-size: large;
+    font-family: NexaBold;
+    color: #002147;
+    margin-bottom:5px;
 }
 li.breadcrumb.ng-enter, li.breadcrumb.ng-leave {
   -webkit-transition: opacity ease-in-out 0.3s;
