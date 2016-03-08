@@ -20,7 +20,7 @@
 							<!-- need this to be able to launch the filter window too. Just use broadcast? -->
 							<li class="breadcrumb" ng-repeat="bc in hide_objects" >
 								<span class="bcname" ng-click="filterClicked(bc.name)">{{bc.knownBy}}</span>
-
+								<span class="glyphicon glyphicon-eye-close" ></span>
 								<button type="button" class="close" aria-label="Close" ng-click="closeBreadcrumb(bc.name)"><span aria-hidden="true">&times;</span></button>
 							</li>
 
