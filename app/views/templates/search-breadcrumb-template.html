@@ -45,10 +45,19 @@
 							
 							<!-- need this to be able to launch the filter window too. Just use broadcast? -->
 							<li class="breadcrumb" ng-repeat="bc in filter_objects" >
-								<span class="bcname" ng-click="filterClicked(bc.name)">{{bc.knownBy}}</span>
+								<!-- <span class="bcname" ng-click="filterClicked(bc.name)">{{bc.knownBy}}</span>
 								<span class="bcname" ng-click="filterClicked(bc.name)">{{filterAsString(bc)}}</span>
 								<span class="glyphicon glyphicon-filter" ></span>
-								<button type="button" class="close" aria-label="Close" ng-click="closeBreadcrumb(bc.name)"><span aria-hidden="true">&times;</span></button>
+								<button type="button" class="close" aria-label="Close" ng-click="closeBreadcrumb(bc.name)"><span aria-hidden="true">&times;</span></button> -->
+								<p class="nexa">
+									<button type="button" class="close pull-right" aria-label="Close" ng-click="closeBreadcrumb(bc.name)"><span aria-hidden="true">&times;</span></button>
+									<span class="glyphicon glyphicon-filter pull-right" ></span>
+									<span class="bcname" ng-click="filterClicked(bc.name)">{{bc.knownBy}}</span><br>
+									<span class="bcname" ng-click="filterClicked(bc.name)" style="font-size:0.8em; color:#aaa;">{{filterAsString(bc)}}</span>
+
+									
+								</p>
+
 							</li>
 							<li ng-if="!filter_objects">
 								<small>No filters</small>
