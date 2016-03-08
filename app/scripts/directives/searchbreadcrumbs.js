@@ -21,16 +21,15 @@ angular.module('chembiohubAssayApp')
           $scope.queryAsfForm = angular.copy(skinConfig.objects[0].query_schemaform.default.form);
 
           angular.forEach($scope.filter_objects, function(obj){
+            $timeout(function(){
+              $scope.setfilterAsString(obj);
+            });
            
-
-           
-
+          });
           $scope.sort_objects = skinConfig.objects[0].sort_objects;
 
           $scope.hide_objects = skinConfig.objects[0].hide_objects;
 
-          });
-          
 
         })
       
@@ -44,24 +43,23 @@ angular.module('chembiohubAssayApp')
               return name;
             }
 
-            $scope.filterAsString = function(obj){
-              console.log(obj);
-              if(obj.filters.query_type.indexOf("blanks" > -1)){
-                console.log("here")
-                var name = $scope.filterTypeName(obj);
-                console.log(name);
-                return name;
+            $scope.setfilterAsString = function(obj){
+              
+              if(obj.filters.greater_than && obj.filters.less_than){
+                obj.display_filter = "> " +  obj.filters.greater_than  + " and < " +  obj.filters.less_than;
               }
-              if(obj.query_type.indexOf("less_than" > -1)){
-                return "< " +  obj.filters.less_than;
+              else if(obj.filters.less_than ){
+                obj.display_filter = "< " +  obj.filters.less_than;
               }
-              if(obj.query_type.indexOf("greater_than" > -1)){
-                return "> " +  obj.filters.greater_than;
+              else if(obj.filters.greater_than ){
+                obj.display_filter = "> " +  obj.filters.greater_than;
               }
-              if(obj.query_type.indexOf("between" > -1)){
-                return "> " +  obj.filters.greater_than  + " and < " +  obj.filters.less_than;
+              else{
+                obj.display_filter = $scope.filterTypeName(obj) + " " ;
+                if(obj.filters[obj.filters.query_type]){
+                  obj.display_filter += obj.filters[obj.filters.query_type];
+                }
               }
-              return $scope.filterTypeName(obj) + " " + obj.filters[query_type];
             }
 
       	/* Close action for a breadcrumb. Remove from list */
