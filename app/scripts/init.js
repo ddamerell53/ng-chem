@@ -38,5 +38,6 @@ var chembiohubAssayApp =  angular.module('chembiohubAssayApp', [
     'angular-info-box',
     'elasticui',
     'schemaForm-file-upload',
+    //'schemaForm-chemdoodle',
     'xeditable',
   ]);
