@@ -76,12 +76,12 @@ angular.module('chembiohubAssayApp')
                         // 
                         angular.forEach($(TH).siblings(), function(el){
                             $timeout(function(){
-                                el.style["background-color"] = "";
+                                el.style["background"] = "";
                                 el.style["color"] = "";
                             })
                         });
-                        TH.style["background-color"] = "#002147";
-                        TH.style["color"] = "white";
+                        TH.style["background"] = "linear-gradient(lightcyan, rgb(255,255,255))";
+                        TH.style["color"] = "#002147";
 
 
                         event.preventDefault();
@@ -89,8 +89,8 @@ angular.module('chembiohubAssayApp')
 
                     });
                     if(col.showFilters){
-                        TH.style["background-color"] = "#002147";
-                        TH.style["color"] = "white";
+                        TH.style["background"] = "linear-gradient(lightcyan, rgb(255,255,255))";
+                        TH.style["color"] = "#002147";
                     }
                 }
 
