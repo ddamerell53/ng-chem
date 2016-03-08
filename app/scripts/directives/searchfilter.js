@@ -51,14 +51,14 @@ angular.module('chembiohubAssayApp')
         $scope.queryTypeChanged = function(modelValue, form){
           //Check to see if anything is not equal to its default value
           var needsUpdating = false;
-
-          //Need to send a redraw to ensure ngmodel is up to date and the validation messages show up
           $scope.$broadcast("schemaFormRedraw");
-          angular.forEach($scope.asfForm, function(item){
+          //Need to send a redraw to ensure ngmodel is up to date and the validation messages show up
+          
+          angular.forEach($scope.queryAsfForm, function(item){
             if(item.onChange == "updated(modelValue,form)"){
               var model = $scope.col.filters[item.key];
-              var def = $scope.asfSchema.properties[item.key].default;
-              if(model != def){
+              var def = $scope.queryAsfSchema.properties[item.key].default;
+              if(model != def && model != undefined){
                 $scope.col.filters[item.key] = def;
                 needsUpdating = true;
               }
@@ -69,6 +69,7 @@ angular.module('chembiohubAssayApp')
           if(needsUpdating || blanks || $scope.blanksQuery){
               if($scope.blanksQuery){
                 $scope.blanksQuery = false;
+
               }
               if(blanks){
                   $scope.blanksQuery = blanks;
@@ -79,30 +80,28 @@ angular.module('chembiohubAssayApp')
               }
               
           }
+          $scope.$broadcast("schemaFormRedraw");
           
         };
 
         
         $scope.hideChanged = function(newHiddenValue, form){
-          if(newHiddenValue == $scope.asfSchema.properties[form.key]){
-            //Resetting to default means removing the filter
-            $rootScope.$broadcast("removeHide", $scope.col.data);
-          }else{
-            $rootScope.$broadcast("addHide", $scope.col.data);
-          }
+          
+            $rootScope.$broadcast("hideChanged", {field_path : $scope.col.data} );
+          
         };
 
         $scope.sortChanged = function(newSortValue, form){
-          if(newSortValue == $scope.asfSchema.properties[form.key]){
+          if(newSortValue == $scope.sortAsfSchema.properties[form.key].default){
             //Resetting to default means removing the filter
-            $rootScope.$broadcast("removeSort", $scope.col.data);
+            $rootScope.$broadcast("removeSort", {field_path : $scope.col.data });
           }else{
-            $rootScope.$broadcast("addSort", $scope.col.data, newSortValue);
+            $rootScope.$broadcast("addSort", {field_path : $scope.col.data, direction: newSortValue});
           }
         };
         
         $scope.sendFilterUpdate = function( addNew){
-            $rootScope.$broadcast("filtersUpdated", {"addNew" : addNew,  "columnPath" : $scope.col.data} ); 
+            $rootScope.$broadcast("filtersUpdated", {"addNew" : addNew,  "field_path" : $scope.col.data , "col" : $scope.col} ); 
         };
 
 

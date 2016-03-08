@@ -21,27 +21,52 @@ angular.module('chembiohubAssayApp')
             }
 
         $rootScope.$on("filtersUpdated",function( event, args){
-            var index = skinConfig.objects[0].filters_applied.indexOf(args.columnPath);
+            var index = skinConfig.objects[0].filters_applied.indexOf(args.field_path);
             var changed = false;
             if(index > -1){
               skinConfig.objects[0].filters_applied.splice(index, 1);
               changed = true;
             }
             if(args.addNew ){
-              skinConfig.objects[0].filters_applied.unshift(args.columnPath);
+              skinConfig.objects[0].filters_applied.push(args.field_path);
               changed = true;
-            }else{
-                if(changed == true){
-                    //Reset the filters on this column as the filter is just being removed
-                    args.col.filters = {filter_type : args.col.filters.filter_type};
-                }
             }
-            var params = SearchUrlParamsV2.generate_new_params();
+            var params = SearchUrlParamsV2.generate_filter_params();
+            $scope.cbh.changeSearchParams(params, true);
+        });
+
+         $rootScope.$on("hideChanged",function( event, args){
+            var index = skinConfig.objects[0].hides_applied.indexOf(args.field_path);
+            if(index > -1){
+              skinConfig.objects[0].hides_applied.splice(index, 1);
+            }else{
+                skinConfig.objects[0].hides_applied.push(args.field_path);
+            }
+            var params = SearchUrlParamsV2.generate_hide_params();
+            $scope.cbh.changeSearchParams(params, true);
+        });
+
+         $rootScope.$on("addSort",function( event, args){
+            var index = skinConfig.objects[0].sorts_applied.indexOf(args.field_path);
+            if(index > -1){
+              skinConfig.objects[0].sorts_applied.splice(index, 1);
+            }
+            skinConfig.objects[0].sorts_applied.push(args.field_path);
+            
+            var params = SearchUrlParamsV2.generate_sort_params();
             $scope.cbh.changeSearchParams(params, true);
         });
 
 
-
+         $rootScope.$on("removeSort",function( event, args){
+            var index = skinConfig.objects[0].sorts_applied.indexOf(args.field_path);
+            if(index > -1){
+              skinConfig.objects[0].sorts_applied.splice(index, 1);
+            }
+            
+            var params = SearchUrlParamsV2.generate_sort_params();
+            $scope.cbh.changeSearchParams(params, true);
+        });
             
             $scope.resetCompoundList();
             $scope.urlConfig = urlConfig;

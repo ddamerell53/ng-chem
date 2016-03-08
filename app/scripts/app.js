@@ -89,7 +89,7 @@ $urlRouterProvider.when('', '/projects/list');
     })
 
     .state('cbh.searchv2', {
-      url: '/searchv2?editMode=&page=&compoundBatchesPerPage=&viewType=&limit&offset&justAdded=&encoded_query=',
+      url: '/searchv2?editMode=&page=&compoundBatchesPerPage=&viewType=&limit&offset&justAdded=&encoded_query=&encoded_sorts=&encoded_hides=',
 
       resolve: {
         gridconfig: ['CompoundListSetup', function(CompoundListSetup) {
