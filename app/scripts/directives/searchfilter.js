@@ -52,7 +52,12 @@ angular.module('chembiohubAssayApp')
               });
         };
 
-        
+        $scope.clearFilters = function(){
+          $scope.col.filters["query_type"] = "phrase";
+          $scope.queryTypeChanged("phrase", {})
+          
+        }
+
         $scope.queryTypeChanged = function(modelValue, form){
           //Check to see if anything is not equal to its default value
           var needsUpdating = false;
