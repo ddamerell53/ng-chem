@@ -8,18 +8,42 @@
  * Controller of the chembiohubAssayApp
  */
 angular.module('chembiohubAssayApp')
-    .controller('Compoundbatchv2Ctrl', ['$scope', '$rootScope', '$state', '$stateParams', '$timeout', 'CBHCompoundBatch', 'urlConfig', '$window', '$location', '$anchorScroll', '$filter', 'SearchUrlParamsV2',
-        function($scope, $rootScope, $state, $stateParams, $timeout, CBHCompoundBatch, urlConfig, $window, $location, $anchorScroll, $filter, SearchUrlParamsV2) {
-
+    .controller('Compoundbatchv2Ctrl', ['$scope', '$rootScope', '$state', '$stateParams', '$timeout', 'CBHCompoundBatch', 'urlConfig', '$window', '$location', '$anchorScroll', '$filter', 'SearchUrlParamsV2','skinConfig',
+        function($scope, $rootScope, $state, $stateParams, $timeout, CBHCompoundBatch, urlConfig, $window, $location, $anchorScroll, $filter, SearchUrlParamsV2, skinConfig) {
+            
             $scope.resetCompoundList = function(){
                 $scope.compoundBatches = {
                     data: [],
                     redraw: 0,
-                    sorts: []
+                    sorts: [],
+                    tabular_data_schema : SearchUrlParamsV2.get_tabular_data_schema($stateParams)
                 };
             }
-            
 
+        $rootScope.$on("filtersUpdated",function( event, args){
+            var index = skinConfig.objects[0].filters_applied.indexOf(args.columnPath);
+            var changed = false;
+            if(index > -1){
+              skinConfig.objects[0].filters_applied.splice(index, 1);
+              changed = true;
+            }
+            if(args.addNew ){
+              skinConfig.objects[0].filters_applied.unshift(args.columnPath);
+              changed = true;
+            }else{
+                if(changed == true){
+                    //Reset the filters on this column as the filter is just being removed
+                    args.col.filters = {filter_type : args.col.filters.filter_type};
+                }
+            }
+            var params = SearchUrlParamsV2.generate_new_params();
+            $scope.cbh.changeSearchParams(params, true);
+        });
+
+
+
+            
+            $scope.resetCompoundList();
             $scope.urlConfig = urlConfig;
             $scope.totalCompoundBatches = 0;
             //$scope.stateProjectKey = $stateParams.projectKey;
@@ -33,8 +57,8 @@ angular.module('chembiohubAssayApp')
             
             $scope.cbh.changeSearchParams = function(newParams, notify) {
                 //General function to search and move to a new URL
-                var pf = searchUrlParams.fromForm($scope.cbh.searchForm);
-                $scope.cbh.setupParams(pf);
+                // var pf = SearchUrlParamsV2.fromForm($scope.cbh.searchForm);
+                // $scope.cbh.setupParams(pf);
                 
                 if (notify) {
                     $scope.pagination.current = 1;
@@ -42,7 +66,7 @@ angular.module('chembiohubAssayApp')
                 $state.params = newParams;
                 $stateParams = newParams;
                 // $location.search(newParams);
-                $state.go('cbh.search', newParams, {
+                $state.go('cbh.searchv2', newParams, {
                     // prevent the events onStart and onSuccess from firing
                     notify: false,
                     // prevent reload of the current state
@@ -545,12 +569,9 @@ angular.module('chembiohubAssayApp')
 
             }
 
-            getResultsPage($scope.pagination.current, $scope.cbh.allSearchParams.params);
+            getResultsPage($scope.pagination.current, {});
             
-            $scope.differentFunction = function() {
-            	console.log("filter button has been pressed!", $scope.cbh.column)
-            	$rootScope.$broadcast("columnSelection", $scope.cbh.column)
-            }
+          
 
 
         }

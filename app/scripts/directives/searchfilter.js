@@ -17,45 +17,115 @@ angular.module('chembiohubAssayApp')
       },
       controller: ["$scope", "$rootScope", "skinConfig", "$timeout", function($scope, $rootScope, skinConfig, $timeout){
       	
-      	$scope.showFilters = false;
       	//has the filter button been pressed in the handsontable?
       	$rootScope.$on("columnSelection", function(event, col){
+         
         	$scope.col = col;
+            $scope.col.showFilters = true;
+          
           if(!$scope.col.filters){
-            $scope.col.filters = {};
+            $scope.col.filters = {"field_path" : col.data };
+          }else{
+            $scope.col.filters.field_path = col.data;
           }
         	// $scope.cbh.column = col
-          $scope.asfForm = angular.copy(skinConfig.objects[0].query_form);
-          $scope.asfSchema = angular.copy(skinConfig.objects[0].query_schema);
-          
-        	$scope.showFilters = true;
-          
+          $scope.queryAsfForm = angular.copy(skinConfig.objects[0].query_schemaform.default.form);
+          $scope.queryAsfSchema = angular.copy(skinConfig.objects[0].query_schemaform.default.schema);
+          $scope.sortAsfForm = angular.copy(skinConfig.objects[0].sort_schemaform.default.form);
+          $scope.sortAsfSchema = angular.copy(skinConfig.objects[0].sort_schemaform.default.schema);
+          $scope.hideAsfForm = angular.copy(skinConfig.objects[0].hide_schemaform.default.form);
+          $scope.hideAsfSchema = angular.copy(skinConfig.objects[0].hide_schemaform.default.schema);
+          $scope.blanksQuery = false;
 
            
         });
         
         $scope.updated = function(foo, form){
             // document.getElementById('html5ValidationForm').submit();
-            if(form.key != "query_type"){
+              $timeout(function(){
+                document.getElementById('validatorId').click();
+              });
+        };
 
-            
-            $timeout(function(){
-              document.getElementById('validatorId').click();
-            });
+        
+        $scope.queryTypeChanged = function(modelValue, form){
+          //Check to see if anything is not equal to its default value
+          var needsUpdating = false;
+
+          //Need to send a redraw to ensure ngmodel is up to date and the validation messages show up
+          $scope.$broadcast("schemaFormRedraw");
+          angular.forEach($scope.asfForm, function(item){
+            if(item.onChange == "updated(modelValue,form)"){
+              var model = $scope.col.filters[item.key];
+              var def = $scope.asfSchema.properties[item.key].default;
+              if(model != def){
+                $scope.col.filters[item.key] = def;
+                needsUpdating = true;
+              }
             }
-            
-        }
-      
-        	
+          });
+          var blanks = (["blanks", "nonblanks"].indexOf(modelValue)> -1);
+
+          if(needsUpdating || blanks || $scope.blanksQuery){
+              if($scope.blanksQuery){
+                $scope.blanksQuery = false;
+              }
+              if(blanks){
+                  $scope.blanksQuery = blanks;
+                  $scope.sendFilterUpdate(true);
+              }else{
+                //Here we are just cancelling a previous blanks or non blanks query
+                $scope.sendFilterUpdate(false);
+              }
+              
+          }
+          
+        };
+
+        
+        $scope.hideChanged = function(newHiddenValue, form){
+          if(newHiddenValue == $scope.asfSchema.properties[form.key]){
+            //Resetting to default means removing the filter
+            $rootScope.$broadcast("removeHide", $scope.col.data);
+          }else{
+            $rootScope.$broadcast("addHide", $scope.col.data);
+          }
+        };
+
+        $scope.sortChanged = function(newSortValue, form){
+          if(newSortValue == $scope.asfSchema.properties[form.key]){
+            //Resetting to default means removing the filter
+            $rootScope.$broadcast("removeSort", $scope.col.data);
+          }else{
+            $rootScope.$broadcast("addSort", $scope.col.data, newSortValue);
+          }
+        };
+        
+        $scope.sendFilterUpdate = function( addNew){
+            $rootScope.$broadcast("filtersUpdated", {"addNew" : addNew,  "columnPath" : $scope.col.data} ); 
+        };
+
+
         $scope.submit = function(form){
           $scope.$broadcast("schemaFormValidate");
-          console.log("submit", form);
+          $timeout(function(){
+            if(form.$valid){
+              $scope.sendFilterUpdate(true);
+            }else{
+              
+              //If the form is invalid for this item we still need to update the table view
+              //if there was a previous filter applied to the dataset
+              $scope.sendFilterUpdate(false);
+            }
+          });
+          
+          
+          
           return false;
         }
 
         $scope.close = function(){
-          $scope.watcher();
-        	$scope.showFilters = false;
+        	$scope.col.showFilters = false;
         }
 
         //now we need a way of getting the correct form and schema for this field from the custom fields

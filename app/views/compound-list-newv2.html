@@ -11,9 +11,6 @@
             <span ng-if="warningsFilter"> (filtered)</span>
             <span ng-if="noData">&nbsp; &nbsp; - &nbsp; &nbsp;{{noData}}</span>
             <button class="btn btn-danger " ng-if="cbh.searchForm.archived=='true'" ng-click="cbh.searchForm.archived='false';">Exit Archive Mode</button>
-            <button ng-show="stateName != 'cbh.projects.project.addcompounds'" class="btn btn-sm btn-default pull-right " ng-if="!cbh.hideSearchForm" ng-click="cbh.hideSearchForm=true;">Hide Advanced and Structure Search</button>
-            <button ng-show="stateName != 'cbh.projects.project.addcompounds'"  class="btn btn-sm btn-default pull-right " ng-if="cbh.hideSearchForm" ng-click="cbh.hideSearchForm=false;">Show Advanced and Structure Search</button>
-
         </h2>
     </div>
 </div>
@@ -69,7 +66,7 @@
 					</div> -->
 					<img src="/images/ring.gif" style="margin-top:100px;">
             	</div>
-                <handsoncompoundtablev2  uncurated-headers="compoundBatches.uncuratedHeaders" sorts="compoundBatches.sorts"  cbh="cbh" compounds="compoundBatches.data", excluded="compoundBatches.excluded" warnings-filter="warningsFilter" redraw="compoundBatches.redraw" columns="compoundBatches.columns" searchform-schema="searchFormSchema" search-form="searchForm" show-blanks="compoundBatches.showBlanks" show-non-blanks="compoundBatches.showNonBlanks" messages="messages" filter-function="differentFunction()" column="column"></handsoncompoundtablev2>
+                <handsoncompoundtablev2  uncurated-headers="compoundBatches.uncuratedHeaders" sorts="compoundBatches.sorts"  cbh="cbh" compounds="compoundBatches.data", excluded="compoundBatches.excluded" warnings-filter="warningsFilter" redraw="compoundBatches.redraw" columns="compoundBatches.tabular_data_schema" searchform-schema="searchFormSchema" search-form="searchForm" show-blanks="compoundBatches.showBlanks" show-non-blanks="compoundBatches.showNonBlanks" messages="messages"  column="column"></handsoncompoundtablev2>
 
             </div>
 

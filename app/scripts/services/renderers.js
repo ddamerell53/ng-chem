@@ -284,7 +284,6 @@ angular.module('chembiohubAssayApp')
                   var mol = instance.getSourceDataAtRow(row);
                   //is this a date?
                   //if not, open the row editor as normal
-                  console.log(mol);
                   Handsontable.Dom.addEvent(button, 'mousedown', function (e){
                     e.preventDefault(); // prevent selection quirk
                     e.stopPropagation();
@@ -349,7 +348,7 @@ angular.module('chembiohubAssayApp')
                   //if(value != "") {
                     img.src = "data:image/png;base64," + value;
                     img.style.cursor = "pointer";
-                    img.style.width = "75px";
+                    img.style.width = "85px";
                   //}
                   //img.src = value;
               
@@ -374,7 +373,6 @@ angular.module('chembiohubAssayApp')
       getColumnLabel : function(c, scope){
         
         
-        
         return "<label style='min-width:80px' >"+ c.knownBy + "</label>";
         
       },
@@ -383,6 +381,8 @@ angular.module('chembiohubAssayApp')
       }
       
     };
+
+
     return data;
 
   });

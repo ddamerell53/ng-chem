@@ -15,22 +15,15 @@ angular.module('chembiohubAssayApp')
       scope: {
       	cbh: "=",
       },
-      controller: ['$scope', '$rootScope', '$filter', function($scope, $rootScope, $filter){
+      controller: ['$scope', '$rootScope', '$filter', 'skinConfig', function($scope, $rootScope, $filter, skinConfig){
+        $scope.$on("filtersUpdated",
+          function(){
+            $scope.breadcrumbList = skinConfig.objects[0].current_query;
+          }
+          )
+      	$scope.breadcrumbList = skinConfig.objects[0].current_query;
 
-      	$scope.breadcrumbList = [
-      		{
-      			name:"test", 
-      			query_type: "string", 
-      			query : {}, 
-      			sort_direction:"asc"
-      		},
-      		{
-      			name:"test2", 
-      			query_type: "string", 
-      			query : {}, 
-      			sort_direction:"desc"
-      		}
-      	];
+
 
       	/* Close action for a breadcrumb. Remove from list */
       	$scope.closeBreadcrumb = function(bcid){
@@ -42,14 +35,14 @@ angular.module('chembiohubAssayApp')
       		console.log($scope.breadcrumbList)
       	};
 
-      	/* Function watching for a search altered event to add or remove breadcrumb */
-      	$scope.$on('searchChanged', function(){
+      	// /* Function watching for a search altered event to add or remove breadcrumb */
+      	// $scope.$on('searchChanged', function(){
 
-      	});
+      	// });
 
-      	$scope.filterClicked = function(filter){
-      		$rootScope.$broadcast('columnSelection', filter);
-      	}
+      	// $scope.filterClicked = function(filter){
+      	// 	$rootScope.$broadcast('columnSelection', filter);
+      	// }
 
 
       }],

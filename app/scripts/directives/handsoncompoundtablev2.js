@@ -14,27 +14,34 @@ angular.module('chembiohubAssayApp')
             transclude: true,
             controller: ['$scope', function($scope){
                 $scope.sendToSearch = function(col){
-                    console.log('sendToSearch',col)
-                    $scope.cbh.column = col
-                    console.log('sendToSearch',$scope.cbh.column)
-                    $scope.filterFunction();
+                    $timeout(function(){
+                            $scope.cbh.column = col;
+                            $rootScope.$broadcast("columnSelection", $scope.cbh.column);
+                       
+                    });
+                    
+                    
                 }
             }],
             link: function preLink(scope, element, attrs) {
                 var redraw;
                 var jsonSchemaColDefs;
-                //console.log(scope.searchformSchema);
                
 
                 function buildButton(col) {
-                    var button = document.createElement('BUTTON');
+                    var button = document.createElement('a');
                     var inactiveStr = "";
 
                     if (col.noSort) {
                         inactiveStr = " lightgrey"
+                        button.innerHTML = 'search∙hide';
+                    }else{
+                        button.innerHTML = 'search∙sort∙hide';
                     }
-                    button.innerHTML = '<span class="glyphicon glyphicon-sort' + inactiveStr + '"></span>';
-                    button.className = 'tableFilter btn btn-default btn-sm';
+
+                    
+                    button.className = ' btn btn-default tableFilter';
+                    button.style["padding"] = "2px";
 
                     return button;
                 }
@@ -59,22 +66,46 @@ angular.module('chembiohubAssayApp')
                     return mappingOptions;
                 }
 
-                function addButtonMenuEvent(button, col) {
+                function addButtonMenuEvent(button, col, TH) {
                     Handsontable.Dom.addEvent(button, 'click', function(event) {
+                        //Cancel any existing showfilters flags so we dont get two highlighted columns
+                        angular.forEach(scope.columns, function(c){
+                            c.showFilters = false;
+                        });
+                        scope.sendToSearch(col);
+                        // 
+                        angular.forEach($(TH).siblings(), function(el){
+                            $timeout(function(){
+                                el.style["background-color"] = "";
+                                el.style["color"] = "";
+                            })
+                        });
+                        TH.style["background-color"] = "#002147";
+                        TH.style["color"] = "white";
+
 
                         event.preventDefault();
                         event.stopImmediatePropagation();
 
-                        scope.sendToSearch(col)
-                      
-
                     });
+                    if(col.showFilters){
+                        TH.style["background-color"] = "#002147";
+                        TH.style["color"] = "white";
+                    }
                 }
 
 
                 redraw = function() {
+                     var rend = renderers.getRenderers(scope, isNewCompoundsInterface);
+                    angular.forEach(scope.columns, function(c) {
+                        if (angular.isDefined(c.renderer_named)) {
+                            if(angular.isDefined(rend[c.renderer_named])){
+                                c.renderer = rend[c.renderer_named];
+                            }
 
-                	console.log("switch on overlay");
+                        }
+                    });
+
                 	//find element with class hot-loading
                 	var el = document.querySelector('.hot-loading');
 					var angElement = angular.element(el);
@@ -102,37 +133,10 @@ angular.module('chembiohubAssayApp')
                     var cNames = [];
                     var projects = scope.cbh.projects.objects;
                     var showCompounds = false;
-                    angular.forEach(projects, function(myproj) {
-
-                        if (!angular.isDefined(scope.cbh.includedProjectKeys) || scope.cbh.includedProjectKeys.indexOf(myproj.project_key) > -1) {
-                            if (myproj.project_type.show_compounds) {
-                                showCompounds = true;
-                            }
-
-                            angular.forEach(myproj.schemaform.form, function(i) {
-
-                                if (cNames.indexOf(i.key) < 0) {
-                                    var hotColumn = {
-                                        knownBy: i.title,
-                                        data: "customFields." + i.key,
-                                        readOnly: !scope.cbh.editMode,
-                                        className: "htCenter htMiddle ",
-                                        renderer: "customFieldRenderer",
-                                        typeahed: [],
-                                        field_type: i.field_type,
-                                    };
-                                    cNames.push(i.key);
-                                    customCols.push(hotColumn);
-                                    jsonSchemaColDefs.push(angular.copy(myproj.schemaform.schema.properties[i.key]));
-                                }
-                            });
-
-                        }
-
-                    });
+                   
 
 
-                    var allCols = customCols;
+                    var allCols = scope.columns;
 
                    
 
@@ -163,12 +167,13 @@ angular.module('chembiohubAssayApp')
                                 button = buildButton(allCols[col]),
                                 infospans = buildInfoSpans(allCols[col]);
 
-                            addButtonMenuEvent(button, allCols[col]);
+                            addButtonMenuEvent(button, allCols[col], TH);
                             while (TH.firstChild.lastChild != TH.firstChild.firstChild) {
                                     TH.firstChild.removeChild(TH.firstChild.lastChild);
 
                                 }
-                            
+                            var br = document.createElement('br');
+                            TH.firstChild.appendChild(br);
                             TH.firstChild.appendChild(button);
                             TH.firstChild.appendChild(infospans);
                             TH.style['white-space'] = 'normal';
@@ -210,11 +215,9 @@ angular.module('chembiohubAssayApp')
                                     //might need to change this to traverse the DOM and find if the button has the success class
                                     // td > a > button
                                     var firstCellButton = firstCell.children[0].children[0];
-                                    console.log(firstCellButton.className)
                                     if (firstCellButton.className == 'btn btn-success') {
                                         var firstValueArchived = true;
                                     }
-                                    console.log('start', start.row)
                                     
                                     for (var rowNo = start.row; rowNo <= end.row; rowNo++) {
                                         var cellAtRow = this.getCell(rowNo, colNo);
@@ -222,7 +225,6 @@ angular.module('chembiohubAssayApp')
                                         var mol = this.getSourceDataAtRow(rowNo);
                                         var split = mol.project.split("/");
                                         var projid = split[split.length - 1];
-                                        console.log('getting here');
 
                                         if (firstValueArchived && cellLink.children[0].className == ('btn btn-danger')) {
                                             
@@ -247,21 +249,10 @@ angular.module('chembiohubAssayApp')
 
                     }
 
-                    var rend = renderers.getRenderers(scope, isNewCompoundsInterface);
-                    
-                    angular.forEach(hotObj.columns, function(c) {
-                        if (angular.isDefined(c.renderer)) {
-
-                            c.renderer = rend[c.renderer];
-                        }
-                    });
-
+                   
                     var container1,
                         hot1;
-                    /*console.log('showing element', element);
-                    container1 = document.createElement('DIV');
-                    container1.style.overflowX = 'scroll';
-                    container1.id = 'myid';*/
+
                     var container = document.createElement('DIV');
                     container.className = container.className + ' handsontable';
 
@@ -270,12 +261,7 @@ angular.module('chembiohubAssayApp')
                         element[0].removeChild(element[0].firstChild);
                     }
 
-                    /*var hotloading = document.createElement('DIV');
-                    hotloading.className = "hot-loading"
-                    element[0].appendChild(hotloading);*/
-                    
-                    //console.log(container1);
-                    //container1.appendChild(container);
+
                     element[0].appendChild(container);
                     var hot1 = new Handsontable(container, hotObj);
                     // hot1.populateFromArray = renderers.getPopulateFromArray(hot1);
@@ -287,7 +273,6 @@ angular.module('chembiohubAssayApp')
 
 
 
-                        scope.columns = hotObj.columns;
 
 
 
@@ -300,7 +285,6 @@ angular.module('chembiohubAssayApp')
                  
 
                     scope.hot1 = hot1;
-                    console.log("switch off overlay")
                 	
                 	
                 	$timeout(function(){
@@ -308,13 +292,12 @@ angular.module('chembiohubAssayApp')
 					  var angElement = angular.element(el);
                       angElement.removeClass("now-showing");
                       //scope.$apply()
-                    }, 750);
+                    },400);
                 	
 
                 }
                 scope.$watch("redraw", function(newValue, oldValue) {
                     redraw();
-                    console.log('redraw being called via watch');
                     
 
                 }, true);
@@ -339,19 +322,10 @@ angular.module('chembiohubAssayApp')
                 "redraw": "=",
                 "compounds": "=",
                 "cbh": "=",
-                "sorts": "=",
                 "uncuratedHeaders": "=",
                 "columns": "=",
-                "excluded": "=",
-                "warningsFilter": "=",
-                "searchformSchema": "=",
-                "searchForm": "=",
-                "showBlanks": "=",
-                "showNonBlanks": "=",
                 "messages": "=",
                 "plugins": "=",
-                "filterFunction": "&",
-                "column": "=",
             }
         };
     }]);
