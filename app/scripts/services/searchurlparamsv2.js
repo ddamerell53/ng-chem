@@ -19,11 +19,36 @@ angular.module('chembiohubAssayApp')
         var searchUrlParamsV2 = {"params":{"query": []}};
 
         searchUrlParamsV2.generate_form = function(stateParams) {
-            //  if(stateParams.encoded_query){
-            //    data.params.encoded_query = stateParams.encoded_query;
-            //    data.paramsUrl = "?encoded_query=" + stateParams.encoded_query;
-            // }
-                
+            var schema = skinConfig.objects[0].tabular_data_schema.schema;
+            var filteredColumns = [];
+            var filterObjects = [];
+             if(stateParams.encoded_query){
+               var qs = JSON.parse(stateParams.encoded_query);
+               angular.forEach(qs, function(q){
+                  schema[q.field_path].filters = q;
+                  filterObjects.push(schema[q.field_path]);
+                  filteredColumns.push(q.field_path);
+               });
+               skinConfig.objects[0].filters_applied = [];
+                skinConfig.objects[0].filter_objects = [] ;
+            }else{
+              skinConfig.objects[0].filters_applied = [];
+                skinConfig.objects[0].filter_objects = [] ;
+            }
+            if(stateParams.encoded_hides){
+                var hides = JSON.parse(stateParams.encoded_hides);
+                var hideObjs = [];
+                angular.forEach(hides, function(hide){
+                  schema[hide.field_path].hide = "hide";
+                   hideObjs.push(schema);
+                });
+                skinConfig.objects[0].hides_applied = hides;
+                skinConfig.objects[0].hide_objects = hideObjs ;
+            }else{
+              skinConfig.objects[0].hides_applied = [];
+                skinConfig.objects[0].hide_objects = [] ;
+            }
+            
           };
 
       searchUrlParamsV2.generate_filter_params = function(){
@@ -49,7 +74,7 @@ angular.module('chembiohubAssayApp')
 
             params.encoded_query = JSON.stringify(query);
 
-            skinConfig.objects[0].query_objects = filteredColumns;
+            skinConfig.objects[0].filter_objects = filteredColumns;
             $rootScope.$broadcast("searchParamsChanged");
             console.log(filteredColumns)
             return params

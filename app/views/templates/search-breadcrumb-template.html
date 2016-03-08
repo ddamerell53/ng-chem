@@ -7,9 +7,8 @@
 							<!-- need this to be able to launch the filter window too. Just use broadcast? -->
 							<li class="breadcrumb" ng-repeat="bc in sort_objects" >
 								<span class="bcname" ng-click="filterClicked(bc.name)">{{bc.knownBy}}</span>
-								<span class="glyphicon glyphicon-filter" ng-if="bc.filter_applied"></span>
-								<span class="glyphicon glyphicon-sort-by-alphabet" ng-if="bc.filters.sort_direction == 'asc'"></span>
-								<span class="glyphicon glyphicon-sort-by-alphabet-alt" ng-if="bc.filters.sort_direction == 'desc'"></span>
+								<span class="glyphicon glyphicon-sort-by-alphabet" ng-if="bc.sort_direction == 'asc'"></span>
+								<span class="glyphicon glyphicon-sort-by-alphabet-alt" ng-if="bc.sort_direction == 'desc'"></span>
 								<button type="button" class="close" aria-label="Close" ng-click="closeBreadcrumb(bc.name)"><span aria-hidden="true">&times;</span></button>
 							</li>
 
@@ -21,9 +20,7 @@
 							<!-- need this to be able to launch the filter window too. Just use broadcast? -->
 							<li class="breadcrumb" ng-repeat="bc in hide_objects" >
 								<span class="bcname" ng-click="filterClicked(bc.name)">{{bc.knownBy}}</span>
-								<span class="glyphicon glyphicon-filter" ng-if="bc.filter_applied"></span>
-								<span class="glyphicon glyphicon-sort-by-alphabet" ng-if="bc.filters.sort_direction == 'asc'"></span>
-								<span class="glyphicon glyphicon-sort-by-alphabet-alt" ng-if="bc.filters.sort_direction == 'desc'"></span>
+
 								<button type="button" class="close" aria-label="Close" ng-click="closeBreadcrumb(bc.name)"><span aria-hidden="true">&times;</span></button>
 							</li>
 
@@ -38,11 +35,9 @@
 						<ul class="list-inline">
 							
 							<!-- need this to be able to launch the filter window too. Just use broadcast? -->
-							<li class="breadcrumb" ng-repeat="bc in query_objects" >
+							<li class="breadcrumb" ng-repeat="bc in filter_objects" >
 								<span class="bcname" ng-click="filterClicked(bc.name)">{{bc.knownBy}}</span>
-								<span class="glyphicon glyphicon-filter" ng-if="bc.filter_applied"></span>
-								<span class="glyphicon glyphicon-sort-by-alphabet" ng-if="bc.filters.sort_direction == 'asc'"></span>
-								<span class="glyphicon glyphicon-sort-by-alphabet-alt" ng-if="bc.filters.sort_direction == 'desc'"></span>
+								<span class="glyphicon glyphicon-filter" ></span>
 								<button type="button" class="close" aria-label="Close" ng-click="closeBreadcrumb(bc.name)"><span aria-hidden="true">&times;</span></button>
 							</li>
 

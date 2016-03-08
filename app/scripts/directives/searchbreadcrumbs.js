@@ -17,7 +17,7 @@ angular.module('chembiohubAssayApp')
       },
       controller: ['$scope', '$rootScope', '$filter', 'skinConfig', function($scope, $rootScope, $filter, skinConfig){
         $scope.$on("searchParamsChanged", function(){
-          $scope.query_objects = skinConfig.objects[0].query_objects;
+          $scope.filter_objects = skinConfig.objects[0].filter_objects;
 
           $scope.sort_objects = skinConfig.objects[0].sort_objects;
 

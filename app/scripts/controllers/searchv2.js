@@ -16,7 +16,7 @@ angular.module('chembiohubAssayApp')
                 
                 var pf = SearchUrlParamsV2.generate_form($stateParams);
 
-                $scope.cbh.allSearchParams = pf;
+                //$scope.cbh.allSearchParams = pf;
             }
 
             $scope.cbh.setupParams();
