@@ -6,7 +6,7 @@
 							
 							<!-- need this to be able to launch the filter window too. Just use broadcast? -->
 							<li class="breadcrumb" ng-repeat="bc in sort_objects" >
-								<span class="bcname" ng-click="filterClicked(bc.name)">{{bc.knownBy}}</span>
+								<span class="bcname" ng-click="filterClicked(bc.name)">{{bc.knownBy}} </span>
 								<span class="glyphicon glyphicon-sort-by-alphabet" ng-if="bc.sort_direction == 'asc'"></span>
 								<span class="glyphicon glyphicon-sort-by-alphabet-alt" ng-if="bc.sort_direction == 'desc'"></span>
 								<button type="button" class="close" aria-label="Close" ng-click="closeBreadcrumb(bc.name)"><span aria-hidden="true">&times;</span></button>
@@ -37,6 +37,7 @@
 							<!-- need this to be able to launch the filter window too. Just use broadcast? -->
 							<li class="breadcrumb" ng-repeat="bc in filter_objects" >
 								<span class="bcname" ng-click="filterClicked(bc.name)">{{bc.knownBy}}</span>
+								<span class="bcname" ng-click="filterClicked(bc.name)">{{filterAsString(bc)}}</span>
 								<span class="glyphicon glyphicon-filter" ></span>
 								<button type="button" class="close" aria-label="Close" ng-click="closeBreadcrumb(bc.name)"><span aria-hidden="true">&times;</span></button>
 							</li>

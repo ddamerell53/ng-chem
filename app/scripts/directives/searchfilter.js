@@ -22,12 +22,16 @@ angular.module('chembiohubAssayApp')
          
         	$scope.col = col;
             $scope.col.showFilters = true;
+
+          
           
           if(!$scope.col.filters){
-            $scope.col.filters = {"field_path" : col.data };
+            $scope.col.filters = {"field_path" : col.data ,
+                                  };
           }else{
             $scope.col.filters.field_path = col.data;
           }
+
         	// $scope.cbh.column = col
           $scope.queryAsfForm = angular.copy(skinConfig.objects[0].query_schemaform.default.form);
           $scope.queryAsfSchema = angular.copy(skinConfig.objects[0].query_schemaform.default.schema);
@@ -37,6 +41,7 @@ angular.module('chembiohubAssayApp')
           $scope.hideAsfSchema = angular.copy(skinConfig.objects[0].hide_schemaform.default.schema);
           $scope.blanksQuery = false;
 
+          
            
         });
         
