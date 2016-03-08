@@ -1036,7 +1036,9 @@ li.breadcrumb.ng-enter.ng-enter-active {
   display: flex; 
   align-items: center;
 }
-
+.thumb-container img {
+    max-height: 100px;
+}
 .thumb-overlay {
     background:rgba(0,0,0,.75);
     opacity: 0;

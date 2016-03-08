@@ -187,9 +187,7 @@ angular.module('chembiohubAssayApp')
                     AttachmentFactory.get({
                       'identifier': file.uniqueIdentifier
                     }, function(data){
-                      console.log("returned from CBHFlowFile view", data);
                       //add this to attachments in the form element (find it by form key in mol.customFields)
-                      console.log('customfields = ', $scope.mol.customFields)
                       var downloadUri = data.download_uri
                       var attachment_obj = {
                           url: downloadUri,
@@ -197,15 +195,13 @@ angular.module('chembiohubAssayApp')
                           mimeType: file.file.type,
                       }
                       $scope.mol.customFields[form_key[0]].attachments.push(attachment_obj)
-                      
+
                     })
 
                   }
 
                   $scope.removeFile = function(form_key, index, url){
-                    console.log("from new removeFile method", form_key);
                     $scope.mol.customFields[form_key[0]].attachments  = $filter('filter')($scope.mol.customFields[form_key[0]].attachments, function(value, index) {return value.url !== url;})
-
                   }
 
 
@@ -275,12 +271,7 @@ angular.module('chembiohubAssayApp')
                         if(item.default){
                           isFileField = true;
                           //also need to rearrange value so it's not a string representation
-                          /*var attachment_obj = {
-                                url: url_string,
-                                printName: file.name,
-                                mimeType: file.file.type,
-                            }*/
-                            attachments = item.default.attachments;
+                          attachments = item.default.attachments;
 
                         }
                         return {
@@ -305,14 +296,12 @@ angular.module('chembiohubAssayApp')
                   }
                   cbh.isUpdated = false;
                   $scope.updateBatch = function(instance) {
-                    console.log("updateBatch", $scope.mol.customFields)
                     CBHCompoundBatch.patch({
                       "customFields": $scope.mol.customFields,
                       "projectKey": $scope.projectWithCustomFieldData.project_key,
                       "id": $scope.mol.id
                     }).then(
                       function(data) {
-                        console.log("post sve customFields", data)
                         $scope.mol.customFields = data.customFields;
                         mol.customFields = data.customFields;
                         //reindex the compound
@@ -334,6 +323,12 @@ angular.module('chembiohubAssayApp')
                   }
                   $scope.myschema = $scope.projectWithCustomFieldData.schemaform.schema;
                   $scope.modalInstance = $modalInstance;
+                  $scope.cancel = function(){
+                    //clear mol, redraw schema form to remove cached data from file upload plugin then dismiss instance
+                    $scope.mol = {}
+                    $scope.$broadcast('schemaFormRedraw');
+                    $scope.modalInstance.dismiss('cancel');
+                  }
 
                 }
               ]

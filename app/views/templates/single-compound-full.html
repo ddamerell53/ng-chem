@@ -85,11 +85,35 @@
                         <button-input copy-model="item.value" disabled="true" label="::item.key" ng-if="item.isFileField == false"></button-input>
                         <div class="form-group" ng-if="item.isFileField == true">
                             <label>{{item.key}}</label>
-                            <ul class="list-unstyled">
+                            <!-- <ul class="list-unstyled">
                                 <li ng-repeat="attc in item.attachments">
                                     <a href="{{attc.url}}">{{attc.printName}}</a>
                                 </li>
                                 <li ng-show="item.attachments.length == 0">no items</li>
+                            </ul> -->
+                            <ul class="list-inline">
+                              <li ng-repeat="attachment in item.attachments" style="display:inline-table;">
+                                <div class="text-center col-xs-12 thumb-container" >
+                                  <!-- <img width="100" ng-if="{png:1,gif:1,jpg:1,jpeg:1}[is_uploading.getExtension()]" flow-img="is_uploading" /> -->
+                                  <img ng-if="attachment.mimeType.indexOf('image') != -1" width="100" ng-src="{{attachment.url}}" />
+                                  <img ng-if="attachment.mimeType.indexOf('spreadsheetml') != -1 || attachment.mimeType.indexOf('excel') != -1" width="100" ng-src="images/xlsx-placeholder.png" />
+                                  <img ng-if="attachment.mimeType.indexOf('wordprocessingml') != -1 || attachment.mimeType.indexOf('msword') != -1" width="100" ng-src="images/docx-placeholder.png" />
+                                  <img ng-if="attachment.mimeType.indexOf('pdf') != -1" width="100" ng-src="images/pdf-placeholder.png" />
+                                  <!-- anything else - use the file placeholder -->
+                                  <img ng-if="attachment.mimeType.indexOf('pdf') == -1 && attachment.mimeType.indexOf('image') == -1 && attachment.mimeType.indexOf('spreadsheetml') == -1 && attachment.mimeType.indexOf('excel') == -1 && attachment.mimeType.indexOf('wordprocessingml') == -1 && attachment.mimeType.indexOf('msword') == -1" width="100" ng-src="images/file-placeholder.png" />
+                                  <div class="thumb-overlay">
+                                    <p>
+                                      <span style="font-size: 0.8em; word-wrap: break-word;">{{attachment.printName}}</span>
+                                      
+                                    </p>
+                                  </div>
+                                  
+                                </div>
+                                  
+                                  
+                                
+                              </li>
+                              <li ng-show="item.attachments.length == 0">no attachments</li>
                             </ul>
                         </div>
                         
@@ -117,5 +141,5 @@
 </div>
 <div class="modal-footer">
     <button class="btn btn-primary" ng-disabled="!projectObj.editor" ng-show="editMode" ng-click="updateBatch(modalInstance);">Update and Close</button>
-    <button class="btn btn-danger" ng-click="modalInstance.dismiss('cancel');">Close <span ng-show="editMode">and Discard Changes</span></button>
+    <button class="btn btn-danger" ng-click="cancel()">Close <span ng-show="editMode">and Discard Changes</span></button>
 </div>
