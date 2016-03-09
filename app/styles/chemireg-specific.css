@@ -1092,6 +1092,10 @@ li.breadcrumb.ng-enter.ng-enter-active {
     opacity: 1;
 }
 
+.subheading {
+  background: linear-gradient(#72777f, #aaa);
+}
+
 /* 16-column bootstrap grid classes */
 /*!
  * Bootstrap v3.3.4 (http://getbootstrap.com)

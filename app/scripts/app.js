@@ -239,6 +239,29 @@ $urlRouterProvider.when('', '/projects/list');
 
       },
     })
+    
+    .state('cbh.home', {
+      url: '/home',
+      templateUrl: 'views/user-profile.html',
+      controller: function($scope, $rootScope, loggedInUser, urlConfig){
+        $scope.links = [];
+        $scope.userFromList = loggedInUser
+        $scope.loadSavedSearches = function(){
+            
+            var params = {'creator_uri': loggedInUser.resource_uri};
+
+            console.log(params);
+            $http.get( urlConfig.cbh_saved_search.list_endpoint  + "/get_list_elasticsearch/", {'params': params}).then(function(data){
+                
+                $scope.links = data.data.objects;
+                console.log($scope.links);
+                $scope.$apply();
+                
+            });
+        };
+        $scope.loadSavedSearches();
+      } 
+    })
 
     .state('cbh.projects.list', {
       url: '/list',
