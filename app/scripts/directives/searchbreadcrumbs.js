@@ -17,19 +17,20 @@ angular.module('chembiohubAssayApp')
       },
       controller: ['$scope', '$rootScope', '$filter', 'skinConfig', function($scope, $rootScope, $filter, skinConfig){
         $scope.$on("searchParamsChanged", function(){
+
               $scope.filter_objects = skinConfig.objects[0].filter_objects;
           $scope.queryAsfForm = angular.copy(skinConfig.objects[0].query_schemaform.default.form);
 
           angular.forEach($scope.filter_objects, function(obj){
-            $timeout(function(){
               $scope.setfilterAsString(obj);
-            });
+      
            
           });
-          $scope.sort_objects = skinConfig.objects[0].sort_objects;
-
           $scope.hide_objects = skinConfig.objects[0].hide_objects;
 
+          $scope.sort_objects = skinConfig.objects[0].sort_objects;
+
+          
 
         })
       

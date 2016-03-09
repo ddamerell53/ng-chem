@@ -284,7 +284,6 @@ angular.module('chembiohubAssayApp')
 			$scope.cbh.column = {}
             $rootScope.$on("columnSelection", function(event, col){
             	$scope.cbh.column = col
-            	$scope.$apply();
             })
 
 

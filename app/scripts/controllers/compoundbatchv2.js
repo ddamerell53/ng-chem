@@ -538,11 +538,15 @@ angular.module('chembiohubAssayApp')
              $scope.cbh.setupParams = function(){
                 
                 var pf = SearchUrlParamsV2.generate_form($stateParams);
+                $scope.resetCompoundList();
+                getResultsPage($scope.pagination.current, $stateParams);
                 $timeout(function(){
-                    $scope.resetCompoundList();
-                    $rootScope.$broadcast("searchParamsChanged");
-                    getResultsPage($scope.pagination.current, $stateParams);
-                });
+                    $scope.$apply(function(){
+                        $rootScope.$broadcast("searchParamsChanged");
+                    })
+                    
+                })
+                
                 
                 
             }

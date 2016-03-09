@@ -295,7 +295,7 @@ angular.module('chembiohubAssayApp')
 					  var angElement = angular.element(el);
                       angElement.removeClass("now-showing");
                       //scope.$apply()
-                    },400);
+                    },250);
                 	
 
                 }
