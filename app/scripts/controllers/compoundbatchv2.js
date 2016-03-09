@@ -20,6 +20,59 @@ angular.module('chembiohubAssayApp')
                 };
             }
 
+        // $rootScope.$on("queryTypeChanged", function(event, col){ //Check to see if anything is not equal to its default value
+        //   var needsUpdating = false;
+        //   $scope.$broadcast("schemaFormRedraw");
+        //   //Need to send a redraw to ensure ngmodel is up to date and the validation messages show up
+          
+        //   angular.forEach(skinConfig.objects[0].hide_schemaform.default.form, function(item){
+        //     if(item.onChange == "updated(modelValue,form)"){
+        //       var model = col.filters[item.key];
+        //       var def = $scope.queryAsfSchema.properties[item.key].default;
+        //       if(model != def && model != undefined){
+        //         col.filters[item.key] = def;
+        //         needsUpdating = true;
+        //       }
+        //     }
+        //   });
+        //   var blanks = (["blanks", "nonblanks"].indexOf(col.filters.query_type) > -1);
+
+        //   if(needsUpdating || blanks || col.blanksQuery){
+        //       if(col.blanksQuery){
+        //         col.blanksQuery = false;
+
+        //       }
+        //       if(blanks){
+        //           col.blanksQuery = blanks;
+
+        //         $rootScope.$broadcast("filtersUpdated", {"addNew" : true,  "field_path" : col.data , "col" : col} ); 
+
+        //       }else{
+        //         //Here we are just cancelling a previous blanks or non blanks query
+        //         $rootScope.$broadcast("filtersUpdated", {"addNew" : false,  "field_path" : col.data , "col" : col} ); 
+
+        //       }
+              
+        //   }
+        //   $scope.$broadcast("schemaFormRedraw");
+          
+        // });
+
+
+        $rootScope.$on("cleanupFilters", function(event, args){
+            console.log("cleanup")
+            angular.forEach(skinConfig.objects[0].query_schemaform.default.form, function(form){
+                if(form.key != "query_type" && form.key){
+                    console.log(form.key)
+                    args.col.filters[form.key] = skinConfig.objects[0].query_schemaform.default.schema.properties[form.key].default;
+                }else if (args.reset_query_type &&  form.key == "query_type"){
+                    args.col.filters.query_type = skinConfig.objects[0].query_schemaform.default.schema.properties[form.key].default;
+                }
+
+            });
+            
+        });
+
         $rootScope.$on("filtersUpdated",function( event, args){
             var index = skinConfig.objects[0].filters_applied.indexOf(args.field_path);
             var changed = false;
@@ -35,15 +88,32 @@ angular.module('chembiohubAssayApp')
             $scope.cbh.changeSearchParams(params, true);
         });
 
-         $rootScope.$on("hideChanged",function( event, args){
+         $rootScope.$on("removeHide",function( event, args){
+            console.log(skinConfig.objects[0].hides_applied)
+            console.log(args)
             var index = skinConfig.objects[0].hides_applied.indexOf(args.field_path);
+            console.log(index);
             if(index > -1){
               skinConfig.objects[0].hides_applied.splice(index, 1);
-            }else{
-                skinConfig.objects[0].hides_applied.push(args.field_path);
             }
             var params = SearchUrlParamsV2.generate_hide_params();
             $scope.cbh.changeSearchParams(params, true);
+        });
+
+         $rootScope.$on("addHide",function( event, args){
+            console.log(skinConfig.objects[0].hides_applied)
+            console.log(args)
+            var index = skinConfig.objects[0].hides_applied.indexOf(args.field_path);
+            console.log(index);
+            if(index > -1){
+              skinConfig.objects[0].hides_applied.splice(index, 1);
+            }
+            skinConfig.objects[0].hides_applied.push(args.field_path);
+            console.log(skinConfig.objects[0].hides_applied);
+            var params = SearchUrlParamsV2.generate_hide_params();
+            $scope.cbh.changeSearchParams(params, true);
+            
+            
         });
 
          $rootScope.$on("addSort",function( event, args){
@@ -59,6 +129,7 @@ angular.module('chembiohubAssayApp')
 
 
          $rootScope.$on("removeSort",function( event, args){
+
             var index = skinConfig.objects[0].sorts_applied.indexOf(args.field_path);
             if(index > -1){
               skinConfig.objects[0].sorts_applied.splice(index, 1);
@@ -83,14 +154,11 @@ angular.module('chembiohubAssayApp')
             $scope.cbh.changeSearchParams = function(newParams, notify) {
                 //General function to search and move to a new URL
                 // var pf = SearchUrlParamsV2.fromForm($scope.cbh.searchForm);
-                // $scope.cbh.setupParams(pf);
-                
                 if (notify) {
                     $scope.pagination.current = 1;
                 }
                 $state.params = newParams;
                 $stateParams = newParams;
-                // $location.search(newParams);
                 $state.go('cbh.searchv2', newParams, {
                     // prevent the events onStart and onSuccess from firing
                     notify: false,

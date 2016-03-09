@@ -46,29 +46,45 @@ angular.module('chembiohubAssayApp')
             $scope.setfilterAsString = function(obj){
               
               if(obj.filters.greater_than && obj.filters.less_than){
-                obj.display_filter = "> " +  obj.filters.greater_than  + " and < " +  obj.filters.less_than;
+                obj.display_filter = "Between " +  obj.filters.greater_than  + " and " +  obj.filters.less_than;
               }
-              else if(obj.filters.less_than ){
-                obj.display_filter = "< " +  obj.filters.less_than;
-              }
-              else if(obj.filters.greater_than ){
-                obj.display_filter = "> " +  obj.filters.greater_than;
-              }
+              
               else{
-                obj.display_filter = $scope.filterTypeName(obj) + " " ;
+                obj.display_filter = $scope.filterTypeName(obj)  ;
                 if(obj.filters[obj.filters.query_type]){
-                  obj.display_filter += obj.filters[obj.filters.query_type];
+                  obj.display_filter += ": " + obj.filters[obj.filters.query_type];
                 }
               }
             }
 
       	/* Close action for a breadcrumb. Remove from list */
-      	$scope.closeBreadcrumb = function(bcid){
+      	$scope.closeSortBreadcrumb = function(bc){
       	
-  			//use underscore.js differnce method to remove item from array
+          bc.sort_direction = "No Sort";
+          $rootScope.$broadcast("removeSort", {"field_path": bc.data});
+        
   			
       	};
 
+        $scope.closeHideBreadcrumb = function(bc){
+
+          bc.hide = "show";
+          $rootScope.$broadcast("removeHide", {"field_path": bc.data});
+        
+        
+        };
+        $scope.closeFilterBreadcrumb = function(bc){
+          
+          bc.display_filter = "";
+          $rootScope.$broadcast("cleanupFilters",{"col": bc, "reset_query_type" : true })         
+          $rootScope.$broadcast("filtersUpdated", {"addNew" : false,  "field_path" : bc.data , "col" : bc} ); 
+
+
+        };
+
+        $scope.filterClicked = function(bc){
+          $rootScope.$broadcast("columnSelection", bc);
+        };
       
 
 

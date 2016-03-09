@@ -21,7 +21,8 @@ angular.module('chembiohubAssayApp')
       	$rootScope.$on("columnSelection", function(event, col){
          
         	$scope.col = col;
-            $scope.col.showFilters = true;
+
+          $scope.col.showFilters = true;
 
           
           
@@ -39,7 +40,7 @@ angular.module('chembiohubAssayApp')
           $scope.sortAsfSchema = angular.copy(skinConfig.objects[0].sort_schemaform.default.schema);
           $scope.hideAsfForm = angular.copy(skinConfig.objects[0].hide_schemaform.default.form);
           $scope.hideAsfSchema = angular.copy(skinConfig.objects[0].hide_schemaform.default.schema);
-          $scope.blanksQuery = false;
+          $scope.col.blanksQuery = false;
 
           
            
@@ -53,52 +54,35 @@ angular.module('chembiohubAssayApp')
         };
 
         $scope.clearFilters = function(){
-          $scope.col.filters["query_type"] = "phrase";
-          $scope.queryTypeChanged("phrase", {})
-          
+          $rootScope.$broadcast("cleanupFilters",{"col": $scope.col, "reset_query_type" : true })         
+          $scope.sendFilterUpdate(false)
+
         }
 
+        $scope.closeMenu = function(){
+          $scope.col.showFilters = false;
+          document.getElementById('validatorId').click();
+        }
+
+
+
         $scope.queryTypeChanged = function(modelValue, form){
-          //Check to see if anything is not equal to its default value
-          var needsUpdating = false;
-          $scope.$broadcast("schemaFormRedraw");
-          //Need to send a redraw to ensure ngmodel is up to date and the validation messages show up
-          
-          angular.forEach($scope.queryAsfForm, function(item){
-            if(item.onChange == "updated(modelValue,form)"){
-              var model = $scope.col.filters[item.key];
-              var def = $scope.queryAsfSchema.properties[item.key].default;
-              if(model != def && model != undefined){
-                $scope.col.filters[item.key] = def;
-                needsUpdating = true;
-              }
-            }
-          });
-          var blanks = (["blanks", "nonblanks"].indexOf(modelValue)> -1);
+            $rootScope.$broadcast("cleanupFilters",{"col": $scope.col, "reset_query_type" : false })         
+            var addNew = modelValue.indexOf("blanks") > -1;
+             $scope.sendFilterUpdate(addNew)
+        }
 
-          if(needsUpdating || blanks || $scope.blanksQuery){
-              if($scope.blanksQuery){
-                $scope.blanksQuery = false;
-
-              }
-              if(blanks){
-                  $scope.blanksQuery = blanks;
-                  $scope.sendFilterUpdate(true);
-              }else{
-                //Here we are just cancelling a previous blanks or non blanks query
-                $scope.sendFilterUpdate(false);
-              }
-              
-          }
-          $scope.$broadcast("schemaFormRedraw");
-          
-        };
+         
 
         
         $scope.hideChanged = function(newHiddenValue, form){
-          
-            $rootScope.$broadcast("hideChanged", {field_path : $scope.col.data} );
-          
+
+            if(newHiddenValue== $scope.hideAsfSchema.properties[form.key].default){
+                $rootScope.$broadcast("removeHide", {field_path : $scope.col.data} );
+            }else{
+                $rootScope.$broadcast("addHide", {field_path : $scope.col.data} );
+
+            }          
         };
 
         $scope.sortChanged = function(newSortValue, form){

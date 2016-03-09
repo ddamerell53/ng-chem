@@ -7,10 +7,10 @@
 			
 			<!-- need this to be able to launch the filter window too. Just use broadcast? -->
 			<li class="breadcrumb" ng-repeat="bc in sort_objects" >
-				<span class="bcname" ng-click="filterClicked(bc.name)">{{bc.knownBy}} </span>
+				<span class="bcname" ng-click="filterClicked(bc)">{{bc.knownBy}} </span>
 				<span class="glyphicon glyphicon-sort-by-alphabet" ng-if="bc.sort_direction == 'asc'"></span>
 				<span class="glyphicon glyphicon-sort-by-alphabet-alt" ng-if="bc.sort_direction == 'desc'"></span>
-				<button type="button" class="close" aria-label="Close" ng-click="closeBreadcrumb(bc.name)"><span aria-hidden="true">&times;</span></button>
+				<button type="button" class="close" aria-label="Close" ng-click="closeSortBreadcrumb(bc)"><span aria-hidden="true">&times;</span></button>
 			</li>
 			<li ng-if="!sort_objects">
 				<small>No sorts</small>
@@ -24,9 +24,9 @@
 			
 			<!-- need this to be able to launch the filter window too. Just use broadcast? -->
 			<li class="breadcrumb" ng-repeat="bc in hide_objects" >
-				<span class="bcname" ng-click="filterClicked(bc.name)">{{bc.knownBy}}</span>
+				<span class="bcname" ng-click="filterClicked(bc)">{{bc.knownBy}}</span>
 				<span class="glyphicon glyphicon-eye-close" ></span>
-				<button type="button" class="close" aria-label="Close" ng-click="closeBreadcrumb(bc.name)"><span aria-hidden="true">&times;</span></button>
+				<button type="button" class="close" aria-label="Close" ng-click="closeHideBreadcrumb(bc)"><span aria-hidden="true">&times;</span></button>
 			</li>
 
 			<li ng-if="!hide_objects">
@@ -47,10 +47,10 @@
 			<li class="breadcrumb" ng-repeat="bc in filter_objects" >
 				
 				<p class="nexa">
-					<button type="button" class="close pull-right" aria-label="Close" ng-click="closeBreadcrumb(bc.name)"><span aria-hidden="true">&times;</span></button>
+					<button type="button" class="close pull-right" aria-label="Close" ng-click="closeFilterBreadcrumb(bc)"><span aria-hidden="true">&times;</span></button>
 					<span class="glyphicon glyphicon-filter pull-right" ></span>
-					<span class="bcname" ng-click="filterClicked(bc.name)">{{bc.knownBy}}</span><br>
-					<span class="bcname" ng-click="filterClicked(bc.name)" style="font-size:0.8em; color:#aaa;">{{bc.display_filter}}</span>
+					<span class="bcname" ng-click="filterClicked(bc)">{{bc.knownBy}}</span><br>
+					<span class="bcname" ng-click="filterClicked(bc)" style="font-size:0.8em; color:#aaa;">{{bc.display_filter}}</span>
 
 					
 				</p>
