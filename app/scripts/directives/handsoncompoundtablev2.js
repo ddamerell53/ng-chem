@@ -7,7 +7,7 @@
  * # HandsOnCompoundTable
  */
 angular.module('chembiohubAssayApp')
-    .directive('handsoncompoundtablev2', ["$timeout", "$compile", "renderers", "$rootScope", "$filter", "$modal", function($timeout, $compile, renderers, $rootScope, $filter, $modal) {
+    .directive('handsoncompoundtablev2', ["$timeout", "$compile", "renderers", "$rootScope", "$filter", "$modal", "$window", function($timeout, $compile, renderers, $rootScope, $filter, $modal, $window) {
         return {
             template: '<div  ></div>',
             restrict: 'E',
@@ -93,10 +93,12 @@ angular.module('chembiohubAssayApp')
                         TH.style["color"] = "#002147";
                     }
                 }
-
+                 
 
                 redraw = function() {
                      var rend = renderers.getRenderers(scope, isNewCompoundsInterface);
+                     var allCols = [];
+
                     angular.forEach(scope.columns, function(c) {
                         if (angular.isDefined(c.renderer_named)) {
                             if(angular.isDefined(rend[c.renderer_named])){
@@ -104,12 +106,14 @@ angular.module('chembiohubAssayApp')
                             }
 
                         }
+                        if(c.hide != "hide"){
+                            allCols.push(c);
+                        }
+                        
                     });
 
                 	//find element with class hot-loading
-                	var el = document.querySelector('.hot-loading');
-					var angElement = angular.element(el);
-                	angElement.addClass("now-showing");
+                	
 
                 	//then hide at the end
 
@@ -128,7 +132,6 @@ angular.module('chembiohubAssayApp')
 
                     }
 
-                    var customCols = []; //DO  NOT CHANGE SMILES TITLE without checking in addcompounds controller and the compounds.py file
                     var count = 0;
                     var cNames = [];
                     var projects = scope.cbh.projects.objects;
@@ -136,7 +139,7 @@ angular.module('chembiohubAssayApp')
                    
 
 
-                    var allCols = scope.columns;
+                    
 
                    
 
@@ -298,8 +301,6 @@ angular.module('chembiohubAssayApp')
                 }
                 scope.$watch("redraw", function(newValue, oldValue) {
                     redraw();
-                    
-
                 }, true);
 
                 scope.$on("updateListView", function() {
@@ -307,7 +308,13 @@ angular.module('chembiohubAssayApp')
                 });
 
                 
-
+                angular.element($window).bind('resize', function() {
+                    //On resize we needto go to the underlying controiller to ensure that the whole of the directive is rebuilt
+                    //That way the scrollbars will work properly
+                    scope.$apply(function() {
+                        $rootScope.$broadcast("filtersUpdated",{});
+                    });
+                });
                 
 
 

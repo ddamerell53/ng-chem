@@ -72,6 +72,7 @@ angular.module('chembiohubAssayApp')
             $rootScope.$broadcast("cleanupFilters",{"col": $scope.col, "reset_query_type" : false })         
             var addNew = modelValue.indexOf("blanks") > -1;
              $scope.sendFilterUpdate(addNew)
+             $scope.$broadcast("schemaFormRedraw");
         }
 
          
@@ -83,7 +84,7 @@ angular.module('chembiohubAssayApp')
                 $rootScope.$broadcast("removeHide", {field_path : $scope.col.data} );
             }else{
                 $rootScope.$broadcast("addHide", {field_path : $scope.col.data} );
-
+                $scope.closeMenu();
             }          
         };
 

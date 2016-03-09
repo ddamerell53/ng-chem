@@ -165,11 +165,13 @@ $q.all([skinReq, projReq, userReq]).then(function(data){
   var skinObj = data[0];
   var projData = data[1];
   var userData = data[2];
-
+  skinObj.data.objects[0].refresh_tabular_schema = function(){
+    skinObj.data.objects[0].tabular_data_schema.copied_schema = angular.copy(skinObj.data.objects[0].tabular_data_schema.schema);
+  }
   //Add a function to get a schema by name
   skinObj.data.objects[0].get_table_schema_by_name = function(name){
    var list_of_fields = skinObj.data.objects[0].tabular_data_schema.included_in_tables[name].default.map(function(item){
-      return skinObj.data.objects[0].tabular_data_schema.schema[item];
+      return skinObj.data.objects[0].tabular_data_schema.copied_schema[item];
    });
    return list_of_fields;
   };
