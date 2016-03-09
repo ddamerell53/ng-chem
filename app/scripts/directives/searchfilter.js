@@ -57,11 +57,13 @@ angular.module('chembiohubAssayApp')
           $rootScope.$broadcast("cleanupFilters",{"col": $scope.col, "reset_query_type" : true })         
           $scope.sendFilterUpdate(false)
 
+
         }
 
         $scope.closeMenu = function(){
           $scope.col.showFilters = false;
-          document.getElementById('validatorId').click();
+          //Get rid of the coloured top on the selected cell in the table
+           $rootScope.$broadcast("updateListView");
         }
 
 
@@ -117,9 +119,7 @@ angular.module('chembiohubAssayApp')
           return false;
         }
 
-        $scope.close = function(){
-        	$scope.col.showFilters = false;
-        }
+
 
         //now we need a way of getting the correct form and schema for this field from the custom fields
 
