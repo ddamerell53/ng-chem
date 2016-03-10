@@ -146,6 +146,9 @@ angular.module('chembiohubAssayApp')
                     }
                 );
         };
+        $timeout(function(){
+          svgify();
+        })
         //$timeout(function(){ $scope.loadSavedSearches();});
 
       } );

@@ -1095,6 +1095,12 @@ li.breadcrumb.ng-enter.ng-enter-active {
 .subheading {
   background: linear-gradient(#72777f, #aaa);
 }
+svg.svg, li svg.svg {
+  fill: #002147;
+}
+svg.svg.nonchem, li svg.svg.nonchem {
+  fill: rgb(190,15,52);
+}
 
 /* 16-column bootstrap grid classes */
 /*!

@@ -1,6 +1,7 @@
 'use strict';
 
 function svgify(){
+    console.log('svgify called');
     jQuery('img.svg').each(function(){
         var $img = jQuery(this);
         var imgID = $img.attr('id');
