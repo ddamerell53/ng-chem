@@ -464,14 +464,13 @@ $urlRouterProvider.when('', '/projects/list');
     modalStateProvider.state('cbh.searchv2.record', {
         url: '/:uniqId',
         templateUrl: 'views/templates/single-compound-full.html',
-        controller: function($scope){
-          $scope.mol = {}
-
-        }
+        size: 'lg',
+        controller: 'SinglemolCtrl'
     });
     modalStateProvider.state('cbh.searchv2.record.edit', {
         url: '/edit',
-        templateUrl: 'views/templates/single-field.html',
+        templateUrl: 'views/templates/single-compound-full.html',
+        size: 'lg',
         controller: function($scope){
           $scope.mol = {}
 
