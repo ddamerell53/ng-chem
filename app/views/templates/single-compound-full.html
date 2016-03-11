@@ -1,5 +1,5 @@
 <div class="modal-header">
-    <button type="button" class="close pull-right" data-dismiss="alert" aria-label="Close" ng-click="modalInstance.dismiss('cancel');"><span class="glyphicon glyphicon-remove-circle"></span></button>
+    <button type="button" class="close pull-right" data-dismiss="alert" aria-label="Close" ng-click="$dismiss('cancel');"><span class="glyphicon glyphicon-remove-circle"></span></button>
     <h2 class="modal-title blue nexa">Batch {{::mol.id}} - {{::mol.chemblId}} <a href="" clip-copy="::mol.chemblId" clip-click="" role="button" class="btn btn-default"><span class="glyphicon glyphicon-file"></span> Copy ID</a> 
 
 <a ng-if="projectObj.project_type.show_compounds == true" href="" clip-copy="::mol.properties.cdxml" clip-click="" role="button" class="btn btn-default"><span class="glyphicon glyphicon-file"></span> Copy CDXML</a> 
@@ -141,5 +141,5 @@
 </div>
 <div class="modal-footer">
     <button class="btn btn-primary" ng-disabled="!projectObj.editor" ng-show="editMode" ng-click="updateBatch(modalInstance);">Update and Close</button>
-    <button class="btn btn-danger" ng-click="cancel()">Close <span ng-show="editMode">and Discard Changes</span></button>
+    <button class="btn btn-danger" ng-click="$dismiss('cancel')">Close <span ng-show="editMode">and Discard Changes</span></button>
 </div>

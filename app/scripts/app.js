@@ -469,6 +469,14 @@ $urlRouterProvider.when('', '/projects/list');
 
         }
     });
+    modalStateProvider.state('cbh.searchv2.record.edit', {
+        url: '/edit',
+        templateUrl: 'views/templates/single-field.html',
+        controller: function($scope){
+          $scope.mol = {}
+
+        }
+    });
 
 
 
