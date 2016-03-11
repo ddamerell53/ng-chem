@@ -18,9 +18,12 @@ angular.module('chembiohubAssayApp')
 
         var searchUrlParamsV2 = {"params":{"query": []}};
 
-        searchUrlParamsV2.generate_form = function(stateParams) {
+        searchUrlParamsV2.generate_form = function(stateParams, cbh) {
             skinConfig.objects[0].refresh_tabular_schema();
-
+            if(stateParams.textsearch){
+              cbh.textsearch = stateParams.textsearch;
+            }
+            
             var schema = skinConfig.objects[0].tabular_data_schema.copied_schema;
             var filteredColumns = [];
             var filterObjects = [];
@@ -96,7 +99,6 @@ angular.module('chembiohubAssayApp')
 
             skinConfig.objects[0].filter_objects = filteredColumns;
             $rootScope.$broadcast("searchParamsChanged");
-            console.log(filteredColumns)
             return params
 
         };
@@ -143,6 +145,12 @@ angular.module('chembiohubAssayApp')
             
             return skinConfig.objects[0].get_table_schema_by_name("search_page");
          };
+
+         searchUrlParamsV2.get_textsearch_params = function(stateParams, textsearch){
+            //Adding a function here so everything is in one place that affects the search params
+            stateParams.textsearch = textsearch;
+            return stateParams;
+         }
 
 
         return searchUrlParamsV2;
