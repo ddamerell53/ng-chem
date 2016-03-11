@@ -13,8 +13,36 @@
 
 angular.module('chembiohubAssayApp')
 
+//Giving single molecule view a state to not break the back button and help with new API
+//http://plnkr.co/edit/CoIhRixz15WZNF4pFHCx?p=preview
+.provider('modalState', function($stateProvider) {
+    var provider = this;
+    this.$get = function() {
+        return provider;
+    }
+    this.state = function(stateName, options) {
+        var modalInstance;
+        $stateProvider.state(stateName, {
+            url: options.url,
+            onEnter: function($modal, $state) {
+                modalInstance = $modal.open(options);
+                modalInstance.result['finally'](function() {
+                    modalInstance = null;
+                    if ($state.$current.name === stateName) {
+                        $state.go('^');
+                    }
+                });
+            },
+            onExit: function() {
+                if (modalInstance) {
+                    modalInstance.close();
+                }
+            }
+        });
+    };
+})
 
-.config(function($stateProvider, $urlRouterProvider, $urlMatcherFactoryProvider) {
+.config(function($stateProvider, $urlRouterProvider, $urlMatcherFactoryProvider, modalStateProvider) {
 $urlRouterProvider.when('', '/projects/list');
 
     // catch all route
@@ -108,6 +136,9 @@ $urlRouterProvider.when('', '/projects/list');
       views: {
         '': {
           templateUrl: 'views/search.html',
+          controller: function($scope, $state){
+            $scope.$state = $state;
+          }
         },
         'form@cbh.searchv2': {
           controller: 'Searchv2Ctrl',
@@ -439,7 +470,16 @@ $urlRouterProvider.when('', '/projects/list');
       },
       templateUrl: 'views/list_plates.html',
       controller: 'PlatemapCtrl',
-    })
+    });
+    
+    modalStateProvider.state('cbh.searchv2.record', {
+        url: '/:uniqId',
+        templateUrl: 'views/templates/single-compound-full.html',
+        controller: function($scope){
+          $scope.mol = {}
+
+        }
+    });
 
 
 
@@ -471,6 +511,7 @@ $urlRouterProvider.when('', '/projects/list');
 
 
   })
+
   .factory('authHttpResponseInterceptor', ['$q', '$location', 'urlConfig', function($q, $location, urlConfig) {
     return {
       response: function(response) {
