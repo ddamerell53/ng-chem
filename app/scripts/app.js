@@ -89,7 +89,7 @@ $urlRouterProvider.when('', '/projects/list');
     })
 
     .state('cbh.searchv2', {
-      url: '/searchv2?editMode=&page=&compoundBatchesPerPage=&viewType=&limit&offset&justAdded=&encoded_query=&encoded_sorts=&encoded_hides=',
+      url: '/searchv2?editMode=&page=&compoundBatchesPerPage=&viewType=&limit&offset&justAdded=&encoded_query=&encoded_sorts=&encoded_hides=&textsearch=',
 
       resolve: {
         gridconfig: ['CompoundListSetup', function(CompoundListSetup) {
@@ -269,18 +269,7 @@ $urlRouterProvider.when('', '/projects/list');
       controller: "ProjectlistCtrl"
     })
 
-    // .state('cbh.projects.empty', {
-    //   url: '/newuser',
-    //   templateUrl: 'views/no-projects.html',
-    //   controller: function($scope) {
 
-    //   }
-
-    // })
-
- 
-
-    
     .state('cbh.projects.project', {
         url: window.projectUrlMatcher,
         templateUrl: 'views/project-full.html',
