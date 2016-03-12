@@ -67,6 +67,27 @@ angular.module('chembiohubAssayApp')
   			
       	};
 
+        $scope.unHideAll = function(){
+          angular.forEach($scope.hide_objects, function(bc){
+            bc.hide= 'show';
+          });;
+          $rootScope.$broadcast("removeAllHides");
+
+        }
+
+        $scope.toggleHide = function(bc){
+          if(bc.hide=='hide'){
+            bc.hide = "show";
+          $rootScope.$broadcast("removeHide", {"field_path": bc.data});
+        }else{
+          bc.hide = "hide";
+          $rootScope.$broadcast("addHide", {"field_path": bc.data});
+
+        }
+          
+        
+        };
+
         $scope.closeHideBreadcrumb = function(bc){
 
           bc.hide = "show";

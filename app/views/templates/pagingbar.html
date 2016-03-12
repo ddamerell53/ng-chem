@@ -1,21 +1,23 @@
 <div class="row"  >
     <div ng-show="stateName == 'cbh.projects.project.addcompounds'" class="col-xs-6" >
-        <button ng-disabled="compoundBatches.sorts.length ==0" ng-click="nullSorts()" class="btn btn-default ">
-            Remove Sorts
-        </button>
-        <button  ng-show="stateName == 'cbh.projects.project.addcompounds'" ng-disabled="warningsFilter==''" ng-click="cbh.toggleWarningsFilter('')" class="btn btn-default ">
-            Remove Filters
-        </button>
-        <!-- Add button launching popup to explain the different compound statuses -->
-        <a ng-click="cbh.openStatusExplanation()" role="button" class="btn btn-default"><span class="glyphicon glyphicon-question-sign"></span> What do the different statuses mean?</a>
+        
+       
+        
+        <!-- 
+        <a ng-click="cbh.openStatusExplanation()" role="button" class="btn btn-default"><span class="glyphicon glyphicon-question-sign"></span> What do the different statuses mean?</a> -->
     </div>
     <div class="col-xs-6" ng-show="stateName != 'cbh.projects.project.addcompounds'">
         <div class="form-group" >
             <div class="col-xs-8 col-sm-8" style="padding:0 3px;">
                 <div class="btn-group">
-                    <button ng-if="!(compoundBatches.sorts.length ==0)" ng-click="nullSorts()" class="btn btn-default ">
-                        Remove Sorts
-                    </button>
+                <button id="hideOptions" type="button" data-toggle="dropdown"class="btn btn-default ">
+                    Field Options&nbsp;<span class="caret" ></span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="projectOptions">
+                     <li class="col-xs-12">Filter, sort or hide</li> 
+                     <li ><div class="col-xs-12"><input  placeholder="Search by name" type="text" ng-model="hidefilter"></input></div></li>
+                     <li ng-repeat="col in cbh.tabular_data_schema | filter:{knownBy : hidefilter}:strict"><a ng-click="cbh.sendToSearch(col)">{{col.knownBy}}</a></li>
+                </ul>
                     <label class="btn btn-default" ng-class="{ active: listOrGallery.choice === 'list' }" >
                         <input type="radio" ng-model="listOrGallery.choice" value="list" id="list-btn" name="listOrGallery" style="display:none;" ng-change="changeView()"><span class="glyphicon glyphicon-list-alt"></span><span class="hidden-xs hidden-sm"> List</span>
                     </label>

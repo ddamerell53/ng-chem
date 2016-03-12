@@ -33,14 +33,14 @@
                 <!-- This is now the searching column -->
                 <div style="display:flex; justify-content: space-around; align-items: center;">
                     <ul class="list-unstyled text-center" style="margin-bottom:0;">
-                        <li><img src="images/search.svg" class="svg {{!project.project_type.show_compounds ? 'nonchem' : ''}}"></li>
+                        <li ><img src='images/search.svg' class="svg {{!project.project_type.show_compounds ? 'nonchem' : ''}}" ></li>
                         <li><strong class="nexa"><span>search</span></strong></li>
                     </ul>
                         
                     
                     
                     <p style="margin: 0;">
-                        <a ng-click="cbh.hideSearchForm=true;" ui-sref="cbh.search({project__project_key__in: project.project_key})"><span class="glyphicon glyphicon-search"></span> Search all {{project.project_type.show_compounds ? 'compounds' : 'inventory items' }}</a>
+                        <a ng-click="cbh.hideSearchForm=true;" ui-sref="cbh.searchv2({pids: project.id })"><span class="glyphicon glyphicon-search"></span> Search all {{project.project_type.show_compounds ? 'compounds' : 'inventory items' }}</a>
                         <br> 
                         <a ui-sref="cbh.search({creator_uri: cbh.logged_in_user.resource_uri, project__project_key__in: project.project_key })"><span class="glyphicon glyphicon-user"></span> Search my {{project.project_type.show_compounds ? 'compounds' : 'inventory items' }}</a>
                     </p>
