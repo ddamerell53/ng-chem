@@ -11,6 +11,10 @@ angular.module('chembiohubAssayApp')
     .controller('Compoundbatchv2Ctrl', ['$scope', '$rootScope', '$state', '$stateParams', '$timeout', 'CBHCompoundBatch', 'urlConfig', '$window', '$location', '$anchorScroll', '$filter', 'SearchUrlParamsV2','skinConfig',
         function($scope, $rootScope, $state, $stateParams, $timeout, CBHCompoundBatch, urlConfig, $window, $location, $anchorScroll, $filter, SearchUrlParamsV2, skinConfig) {
             
+            $scope.cbh.resetSearch = function(){
+                $state.go("cbh.searchv2",  {}, {reload: true, inherit: false});
+            }
+
             $scope.resetCompoundList = function(){
                 $scope.cbh.tabular_data_schema = SearchUrlParamsV2.get_tabular_data_schema($stateParams);
                 $scope.compoundBatches = {
@@ -266,38 +270,7 @@ angular.module('chembiohubAssayApp')
 
 
             $scope.cbh.setUpPageNumbers();
-            $scope.blankForm = function(toggleAddingOff, cloned) {
-                if (angular.isDefined($scope.cbh.projAddingTo)) {
-                    var myform = angular.copy($scope.cbh.projAddingTo.schemaform.form);
-                    //we may need to replicate this within the search form...
-                    angular.forEach(myform, function(item) {
-                        item['feedback'] = false;
-                        item['disableSuccessState'] = true;
 
-                    });
-                    $scope.myschema = angular.copy($scope.cbh.projAddingTo.schemaform.schema);
-                    $scope.formChunks = myform.chunk(Math.ceil($scope.cbh.projAddingTo.schemaform.form.length / 3));
-
-                    $scope.newMol = {
-                        "customFields": {}
-                    };
-                    if(cloned){
-                        $scope.newMol.customFields = angular.copy(cloned.customFields);
-                        $scope.newMol.id = undefined;
-                        $scope.newMol.resource_uri = undefined;
-                    }
-                    //need to also make the form pristine and remove (usually incorrect) validation cues...
-                    //we've removed the feedback because it is broken in angular schema form and therefore inconsistent.
-                    angular.forEach($scope.formChunks, function(chunk) {
-                        chunk.$pristine = true;
-                    });
-                    if (toggleAddingOff) {
-                        $scope.addingData = false;
-                    }
-                }
-
-
-            };
 
             $scope.cbh.toggleEditMode = function() {
                 $scope.cbh.editMode = !$scope.cbh.editMode;

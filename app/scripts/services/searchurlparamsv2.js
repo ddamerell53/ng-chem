@@ -76,11 +76,21 @@ angular.module('chembiohubAssayApp')
               projids = stateParams.pids.split(",");
             }
             angular.forEach(cbh.projects.objects, function(p){
-              if (projids.indexOf(p.id) > -1){
+              if (projids.indexOf(p.id.toString()) > -1){
                 p.filtered = true;
                 cbh.selected_projects.push(p);
+              }else{
+                p.filtered = false;
               }
             });
+
+            if(stateParams.textsearch){
+              cbh.textsearch = stateParams.textsearch;
+            }else{
+              cbh.textsearch = '';
+            }
+
+
             
           };
 
