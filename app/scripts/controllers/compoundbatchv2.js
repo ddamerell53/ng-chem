@@ -11,22 +11,36 @@ angular.module('chembiohubAssayApp')
     .controller('Compoundbatchv2Ctrl', ['$scope', '$rootScope', '$state', '$stateParams', '$timeout', 'CBHCompoundBatch', 'urlConfig', '$window', '$location', '$anchorScroll', '$filter', 'SearchUrlParamsV2','skinConfig',
         function($scope, $rootScope, $state, $stateParams, $timeout, CBHCompoundBatch, urlConfig, $window, $location, $anchorScroll, $filter, SearchUrlParamsV2, skinConfig) {
             
+            $scope.cbh.resetSearch = function(){
+                $state.go("cbh.searchv2",  {}, {reload: true, inherit: false});
+            }
+
             $scope.resetCompoundList = function(){
+                $scope.cbh.tabular_data_schema = SearchUrlParamsV2.get_tabular_data_schema($stateParams);
                 $scope.compoundBatches = {
                     data: [],
                     redraw: 0,
                     sorts: [],
-                    tabular_data_schema : SearchUrlParamsV2.get_tabular_data_schema($stateParams)
+                    tabular_data_schema : $scope.cbh.tabular_data_schema
                 };
             }
 
+            $scope.cbh.sendToSearch = function(col){
+                angular.forEach($scope.compoundBatches.tabular_data_schema, function(c){
+                            c.showFilters = false;
+                        });
+                $timeout(function(){
+                        $scope.cbh.column = col;
+                        $rootScope.$broadcast("columnSelection", $scope.cbh.column);
+                        $scope.cbh.changeSearchParams($stateParams, true);
 
+                }); 
+            }
 
 
         $rootScope.$on("cleanupFilters", function(event, args){
             angular.forEach(skinConfig.objects[0].query_schemaform.default.form, function(form){
                 if(form.key != "query_type" && form.key){
-                    console.log(form.key)
                     args.col.filters[form.key] = skinConfig.objects[0].query_schemaform.default.schema.properties[form.key].default;
                 }else if (args.reset_query_type &&  form.key == "query_type"){
                     args.col.filters.query_type = skinConfig.objects[0].query_schemaform.default.schema.properties[form.key].default;
@@ -51,10 +65,18 @@ angular.module('chembiohubAssayApp')
             $scope.cbh.changeSearchParams(params, true);
         });
 
+        $rootScope.$on("removeAllHides",function( event, args){
+            
+            skinConfig.objects[0].hides_applied = [];
+            var params = SearchUrlParamsV2.generate_hide_params($stateParams);
+            $scope.cbh.changeSearchParams(params, true);
+        });
+
+
+
          $rootScope.$on("removeHide",function( event, args){
             
             var index = skinConfig.objects[0].hides_applied.indexOf(args.field_path);
-            console.log(index);
             if(index > -1){
               skinConfig.objects[0].hides_applied.splice(index, 1);
             }
@@ -117,6 +139,46 @@ angular.module('chembiohubAssayApp')
             );
 
 
+           $scope.cbh.selectAllProjects = function(){
+                $scope.cbh.selected_projects = [];
+                angular.forEach($scope.cbh.projects.objects, function(p){
+                    $scope.cbh.selected_projects.push(p);
+                });
+                
+                angular.forEach($scope.cbh.projects.objects, function(p){
+                    p.filtered = true;
+                });
+                var params = SearchUrlParamsV2.get_project_params($stateParams, $scope.cbh.selected_projects);
+                $scope.cbh.changeSearchParams(params, true);
+           }
+            
+            $scope.cbh.deSelectAllProjects = function(){
+                $scope.cbh.selected_projects = [];
+                angular.forEach($scope.cbh.projects.objects, function(p){
+                    p.filtered = false;
+                });
+                var params = SearchUrlParamsV2.get_project_params($stateParams, $scope.cbh.selected_projects);
+                $scope.cbh.changeSearchParams(params, true);
+           }
+
+           $scope.cbh.toggleProjectFiltered = function(proj){
+                var justToggledOn = true;
+
+                angular.forEach($scope.cbh.selected_projects,function( sel, index, array){
+                    if(proj.id == sel.id){
+                        array.splice(index, 1);
+                        justToggledOn = false;
+                        proj.filtered = false;
+                    }
+                });
+
+                if(justToggledOn){
+                    $scope.cbh.selected_projects.push(proj);
+                    proj.filtered = true;
+                }
+                var params = SearchUrlParamsV2.get_project_params($stateParams, $scope.cbh.selected_projects);
+                $scope.cbh.changeSearchParams(params, true);
+           }
             
 
             
@@ -195,13 +257,6 @@ angular.module('chembiohubAssayApp')
                 }
             }
 
-
-
-            //..
-
-
-
-
             $scope.cbh.patchRecord = function(mol) {
                 $scope.compoundBatches.backup = angular.copy($scope.compoundBatches.data);
                 CBHCompoundBatch.patch(mol).then(function(data) {
@@ -215,38 +270,7 @@ angular.module('chembiohubAssayApp')
 
 
             $scope.cbh.setUpPageNumbers();
-            $scope.blankForm = function(toggleAddingOff, cloned) {
-                if (angular.isDefined($scope.cbh.projAddingTo)) {
-                    var myform = angular.copy($scope.cbh.projAddingTo.schemaform.form);
-                    //we may need to replicate this within the search form...
-                    angular.forEach(myform, function(item) {
-                        item['feedback'] = false;
-                        item['disableSuccessState'] = true;
 
-                    });
-                    $scope.myschema = angular.copy($scope.cbh.projAddingTo.schemaform.schema);
-                    $scope.formChunks = myform.chunk(Math.ceil($scope.cbh.projAddingTo.schemaform.form.length / 3));
-
-                    $scope.newMol = {
-                        "customFields": {}
-                    };
-                    if(cloned){
-                        $scope.newMol.customFields = angular.copy(cloned.customFields);
-                        $scope.newMol.id = undefined;
-                        $scope.newMol.resource_uri = undefined;
-                    }
-                    //need to also make the form pristine and remove (usually incorrect) validation cues...
-                    //we've removed the feedback because it is broken in angular schema form and therefore inconsistent.
-                    angular.forEach($scope.formChunks, function(chunk) {
-                        chunk.$pristine = true;
-                    });
-                    if (toggleAddingOff) {
-                        $scope.addingData = false;
-                    }
-                }
-
-
-            };
 
             $scope.cbh.toggleEditMode = function() {
                 $scope.cbh.editMode = !$scope.cbh.editMode;
@@ -403,10 +427,6 @@ angular.module('chembiohubAssayApp')
                         $scope.totalCompoundBatches = result.meta.totalCount;
                         $scope.compoundBatches.data = result.objects;
                         $scope.compoundBatches.backup = angular.copy(result.objects);
-
-
-
-
                         if (result.objects.length > 0) {
                             $scope.imageCallback();
                             $scope.noData = "";
@@ -429,30 +449,20 @@ angular.module('chembiohubAssayApp')
                             $scope.compoundBatches.showNonBlanks = JSON.parse($stateParams.showNonBlanks)
                         }
                     }
-
-
                 }, function(error){
                     $scope.resetCompoundList();
                     $scope.noData = "Sorry, there was an error with that query. No data found.";
-                                        $scope.imageCallback();
-
+                    $scope.imageCallback();
                 }
                 );
                 if( $scope.cbh.showSingle){
                     //turn oon the add inventory items
                     $scope.toggleAddData();
-                    $scope.cbh.showSingle = false;
-                    
+                    $scope.cbh.showSingle = false;   
                 }
-
             }
 
-
-
-
-
             $scope.undoChanges = function() {
-                console.log("test")
                 $scope.currentlyLoading = true;
                 $scope.compoundBatches.data = angular.copy($scope.compoundBatches.backup);
                 var itemsToChange = $scope.cbh.changesToUndo.map(function(item) {

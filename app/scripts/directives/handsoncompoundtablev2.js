@@ -17,10 +17,7 @@ angular.module('chembiohubAssayApp')
                     $timeout(function(){
                             $scope.cbh.column = col;
                             $rootScope.$broadcast("columnSelection", $scope.cbh.column);
-                       
-                    });
-                    
-                    
+                    }); 
                 }
             }],
             link: function preLink(scope, element, attrs) {

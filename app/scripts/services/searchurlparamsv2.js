@@ -70,6 +70,27 @@ angular.module('chembiohubAssayApp')
               skinConfig.objects[0].sorts_applied = [];
                 skinConfig.objects[0].sort_objects = [] ;
             }
+            cbh.selected_projects = [];
+            var projids = [];
+            if(stateParams.pids){
+              projids = stateParams.pids.split(",");
+            }
+            angular.forEach(cbh.projects.objects, function(p){
+              if (projids.indexOf(p.id.toString()) > -1){
+                p.filtered = true;
+                cbh.selected_projects.push(p);
+              }else{
+                p.filtered = false;
+              }
+            });
+
+            if(stateParams.textsearch){
+              cbh.textsearch = stateParams.textsearch;
+            }else{
+              cbh.textsearch = '';
+            }
+
+
             
           };
 
@@ -150,6 +171,12 @@ angular.module('chembiohubAssayApp')
             //Adding a function here so everything is in one place that affects the search params
             stateParams.textsearch = textsearch;
             return stateParams;
+         }
+
+         searchUrlParamsV2.get_project_params = function(stateParams, selected_projects){
+            var pids = selected_projects.map(function(p){return p.id});
+            stateParams.pids = pids.join(",");
+            return stateParams
          }
 
 

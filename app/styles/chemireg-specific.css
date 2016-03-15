@@ -147,6 +147,9 @@ height: auto !important;
 .lightgrey {
   color: lightgrey;
 }
+
+
+
 .handsontable .htAutocompleteArrow {
   float: right;
   font-size: 14px;
@@ -980,7 +983,7 @@ li.platewell.header {
 }
 
 li.breadcrumb {
-    padding: 10px 15px;
+    padding: 10px 10px;
     border: 2px solid rgb(68,104,125);
     margin-right:10px;
     color: #002147;
@@ -994,14 +997,18 @@ li.breadcrumb span.bcname {
 }
 li.breadcrumb p{
   margin-bottom:0;
+  line-height:1.2em;
 }
 li.breadcrumb button {
     margin-left: 5px;
 }
+div.holder {
 
+}
 fieldset.breadcrumbs {
+  padding-bottom:0px !important;
+  min-height: 105px;
   border: 2px dashed #ddd;
-    margin-top:-2px;
     z-index:-1;
     -webkit-transition: max-height 0.3s ease-in-out, opacity 0.2s 0.1s ease-in-out;
     transition: max-height 0.3s ease-in-out, opacity 0.2s 0.1s ease-in-out;
@@ -1020,11 +1027,12 @@ fieldset.filters {
 fieldset.breadcrumbs legend, fieldset.filters legend {
     border-bottom: none;
     width: inherit;
-    padding: 0 10px;
+    padding: 0 0px;
     font-size: large;
     font-family: NexaBold;
     color: #002147;
-    margin-bottom:5px;
+    margin-bottom:0px;
+
 }
 fieldset.breadcrumbs ul.list-inline > li {
     padding-bottom: 0;
