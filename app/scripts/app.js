@@ -462,20 +462,12 @@ $urlRouterProvider.when('', '/projects/list');
     });
     
     modalStateProvider.state('cbh.searchv2.record', {
-        url: '/:uniqId',
+        url: '/:uniqId?edit=',
         templateUrl: 'views/templates/single-compound-full.html',
         size: 'lg',
         controller: 'SinglemolCtrl'
     });
-    modalStateProvider.state('cbh.searchv2.record.edit', {
-        url: '/edit',
-        templateUrl: 'views/templates/single-compound-full.html',
-        size: 'lg',
-        controller: function($scope){
-          $scope.mol = {}
-
-        }
-    });
+    //we can use modalStateProvider for other modals that need their own directly navigable route
 
 
 
