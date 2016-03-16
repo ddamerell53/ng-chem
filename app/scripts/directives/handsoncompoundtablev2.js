@@ -66,7 +66,7 @@ angular.module('chembiohubAssayApp')
                 function addButtonMenuEvent(button, col, TH) {
                     Handsontable.Dom.addEvent(button, 'click', function(event) {
                         //Cancel any existing showfilters flags so we dont get two highlighted columns
-                        angular.forEach(scope.columns, function(c){
+                        angular.forEach(scope.cbh.tabular_data_schema, function(c){
                             c.showFilters = false;
                         });
                         scope.sendToSearch(col);
@@ -96,16 +96,30 @@ angular.module('chembiohubAssayApp')
                      var rend = renderers.getRenderers(scope, isNewCompoundsInterface);
                      var allCols = [];
 
-                    angular.forEach(scope.columns, function(c) {
+                    angular.forEach(scope.cbh.tabular_data_schema, function(c) {
                         if (angular.isDefined(c.renderer_named)) {
                             if(angular.isDefined(rend[c.renderer_named])){
                                 c.renderer = rend[c.renderer_named];
                             }
 
                         }
-                        if(c.hide != "hide"){
-                            allCols.push(c);
+                        //Provided we are in edit mode or newcompoundsinterface then 
+                        //make the editable cells not readonly
+                        //On the new compounds interface then this will work for the 
+                        //action item
+                        if(c.editable && (scope.cbh.editMode || isNewCompoundsInterface)){
+                            c.readOnly = false;
+                        }else{
+                            c.readOnly = true;
                         }
+                        if(c.hide != "hide"){
+                            if(c.knownBy == "Clone" && scope.cbh.editMode){
+                                //nothing
+                            }else{
+                                allCols.push(c);
+                            }
+                        }
+
                         
                     });
 
@@ -181,7 +195,7 @@ angular.module('chembiohubAssayApp')
                         maxRows: scope.compounds.length,
                         renderAllRows: true,
                         fillHandle: "vertical",
-                        height: 500,
+                        height: 600,
                     }
                     if (isNewCompoundsInterface) {
                         hotObj.afterChange = function(data, sourceOfChange) {
@@ -228,13 +242,13 @@ angular.module('chembiohubAssayApp')
 
                                         if (firstValueArchived && cellLink.children[0].className == ('btn btn-danger')) {
                                             
-                                            cellLink.innerHTML = "<button class='btn btn-success'><span class=' glyphicon glyphicon-ok'></span>&nbsp;Restore</button>"
+                                            cellLink.innerHTML = "<button class='btn btn-success btn-xs'><span class=' glyphicon glyphicon-ok'></span>&nbsp;Restore</button>"
                                             mol.toArchive = true;
                                             mol.properties.archived = true;
                                             cellLink.click();
                                         } else if (!firstValueArchived && cellLink.children[0].className == ('btn btn-success')) {
                                             
-                                            cellLink.innerHTML = "<button class='btn btn-danger'><span class='glyphicon glyphicon-remove'></span>&nbsp;Archive</button>";
+                                            cellLink.innerHTML = "<button class='btn btn-danger btn-xs'><span class='glyphicon glyphicon-remove'></span>&nbsp;Archive</button>";
                                             mol.toArchive = false;
                                             mol.properties.archived = false;
                                             cellLink.click();

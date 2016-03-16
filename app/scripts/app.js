@@ -118,7 +118,6 @@ $urlRouterProvider.when('', '/projects/list');
 
     .state('cbh.searchv2', {
       url: '/searchv2?pids=&editMode=&page=&compoundBatchesPerPage=&viewType=&limit&offset&justAdded=&encoded_query=&encoded_sorts=&encoded_hides=&textsearch=',
-
       resolve: {
         gridconfig: ['CompoundListSetup', function(CompoundListSetup) {
           return CompoundListSetup;
@@ -131,6 +130,9 @@ $urlRouterProvider.when('', '/projects/list');
           return MessageFactory.getMessages();
         }],
 
+      },
+      params: {
+        archived: undefined  //The archived param is used in the getResultsPage function to add an additional filter 
       },
 
       views: {
@@ -154,6 +156,81 @@ $urlRouterProvider.when('', '/projects/list');
 
 
     })
+  .state('cbh.archiveitems', {
+      url: '/archiveitems?pids=&page=&compoundBatchesPerPage=&viewType=&limit&offset&justAdded=&encoded_query=&encoded_sorts=&encoded_hides=&textsearch=',
+      resolve: {
+        gridconfig: ['CompoundListSetup', function(CompoundListSetup) {
+          return CompoundListSetup;
+        }],
+        projectFactory: ['ProjectFactory', function(ProjectFactory) {
+          return ProjectFactory;
+        }],
+        messages: ['MessageFactory', function(MessageFactory) {
+          return MessageFactory.getMessages();
+        }],
+      },
+      params: {
+        archived: false  //The archived param is used in the getResultsPage function to add an additional filter 
+      },
+      views: {
+        '': {
+          templateUrl: 'views/search.html',
+          controller: function($scope, $state){
+            $scope.$state = $state;
+          }
+        },
+        'form@cbh.archiveitems': {
+          controller: 'Searchv2Ctrl',
+          templateUrl: 'views/templates/search-templatev2.html'
+        },
+
+        'newresults@cbh.archiveitems': {
+          templateUrl: 'views/compound-list-newv2.html',
+          controller: 'Compoundbatchv2Ctrl'
+        },
+
+      }
+
+
+    })
+.state('cbh.restoreitems', {
+      url: '/restoreitems?pids=&page=&compoundBatchesPerPage=&viewType=&limit&offset&justAdded=&encoded_query=&encoded_sorts=&encoded_hides=&textsearch=',
+      resolve: {
+        gridconfig: ['CompoundListSetup', function(CompoundListSetup) {
+          return CompoundListSetup;
+        }],
+        projectFactory: ['ProjectFactory', function(ProjectFactory) {
+          return ProjectFactory;
+        }],
+        messages: ['MessageFactory', function(MessageFactory) {
+          return MessageFactory.getMessages();
+        }],
+      },
+      params: {
+        archived: true  //The archived param is used in the getResultsPage function to add an additional filter 
+      },
+      views: {
+        '': {
+          templateUrl: 'views/search.html',
+          controller: function($scope, $state){
+            $scope.$state = $state;
+          }
+        },
+        'form@cbh.restoreitems': {
+          controller: 'Searchv2Ctrl',
+          templateUrl: 'views/templates/search-templatev2.html'
+        },
+
+        'newresults@cbh.restoreitems': {
+          templateUrl: 'views/compound-list-newv2.html',
+          controller: 'Compoundbatchv2Ctrl'
+        },
+
+      }
+
+
+    })
+
 
     .state('cbh.search_assays', {
       url: '/search-assays?textsearch=&l0=&l1=&l2=&start=&end=&useruris=',
@@ -173,7 +250,6 @@ $urlRouterProvider.when('', '/projects/list');
 
 
     })
-
     .state('cbh.help', {
       //parent: 'Default',
       url: '/help',

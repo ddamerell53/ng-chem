@@ -12,16 +12,17 @@ angular.module('chembiohubAssayApp')
         function($scope, $rootScope, $state, $stateParams, $timeout, CBHCompoundBatch, urlConfig, $window, $location, $anchorScroll, $filter, SearchUrlParamsV2, skinConfig) {
             
             $scope.cbh.resetSearch = function(){
-                $state.go("cbh.searchv2",  {}, {reload: true, inherit: false});
+                $state.go($state.current.name,  {}, {reload: true, inherit: false});
             }
 
             $scope.resetCompoundList = function(){
-                $scope.cbh.tabular_data_schema = SearchUrlParamsV2.get_tabular_data_schema($stateParams);
+                
+                $scope.cbh.tabular_data_schema = skinConfig.objects[0].get_filtered_table_schema($state.current.name, $scope.cbh.selected_projects);
+
                 $scope.compoundBatches = {
                     data: [],
                     redraw: 0,
                     sorts: [],
-                    tabular_data_schema : $scope.cbh.tabular_data_schema
                 };
             }
 
@@ -185,12 +186,13 @@ angular.module('chembiohubAssayApp')
             $scope.cbh.changeSearchParams = function(newParams, notify) {
                 //General function to search and move to a new URL
                 // var pf = SearchUrlParamsV2.fromForm($scope.cbh.searchForm);
+
                 if (notify) {
                     $scope.pagination.current = 1;
                 }
                 $state.params = newParams;
                 $stateParams = newParams;
-                $state.go('cbh.searchv2', newParams, {
+                $state.go($state.current.name, newParams, {
                     // prevent the events onStart and onSuccess from firing
                     notify: false,
                     // prevent reload of the current state
@@ -260,9 +262,12 @@ angular.module('chembiohubAssayApp')
             $scope.cbh.patchRecord = function(mol) {
                 $scope.compoundBatches.backup = angular.copy($scope.compoundBatches.data);
                 CBHCompoundBatch.patch(mol).then(function(data) {
-                    CBHCompoundBatch.reindexModifiedCompound(data.id).then(function(reindexed) {
-                        $scope.undoChanges = [data.id];
+                    angular.forEach($scope.compoundBatches.data, function(m){
+                        if(m.id == mol.id){
+                            $scope.changesToUndo = [[data.id]];
+                        }
                     });
+              
                 });
 
                 $scope.compoundBatches.redraw++;
@@ -274,11 +279,6 @@ angular.module('chembiohubAssayApp')
 
             $scope.cbh.toggleEditMode = function() {
                 $scope.cbh.editMode = !$scope.cbh.editMode;
-                if ($scope.cbh.editMode) {
-                    $scope.cbh.hideSearchForm = true;
-                } else {
-                    //Nothing - we dont unhide the search form unles the user clicks
-                }
                 var newParams = angular.copy($stateParams);
                 newParams.page = 1;
                 newParams.compoundBatchesPerPage = $scope.pagination.compoundBatchesPerPage.value;
@@ -287,63 +287,72 @@ angular.module('chembiohubAssayApp')
                 $scope.cbh.changeSearchParams(newParams, false);
             }
 
-            // $scope.editModeUnreachable = function() {
-            //     var noEdit = true;
-            //     angular.forEach($rootScope.projects, function(myproj, index) {
-            //         if (myproj.project_key == $stateParams.project__project_key__in) {
-            //             if (myproj.editor) {
-            //                 noEdit = false;
-                            
-            //             }
-            //         }
-            //     });
-            //     if (noEdit) {
-            //         $scope.blankForm(true);
-            //     }
-            //     return noEdit;
-            // }
-            // if ($stateParams.editMode == "true" || $stateParams.editMode == true) {
-            //     $scope.cbh.editMode = true;
-            //     if ($scope.editModeUnreachable()) {
-            //         $scope.cbh.toggleEditMode();
-            //     }
-            // } else {
-            //     $scope.cbh.editMode = false;
-            // }
-
+     
             $scope.addingData = false;
 
             $scope.saveSingleCompound = function(toggleAddingOff) {
-                CBHCompoundBatch.saveSingleCompound($scope.cbh.projAddingTo.project_key, '', $scope.newMol.customFields).then(
+                CBHCompoundBatch.saveSingleCompound($scope.newMol).then(
                     function(data) {
-                        CBHCompoundBatch.reindexModifiedCompound(data.data.id).then(function(reindexed) {
-                            $scope.pageChanged(1);
-                            $scope.blankForm(toggleAddingOff);
-
-                        });
+                        $scope.pageChanged(1);
+                        $scope.blankForm(toggleAddingOff);
                     }
                 );
             };
 
             $scope.$on("cloneAnItem", function(event, item){
+                $scope.toggleAddData(item);
+
+            })
+
+            $scope.toggleAddData = function(item) {
                 if($scope.cbh.editMode){
                     $scope.cbh.toggleEditMode();
                 }
-                $scope.addingData = true;
-                $scope.cbh.hideSearchForm = true;
-                $scope.blankForm(false, item);
-            })
-
-            $scope.toggleAddData = function() {
                 if (!$scope.addingData) {
                     $scope.addingData = true;
-                    $scope.blankForm();
-                    $scope.cbh.hideSearchForm=true;
+                    console.log(item)
+                    $scope.blankForm(false, item);
                 } else {
                     
                     $scope.addingData = false;
                 }
             }
+
+            $scope.blankForm = function(toggleAddingOff, cloned) {
+                if (angular.isDefined($scope.cbh.projAddingTo)) {
+                    var myform = angular.copy($scope.cbh.projAddingTo.schemaform.form);
+                    //we may need to replicate this within the search form...
+                    angular.forEach(myform, function(item) {
+                        item['feedback'] = false;
+                        item['disableSuccessState'] = true;
+
+                    });
+                    $scope.myschema = angular.copy($scope.cbh.projAddingTo.schemaform.schema);
+                    $scope.formChunks = myform.chunk(Math.ceil($scope.cbh.projAddingTo.schemaform.form.length / 3));
+
+                    $scope.newMol = {
+                        "custom_fields": {},
+                        "project": {"pk" : $scope.cbh.projAddingTo.id}
+                    };
+                    if(cloned){
+                        $scope.newMol.custom_fields = angular.copy(cloned.custom_fields);
+                        $scope.newMol.id = undefined;
+                        $scope.newMol.resource_uri = undefined;
+                    }
+                    //need to also make the form pristine and remove (usually incorrect) validation cues...
+                    //we've removed the feedback because it is broken in angular schema form and therefore inconsistent.
+                    angular.forEach($scope.formChunks, function(chunk) {
+                        chunk.$pristine = true;
+                    });
+                    if (toggleAddingOff) {
+                        $scope.addingData = false;
+                    }
+                }
+
+
+            };
+
+
 
             // $scope.cbh.toggleArchiveFilter = function() {
             //     $scope.cbh.archiveFilter = !$scope.cbh.archiveFilter;
@@ -409,6 +418,14 @@ angular.module('chembiohubAssayApp')
                 // $scope.cbh.includedProjectKeys = ($scope.cbh.searchForm.project__project_key__in.length > 0) ? $scope.cbh.searchForm.project__project_key__in : $scope.cbh.projects.objects.map(function(p) {
                 //     return p.project_key
                 // });
+                $scope.resetCompoundList();
+                if($scope.cbh.selected_projects.length == 1){
+                    if($scope.cbh.selected_projects[0].editor){
+                        $scope.cbh.projAddingTo = $scope.cbh.selected_projects[0];
+                    }
+                }else{
+                    $scope.cbh.projAddingTo = undefined;
+                }
 
                 var el = document.querySelector('.hot-loading');
                     var angElement = angular.element(el);
@@ -418,7 +435,7 @@ angular.module('chembiohubAssayApp')
                 var localTimeSearched = String(timeSearched);
                 filters.limit = $scope.pagination.compoundBatchesPerPage.value;
                 filters.offset = (pageNumber - 1) * parseInt($scope.pagination.compoundBatchesPerPage.value);
-                
+
                 $scope.noData = "";
 
 
@@ -436,11 +453,8 @@ angular.module('chembiohubAssayApp')
                             $scope.imageCallback();
                         } else {
                             $scope.imageCallback();
-                            if ($state.current.name === "cbh.search") {
-                                $scope.noData = "No Compounds Found. Why not try amending your search?";
-                            } else {
-                                $scope.noData = "No Compounds Found. To add compounds use the link above.";
-                            }
+                            $scope.noData = "No Compounds Found. To add compounds use the link above.";
+                           
                         }
                         if (angular.isDefined($stateParams.showBlanks)) {
                             $scope.compoundBatches.showBlanks = JSON.parse($stateParams.showBlanks)
@@ -463,22 +477,17 @@ angular.module('chembiohubAssayApp')
             }
 
             $scope.undoChanges = function() {
-                $scope.currentlyLoading = true;
                 $scope.compoundBatches.data = angular.copy($scope.compoundBatches.backup);
                 var itemsToChange = $scope.cbh.changesToUndo.map(function(item) {
                     return $scope.compoundBatches.data[item[0]]
                 });
+                console.log(itemsToChange)
                 CBHCompoundBatch.patchList({
                     "objects": itemsToChange
-                }, $rootScope.projects).then(function(data) {
-                    angular.forEach(data, function(d) {
-
-                        CBHCompoundBatch.reindexModifiedCompound(d.id);
-
-                    });
-                    $scope.compoundBatches.redraw++;
-                    $scope.currentlyLoading = false;
-                    $scope.compoundBatches.backup = angular.copy($scope.compoundBatches.data);
+                        }, $rootScope.projects).then(function(data) {
+                            
+                            $scope.compoundBatches.redraw++;
+                            $scope.compoundBatches.backup = angular.copy($scope.compoundBatches.data);
                 });
             }
 
@@ -503,13 +512,11 @@ angular.module('chembiohubAssayApp')
                         });
 
                         $scope.cbh.changesToUndo = changes;
+                        console.log($scope.cbh.changesToUndo);
                         var patchData = {};
                         patchData.objects = itemsToChange;
                         CBHCompoundBatch.patchList(patchData, $rootScope.projects).then(function(data) {
-                            angular.forEach(data, function(d) {
-
-                                CBHCompoundBatch.reindexModifiedCompound(d.id);
-                            })
+                           
                         });
                     }
                 }
@@ -538,19 +545,39 @@ angular.module('chembiohubAssayApp')
 
 
             }
+            $scope.editModeUnreachable = function() {
+                if($stateParams.archived){
+                    //You can't edit archived items except to
+                    //un archive them
+                    return true;
+                }
+                if ($scope.cbh.selected_projects.length == 1){
+                    if($scope.cbh.selected_projects[0].editor){
+                        return false;
+                    }
+                }
+                return true;
+            }
+
              $scope.cbh.setupParams = function(){
                 
-                var pf = SearchUrlParamsV2.generate_form($stateParams, $scope.cbh);
-                $scope.resetCompoundList();
+                var pf = SearchUrlParamsV2.generate_form($stateParams, $scope.cbh, $state.current.name);
                 getResultsPage($scope.pagination.current, $stateParams);
                 $timeout(function(){
                     $scope.$apply(function(){
                         $rootScope.$broadcast("searchParamsChanged");
                     })
                     
-                })
-                
-                
+                });
+
+                if ($stateParams.editMode == "true" || $stateParams.editMode == true) {
+                    $scope.cbh.editMode = true;
+                    if ($scope.editModeUnreachable()) {
+                        $scope.cbh.toggleEditMode();
+                    }
+                } else {
+                    $scope.cbh.editMode = false;
+                }
                 
             }
 
