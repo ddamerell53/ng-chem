@@ -32,7 +32,7 @@ var configuration = {
     "cbh_skinning": {"list_endpoint": path + 
     "cbh_skinning", "schema": path + "cbh_skinning/schema"}, 
     "cbh_compound_batches": {"list_endpoint": path + 
-    "cbh_compound_batches", "schema": path + "cbh_compound_batches/schema"},
+    "cbh_compound_batches_v2", "schema": path + "cbh_compound_batches/schema"},
     "users": {"list_endpoint": path + "users", "schema": path + "users/schema"},
     "invitations": {"list_endpoint": path + "invitations", "schema": path + "invitations/schema"},
     "cbh_draft_data": {"list_endpoint": path + "datastore/cbh_draft_data", "schema": path + "datastore/cbh_draft_data/schema"},
@@ -176,6 +176,31 @@ $q.all([skinReq, projReq, userReq]).then(function(data){
    return list_of_fields;
   };
 
+skinObj.data.objects[0].get_filtered_table_schema = function(name, selected_projects){
+   var project_uris =  selected_projects.map(function(p){return p.resource_uri;});
+   var schema = skinObj.data.objects[0].get_table_schema_by_name(name);
+   var filtered = [];
+   angular.forEach(schema, function(field){
+      
+      var push = false;
+      //check that this field is used by one of the projects we have filtered down to
+      if(field.project_specific_schema){
+          angular.forEach(field.projects, function(puri){
+            if(project_uris.indexOf(puri)> -1){
+              push = true
+            }
+          });
+      }else{
+        push = true;
+      }
+      if(push){
+        filtered.push(field);
+      }
+
+   });
+   
+   return filtered;
+  };
   
 
 

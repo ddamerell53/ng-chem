@@ -73,12 +73,9 @@
                             </ul>
                         </div>
                     </li> -->
-                    <li ng-if="cbh.logged_in_user.can_view_assayreg" class="text-center clickable" style="color:white;" ng-class="cbh.currentPageClass('cbh.search_assays')">
-                        <a ui-sref="cbh.search_assays({'textsearch': cbh.textsearch})" style="color:white;"><img src="images/search-activities.png">
-                            <br><strong class="nexa"><small>search activities</small></strong></a>
-                    </li>
-                    <li ng-if="cbh.logged_in_user.can_view_chemreg" class="text-center clickable" style="color:white; " ng-class="cbh.currentPageClass('cbh.search')">
-                        <a ui-sref="cbh.search({'textsearch': cbh.textsearch})" style="color:white;"><img src="images/search-compounds.png">
+  
+                    <li ng-if="cbh.logged_in_user.can_view_chemreg" class="text-center clickable" style="color:white; " ng-class="cbh.currentPageClass('cbh.searchv2')">
+                        <a ui-sref="cbh.searchv2" style="color:white;"><img src="images/search-compounds.png">
                             <br><strong class="nexa"><small>search compounds</small></strong></a>
                     </li>
                     <li class="text-center clickable" style="color:white;" ng-class="cbh.currentPageClass('cbh.help')">

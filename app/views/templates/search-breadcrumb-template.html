@@ -29,7 +29,8 @@
                      <li ng-repeat="col in cbh.tabular_data_schema | filter:{knownBy : hidefilt}:strict">
                      	<a ng-click="toggleHide(col)">
                      		<span class="glyphicon" ng-class="col.hide=='hide' ? 'glyphicon-eye-close' : 'glyphicon-eye-open'"></span>
-                     		{{col.knownBy}}
+                            <span  style="{{col.hide=='hide' ? 'color:grey !important' : ''}}">{{col.knownBy}}</span>
+                     		
                      	</a>
                      </li>
                 </ul>
@@ -96,6 +97,6 @@
 
 </div>
 <div class="col-sm-2">
-    <button style="margin-top:30px" class="btn btn-lg btn-danger pull-right" ng-click="cbh.resetSearch()">Reset Search Page</button>
+    <button style="margin-top:30px" class="btn btn-lg btn-danger pull-right" ng-click="cbh.resetSearch()">Reset</button>
 </div>
 </div>

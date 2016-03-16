@@ -151,53 +151,48 @@ angular.module('chembiohubAssayApp')
               archivedRenderer : function(instance, td, row, col, prop, value, cellProperties) {
                 var projects = scope.cbh.projects.objects;
                 var mol = instance.getSourceDataAtRow(row);
-                var split = mol.project.split("/");
-                var projid = split[split.length-1]; 
-                angular.forEach(projects,function(myproj){
-                    if(myproj.id == projid){
-                      var toArchive = false ;
-                      var escaped = "<button class='btn btn-success'><span class=' glyphicon glyphicon-ok'></span>&nbsp;Restore</button>";
+                cellProperties.readOnly = false;
+                var toArchive = false ;
+                      var escaped = "<button class='btn btn-success btn-xs'><span class=' glyphicon glyphicon-ok'></span>&nbsp;Restore</button>";
                       if(value==null || value=="false" || value==false){
-                          var escaped = "<button class='btn btn-danger'><span class='glyphicon glyphicon-remove'></span>&nbsp;Archive</button>";
+                          var escaped = "<button class='btn btn-danger btn-xs'><span class='glyphicon glyphicon-remove'></span>&nbsp;Archive</button>";
                           toArchive = true;
                       }
+                  var myproj = scope.cbh.projAddingTo;
+                    
+                      
                       var a = document.createElement('a');
                       a.innerHTML = escaped;
                       Handsontable.Dom.addEvent(a, 'click', function (e){
                           e.preventDefault(); // prevent selection quirk
                           mol.properties.archived=toArchive;
                           value=toArchive;
-                          mol.projectKey= myproj.project_key;
+                          mol.projectKey= mol.projectfull.project_key;
                           scope.cbh.patchRecord(mol);
                       });
                       Handsontable.Dom.empty(td);
                       td.className  += "htCenter htMiddle";
                       td.appendChild(a);
+                      td.style.padding = "5px";
                       return td;
-                    }
-                      
-                  });
-
-                
+                    
               },
 
                cloneRenderer : function(instance, td, row, col, prop, value, cellProperties) {
-                var projects = scope.cbh.projects.objects;
-                var mol = instance.getSourceDataAtRow(row);
-                var split = mol.project.split("/");
-                var projid = split[split.length-1]; 
-                angular.forEach(projects,function(myproj){
-                    if(myproj.id == projid){
-                      var toArchive = false ;
-                      var escaped = "<button class='btn btn-primary'><span class=' glyphicon glyphicon-copy'></span>&nbsp;" + myproj.project_type.copy_action_name + "</button>";
+                  var mol = instance.getSourceDataAtRow(row);
+                     
+                if(scope.cbh.projAddingTo && ! scope.cbh.editMode){
+                   var toArchive = false ;
                       
-                      var a = document.createElement('a');
-                      a.innerHTML = escaped;
+                      var escaped = "<button class='btn btn-primary btn-xs'><span class=' glyphicon glyphicon-duplicate'></span>&nbsp;" + mol.projectfull.project_type.copy_action_name + "</button>";
+                      var a = document.createElement('a'); 
+                     a.innerHTML = escaped;
+                      
                       Handsontable.Dom.addEvent(a, 'click', function (e){
                           e.preventDefault(); // prevent selection quirk
-                          if(myproj.project_type.show_compounds){
+                          if(scope.cbh.projAddingTo.project_type.show_compounds){
                               //If this is a compounds project redirect to compound clone page
-                              $state.go("cbh.projects.project.addsingle",{"projectKey" : myproj.project_key, "idToClone": mol.id} , { reload: true });
+                              $state.go("cbh.projects.project.addsingle",{"projectKey" : scope.cbh.projAddingTo.project_key, "idToClone": mol.id} , { reload: true });
                           }else{
                               $rootScope.$broadcast("cloneAnItem", mol)
                           }
@@ -206,10 +201,25 @@ angular.module('chembiohubAssayApp')
                       Handsontable.Dom.empty(td);
                       td.className  += "htCenter htMiddle";
                       td.appendChild(a);
+                      td.style.padding = "5px";
                       return td;
-                    }
-                      
-                  });
+                }else{
+                var escaped = "<button disabled class='btn btn-primary btn-xs'><span class=' glyphicon glyphicon-duplicate'></span>&nbsp;" + mol.projectfull.project_type.copy_action_name + "</button>";
+
+                  var a = document.createElement('a');
+                  a.innerHTML = escaped;
+                  Handsontable.Dom.empty(td);
+                  td.className  += "htCenter htMiddle";
+                  a.title = "Select single editable project to clone";
+                  if(scope.cbh.editMode){
+                    a.title = "Select single editable project and turn off edit mode to clone";
+                  }
+                  td.appendChild(a);
+                  td.className  += "htCenter htMiddle";
+                  td.style.padding = "5px";
+                  return td;
+                }
+                
 
                 
               },

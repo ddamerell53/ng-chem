@@ -18,7 +18,7 @@ angular.module('chembiohubAssayApp')
 
         var searchUrlParamsV2 = {"params":{"query": []}};
 
-        searchUrlParamsV2.generate_form = function(stateParams, cbh) {
+        searchUrlParamsV2.generate_form = function(stateParams, cbh, stateName) {
             skinConfig.objects[0].refresh_tabular_schema();
             if(stateParams.textsearch){
               cbh.textsearch = stateParams.textsearch;
@@ -47,7 +47,6 @@ angular.module('chembiohubAssayApp')
                   schema[hide].hide = "hide";
                    hideObjs.push(schema[hide]);
                 });
-                console.log(hideObjs);
                 skinConfig.objects[0].hides_applied = hides;
                 skinConfig.objects[0].hide_objects = hideObjs ;
             }else{
@@ -70,11 +69,15 @@ angular.module('chembiohubAssayApp')
               skinConfig.objects[0].sorts_applied = [];
                 skinConfig.objects[0].sort_objects = [] ;
             }
-            cbh.selected_projects = [];
+            
             var projids = [];
             if(stateParams.pids){
               projids = stateParams.pids.split(",");
             }
+
+            
+            cbh.selected_projects = [];
+            
             angular.forEach(cbh.projects.objects, function(p){
               if (projids.indexOf(p.id.toString()) > -1){
                 p.filtered = true;
@@ -83,6 +86,8 @@ angular.module('chembiohubAssayApp')
                 p.filtered = false;
               }
             });
+
+
 
             if(stateParams.textsearch){
               cbh.textsearch = stateParams.textsearch;
@@ -114,9 +119,7 @@ angular.module('chembiohubAssayApp')
             });
 
             params.encoded_query = JSON.stringify(query);
-            if(params.encoded_query == "[]"){
-              params.encoded_query = undefined;
-            }
+            
 
             skinConfig.objects[0].filter_objects = filteredColumns;
             $rootScope.$broadcast("searchParamsChanged");
@@ -134,9 +137,7 @@ angular.module('chembiohubAssayApp')
           });
           skinConfig.objects[0].hide_objects = hideObjs ;
           params.encoded_hides = JSON.stringify(hides);
-          if(params.encoded_hides == "[]"){
-              params.encoded_hides = undefined;
-            }
+          
           $rootScope.$broadcast("searchParamsChanged");
           return params;
         }
@@ -154,19 +155,13 @@ angular.module('chembiohubAssayApp')
           skinConfig.objects[0].sort_objects = sortObjs ;
 
           params.encoded_sorts = JSON.stringify(sorts);
-          if(params.encoded_sorts == "[]"){
-              params.encoded_sorts = undefined;
-            }
+          
           $rootScope.$broadcast("searchParamsChanged");
           return params;
         }
         
 
-         searchUrlParamsV2.get_tabular_data_schema = function(stateParams) {
-            
-            return skinConfig.objects[0].get_table_schema_by_name("search_page");
-         };
-
+        
          searchUrlParamsV2.get_textsearch_params = function(stateParams, textsearch){
             //Adding a function here so everything is in one place that affects the search params
             stateParams.textsearch = textsearch;
