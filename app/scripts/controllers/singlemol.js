@@ -8,8 +8,8 @@
  * Controller of the chembiohubAssayApp
  */
 angular.module('chembiohubAssayApp')
-    .controller('SinglemolCtrl', ['$scope', '$rootScope', '$modalInstance', '$timeout', 'CBHCompoundBatch', 'ProjectFactory', '$cookies', 'FlowFileFactory', '$filter', '$stateParams', 'urlConfig', '$state', '$window',
-        function($scope, $rootScope, $modalInstance, $timeout, CBHCompoundBatch, ProjectFactory, $cookies, FlowFileFactory, $filter, $stateParams, urlConfig, $state, $window) {
+    .controller('SinglemolCtrl', ['$scope', '$rootScope', '$modalInstance', '$timeout', 'CBHCompoundBatch', 'ProjectFactory', '$cookies', 'FlowFileFactory', '$filter', '$stateParams', 'urlConfig', '$state', '$window', 'projectList',
+        function($scope, $rootScope, $modalInstance, $timeout, CBHCompoundBatch, ProjectFactory, $cookies, FlowFileFactory, $filter, $stateParams, urlConfig, $state, $window, projectList) {
             console.log('stateParams In Controller', $stateParams);
             var mol = {}
             $scope.mol = {}
@@ -26,12 +26,15 @@ angular.module('chembiohubAssayApp')
                 $scope.mol = angular.copy(mol);
                 
                 var projid = mol.projectfull.id;
+                console.log(projid);
                 $scope.projectWithCustomFieldData;
-                angular.forEach($rootScope.projects, function(myproj) {
-                    if (myproj.id.toString() == projid) {
+                angular.forEach(projectList.objects, function(myproj) {
+                    console.log(myproj)
+                    if (myproj.id == projid) {
                         $scope.projectWithCustomFieldData = myproj;
-                        $scope.projectWithCustomFieldData.updateCustomFields();
+                         $scope.projectWithCustomFieldData.updateCustomFields();
                         $scope.projectObj = myproj;
+
                     }
                 });
                 $scope.singleForm = false;

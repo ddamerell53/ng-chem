@@ -16,8 +16,10 @@ angular.module('chembiohubAssayApp')
             }
 
             $scope.resetCompoundList = function(){
-                
-                $scope.cbh.tabular_data_schema = skinConfig.objects[0].get_filtered_table_schema($state.current.name, $scope.cbh.selected_projects);
+                //We need the base statename, not the modal statename
+
+                var stateName = $state.current.name.replace(".record", "")
+                $scope.cbh.tabular_data_schema = skinConfig.objects[0].get_filtered_table_schema(stateName, $scope.cbh.selected_projects);
 
                 $scope.compoundBatches = {
                     data: [],
@@ -577,9 +579,11 @@ angular.module('chembiohubAssayApp')
 
              $scope.cbh.setupParams = function(){
                 
-                var pf = SearchUrlParamsV2.generate_form($stateParams, $scope.cbh, $state.current.name);
+                
+                var pf = SearchUrlParamsV2.generate_form($stateParams, $scope.cbh);
                 getResultsPage($scope.pagination.current, $stateParams);
                 $timeout(function(){
+                    
                     $scope.$apply(function(){
                         $rootScope.$broadcast("searchParamsChanged");
                     })

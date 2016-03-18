@@ -18,7 +18,7 @@ angular.module('chembiohubAssayApp')
 
         var searchUrlParamsV2 = {"params":{"query": []}};
 
-        searchUrlParamsV2.generate_form = function(stateParams, cbh, stateName) {
+        searchUrlParamsV2.generate_form = function(stateParams, cbh) {
             skinConfig.objects[0].refresh_tabular_schema();
             if(stateParams.textsearch){
               cbh.textsearch = stateParams.textsearch;
@@ -94,6 +94,7 @@ angular.module('chembiohubAssayApp')
             }else{
               cbh.textsearch = '';
             }
+            console.log()
 
 
             
