@@ -73,6 +73,19 @@ var schemaGetter = function(project_data_fields){
         };
 
 
+var viewFormGetter = function(project_data_fields, htmlClass, project){
+            if(!angular.isDefined(htmlClass)){
+              htmlClass = "col-xs-12";
+            }
+            var view_form = [];
+            angular.forEach(project_data_fields, function(field){
+              var vform = angular.copy(field.view_form.form);
+              view_form.push(vform);
+            });
+            return view_form
+}
+
+
 var formGetter = function(project_data_fields, htmlClass, project){
             if(!angular.isDefined(htmlClass)){
               htmlClass = "col-xs-12";
@@ -222,8 +235,10 @@ var login = null;
   angular.forEach(projData.data.objects, function(project){
         project.schemaform = {
           "form" : formGetter(project.custom_field_config.project_data_fields, "col-xs-12", project),
-          "schema" : schemaGetter(project.custom_field_config.project_data_fields)
+          "schema" : schemaGetter(project.custom_field_config.project_data_fields),
+          "viewForm" : viewFormGetter(project.custom_field_config.project_data_fields)
         }
+        console.log(project.schemaform);
         project.updateCustomFields = function(){
           
           $timeout(function(){
