@@ -24,8 +24,8 @@ angular.module('chembiohubAssayApp')
                 $scope.isNewCompoundsInterface = false;
                 
                 $scope.mol = angular.copy(mol);
-                var split = mol.project.split("/");
-                var projid = split[split.length - 1];
+                
+                var projid = mol.projectfull.id;
                 $scope.projectWithCustomFieldData;
                 angular.forEach($rootScope.projects, function(myproj) {
                     if (myproj.id.toString() == projid) {
@@ -50,7 +50,6 @@ angular.module('chembiohubAssayApp')
                 }
 
                 myform = $scope.projectWithCustomFieldData.schemaform.form;
-                console.log('myform', myform);
 
                 len = Math.ceil(myform.length / 2);
                 $scope.firstForm = angular.copy(myform).splice(0, len);
@@ -124,13 +123,10 @@ angular.module('chembiohubAssayApp')
                             key = item.key
                         };
                         var value = "";
-                        //if (angular.isDefined($scope.mol.customFields[key])) {
-                        if (angular.isDefined($scope.mol.indexed_fields[key])) {
+                        if (angular.isDefined($scope.mol.custom_fields[key])) {
 
 
-                            //value = $scope.mol.customFields[key]
-                            value = $scope.mol.indexed_fields[key]
-
+                            value = $scope.mol.custom_fields[key]
                         }
                         if (value.constructor === Array) {
                             value = value.join(", ");
