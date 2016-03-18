@@ -12,6 +12,11 @@
 angular.module('chembiohubAssayApp')
   .filter('notEmpty', function () {
     return function (input) {
-      return Object.keys(input).length > 0;
+        if(input){
+            return Object.keys(input).length > 0;
+        }else{
+            return false;
+        }
+      
     };
   });

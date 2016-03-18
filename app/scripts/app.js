@@ -39,7 +39,9 @@ angular.module('chembiohubAssayApp')
                 }
             }
         });
+        return this;
     };
+
 })
 
 .config(function($stateProvider, $urlRouterProvider, $urlMatcherFactoryProvider, modalStateProvider) {

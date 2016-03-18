@@ -20,7 +20,6 @@ angular.module('chembiohubAssayApp')
 
 
                 mol = angular.copy(data.data);
-                console.log('cbh in controller', $scope.cbh)
                 $scope.isNewCompoundsInterface = false;
                 
                 $scope.mol = angular.copy(mol);
@@ -63,6 +62,9 @@ angular.module('chembiohubAssayApp')
 
                 $scope.myschema = $scope.projectWithCustomFieldData.schemaform.schema;
                 $scope.modalInstance = $modalInstance;
+                $timeout(function(){
+                    $scope.$apply();
+                })
 
             });
 
