@@ -10,7 +10,7 @@
 
 
 angular.module('chembiohubAssayApp')
-    .factory('SearchUrlParamsV2', function($filter, $state, skinConfig, $rootScope) {
+    .factory('SearchUrlParamsV2', ['$filter', '$state', 'skinConfig', '$rootScope', 'CBHCompoundBatch', function($filter, $state, skinConfig, $rootScope, CBHCompoundBatch) {
 
         // Private variables
 
@@ -175,10 +175,45 @@ angular.module('chembiohubAssayApp')
             return stateParams
          }
 
+         /* For saved search, we are limiting the set of returned items to provide a snapshot 
+            of that search at the time specified.
+            To do this, we need to get the result returned by the search with the highest batch ID */
+         searchUrlParamsV2.generate_capped_saved_search = function(params){
+            //get the params as JSON
+            var paramsObj = JSON.parse(params.encoded_query);
+            var backend_query = {'limit':1, 'offset': 0};
+            var importantParams = ['pids', 'archived', 'encoded_query'];
+            angular.forEach(importantParams, function(p){
+              backend_query[p] = params[p];
+
+            })
+            CBHCompoundBatch.queryv2(backend_query).then(function(result) {
+
+              //get the single result, and add this as a parameter to encoded_query
+              var cap_batch_id = result.objects[0].id
+              var capping_query = {
+                "query_type":"less_than",
+                "less_than": cap_batch_id,
+                "field_path":"id"
+              }
+              paramsObj.push(capping_query);
+              params.encoded_query = JSON.stringify(paramsObj);
+              //we haven't changed the search parameters - we're just getting what they would be if capped so no need to notify about parameter changes
+              return params
+
+              
+            }, function(error){
+                $scope.noData = "Sorry, there was an error with that query. No data found.";
+                return params
+            });
+
+            
+         }
+
 
         return searchUrlParamsV2;
 
         // Public API for configuration
 
 
-    });
+    }]);

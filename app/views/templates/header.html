@@ -1,24 +1,8 @@
-<nav class="navbar navbar-default" role="navigation" style="border-bottom:10px solid #72777f; border-top:5px solid #002147;">
-    <div class="container">
-        <div class="row">
-            <div class="col pull-right" style="margin-left:20px;">
-                <!-- Projects button -->
-                <a id="projectsBtn" class="mt-8" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <div class="row pull-right">
-                        <div class="dropdown" ng-show="isLoggedIn()" style="background-color:rgb(68,104,125); margin-top:-7px; padding:16px; height:76px; max-height:76px;">
-                            <strong class="text-center nexa" style="padding-top:5px; color:white;"><img src="https://chembiohub.ox.ac.uk/hub/bower_components/chembiohub-theme/img/CBH_2_2_LowRes.png" style="height:45px">{{cbh.appName}}</strong>&nbsp;<span class="caret" style="color:white;"></span>
-                            <ul class="dropdown-menu ng-animate" role="menu" aria-labelledby="projectsBtn" style="width:210px;">
-                                <li role="presentation" style="background-color:#ddd; padding:0 8px;"><span class="glyphicon glyphicon-user"></span> <strong class="nexa"><span>{{cbh.logged_in_user.first_name || cbh.logged_in_user.username}}</span></strong></li>
-                                <li role="presentation" ng-if="cbh.logged_in_user.is_superuser" style="padding: 0 8px;"><a ng-href="{{cbh.api_base}}/admin"><span class="glyphicon glyphicon-cog"></span> <strong class="nexa">Admin Panel</strong></a></li>
-                                <li role="presentation" style="padding: 0 8px;"><a ng-click="cbh.invitationPopup()"><span class="glyphicon glyphicon-comment"></span> <strong class="nexa">Send an Invitation</strong></a></li>
-                                <li role="presentation" style="padding:0 8px;"><a href="http://goo.gl/forms/y6e4achfUE" onclick='return !window.open(this.href);'><span class="glyphicon glyphicon-exclamation-sign"></span> <strong class="nexa">Report an issue</strong></a></li>
-                                <li role="presentation" style="padding:0 8px;"><a href="{{ getUrlBase() }}logout"><span class="glyphicon glyphicon-off"></span> <strong class="nexa">Log Out</strong></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col" id="slogan" class="text-right pull-right" eui-index="'cbh_queries'" eui-enabled="true">
+<nav class="navbar navbar-default" role="navigation" style="border-bottom:10px solid #72777f; padding-top:0">
+    <div class="container" style="display: flex; justify-content: flex-end;">
+        <div class="row" style="justify-content: inherit;width: 100%;display: flex; align-items:stretch; line-height:1">
+            
+            <div class="col" id="slogan" class="text-right " eui-index="'cbh_queries'" eui-enabled="true">
                 <!-- eui-query="ejs.MultiMatchQuery(['l0.project_data.Title','l1.project_data.Title','l2.project_data.Title','l3.project_data.Title'], cbh.textsearch).type('phrase_prefix')" -->
                 <!--eui-aggregation="ejs.TermsAggregation('title_filtering').field('l1.project_data_all').size(10)"-->
                 <ul class="list-inline pull-right text-center">
@@ -83,10 +67,26 @@
                             <br><strong class="nexa"><small>help</small></strong></a>
                     </li>
                 </ul>
+                <!-- <div></div>
                 <div></div>
                 <div></div>
-                <div></div>
-                <div></div>
+                <div></div> -->
+            </div>
+            <div class="col">
+                <!-- Projects button -->
+                <a id="projectsBtn" class="mt-8" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    
+                        <div class="dropdown" ng-show="isLoggedIn()" style="background-color:rgb(68,104,125); padding:16px;">
+                            <strong class="text-center nexa" style="padding-top:5px; color:white;"><img src="https://chembiohub.ox.ac.uk/hub/bower_components/chembiohub-theme/img/CBH_2_2_LowRes.png" style="height:45px">{{cbh.appName}}</strong>&nbsp;<span class="caret" style="color:white;"></span>
+                            <ul class="dropdown-menu ng-animate" role="menu" aria-labelledby="projectsBtn" style="width:210px;">
+                                <li role="presentation" style="background-color:#ddd; padding:0 8px;"><span class="glyphicon glyphicon-user"></span> <strong class="nexa"><span>{{cbh.logged_in_user.first_name || cbh.logged_in_user.username}}</span></strong></li>
+                                <li role="presentation" ng-if="cbh.logged_in_user.is_superuser" style="padding: 0 8px;"><a ng-href="{{cbh.api_base}}/admin"><span class="glyphicon glyphicon-cog"></span> <strong class="nexa">Admin Panel</strong></a></li>
+                                <li role="presentation" style="padding: 0 8px;"><a ng-click="cbh.invitationPopup()"><span class="glyphicon glyphicon-comment"></span> <strong class="nexa">Send an Invitation</strong></a></li>
+                                <li role="presentation" style="padding:0 8px;"><a href="http://goo.gl/forms/y6e4achfUE" onclick='return !window.open(this.href);'><span class="glyphicon glyphicon-exclamation-sign"></span> <strong class="nexa">Report an issue</strong></a></li>
+                                <li role="presentation" style="padding:0 8px;"><a href="{{ getUrlBase() }}logout"><span class="glyphicon glyphicon-off"></span> <strong class="nexa">Log Out</strong></a></li>
+                            </ul>
+                        </div>
+                </a>
             </div>
         </div>
     </div>

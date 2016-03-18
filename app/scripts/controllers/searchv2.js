@@ -52,7 +52,7 @@ angular.module('chembiohubAssayApp')
                     molecule: {}
                 });
                 $scope.cbh.searchForm = angular.copy(pf.searchForm);
-                $state.transitionTo('cbh.search', {
+                $state.transitionTo('cbh.searchv2', {
                     location: true,
                     inherit: false,
                     relative: null,
@@ -185,13 +185,18 @@ angular.module('chembiohubAssayApp')
                     ProjectTypeFactory.get({"saved_search_project_type": true}, function(data){
                       
                       $scope.savedSearchType = data.objects[0];
-                      //var template = $scope.savedSearchType.project_template;
+                      
                       var d = new Date();
                       $scope.savedSearchType.project_template.name = $scope.newSavedSearchModel.alias + d.getTime().toString();
                       $scope.savedSearchType.project_template.custom_field_config.name = $scope.newSavedSearchModel.alias + d.getTime().toString();
+                      var new_state_params = SearchUrlParamsV2.generate_capped_saved_search($stateParams);
+                      //create a new URL string with the newly generated state params
+                      var new_capped_url = $state.href($state.current.name, new_state_params);
+
 
                         projectFactory.save($scope.savedSearchType.project_template, function(data){
                             var resource_uri = data.resource_uri;
+                            //change capped_url to the newly retrieved capped url
                             var savedSearchObj = {
                                 "project": data.resource_uri,
                                 "projectKey": data.project_key,
@@ -199,6 +204,7 @@ angular.module('chembiohubAssayApp')
                                 "customFields": {
                                     alias: $scope.newSavedSearchModel.alias,
                                     url: window.location.href,
+                                    capped_url: new_capped_url
                                 },
                                 "uncuratedFields":{},
                                 "warnings" :{}, 

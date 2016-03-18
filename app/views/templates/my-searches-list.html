@@ -9,7 +9,7 @@
 
             </strong><small>view details</small><br>
                 <!-- <small><span class="glyphicon glyphicon-time"></span> date added: {{ link.created | date }}</small> -->
-                <small><span class="glyphicon glyphicon-repeat"></span> <a href="{{ link.customFields.url }}">Use this search again</a> <br> <span class="glyphicon glyphicon-time"></span> see original results from {{ link.created | date }}</small>
+                <small><span class="glyphicon glyphicon-repeat"></span> <a href="{{ link.customFields.url }}">Use this search again</a> <br> <a href="{{ link.customFields.capped_url }}"><span class="glyphicon glyphicon-time"></span></a> see original results from {{ link.created | date }}</small>
             <br>
 
             <!-- <small><span class="glyphicon glyphicon-time"></span> date added: {{ link.created | date }}</small> -->
