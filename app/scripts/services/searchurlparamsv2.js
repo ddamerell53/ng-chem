@@ -101,6 +101,7 @@ angular.module('chembiohubAssayApp')
 
       searchUrlParamsV2.generate_filter_params = function(params){
             var schema = skinConfig.objects[0].tabular_data_schema.copied_schema;
+            console.log(schema);
             var filteredColumns = [];
            
             var query = skinConfig.objects[0].filters_applied.map(function(item){

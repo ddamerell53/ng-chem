@@ -19,7 +19,6 @@ angular.module('chembiohubAssayApp')
             $scope.searchFormSchema = angular.copy($scope.cbh.projects.searchform);
            $scope.cbh.statename = $state.current.name;
             
-
            
             $scope.projectObj = {}
 

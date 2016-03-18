@@ -27,7 +27,7 @@ angular.module('chembiohubAssayApp')
           
           
           if(!$scope.col.filters){
-            $scope.col.filters = {"field_path" : col.data ,
+            $scope.col.filters = {"field_path" : col.data , 'pick_from_list' : []
                                   };
           }else{
             $scope.col.filters.field_path = col.data;
@@ -41,16 +41,31 @@ angular.module('chembiohubAssayApp')
           $scope.hideAsfForm = angular.copy(skinConfig.objects[0].hide_schemaform.default.form);
           $scope.hideAsfSchema = angular.copy(skinConfig.objects[0].hide_schemaform.default.schema);
           $scope.col.blanksQuery = false;
-
+          $scope.$broadcast("schemaFormRedraw");
+          
           
            
         });
         
-        $scope.updated = function(foo, form){
-            // document.getElementById('html5ValidationForm').submit();
+        $scope.updated = function(modelValue, form){
+
+            if(form.key[0] =="pick_from_list" ){
+              //special case for empty pick from list
+              if(modelValue.length == 0){
+                $rootScope.$broadcast("cleanupFilters",{"col": $scope.col, "reset_query_type" : false }) 
+                $scope.sendFilterUpdate(false);
+              }else{
+                //We can't do the click on the validate link
+                //Because it will close the drop down
+                $scope.sendFilterUpdate(true);
+              }
+              
+            }else{
               $timeout(function(){
                 document.getElementById('validatorId').click();
               });
+            }
+              
         };
 
         $scope.clearFilters = function(){

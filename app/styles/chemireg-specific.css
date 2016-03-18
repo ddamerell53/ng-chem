@@ -999,6 +999,7 @@ li.breadcrumb {
 }
 li.breadcrumb span.bcname {
     font-family: NexaBold;
+    cursor: pointer;
 }
 li.breadcrumb p{
   margin-bottom:0;
@@ -1072,7 +1073,7 @@ li.breadcrumb.ng-enter.ng-enter-active {
   position: absolute; /*required for z-index*/
   z-index: 1000; /*puts on top of everything*/
   background-color:#444;
-  opacity:0.7;
+  opacity:0.15;
 }
 .thumb-container {
   min-height:100px; 

@@ -52,7 +52,14 @@ angular.module('chembiohubAssayApp')
               
               else{
                 obj.display_filter = $scope.filterTypeName(obj)  ;
-                if(obj.filters[obj.filters.query_type]){
+                if(obj.filters.query_type=='pick_from_list'){
+                    if(obj.filters[obj.filters.query_type].length < 4){
+                        obj.display_filter += ": " + obj.filters[obj.filters.query_type]
+                    }else{
+                        obj.display_filter += ": " + obj.filters[obj.filters.query_type].length + " items selected";
+                    }
+
+                }else if(obj.filters[obj.filters.query_type]){
                   obj.display_filter += ": " + obj.filters[obj.filters.query_type];
                 }
               }
