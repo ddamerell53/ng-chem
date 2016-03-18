@@ -872,7 +872,7 @@ div.modal-body table td, div.modal-body table th{
 }
 
 .list-inline > li {
-    padding-bottom: 10px;
+    padding-bottom: 8px;
     margin-bottom: -30px;
 }
 
@@ -1114,6 +1114,47 @@ svg.svg, li svg.svg {
 svg.svg.nonchem, li svg.svg.nonchem {
   fill: rgb(190,15,52);
 }
+
+
+/* project list layout flex based rework */
+.proj-section {
+  padding:10px;
+  width:100%;
+  display:flex;
+}
+.proj-section.proj-list-header {
+  padding-bottom:0;
+}
+.proj-section > div {
+  display:flex; 
+  justify-content: space-around; 
+  align-items: center;
+  flex: 1 100%;
+}
+@media all and (min-width: 600px) {
+  .proj-section.add, .proj-section.search, .proj-section.admin  {
+    width:33%;
+  }
+  /*.main { flex: 2 0px; }
+  
+  .aside-1 { order: 1; }
+  .main    { order: 2; }
+  .aside-2 { order: 3; }
+  .footer  { order: 4; }*/
+}
+
+/* Large screens */
+@media all and (min-width: 960px) {
+  /* We invert order of first sidebar and main
+   * And tell the main element to take twice as much width as the other two sidebars 
+   */
+   .list-inline > li {
+        padding-bottom: 13px;
+        margin-bottom: -30px;
+    }
+  
+}
+
 
 /* 16-column bootstrap grid classes */
 /*!

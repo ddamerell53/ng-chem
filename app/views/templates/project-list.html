@@ -1,8 +1,8 @@
-    
-        <div class="row row-flex grey-to-white {{!project.project_type.show_compounds ? 'nonchem' : ''}}" ng-repeat="project in projects | filter:search:strict" style="margin-bottom:15px; margin-left:10px; border-radius:10px;">
-            <div class="col-sm-3 proj-list-header {{!project.project_type.show_compounds ? 'nonchem' : ''}}" style="height:100%">
 
-                <h2 class="blue" style="display:inline-block">
+        <div class="row grey-to-white {{!project.project_type.show_compounds ? 'nonchem' : ''}}" ng-repeat="project in projects | filter:search:strict" style="margin-bottom:15px; margin-left:10px; border-radius:10px; align-items:center; display:flex; flex-flow: wrap row;">
+            <div class="proj-section proj-list-header {{!project.project_type.show_compounds ? 'nonchem' : ''}}" style="height:100%">
+
+                <h2 class="blue" style="display:inline-block; padding-bottom:0; margin-bottom: 0;">
                                   
                     {{project.name }} 
                 </h2>
@@ -10,12 +10,12 @@
                 
             </div>
 
-            <div class="col-sm-3" style="padding:10px 10px 0 10px;">
+            <div class="proj-section add" >
                 <!-- This is now the adding stuff column -->
-                <div style="display:flex; justify-content: space-around; align-items: center;">
+                <div>
                     <ul class="list-unstyled text-center" style="margin-bottom:0;">
                         <li><img src="images/add.svg" class="svg {{!project.project_type.show_compounds ? 'nonchem' : ''}}"></li>
-                        <li><strong class="nexa"><span>add</span></strong></li>
+                        <li ><strong class="nexa"><span>add</span></strong></li>
                     </ul>
                     <p style="margin: 0;">
                         <a ng-if="project.editor && project.project_type.show_compounds" ui-sref="cbh.projects.project.addsingle({projectKey: project.project_key})" ><span class="glyphicon glyphicon-pencil"></span> Draw compound</a>
@@ -29,12 +29,12 @@
                 
             </div>
 
-            <div class="col-sm-3" style="padding:10px 10px 0 10px;">
+            <div class="proj-section search" >
                 <!-- This is now the searching column -->
-                <div style="display:flex; justify-content: space-around; align-items: center;">
+                <div>
                     <ul class="list-unstyled text-center" style="margin-bottom:0;">
                         <li ><img src='images/search.svg' class="svg {{!project.project_type.show_compounds ? 'nonchem' : ''}}" ></li>
-                        <li><strong class="nexa"><span>search</span></strong></li>
+                        <li ><strong class="nexa"><span>search</span></strong></li>
                     </ul>
                         
                     
@@ -42,19 +42,19 @@
                     <p style="margin: 0;">
                         <a ng-click="cbh.hideSearchForm=true;" ui-sref="cbh.searchv2({pids: project.id })"><span class="glyphicon glyphicon-search"></span> Search all {{project.project_type.show_compounds ? 'compounds' : 'inventory items' }}</a>
                         <br> 
-                        <a ui-sref="cbh.searchv2({pids: project.id, encoded_query : '[{&quot;query_type&quot;:&quot;phrase&quot;,&quot;phrase&quot;:&quot;' + cbh.logged_in_user.display_name + '&quot;,&quot;field_path&quot;:&quot;created_by&quot;}]' })"><span class="glyphicon glyphicon-user"></span> Search my {{project.project_type.show_compounds ? 'compounds' : 'inventory items' }}</a>
+                        <a ui-sref="cbh.searchv2({pids: project.id, encoded_query : '[{&quot;query_type&quot;:&quot;pick_from_list&quot;,&quot;pick_from_list&quot;:[&quot;' + cbh.logged_in_user.display_name + '&quot;],&quot;field_path&quot;:&quot;created_by&quot;}]' })"><span class="glyphicon glyphicon-user"></span> Search my {{project.project_type.show_compounds ? 'compounds' : 'inventory items' }}</a>
                     </p>
                 </div>
 
                
             </div>
 
-            <div class="col-xs-3"  style="padding:10px 10px 0 10px;">
+            <div class="proj-section admin"  >
                <!-- This is still the admin column -->
-               <div ng-if="project.owner" style="display:flex; justify-content: space-around; align-items: center;">
+               <div ng-if="project.owner">
                     <ul class="list-unstyled text-center" style="margin-bottom:0;">
                         <li><img src="images/map.svg" class="svg {{!project.project_type.show_compounds ? 'nonchem' : ''}}"></li>
-                        <li><strong class="nexa"><span>admin</span></strong></li>
+                        <li ><strong class="nexa"><span>admin</span></strong></li>
                     </ul>
                     <p style="margin: 0;">
                         <a ng-if="project.owner" ng-click="openProjectWindow(project.id)"><span class="glyphicon glyphicon-pencil"></span> Edit configuration</a><br ng-if="project.owner" >
@@ -73,4 +73,4 @@
             
         </div>
 
-            
+
