@@ -42,7 +42,7 @@
                     <p style="margin: 0;">
                         <a ng-click="cbh.hideSearchForm=true;" ui-sref="cbh.searchv2({pids: project.id })"><span class="glyphicon glyphicon-search"></span> Search all {{project.project_type.show_compounds ? 'compounds' : 'inventory items' }}</a>
                         <br> 
-                        <a ui-sref="cbh.searchv2({pids: project.id, encoded_query : '[{&quot;query_type&quot;:&quot;phrase&quot;,&quot;phrase&quot;:&quot;' + cbh.logged_in_user.display_name + '&quot;,&quot;field_path&quot;:&quot;created_by&quot;}]' })"><span class="glyphicon glyphicon-user"></span> Search my {{project.project_type.show_compounds ? 'compounds' : 'inventory items' }}</a>
+                        <a ui-sref="cbh.searchv2({pids: project.id, encoded_query : '[{&quot;query_type&quot;:&quot;pick_from_list&quot;,&quot;pick_from_list&quot;:[&quot;' + cbh.logged_in_user.display_name + '&quot;],&quot;field_path&quot;:&quot;created_by&quot;}]' })"><span class="glyphicon glyphicon-user"></span> Search my {{project.project_type.show_compounds ? 'compounds' : 'inventory items' }}</a>
                     </p>
                 </div>
 

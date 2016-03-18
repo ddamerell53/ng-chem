@@ -999,6 +999,7 @@ li.breadcrumb {
 }
 li.breadcrumb span.bcname {
     font-family: NexaBold;
+    cursor: pointer;
 }
 li.breadcrumb p{
   margin-bottom:0;

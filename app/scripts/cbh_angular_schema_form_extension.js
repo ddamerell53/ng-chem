@@ -60,16 +60,15 @@ angular.module('schemaForm')
 
     $rootScope.$on("autoCompleteData", function(event, autocompletedata){
         $scope.items = autocompletedata.items;
-        $scope.numberItemsMissing = 10; //autocompletedata.unique_count - $scope.items.length;
+        $scope.numberItemsMissing = autocompletedata.unique_count - $scope.items.length;
     });
     $scope.$watch("autoComp", function(newVal, oldVal){
       //when the user searches, we call the back end to get 
       if(newVal != oldVal){
-        if($scope.numberItemsMissing > 0){
-          //Only call the back end if we have not already retrieved
-          //all of the data
+        
+          //Filter via the back end as it is more accurate
           $scope.opened($scope.form.key, $scope.autoComp);
-        }
+        
       }
     });
 
