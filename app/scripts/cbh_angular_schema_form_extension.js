@@ -17,3 +17,78 @@ $templateCache.put("directives/decorators/bootstrap/default.html","<div class=\"
 
 }]);
 
+
+
+
+angular.module('schemaForm').config(
+['schemaFormProvider', 'schemaFormDecoratorsProvider', 'sfPathProvider','sfBuilderProvider',
+  function(schemaFormProvider,  schemaFormDecoratorsProvider, sfPathProvider, sfBuilderProvider) {
+
+  var simpleTransclusion  = sfBuilderProvider.builders.simpleTransclusion;
+  var ngModelOptions      = sfBuilderProvider.builders.ngModelOptions;
+  var ngModel             = sfBuilderProvider.builders.ngModel;
+  var sfField             = sfBuilderProvider.builders.sfField;
+  var condition           = sfBuilderProvider.builders.condition;
+  var array               = sfBuilderProvider.builders.array;
+    var filtereddropdown = function(name, schema, options) {
+      if (schema.type === 'object' && schema.format == 'filtereddropdown') {
+        var f = schemaFormProvider.stdFormObj(name, schema, options);
+        f.key  = options.path;
+        f.type = 'filtereddropdown';
+        options.lookup[sfPathProvider.stringify(options.path)] = f;
+        return f;
+      }
+    };
+
+    // schemaFormProvider.defaults.object.unshift(filtereddropdown);
+
+  //Add to the bootstrap directive
+    schemaFormDecoratorsProvider.addMapping('bootstrapDecorator', 'filtereddropdown',
+    'views/templates/filtered-dropdown-form-template.html', [sfField, ngModelOptions, ngModel, array, condition]);
+    // schemaFormDecoratorsProvider.createDirective('filtereddropdown',
+    // 'views/templates/filtered-dropdown-form-template.html');
+
+
+  }]);
+
+
+angular.module('schemaForm')
+  .controller('filtereddropdownController', function ($scope, $rootScope, $timeout) {
+    $scope.opened = function(key, autoComp){
+         $rootScope.$broadcast("openedDropdown", {'key': key, 'autocomplete' : autoComp});
+    };
+
+    $rootScope.$on("autoCompleteData", function(event, autocompletedata){
+        $scope.items = autocompletedata.items;
+        $scope.numberItemsMissing = 10; //autocompletedata.unique_count - $scope.items.length;
+    });
+    $scope.$watch("autoComp", function(newVal, oldVal){
+      //when the user searches, we call the back end to get 
+      if(newVal != oldVal){
+        if($scope.numberItemsMissing > 0){
+          //Only call the back end if we have not already retrieved
+          //all of the data
+          $scope.opened($scope.form.key, $scope.autoComp);
+        }
+      }
+    });
+
+    $scope.toggleItem = function(item, $$value$$){
+        $timeout(function(){
+            $scope.$apply(function(){
+            var index = $$value$$.indexOf(item.key);
+            if(index == -1){
+                $$value$$.push(item.key); 
+            }else{
+                $$value$$.splice(index, 1);
+            }
+            });
+            
+            $scope.evalExpr($scope.form.onChange, {'modelValue': $$value$$, form: $scope.form});
+        })
+        
+        
+    }
+    $scope.items = [];
+    
+  });

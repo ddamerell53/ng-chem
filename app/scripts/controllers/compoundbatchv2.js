@@ -26,6 +26,22 @@ angular.module('chembiohubAssayApp')
                 };
             }
 
+            $scope.$on("openedDropdown", function(event, args){
+                var filters = angular.copy($stateParams);
+                var activeCol = null;
+                angular.forEach($scope.cbh.tabular_data_schema, function(c){
+                    if(c.showFilters){
+                        activeCol = c;
+                    }
+                });
+                filters.autocomplete_field_path = activeCol.data;
+                filters.autocomplete = args.autocomplete;
+                CBHCompoundBatch.queryv2(filters).then(function(result) {
+                    $rootScope.$broadcast("autoCompleteData", result);
+                });
+                
+            })
+
             $scope.cbh.sendToSearch = function(col){
                 angular.forEach($scope.compoundBatches.tabular_data_schema, function(c){
                             c.showFilters = false;
@@ -42,9 +58,9 @@ angular.module('chembiohubAssayApp')
         $rootScope.$on("cleanupFilters", function(event, args){
             angular.forEach(skinConfig.objects[0].query_schemaform.default.form, function(form){
                 if(form.key != "query_type" && form.key){
-                    args.col.filters[form.key] = skinConfig.objects[0].query_schemaform.default.schema.properties[form.key].default;
+                    args.col.filters[form.key] = angular.copy(skinConfig.objects[0].query_schemaform.default.schema.properties[form.key].default);
                 }else if (args.reset_query_type &&  form.key == "query_type"){
-                    args.col.filters.query_type = skinConfig.objects[0].query_schemaform.default.schema.properties[form.key].default;
+                    args.col.filters.query_type = angular.copy(skinConfig.objects[0].query_schemaform.default.schema.properties[form.key].default);
                 }
 
             });
