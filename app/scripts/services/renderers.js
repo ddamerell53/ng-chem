@@ -235,7 +235,7 @@ angular.module('chembiohubAssayApp')
                     // e.preventDefault(); // prevent selection quirk
                     var mol = instance.getSourceDataAtRow(row);
                     //scope.cbh.openSingleMol(mol);
-                    $state.go($state.current.name + '.record', {'uniqId': mol.id}, {reload: true});
+                    $state.go($state.current.name + '.record', {'uniqId': mol.id});
                 });
                 Handsontable.Dom.empty(td);
                 td.className  += "htCenter htMiddle courier";
