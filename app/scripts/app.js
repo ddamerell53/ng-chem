@@ -542,6 +542,18 @@ $urlRouterProvider.when('', '/projects/list');
         templateUrl: 'views/templates/single-compound-full.html',
         size: 'lg',
         controller: 'SinglemolCtrl'
+    })
+    .state('cbh.archiveitems.record', {
+        url: '/:uniqId?edit=',
+        templateUrl: 'views/templates/single-compound-full.html',
+        size: 'lg',
+        controller: 'SinglemolCtrl'
+    })
+    .state('cbh.restoreitems.record', {
+        url: '/:uniqId?edit=',
+        templateUrl: 'views/templates/single-compound-full.html',
+        size: 'lg',
+        controller: 'SinglemolCtrl'
     });
     //we can use modalStateProvider for other modals that need their own directly navigable route
 
