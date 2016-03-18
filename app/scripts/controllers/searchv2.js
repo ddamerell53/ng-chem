@@ -10,7 +10,7 @@
 
 
 angular.module('chembiohubAssayApp')
-    .controller('Searchv2Ctrl', ['$scope', '$http', '$rootScope', '$filter', '$stateParams', '$location', '$state', '$timeout', 'projectFactory', 'gridconfig', 'CBHCompoundBatch', 'urlConfig', 'SearchUrlParamsV2', '$modal', 'loggedInUser', 'ProjectTypeFactory', 'SavedSearchFactory',
+    .controller('Searchv2Ctrl', ['$scope', '$http', '$rootScope', '$filter', '$stateParams', '$location', '$state', '$timeout', 'projectFactory', 'gridconfig', 'CBHCompoundBatch', 'urlConfig', 'SearchUrlParamsV2', '$modal', 'loggedInUser', 'ProjectTypeFactory', 'SavedSearchFactory', 
         function($scope, $http, $rootScope, $filter, $stateParams, $location, $state, $timeout, projectFactory, gridconfig, CBHCompoundBatch, urlConfig, SearchUrlParamsV2, $modal, loggedInUser, ProjectTypeFactory, SavedSearchFactory) {
             
 
@@ -40,8 +40,7 @@ angular.module('chembiohubAssayApp')
 
 
 
-
-           
+    
 
 
 
@@ -179,9 +178,7 @@ angular.module('chembiohubAssayApp')
                 //set blinded_batch_id = "EMPTY_STRING"
                 //send back to the savedsearch service
 
-                //if(myForm.$valid){
                      
-                    console.log('still being found');
                     ProjectTypeFactory.get({"saved_search_project_type": true}, function(data){
                       
                       $scope.savedSearchType = data.objects[0];
@@ -198,27 +195,19 @@ angular.module('chembiohubAssayApp')
                             var resource_uri = data.resource_uri;
                             //change capped_url to the newly retrieved capped url
                             var savedSearchObj = {
-                                "project": data.resource_uri,
-                                "projectKey": data.project_key,
-                                "blindedBatchId": "EMPTY_STRING",
-                                "customFields": {
+                                "project": {"pk" :data.id},
+                                "blinded_batch_id": "EMPTY_ID",
+                                "custom_fields": {
                                     alias: $scope.newSavedSearchModel.alias,
                                     url: window.location.href,
                                     capped_url: new_capped_url
                                 },
-                                "uncuratedFields":{},
-                                "warnings" :{}, 
-                                "properties" :{},  
-                                "errors" :{}
                             }
-                            console.log(savedSearchObj)
                             var ssf = SavedSearchFactory.list;
                             ssf.save(savedSearchObj, function(data){
                                 //search is now saved - close the modal
                                 //make sure reindex is called on the correct thing within data
-                                console.log('inside save');
-                                var params = {"id": data.id}
-                                $http.post( urlConfig.cbh_saved_search.list_endpoint  + "/reindex_compound/" , params)
+                              
                             });   
                         });
                       });

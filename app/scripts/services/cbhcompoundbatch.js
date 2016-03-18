@@ -195,7 +195,7 @@ angular.module('chembiohubAssayApp')
       
          var promise = $http( 
             {
-                url: urlConfig.cbh_compound_batches_search.list_endpoint ,
+                url: urlConfig.cbh_compound_batches.list_endpoint ,
                 method: 'GET',
                 params: filters
             }

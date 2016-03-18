@@ -16,7 +16,7 @@ angular.module('chembiohubAssayApp')
             var myform, len;
             $scope.editMode = false;
 
-            $http.get(urlConfig.cbh_compound_batches_search.list_endpoint + "/" + $stateParams.uniqId + "/").then(function(data) {
+            $http.get(urlConfig.cbh_compound_batches.list_endpoint + "/" + $stateParams.uniqId + "/").then(function(data) {
 
 
                 mol = angular.copy(data.data);

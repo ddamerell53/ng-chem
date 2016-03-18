@@ -32,7 +32,7 @@ var configuration = {
     "cbh_skinning": {"list_endpoint": path + 
     "cbh_skinning", "schema": path + "cbh_skinning/schema"}, 
     "cbh_compound_batches": {"list_endpoint": path + 
-    "cbh_compound_batches_v2", "schema": path + "cbh_compound_batches/schema"},
+    "cbh_compound_batches_v2", "schema": path + "cbh_compound_batches_v2/schema"},
     "users": {"list_endpoint": path + "users", "schema": path + "users/schema"},
     "invitations": {"list_endpoint": path + "invitations", "schema": path + "invitations/schema"},
     "cbh_draft_data": {"list_endpoint": path + "datastore/cbh_draft_data", "schema": path + "datastore/cbh_draft_data/schema"},
@@ -41,7 +41,6 @@ var configuration = {
 
   "cbh_custom_field_configs": {"list_endpoint":path + "cbh_custom_field_configs", "schema": path + "cbh_custom_field_configs/schema"},
   "cbh_queries": {"list_endpoint":path + "cbh_queries", "schema": path + "cbh_queries/schema"},
-  "cbh_compound_batches_search" : {"list_endpoint": path + "cbh_compound_batches_search" , "schema": path + "cbh_queries/schema"},
 
 "admin": {"list_endpoint": admin_url}
 

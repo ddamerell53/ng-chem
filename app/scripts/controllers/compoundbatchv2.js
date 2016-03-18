@@ -457,7 +457,7 @@ angular.module('chembiohubAssayApp')
 
                 CBHCompoundBatch.queryv2(filters).then(function(result) {
                     if (timeSearched == localTimeSearched) {
-                        $scope.totalCompoundBatches = result.meta.totalCount;
+                        $scope.totalCompoundBatches = result.meta.total_count;
                         $scope.compoundBatches.data = result.objects;
                         $scope.compoundBatches.backup = angular.copy(result.objects);
                         if (result.objects.length > 0) {
