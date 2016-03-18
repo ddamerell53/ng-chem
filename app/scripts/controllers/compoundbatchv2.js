@@ -8,8 +8,8 @@
  * Controller of the chembiohubAssayApp
  */
 angular.module('chembiohubAssayApp')
-    .controller('Compoundbatchv2Ctrl', ['$scope', '$rootScope', '$state', '$stateParams', '$timeout', 'CBHCompoundBatch', 'urlConfig', '$window', '$location', '$anchorScroll', '$filter', 'SearchUrlParamsV2','skinConfig',
-        function($scope, $rootScope, $state, $stateParams, $timeout, CBHCompoundBatch, urlConfig, $window, $location, $anchorScroll, $filter, SearchUrlParamsV2, skinConfig) {
+    .controller('Compoundbatchv2Ctrl', ['$scope', '$rootScope', '$state', '$stateParams', '$timeout', 'CBHCompoundBatch', 'urlConfig', '$window', '$location', '$anchorScroll', '$filter', 'SearchUrlParamsV2','skinConfig', 'FlowFileFactory',
+        function($scope, $rootScope, $state, $stateParams, $timeout, CBHCompoundBatch, urlConfig, $window, $location, $anchorScroll, $filter, SearchUrlParamsV2, skinConfig, FlowFileFactory) {
             
             $scope.cbh.resetSearch = function(){
                 $state.go($state.current.name,  {}, {reload: true, inherit: false});
@@ -598,6 +598,33 @@ angular.module('chembiohubAssayApp')
             }
 
             $scope.cbh.setupParams();
+
+            /* File attachment functions */
+            $scope.success = function(file, form_key) {
+                //apply the urls of the flowfile object to the correct custom field of $scope.mol.customFields - find the attachments array and add it
+                //put a new method in FlowFileFactory
+
+                var AttachmentFactory = FlowFileFactory.cbhChemFlowFile;
+                AttachmentFactory.get({
+                    'identifier': file.uniqueIdentifier
+                }, function(data) {
+                    //add this to attachments in the form element (find it by form key in mol.customFields)
+                    var downloadUri = data.download_uri
+                    var attachment_obj = {
+                        url: downloadUri,
+                        printName: file.name,
+                        mimeType: file.file.type,
+                    }
+                    $scope.newMol.custom_fields[form_key[0]].attachments.push(attachment_obj)
+
+                })
+
+            }
+
+            $scope.removeFile = function(form_key, index, url) {
+                $scope.newMol.custom_fields[form_key[0]].attachments = $filter('filter')($scope.newMol.custom_fields[form_key[0]].attachments, function(value, index) {
+                    return value.url !== url; })
+            }
             
             
           

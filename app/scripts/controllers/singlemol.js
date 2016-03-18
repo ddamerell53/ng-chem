@@ -79,14 +79,14 @@ angular.module('chembiohubAssayApp')
                         printName: file.name,
                         mimeType: file.file.type,
                     }
-                    $scope.mol.customFields[form_key[0]].attachments.push(attachment_obj)
+                    $scope.mol.custom_fields[form_key[0]].attachments.push(attachment_obj)
 
                 })
 
             }
 
             $scope.removeFile = function(form_key, index, url) {
-                $scope.mol.customFields[form_key[0]].attachments = $filter('filter')($scope.mol.customFields[form_key[0]].attachments, function(value, index) {
+                $scope.mol.custom_fields[form_key[0]].attachments = $filter('filter')($scope.mol.custom_fields[form_key[0]].attachments, function(value, index) {
                     return value.url !== url; })
             }
 
