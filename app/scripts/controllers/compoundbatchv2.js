@@ -436,6 +436,7 @@ angular.module('chembiohubAssayApp')
                 // $scope.cbh.includedProjectKeys = ($scope.cbh.searchForm.project__project_key__in.length > 0) ? $scope.cbh.searchForm.project__project_key__in : $scope.cbh.projects.objects.map(function(p) {
                 //     return p.project_key
                 // });
+                SearchUrlParamsV2.setBaseDownloadUrl($scope.cbh, $stateParams);
                 $scope.resetCompoundList();
                 if($scope.cbh.selected_projects.length == 1){
                     if($scope.cbh.selected_projects[0].editor){
@@ -632,7 +633,16 @@ angular.module('chembiohubAssayApp')
             
             
           
-
+            angular.element($window).bind('resize', function() {
+                    //On resize we needto go to the underlying controiller to ensure that the whole of the directive is rebuilt
+                    //That way the scrollbars will work properly
+                    if($state.current.name.indexOf("record") == -1){
+                        $scope.$apply(function() {
+                            $rootScope.$broadcast("filtersUpdated",{});
+                        });
+                    }
+                   
+                });
 
         }
     ]);

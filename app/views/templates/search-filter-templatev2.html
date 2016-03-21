@@ -5,7 +5,7 @@
     </div> -->
     <fieldset class="filters">
     	<legend>{{col.knownBy}} - add filters and sorts</legend>
-    	<div class="col-sm-4">
+    	<div class="col-sm-3">
             <form novalidate>
                 <div class="col-xs-12 " style="padding-top:10px; linear-gradient(to bottom, rgba(181,209,255,0.34) 0%,rgba(181,209,255,0.34) 100%)">
                     <div class="col-xs-12" sf-schema="sortAsfSchema" sf-form="sortAsfForm" sf-model="col"></div>
@@ -13,7 +13,7 @@
                 </div>
             </form>
         </div>
-        <form class="col-sm-8" novalidate id="html5ValidationForm" name="html5ValidationForm" ng-submit="submit(html5ValidationForm)">
+        <form class="col-sm-9" novalidate id="html5ValidationForm" name="html5ValidationForm" ng-submit="submit(html5ValidationForm)">
             <div class="col-xs-12 " style="padding-top:10px; linear-gradient(to bottom, rgba(181,209,255,0.34) 0%,rgba(181,209,255,0.34) 100%)">
                 <div class="col-xs-12" sf-schema="queryAsfSchema" sf-form="queryAsfForm" sf-model="col.filters"></div>
                 <div ng-show="false" class="col-xs-12">

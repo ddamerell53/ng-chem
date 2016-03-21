@@ -194,7 +194,10 @@ angular.module('chembiohubAssayApp')
                               //If this is a compounds project redirect to compound clone page
                               $state.go("cbh.projects.project.addsingle",{"projectKey" : scope.cbh.projAddingTo.project_key, "idToClone": mol.id} , { reload: true });
                           }else{
+                            scope.$apply(function(){
                               $rootScope.$broadcast("cloneAnItem", mol)
+                            });
+                              
                           }
 
                       });
@@ -347,9 +350,8 @@ angular.module('chembiohubAssayApp')
                   td.innerHTML = "No Image";
                   td.className  += "htCenter htMiddle ";
                   Handsontable.Dom.addEvent(td, 'mousedown', function (e){
-                    // e.preventDefault(); // prevent selection quirk
                     var mol = instance.getSourceDataAtRow(row);
-                    scope.cbh.openSingleMol(mol, isNewCompoundsInterface);
+                    $state.go($state.current.name + '.record', {'uniqId': mol.id});
                   });
                   return td;
                 }
@@ -366,7 +368,7 @@ angular.module('chembiohubAssayApp')
                   Handsontable.Dom.addEvent(img, 'mousedown', function (e){
                     // e.preventDefault(); // prevent selection quirk
                     var mol = instance.getSourceDataAtRow(row);
-                    scope.cbh.openSingleMol(mol, isNewCompoundsInterface);
+                    $state.go($state.current.name + '.record', {'uniqId': mol.id});
                   });
               
                   Handsontable.Dom.empty(td);

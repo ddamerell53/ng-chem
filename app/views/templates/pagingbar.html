@@ -6,7 +6,7 @@
                 <!-- 
                 <a ng-click="cbh.openStatusExplanation()" role="button" class="btn btn-default"><span class="glyphicon glyphicon-question-sign"></span> What do the different statuses mean?</a> -->
             </div>
-            <div class="col-md-8" ng-show="cbh.statename != 'cbh.projects.project.addcompounds'">
+            <div class="col-md-7" ng-show="cbh.statename != 'cbh.projects.project.addcompounds'">
                 <div class="form-group" >
                     <div class="col-sm-12" style="padding:0 3px;">
                         <div class="btn-group">
@@ -19,10 +19,10 @@
                              <li ng-repeat="col in cbh.tabular_data_schema | filter:{knownBy : hidefilter}:strict"><a ng-click="cbh.sendToSearch(col)">{{col.knownBy}}</a></li>
                         </ul>
                         <label class="btn btn-default" ng-class="{ active: listOrGallery.choice === 'list' }" >
-                            <input type="radio" ng-model="listOrGallery.choice" value="list" id="list-btn" name="listOrGallery" style="display:none;" ng-change="changeView()"><span class="glyphicon glyphicon-list-alt"></span><span class="hidden-xs hidden-sm hidden-md"> List</span>
+                            <input type="radio" ng-model="listOrGallery.choice" value="list" id="list-btn" name="listOrGallery" style="display:none;" ng-change="changeView()"><span class="glyphicon glyphicon-list-alt"></span><span class="hidden-xs hidden-sm hidden-md"> </span>
                         </label>
                         <label class="btn btn-default" ng-class="{ active: listOrGallery.choice === 'gallery' }">
-                            <input type="radio" ng-model="listOrGallery.choice" value="gallery" id="gallery-btn" name="listOrGallery" style="display:none;" ng-change="changeView()" ><span class="glyphicon glyphicon-picture"></span><span class="hidden-xs hidden-sm hidden-md"> Gallery</span>
+                            <input type="radio" ng-model="listOrGallery.choice" value="gallery" id="gallery-btn" name="listOrGallery" style="display:none;" ng-change="changeView()" ><span class="glyphicon glyphicon-picture"></span><span class="hidden-xs hidden-sm hidden-md"> </span>
                         </label>
                         <span ng-if="cbh.statename=='cbh.searchv2'">
                             <label ng-if="!addingData && !editModeUnreachable()" class="btn btn-default" ng-class="{ active: cbh.editMode === true }" >
@@ -58,9 +58,9 @@
                    
                 </div>
             </div> 
-            <div class="col-md-4">
+            <div class="col-md-5">
                 <div class="col-xs-8">
-                        <dir-pagination-controls on-page-change="pageChanged(newPageNumber)" max-size="7">
+                        <dir-pagination-controls on-page-change="pageChanged(newPageNumber)" max-size="5">
                         </dir-pagination-controls>
                 </div>
                 <!-- <div  ng-show="cbh.statename != 'cbh.projects.project.addcompounds'" class="col-xs-1" >

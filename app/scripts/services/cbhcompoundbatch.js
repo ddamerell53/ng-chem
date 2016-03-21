@@ -151,7 +151,7 @@ angular.module('chembiohubAssayApp')
         //Add a property to the molfile to say that this molecule has been hand drawn
           //Set the batch as blinded by using a placeholder id - see save method of CBHCompoundBatch on other end
         post_data.blinded_batch_id = "EMPTY_ID";
-        return $http.post( urlConfig.cbh_compound_batches.list_endpoint +"/" ,post_data);
+        return $http.post( urlConfig.cbh_compound_batches_v2.list_endpoint +"/" ,post_data);
 
     };
 
@@ -175,11 +175,27 @@ angular.module('chembiohubAssayApp')
         return $http.post( urlConfig.cbh_batch_upload.list_endpoint + "/headers/", {"projectKey" :projectKey, file_name:file_name });
     };
 
-    CBHCompoundBatch.query = function(filters) {
-      
+    // CBHCompoundBatch.query = function(filters) {
+        
+    //      var promise = $http( 
+    //         {
+    //             url: urlConfig.cbh_compound_batches.list_endpoint + "/get_list_elasticsearch/",
+    //             method: 'GET',
+    //             params: filters
+    //         }
+    //         ).then(
+    //         function(data){
+    //             return data.data;
+    //         }
+    //     );
+    //     return promise;
+    // };
+
+  CBHCompoundBatch.queryv2 = function(filters) {
+        
          var promise = $http( 
             {
-                url: urlConfig.cbh_compound_batches.list_endpoint + "/get_list_elasticsearch/",
+                url: urlConfig.cbh_compound_batches_v2.list_endpoint ,
                 method: 'GET',
                 params: filters
             }
@@ -191,27 +207,12 @@ angular.module('chembiohubAssayApp')
         return promise;
     };
 
-    CBHCompoundBatch.queryv2 = function(filters) {
-      
-         var promise = $http( 
-            {
-                url: urlConfig.cbh_compound_batches.list_endpoint ,
-                method: 'GET',
-                params: filters
-            }
-            ).then(
-            function(data){
-                return data.data;
-            }
-        );
-        return promise;
-    };
 
     CBHCompoundBatch.get = function(id) {
       
          var promise = $http( 
             {
-                url: urlConfig.cbh_compound_batches.list_endpoint + "/" + id,
+                url: urlConfig.cbh_compound_batches_v2.list_endpoint + "/" + id,
                 method: 'GET',
             }
             ).then(
@@ -223,8 +224,8 @@ angular.module('chembiohubAssayApp')
     };
 
 
-    var patch = function(data, projectKey){
-        var promise = $http.patch(  urlConfig.cbh_compound_batches.list_endpoint + '/' + data.id + '/' ,       
+    var patch = function(data){
+        var promise = $http.patch(  urlConfig.cbh_compound_batches_v2.list_endpoint + '/' + data.id + '/' ,       
                 data
             ).then(
             function(data){

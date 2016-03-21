@@ -16,7 +16,7 @@ angular.module('chembiohubAssayApp')
             var myform, len;
             $scope.editMode = false;
 
-            $http.get(urlConfig.cbh_compound_batches.list_endpoint + "/" + $stateParams.uniqId + "/").then(function(data) {
+            $http.get(urlConfig.cbh_compound_batches_v2.list_endpoint + "/" + $stateParams.uniqId + "/").then(function(data) {
 
 
                 mol = angular.copy(data.data);
@@ -28,7 +28,6 @@ angular.module('chembiohubAssayApp')
                 
                 $scope.projectWithCustomFieldData;
                 angular.forEach(projectList.objects, function(myproj) {
-                    
                     if (myproj.id == projid) {
                         $scope.projectWithCustomFieldData = myproj;
                          $scope.projectWithCustomFieldData.updateCustomFields();
@@ -185,19 +184,9 @@ angular.module('chembiohubAssayApp')
             }
             $scope.isUpdated = false;
             $scope.updateBatch = function(instance) {
-                CBHCompoundBatch.patch({
-                    "customFields": $scope.mol.indexed_fields,
-                    "projectKey": $scope.projectWithCustomFieldData.project_key,
-                    "id": $scope.mol.id
-                }).then(
-                    function(data) {
-                        $scope.mol.indexed_fields = data.indexed_fields;
-                        mol.indexed_fields = data.indexed_fields;
-                        //reindex the compound
-                        CBHCompoundBatch.reindexModifiedCompound($scope.mol.id).then(function(d) {
-                            //Make sure all the custom fields have been updated
 
-                        });
+                CBHCompoundBatch.patch($scope.mol ).then(
+                    function(data) {
                         $scope.update_success = true;
                         $scope.editMode = false;
                         $scope.init();
@@ -205,6 +194,7 @@ angular.module('chembiohubAssayApp')
                         $scope.isUpdated = true;
                         if (angular.isDefined(instance)) {
                             instance.dismiss('cancel');
+                            $rootScope.$broadcast("filtersUpdated",{});
                         }
 
                     }
@@ -216,6 +206,9 @@ angular.module('chembiohubAssayApp')
                 $scope.mol = {}
                 $scope.$broadcast('schemaFormRedraw');
                 $scope.modalInstance.dismiss('cancel');
+                if($scope.isUpdated){
+                    $rootScope.$broadcast("filtersUpdated",{});
+                }
             }
         }
     ]);

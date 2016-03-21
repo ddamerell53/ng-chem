@@ -205,23 +205,16 @@ angular.module('chembiohubAssayApp')
                             }
 
                             angular.forEach(myproj.schemaform.form, function(i) {
-                                var renderer_to_use = 'customFieldRenderer';
-                                var attachments = [];
-                                if(i.default){
-                                    renderer_to_use = 'fileUploadRenderer';
-                                    attachments = i.default.attachments;
-                                    console.log("form element in hot", i);
-                                }
+
                                 if (cNames.indexOf(i.key) < 0) {
                                     var hotColumn = {
                                         knownBy: i.title,
                                         data: "customFields." + i.key,
                                         readOnly: !scope.cbh.editMode,
                                         className: "htCenter htMiddle ",
-                                        renderer: renderer_to_use,
+                                        renderer: "customFieldRenderer",
                                         typeahed: [],
                                         field_type: i.field_type,
-                                        attachments: attachments,
                                     };
                                     cNames.push(i.key);
                                     customCols.push(hotColumn);
