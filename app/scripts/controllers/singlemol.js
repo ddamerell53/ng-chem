@@ -92,7 +92,7 @@ angular.module('chembiohubAssayApp')
                         mimeType: file.file.type,
                     }
                     //so that the schema form file upload plugin can see the files
-                    $scope.mol.indexed_fields[form_key[0]].attachments.push(attachment_obj)
+                    $scope.mol.custom_fields[form_key[0]].attachments.push(attachment_obj)
                     //also push to the value part for the form itself
                     //$scope.mol.indexed_fields[form_key[0]].value.attachments.push(attachment_obj)
 
@@ -101,7 +101,7 @@ angular.module('chembiohubAssayApp')
             }
 
             $scope.removeFile = function(form_key, index, url) {
-                $scope.mol.indexed_fields[form_key[0]].attachments = $filter('filter')($scope.mol.indexed_fields[form_key[0]].attachments, function(value, index) {
+                $scope.mol.custom_fields[form_key[0]].attachments = $filter('filter')($scope.mol.custom_fields[form_key[0]].attachments, function(value, index) {
                     return value.url !== url; })
                 //$scope.mol.custom_fields[form_key[0]].value.attachments = $filter('filter')($scope.mol.custom_fields[form_key[0]].value.attachments, function(value, index) {
                 //    return value.url !== url; })
@@ -141,10 +141,10 @@ angular.module('chembiohubAssayApp')
                             key = item.key
                         };
                         var value = "";
-                        if (angular.isDefined($scope.mol.indexed_fields[key])) {
+                        if (angular.isDefined($scope.mol.custom_fields[key])) {
 
 
-                            value = $scope.mol.indexed_fields[key]
+                            value = $scope.mol.custom_fields[key]
                         }
                         if (value.constructor === Array) {
                             value = value.join(", ");

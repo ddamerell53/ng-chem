@@ -68,7 +68,7 @@
                 </div>
                 <div class="alert alert-success" ng-show="update_success">Project Data Updated Successfully</div>
                 <div class="col-xs-12 col-md-6" ng-hide="editMode">
-                    {{firstList}}
+                    
                     <div ng-repeat="item in firstList track by item.key">
 
                         <button-input copy-model="item.value" disabled="true" label="::item.key" ng-if="item.isFileField == false"></button-input>
@@ -85,11 +85,12 @@
                                   <img ng-if="attachment.mimeType.indexOf('pdf') != -1" width="100" ng-src="images/pdf-placeholder.png" />
                                   <!-- anything else - use the file placeholder -->
                                   <img ng-if="attachment.mimeType.indexOf('pdf') == -1 && attachment.mimeType.indexOf('image') == -1 && attachment.mimeType.indexOf('spreadsheetml') == -1 && attachment.mimeType.indexOf('excel') == -1 && attachment.mimeType.indexOf('wordprocessingml') == -1 && attachment.mimeType.indexOf('msword') == -1" width="100" ng-src="images/file-placeholder.png" />
-                                  <div class="thumb-overlay">
-                                    <p>
-                                      <span style="font-size: 0.8em; word-wrap: break-word;">{{attachment.printName}}</span>
+                                  <div class="thumb-overlay" style="display:flex; flex-direction:column; align-items:stretch; justify-content: center; width:100px;">
+                                    
+                                      <div><span style="font-size: 0.8em; word-wrap: break-word;">{{attachment.printName}}</span></div>
                                       
-                                    </p>
+                                      <div style="font-size: 3em; word-wrap: break-word;"><a href="{{attachment.url}}" style="color:white;" title="download"><span class="glyphicon glyphicon-download"></span></a></div>
+                                    
                                   </div>
                                   
                                 </div>
@@ -109,6 +110,7 @@
                         <div class="form-group" ng-if="item.isFileField == true">
                             <label>{{item.key}}</label>
                             <ul class="list-inline">
+                                {{item}}
                               <li ng-repeat="attachment in item.value.attachments" style="display:inline-table;">
                                 <div class="text-center col-xs-12 thumb-container" >
                                   <!-- <img width="100" ng-if="{png:1,gif:1,jpg:1,jpeg:1}[is_uploading.getExtension()]" flow-img="is_uploading" /> -->
@@ -118,11 +120,12 @@
                                   <img ng-if="attachment.mimeType.indexOf('pdf') != -1" width="100" ng-src="images/pdf-placeholder.png" />
                                   <!-- anything else - use the file placeholder -->
                                   <img ng-if="attachment.mimeType.indexOf('pdf') == -1 && attachment.mimeType.indexOf('image') == -1 && attachment.mimeType.indexOf('spreadsheetml') == -1 && attachment.mimeType.indexOf('excel') == -1 && attachment.mimeType.indexOf('wordprocessingml') == -1 && attachment.mimeType.indexOf('msword') == -1" width="100" ng-src="images/file-placeholder.png" />
-                                  <div class="thumb-overlay">
-                                    <p>
-                                      <span style="font-size: 0.8em; word-wrap: break-word;">{{attachment.printName}}</span>
+                                  <div class="thumb-overlay" style="display:flex; flex-direction:column; align-items:stretch; justify-content: center; width:100px;">
+                                    
+                                      <div><span style="font-size: 0.8em; word-wrap: break-word;">{{attachment.printName}}</span></div>
                                       
-                                    </p>
+                                      <div style="font-size: 3em; word-wrap: break-word;"><a href="{{attachment.url}}" style="color:white;" title="download"><span class="glyphicon glyphicon-download"></span></a></div>
+                                    
                                   </div>
                                   
                                 </div>
