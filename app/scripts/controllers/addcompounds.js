@@ -65,11 +65,7 @@ angular.module('chembiohubAssayApp')
         }
                 $scope.cbh.appName = "ChemiReg";
 
-        $scope.topLink = function() {
-            $state.go("cbh.projects.list.project", {
-                "projectKey": projectKey
-            });
-        }
+
 
         $scope.setLoadingMessageHeight = function(){
             var scrollTop = $(window).scrollTop();
@@ -82,9 +78,9 @@ angular.module('chembiohubAssayApp')
             CBHCompoundBatch.saveMultiBatchMolecules($scope.datasets[$scope.current_dataset_id].config).then(
                     function(data){
                         $scope.cbh.hideSearchForm=true;
-                        $state.transitionTo("cbh.search", 
-                                        {multiple_batch_id: $scope.datasets[$scope.current_dataset_id].config.multiplebatch, 
-                            justAdded: true, project__project_key__in: projectKey},
+                        $state.transitionTo("cbh.searchv2", 
+                                        {encoded_query: $filter("encodeParamForSearch")({"field_path": "multiple_batch_id", "value": $scope.datasets[$scope.current_dataset_id].config.multiplebatch + ""}), 
+                            justAdded: true, pids : [$scope.proj.id]},
                             { location: true, 
                                             inherit: false, 
                                             relative: null, 
@@ -560,8 +556,8 @@ $scope.changeView = function(){
                 $scope.searchFormSchema= angular.copy($scope.cbh.projects.searchform);
                 var pf = searchUrlParams.setup($stateParams, {molecule: {}});
                 $scope.searchForm = false; //angular.copy(pf.searchForm);
-                var custFieldFormItem = $filter('filter')($scope.searchFormSchema.cf_form, {key:'search_custom_fields__kv_any'}, true);
-                custFieldFormItem[0].options.async.call = $scope.refreshCustFields;
+                // var custFieldFormItem = $filter('filter')($scope.searchFormSchema.cf_form, {key:'search_custom_fields__kv_any'}, true);
+                // custFieldFormItem[0].options.async.call = $scope.refreshCustFields;
 
                 /*if($scope.searchForm.search_custom_fields__kv_any) {
                     $scope.searchFormSchema.schema.properties.search_custom_fields__kv_any.items = $scope.searchForm.search_custom_fields__kv_any.map(function(i){return {value : i, label : i}});

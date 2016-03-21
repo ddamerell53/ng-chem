@@ -319,13 +319,7 @@ angular.module('chembiohubAssayApp')
                 });
 
                 
-                angular.element($window).bind('resize', function() {
-                    //On resize we needto go to the underlying controiller to ensure that the whole of the directive is rebuilt
-                    //That way the scrollbars will work properly
-                    scope.$apply(function() {
-                        $rootScope.$broadcast("filtersUpdated",{});
-                    });
-                });
+               
                 
 
 

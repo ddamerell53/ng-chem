@@ -31,8 +31,8 @@ var configuration = {
     "cbh_plate_map": {"list_endpoint":path + "cbh_plate_map", "schema": path + "cbh_plate_map/schema"},
     "cbh_skinning": {"list_endpoint": path + 
     "cbh_skinning", "schema": path + "cbh_skinning/schema"}, 
-    "cbh_compound_batches": {"list_endpoint": path + 
-    "cbh_compound_batches_v2", "schema": path + "cbh_compound_batches_v2/schema"},
+    "cbh_compound_batches": {"list_endpoint": path + "cbh_compound_batches", "schema": path + "cbh_compound_batches/schema"},
+    "cbh_compound_batches_v2": {"list_endpoint": path + "cbh_compound_batches_v2", "schema": path + "cbh_compound_batches_v2/schema"},
     "users": {"list_endpoint": path + "users", "schema": path + "users/schema"},
     "invitations": {"list_endpoint": path + "invitations", "schema": path + "invitations/schema"},
     "cbh_draft_data": {"list_endpoint": path + "datastore/cbh_draft_data", "schema": path + "datastore/cbh_draft_data/schema"},
@@ -182,8 +182,7 @@ $q.all([skinReq, projReq, userReq]).then(function(data){
   }
   //Add a function to get a schema by name
   skinObj.data.objects[0].get_table_schema_by_name = function(name){
-    console.log(name)
-    console.log(skinObj.data.objects[0].tabular_data_schema)
+   
    var list_of_fields = skinObj.data.objects[0].tabular_data_schema.included_in_tables[name].default.map(function(item){
       return skinObj.data.objects[0].tabular_data_schema.copied_schema[item];
    });
@@ -201,6 +200,9 @@ skinObj.data.objects[0].get_filtered_table_schema = function(name, selected_proj
       if(field.project_specific_schema){
           angular.forEach(field.projects, function(puri){
             if(project_uris.indexOf(puri)> -1){
+              push = true
+            }else if (project_uris.length == 0){
+              //Assume all projects if none selected
               push = true
             }
           });

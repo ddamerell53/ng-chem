@@ -360,10 +360,9 @@ $urlRouterProvider.when('', '/projects/list');
             var params = {'creator_uri': loggedInUser.resource_uri};
 
             console.log(params);
-            $http.get( urlConfig.cbh_saved_search.list_endpoint  + "/get_list_elasticsearch/", {'params': params}).then(function(data){
+            $http.get( urlConfig.cbh_saved_search.list_endpoint , {'params': params}).then(function(data){
                 
                 $scope.links = data.data.objects;
-                console.log($scope.links);
                 $scope.$apply();
                 
             });

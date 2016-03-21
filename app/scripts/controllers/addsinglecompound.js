@@ -137,14 +137,16 @@ angular.module('chembiohubAssayApp')
             $scope.saveTemporaryCompoundData = function(doArchiveItem){
                 $scope.currentlyLoading = true;
                 var callback = function(){
-                    $state.transitionTo("cbh.search", 
-                                        {multiple_batch_id: $scope.dataset.config.multiplebatch, 
-                            justAdded: true, project__project_key__in: projectKey},
+
+                    
+                $state.transitionTo("cbh.searchv2", 
+                                        {encoded_query: $filter("encodeParamForSearch")({"field_path": "multiple_batch_id", "value": $scope.dataset.config.multiplebatch + ""}), 
+                            justAdded: true, pids : [$scope.projectObj.id]},
                             { location: true, 
-                                inherit: false, 
-                                relative: null, 
-                                notify: true }
-                            );
+                                            inherit: false, 
+                                            relative: null, 
+                                            notify: true }
+                                        );
                 }
                 CBHCompoundBatch.saveMultiBatchMolecules($scope.dataset.config).then(
                         function(data){
