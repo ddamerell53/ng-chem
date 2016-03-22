@@ -145,18 +145,18 @@ angular.module('chembiohubAssayApp')
                         }
                     }
                 );
-        };
+        };/*
         $timeout(function(){
           svgify();
-        })
+        })*/
         //$timeout(function(){ $scope.loadSavedSearches();});
         $scope.search = {
           'name':''
-        }
+        }/*
         $scope.$watch('search.name', function(){
           $timeout(function(){
             svgify();
           })
-        })
+        })*/
 
       } );
