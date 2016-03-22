@@ -31,6 +31,9 @@
 								<td>{{plate.created | date: "d MMM yyyy"}}</td>
 								<td data-plate-id="{{plate.id}}"><span class="glyphicon glyphicon-pencil" ng-click="loadPlateForEditing(plate.id)" style="cursor:pointer;"></span></td>
 							</tr>
+							<tr ng-if="plates.length == 0">
+								<td colspan="6">no items</td>
+							</tr>
 						</tbody>
 					</table>
 
