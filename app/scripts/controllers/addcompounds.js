@@ -74,13 +74,12 @@ angular.module('chembiohubAssayApp')
         $scope.saveTemporaryCompoundData = function(){
             $scope.setLoadingMessageHeight();
             $scope.currentlyLoading = true;
-
+            $scope.cbh.justAdded = true;
             CBHCompoundBatch.saveMultiBatchMolecules($scope.datasets[$scope.current_dataset_id].config).then(
                     function(data){
-                        $scope.cbh.hideSearchForm=true;
                         $state.transitionTo("cbh.searchv2", 
                                         {encoded_query: $filter("encodeParamForSearch")({"field_path": "multiple_batch_id", "value": $scope.datasets[$scope.current_dataset_id].config.multiplebatch + ""}), 
-                            justAdded: true, pids : [$scope.proj.id]},
+                             pids : [$scope.proj.id]},
                             { location: true, 
                                             inherit: false, 
                                             relative: null, 

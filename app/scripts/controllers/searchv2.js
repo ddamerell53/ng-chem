@@ -23,21 +23,8 @@ angular.module('chembiohubAssayApp')
             $scope.projectObj = {}
 
 
-            if($stateParams.project__project_key__in  && $stateParams.justAdded){
-                $scope.justAdded = $stateParams.justAdded;
-                //convert the comma separated list to array
-                $scope.selected_projects = $stateParams.project__project_key__in.split(',');
-                if($scope.selected_projects.length == 1){
-                    angular.forEach($rootScope.projects, function(myproj) {
-                        if (myproj.project_key == $scope.selected_projects[0]) {
-                            $scope.projectObj = myproj;
-                        }
-                    });
-                }
-                
-            }
             
-
+            
 
 
     

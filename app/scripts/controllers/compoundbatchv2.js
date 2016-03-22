@@ -82,6 +82,7 @@ angular.module('chembiohubAssayApp')
             }
             var params = SearchUrlParamsV2.generate_filter_params($stateParams);
             $scope.cbh.changeSearchParams(params, true);
+            $scope.cbh.justAdded = false;
         });
 
         $rootScope.$on("removeAllHides",function( event, args){
@@ -169,6 +170,7 @@ angular.module('chembiohubAssayApp')
                 });
                 var params = SearchUrlParamsV2.get_project_params($stateParams, $scope.cbh.selected_projects);
                 $scope.cbh.changeSearchParams(params, true);
+                $scope.cbh.justAdded = false;
            }
             
             $scope.cbh.deSelectAllProjects = function(){
@@ -178,6 +180,7 @@ angular.module('chembiohubAssayApp')
                 });
                 var params = SearchUrlParamsV2.get_project_params($stateParams, $scope.cbh.selected_projects);
                 $scope.cbh.changeSearchParams(params, true);
+                $scope.cbh.justAdded = false;
            }
 
            $scope.cbh.toggleProjectFiltered = function(proj){
@@ -197,6 +200,7 @@ angular.module('chembiohubAssayApp')
                 }
                 var params = SearchUrlParamsV2.get_project_params($stateParams, $scope.cbh.selected_projects);
                 $scope.cbh.changeSearchParams(params, true);
+                $scope.cbh.justAdded = false;
            }
             
 
