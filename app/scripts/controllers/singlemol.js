@@ -94,12 +94,14 @@ angular.module('chembiohubAssayApp')
             }
 
             $scope.openClone = function() {
-                $modalInstance.dismiss("cancel");
-                if ($scope.projectObj.project_type.show_compounds) {
+                
+                if ($scope.mol.projectfull.project_type.show_compounds) {
                     //If this is a compounds project redirect to compound clone page
-                    $state.go("cbh.projects.project.addsingle", { 'projectKey': $scope.projectObj.project_key, idToClone: $scope.mol.id }, { reload: true });
+                    console.log("newcompounds")
+                    $state.go("cbh.projects.project.addsingle", { 'projectKey': $scope.mol.projectfull.project_key, idToClone: $scope.mol.id }, { reload: true });
                 } else {
-                    $rootScope.$broadcast("cloneAnItem", mol)
+                    $rootScope.$broadcast("cloneAnItem", mol);
+                    $modalInstance.dismiss("cancel");
                 }
 
             }

@@ -198,14 +198,14 @@ angular.module('chembiohubAssayApp')
             To do this, we need to get the result returned by the search with the highest batch ID */
          searchUrlParamsV2.generate_capped_saved_search = function(params){
             //get the params as JSON
-            var paramsObj = JSON.parse(btoa(params.encoded_query));
+            var paramsObj = JSON.parse(atob(params.encoded_query));
             var backend_query = {'limit':1, 'offset': 0};
             var importantParams = ['pids', 'archived', 'encoded_query'];
             angular.forEach(importantParams, function(p){
               backend_query[p] = params[p];
 
             })
-            CBHCompoundBatch.queryv2(backend_query).then(function(result) {
+            var promise = CBHCompoundBatch.queryv2(backend_query).then(function(result) {
 
               //get the single result, and add this as a parameter to encoded_query
               var cap_batch_id = result.objects[0].id
@@ -220,10 +220,9 @@ angular.module('chembiohubAssayApp')
               return params
 
               
-            }, function(error){
-                $scope.noData = "Sorry, there was an error with that query. No data found.";
-                return params
             });
+
+            return promise;
 
             
          }

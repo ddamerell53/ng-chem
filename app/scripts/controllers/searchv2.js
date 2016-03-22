@@ -115,9 +115,11 @@ angular.module('chembiohubAssayApp')
             $scope.openMySavedSearchPopup = function(){
                 //Test data looks like:
                 $scope.links = [];
-                var params = {'creator_uri': loggedInUser.resource_uri};
+                var encoded_username= $filter("encodeParamForSearch")({"field_path": "created_by", "value": loggedInUser.display_name});
 
-                $http.get( urlConfig.cbh_saved_search.list_endpoint  + "/get_list_elasticsearch/", {'params': params}).then(function(data){
+                var params = {'encoded_query': encoded_username};
+
+                $http.get( urlConfig.cbh_saved_search.list_endpoint  + "/", {'params': params}).then(function(data){
                     
                     $scope.links = data.data.objects;
                     $scope.modalInstance = $modal.open({
@@ -173,10 +175,9 @@ angular.module('chembiohubAssayApp')
                       var d = new Date();
                       $scope.savedSearchType.project_template.name = $scope.newSavedSearchModel.alias + d.getTime().toString();
                       $scope.savedSearchType.project_template.custom_field_config.name = $scope.newSavedSearchModel.alias + d.getTime().toString();
-                      var new_state_params = SearchUrlParamsV2.generate_capped_saved_search($stateParams);
-                      //create a new URL string with the newly generated state params
+                      SearchUrlParamsV2.generate_capped_saved_search($stateParams).then(function(new_state_params){
+                        //create a new URL string with the newly generated state params
                       var new_capped_url = $state.href($state.current.name, new_state_params);
-
 
                         projectFactory.save($scope.savedSearchType.project_template, function(data){
                             var resource_uri = data.resource_uri;
@@ -198,6 +199,8 @@ angular.module('chembiohubAssayApp')
                             });   
                         });
                       });
+                    });
+                      
             }
 
 			$scope.cbh.column = {}
