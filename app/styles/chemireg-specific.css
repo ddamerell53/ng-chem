@@ -1156,6 +1156,23 @@ svg.svg.nonchem, li svg.svg.nonchem {
   
 }
 
+/*.pick-list-item {
+}*/
+
+.pick-list-item.ng-enter, .pick-list-item.ng-leave {
+  transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.2s;
+}
+
+.pick-list-item.ng-enter,
+.pick-list-item.ng-leave.ng-leave-active {
+  opacity:0;
+}
+
+.pick-list-item.ng-leave,
+.pick-list-item.ng-enter.ng-enter-active {
+  opacity:1;
+}
+
 
 /* 16-column bootstrap grid classes */
 /*!
