@@ -17,9 +17,9 @@
                         </span>
                     <span class="caret" ></span>
                 </button>
-                <ul class="dropdown-menu" style="min-width:300px;max-width:300px;" >
+                <ul class="dropdown-menu" style="min-width:300px;max-width:300px;"  style="padding-top:5px; padding-bottom:5px;" >
                   
-                    
+                     <li ng-if="items.length == 0 && loading == true" class="col-xs-12">Loading...</li>
                      <li ng-if="numberItemsMissing < 2" class="col-xs-12">Click on an item to filter</li> 
                      <li class="col-xs-12" ng-if="numberItemsMissing > 1">Not all items shown - search</li>
                      <li ><div class="col-xs-12"><input  placeholder="Search by name" type="text" ng-model="autoComp"></input></div></li>

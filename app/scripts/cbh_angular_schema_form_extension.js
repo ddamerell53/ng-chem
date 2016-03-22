@@ -54,11 +54,13 @@ angular.module('schemaForm').config(
 
 angular.module('schemaForm')
   .controller('filtereddropdownController', function ($scope, $rootScope, $timeout) {
+    $scope.loading = true;
     $scope.opened = function(key, autoComp){
          $rootScope.$broadcast("openedDropdown", {'key': key, 'autocomplete' : autoComp});
     };
 
     $rootScope.$on("autoCompleteData", function(event, autocompletedata){
+        $scope.loading = false;
         $scope.items = autocompletedata.items;
         $scope.numberItemsMissing = autocompletedata.unique_count - $scope.items.length;
     });
