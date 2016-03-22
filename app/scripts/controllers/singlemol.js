@@ -25,7 +25,7 @@ angular.module('chembiohubAssayApp')
                 $scope.mol = angular.copy(mol);
                 
                 var projid = mol.projectfull.id;
-                console.log(projid);
+                
                 $scope.projectWithCustomFieldData;
                 angular.forEach(projectList.objects, function(myproj) {
                     if (myproj.id == projid) {
@@ -60,6 +60,7 @@ angular.module('chembiohubAssayApp')
                 $scope.init();
 
                 $scope.myschema = $scope.projectWithCustomFieldData.schemaform.schema;
+                
                 $scope.modalInstance = $modalInstance;
                 $timeout(function(){
                     $scope.$apply();
@@ -67,9 +68,17 @@ angular.module('chembiohubAssayApp')
 
             });
 
+            /*$scope.fileInit = function(form_key){
+                //need to transplant the items in item.value.attachments to item.attachments
+                //so that the file upload directive can see them
+                $scope.mol.indexed_fields[form_key[0]].attachments = $scope.mol.custom_fields[form_key[0]].value.attachments
+                
+            }*/
+
             $scope.success = function(file, form_key) {
                 //apply the urls of the flowfile object to the correct custom field of $scope.mol.customFields - find the attachments array and add it
                 //put a new method in FlowFileFactory
+                //need to modify this so that the items are added to the value part of the schema item returned by the API
 
                 var AttachmentFactory = FlowFileFactory.cbhChemFlowFile;
                 AttachmentFactory.get({
@@ -82,7 +91,10 @@ angular.module('chembiohubAssayApp')
                         printName: file.name,
                         mimeType: file.file.type,
                     }
+                    //so that the schema form file upload plugin can see the files
                     $scope.mol.custom_fields[form_key[0]].attachments.push(attachment_obj)
+                    //also push to the value part for the form itself
+                    //$scope.mol.indexed_fields[form_key[0]].value.attachments.push(attachment_obj)
 
                 })
 
@@ -91,6 +103,8 @@ angular.module('chembiohubAssayApp')
             $scope.removeFile = function(form_key, index, url) {
                 $scope.mol.custom_fields[form_key[0]].attachments = $filter('filter')($scope.mol.custom_fields[form_key[0]].attachments, function(value, index) {
                     return value.url !== url; })
+                //$scope.mol.custom_fields[form_key[0]].value.attachments = $filter('filter')($scope.mol.custom_fields[form_key[0]].value.attachments, function(value, index) {
+                //    return value.url !== url; })
             }
 
             $scope.openClone = function() {
@@ -172,9 +186,9 @@ angular.module('chembiohubAssayApp')
             }
             $scope.isUpdated = false;
             $scope.updateBatch = function(instance) {
+
                 CBHCompoundBatch.patch($scope.mol ).then(
                     function(data) {
-                                                
                         $scope.update_success = true;
                         $scope.editMode = false;
                         $scope.init();

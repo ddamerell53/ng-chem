@@ -17,16 +17,16 @@
                         </span>
                     <span class="caret" ></span>
                 </button>
-                <ul class="dropdown-menu" style="min-width:300px;max-width:300px;" >
+                <ul class="dropdown-menu" style="min-width:300px;max-width:300px;"  style="padding-top:5px; padding-bottom:5px;" >
                   
-                    
-                     <li ng-if="numberItemsMissing < 2" class="col-xs-12">Click on an item to filter</li> 
+                     <li ng-show="items.length == 0 && loading == true" class="col-xs-12 pick-list-item">Loading...</li>
+                     <li ng-show="numberItemsMissing < 2" class="col-xs-12 pick-list-item">Click on an item to filter</li> 
                      <li class="col-xs-12" ng-if="numberItemsMissing > 1">Not all items shown - search</li>
                      <li ><div class="col-xs-12"><input  placeholder="Search by name" type="text" ng-model="autoComp"></input></div></li>
                      
                 </ul>
                 <ul class="dropdown-menu" style="margin-top:55px;min-width:300px;max-width:300px; max-height:300px; overflow-y:scroll;" >
-                    <li ng-if="items.length == 0" class="col-xs-12">No items found with these search parameters</li> 
+                    <li ng-show="items.length == 0" class="col-xs-12">No items found with these search parameters</li> 
 
                      <li ng-class="model[form.key[0]].indexOf(item.key) > -1 ? 'active' : ''" ng-repeat="item in items">
                         <a  ng-click="toggleItem(item, model[form.key[0]]); $event.stopPropagation();">

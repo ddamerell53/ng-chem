@@ -103,6 +103,17 @@ angular.module('chembiohubAssayApp')
                             }
 
                         }
+                        if(angular.isDefined(c.project_specific_schema)){
+                            angular.forEach(c.project_specific_schema, function( schem, projUri){
+                                console.log("psc check", schem.renderer_named);
+                                if(angular.isDefined(rend[schem.renderer_named])){
+                                    console.log("if is defined");
+                                    schem.renderer = rend[schem.renderer_named]
+                                }
+
+                            })
+                        }
+                        
                         //Provided we are in edit mode or newcompoundsinterface then 
                         //make the editable cells not readonly
                         //On the new compounds interface then this will work for the 
