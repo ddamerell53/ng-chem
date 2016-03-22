@@ -138,10 +138,10 @@ angular.module('chembiohubAssayApp')
                 $scope.currentlyLoading = true;
                 var callback = function(){
 
-                    
+                    $scope.cbh.justAdded = true;
                 $state.transitionTo("cbh.searchv2", 
                                         {encoded_query: $filter("encodeParamForSearch")({"field_path": "multiple_batch_id", "value": $scope.dataset.config.multiplebatch + ""}), 
-                            justAdded: true, pids : [$scope.projectObj.id]},
+                             pids : [$scope.projectObj.id]},
                             { location: true, 
                                             inherit: false, 
                                             relative: null, 

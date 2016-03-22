@@ -17,7 +17,7 @@
                     <span><a href="{{ link.custom_fields.url }}" ng-click="cancel()">Use this search</a> </span>
                 </strong><br>
 
-                <small><span class="glyphicon glyphicon-time"></span> date added: {{ link.created | date }}</small>
+                <small><a href="{{ link.custom_fields.capped_url }}"><span class="glyphicon glyphicon-time"></span>&nbsp;see original results from {{ link.created | date }}</a> </small>
             </p>
         </div>
         <div class="col-xs-3 text-right">

@@ -119,7 +119,7 @@ $urlRouterProvider.when('', '/projects/list');
     })
 
     .state('cbh.searchv2', {
-      url: '/searchv2?pids=&editMode=&page=&compoundBatchesPerPage=&viewType=&limit&offset&justAdded=&encoded_query=&encoded_sorts=&encoded_hides=&textsearch=',
+      url: '/searchv2?pids=&editMode=&page=&compoundBatchesPerPage=&viewType=&limit&offset&encoded_query=&encoded_sorts=&encoded_hides=&textsearch=',
       resolve: {
         gridconfig: ['CompoundListSetup', function(CompoundListSetup) {
           return CompoundListSetup;
@@ -352,16 +352,17 @@ $urlRouterProvider.when('', '/projects/list');
     .state('cbh.home', {
       url: '/home',
       templateUrl: 'views/user-profile.html',
-      controller: function($scope, $rootScope, loggedInUser, urlConfig){
+      controller: function($scope, $rootScope, loggedInUser, urlConfig, $filter){
         $scope.links = [];
         $scope.userFromList = loggedInUser
         $scope.loadSavedSearches = function(){
             
-            var params = {'creator_uri': loggedInUser.resource_uri};
+            var encoded_username= $filter("encodeParamForSearch")({"field_path": "created_by", "value": loggedInUser.display_name});
 
-            console.log(params);
-            $http.get( urlConfig.cbh_saved_search.list_endpoint , {'params': params}).then(function(data){
-                
+                var params = {'encoded_query': encoded_username};
+
+                $http.get( urlConfig.cbh_saved_search.list_endpoint  + "/", {'params': params}).then(function(data){
+
                 $scope.links = data.data.objects;
                 $scope.$apply();
                 
