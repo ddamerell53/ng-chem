@@ -105,6 +105,7 @@ angular.module('chembiohubAssayApp')
                             $scope.errormess = "You must add a title";
                     
                         }
+                        //TODO: account for string being too long for text field length (1028 chars)
 
                     };
 
@@ -119,6 +120,7 @@ angular.module('chembiohubAssayApp')
 
                 var params = {'encoded_query': encoded_username};
 
+                //TODO - error handling for unreachable server or other back end error
                 $http.get( urlConfig.cbh_saved_search.list_endpoint  + "/", {'params': params}).then(function(data){
                     
                     $scope.links = data.data.objects;
@@ -167,7 +169,7 @@ angular.module('chembiohubAssayApp')
                 //set blinded_batch_id = "EMPTY_STRING"
                 //send back to the savedsearch service
 
-                     
+                    //TODO: handle unreachable query or server side error
                     ProjectTypeFactory.get({"saved_search_project_type": true}, function(data){
                       
                       $scope.savedSearchType = data.objects[0];
@@ -178,7 +180,7 @@ angular.module('chembiohubAssayApp')
                       SearchUrlParamsV2.generate_capped_saved_search($stateParams).then(function(new_state_params){
                         //create a new URL string with the newly generated state params
                       var new_capped_url = $state.href($state.current.name, new_state_params);
-
+                        //TODO: handle unreachable query or server side error
                         projectFactory.save($scope.savedSearchType.project_template, function(data){
                             var resource_uri = data.resource_uri;
                             //change capped_url to the newly retrieved capped url
@@ -192,6 +194,7 @@ angular.module('chembiohubAssayApp')
                                 },
                             }
                             var ssf = SavedSearchFactory.list;
+                            //TODO: handle unreachable query or server side error
                             ssf.save(savedSearchObj, function(data){
                                 //search is now saved - close the modal
                                 //make sure reindex is called on the correct thing within data
