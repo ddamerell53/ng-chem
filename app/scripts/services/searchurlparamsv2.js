@@ -125,9 +125,9 @@ angular.module('chembiohubAssayApp')
             var query = skinConfig.objects[0].filters_applied.map(function(item){
               var subQ = {};
               //Select only the filters that have a value - note that the data has been validated already
-              angular.forEach(skinConfig.objects[0].query_schemaform.default.form, function(f){
-                if(schema[item].filters[f.key]){
-                  subQ[f.key] = schema[item].filters[f.key];
+              angular.forEach(skinConfig.objects[0].query_schemaform.default.schema.properties, function(value, key){
+                if(schema[item].filters[key]){
+                  subQ[key] = schema[item].filters[key];
                   
                 }
                 
@@ -136,9 +136,7 @@ angular.module('chembiohubAssayApp')
               filteredColumns.push(schema[item]);
               return subQ;
             });
-            console.log(query)
             params.encoded_query = btoa(JSON.stringify(query));
-            console.log(params.encoded_query)
 
             skinConfig.objects[0].filter_objects = filteredColumns;
             $rootScope.$broadcast("searchParamsChanged");

@@ -58,13 +58,12 @@ angular.module('chembiohubAssayApp')
 
 
         $rootScope.$on("cleanupFilters", function(event, args){
-            angular.forEach(skinConfig.objects[0].query_schemaform.default.form, function(form){
-                if(form.key != "query_type" && form.key){
-                    args.col.filters[form.key] = angular.copy(skinConfig.objects[0].query_schemaform.default.schema.properties[form.key].default);
+            angular.forEach(skinConfig.objects[0].query_schemaform.default.schema.properties, function(value, key){
+                if(key != "query_type" && key){
+                    args.col.filters[key] = angular.copy(value.default);
                 }else if (args.reset_query_type &&  form.key == "query_type"){
-                    args.col.filters.query_type = angular.copy(skinConfig.objects[0].query_schemaform.default.schema.properties[form.key].default);
+                    args.col.filters.query_type = angular.copy(value.default);
                 }
-
             });
             
         });
