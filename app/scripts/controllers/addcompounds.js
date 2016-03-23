@@ -91,7 +91,8 @@ angular.module('chembiohubAssayApp')
                     }
                 )       
         }
-
+        $scope.cbh.statename = $state.current.name;
+        console.log($state.current.name);
         $scope.cbh.saveChangesToTemporaryDataInController = function(changes, sourceOfChange){
 
             if(changes && changes.length > 0){

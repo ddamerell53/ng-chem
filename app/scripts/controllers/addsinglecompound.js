@@ -30,7 +30,7 @@ angular.module('chembiohubAssayApp')
 
             $scope.editMode = false;
 
-
+            $scope.cbh.statename = $state.current.name;
             $scope.revert = function(){
                 $scope.mol = angular.copy($scope.clonedMol);
                 $scope.mol.molecule = $scope.mol.ctab;

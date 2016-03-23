@@ -36,6 +36,44 @@ angular.module('chembiohubAssayApp')
         getRenderers: function(sco, isNewCompounds){
         var scope;
         var isNewCompoundsInterface = isNewCompounds;
+        var defaultCustomFieldRenderer = function(instance, td, row, col, prop, value, cellProperties) {
+                td = linkrend(instance, td, row, col, prop, value, cellProperties);
+                
+                if(cellProperties.readOnly == false){
+                  td.className  += " gallery-item";
+                  var holderRow = document.createElement("div");
+                  holderRow.className += "row"
+
+                  var button = document.createElement("div");
+                  //button.className ="row";
+                  button.innerHTML = "<button class='btn btn-xs btn-default pull-right' style='positon:top' title='Edit'><span class='glyphicon glyphicon-pencil'></span></button>"
+                  td.firstChild.className += ' col-xs-12';
+                  //td.firstChild.style = 'margin-bottom:10px;';
+
+                  //td.insertBefore( button, td.firstChild );
+                  $(button).appendTo($(holderRow));
+                  $(td.firstChild).css('margin-bottom', '18px').appendTo($(holderRow));
+
+                  $(holderRow).appendTo($(td));
+
+                  var mol = instance.getSourceDataAtRow(row);
+                  //is this a date?
+                  //if not, open the row editor as normal
+                  Handsontable.Dom.addEvent(button, 'mousedown', function (e){
+                    e.preventDefault(); // prevent selection quirk
+                    e.stopPropagation();
+                    
+                    
+                    scope.cbh.openSingleMol(mol, false, prop);
+                  
+                  });
+
+                }
+                
+                return td
+              };
+
+
         var linkrend = function(instance, td, row, col, prop, value, cellProperties) {
                var escaped = Handsontable.helper.stringify(value);
                 escaped = strip_tags(escaped, '');
@@ -279,54 +317,18 @@ angular.module('chembiohubAssayApp')
               customFieldRenderer: function(instance, td, row, col, prop, value, cellProperties) {
                 /* differentiate different renderer type for custom field */
                 var mol = instance.getSourceDataAtRow(row);
-                var projSpecificRenderer = cellProperties.project_specific_schema[mol.project].renderer;
+                if(cellProperties.project_specific_schema[mol.project]){
+                  var projSpecificRenderer = cellProperties.project_specific_schema[mol.project].renderer;
 
-                return projSpecificRenderer(instance, td, row, col, prop, value, cellProperties);
-              },
-              defaultCustomFieldRenderer: function(instance, td, row, col, prop, value, cellProperties) {
-                td = linkrend(instance, td, row, col, prop, value, cellProperties);
-                
-                if(cellProperties.readOnly == false){
-                  td.className  += " gallery-item";
-                  var holderRow = document.createElement("div");
-                  holderRow.className += "row"
-
-                  var button = document.createElement("div");
-                  //button.className ="row";
-                  button.innerHTML = "<button class='btn btn-xs btn-default pull-right' style='positon:top' title='Edit'><span class='glyphicon glyphicon-pencil'></span></button>"
-                  td.firstChild.className += ' col-xs-12';
-                  //td.firstChild.style = 'margin-bottom:10px;';
-
-                  //td.insertBefore( button, td.firstChild );
-                  $(button).appendTo($(holderRow));
-                  $(td.firstChild).css('margin-bottom', '18px').appendTo($(holderRow));
-
-                  $(holderRow).appendTo($(td));
-
-                  var mol = instance.getSourceDataAtRow(row);
-                  //is this a date?
-                  //if not, open the row editor as normal
-                  Handsontable.Dom.addEvent(button, 'mousedown', function (e){
-                    e.preventDefault(); // prevent selection quirk
-                    e.stopPropagation();
-                    
-                    
-                    scope.cbh.openSingleMol(mol, false, prop);
-                  
-                  });
-                  //if it IS a date, just open the date popup
-                  /*Handsontable.Dom.addEvent(button, 'mousedown', function (e){
-                    e.preventDefault(); // prevent selection quirk
-                    e.stopPropagation();
-                    
-                    
-                    //scope.cbh.openSingleMol(mol, false, prop);
-                  
-                  });*/
+                  if(projSpecificRenderer){
+                    return projSpecificRenderer(instance, td, row, col, prop, value, cellProperties);
+                  }
                 }
+                return defaultCustomFieldRenderer(instance, td, row, col, prop, value, cellProperties);
+
                 
-                return td
               },
+              defaultCustomFieldRenderer: defaultCustomFieldRenderer,
               fileUploadRenderer: function(instance, td, row, col, prop, value, cellProperties){
                 //build an unordered, unstyled list
                 
