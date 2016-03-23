@@ -103,6 +103,7 @@ angular.module('chembiohubAssayApp')
                 });
                 var patchData = angular.copy($scope.datasets[$scope.current_dataset_id].config);
                 patchData.objects = itemsToChange;
+                //TODO handle error here
                 CBHCompoundBatch.patchTempList(patchData).then(function(data){
                     // $scope.currentlyLoading = false;
                     // $scope.imageCallback();
@@ -538,6 +539,7 @@ $scope.changeView = function(){
 
         $scope.compoundBatches.data = [];
         
+        //TODO handle error here
         CBHCompoundBatch.getAddCompoundsResults($stateParams.mb_id, 
             limit, 
             offset, 

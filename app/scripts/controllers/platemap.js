@@ -214,6 +214,7 @@ angular.module('chembiohubAssayApp')
             //pass this function to the directive for the appropriate page
             $scope.saveWholePlate = function(){
             	
+                //TODO handle error here
             	ProjectTypeFactory.get({"plate_map_project_type": true}, function(data){
                       //$scope.newPlateForm
                       $scope.plateMapType = data.objects[0];
@@ -222,6 +223,7 @@ angular.module('chembiohubAssayApp')
                       $scope.plateMapType.project_template.name = $scope.newPlateForm.name + d.getTime().toString();
                       $scope.plateMapType.project_template.custom_field_config.name = $scope.newPlateForm.name + d.getTime().toString();
 
+                        //TODO handle error here
                         projectFactory.save($scope.plateMapType.project_template, function(data){
                             var resource_uri = data.resource_uri;
                             var plateMapObj = {
@@ -245,7 +247,7 @@ angular.module('chembiohubAssayApp')
 
                             var pmf = PlateMapFactory.list;
 
-
+                            //TODO handle error here
                             pmf.save(plateMapObj, function(data){
                                 //search is now saved - close the modal
                                 //make sure reindex is called on the correct thing within data
@@ -278,7 +280,7 @@ angular.module('chembiohubAssayApp')
             $scope.loadPlateMaps = function(){
 	            var params = {'creator_uri': loggedInUser.resource_uri};
 
-
+                //TODO handle error here
 	            $http.get( urlConfig.cbh_plate_map.list_endpoint  + "/get_list_elasticsearch/", {'params': params}).then(function(data){
 	                
 	                $scope.plates = data.data.objects;
@@ -338,7 +340,7 @@ angular.module('chembiohubAssayApp')
 	            fullPlateObj[0].customFields = $scope.editingPlate            	
             	
             	var pmf = PlateMapFactory.list;
-
+                //TODO handle error here
                 pmf.update({ customFields : $scope.editingPlate, projectKey: fullPlateObj[0].projectfull.project_key, id: $scope.editingPlateId }, function(data){
                     //search is now saved - close the modal
                     //make sure reindex is called on the correct thing within data

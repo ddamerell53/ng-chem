@@ -27,6 +27,7 @@ angular.module('chembiohubAssayApp')
             var updateableList = { "objects": $scope.projectPermissions.roles.map(function(role){
                 return $scope.projectPermissions[role];
             }) };
+            //TODO handle error here
             Projectpermissions.update({}, updateableList, function(data){
                 location.reload(true);
                 $scope.cancel();

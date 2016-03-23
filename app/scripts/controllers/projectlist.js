@@ -26,6 +26,7 @@ angular.module('chembiohubAssayApp')
       $scope.links = [];
 
         var refreshProjectTypes = function(){
+          //TODO handle error here
                 ProjectTypeFactory.get({"saved_search_project_type": false}, function(data){
                   $scope.projectTypes = data.objects.map(function(pType){
                       
@@ -43,7 +44,7 @@ angular.module('chembiohubAssayApp')
             
             var params = {'creator_uri': loggedInUser.resource_uri};
 
-
+            //TODO handle error here
             $http.get( urlConfig.cbh_saved_search.list_endpoint  + "/get_list_elasticsearch/", {'params': params}).then(function(data){
                 
                 $scope.links = data.data.objects;
@@ -126,6 +127,7 @@ angular.module('chembiohubAssayApp')
 
         /* Provide a link from the project list page to the assayreg page for items in this project which have been added by this user */
         $scope.cbh.searchForUserWithProjectKey = function(projKey){
+          //TODO handle error here
           AddDataFactory.nestedDataClassification.get({
                         "project_key": projKey,
                     },

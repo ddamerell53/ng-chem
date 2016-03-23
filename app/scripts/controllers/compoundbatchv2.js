@@ -283,7 +283,7 @@ angular.module('chembiohubAssayApp')
 
             $scope.cbh.patchRecord = function(mol) {
                 $scope.compoundBatches.backup = angular.copy($scope.compoundBatches.data);
-                //TODO handle error here
+                //TODO handle error
                 CBHCompoundBatch.patch(mol).then(function(data) {
                     angular.forEach($scope.compoundBatches.data, function(m){
                         if(m.id == mol.id){
@@ -506,6 +506,7 @@ angular.module('chembiohubAssayApp')
                     return $scope.compoundBatches.data[item[0]]
                 });
                 console.log(itemsToChange)
+                //TODO handle error here
                 CBHCompoundBatch.patchList({
                     "objects": itemsToChange
                         }, $rootScope.projects).then(function(data) {
@@ -539,6 +540,7 @@ angular.module('chembiohubAssayApp')
                         console.log($scope.cbh.changesToUndo);
                         var patchData = {};
                         patchData.objects = itemsToChange;
+                        //TODO handle error here
                         CBHCompoundBatch.patchList(patchData, $rootScope.projects).then(function(data) {
                            
                         });
@@ -614,6 +616,7 @@ angular.module('chembiohubAssayApp')
                 //apply the urls of the flowfile object to the correct custom field of $scope.mol.customFields - find the attachments array and add it
                 //put a new method in FlowFileFactory
 
+                //TODO handle error here
                 var AttachmentFactory = FlowFileFactory.cbhChemFlowFile;
                 AttachmentFactory.get({
                     'identifier': file.uniqueIdentifier

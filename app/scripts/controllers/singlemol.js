@@ -16,6 +16,7 @@ angular.module('chembiohubAssayApp')
             var myform, len;
             $scope.editMode = false;
 
+            //TODO handle error here
             $http.get(urlConfig.cbh_compound_batches_v2.list_endpoint + "/" + $stateParams.uniqId + "/").then(function(data) {
 
 
@@ -79,7 +80,7 @@ angular.module('chembiohubAssayApp')
                 //apply the urls of the flowfile object to the correct custom field of $scope.mol.customFields - find the attachments array and add it
                 //put a new method in FlowFileFactory
                 //need to modify this so that the items are added to the value part of the schema item returned by the API
-
+                //TODO handle error here
                 var AttachmentFactory = FlowFileFactory.cbhChemFlowFile;
                 AttachmentFactory.get({
                     'identifier': file.uniqueIdentifier
@@ -186,7 +187,7 @@ angular.module('chembiohubAssayApp')
             }
             $scope.isUpdated = false;
             $scope.updateBatch = function(instance) {
-
+                //TODO handle error here
                 CBHCompoundBatch.patch($scope.mol ).then(
                     function(data) {
                         $scope.update_success = true;
