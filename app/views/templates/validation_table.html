@@ -51,7 +51,7 @@
                          <p class="nexa vw" style="padding-top:10px;">not processed</p>
                     </div>
                     <div class="col-xs-3 pull-right" style="padding:10px 4px 0 0;">
-                        <div ng-class="proj.project_type.show_compounds == true ? 'pull-right' : ''"><a ng-show="datasets[current_dataset_id].config.batchstats['parseErrors'] > 0" ng-click ="cbh.toggleWarningsFilter('warnings.parseError')" class="btn btn-sm btn-default" ng-class="warningsFilter =='warnings.parseError' ? 'blue' : 'lightgrey'" title="Filter only records where the structure cannot be processed"><span class="glyphicon glyphicon-filter "></span></a>
+                        <div ng-class="proj.project_type.show_compounds == true ? 'pull-right' : ''"><a ng-show="datasets[current_dataset_id].config.batchstats['parseerrors'] > 0" ng-click ="cbh.toggleWarningsFilter('warnings.parseerror')" class="btn btn-sm btn-default" ng-class="warningsFilter =='warnings.parseerror' ? 'blue' : 'lightgrey'" title="Filter only records where the structure cannot be processed"><span class="glyphicon glyphicon-filter "></span></a>
                         <info-box lookup="error_total_values" lookupitems="cbh.messages"></info-box></div>
                     </div>
 
