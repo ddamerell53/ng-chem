@@ -61,7 +61,7 @@ angular.module('chembiohubAssayApp')
             angular.forEach(skinConfig.objects[0].query_schemaform.default.schema.properties, function(value, key){
                 if(key != "query_type" && key){
                     args.col.filters[key] = angular.copy(value.default);
-                }else if (args.reset_query_type &&  form.key == "query_type"){
+                }else if (args.reset_query_type &&  key == "query_type"){
                     args.col.filters.query_type = angular.copy(value.default);
                 }
             });

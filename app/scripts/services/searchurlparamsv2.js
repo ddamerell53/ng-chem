@@ -132,7 +132,7 @@ angular.module('chembiohubAssayApp')
                 }
                 
               });
-              subQ["field_path"] = schema[item].filters["field_path"];
+              subQ["field_path"] = schema[item].data;
               filteredColumns.push(schema[item]);
               return subQ;
             });
