@@ -282,6 +282,7 @@ angular.module('chembiohubAssayApp')
 
             $scope.cbh.patchRecord = function(mol) {
                 $scope.compoundBatches.backup = angular.copy($scope.compoundBatches.data);
+                //TODO handle error here
                 CBHCompoundBatch.patch(mol).then(function(data) {
                     angular.forEach($scope.compoundBatches.data, function(m){
                         if(m.id == mol.id){

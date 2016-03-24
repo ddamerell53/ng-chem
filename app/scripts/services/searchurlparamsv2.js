@@ -203,6 +203,7 @@ angular.module('chembiohubAssayApp')
               backend_query[p] = params[p];
 
             })
+            //TODO hanlde error from this call
             var promise = CBHCompoundBatch.queryv2(backend_query).then(function(result) {
 
               //get the single result, and add this as a parameter to encoded_query
