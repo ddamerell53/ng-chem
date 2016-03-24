@@ -296,6 +296,7 @@ angular.module('chembiohubAssayApp')
                   }
                   cbh.isUpdated = false;
                   $scope.updateBatch = function(instance) {
+                    //TODO handle error here
                     CBHCompoundBatch.patch({
                       "customFields": $scope.mol.customFields,
                       "projectKey": $scope.projectWithCustomFieldData.project_key,
