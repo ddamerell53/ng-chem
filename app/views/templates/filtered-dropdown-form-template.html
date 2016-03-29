@@ -26,11 +26,25 @@
                      
                 </ul>
                 <ul class="dropdown-menu" style="margin-top:55px;min-width:300px;max-width:300px; max-height:300px; overflow-y:auto;  border-top:0;" >
-                    <li ng-show="items.length == 0" class="col-xs-12">No items found with these search parameters</li> 
+                    <li ng-show="items.length == 0 && !form.options.tagging" class="col-xs-12">No items found with these search parameters</li> 
 
-                     <li ng-class="model[form.key[0]].indexOf(item.key) > -1 ? 'active' : ''" ng-repeat="item in items">
+                    <li ng-if="form.options.tagging && autoCompNotInList" ng-class="model[form.key[0]].indexOf(item.key) > -1 ? 'active' : ''" >
+                        <a  ng-click="toggleItem(autoCompNotInList, model[form.key[0]], true); $event.stopPropagation();">
+                            <span class="glyphicon" ng-class="model[form.key[0]].indexOf(autoCompNotInList.key) > -1 ? 'glyphicon-check' : 'glyphicon-unchecked'"></span>
+                            <span  >{{autoCompNotInList.key}} (add new)</span>
+                        </a>
+                     </li>
+
+                    <li ng-if="form.options.tagging" ng-class="checkItem(item.key, model[form.key[0]]) ? 'active' : ''" ng-repeat="item in newTagsObjects">
+                        <a  ng-click="toggleItem(item, model[form.key[0]], true); $event.stopPropagation();">
+                            <span class="glyphicon" ng-class="checkItem(item.key, model[form.key[0]]) > -1 ? 'glyphicon-check' : 'glyphicon-unchecked'"></span>
+                            <span  >{{item.key}} (new)</span>
+                        </a>
+                     </li>
+                    
+                     <li ng-class="checkItem(item.key, model[form.key[0]]) > -1 ? 'active' : ''" ng-repeat="item in items">
                         <a  ng-click="toggleItem(item, model[form.key[0]]); $event.stopPropagation();">
-                            <span class="glyphicon" ng-class="model[form.key[0]].indexOf(item.key) > -1 ? 'glyphicon-check' : 'glyphicon-unchecked'"></span>
+                            <span class="glyphicon" ng-class="checkItem(item.key, model[form.key[0]]) > -1 ? 'glyphicon-check' : 'glyphicon-unchecked'"></span>
                             <span  >{{item.key}} ({{item.doc_count}})</span>
                         </a>
                      </li>

@@ -207,17 +207,8 @@ angular.module('chembiohubAssayApp')
                             angular.forEach(myproj.schemaform.form, function(i) {
 
                                 if (cNames.indexOf(i.key) < 0) {
-                                    var hotColumn = {
-                                        knownBy: i.title,
-                                        data: "customFields." + i.key,
-                                        readOnly: !scope.cbh.editMode,
-                                        className: "htCenter htMiddle ",
-                                        renderer: "customFieldRenderer",
-                                        typeahed: [],
-                                        field_type: i.field_type,
-                                    };
+                                    
                                     cNames.push(i.key);
-                                    customCols.push(hotColumn);
                                     jsonSchemaColDefs.push(angular.copy(myproj.schemaform.schema.properties[i.key]));
                                 }
                             });
