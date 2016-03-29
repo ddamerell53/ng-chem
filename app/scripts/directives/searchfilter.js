@@ -18,7 +18,7 @@ angular.module('chembiohubAssayApp')
       controller: ["$scope", "$rootScope", "skinConfig", "$timeout", function($scope, $rootScope, skinConfig, $timeout){
       	
       	//has the filter button been pressed in the handsontable?
-      	$rootScope.$on("columnSelection", function(event, col){
+      	$scope.$on("columnSelection", function(event, col){
          
         	$scope.col = col;
 

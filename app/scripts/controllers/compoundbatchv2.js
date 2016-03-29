@@ -54,20 +54,11 @@ angular.module('chembiohubAssayApp')
                         $scope.cbh.column = col;
                         $rootScope.$broadcast("columnSelection", $scope.cbh.column);
                         $scope.cbh.changeSearchParams($stateParams, true);
-                    //     $timeout(function(){
-                    //     angular.forEach($(col.TH).siblings(), function(el){
-                    //         $timeout(function(){
-                    //             el.style["background"] = "";
-                    //             el.style["color"] = "";
-                    //         })
-                    //     });
-                    // });
-
                 }); 
             }
 
 
-        $rootScope.$on("cleanupFilters", function(event, args){
+        $scope.$on("cleanupFilters", function(event, args){
             angular.forEach(skinConfig.objects[0].query_schemaform.default.schema.properties, function(value, key){
                 if(key != "query_type" && key){
                     args.col.filters[key] = angular.copy(value.default);
@@ -78,7 +69,7 @@ angular.module('chembiohubAssayApp')
             
         });
 
-        $rootScope.$on("filtersUpdated",function( event, args){
+        $scope.$on("filtersUpdated",function( event, args){
             var index = skinConfig.objects[0].filters_applied.indexOf(args.field_path);
             var changed = false;
             if(index > -1){
@@ -94,7 +85,7 @@ angular.module('chembiohubAssayApp')
             $scope.cbh.justAdded = false;
         });
 
-        $rootScope.$on("removeAllHides",function( event, args){
+        $scope.$on("removeAllHides",function( event, args){
             
             skinConfig.objects[0].hides_applied = [];
             var params = SearchUrlParamsV2.generate_hide_params($stateParams);
@@ -103,7 +94,7 @@ angular.module('chembiohubAssayApp')
 
 
 
-         $rootScope.$on("removeHide",function( event, args){
+         $scope.$on("removeHide",function( event, args){
             
             var index = skinConfig.objects[0].hides_applied.indexOf(args.field_path);
             if(index > -1){
@@ -113,7 +104,7 @@ angular.module('chembiohubAssayApp')
             $scope.cbh.changeSearchParams(params, true);
         });
 
-         $rootScope.$on("addHide",function( event, args){
+         $scope.$on("addHide",function( event, args){
             var index = skinConfig.objects[0].hides_applied.indexOf(args.field_path);
             if(index > -1){
               skinConfig.objects[0].hides_applied.splice(index, 1);
@@ -125,7 +116,7 @@ angular.module('chembiohubAssayApp')
             
         });
 
-         $rootScope.$on("addSort",function( event, args){
+         $scope.$on("addSort",function( event, args){
             var index = skinConfig.objects[0].sorts_applied.indexOf(args.field_path);
             if(index > -1){
               skinConfig.objects[0].sorts_applied.splice(index, 1);
@@ -137,7 +128,7 @@ angular.module('chembiohubAssayApp')
         });
 
 
-         $rootScope.$on("removeSort",function( event, args){
+         $scope.$on("removeSort",function( event, args){
 
             var index = skinConfig.objects[0].sorts_applied.indexOf(args.field_path);
             if(index > -1){
@@ -343,13 +334,24 @@ angular.module('chembiohubAssayApp')
                 }
                 if (!$scope.addingData) {
                     $scope.addingData = true;
-                    console.log(item)
                     $scope.blankForm(false, item);
                 } else {
                     
                     $scope.addingData = false;
                 }
             }
+
+            $scope.$on("openedTaggingDropdown", function(event, args){
+                var filters = {};
+                filters.pids = $scope.cbh.projAddingTo.id;
+                
+                filters.autocomplete_field_path = "custom_fields." + args.key;
+                filters.autocomplete = args.autocomplete;
+                CBHCompoundBatch.queryv2(filters).then(function(result) {
+                    $rootScope.$broadcast("autoCompleteTaggingData", result);
+                });
+                
+            })
 
             $scope.blankForm = function(toggleAddingOff, cloned) {
                 if (angular.isDefined($scope.cbh.projAddingTo)) {
@@ -387,18 +389,7 @@ angular.module('chembiohubAssayApp')
 
 
 
-            // $scope.cbh.toggleArchiveFilter = function() {
-            //     $scope.cbh.archiveFilter = !$scope.cbh.archiveFilter;
-            //     var newParams = angular.copy($stateParams);
-            //     newParams.page = 1;
-            //     newParams.compoundBatchesPerPage = $scope.pagination.compoundBatchesPerPage.value;
-            //     newParams.doScroll = 'true';
-            //     newParams.archived = ($scope.cbh.archiveFilter).toString();
-            //     $scope.cbh.changeSearchParams(newParams, false);
-
-
-            // }
-
+  
 
 
             $scope.changeNumberPerPage = function(viewType) {
