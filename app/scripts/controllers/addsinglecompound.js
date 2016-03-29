@@ -144,8 +144,32 @@ angular.module('chembiohubAssayApp')
                 };
                 $scope.createMultiBatch();
             }
+            
+            //validation of form happens here
+            $scope.errormess = "";
+            $scope.doArchiveItem = false;
 
-            $scope.saveTemporaryCompoundData = function(doArchiveItem){
+            $scope.validateOtherFormData = function(myForm){
+                console.log('doValidation being called', myForm)
+                $scope.errormess = "";
+                //this step is necessary to ensure that required fields have data
+                //and for validation check on the form as a whole to fail if required fields are missing
+                //don't look for this in the angular schema form examples - it's not there...
+                $scope.$broadcast("schemaFormValidate");
+                if(myForm.$valid && !myForm.$pristine){
+                    $scope.saveTemporaryCompoundData();
+                }
+                else if(myForm.$pristine){
+                    $scope.errormess = "You must add some data before you can submit your form.";
+                }
+                else {
+                    $scope.errormess = "You have required fields missing or incorrect data - please correct these and try again.";
+                }
+                //TODO: account for string being too long for text field length (1028 chars)
+
+            };
+
+            $scope.saveTemporaryCompoundData = function(){
                 $scope.currentlyLoading = true;
                 var callback = function(){
 
@@ -162,7 +186,7 @@ angular.module('chembiohubAssayApp')
                 CBHCompoundBatch.saveMultiBatchMolecules($scope.dataset.config).then(
                         function(data){
                             $scope.cbh.hideSearchForm=true;
-                            if($scope.idToClone && doArchiveItem){
+                            if($scope.idToClone && $scope.doArchiveItem){
                                $scope.clonedMol.properties.archived = "true";
                                $scope.clonedMol.projectKey = $scope.projectWithCustomFieldData.project_key;
                                CBHCompoundBatch.patch($scope.clonedMol).then(function(data) {

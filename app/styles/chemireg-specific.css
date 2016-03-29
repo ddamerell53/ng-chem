@@ -1173,6 +1173,11 @@ svg.svg.nonchem, li svg.svg.nonchem {
   opacity:1;
 }
 
+.has-error .help-block, .control-label {
+  font-family: NexaBold;
+  border:0;
+}
+
 
 /* 16-column bootstrap grid classes */
 /*!

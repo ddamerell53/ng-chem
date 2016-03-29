@@ -314,11 +314,36 @@ angular.module('chembiohubAssayApp')
      
             $scope.addingData = false;
 
-            $scope.saveSingleCompound = function(toggleAddingOff) {
+            $scope.errormess = "";
+            $scope.toggleAddingOff = false;
+
+            $scope.doSingleCompoundValidation = function(myForm){
+                console.log('doValidation being called', myForm)
+                $scope.errormess = "";
+                //this step is necessary to ensure that required fields have data
+                //and for validation check on the form as a whole to fail if required fields are missing
+                //don't look for this in the angular schema form examples - it's not there...
+                $scope.$broadcast("schemaFormValidate");
+                if(myForm.$valid && !myForm.$pristine){
+                    $scope.saveSingleCompound();
+                }
+                else if(myForm.$pristine){
+                    $scope.errormess = "You must add some data before you can submit your form.";
+                }
+                else {
+                    $scope.errormess = "You have required fields missing or incorrect data - please correct these and try again.";
+                }
+                //TODO: account for string being too long for text field length (1028 chars)
+
+            };
+
+            $scope.saveSingleCompound = function() {
+                //adding validation here
+
                 CBHCompoundBatch.saveSingleCompound($scope.newMol).then(
                     function(data) {
                         $scope.pageChanged(1);
-                        $scope.blankForm(toggleAddingOff);
+                        $scope.blankForm($scope.toggleAddingOff);
                     }
                 );
             };

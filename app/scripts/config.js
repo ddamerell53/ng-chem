@@ -66,8 +66,13 @@ var $timeout = initInjector.get("$timeout");
 
 var schemaGetter = function(project_data_fields){
             var edit_schema = { "type": "object", 'properties' : {}, 'required': [] };
+
                 angular.forEach(project_data_fields, function(field){
                   angular.extend(edit_schema.properties, angular.copy(field.edit_schema.properties));
+                  //ensure required fields are added to required
+                  if (field.required){
+                    edit_schema.required.push(field.name);
+                  }
                 });
             return edit_schema;
         };
