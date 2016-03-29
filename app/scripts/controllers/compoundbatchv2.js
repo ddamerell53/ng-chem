@@ -28,7 +28,7 @@ angular.module('chembiohubAssayApp')
                 };
             }
 
-            $scope.$on("openedDropdown", function(event, args){
+            $scope.$on("openedSearchDropdown", function(event, args){
                 var filters = angular.copy($stateParams);
                 var activeCol = null;
                 angular.forEach($scope.cbh.tabular_data_schema, function(c){
@@ -45,13 +45,23 @@ angular.module('chembiohubAssayApp')
             })
 
             $scope.cbh.sendToSearch = function(col){
-                angular.forEach($scope.compoundBatches.tabular_data_schema, function(c){
+                
+                $timeout(function(){
+                        angular.forEach($scope.cbh.tabular_data_schema, function(c){
                             c.showFilters = false;
                         });
-                $timeout(function(){
+                        col.showFilters = true;
                         $scope.cbh.column = col;
                         $rootScope.$broadcast("columnSelection", $scope.cbh.column);
                         $scope.cbh.changeSearchParams($stateParams, true);
+                    //     $timeout(function(){
+                    //     angular.forEach($(col.TH).siblings(), function(el){
+                    //         $timeout(function(){
+                    //             el.style["background"] = "";
+                    //             el.style["color"] = "";
+                    //         })
+                    //     });
+                    // });
 
                 }); 
             }

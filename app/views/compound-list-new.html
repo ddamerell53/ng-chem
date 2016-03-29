@@ -10,10 +10,6 @@
             </ng-pluralize>
             <span ng-if="warningsFilter"> (filtered)</span>
             <span ng-if="noData">&nbsp; &nbsp; - &nbsp; &nbsp;{{noData}}</span>
-            <button class="btn btn-danger " ng-if="cbh.searchForm.archived=='true'" ng-click="cbh.searchForm.archived='false';">Exit Archive Mode</button>
-            <button ng-show="stateName != 'cbh.projects.project.addcompounds'" class="btn btn-sm btn-default pull-right " ng-if="!cbh.hideSearchForm" ng-click="cbh.hideSearchForm=true;">Hide Advanced and Structure Search</button>
-            <button ng-show="stateName != 'cbh.projects.project.addcompounds'"  class="btn btn-sm btn-default pull-right " ng-if="cbh.hideSearchForm" ng-click="cbh.hideSearchForm=false;">Show Advanced and Structure Search</button>
-
         </h2>
     </div>
 </div>
@@ -26,45 +22,10 @@
 </div>
 <div class="row" >
     <div class ="col-xs-12">
-
-        <div ng-if="listOrGallery.choice == 'list'">
-            <div ng-show="(cbh.changesToUndo.length > 0)" >
-                <div class="alert alert-warning text-center">
-                    <ng-pluralize count="cbh.changesToUndo.length"
-                 when="{'0': '',
-                     'one': '1 item updated.',
-                     'other': '{} items updated.'}">
-</ng-pluralize> <button class="btn  btn-danger pull-right" ng-click="undoChanges()"><span class="glyphicon glyphicon-thumbs-down"></span> Undo</button>
-</div>
-                <div class="spacer"></div>
-            </div>
-            
-            <div  ng-if="addingData && cbh.projAddingTo.project_type.show_compounds == false">
-                <div class="col-xs-12">
-                <h2 class="blue"><small><span class="glyphicon glyphicon-plus"></span>Adding {{cbh.projAddingTo.project_type.show_compounds == true ? 'compounds' : 'items' }} to {{cbh.projAddingTo.name}} </small></h2>
-            </div>
-            <div ng-repeat="form in formChunks" class="col-xs-12 col-sm-4">
-                <div  class=" form-group" sf-schema="myschema" sf-form="form" sf-model="newMol.customFields"></div>
-                <div class="spacer"></div>
-                
-            </div>
-            <div class="row"><div class="col-xs-12">
-                <div class="pull-right" >
-                                                <button ng-click="blankForm(true);" class="btn btn-primary"><span class="glyphicon glyphicon-ban-circle"></span>&nbsp;Close</button>
-                                                <button ng-click="blankForm()" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span>&nbsp;Clear Form</button>
-                                                <button  ng-click="saveSingleCompound(true)" class="btn btn-success"><span class="glyphicon glyphicon-ok"></span>&nbsp;Save
-                                                </button>
-                                                <button  ng-click="saveSingleCompound()" class="btn btn-success"><span class="glyphicon glyphicon-ok"></span>&nbsp;Save and add another
-                                                </button>
-                                            </div></div>
-                                </div>
-
-        </div>
-            
-            <div id="myhot" style="margin-top:5px;">
+            <div ng-if="compoundBatches.columns" id="myhot" style="margin-top:5px;">
                 <handsoncompoundtable  uncurated-headers="compoundBatches.uncuratedHeaders" sorts="compoundBatches.sorts"  cbh="cbh" compounds="compoundBatches.data", excluded="compoundBatches.excluded" warnings-filter="warningsFilter" redraw="compoundBatches.redraw" columns="compoundBatches.columns" searchform-schema="searchFormSchema" search-form="searchForm" show-blanks="compoundBatches.showBlanks" show-non-blanks="compoundBatches.showNonBlanks" messages="messages"></handsoncompoundtable>
             </div>
-
+            <!-- This table is only there to make sure that the ng-paginate directive works as the ng-paginate directive needs an ng-repeat-->
             <table ng-show="">
                 <tr dir-paginate="compoundBatch in compoundBatches.data | itemsPerPage: pagination.compoundBatchesPerPage.value" total-items="totalCompoundBatches" current-page="pagination.current">
 

@@ -245,7 +245,6 @@ var login = null;
           "schema" : schemaGetter(project.custom_field_config.project_data_fields),
           "viewForm" : viewFormGetter(project.custom_field_config.project_data_fields)
         }
-        console.log(project.schemaform);
         project.updateCustomFields = function(){
           
           $timeout(function(){

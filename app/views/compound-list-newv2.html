@@ -8,7 +8,6 @@
              'one': '1 ' + cbh.skinning.result_alias,
               'other': '{} ' + cbh.skinning.result_alias + 's'}">
             </ng-pluralize>
-            <span ng-if="warningsFilter"> (filtered)</span>
             <span ng-if="noData">&nbsp; &nbsp; - &nbsp; &nbsp;{{noData}}</span>
         </h2>
             </div>
@@ -36,7 +35,6 @@
                             <h2 class="blue"><small><span class="glyphicon glyphicon-plus"></span>Adding {{cbh.projAddingTo.project_type.show_compounds == true ? 'compounds' : 'items' }} to {{cbh.projAddingTo.name}} </small></h2>
                         </div>
                         <form name="myForm" id="myForm" role="form" ng-submit="doSingleCompoundValidation(myForm)">
-                            
                             <div ng-repeat="form in formChunks" class="col-xs-12 col-sm-4">
                                 <div class=" form-group" sf-schema="myschema" sf-form="form" sf-model="newMol.custom_fields"></div>
                                 <div class="spacer"></div>
@@ -47,16 +45,12 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-xs-12 mt">
+                                <div class="col-xs-12">
                                     <div class="pull-right">
                                         <button ng-click="blankForm(true);" class="btn btn-primary"><span class="glyphicon glyphicon-ban-circle"></span>&nbsp;Close</button>
                                         <button ng-click="blankForm()" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span>&nbsp;Clear Form</button>
                                         <button type='submit' value="Submit" class="btn btn-primary" form="myForm" ng-click="toggleAddingOff = false"><span class="glyphicon glyphicon-share"></span>Save</button>
                                         <button type='submit' value="Submit" class="btn btn-primary" form="myForm" ng-click="toggleAddingOff = true"><span class="glyphicon glyphicon-share"></span>Save and add another</button>
-                                        <!-- <button ng-click="doSingleCompoundValidation(form, false)" class="btn btn-success"><span class="glyphicon glyphicon-ok"></span>&nbsp;Save
-                                        </button>
-                                        <button ng-click="doSingleCompoundValidation(form, true)" class="btn btn-success"><span class="glyphicon glyphicon-ok"></span>&nbsp;Save and add another
-                                        </button> -->
                                     </div>
                                 </div>
                             </div>
@@ -72,6 +66,7 @@
                         </div>
                         <handsoncompoundtablev2 uncurated-headers="compoundBatches.uncuratedHeaders" sorts="compoundBatches.sorts" cbh="cbh" compounds="compoundBatches.data" , excluded="compoundBatches.excluded" warnings-filter="warningsFilter" redraw="compoundBatches.redraw" columns="compoundBatches.tabular_data_schema" searchform-schema="searchFormSchema" search-form="searchForm" show-blanks="compoundBatches.showBlanks" show-non-blanks="compoundBatches.showNonBlanks" messages="messages" column="column"></handsoncompoundtablev2>
                     </div>
+                    <!-- This table is only there to make sure that the ng-paginate directive works as the ng-paginate directive needs an ng-repeat-->
                     <table ng-show="">
                         <tr dir-paginate="compoundBatch in compoundBatches.data | itemsPerPage: pagination.compoundBatchesPerPage.value" total-items="totalCompoundBatches" current-page="pagination.current">
                             <td>{{ compoundBatch }}</td>

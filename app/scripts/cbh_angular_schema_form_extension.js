@@ -20,6 +20,30 @@ $templateCache.put("directives/decorators/bootstrap/default.html","<div class=\"
 
 
 
+function mergeKeyArrays(left, right)
+{
+    var result = [];
+ 
+    while (left.length && right.length) {
+        if (left[0].key.toLowerCase() <= right[0].key.toLowerCase()) {
+            result.push(left.shift());
+        } else {
+            result.push(right.shift());
+        }
+    }
+ 
+    while (left.length)
+        result.push(left.shift());
+ 
+    while (right.length)
+        result.push(right.shift());
+ 
+    return result;
+}
+
+
+
+
 angular.module('schemaForm').config(
 ['schemaFormProvider', 'schemaFormDecoratorsProvider', 'sfPathProvider','sfBuilderProvider',
   function(schemaFormProvider,  schemaFormDecoratorsProvider, sfPathProvider, sfBuilderProvider) {
@@ -53,16 +77,60 @@ angular.module('schemaForm').config(
 
 
 angular.module('schemaForm')
-  .controller('filtereddropdownController', function ($scope, $rootScope, $timeout) {
+  .controller('filtereddropdownController', function ($scope, $rootScope, $timeout, $filter) {
     $scope.loading = true;
     $scope.opened = function(key, autoComp){
-         $rootScope.$broadcast("openedDropdown", {'key': key, 'autocomplete' : autoComp});
+         $rootScope.$broadcast($scope.form.options.fetchDataEventName, {'key': key, 'autocomplete' : autoComp});
     };
+    $scope.autoComp = "";
+    //if there are static items defined, sort them and make them into right format
+    if($scope.form.options.staticItems){
+       $scope.form.options.staticItems.sort(function(item1, item2){ 
+        if ( item1.key < item2.key )
+          return -1;
+        if ( item1.key > item2.key )
+          return 1;
+        return 0;
+      })
 
-    $rootScope.$on("autoCompleteData", function(event, autocompletedata){
-        $scope.loading = false;
-        $scope.items = autocompletedata.items;
-        $scope.numberItemsMissing = autocompletedata.unique_count - $scope.items.length;
+    }
+    
+    $rootScope.$on($scope.form.options.dataArrivesEventName , function(event, autocompletedata){
+        if($scope.autoComp == autocompletedata.autocomplete){
+          //The data is not out of date - if the user types quickly we are pulling back
+          //results for every letter typed so we have to be sure the data is still valid
+          //We could already be waiting for the next result!
+          $scope.loading = false;
+          var sortedStaticItems = [];
+          if($scope.form.options.staticItems){
+            sortedStaticItems = angular.copy($scope.form.options.staticItems);
+          }
+          //The static items still need to be filtered for autocomplete for consistency
+          var autocompleteStatic = $filter('filter')(sortedStaticItems, {key: $scope.autoComp})
+          //Merge together the static items from the schema with the dynamic items from the back end
+          //This gives a total list of items as desired
+          $scope.items = mergeKeyArrays(autocompletedata.items, autocompleteStatic) ;
+          if($scope.autoComp){
+            var autoCompleteExistsOnBackend = false;
+            angular.forEach($scope.items, function(item){
+                if(item.key.toLowerCase() == $scope.autoComp){
+                  autoCompleteExistsOnBackend = true;
+                }
+            });
+            if(autoCompleteExistsOnBackend){
+              $scope.autoCompNotInList = undefined;
+            }else{
+              $scope.autoCompNotInList = {"key" : $scope.autoComp, doc_count: 0};
+            }
+          }else{
+            $scope.autoCompNotInList = undefined;
+          }
+          
+          $scope.numberItemsMissing = autocompletedata.unique_count - $scope.items.length;
+        }else{
+          //The user must have changed the autocomplete in between times
+        }
+        
     });
     $scope.$watch("autoComp", function(newVal, oldVal){
       //when the user searches, we call the back end to get 
@@ -74,22 +142,83 @@ angular.module('schemaForm')
       }
     });
 
-    $scope.toggleItem = function(item, $$value$$){
+    $scope.autoCompNotInList = undefined;
+    $scope.newTags = [];
+    $scope.newTagsObjects = [];
+
+
+    if($scope.form.options.multiple){
+      $scope.checkItem = function(key, $$value$$){
+        return $$value$$.indexOf(key)
+      }
+      $scope.toggleItem = function(item, $$value$$, isNewItem){
         $timeout(function(){
             $scope.$apply(function(){
-            var index = $$value$$.indexOf(item.key);
-            if(index == -1){
-                $$value$$.push(item.key); 
-            }else{
-                $$value$$.splice(index, 1);
-            }
+              var index;
+                index = $$value$$.indexOf(item.key);
+              
+            
+            var newTagIndex = $scope.newTags.indexOf(item.key);
+              if(index == -1){
+                  $$value$$.push(item.key); 
+                  if(isNewItem){
+                    $scope.newTags.push(item.key);
+                    $scope.newTagsObjects.push(item);
+                  }
+                  $scope.autoCompNotInList = undefined;
+              }else{
+                  $$value$$.splice(index, 1);
+                  if(isNewItem){
+                    $scope.newTags.splice(newTagIndex, 1);
+                    $scope.newTagsObjects.splice(newTagIndex, 1);
+                  }
+              
+                }
             });
             
             $scope.evalExpr($scope.form.onChange, {'modelValue': $$value$$, form: $scope.form});
         })
-        
-        
+      }
+    }else {
+      $scope.checkItem = function(key, $$value$$){
+        return $$value$$ == key;
+      }
+      $scope.toggleItem = function(item, $$value$$, isNewItem){
+        $timeout(function(){
+            $scope.$apply(function(){
+              var toggleOff = false;
+              if($$value$$ == item.key){
+                toggleOff = true;
+              }
+              var newTagIndex = $scope.newTags.indexOf(item.key);
+              if(toggleOff){
+                  $$value$$ = item.key; 
+                  if(isNewItem){
+                    $scope.newTags.push(item.key);
+                    $scope.newTagsObjects.push(item);
+                  }
+                  $scope.autoCompNotInList = undefined;
+              }else{
+                  $$value$$ = "";
+                  if(isNewItem){
+                    $scope.newTags.splice(newTagIndex, 1);
+                    $scope.newTagsObjects.splice(newTagIndex, 1);
+                  }
+              
+                }
+            });
+            
+            $scope.evalExpr($scope.form.onChange, {'modelValue': $$value$$, form: $scope.form});
+        })
+      }
     }
+    
     $scope.items = [];
     
   });
+
+
+
+
+
+

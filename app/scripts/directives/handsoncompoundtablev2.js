@@ -13,12 +13,7 @@ angular.module('chembiohubAssayApp')
             restrict: 'E',
             transclude: true,
             controller: ['$scope', function($scope){
-                $scope.sendToSearch = function(col){
-                    $timeout(function(){
-                            $scope.cbh.column = col;
-                            $rootScope.$broadcast("columnSelection", $scope.cbh.column);
-                    }); 
-                }
+                
             }],
             link: function preLink(scope, element, attrs) {
                 var redraw;
@@ -63,13 +58,21 @@ angular.module('chembiohubAssayApp')
                     return mappingOptions;
                 }
 
+                
+
+
                 function addButtonMenuEvent(button, col, TH) {
+                    col.TH = TH;
                     Handsontable.Dom.addEvent(button, 'click', function(event) {
                         //Cancel any existing showfilters flags so we dont get two highlighted columns
-                        angular.forEach(scope.cbh.tabular_data_schema, function(c){
-                            c.showFilters = false;
-                        });
-                        scope.sendToSearch(col);
+                        
+                       
+                           
+                        scope.cbh.sendToSearch(col); 
+                            
+                            
+                        
+                        
                         // 
                         angular.forEach($(TH).siblings(), function(el){
                             $timeout(function(){
@@ -86,8 +89,18 @@ angular.module('chembiohubAssayApp')
 
                     });
                     if(col.showFilters){
-                        TH.style["background"] = "linear-gradient(lightcyan, #eee)";
-                        TH.style["color"] = "#002147";
+                        
+                        $timeout(function(){
+                            angular.forEach($(TH).siblings(), function(el){
+                            
+                                el.style["background"] = "";
+                                el.style["color"] = "";
+                            
+                             });
+                            TH.style["background"] = "linear-gradient(lightcyan, #eee)";
+                            TH.style["color"] = "#002147";
+                        });
+                        
                     }
                 }
                  
