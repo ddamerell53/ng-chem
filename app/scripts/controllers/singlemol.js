@@ -186,8 +186,10 @@ angular.module('chembiohubAssayApp')
                 $scope.update_success = false;
             }
             $scope.isUpdated = false;
-            $scope.updateBatch = function(instance) {
+            $scope.closeInstance = false;
+            $scope.updateBatch = function() {
                 //TODO handle error here
+                console.log("updateBatch called")
                 CBHCompoundBatch.patch($scope.mol ).then(
                     function(data) {
                         $scope.update_success = true;
@@ -195,8 +197,8 @@ angular.module('chembiohubAssayApp')
                         $scope.init();
                         $timeout($scope.removeAlert, 5000);
                         $scope.isUpdated = true;
-                        if (angular.isDefined(instance)) {
-                            instance.dismiss('cancel');
+                        if ($scope.closeInstance == true) {
+                            $scope.modalInstance.dismiss('cancel');
                             $rootScope.$broadcast("filtersUpdated",{});
                         }
 
@@ -213,5 +215,29 @@ angular.module('chembiohubAssayApp')
                     $rootScope.$broadcast("filtersUpdated",{});
                 }
             }
+
+            //validation of form happens here
+            $scope.errormess = "";
+            //$scope.doArchiveItem = false;
+
+            $scope.validateFormData = function(myEditedForm){
+                console.log('doValidation being called', myEditedForm)
+                $scope.errormess = "";
+                //this step is necessary to ensure that required fields have data
+                //and for validation check on the form as a whole to fail if required fields are missing
+                //don't look for this in the angular schema form examples - it's not there...
+                $scope.$broadcast("schemaFormValidate");
+                if(myEditedForm.$valid && !myEditedForm.$pristine){
+                    $scope.updateBatch();
+                }
+                else if(myEditedForm.$pristine){
+                    $scope.errormess = "You must add some data before you can submit your form.";
+                }
+                else {
+                    $scope.errormess = "You have required fields missing or incorrect data - please correct these and try again.";
+                }
+                //TODO: account for string being too long for text field length (1028 chars)
+
+            };
         }
     ]);
