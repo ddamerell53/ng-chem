@@ -69,8 +69,8 @@ angular.module('schemaForm').config(
   //Add to the bootstrap directive
     schemaFormDecoratorsProvider.addMapping('bootstrapDecorator', 'filtereddropdown',
     'views/templates/filtered-dropdown-form-template.html', [sfField, ngModelOptions, ngModel, array, condition]);
-    // schemaFormDecoratorsProvider.createDirective('filtereddropdown',
-    // 'views/templates/filtered-dropdown-form-template.html');
+    schemaFormDecoratorsProvider.createDirective('filtereddropdown',
+    'views/templates/filtered-dropdown-form-template.html');
 
 
   }]);
@@ -94,44 +94,48 @@ angular.module('schemaForm')
       })
 
     }
-    
-    $rootScope.$on($scope.form.options.dataArrivesEventName , function(event, autocompletedata){
+    if($scope.form.options.dataArrivesEventName){
+
+        $scope.$on($scope.form.options.dataArrivesEventName , function(event, autocompletedata){
+
+
         if($scope.autoComp == autocompletedata.autocomplete){
           //The data is not out of date - if the user types quickly we are pulling back
           //results for every letter typed so we have to be sure the data is still valid
           //We could already be waiting for the next result!
-          $scope.loading = false;
-          var sortedStaticItems = [];
-          if($scope.form.options.staticItems){
-            sortedStaticItems = angular.copy($scope.form.options.staticItems);
-          }
-          //The static items still need to be filtered for autocomplete for consistency
-          var autocompleteStatic = $filter('filter')(sortedStaticItems, {key: $scope.autoComp})
-          //Merge together the static items from the schema with the dynamic items from the back end
-          //This gives a total list of items as desired
-          $scope.items = mergeKeyArrays(autocompletedata.items, autocompleteStatic) ;
-          if($scope.autoComp){
-            var autoCompleteExistsOnBackend = false;
-            angular.forEach($scope.items, function(item){
-                if(item.key.toLowerCase() == $scope.autoComp){
-                  autoCompleteExistsOnBackend = true;
+              $scope.loading = false;
+              var sortedStaticItems = [];
+              if($scope.form.options.staticItems){
+                sortedStaticItems = angular.copy($scope.form.options.staticItems);
+              }
+              //The static items still need to be filtered for autocomplete for consistency
+              var autocompleteStatic = $filter('filter')(sortedStaticItems, {key: $scope.autoComp})
+              //Merge together the static items from the schema with the dynamic items from the back end
+              //This gives a total list of items as desired
+              $scope.items = mergeKeyArrays(autocompletedata.items, autocompleteStatic) ;
+              if($scope.autoComp){
+                var autoCompleteExistsOnBackend = false;
+                angular.forEach($scope.items, function(item){
+                    if(item.key.toLowerCase() == $scope.autoComp){
+                      autoCompleteExistsOnBackend = true;
+                    }
+                });
+                if(autoCompleteExistsOnBackend){
+                  $scope.autoCompNotInList = undefined;
+                }else{
+                  $scope.autoCompNotInList = {"key" : $scope.autoComp, doc_count: 0};
                 }
-            });
-            if(autoCompleteExistsOnBackend){
-              $scope.autoCompNotInList = undefined;
+              }else{
+                $scope.autoCompNotInList = undefined;
+              }
+              
+              $scope.numberItemsMissing = autocompletedata.unique_count - autocompletedata.items.length;
             }else{
-              $scope.autoCompNotInList = {"key" : $scope.autoComp, doc_count: 0};
+              //The user must have changed the autocomplete in between times
             }
-          }else{
-            $scope.autoCompNotInList = undefined;
-          }
-          
-          $scope.numberItemsMissing = autocompletedata.unique_count - $scope.items.length;
-        }else{
-          //The user must have changed the autocomplete in between times
-        }
-        
-    });
+            
+        });
+    }
     $scope.$watch("autoComp", function(newVal, oldVal){
       //when the user searches, we call the back end to get 
       if(newVal != oldVal){
@@ -149,25 +153,30 @@ angular.module('schemaForm')
 
     if($scope.form.options.multiple){
       $scope.checkItem = function(key, $$value$$){
+        if(!angular.isDefined($$value$$)){
+          return -1;
+        }
         return $$value$$.indexOf(key)
       }
-      $scope.toggleItem = function(item, $$value$$, isNewItem){
+      $scope.toggleItem = function(item,  isNewItem){
         $timeout(function(){
             $scope.$apply(function(){
               var index;
-                index = $$value$$.indexOf(item.key);
+                index = $scope.model[$scope.form.key[0]].indexOf(item.key);
               
             
             var newTagIndex = $scope.newTags.indexOf(item.key);
               if(index == -1){
-                  $$value$$.push(item.key); 
+                  $scope.model[$scope.form.key[0]].push(item.key); 
                   if(isNewItem){
                     $scope.newTags.push(item.key);
                     $scope.newTagsObjects.push(item);
+                    //Reset the autocomplete
+                    $scope.autoComp = "";
                   }
                   $scope.autoCompNotInList = undefined;
               }else{
-                  $$value$$.splice(index, 1);
+                  $scope.model[$scope.form.key[0]].splice(index, 1);
                   if(isNewItem){
                     $scope.newTags.splice(newTagIndex, 1);
                     $scope.newTagsObjects.splice(newTagIndex, 1);
@@ -176,39 +185,56 @@ angular.module('schemaForm')
                 }
             });
             
-            $scope.evalExpr($scope.form.onChange, {'modelValue': $$value$$, form: $scope.form});
+            $scope.evalExpr($scope.form.onChange, {'modelValue': $scope.model[$scope.form.key[0]], form: $scope.form});
         })
       }
     }else {
       $scope.checkItem = function(key, $$value$$){
-        return $$value$$ == key;
+        if(!angular.isDefined($$value$$)){
+          return -1;
+        }
+        if( $$value$$ == key){
+          return 1;
+        }else{
+          return -1;
+        }
       }
-      $scope.toggleItem = function(item, $$value$$, isNewItem){
+      $scope.toggleItem = function(item,  isNewItem){
+        
         $timeout(function(){
             $scope.$apply(function(){
               var toggleOff = false;
-              if($$value$$ == item.key){
+              if($scope.model[$scope.form.key[0]] == item.key){
                 toggleOff = true;
               }
+              
               var newTagIndex = $scope.newTags.indexOf(item.key);
-              if(toggleOff){
-                  $$value$$ = item.key; 
+              if(!toggleOff){
+                  //If the last item selected was a new item, remove it from the local list
+                  if($scope.newTags.indexOf($scope.model[$scope.form.key[0]] ) > -1){
+                    $scope.newTags = []
+                  }
+                  $scope.model[$scope.form.key[0]] = item.key; 
                   if(isNewItem){
                     $scope.newTags.push(item.key);
-                    $scope.newTagsObjects.push(item);
+                    //Reset the autocomplete
+                    $scope.autoComp = "";
                   }
                   $scope.autoCompNotInList = undefined;
               }else{
-                  $$value$$ = "";
+                  $scope.model[$scope.form.key[0]] = "";
                   if(isNewItem){
                     $scope.newTags.splice(newTagIndex, 1);
-                    $scope.newTagsObjects.splice(newTagIndex, 1);
                   }
               
                 }
+              //newTagObjects should only contain the selected new tags at any time
+              $scope.newTagsObjects = $scope.newTags.map(function(tag){
+                return {"key" : tag};
+              });
             });
             
-            $scope.evalExpr($scope.form.onChange, {'modelValue': $$value$$, form: $scope.form});
+            $scope.evalExpr($scope.form.onChange, {'modelValue': $scope.model[$scope.form.key[0]], form: $scope.form});
         })
       }
     }

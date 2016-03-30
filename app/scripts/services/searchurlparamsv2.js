@@ -125,13 +125,13 @@ angular.module('chembiohubAssayApp')
             var query = skinConfig.objects[0].filters_applied.map(function(item){
               var subQ = {};
               //Select only the filters that have a value - note that the data has been validated already
-              angular.forEach(skinConfig.objects[0].query_schemaform.default.schema.properties, function(value, key){
-                if(schema[item].filters[key]){
-                  subQ[key] = schema[item].filters[key];
-                  
+              
+              angular.forEach(schema[item].filters, function(v, k){
+                if(v){
+                  subQ[k] = v;
                 }
-                
               });
+              
               subQ["field_path"] = schema[item].data;
               filteredColumns.push(schema[item]);
               return subQ;

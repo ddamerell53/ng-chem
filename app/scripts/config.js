@@ -99,60 +99,12 @@ var formGetter = function(project_data_fields, htmlClass, project){
             angular.forEach(project_data_fields, function(field){
               var form = angular.copy(field.edit_form.form[0]);
               form.htmlClass = htmlClass;
-              if(angular.isDefined(form.options)){
-    
-                 if(angular.isDefined(form.options.async)){
-                    form.options.async.call =  function(schema, options, search) {
-
-                      var url = form.options.async.url + "?custom__field__startswith=" + search;
-                      if(angular.isDefined(project)){
-                        url += ("&custom_field=" + form.key);
-                        url += ("&project__project_key__in=" + project.project_key);
-
-                      }
-                      return $http.get( url ).then( function(data){
-                            
-
-                            
-                            if(form.permanent_items){
-                              angular.forEach(form.permanent_items,function(item){
-                                data.data.unshift(angular.copy(item));
-                              });
-                            }
-                            if(search){
-                              data.data.unshift({"isTag": true, "label": search + " (adding new)", "value": search});
-                            }
-                            var foundWords = [];
-                            var deDuped = [];
-                            data.data.reverse();
-                            var exactMatch;
-                            angular.forEach(data.data, function(d){
-                                if(foundWords.indexOf(d.value) == -1){
-                                  if (d.value==search){
-                                    exactMatch = d
-                                  }else{
-                                     deDuped.push(d);
-                                      foundWords.push(d.value);
-                                  }
-                                 
-                                }
-                            });
-                            if(exactMatch){
-                              deDuped.unshift(exactMatch);
-                            }
-
-                            // console.log(data)
-                            return {"data" : deDuped};
-                          
-                          
-                      });
-                    }
-                 }
-              }
+              
               edit_form.push(form);
             });
             return edit_form;
         }
+        
 angular.module('chembiohubAssayApp')
   .factory('CustomFieldConfig', function () {
     return {

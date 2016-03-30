@@ -3,48 +3,51 @@
   <label class="control-label {{form.labelHtmlClass}}" ng-class="{'sr-only': !showTitle()}" for="{{form.key.slice(-1)[0]}}">{{form.title}} </label>
 <div class="dropdown" is-open="test" >
                 <button ng-click="opened(form.key, '')" type="button" data-toggle="dropdown" class="btn btn-default btn-lg">
-                        <span ng-if="$$value$$.length == 0">
-                            Use the drop-down to filter
+                        <span ng-if="!$$value$$ || $$value$$.length == 0">
+                            Please select
                         </span>
-                        <span ng-show="$$value$$.length < 4 && $$value$$.length > 0"  >
+                        <span ng-show="form.options.multiple && ($$value$$.length < 4 && $$value$$.length > 0)"  >
                             {{$$value$$.length}} item<span ng-show="$$value$$.length !=1"  >s</span> selected...
                             <span ng-repeat="item in $$value$$ track by $index">
                                     {{item}}<span ng-if="$index!=2 && $$value$$.length !=1">,</span>
                             </span>
                         </span>
-                        <span ng-show="$$value$$.length > 3"  >
+                        <span ng-show="form.options.multiple && $$value$$.length > 3"  >
                                 {{$$value$$.length}} items selected
+                        </span>
+                        <span ng-show="!form.options.multiple && $$value$$.length > 0"  >
+                                {{$$value$$}} 
                         </span>
                     <span class="caret" ></span>
                 </button>
                 <ul class="dropdown-menu" style="min-width:300px;max-width:300px;"  style="padding-top:5px; padding-bottom:5px; border-bottom:0;" >
                   
                      <li ng-show="items.length == 0 && loading == true" class="col-xs-12 pick-list-item">Loading...</li>
-                     <li ng-show="numberItemsMissing < 2" class="col-xs-12 pick-list-item">Click on an item to filter</li> 
+                     <li ng-show="numberItemsMissing < 2" class="col-xs-12 pick-list-item">Click on an item to select</li> 
                      <li class="col-xs-12" ng-if="numberItemsMissing > 1">Not all items shown - search</li>
-                     <li ><div class="col-xs-12"><input  placeholder="Search by name" type="text" ng-model="autoComp"></input></div></li>
+                     <li ><div class="col-xs-12"><input  placeholder="{{form.options.tagging ? 'Find a tag or create one' : 'Find a tag'}}" type="text" ng-model="autoComp"></input></div></li>
                      
                 </ul>
                 <ul class="dropdown-menu" style="margin-top:55px;min-width:300px;max-width:300px; max-height:300px; overflow-y:auto;  border-top:0;" >
-                    <li ng-show="items.length == 0 && !form.options.tagging" class="col-xs-12">No items found with these search parameters</li> 
+                    <li ng-show="items.length == 0 && !form.options.tagging" class="col-xs-12">No items found</li> 
 
                     <li ng-if="form.options.tagging && autoCompNotInList" ng-class="model[form.key[0]].indexOf(item.key) > -1 ? 'active' : ''" >
-                        <a  ng-click="toggleItem(autoCompNotInList, model[form.key[0]], true); $event.stopPropagation();">
-                            <span class="glyphicon" ng-class="model[form.key[0]].indexOf(autoCompNotInList.key) > -1 ? 'glyphicon-check' : 'glyphicon-unchecked'"></span>
-                            <span  >{{autoCompNotInList.key}} (add new)</span>
+                        <a  ng-click="toggleItem(autoCompNotInList, true); $event.stopPropagation();">
+                            <span ng-if="form.options.multiple" class="glyphicon" ng-class="model[form.key[0]].indexOf(autoCompNotInList.key) > -1 ? 'glyphicon-check' : 'glyphicon-unchecked'"></span>
+                            <span  >{{autoCompNotInList.key}} (create new)</span>
                         </a>
                      </li>
 
-                    <li ng-if="form.options.tagging" ng-class="checkItem(item.key, model[form.key[0]]) ? 'active' : ''" ng-repeat="item in newTagsObjects">
-                        <a  ng-click="toggleItem(item, model[form.key[0]], true); $event.stopPropagation();">
-                            <span class="glyphicon" ng-class="checkItem(item.key, model[form.key[0]]) > -1 ? 'glyphicon-check' : 'glyphicon-unchecked'"></span>
+                    <li ng-if="form.options.tagging" ng-class="checkItem(item.key, model[form.key[0]]) > -1 ? 'active' : ''" ng-repeat="item in newTagsObjects">
+                        <a  ng-click="toggleItem(item, true); $event.stopPropagation();">
+                            <span ng-if="form.options.multiple" class="glyphicon" ng-class="checkItem(item.key, model[form.key[0]]) > -1 ? 'glyphicon-check' : 'glyphicon-unchecked'"></span>
                             <span  >{{item.key}} (new)</span>
                         </a>
                      </li>
                     
                      <li ng-class="checkItem(item.key, model[form.key[0]]) > -1 ? 'active' : ''" ng-repeat="item in items">
-                        <a  ng-click="toggleItem(item, model[form.key[0]]); $event.stopPropagation();">
-                            <span class="glyphicon" ng-class="checkItem(item.key, model[form.key[0]]) > -1 ? 'glyphicon-check' : 'glyphicon-unchecked'"></span>
+                        <a  ng-click="toggleItem(item); $event.stopPropagation();">
+                            <span ng-if="form.options.multiple" class="glyphicon" ng-class="checkItem(item.key, model[form.key[0]]) > -1 ? 'glyphicon-check' : 'glyphicon-unchecked'"></span>
                             <span  >{{item.key}} ({{item.doc_count}})</span>
                         </a>
                      </li>

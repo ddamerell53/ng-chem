@@ -56,6 +56,17 @@ angular.module('chembiohubAssayApp')
                     $scope.projectObj = myproj;
                 }
             });
+            $scope.$on("openedTaggingDropdown", function(event, args){
+                var filters = {};
+                filters.pids = $scope.projectObj.id;
+                
+                filters.autocomplete_field_path = "custom_fields." + args.key;
+                filters.autocomplete = args.autocomplete;
+                CBHCompoundBatch.queryv2(filters).then(function(result) {
+                    $rootScope.$broadcast("autoCompleteTaggingData", result);
+                });
+                
+            })
 
             var myform = $scope.projectWithCustomFieldData.schemaform.form;
 
