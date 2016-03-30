@@ -19,7 +19,7 @@ angular.module('chembiohubAssayApp')
       	
       	//has the filter button been pressed in the handsontable?
       	$rootScope.$on("columnSelection", function(event, col){
-         
+         console.log("show me the column", col)
         	$scope.col = col;
 
           $scope.col.showFilters = true;
@@ -34,8 +34,14 @@ angular.module('chembiohubAssayApp')
           }
 
         	// $scope.cbh.column = col
-          $scope.queryAsfForm = angular.copy(skinConfig.objects[0].query_schemaform.default.form);
-          $scope.queryAsfSchema = angular.copy(skinConfig.objects[0].query_schemaform.default.schema);
+          if(col.searchFormType == "chemical"){
+            $scope.queryAsfForm = angular.copy(skinConfig.objects[0].chem_query_schemaform.default.form);
+            $scope.queryAsfSchema = angular.copy(skinConfig.objects[0].chem_query_schemaform.default.schema);
+          }
+          else {
+            $scope.queryAsfForm = angular.copy(skinConfig.objects[0].query_schemaform.default.form);
+            $scope.queryAsfSchema = angular.copy(skinConfig.objects[0].query_schemaform.default.schema);
+          }
           $scope.sortAsfForm = angular.copy(skinConfig.objects[0].sort_schemaform.default.form);
           $scope.sortAsfSchema = angular.copy(skinConfig.objects[0].sort_schemaform.default.schema);
           $scope.hideAsfForm = angular.copy(skinConfig.objects[0].hide_schemaform.default.form);

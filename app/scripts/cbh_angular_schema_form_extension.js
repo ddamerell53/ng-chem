@@ -217,6 +217,29 @@ angular.module('schemaForm')
     
   });
 
+angular.module('schemaForm').config(
+['schemaFormProvider', 'schemaFormDecoratorsProvider', 'sfPathProvider',
+  function(schemaFormProvider,  schemaFormDecoratorsProvider, sfPathProvider) {
+
+    var chemdoodle = function(name, schema, options) {
+      if (schema.type === 'string' && schema.format == 'chemdoodle') {
+        var f = schemaFormProvider.stdFormObj(name, schema, options);
+        f.key  = options.path;
+        f.type = 'chemdoodle';
+        options.lookup[sfPathProvider.stringify(options.path)] = f;
+        return f;
+      }
+    };
+
+    schemaFormProvider.defaults.object.unshift(chemdoodle);
+
+  //Add to the bootstrap directive
+    schemaFormDecoratorsProvider.addMapping('bootstrapDecorator', 'chemdoodle',
+    'views/templates/chemdoodle-form-template.html');
+    /*schemaFormDecoratorsProvider.createDirective('chemdoodle',
+    'directives/decorators/bootstrap/chemdoodle/chemdoodle-form-template.html');*/
+  }]);
+
 
 
 
