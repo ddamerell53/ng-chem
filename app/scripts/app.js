@@ -9,9 +9,9 @@
  * Main module of the application.
  */
 
-var searchParamsString = "?pids=&page=&compoundBatchesPerPage=&viewType=&limit&offset&encoded_query=&encoded_sorts=&encoded_hides=&textsearch=&chemical_search_id=";
+window.searchParamsString = "?pids=&page=&compoundBatchesPerPage=&viewType=&limit&offset&encoded_query=&encoded_sorts=&encoded_hides=&textsearch=&chemical_search_id=";
 
-var searchResolve = {
+window.searchResolve = {
         gridconfig: ['CompoundListSetup', function(CompoundListSetup) {
           return CompoundListSetup;
         }],
@@ -131,8 +131,8 @@ $urlRouterProvider.when('', '/projects/list');
     })
 
     .state('cbh.searchv2', {
-      url: '/searchv2' + searchParamsString + "&editMode=",
-      resolve: angular.copy(searchResolve),
+      url: '/searchv2' + window.searchParamsString + "&editMode=",
+      resolve: angular.copy(window.searchResolve),
       params: {
         archived: undefined  //The archived param is used in the getResultsPage function to add an additional filter 
       },
@@ -159,8 +159,8 @@ $urlRouterProvider.when('', '/projects/list');
 
     })
   .state('cbh.archiveitems', {
-      url: '/archiveitems' + searchParamsString,
-      resolve: angular.copy(searchResolve),
+      url: '/archiveitems' + window.searchParamsString,
+      resolve: angular.copy(window.searchResolve),
       params: {
         archived: false  //The archived param is used in the getResultsPage function to add an additional filter 
       },
@@ -186,8 +186,8 @@ $urlRouterProvider.when('', '/projects/list');
 
     })
 .state('cbh.restoreitems', {
-      url: '/restoreitems' + searchParamsString,
-      resolve: angular.copy(searchResolve),
+      url: '/restoreitems' + window.searchParamsString,
+      resolve: angular.copy(window.searchResolve),
       params: {
         archived: true  //The archived param is used in the getResultsPage function to add an additional filter 
       },
