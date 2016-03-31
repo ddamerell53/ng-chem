@@ -515,7 +515,7 @@ $urlRouterProvider.when('', '/projects/list');
 
     /* PLATE MAP IMPLEMENTATION */
     .state('cbh.addPlate', {
-      url: '/add_plate',
+      url: '/add_plate?pid=',
       resolve: {
         projectFactory: ['ProjectFactory', function(ProjectFactory) {
           return ProjectFactory;
@@ -528,7 +528,7 @@ $urlRouterProvider.when('', '/projects/list');
     })
 
     .state('cbh.listPlates', {
-      url: '/plates?plate=',
+      url: '/plates?plate=&pid=',
       resolve: {
         projectFactory: ['ProjectFactory', function(ProjectFactory) {
           return ProjectFactory;
