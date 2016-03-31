@@ -40,12 +40,14 @@ angular.module('chembiohubAssayApp')
             $scope.col.filters.field_path = col.data;
           }
            $scope.chemicalUpdated = function(modelValue, form){
+                $scope.chemicalfilters.inprogress = true;
                 $timeout(function(){
                   $rootScope.$broadcast("chemicalSearch")
                 });
             }
 
             $scope.$on("moleculeChanged", function(){
+                $scope.chemicalfilters.inprogress = true;
                 $timeout(function(){
                   $rootScope.$broadcast("chemicalSearch")
                 });
@@ -166,6 +168,10 @@ angular.module('chembiohubAssayApp')
 
         $scope.chemicalsubmit = function(){
           $rootScope.$broadcast("chemicalFilterApplied")
+        }
+
+        $scope.removeStructureSearch = function(){
+          $rootScope.$broadcast("removeStructureSearch");
         }
 
 

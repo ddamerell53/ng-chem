@@ -14,5 +14,5 @@ angular.module('chembiohubAssayApp')
 
 
     // Public API here
-    return $resource(urlConfig.cbh_chemical_search.list_endpoint)
+    return $resource(urlConfig.cbh_chemical_search.list_endpoint + '/:id', {id: '@id'});
   });

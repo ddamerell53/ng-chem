@@ -34,7 +34,28 @@ angular.module('chembiohubAssayApp')
                     skinConfig.objects[0].chemicalSearch = data;
                     $rootScope.$broadcast("chemicalSearchReady");
                 });
-            })
+            });
+
+            $scope.$on("removeStructureSearch", function(){
+                var qt = angular.copy(skinConfig.objects[0].chemicalSearch.query_type);
+                skinConfig.objects[0].chemicalSearch.molfile = "";
+                skinConfig.objects[0].chemicalSearch.filter_is_applied = false;
+                skinConfig.objects[0].chemicalSearch.inprogress = false;
+                skinConfig.objects[0].chemicalSearch.smiles = "";
+                skinConfig.objects[0].chemicalSearch.id = undefined;
+                skinConfig.objects[0].chemicalSearch.image = undefined;
+                var params = $stateParams;
+                params.chemical_search_id=undefined;
+                $scope.cbh.changeSearchParams(params, true);
+
+                
+                $scope.$broadcast("chemicalSearchReady");
+                $rootScope.$broadcast("setMolecule");
+                    
+                    
+           
+                
+            });
 
             $scope.$on("chemicalFilterApplied",function( event, args){
                     var params = SearchUrlParamsV2.generate_chemical_params($stateParams);

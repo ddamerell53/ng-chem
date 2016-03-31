@@ -10,7 +10,7 @@
 
 
 angular.module('chembiohubAssayApp')
-    .factory('SearchUrlParamsV2', ['$filter', '$state', 'skinConfig', '$rootScope', 'CBHCompoundBatch','urlConfig', function($filter, $state, skinConfig, $rootScope, CBHCompoundBatch, urlConfig) {
+    .factory('SearchUrlParamsV2', ['$filter', '$state', 'skinConfig', '$rootScope', 'CBHCompoundBatch','urlConfig', 'chemicalSearch', function($filter, $state, skinConfig, $rootScope, CBHCompoundBatch, urlConfig, chemicalSearch) {
 
         // Private variables
 
@@ -93,10 +93,16 @@ angular.module('chembiohubAssayApp')
               cbh.textsearch = '';
             }
 
-            if(stateParams.chemicalSearchId){
+            if(stateParams.chemical_search_id){
               //get it
+              chemicalSearch.get({"id" :stateParams.chemical_search_id}, function(data){
+                skinConfig.objects[0].chemicalSearch = data;
+                skinConfig.objects[0].chemicalSearch.pids = stateParams.pids;
+                $rootScope.$broadcast("chemicalFilterApplied");
+              }, function(error){
 
-              skinConfig.objects[0].chemicalSearch.pids = stateParams.pids;
+              });
+              
             }else{
               skinConfig.objects[0].chemicalSearch = {"pids" : stateParams.pids };
             }
@@ -128,7 +134,8 @@ angular.module('chembiohubAssayApp')
       }
 
       searchUrlParamsV2.generate_chemical_params = function(params){
-        params.chemicalSearchId = skinConfig.objects[0].chemicalSearch.id;
+        params.chemical_search_id = skinConfig.objects[0].chemicalSearch.id;
+        skinConfig.objects[0].chemicalSearch.filter_is_applied = true;
         return params;
       }
 

@@ -9,7 +9,7 @@
  * Main module of the application.
  */
 
-var searchParamsString = "?pids=&page=&compoundBatchesPerPage=&viewType=&limit&offset&encoded_query=&encoded_sorts=&encoded_hides=&textsearch=&chemicalSearchId=";
+var searchParamsString = "?pids=&page=&compoundBatchesPerPage=&viewType=&limit&offset&encoded_query=&encoded_sorts=&encoded_hides=&textsearch=&chemical_search_id=";
 
 var searchResolve = {
         gridconfig: ['CompoundListSetup', function(CompoundListSetup) {
