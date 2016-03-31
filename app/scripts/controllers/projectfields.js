@@ -47,6 +47,7 @@ angular.module('chembiohubAssayApp')
                     "type": "radiobuttons",
                     "titleMap": projectTypes,
                     "htmlClass": "col-sm-5",
+                    "onChange": "updatedProjectType()",
                     "disableSuccessState":true,
                     "feedback": false
 
@@ -233,6 +234,50 @@ angular.module('chembiohubAssayApp')
                 });
 
                 
+              }
+              //interject with platemap fields for the platemap project type
+              
+
+              $scope.updatedProjectType = function(){
+                console.log($scope.proj.project_type.name);
+                if(projectId == -1){
+                  if($scope.proj.project_type.plate_map_project_type == true){
+                    //add the extra platemap specific default fields here
+                    console.log("That's a platemap field");
+                    /*"custom_field_config":{
+                        "project_data_fields": [{"required":false, "field_type": "char", "open_or_restricted": "open"},]
+
+                      }*/
+                      var plateSizes = [
+                        {
+                            "value": 96,
+                            "name": "96"
+                        }, {
+                            "value": 48,
+                            "name": "48"
+                        }]
+                      var plateTypes = [
+                        {
+                            "value": 'working',
+                            "name": "working"
+                        }, {
+                            "value": 'backup',
+                            "name": "backup"
+                        }
+                      ]
+                      $scope.proj.custom_field_config.project_data_fields = [
+
+                        //plus a new field by default?
+                        {"required":false, "field_type": "char", "open_or_restricted": "open", "name": "Name"},
+                        {"required":false, "field_type": "uiselect", "titleMap": plateSizes, "open_or_restricted": "open", "name": "Plate Size",},
+                        {"required":false, "field_type": "char", "open_or_restricted": "open", "name": "Description"},
+                        {"required":false, "field_type": "uiselect", "titleMap": plateSizes, "open_or_restricted": "open", "name": "Plate Type", "description": "blah"},
+                      ]
+                  }
+                  else {
+                    $scope.proj.custom_field_config.project_data_fields = [{"required":false, "field_type": "char", "open_or_restricted": "open"},]
+                  }
+                }
               }
 
 

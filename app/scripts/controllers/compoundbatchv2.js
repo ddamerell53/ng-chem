@@ -55,6 +55,9 @@ angular.module('chembiohubAssayApp')
                 filters.autocomplete_field_path = activeCol.data;
                 filters.autocomplete = args.autocomplete;
                 CBHCompoundBatch.queryv2(filters).then(function(result) {
+                    //this is broadcasting to a dynamic $on method within the pickfromlist widget (within cbh_angular_schema_form_extension.js)
+                    //which is why if you look for the braodcast name elsewhere you won't find it.
+                    //it looks for the name defined in dataArrivesEventName within the schema form element
                     $rootScope.$broadcast("autoCompleteData", result);
                 });
                 

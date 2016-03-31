@@ -17,13 +17,14 @@ angular.module('chembiohubAssayApp')
             //we need to use the searchform object in order to list UOX IDs for compounds
             //cherry pick the form and schema elements
             $scope.searchFormSchema = angular.copy($scope.cbh.projects.searchform);
-            $scope.uoxFormItem = $filter('filter')($scope.searchFormSchema.form, {
+            //this needs replacing with the new 'staticItems' for the pick from list widget
+            /*$scope.uoxFormItem = $filter('filter')($scope.searchFormSchema.form, {
                 key: 'related_molregno__chembl__chembl_id__in'
             }, true);
             $scope.refresh = function(schema, options, search) {
                 return $http.get(options.async.url + "?chembl_id__chembl_id__startswith=" + search);
             }
-            $scope.uoxFormItem[0].options.async.call = $scope.refresh;
+            $scope.uoxFormItem[0].options.async.call = $scope.refresh;*/
 
             //we end up passing schemaFormHolder through to the platemap directive
             //so that if this ends up coming from a service we can alter it here
@@ -140,7 +141,25 @@ angular.module('chembiohubAssayApp')
                     "htmlClass": "col-sm-4",
                     "disableSuccessState": true,
                     "feedback": false
-                }, $scope.uoxFormItem[0],
+                }, 
+                //$scope.uoxFormItem[0],
+                //need to use the new pick from list
+                { 
+                        'title' : 'Pick from list',
+                        'key' : 'uuid', 
+                        "htmlClass": "col-sm-6",
+                        "onChange": "updated(modelValue,form)",
+                        "disableSuccessState":true,
+                        "feedback": true,
+                        "type" : "filtereddropdown",
+                        "options":{
+                          "tagging" : true,
+                          "fetchDataEventName" : "openedSearchDropdown",
+                          "dataArrivesEventName" : "autoCompleteData",
+                          "multiple" : false,
+                          "staticItems" : []
+                        }
+                    },
             ];
 
             $scope.schemaFormHolder.well_schema = {
@@ -167,11 +186,19 @@ angular.module('chembiohubAssayApp')
 	                    "feedback": false
 
                     },
-                    'related_molregno__chembl__chembl_id__in': {
+                    /*'related_molregno__chembl__chembl_id__in': {
 	                    'type': 'array',
 	                    'format': 'uiselect',
 	                    
-	                },
+	                },*/
+                    "uuid":{
+                      "type" : "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "default" : []
+
+                    },
 
                     
                 }
@@ -224,6 +251,7 @@ angular.module('chembiohubAssayApp')
                       $scope.plateMapType.project_template.custom_field_config.name = $scope.newPlateForm.name + d.getTime().toString();
 
                         //TODO handle error here
+                        //Need to replace this with
                         projectFactory.save($scope.plateMapType.project_template, function(data){
                             var resource_uri = data.resource_uri;
                             var plateMapObj = {
