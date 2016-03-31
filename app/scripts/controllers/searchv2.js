@@ -20,15 +20,7 @@ angular.module('chembiohubAssayApp')
            $scope.cbh.statename = $state.current.name;
             
            
-            $scope.projectObj = {}
-
-
-            
-            
-
-
-    
-
+            $scope.projectObj = {};
 
 
             $scope.cancel = function() {

@@ -9,7 +9,19 @@
  * Main module of the application.
  */
 
+var searchParamsString = "?pids=&page=&compoundBatchesPerPage=&viewType=&limit&offset&encoded_query=&encoded_sorts=&encoded_hides=&textsearch=&chemicalSearchId=";
 
+var searchResolve = {
+        gridconfig: ['CompoundListSetup', function(CompoundListSetup) {
+          return CompoundListSetup;
+        }],
+        projectFactory: ['ProjectFactory', function(ProjectFactory) {
+          return ProjectFactory;
+        }],
+        messages: ['MessageFactory', function(MessageFactory) {
+          return MessageFactory.getMessages();
+        }],
+      }
 
 angular.module('chembiohubAssayApp')
 
@@ -119,20 +131,8 @@ $urlRouterProvider.when('', '/projects/list');
     })
 
     .state('cbh.searchv2', {
-      url: '/searchv2?pids=&editMode=&page=&compoundBatchesPerPage=&viewType=&limit&offset&encoded_query=&encoded_sorts=&encoded_hides=&textsearch=',
-      resolve: {
-        gridconfig: ['CompoundListSetup', function(CompoundListSetup) {
-          return CompoundListSetup;
-        }],
-        projectFactory: ['ProjectFactory', function(ProjectFactory) {
-          return ProjectFactory;
-        }],
-
-        messages: ['MessageFactory', function(MessageFactory) {
-          return MessageFactory.getMessages();
-        }],
-
-      },
+      url: '/searchv2' + searchParamsString + "&editMode=",
+      resolve: angular.copy(searchResolve),
       params: {
         archived: undefined  //The archived param is used in the getResultsPage function to add an additional filter 
       },
@@ -159,18 +159,8 @@ $urlRouterProvider.when('', '/projects/list');
 
     })
   .state('cbh.archiveitems', {
-      url: '/archiveitems?pids=&page=&compoundBatchesPerPage=&viewType=&limit&offset&justAdded=&encoded_query=&encoded_sorts=&encoded_hides=&textsearch=',
-      resolve: {
-        gridconfig: ['CompoundListSetup', function(CompoundListSetup) {
-          return CompoundListSetup;
-        }],
-        projectFactory: ['ProjectFactory', function(ProjectFactory) {
-          return ProjectFactory;
-        }],
-        messages: ['MessageFactory', function(MessageFactory) {
-          return MessageFactory.getMessages();
-        }],
-      },
+      url: '/archiveitems' + searchParamsString,
+      resolve: angular.copy(searchResolve),
       params: {
         archived: false  //The archived param is used in the getResultsPage function to add an additional filter 
       },
@@ -196,18 +186,8 @@ $urlRouterProvider.when('', '/projects/list');
 
     })
 .state('cbh.restoreitems', {
-      url: '/restoreitems?pids=&page=&compoundBatchesPerPage=&viewType=&limit&offset&justAdded=&encoded_query=&encoded_sorts=&encoded_hides=&textsearch=',
-      resolve: {
-        gridconfig: ['CompoundListSetup', function(CompoundListSetup) {
-          return CompoundListSetup;
-        }],
-        projectFactory: ['ProjectFactory', function(ProjectFactory) {
-          return ProjectFactory;
-        }],
-        messages: ['MessageFactory', function(MessageFactory) {
-          return MessageFactory.getMessages();
-        }],
-      },
+      url: '/restoreitems' + searchParamsString,
+      resolve: angular.copy(searchResolve),
       params: {
         archived: true  //The archived param is used in the getResultsPage function to add an additional filter 
       },
