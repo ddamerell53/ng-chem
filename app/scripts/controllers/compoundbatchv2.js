@@ -8,8 +8,8 @@
  * Controller of the chembiohubAssayApp
  */
 angular.module('chembiohubAssayApp')
-    .controller('Compoundbatchv2Ctrl', ['$scope', '$rootScope', '$state', '$stateParams', '$timeout', 'CBHCompoundBatch', 'urlConfig', '$window', '$location', '$anchorScroll', '$filter', 'SearchUrlParamsV2','skinConfig', 'FlowFileFactory',
-        function($scope, $rootScope, $state, $stateParams, $timeout, CBHCompoundBatch, urlConfig, $window, $location, $anchorScroll, $filter, SearchUrlParamsV2, skinConfig, FlowFileFactory) {
+    .controller('Compoundbatchv2Ctrl', ['$scope', '$rootScope', '$state', '$stateParams', '$timeout', 'CBHCompoundBatch', 'urlConfig', '$window', '$location', '$anchorScroll', '$filter', 'SearchUrlParamsV2','skinConfig', 'FlowFileFactory', 'chemicalSearch',
+        function($scope, $rootScope, $state, $stateParams, $timeout, CBHCompoundBatch, urlConfig, $window, $location, $anchorScroll, $filter, SearchUrlParamsV2, skinConfig, FlowFileFactory, chemicalSearch) {
             
             $scope.cbh.resetSearch = function(){
                 $state.go($state.current.name,  {}, {reload: true, inherit: false});
@@ -27,6 +27,22 @@ angular.module('chembiohubAssayApp')
                     sorts: [],
                 };
             }
+
+            $scope.$on("chemicalSearch", function(event ){
+                var data = skinConfig.objects[0].chemicalSearch
+                chemicalSearch.save(data, function(data){
+                    skinConfig.objects[0].chemicalSearch = data;
+                    $rootScope.$broadcast("chemicalSearchReady");
+                });
+            })
+
+            $scope.$on("chemicalFilterApplied",function( event, args){
+                    var params = SearchUrlParamsV2.generate_chemical_params($stateParams);
+                    $scope.cbh.changeSearchParams(params, true);
+                    $scope.cbh.justAdded = false;
+            });
+
+
 
             $scope.$on("openedSearchDropdown", function(event, args){
                 var filters = angular.copy($stateParams);
@@ -68,6 +84,9 @@ angular.module('chembiohubAssayApp')
             });
             
         });
+
+
+     
 
         $scope.$on("filtersUpdated",function( event, args){
             var index = skinConfig.objects[0].filters_applied.indexOf(args.field_path);
@@ -318,7 +337,6 @@ angular.module('chembiohubAssayApp')
             $scope.toggleAddingOff = false;
 
             $scope.doSingleCompoundValidation = function(myForm){
-                console.log('doValidation being called', myForm)
                 $scope.errormess = "";
                 //this step is necessary to ensure that required fields have data
                 //and for validation check on the form as a whole to fail if required fields are missing

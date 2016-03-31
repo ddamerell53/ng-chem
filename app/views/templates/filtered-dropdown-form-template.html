@@ -3,20 +3,20 @@
   <label class="control-label {{form.labelHtmlClass}}" ng-class="{'sr-only': !showTitle()}" for="{{form.key.slice(-1)[0]}}">{{form.title}} </label>
 <div class="dropdown" is-open="test" >
                 <button ng-click="opened(form.key, '')" type="button" data-toggle="dropdown" class="btn btn-default btn-lg">
-                        <span ng-if="!$$value$$ || $$value$$.length == 0">
+                        <span ng-if="!model[form.key[form.key.length -1]] || model[form.key[form.key.length -1]].length == 0">
                             Please select
                         </span>
-                        <span ng-show="form.options.multiple && ($$value$$.length < 4 && $$value$$.length > 0)"  >
-                            {{$$value$$.length}} item<span ng-show="$$value$$.length !=1"  >s</span> selected...
-                            <span ng-repeat="item in $$value$$ track by $index">
-                                    {{item}}<span ng-if="$index!=2 && $$value$$.length !=1">,</span>
+                        <span ng-show="form.options.multiple && (model[form.key[form.key.length -1]].length < 4 && model[form.key[form.key.length -1]].length > 0)"  >
+                            {{model[form.key[form.key.length -1]].length}} item<span ng-show="model[form.key[form.key.length -1]].length !=1"  >s</span> selected...
+                            <span ng-repeat="item in model[form.key[form.key.length -1]] track by $index">
+                                    {{item}}<span ng-if="$index!=2 && model[form.key[form.key.length -1]].length !=1">,</span>
                             </span>
                         </span>
-                        <span ng-show="form.options.multiple && $$value$$.length > 3"  >
-                                {{$$value$$.length}} items selected
+                        <span ng-show="form.options.multiple && model[form.key[form.key.length -1]].length > 3"  >
+                                {{model[form.key[form.key.length -1]].length}} items selected
                         </span>
-                        <span ng-show="!form.options.multiple && $$value$$.length > 0"  >
-                                {{$$value$$}} 
+                        <span ng-show="!form.options.multiple && model[form.key[form.key.length -1]].length > 0"  >
+                                {{model[form.key[form.key.length -1]]}} 
                         </span>
                     <span class="caret" ></span>
                 </button>

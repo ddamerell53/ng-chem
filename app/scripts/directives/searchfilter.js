@@ -9,7 +9,7 @@
 angular.module('chembiohubAssayApp')
   .directive('searchFilter', [ function () {
     return {
-      templateUrl: 'views/templates/search-filter-templatev2.html',
+      template: '<div  ng-include="getTemplateUrl()"></div>',
       restrict: 'E',
       transclude: true,
       scope: {
@@ -17,11 +17,18 @@ angular.module('chembiohubAssayApp')
       },
       controller: ["$scope", "$rootScope", "skinConfig", "$timeout", function($scope, $rootScope, skinConfig, $timeout){
       	
+
       	//has the filter button been pressed in the handsontable?
       	$scope.$on("columnSelection", function(event, col){
 
         	$scope.col = col;
+          $scope.getTemplateUrl = function(){
+            if($scope.col.searchFormType == 'chemical'){
+              return 'views/templates/search-filter-templatev2_chemical.html';
+            }
+            return 'views/templates/search-filter-templatev2.html';
 
+          }
           $scope.col.showFilters = true;
 
           
@@ -32,11 +39,28 @@ angular.module('chembiohubAssayApp')
           }else{
             $scope.col.filters.field_path = col.data;
           }
+           $scope.chemicalUpdated = function(modelValue, form){
+                $timeout(function(){
+                  $rootScope.$broadcast("chemicalSearch")
+                });
+            }
+
+            $scope.$on("moleculeChanged", function(){
+                $timeout(function(){
+                  $rootScope.$broadcast("chemicalSearch")
+                });
+                
+            });
+
+            $scope.$on("chemicalSearchReady", function(event){
+              $scope.chemicalfilters = skinConfig.objects[0].chemicalSearch;
+            });
 
         	// $scope.cbh.column = col
           if(col.searchFormType == "chemical"){
             $scope.queryAsfForm = angular.copy(skinConfig.objects[0].chem_query_schemaform.default.form);
             $scope.queryAsfSchema = angular.copy(skinConfig.objects[0].chem_query_schemaform.default.schema);
+            $scope.chemicalfilters = skinConfig.objects[0].chemicalSearch;
           }
           else {
             $scope.queryAsfForm = angular.copy(skinConfig.objects[0].query_schemaform.default.form);
@@ -52,6 +76,8 @@ angular.module('chembiohubAssayApp')
           
            
         });
+        
+
         
         $scope.updated = function(modelValue, form){
 
@@ -135,10 +161,11 @@ angular.module('chembiohubAssayApp')
               $scope.sendFilterUpdate(false);
             }
           });
-          
-          
-          
           return false;
+        }
+
+        $scope.chemicalsubmit = function(){
+          $rootScope.$broadcast("chemicalFilterApplied")
         }
 
 

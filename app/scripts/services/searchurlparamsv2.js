@@ -69,6 +69,7 @@ angular.module('chembiohubAssayApp')
             }
             
             var projids = [];
+            var projforChemSearch = [];
             if(stateParams.pids){
               projids = stateParams.pids.split(",");
             }
@@ -90,6 +91,14 @@ angular.module('chembiohubAssayApp')
               cbh.textsearch = atob(stateParams.textsearch);
             }else{
               cbh.textsearch = '';
+            }
+
+            if(stateParams.chemicalSearchId){
+              //get it
+
+              skinConfig.objects[0].chemicalSearch.pids = stateParams.pids;
+            }else{
+              skinConfig.objects[0].chemicalSearch = {"pids" : stateParams.pids };
             }
 
 
@@ -116,6 +125,11 @@ angular.module('chembiohubAssayApp')
       searchUrlParamsV2.setBaseDownloadUrl = function(cbh, params){
          cbh.baseDownloadUrl = urlConfig.cbh_compound_batches_v2.list_endpoint + "?";
          cbh.baseDownloadUrl += ngParamSerializer(params);
+      }
+
+      searchUrlParamsV2.generate_chemical_params = function(params){
+        params.chemicalSearchId = skinConfig.objects[0].chemicalSearch.id;
+        return params;
       }
 
       searchUrlParamsV2.generate_filter_params = function(params){
@@ -188,6 +202,7 @@ angular.module('chembiohubAssayApp')
          searchUrlParamsV2.get_project_params = function(stateParams, selected_projects){
             var pids = selected_projects.map(function(p){return p.id});
             stateParams.pids = pids.join(",");
+            skinConfig.objects[0].chemicalSearch.pids = stateParams.pids;
             return stateParams
          }
 

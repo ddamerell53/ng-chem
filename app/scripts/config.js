@@ -37,7 +37,8 @@ var configuration = {
     "invitations": {"list_endpoint": path + "invitations", "schema": path + "invitations/schema"},
     "cbh_draft_data": {"list_endpoint": path + "datastore/cbh_draft_data", "schema": path + "datastore/cbh_draft_data/schema"},
     "cbh_multiple_batches": {"list_endpoint": path + "cbh_multiple_batches", "schema": path + "cbh_multiple_batches/schema"},
-	"instance_path" : {"url_frag": path, "base" : base, "bit": bit} ,
+	  "cbh_chemical_search" :  {"list_endpoint": path + "cbh_chemical_search", "schema": path + "cbh_chemical_search/schema"},
+  "instance_path" : {"url_frag": path, "base" : base, "bit": bit} ,
 
   "cbh_custom_field_configs": {"list_endpoint":path + "cbh_custom_field_configs", "schema": path + "cbh_custom_field_configs/schema"},
   "cbh_queries": {"list_endpoint":path + "cbh_queries", "schema": path + "cbh_queries/schema"},
