@@ -390,6 +390,9 @@ $urlRouterProvider.when('', '/projects/list');
         url: 'addsingle/?mb_id=&warningsFilter=&idToClone=',
         templateUrl: 'views/add-single-compound.html',
         controller: 'AddSingleCompoundCtrl',
+        params: {
+          idToClone : undefined
+        },
         resolve: {
             mol: ['CBHCompoundBatch', '$stateParams', '$timeout', function(CBHCompoundBatch, $stateParams, $timeout) {
               if($stateParams.idToClone){

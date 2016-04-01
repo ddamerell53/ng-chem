@@ -1,5 +1,5 @@
         <div class="row"  >
-            <div ng-show="cbh.statename == 'cbh.projects.project.addcompounds'" class="col-md-7" >
+            <div ng-show="cbh.statename == 'cbh.projects.project.addcompounds'" class="col-md-6 col-lg-7" >
                 <button ng-disabled="compoundBatches.sorts.length ==0" ng-click="nullSorts()" class="btn btn-default ">
                     Remove Sorts
                 </button>
@@ -11,12 +11,12 @@
                  <select style="width:110px; display:inline-block" ng-options="item.label for item in itemsPerPage track by item.value" ng-model="pagination.compoundBatchesPerPage" ng-change="changeNumberPerPage(listOrGallery.choice)" class="form-control">
                         </select>
             </div>
-            <div class="col-md-7" ng-if="cbh.statename!='cbh.projects.project.addcompounds'" >
+            <div class="col-md-6 col-lg-7" ng-if="cbh.statename!='cbh.projects.project.addcompounds'" >
                 <div class="form-group" >
                     <div class="col-sm-12" style="padding:0 3px;">
                         <div class="btn-group">
                         <button  id="hideOptions" type="button" data-toggle="dropdown"class="btn btn-default ">
-                            Field Options&nbsp;<span class="caret" ></span>
+                            <span class="glyphicon glyphicon-sort"></span><span class="glyphicon glyphicon-filter"></span>Fields&nbsp;<span class="caret" ></span>
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="projectOptions">
                              <li class="col-xs-12">Filter, sort or hide</li> 
@@ -54,7 +54,7 @@
                             </label>
                         </span>
                         <info-box ng-if="cbh.statename=='cbh.searchv2'" style="margin-top:-5px; margin-right:5px" right="true" lookup="edit_mode" lookupitems="cbh.messages"></info-box>
-                        <select style="width:110px; display:inline-block" ng-options="item.label for item in itemsPerPage track by item.value" ng-model="pagination.compoundBatchesPerPage" ng-change="changeNumberPerPage(listOrGallery.choice)" class="form-control">
+                        <select style="width:100px; display:inline-block" ng-options="item.label for item in itemsPerPage track by item.value" ng-model="pagination.compoundBatchesPerPage" ng-change="changeNumberPerPage(listOrGallery.choice)" class="form-control">
                         </select>
                         </div>
                         
@@ -63,15 +63,12 @@
                    
                 </div>
             </div> 
-            <div class="col-md-5">
-                <div class="col-xs-8">
+            <div class="col-lg-5 col-md-6">
+                <div class="col-xs-7" style="padding-left:0px;">
                         <dir-pagination-controls on-page-change="pageChanged(newPageNumber)" max-size="5">
                         </dir-pagination-controls>
                 </div>
-                <!-- <div  ng-show="cbh.statename != 'cbh.projects.project.addcompounds'" class="col-xs-1" >
-                        <input size="10" type="text" ng-model="cbh.textsearch" />
-                </div> -->
-                <div ng-if="cbh.baseDownloadUrl" class="col-xs-4 "> 
+                <div ng-if="cbh.baseDownloadUrl" class="col-xs-5 "> 
                     <div class="{{dropclass}}  " >
                        <div ng-include="'views/templates/download-buttons.html'"></div>
                     </div>
