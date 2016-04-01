@@ -8,22 +8,10 @@
  * Controller of the ngChemApp
  */
 angular.module('chembiohubAssayApp')
-  .controller('ProjectfieldsCtrl', ["$scope", "$modalInstance", "$rootScope", "ProjectFactory", "projectId", "default_project_type", "projectTypes",
-    function($scope, $modalInstance, $rootScope, ProjectFactory,  projectId, default_project_type, projectTypes) {
+  .controller('ProjectfieldsCtrl', ["$scope", "$modalInstance", "$rootScope", "ProjectFactory", "projectId", "default_project_type", "projectTypes", "skinConfig",
+    function($scope, $modalInstance, $rootScope, ProjectFactory,  projectId, default_project_type, projectTypes, skinConfig) {
             $scope.isIE = detectIE();
-            var field_types = [{"name": "Short text", "value": "char"},  
-              {"name": "Full text", "value": "textarea"}, 
-              {"name": "Choice", "value": "uiselect"}, 
-              {"name": "Integer field", "value": "integer"},
-               {"name": "Decimal field", "value": "number"}, 
-               {"name": "Choice allowing create", "value": "uiselecttag"}, 
-               {"name": "Tags field allowing create", "value": "uiselecttags"}, 
-               {"name": "Percentage field", "value": "percentage"},
-                {"name": "Date Field", "value": "date"}, 
-                {"name": "Link to server or external", "value": "href"}, 
-                {"name": "Image link to embed", "value": "imghref"}, 
-                {"name": "Decimal field", "value": "decimal"}, 
-                {"name": "checkbox", "value": "boolean"}];
+            var field_types = skinConfig.objects[0].field_type_choices;
               var restrictions = [
                 {"value": "open","name":"Open"},
                 {"value": "restricted","name":"Restricted to editors"}
@@ -131,7 +119,7 @@ angular.module('chembiohubAssayApp')
                         "disableSuccessState":true,
                         "feedback": false,
                         "title": "Allowed values (comma-separated)",
-                       "condition": "(model.custom_field_config.project_data_fields[arrayIndex].field_type == 'uiselect' || model.custom_field_config.project_data_fields[arrayIndex].field_type == 'uiselecttags' || model.custom_field_config.project_data_fields[arrayIndex].field_type == 'uiselecttag')"
+                       "condition": "(model.custom_field_config.project_data_fields[arrayIndex].field_type == 'uiselect' || model.custom_field_config.project_data_fields[arrayIndex].field_type == 'uiselecttags' || model.custom_field_config.project_data_fields[arrayIndex].field_type == 'uiselecttag' || model.custom_field_config.project_data_fields[arrayIndex].field_type == 'radios')"
                      }
                     ]
                   },
@@ -197,6 +185,16 @@ angular.module('chembiohubAssayApp')
 
 
               $scope.modalInstance = $modalInstance;
+              //this is no longer needed
+              $scope.updatedProjectType = function(){
+                
+                if(projectId == -1){
+                  
+                      $scope.proj.custom_field_config = angular.copy($scope.proj.project_type.project_template.custom_field_config);
+                 
+                  
+                }
+              };
               $scope.setProjectType = function(){
                 //ensures that there is object equality for the project type
                 projectTypes.forEach(function(pType){
@@ -212,13 +210,10 @@ angular.module('chembiohubAssayApp')
                 $scope.operation = "add";
                 $scope.proj = {
                   "project_type": default_project_type,
-                  "custom_field_config":{
-                    "project_data_fields": [{"required":false, "field_type": "char", "open_or_restricted": "open"},]
-
-                  }
                  
                   
                };
+                $scope.updatedProjectType();
                 setForms();
               }else{
                 ProjectFactory.get({"projectId": projectId}, function(data){
@@ -237,48 +232,7 @@ angular.module('chembiohubAssayApp')
               }
               //interject with platemap fields for the platemap project type
               
-
-              $scope.updatedProjectType = function(){
-                console.log($scope.proj.project_type.name);
-                if(projectId == -1){
-                  if($scope.proj.project_type.plate_map_project_type == true){
-                    //add the extra platemap specific default fields here
-                    console.log("That's a platemap field");
-                    /*"custom_field_config":{
-                        "project_data_fields": [{"required":false, "field_type": "char", "open_or_restricted": "open"},]
-
-                      }*/
-                      var plateSizes = [
-                        {
-                            "value": 96,
-                            "name": "96"
-                        }, {
-                            "value": 48,
-                            "name": "48"
-                        }]
-                      var plateTypes = [
-                        {
-                            "value": 'working',
-                            "name": "working"
-                        }, {
-                            "value": 'backup',
-                            "name": "backup"
-                        }
-                      ]
-                      $scope.proj.custom_field_config.project_data_fields = [
-
-                        //plus a new field by default?
-                        {"required":false, "field_type": "char", "open_or_restricted": "open", "name": "Name"},
-                        {"required":false, "field_type": "uiselect", "titleMap": plateSizes, "open_or_restricted": "open", "name": "Plate Size",},
-                        {"required":false, "field_type": "char", "open_or_restricted": "open", "name": "Description"},
-                        {"required":false, "field_type": "uiselect", "titleMap": plateSizes, "open_or_restricted": "open", "name": "Plate Type", "description": "blah"},
-                      ]
-                  }
-                  else {
-                    $scope.proj.custom_field_config.project_data_fields = [{"required":false, "field_type": "char", "open_or_restricted": "open"},]
-                  }
-                }
-              }
+              
 
 
               

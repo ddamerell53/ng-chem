@@ -7,7 +7,7 @@
  * # platemap
  */
 angular.module('chembiohubAssayApp')
-    .directive('platemap',['$filter', function($filter) {
+    .directive('platemap',['$filter', 'CBHCompoundBatch', '$stateParams', function($filter, CBHCompoundBatch, $stateParams) {
         return {
             templateUrl: 'views/templates/plate-map-template.html',
             restrict: 'E',
@@ -18,11 +18,13 @@ angular.module('chembiohubAssayApp')
                 cbh: "=",
                 savePlateFunction: "&"
             },
-            controller: ["$scope","$rootScope","$filter",function($scope, $rootScope, $filter) {
-                if ($scope.plateForm.plate_size == 96) {
+            controller: ["$scope","$rootScope","$filter","CBHCompoundBatch",'$stateParams',function($scope, $rootScope, $filter, CBHCompoundBatch, $stateParams) {
+                console.log("plateForm is ", $scope.plateForm);
+                if (parseInt($scope.plateForm["Plate Size"]) == 96) {
+                    console.log('parsing')
                     $scope.rows = ["A", "B", "C", "D", "E", "F", "G", "H", ];
                     $scope.cols = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", ];
-                } else if ($scope.plateForm.plate_size == 48) {
+                } else if (parseInt($scope.plateForm["Plate Size"] == 48)) {
                     $scope.rows = ["A", "B", "C", "D"];
                     $scope.cols = ["1", "2", "3", "4", "5", "6"];
                 }
@@ -40,14 +42,14 @@ angular.module('chembiohubAssayApp')
                                 'row': row,
                                 'col': col,
                                 'hasData': false,
-                                'related_molregno__chembl__chembl_id__in': [],
+                                'uuid': [],
                             }
 
                         })
                     })
                 }
                 //blank well for reference
-                
+                console.log("plateForm wells is now ", $scope.plateForm.wells);
 
 	            $scope.wellForm = {}
 	            $scope.selectedWell = {}
@@ -74,7 +76,7 @@ angular.module('chembiohubAssayApp')
                                 'row': row,
                                 'col': col,
                                 'hasData': false,
-                                'related_molregno__chembl__chembl_id__in': [],
+                                'uuid': [],
                                 'justCleared': true,
                             };
                     console.log('wellFormFE',wellFormFE)
@@ -114,9 +116,32 @@ angular.module('chembiohubAssayApp')
 
 	            }
 
+                //need to implement this as the click function for the filtered dropdown for the UOX ID lookup
+                $scope.$on("openedSearchDropdown", function(event, args){
+                    var filters = angular.copy($stateParams);
+                    /*var activeCol = null;
+                    angular.forEach($scope.cbh.tabular_data_schema, function(c){
+                        if(c.showFilters){
+                            activeCol = c;
+                        }
+                    });*/
+                //call to fetch uuid autocomplete results looks like this:
+                //http://localhost:9000/dev/cbh_compound_batches_v2?autocomplete=&autocomplete_field_path=uuid&compoundBatchesPerPage=50&encoded_query=W10%3D&limit=50&offset=0&page=1&pids=3
+                    filters.autocomplete_field_path = 'uuid';
+                    filters.autocomplete = args.autocomplete;
+                    CBHCompoundBatch.queryv2(filters).then(function(result) {
+                        //this is broadcasting to a dynamic $on method within the pickfromlist widget (within cbh_angular_schema_form_extension.js)
+                        //which is why if you look for the braodcast name elsewhere you won't find it.
+                        //it looks for the name defined in dataArrivesEventName within the schema form element
+                        $rootScope.$broadcast("autoCompleteData", result);
+                    });
+                    
+                })
+                
+                //this function should now be the onChange of the filtereddropdown field
 	            function updateFields() {
-	                if ($scope.wellForm.related_molregno__chembl__chembl_id__in) {
-	                    $scope.searchFormSchema.well_schema.properties.related_molregno__chembl__chembl_id__in.items = $scope.wellForm.related_molregno__chembl__chembl_id__in.map(function(i) {
+	                if ($scope.wellForm.uuid) {
+	                    $scope.searchFormSchema.well_schema.properties.uuid.items = $scope.wellForm.uuid.map(function(i) {
 	                        return {
 	                            value: i,
 	                            label: i
@@ -125,7 +150,7 @@ angular.module('chembiohubAssayApp')
                         $rootScope.$broadcast('schemaFormRedraw');
 	                }
                     else {
-                        $scope.searchFormSchema.well_schema.properties.related_molregno__chembl__chembl_id__in.items = [];
+                        $scope.searchFormSchema.well_schema.properties.uuid.items = [];
                     }
 
 	            }

@@ -8,9 +8,15 @@
  * Controller of the chembiohubAssayApp
  */
 angular.module('chembiohubAssayApp')
-    .controller('PlatemapCtrl', ['$scope', '$rootScope', 'PlateMapFactory', 'ProjectTypeFactory', 'projectFactory', 'urlConfig', '$filter', 'loggedInUser', '$stateParams','$state',
-        function($scope, $rootScope, PlateMapFactory, ProjectTypeFactory, projectFactory, urlConfig, $filter, loggedInUser, $stateParams, $state) {
+    .controller('PlatemapCtrl', ['$scope', '$rootScope', 'urlConfig', '$filter', 'loggedInUser', '$stateParams','$state', 'projectKey', 'projectList', 'CBHCompoundBatch',
+        function($scope, $rootScope, urlConfig, $filter, loggedInUser, $stateParams, $state, projectKey, projectList, CBHCompoundBatch) {
         	/* Setup stuff */
+            angular.forEach(projectList.objects, function(myproj) {
+                if (myproj.project_key === projectKey) {
+                    $scope.projectObj = myproj;
+                    console.log("project is", $scope.projectObj);
+                }
+            });
             $scope.newPlateForm = {}
             $scope.schemaFormHolder = {}
 
@@ -18,111 +24,18 @@ angular.module('chembiohubAssayApp')
             //cherry pick the form and schema elements
             $scope.searchFormSchema = angular.copy($scope.cbh.projects.searchform);
             //this needs replacing with the new 'staticItems' for the pick from list widget
-            /*$scope.uoxFormItem = $filter('filter')($scope.searchFormSchema.form, {
-                key: 'related_molregno__chembl__chembl_id__in'
-            }, true);
-            $scope.refresh = function(schema, options, search) {
-                return $http.get(options.async.url + "?chembl_id__chembl_id__startswith=" + search);
-            }
-            $scope.uoxFormItem[0].options.async.call = $scope.refresh;*/
 
             //we end up passing schemaFormHolder through to the platemap directive
             //so that if this ends up coming from a service we can alter it here
-            $scope.schemaFormHolder.new_form = [
-                //need: name, plate size, description, plate type
-                //choices here hard coded for now
-                {
-                    "key": "name",
-                    "htmlClass": "col-sm-4",
-                    "disableSuccessState": true,
-                    "title": "Plate Name",
-                    "required": true,
-                }, {
-                    "key": "plate_size",
-                    "title": "Plate Size",
-                    "type": "select",
-                    "titleMap": [
-                    	{
-	                        "value": 96,
-	                        "name": "96"
-	                    }, {
-	                        "value": 48,
-	                        "name": "48"
-                    	}
-                    ],
-                    "htmlClass": "col-sm-2",
-                    "disableSuccessState": true,
-                    "feedback": false
+            
 
-                }, {
-                    "key": "description",
-                    "title": "Description",
-                    "htmlClass": "col-sm-4",
-                    "disableSuccessState": true,
-                    "feedback": false
-                }, {
-                    "key": "plate_type",
-                    "title": "Plate Type",
-                    "type": "select",
-                    "titleMap": [
-                    	{
-	                        "value": 'working',
-	                        "name": "working"
-	                    }, {
-	                        "value": 'backup',
-	                        "name": "backup"
-                    	}
-                    ],
-                    "htmlClass": "col-sm-2",
-                    "disableSuccessState": true,
-                    "feedback": false
-
-                },
-            ];
-
-            $scope.schemaFormHolder.new_schema = {
-                "type": "object",
-                "properties": {
-                    "name": {
-                        "title": "Plate Name",
-                        "type": "string",
-                        "pattern": "^[a-zA-Z0-9_ /&]*$",
-                        "validationMessage": {
-                            202: "Only letters, spaces, numbers, dashes, slashes, & signs and underscores in project names"
-                        },
-
-
-                    },
-                    "plate_size": {
-                        "title": "Plate Size",
-                        "type": "int",
-                        "default": 96,
-
-                    },
-                    "description": {
-                        "title": "Description",
-                        "type": "string",
-                        "pattern": "^[a-zA-Z0-9_ /&]*$",
-	                    "disableSuccessState": true,
-	                    "feedback": false
-
-                    },
-                    "plate_type": {
-                        "title": "Plate Type",
-                        "type": "string",
-                        "default": 'working',
-
-                    },
-
-                    
-                }
-            }
-
+            $scope.schemaFormHolder.required=[]
             $scope.schemaFormHolder.well_form = [
                 //need: name, plate size, description, plate type
                 //choices here hard coded for now
                 {
                     "key": "barcode",
+                    "knownBy": "barcode",
                     "htmlClass": "col-sm-4",
                     "disableSuccessState": true,
                     "title": "Barcode ID",
@@ -130,6 +43,7 @@ angular.module('chembiohubAssayApp')
                     "feedback": false
                 }, {
                     "key": "units",
+                    "knownBy": "units",
                     "title": "Units",
                     "htmlClass": "col-sm-4",
                     "disableSuccessState": true,
@@ -137,16 +51,16 @@ angular.module('chembiohubAssayApp')
 
                 }, {
                     "key": "conc",
+                    "knownBy": "conc",
                     "title": "Concentration",
                     "htmlClass": "col-sm-4",
                     "disableSuccessState": true,
                     "feedback": false
                 }, 
-                //$scope.uoxFormItem[0],
-                //need to use the new pick from list
                 { 
                         'title' : 'Pick from list',
                         'key' : 'uuid', 
+                        'knownBy' : 'uuid', 
                         "htmlClass": "col-sm-6",
                         "onChange": "updated(modelValue,form)",
                         "disableSuccessState":true,
@@ -159,6 +73,9 @@ angular.module('chembiohubAssayApp')
                           "multiple" : false,
                           "staticItems" : []
                         }
+
+
+                        
                     },
             ];
 
@@ -186,22 +103,26 @@ angular.module('chembiohubAssayApp')
 	                    "feedback": false
 
                     },
-                    /*'related_molregno__chembl__chembl_id__in': {
-	                    'type': 'array',
-	                    'format': 'uiselect',
-	                    
-	                },*/
                     "uuid":{
-                      "type" : "array",
+                      "type" : "filtereddropdown",
                       "items": {
                         "type": "string"
                       },
-                      "default" : []
+                      'format': "filtereddropdown",
+                      "default" : [],
+                      "options":{
+                          "tagging" : true,
+                          "fetchDataEventName" : "openedSearchDropdown",
+                          "dataArrivesEventName" : "autoCompleteData",
+                          "multiple" : false,
+                          "staticItems" : []
+                        }
 
                     },
 
                     
-                }
+                },
+                "required":[]
             }
 
             
@@ -214,6 +135,9 @@ angular.module('chembiohubAssayApp')
             }
             $scope.showPlate = false;
             $scope.setupNewPlateFromForm = function(form){
+
+                //the form now comes from the current project's custom field config
+
 
             	console.log('validation happening')
             	if(form.$valid && $scope.newPlateForm.name != "" && !form.$pristine){
@@ -242,73 +166,50 @@ angular.module('chembiohubAssayApp')
             $scope.saveWholePlate = function(){
             	
                 //TODO handle error here
-            	ProjectTypeFactory.get({"plate_map_project_type": true}, function(data){
-                      //$scope.newPlateForm
-                      $scope.plateMapType = data.objects[0];
-                      //var template = $scope.savedSearchType.project_template;
-                      var d = new Date();
-                      $scope.plateMapType.project_template.name = $scope.newPlateForm.name + d.getTime().toString();
-                      $scope.plateMapType.project_template.custom_field_config.name = $scope.newPlateForm.name + d.getTime().toString();
 
-                        //TODO handle error here
-                        //Need to replace this with
-                        projectFactory.save($scope.plateMapType.project_template, function(data){
-                            var resource_uri = data.resource_uri;
+                            //proid in this case is from the
+                            console.log($scope.newPlateForm); 
                             var plateMapObj = {
-                                "project": data.resource_uri,
-                                "projectKey": data.project_key,
-                                "blindedBatchId": "EMPTY_STRING",
+                                "project": {"pk": $scope.projectObj.id},
+                                "blinded_batch_id": "EMPTY_STRING",
                                 //"customFields": $scope.newPlateForm,
-                                "customFields": {
-                                	"description": $scope.newPlateForm.description,
-									"name": $scope.newPlateForm.name,
-									"plate_size": $scope.newPlateForm.plate_size,
-									"plate_type": $scope.newPlateForm.plate_type,
+                                "custom_fields": {
+                                	"Description": $scope.newPlateForm['Description'],
+									"Name": $scope.newPlateForm['Name'],
+									"Plate Size": $scope.newPlateForm['Plate Size'],
+									"Plate Type": $scope.newPlateForm['Plate Type'],
 									"wells": $scope.newPlateForm.wells,
                                 },
-                                "uncuratedFields":{},
+                                "uncurated_fields":{},
                                 "warnings" :{}, 
                                 "properties" :{},  
                                 "errors" :{}
                             }
-                            console.log(plateMapObj)
+                            //console.log(plateMapObj)
 
-                            var pmf = PlateMapFactory.list;
-
-                            //TODO handle error here
-                            pmf.save(plateMapObj, function(data){
-                                //search is now saved - close the modal
-                                //make sure reindex is called on the correct thing within data
-                                console.log('inside save');
-                                var params = {"id": data.id}
-
-                                $http.post( urlConfig.cbh_plate_map.list_endpoint  + "/reindex_compound/" , params).then(function(da){
-                                    $state.go("cbh.listPlates", {
-                                       "plate": data.id,
-                                    }, {
-                                        reload: true,
-                                    });
-                                })
-
-                                ///if it's worked, redirect to the edit page for this plate.
-                                //from there we know we will be patching an existing record.
-                                
-
-                            });
-
+                           CBHCompoundBatch.saveSingleCompound(plateMapObj).then(function(data){
+                                console.log(data);
+                                //forward to list?
+                           });
                             
-                        });
-
+                  
                         
-                      });
+                      
             }
 
 
             /* Listings page code */
             $scope.loadPlateMaps = function(){
+                //add a project type filter within the params
 	            var params = {'creator_uri': loggedInUser.resource_uri};
 
                 //TODO handle error here
+                
+                //this needs changing as plates are now batches rather than projects - 
+                //replicate the CompoundBatch retrieval here for the given project
+
+                //need to use the new search API - build the correct query etc
+                //should this just be adapted from the current search controller? we are now looking for batches after all.
 	            $http.get( urlConfig.cbh_plate_map.list_endpoint  + "/get_list_elasticsearch/", {'params': params}).then(function(data){
 	                
 	                $scope.plates = data.data.objects;
@@ -343,6 +244,7 @@ angular.module('chembiohubAssayApp')
 	                id: plateId
 	            }, true);
 	            //set a flag to say the plate template should be shown
+                //this now needs changing because multiple plates per project. Need the batch ID to retrieve the plate
 	            $scope.editingPlate = fullPlateObj[0].customFields
 	            $scope.editingPlateId = plateId;
 	        	$scope.showEditingForm = true;
@@ -367,9 +269,10 @@ angular.module('chembiohubAssayApp')
 	            //edit the cutom fields from the plate form
 	            fullPlateObj[0].customFields = $scope.editingPlate            	
             	
+                //this needs to be changed to use compound batch instead? Maybe not as long as the project key is correct
             	var pmf = PlateMapFactory.list;
                 //TODO handle error here
-                pmf.update({ customFields : $scope.editingPlate, projectKey: fullPlateObj[0].projectfull.project_key, id: $scope.editingPlateId }, function(data){
+                pmf.update({ customFields : $scope.editingPlate, projectKey: projectKey, id: $scope.editingPlateId }, function(data){
                     //search is now saved - close the modal
                     //make sure reindex is called on the correct thing within data
                     var params = {"id": data.id}

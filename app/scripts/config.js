@@ -123,7 +123,7 @@ var skinReq = $http({  method: "get",
 
 var projReq = $http({  method: "get",
                     url: configuration.cbh_projects.list_endpoint,
-                    params: {"schemaform": true, "limit":1000, "project_type__saved_search_project_type": false, "project_type__plate_map_project_type": false }, });
+                    params: {"schemaform": true, "limit":1000, "project_type__saved_search_project_type": false, }, });
 
 var userReq = $http({  method: "get",
                     url: configuration.users.list_endpoint,
