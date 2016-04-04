@@ -77,7 +77,8 @@ angular.module('schemaForm').config(
 
 
 angular.module('schemaForm')
-  .controller('filtereddropdownController', function ($scope, $rootScope, $timeout, $filter) {
+  .controller('filtereddropdownController', 
+    function ($scope, $rootScope, $timeout, $filter) {
     $scope.loading = true;
     $scope.opened = function(key, autoComp){
          $rootScope.$broadcast($scope.form.options.fetchDataEventName, {'key': key, 'autocomplete' : autoComp});

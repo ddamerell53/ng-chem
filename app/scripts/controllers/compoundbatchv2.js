@@ -17,7 +17,7 @@ angular.module('chembiohubAssayApp')
 
             $scope.resetCompoundList = function(){
                 //We need the base statename, not the modal statename
-
+                $scope.totalCompoundBatches = 0;
                 var stateName = $state.current.name.replace(".record", "")
                 $scope.cbh.tabular_data_schema = skinConfig.objects[0].get_filtered_table_schema(stateName, $scope.cbh.selected_projects);
 
@@ -30,6 +30,7 @@ angular.module('chembiohubAssayApp')
 
             $scope.$on("chemicalSearch", function(event ){
                 var data = skinConfig.objects[0].chemicalSearch
+                data.id = undefined;
                 chemicalSearch.save(data, function(data){
                     skinConfig.objects[0].chemicalSearch = data;
                     $rootScope.$broadcast("chemicalSearchReady");
