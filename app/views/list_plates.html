@@ -2,14 +2,12 @@
 	<div class="col-xs-12">
 		<div class="row">
 			<h2 class="blue">Plate Maps <br><small>Plate maps curently in the system. To add a plate map to thie project, click here</small> <a ui-sref="cbh.projects.project.addplate({projectKey: projectKey})" class="btn btn-primary" role="button">Add Plate</a></h2>
-			<span class="pull-right" style="margin-top: -40px; margin-right: -10px;"><label >Filter plate list: </label><input ng-model="search.$"><info-box lookup="plate_list_filter_help" lookupitems="cbh.messages" left="true"></info-box></span>
-
+			<!-- <span class="pull-right" style="margin-top: -40px; margin-right: -10px;"><label >Filter plate list: </label><input ng-model="search.$"><info-box lookup="plate_list_filter_help" lookupitems="cbh.messages" left="true"></info-box></span> -->
+			
 				
 				<!-- New plate form -->
 				<div class="container-flex" ng-init="loadPlateMaps()">
-					<!-- <ul>
-						<li ng-repeat="plate in plates">{{plate.customFields.name}}</li>
-					</ul> -->
+					
 					<div class="col-xs-8">
                         <dir-pagination-controls on-page-change="pageChanged(newPageNumber)" max-size="5">
                         </dir-pagination-controls>
@@ -17,10 +15,7 @@
 					<table class="table table-responsive">
 						<thead>
 							<tr>
-								<th>Name</th>
-								<th>Description</th>
-								<th>Plate Size</th>
-								<th>Plate Type</th>
+								<th ng-repeat="field in projectObj.custom_field_config.project_data_fields">{{field.edit_form.form[0].key}}</th>
 								<th>Added on</th>
 								<th>Edit</th>
 							</tr>
@@ -28,10 +23,7 @@
 						<tbody>
 							<!-- <tr ng-repeat="plate in plates | filter:search" ng-class="editingPlateId == plate.id ? 'info' : ''"> -->
 							<tr dir-paginate="plate in plates | itemsPerPage:5" current-page="pagination.current" total-items="totalCount">
-								<td>{{plate.custom_fields.Name}}</td>
-								<td>{{plate.custom_fields.Description}}</td>
-								<td>{{plate.custom_fields['Plate Size']}}</td>
-								<td>{{plate.custom_fields['Plate Type']}}</td>
+								<td ng-repeat="field in projectObj.custom_field_config.project_data_fields">{{plate.custom_fields[field.edit_form.form[0].key]}}</td>
 								<td>{{plate.created | date: "d MMM yyyy"}}</td>
 								<td data-plate-id="{{plate.id}}"><span class="glyphicon glyphicon-pencil" ng-click="loadPlateForEditing(plate.id)" style="cursor:pointer;"></span></td>
 							</tr>
