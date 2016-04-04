@@ -201,29 +201,35 @@ angular.module('chembiohubAssayApp')
             /* Listings page code */
             $scope.loadPlateMaps = function(){
                 //add a project type filter within the params
-	            var params = {'creator_uri': loggedInUser.resource_uri};
+                //var params = {'creator_uri': loggedInUser.resource_uri};
+	            var params = {'pids': $scope.projectObj.id};
+
+                var filters = angular.copy($stateParams);
+                    /*var activeCol = null;
+                    angular.forEach($scope.cbh.tabular_data_schema, function(c){
+                        if(c.showFilters){
+                            activeCol = c;
+                        }
+                    });*/
+                //call to fetch uuid autocomplete results looks like this:
+                //http://localhost:9000/dev/cbh_compound_batches_v2?autocomplete=&autocomplete_field_path=uuid&compoundBatchesPerPage=50&encoded_query=W10%3D&limit=50&offset=0&page=1&pids=3
+                    //filters.autocomplete_field_path = 'uuid';
+                    //filters.autocomplete = args.autocomplete;
+                    CBHCompoundBatch.queryv2(filters).then(function(data) {
+                        $scope.plates = data.objects;
+                        $scope.$apply();
+                        if($stateParams.plate){
+                            console.log('plate found in url')
+                            console.log("$scope.plates",$scope.plates)
+                            $scope.loadPlateSpecifiedInUrl();
+                            
+                        }
+                        else{
+                            console.log('Cant find plate', $stateParams)
+                        }
+                    });
 
                 //TODO handle error here
-                
-                //this needs changing as plates are now batches rather than projects - 
-                //replicate the CompoundBatch retrieval here for the given project
-
-                //need to use the new search API - build the correct query etc
-                //should this just be adapted from the current search controller? we are now looking for batches after all.
-	            $http.get( urlConfig.cbh_plate_map.list_endpoint  + "/get_list_elasticsearch/", {'params': params}).then(function(data){
-	                
-	                $scope.plates = data.data.objects;
-	                $scope.$apply();
-	                if($stateParams.plate){
-                        console.log('plate found in url')
-                        console.log("$scope.plates",$scope.plates)
-                        $scope.loadPlateSpecifiedInUrl();
-                        
-                    }
-                    else{
-                        console.log('Cant find plate', $stateParams)
-                    }
-	            });
 	        };
 
 
@@ -244,8 +250,8 @@ angular.module('chembiohubAssayApp')
 	                id: plateId
 	            }, true);
 	            //set a flag to say the plate template should be shown
-                //this now needs changing because multiple plates per project. Need the batch ID to retrieve the plate
-	            $scope.editingPlate = fullPlateObj[0].customFields
+                //We have multiple plates per project. Need the batch ID to retrieve the plate
+	            $scope.editingPlate = fullPlateObj[0].custom_fields
 	            $scope.editingPlateId = plateId;
 	        	$scope.showEditingForm = true;
 	        	
@@ -267,18 +273,15 @@ angular.module('chembiohubAssayApp')
 	            }, true);
 	            
 	            //edit the cutom fields from the plate form
-	            fullPlateObj[0].customFields = $scope.editingPlate            	
+	            fullPlateObj[0].custom_fields = $scope.editingPlate            	
             	
                 //this needs to be changed to use compound batch instead? Maybe not as long as the project key is correct
-            	var pmf = PlateMapFactory.list;
-                //TODO handle error here
-                pmf.update({ customFields : $scope.editingPlate, projectKey: projectKey, id: $scope.editingPlateId }, function(data){
-                    //search is now saved - close the modal
-                    //make sure reindex is called on the correct thing within data
-                    var params = {"id": data.id}
 
-                    $http.post( urlConfig.cbh_plate_map.list_endpoint  + "/reindex_compound/" , params)
-
+                //Think I need to change this to use the CBHCompoundBatch method (like saving a plate now does)
+            	
+                CBHCompoundBatch.patch(fullPlateObj[0]).then(function(data) {
+                    //do anything here?
+                    console.log("Saved successfully")
                 });
 
             }

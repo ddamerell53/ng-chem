@@ -62,7 +62,7 @@ angular.module('chembiohubAssayApp')
 	            $scope.showWellForm = function(well){
 	            	$scope.selectedWell = well;
 					$scope.wellForm = well;
-					updateFields();
+					//updateFields();
 					$rootScope.$broadcast('schemaFormRedraw');
 					         	
 	            }
@@ -82,7 +82,7 @@ angular.module('chembiohubAssayApp')
                     console.log('wellFormFE',wellFormFE)
                     console.log('well on plate',$scope.plateForm.wells[$scope.selectedWellLocation])
                     
-                    updateFields();
+                    //updateFields();
                     $rootScope.$broadcast('schemaFormRedraw');
                     wellFormFE.$setPristine();
 
@@ -139,7 +139,7 @@ angular.module('chembiohubAssayApp')
                 })
                 
                 //this function should now be the onChange of the filtereddropdown field
-	            function updateFields() {
+	            /*function updateFields() {
 	                if ($scope.wellForm.uuid) {
 	                    $scope.searchFormSchema.well_schema.properties.uuid.items = $scope.wellForm.uuid.map(function(i) {
 	                        return {
@@ -153,7 +153,7 @@ angular.module('chembiohubAssayApp')
                         $scope.searchFormSchema.well_schema.properties.uuid.items = [];
                     }
 
-	            }
+	            }*/
                 $scope.showWellForm($scope.plateForm.wells["A1"]);
                 /*updateFields();
                 $rootScope.$broadcast('schemaFormRedraw');*/

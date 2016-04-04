@@ -1,7 +1,7 @@
 <div class="container-fluid mt">
 	<div class="col-xs-12">
 		<div class="row">
-			<h2 class="blue">Plate Maps <br><small>Plate maps curently in the system. To add a plate map, click here</small> <a ui-sref="cbh.addPlate" class="btn btn-primary" role="button">Add Plate</a></h2>
+			<h2 class="blue">Plate Maps <br><small>Plate maps curently in the system. To add a plate map to thie project, click here</small> <a ui-sref="cbh.projects.project.addplate({projectKey: projectKey})" class="btn btn-primary" role="button">Add Plate</a></h2>
 			<span class="pull-right" style="margin-top: -40px; margin-right: -10px;"><label >Filter plate list: </label><input ng-model="search.$"><info-box lookup="plate_list_filter_help" lookupitems="cbh.messages" left="true"></info-box></span>
 
 				
@@ -24,10 +24,10 @@
 						</thead>
 						<tbody>
 							<tr ng-repeat="plate in plates | filter:search" ng-class="editingPlateId == plate.id ? 'info' : ''">
-								<td>{{plate.customFields.name}}</td>
-								<td>{{plate.customFields.description}}</td>
-								<td>{{plate.customFields.plate_size}}</td>
-								<td>{{plate.customFields.plate_type}}</td>
+								<td>{{plate.custom_fields.Name}}</td>
+								<td>{{plate.custom_fields.Description}}</td>
+								<td>{{plate.custom_fields['Plate Size']}}</td>
+								<td>{{plate.custom_fields['Plate Type']}}</td>
 								<td>{{plate.created | date: "d MMM yyyy"}}</td>
 								<td data-plate-id="{{plate.id}}"><span class="glyphicon glyphicon-pencil" ng-click="loadPlateForEditing(plate.id)" style="cursor:pointer;"></span></td>
 							</tr>
