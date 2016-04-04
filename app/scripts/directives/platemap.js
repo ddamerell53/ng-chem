@@ -16,12 +16,11 @@ angular.module('chembiohubAssayApp')
                 plateForm: "=plate",
                 schemaFormHolder: "=sfh",
                 cbh: "=",
-                savePlateFunction: "&"
+                savePlateFunction: "&",
+                plateSaved: "="
             },
             controller: ["$scope","$rootScope","$filter","CBHCompoundBatch",'$stateParams',function($scope, $rootScope, $filter, CBHCompoundBatch, $stateParams) {
-                console.log("plateForm is ", $scope.plateForm);
                 if (parseInt($scope.plateForm["Plate Size"]) == 96) {
-                    console.log('parsing')
                     $scope.rows = ["A", "B", "C", "D", "E", "F", "G", "H", ];
                     $scope.cols = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", ];
                 } else if (parseInt($scope.plateForm["Plate Size"] == 48)) {
@@ -54,12 +53,14 @@ angular.module('chembiohubAssayApp')
 	            $scope.wellForm = {}
 	            $scope.selectedWell = {}
 	            $scope.selectedWellLocation = ""
+                $scope.plateSaved = false;
 	            //we need to use the searchform object in order to list UOX IDs for compounds
             	//cherry pick the form and schema elements
                 //$scope.searchFormSchema = angular.copy($scope.cbh.projects.searchform);
 	            $scope.searchFormSchema = $scope.schemaFormHolder;
 
 	            $scope.showWellForm = function(well){
+                    $scope.plateSaved = false;
 	            	$scope.selectedWell = well;
 					$scope.wellForm = well;
 					//updateFields();
@@ -69,9 +70,7 @@ angular.module('chembiohubAssayApp')
 
 	            $scope.clearWell = function(wellFormFE){
                     var row = angular.copy($scope.selectedWell.row);
-                    console.log($scope.selectedWellLocation.row)
                     var col = angular.copy($scope.selectedWell.col);
-                    console.log($scope.selectedWellLocation.col)
 	            	$scope.plateForm.wells[$scope.selectedWellLocation] = {
                                 'row': row,
                                 'col': col,
@@ -79,8 +78,6 @@ angular.module('chembiohubAssayApp')
                                 'uuid': [],
                                 'justCleared': true,
                             };
-                    console.log('wellFormFE',wellFormFE)
-                    console.log('well on plate',$scope.plateForm.wells[$scope.selectedWellLocation])
                     
                     //updateFields();
                     $rootScope.$broadcast('schemaFormRedraw');
@@ -119,14 +116,8 @@ angular.module('chembiohubAssayApp')
                 //need to implement this as the click function for the filtered dropdown for the UOX ID lookup
                 $scope.$on("openedSearchDropdown", function(event, args){
                     var filters = angular.copy($stateParams);
-                    /*var activeCol = null;
-                    angular.forEach($scope.cbh.tabular_data_schema, function(c){
-                        if(c.showFilters){
-                            activeCol = c;
-                        }
-                    });*/
-                //call to fetch uuid autocomplete results looks like this:
-                //http://localhost:9000/dev/cbh_compound_batches_v2?autocomplete=&autocomplete_field_path=uuid&compoundBatchesPerPage=50&encoded_query=W10%3D&limit=50&offset=0&page=1&pids=3
+                    //call to fetch uuid autocomplete results looks like this:
+                    //http://localhost:9000/dev/cbh_compound_batches_v2?autocomplete=&autocomplete_field_path=uuid&compoundBatchesPerPage=50&encoded_query=W10%3D&limit=50&offset=0&page=1&pids=3
                     filters.autocomplete_field_path = 'uuid';
                     filters.autocomplete = args.autocomplete;
                     CBHCompoundBatch.queryv2(filters).then(function(result) {
@@ -138,34 +129,8 @@ angular.module('chembiohubAssayApp')
                     
                 })
                 
-                //this function should now be the onChange of the filtereddropdown field
-	            /*function updateFields() {
-	                if ($scope.wellForm.uuid) {
-	                    $scope.searchFormSchema.well_schema.properties.uuid.items = $scope.wellForm.uuid.map(function(i) {
-	                        return {
-	                            value: i,
-	                            label: i
-	                        }
-	                    });
-                        $rootScope.$broadcast('schemaFormRedraw');
-	                }
-                    else {
-                        $scope.searchFormSchema.well_schema.properties.uuid.items = [];
-                    }
-
-	            }*/
                 $scope.showWellForm($scope.plateForm.wells["A1"]);
-                /*updateFields();
-                $rootScope.$broadcast('schemaFormRedraw');*/
-                //need an event to updateFields when the plate model has changed
-                /*$rootScope.$on("plateChanged", function(event, args){
-                    console.log('plate changed');
-                    //updateFields();
-                    //$rootScope.$broadcast('schemaFormRedraw');
-                    $scope.showWellForm($scope.plateForm.wells["A1"]);
-                    //hide the form
-                    
-                });*/
+                
                 $scope.$watch('plateForm', function() {
                     $scope.showWellForm($scope.plateForm.wells["A1"]);
                 });

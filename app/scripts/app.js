@@ -502,7 +502,7 @@ $urlRouterProvider.when('', '/projects/list');
     })
 
     .state('cbh.projects.project.listplates', {
-      url: 'plates/?plate=',
+      url: 'plates/?plate=&page=&compoundBatchesPerPage=',
       templateUrl: 'views/list_plates.html',
       controller: 'PlatemapCtrl',
     });

@@ -27,6 +27,12 @@ angular.module('chembiohubAssayApp')
 
             //we end up passing schemaFormHolder through to the platemap directive
             //so that if this ends up coming from a service we can alter it here
+
+            $scope.pagination = {"current": 1
+                                    };
+
+            $scope.batchesPerPage = 5;
+            
             
 
             $scope.schemaFormHolder.required=[]
@@ -167,67 +173,86 @@ angular.module('chembiohubAssayApp')
             	
                 //TODO handle error here
 
-                            //proid in this case is from the
-                            console.log($scope.newPlateForm); 
-                            var plateMapObj = {
-                                "project": {"pk": $scope.projectObj.id},
-                                "blinded_batch_id": "EMPTY_STRING",
-                                //"customFields": $scope.newPlateForm,
-                                "custom_fields": {
-                                	"Description": $scope.newPlateForm['Description'],
-									"Name": $scope.newPlateForm['Name'],
-									"Plate Size": $scope.newPlateForm['Plate Size'],
-									"Plate Type": $scope.newPlateForm['Plate Type'],
-									"wells": $scope.newPlateForm.wells,
-                                },
-                                "uncurated_fields":{},
-                                "warnings" :{}, 
-                                "properties" :{},  
-                                "errors" :{}
-                            }
-                            //console.log(plateMapObj)
+                //proid in this case is from the
+                console.log($scope.newPlateForm); 
+                var plateMapObj = {
+                    "project": {"pk": $scope.projectObj.id},
+                    "blinded_batch_id": "EMPTY_STRING",
+                    //"customFields": $scope.newPlateForm,
+                    "custom_fields": {
+                    	"Description": $scope.newPlateForm['Description'],
+						"Name": $scope.newPlateForm['Name'],
+						"Plate Size": $scope.newPlateForm['Plate Size'],
+						"Plate Type": $scope.newPlateForm['Plate Type'],
+						"wells": $scope.newPlateForm.wells,
+                    },
+                    "uncurated_fields":{},
+                    "warnings" :{}, 
+                    "properties" :{},  
+                    "errors" :{}
+                }
+                //console.log(plateMapObj)
 
-                           CBHCompoundBatch.saveSingleCompound(plateMapObj).then(function(data){
-                                console.log(data);
-                                //forward to list?
-                           });
+               CBHCompoundBatch.saveSingleCompound(plateMapObj).then(function(data){
+                    console.log(data);
+                    $scope.plateSaved = true;
+                    //forward to list?
+                    $state.go("cbh.projects.project.listplates", {"projectKey": projectKey});
+               });
                             
                   
                         
                       
             }
 
+            $scope.cbh.changeSearchParams = function(newParams, notify) {
+                //General function to search and move to a new URL
+                
+                $state.params = newParams;
+                $stateParams = newParams;
+                // $location.search(newParams);
+                $state.go($state.current, newParams, {
+                    // prevent the events onStart and onSuccess from firing
+                    notify: false,
+                    // prevent reload of the current state
+                    reload: false,
+                    // replace the last record when changing the params so you don't hit the back button and get old params
+                    location: 'replace',
+                    // inherit the current params on the url
+                    inherit: true
+                });
+                //getResultsPage($scope.pagination.current, newParams);
+            }
+
 
             /* Listings page code */
             $scope.loadPlateMaps = function(){
                 //add a project type filter within the params
-                //var params = {'creator_uri': loggedInUser.resource_uri};
 	            var params = {'pids': $scope.projectObj.id};
 
                 var filters = angular.copy($stateParams);
-                    /*var activeCol = null;
-                    angular.forEach($scope.cbh.tabular_data_schema, function(c){
-                        if(c.showFilters){
-                            activeCol = c;
-                        }
-                    });*/
-                //call to fetch uuid autocomplete results looks like this:
-                //http://localhost:9000/dev/cbh_compound_batches_v2?autocomplete=&autocomplete_field_path=uuid&compoundBatchesPerPage=50&encoded_query=W10%3D&limit=50&offset=0&page=1&pids=3
-                    //filters.autocomplete_field_path = 'uuid';
-                    //filters.autocomplete = args.autocomplete;
-                    CBHCompoundBatch.queryv2(filters).then(function(data) {
-                        $scope.plates = data.objects;
-                        $scope.$apply();
-                        if($stateParams.plate){
-                            console.log('plate found in url')
-                            console.log("$scope.plates",$scope.plates)
-                            $scope.loadPlateSpecifiedInUrl();
-                            
-                        }
-                        else{
-                            console.log('Cant find plate', $stateParams)
-                        }
-                    });
+                
+
+                $scope.cbh.changeSearchParams(filters);
+                filters = angular.copy($stateParams);
+                    
+                filters.limit = $scope.batchesPerPage;
+                filters.offset = (filters.page - 1) * 5;
+                CBHCompoundBatch.queryv2(filters).then(function(data) {
+                    $scope.totalCount = data.meta.total_count;
+                    $scope.plates = data.objects;
+                    //$scope.$apply();
+                    console.log($scope.plates.length)
+                    if($stateParams.plate){
+                        console.log('plate found in url')
+                        console.log("$scope.plates",$scope.plates)
+                        $scope.loadPlateSpecifiedInUrl();
+                        
+                    }
+                    else{
+                        console.log('Cant find plate', $stateParams)
+                    }
+                });
 
                 //TODO handle error here
 	        };
@@ -244,8 +269,10 @@ angular.module('chembiohubAssayApp')
                 $scope.loadPlateForEditing(parseInt($stateParams.plate));
             }
 
+            //fetch the whole plate to put into the form for editing.
 	        $scope.loadPlateForEditing = function(plateId){
 	        	//find the plate in the list
+                $scope.plateSaved = false;
 	        	var fullPlateObj = $filter('filter')($scope.plates, {
 	                id: plateId
 	            }, true);
@@ -267,7 +294,7 @@ angular.module('chembiohubAssayApp')
 
             $scope.patchWholePlate = function(){
             	//$scope.plates has all the plates
-            	//find the one we want
+            	//find the one we want as specified by editingPlateId
             	var fullPlateObj = $filter('filter')($scope.plates, {
 	                id: $scope.editingPlateId
 	            }, true);
@@ -275,15 +302,28 @@ angular.module('chembiohubAssayApp')
 	            //edit the cutom fields from the plate form
 	            fullPlateObj[0].custom_fields = $scope.editingPlate            	
             	
-                //this needs to be changed to use compound batch instead? Maybe not as long as the project key is correct
-
                 //Think I need to change this to use the CBHCompoundBatch method (like saving a plate now does)
             	
                 CBHCompoundBatch.patch(fullPlateObj[0]).then(function(data) {
-                    //do anything here?
-                    console.log("Saved successfully")
+                    //do anything here? Success message of some description
+                    $scope.plateSaved = true;
                 });
 
             }
+
+            /* pagination function */
+            $scope.pageChanged = function(newPage) {
+                $scope.plateSaved = false;
+                console.log("newPage", newPage);
+                var newParams = angular.copy($stateParams);
+                newParams.page = newPage;
+                newParams.compoundBatchesPerPage = $scope.batchesPerPage;
+                //newParams.limit = 5
+                //newParams.offset = (newPage - 1) * 5;
+                $stateParams = newParams
+                $scope.loadPlateMaps();
+                //do the search here
+
+            };
         }
     ]);

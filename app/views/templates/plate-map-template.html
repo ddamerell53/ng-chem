@@ -24,11 +24,7 @@
 				<div class="row"></div>
 		</div>
 	</div>
-	<div class="row">
-		<div class="col-xs-12">
-			<button class="btn btn-success" ng-click="savePlateFunction()">Save Plate</button>
-		</div>
-	</div>
+
 </div>
 <div class="col-lg-5">
 	<div ng-show="wellForm.row">
@@ -50,9 +46,16 @@
 					</button>
 				</div>
 			</div>
+			<div class="row pull-right mt">
+				<div class="col-xs-12">
+					<span ng-if="plateSaved" class="alert-success">Plate saved</span>&nbsp;
+					<button class="btn btn-success" ng-click="savePlateFunction()">Save Plate</button>
+				</div>
+			</div>
 
 		</form>
 
 	</div>
+
 	
 </div>
