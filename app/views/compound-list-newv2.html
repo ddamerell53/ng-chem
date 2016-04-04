@@ -8,7 +8,7 @@
              'one': '1 ' + cbh.skinning.result_alias,
               'other': '{} ' + cbh.skinning.result_alias + 's'}">
             </ng-pluralize>
-            <span ng-if="noData">&nbsp; &nbsp; - &nbsp; &nbsp;{{noData}}</span>
+            <span ng-if="noData">&nbsp; - &nbsp;{{noData}}</span>
         </h2>
             </div>
         </div>
@@ -64,7 +64,7 @@
                     </div> -->
                             <img src="images/ring.gif" style="margin-top:100px; margin-left: auto; margin-right:auto">
                         </div>
-                        <handsoncompoundtablev2 uncurated-headers="compoundBatches.uncuratedHeaders" sorts="compoundBatches.sorts" cbh="cbh" compounds="compoundBatches.data" , excluded="compoundBatches.excluded" warnings-filter="warningsFilter" redraw="compoundBatches.redraw" columns="compoundBatches.tabular_data_schema" searchform-schema="searchFormSchema" search-form="searchForm" show-blanks="compoundBatches.showBlanks" show-non-blanks="compoundBatches.showNonBlanks" messages="messages" column="column"></handsoncompoundtablev2>
+                        <handsoncompoundtablev2 uncurated-headers="compoundBatches.uncuratedHeaders" sorts="compoundBatches.sorts" cbh="cbh" compounds="compoundBatches.data"  excluded="compoundBatches.excluded" warnings-filter="warningsFilter" redraw="compoundBatches.redraw" columns="compoundBatches.tabular_data_schema" searchform-schema="searchFormSchema" search-form="searchForm" show-blanks="compoundBatches.showBlanks" show-non-blanks="compoundBatches.showNonBlanks" messages="messages" column="column"></handsoncompoundtablev2>
                     </div>
                     <!-- This table is only there to make sure that the ng-paginate directive works as the ng-paginate directive needs an ng-repeat-->
                     <table ng-show="">
@@ -87,3 +87,4 @@
             </div>
         </div>
     </div>
+</div>

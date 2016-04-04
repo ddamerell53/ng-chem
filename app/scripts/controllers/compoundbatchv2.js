@@ -17,7 +17,7 @@ angular.module('chembiohubAssayApp')
 
             $scope.resetCompoundList = function(){
                 //We need the base statename, not the modal statename
-
+                $scope.totalCompoundBatches = 0;
                 var stateName = $state.current.name.replace(".record", "")
                 $scope.cbh.tabular_data_schema = skinConfig.objects[0].get_filtered_table_schema(stateName, $scope.cbh.selected_projects);
 
@@ -30,11 +30,33 @@ angular.module('chembiohubAssayApp')
 
             $scope.$on("chemicalSearch", function(event ){
                 var data = skinConfig.objects[0].chemicalSearch
+                data.id = undefined;
                 chemicalSearch.save(data, function(data){
                     skinConfig.objects[0].chemicalSearch = data;
                     $rootScope.$broadcast("chemicalSearchReady");
                 });
-            })
+            });
+
+            $scope.$on("removeStructureSearch", function(){
+                var qt = angular.copy(skinConfig.objects[0].chemicalSearch.query_type);
+                skinConfig.objects[0].chemicalSearch.molfile = "";
+                skinConfig.objects[0].chemicalSearch.filter_is_applied = false;
+                skinConfig.objects[0].chemicalSearch.inprogress = false;
+                skinConfig.objects[0].chemicalSearch.smiles = "";
+                skinConfig.objects[0].chemicalSearch.id = undefined;
+                skinConfig.objects[0].chemicalSearch.image = undefined;
+                var params = $stateParams;
+                params.chemical_search_id=undefined;
+                $scope.cbh.changeSearchParams(params, true);
+
+                
+                $scope.$broadcast("chemicalSearchReady");
+                $rootScope.$broadcast("setMolecule");
+                    
+                    
+           
+                
+            });
 
             $scope.$on("chemicalFilterApplied",function( event, args){
                     var params = SearchUrlParamsV2.generate_chemical_params($stateParams);
@@ -524,7 +546,10 @@ angular.module('chembiohubAssayApp')
                             $scope.imageCallback();
                         } else {
                             $scope.imageCallback();
-                            $scope.noData = "No Compounds Found. To add compounds use the link above.";
+                            $scope.noData = "No " + skinConfig.objects[0].result_alias + " found.";
+                            if (!$scope.editModeUnreachable()){
+                                $scope.noData += " To add " + skinConfig.objects[0].result_alias + " click the links below."
+                            }
                            
                         }
                         if (angular.isDefined($stateParams.showBlanks)) {
@@ -619,7 +644,7 @@ angular.module('chembiohubAssayApp')
 
             }
             $scope.editModeUnreachable = function() {
-                if($stateParams.archived){
+                if($stateParams.archived == true && !angular.isUndefined($stateParams.archived)){
                     //You can't edit archived items except to
                     //un archive them
                     return true;

@@ -24,7 +24,9 @@ angular.module('chembiohubAssayApp')
                     $scope.idToClone = $scope.clonedMol.id;
                  }else{
                     $scope.idToClone = null;
+                    console.log($scope.mol)
                  }
+
 
 
 
@@ -150,7 +152,6 @@ angular.module('chembiohubAssayApp')
             $scope.doArchiveItem = false;
 
             $scope.validateOtherFormData = function(myForm){
-                console.log('doValidation being called', myForm)
                 $scope.errormess = "";
                 //this step is necessary to ensure that required fields have data
                 //and for validation check on the form as a whole to fail if required fields are missing
@@ -171,6 +172,7 @@ angular.module('chembiohubAssayApp')
 
             $scope.saveTemporaryCompoundData = function(){
                 $scope.currentlyLoading = true;
+                $scope.dataset.config.customFields = $scope.mol.customFields;
                 var callback = function(){
 
                     $scope.cbh.justAdded = true;
@@ -248,12 +250,11 @@ angular.module('chembiohubAssayApp')
             };
             $scope.removeSupplemetaryField = function(removeid){
             	//pop item with this ID from supplementary fields
-            	console.log(removeid);
 
             	var itemToRemove = $filter('filter')($scope.mol.supplementaryFields, {id: removeid}, true);
             	$scope.mol.supplementaryFields.splice( $scope.mol.supplementaryFields.indexOf(itemToRemove[0]), 1 );
             }
-            $scope.myschema = $scope.projectWithCustomFieldData.schemaform.schema;
+            $scope.myschema = angular.copy($scope.projectWithCustomFieldData.schemaform.schema);
 
 
     }]);

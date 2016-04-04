@@ -72,7 +72,20 @@
 		<ul class="list-inline">
 			
 			<!-- need this to be able to launch the filter window too. Just use broadcast? -->
-            
+            <li class="breadcrumb" ng-if="chemicalfilter" >
+                
+                <p class="nexa">
+                    <button type="button" class="close pull-right" aria-label="Close" ng-click="removeStructureSearch()"><span aria-hidden="true">&times;</span></button>
+                    <span class="glyphicon glyphicon-filter pull-right" ></span>
+                    <span class="bcname" ng-click="filterClicked(structureCol)">Structure Search</span><br>
+                    <span class="bcname" ng-click="filterClicked(structureCol)" style="font-size:0.8em; color:#aaa;">{{queryName}}</span>
+                    
+                    <img ng-if="chemicalfilter.image" ng-src="data:image/png;base64,{{chemicalfilter.image}}"></img>
+
+                    
+                </p>
+
+            </li>
 			<li class="breadcrumb" ng-repeat="bc in filter_objects" >
 				
 				<p class="nexa">
@@ -85,7 +98,7 @@
 				</p>
 
 			</li>
-			<li ng-if="!filter_objects || filter_objects.length == 0">
+			<li ng-if="!chemicalfilter && (!filter_objects || filter_objects.length == 0 )">
 				<small>No filters</small>
 			</li>
 

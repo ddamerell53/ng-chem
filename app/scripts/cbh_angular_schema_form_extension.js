@@ -25,8 +25,14 @@ function mergeKeyArrays(left, right)
     var result = [];
  
     while (left.length && right.length) {
-        if (left[0].key.toLowerCase() <= right[0].key.toLowerCase()) {
+        if (left[0].key.toLowerCase() < right[0].key.toLowerCase()) {
             result.push(left.shift());
+        }else if(left[0].key.toLowerCase() == right[0].key.toLowerCase()){
+            //If the keys are equal then only include one of the two keys
+            
+            result.push(left.shift());
+            //Remove the item from the right array without 
+            right.shift();
         } else {
             result.push(right.shift());
         }
@@ -77,7 +83,8 @@ angular.module('schemaForm').config(
 
 
 angular.module('schemaForm')
-  .controller('filtereddropdownController', function ($scope, $rootScope, $timeout, $filter) {
+  .controller('filtereddropdownController', 
+    function ($scope, $rootScope, $timeout, $filter) {
     $scope.loading = true;
     $scope.opened = function(key, autoComp){
          $rootScope.$broadcast($scope.form.options.fetchDataEventName, {'key': key, 'autocomplete' : autoComp});
@@ -116,20 +123,24 @@ angular.module('schemaForm')
               if($scope.autoComp){
                 var autoCompleteExistsOnBackend = false;
                 angular.forEach($scope.items, function(item){
-                    if(item.key.toLowerCase() == $scope.autoComp){
+                    if(item.key.toLowerCase() == $scope.autoComp.toLowerCase()){
                       autoCompleteExistsOnBackend = true;
                     }
                 });
                 if(autoCompleteExistsOnBackend){
                   $scope.autoCompNotInList = undefined;
                 }else{
-                  $scope.autoCompNotInList = {"key" : $scope.autoComp, doc_count: 0};
+                  if($scope.form.options.tagging){
+                    $scope.autoCompNotInList = {"key" : $scope.autoComp, doc_count: 0};
+                  }else{
+                    $scope.autoCompNotInList = undefined;
+                  }
                 }
               }else{
                 $scope.autoCompNotInList = undefined;
               }
-              
-              $scope.numberItemsMissing = autocompletedata.unique_count - autocompletedata.items.length;
+              //Unique count counts blanks but the blank item is removed before rendering
+              $scope.numberItemsMissing = autocompletedata.unique_count - autocompletedata.items.length - 1;
             }else{
               //The user must have changed the autocomplete in between times
             }

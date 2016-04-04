@@ -42,7 +42,7 @@
                 <div class="col-sm-6 ">
                     <div class="row">
                         <div class="col-xs-12" ng-if="myschema.properties | notEmpty">
-                            <h2 class="blue">Project Fields<br><small>Add data specific to this project here. This data WILL be searchable within the ChemBio Hub Platform.<br>If you make any changes to these fields after clicking Validate, you will have to click Validate again for these changes to be submitted.</small> </h2>
+                            <h2 class="blue">Project Fields<br><small>Add data specific to this project here. This data WILL be searchable within the ChemBio Hub Platform.</small> </h2>
                             <div class="col-xs-12">
                                 <div class=" form-group" sf-schema="myschema" sf-form="myform" sf-model="mol.customFields"></div>
                             </div> 
@@ -82,14 +82,14 @@
               <div class="row mt">
                     <div class="col-xs-12">
                         <div class="pull-right">
-                            <button ng-show="mol.molecule == ''" disabled type="submit" class="btn btn-lg btn-primary "><span class="glyphicon glyphicon-ok"></span> Validate compound</button>
-                            <button ng-show="mol.molecule != ''" ng-click="validateDrawn()" type="submit" class="btn btn-lg btn-primary "><span class="glyphicon glyphicon-ok"></span> Validate compound</button>
-                            <!-- <button ng-show="idToClone && mol.molecule != '' && dataReady && dataset.config.errors.length == 0" ng-click="saveTemporaryCompoundData(true)" type="submit" class="btn btn-lg btn-success "><span class="glyphicon glyphicon-ok"></span> Save compound and archive cloned compound</button> -->
-                            <button type='submit' ng-show="idToClone && mol.molecule != '' && dataReady && dataset.config.errors.length == 0" value="Submit" class="btn btn-lg btn-primary" form="myForm"><span class="glyphicon glyphicon-share" ng-click="doArchiveItem = true"></span><span class="glyphicon glyphicon-ok"></span>Save compound and archive cloned compound</button>
-                            <!-- <button ng-show="mol.molecule != '' && dataReady && dataset.config.errors.length == 0" ng-click="saveTemporaryCompoundData()" type="submit" class="btn btn-lg btn-success "><span class="glyphicon glyphicon-ok"></span> Save compound</button> -->
-                            <button type='submit' ng-show="mol.molecule != '' && dataReady && dataset.config.errors.length == 0" value="Submit" class="btn btn-lg btn-success" form="myForm"><span class="glyphicon glyphicon-share" ng-click="doArchiveItem = false"></span><span class="glyphicon glyphicon-ok"></span>Save compound</button>
+                            <button type="button" ng-show="mol.molecule == ''" disabled class="btn btn-lg btn-primary "><span class="glyphicon glyphicon-ok"></span> Validate compound</button>
+                            <button type="button"  ng-show="mol.molecule != '' && ! dataReady" ng-click="validateDrawn()" class="btn btn-lg btn-primary "><span class="glyphicon glyphicon-ok"></span> Validate compound</button>
                             
-                            <button type="cancel" ng-click="revert()" class="btn btn-lg btn-danger"><span class="glyphicon glyphicon-remove"></span> {{(idToClone ? 'Revert to cloned' : 'Clear form')}}</button>
+                            <button  ng-show="idToClone && mol.molecule != '' && dataReady && dataset.config.errors.length == 0" value="Submit" class="btn btn-lg btn-primary" ><span class="glyphicon glyphicon-share" ng-click="doArchiveItem = true"></span><span class="glyphicon glyphicon-ok"></span>Save compound and archive cloned compound</button>
+                          
+                            <button ng-show="mol.molecule != '' && dataReady && dataset.config.errors.length == 0"  class="btn btn-lg btn-success" ><span class="glyphicon glyphicon-share" ng-click="doArchiveItem = false"></span><span class="glyphicon glyphicon-ok"></span>Save compound</button>
+                            
+                            <button type="button" ng-click="revert()" class="btn btn-lg btn-danger"><span class="glyphicon glyphicon-remove"></span> {{(idToClone ? 'Revert to cloned' : 'Clear form')}}</button>
                         </div>
                     </div>
                 </div>
