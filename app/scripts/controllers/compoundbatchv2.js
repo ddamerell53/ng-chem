@@ -543,7 +543,10 @@ angular.module('chembiohubAssayApp')
                             $scope.imageCallback();
                         } else {
                             $scope.imageCallback();
-                            $scope.noData = "No Compounds Found. To add compounds use the link above.";
+                            $scope.noData = "No " + skinConfig.objects[0].result_alias + " found.";
+                            if (!$scope.editModeUnreachable()){
+                                $scope.noData += " To add " + skinConfig.objects[0].result_alias + " click the links below."
+                            }
                            
                         }
                         if (angular.isDefined($stateParams.showBlanks)) {
@@ -638,7 +641,7 @@ angular.module('chembiohubAssayApp')
 
             }
             $scope.editModeUnreachable = function() {
-                if($stateParams.archived){
+                if($stateParams.archived == true && !angular.isUndefined($stateParams.archived)){
                     //You can't edit archived items except to
                     //un archive them
                     return true;

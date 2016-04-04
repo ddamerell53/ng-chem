@@ -68,7 +68,7 @@
                         <dir-pagination-controls on-page-change="pageChanged(newPageNumber)" max-size="5">
                         </dir-pagination-controls>
                 </div>
-                <div ng-if="cbh.baseDownloadUrl" class="col-xs-5 "> 
+                <div ng-if="cbh.baseDownloadUrl" ng-if="cbh.statename!='cbh.projects.project.addcompounds'" class="col-xs-5 "> 
                     <div class="{{dropclass}}  " >
                        <div ng-include="'views/templates/download-buttons.html'"></div>
                     </div>
