@@ -19,7 +19,7 @@ angular.module('chembiohubAssayApp')
               var setForms = function(){
                  $scope.projectForm = [
                   {"key":"name",
-                    "htmlClass": "col-sm-5",
+                    "htmlClass": "col-sm-4",
                     "disableSuccessState":true,
                     "title": "Project Name",
                     "required": true,
@@ -34,12 +34,19 @@ angular.module('chembiohubAssayApp')
                     "title": "Project Type",
                     "type": "radiobuttons",
                     "titleMap": projectTypes,
-                    "htmlClass": "col-sm-5",
+                    "htmlClass": "col-sm-4",
                     "onChange": "updatedProjectType()",
                     "disableSuccessState":true,
                     "feedback": false
 
                 },
+                {"key":"project_counter_start",
+                    "htmlClass": "col-sm-4",
+                    "disableSuccessState":true,
+                    "title": "Project Counter Starts At",
+                    "required": true,
+                    "feedback": false,
+                  },
                 {
                     "key": "custom_field_config.project_data_fields",
                     "title": "Project Data Fields",
@@ -151,6 +158,11 @@ angular.module('chembiohubAssayApp')
                                                 }),
                                               "default": default_project_type,
 
+                                            },
+                                            "project_counter_start":{
+                                                "title" : "Project Counter Starts At",
+                                                "type": "integer",
+                                                "default" : 1,
                                             },
 
                                           "custom_field_config":
