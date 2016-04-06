@@ -23,7 +23,7 @@
                 <ul class="dropdown-menu" style="min-width:300px;max-width:300px;"  style="padding-top:5px; padding-bottom:5px; border-bottom:0;" >
                   
                      <li ng-show="items.length == 0 && loading == true" class="col-xs-12 pick-list-item">Loading...</li>
-                     <li ng-show="numberItemsMissing < 2" class="col-xs-12 pick-list-item">Click on an item to select</li> 
+                     <li ng-show="numberItemsMissing==0" class="col-xs-12 pick-list-item">Click on an item to select</li> 
                      <li class="col-xs-12" ng-if="numberItemsMissing > 1">Not all items shown - search</li>
                      <li ><div class="col-xs-12"><input  placeholder="{{form.options.tagging ? 'Find a tag or create one' : 'Find a tag'}}" type="text" ng-model="autoComp"></input></div></li>
                      

@@ -26,14 +26,20 @@ function mergeKeyArrays(left, right)
  
     while (left.length && right.length) {
         if (left[0].key.toLowerCase() < right[0].key.toLowerCase()) {
+            console.log(left[0]);
+            console.log(right[0]);
             result.push(left.shift());
-        }else if(left[0].key.toLowerCase() == right[0].key.toLowerCase()){
+
+        }else if(left[0].key.toLowerCase() === right[0].key.toLowerCase()){
             //If the keys are equal then only include one of the two keys
-            
+            console.log("equal")
+
             result.push(left.shift());
             //Remove the item from the right array without 
             right.shift();
         } else {
+            console.log(left[0]);
+            console.log(right[0]);
             result.push(right.shift());
         }
     }
@@ -110,6 +116,8 @@ angular.module('schemaForm')
           //The data is not out of date - if the user types quickly we are pulling back
           //results for every letter typed so we have to be sure the data is still valid
           //We could already be waiting for the next result!
+              $scope.numberItemsMissing = autocompletedata.unique_count - autocompletedata.items.length ;
+
               $scope.loading = false;
               var sortedStaticItems = [];
               if($scope.form.options.staticItems){
@@ -119,6 +127,8 @@ angular.module('schemaForm')
               var autocompleteStatic = $filter('filter')(sortedStaticItems, {key: $scope.autoComp})
               //Merge together the static items from the schema with the dynamic items from the back end
               //This gives a total list of items as desired
+              console.log(autocompleteStatic)
+              console.log(autocompletedata.items)
               $scope.items = mergeKeyArrays(autocompletedata.items, autocompleteStatic) ;
               if($scope.autoComp){
                 var autoCompleteExistsOnBackend = false;
@@ -140,7 +150,7 @@ angular.module('schemaForm')
                 $scope.autoCompNotInList = undefined;
               }
               //Unique count counts blanks but the blank item is removed before rendering
-              $scope.numberItemsMissing = autocompletedata.unique_count - autocompletedata.items.length - 1;
+
             }else{
               //The user must have changed the autocomplete in between times
             }
