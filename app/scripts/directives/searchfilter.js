@@ -41,16 +41,22 @@ angular.module('chembiohubAssayApp')
           }
            $scope.chemicalUpdated = function(modelValue, form){
                 $scope.chemicalfilters.inprogress = true;
+                console.log("calling up")
                 $timeout(function(){
                   $rootScope.$broadcast("chemicalSearch")
                 });
             }
-
+            $scope.fetching = false;
             $scope.$on("moleculeChanged", function(){
                 $scope.chemicalfilters.inprogress = true;
-                $timeout(function(){
-                  $rootScope.$broadcast("chemicalSearch")
-                });
+                if(!$scope.fetching){
+                  $scope.fetching = true;
+                  $timeout(function(){
+                    $scope.fetching = false;
+                    $rootScope.$broadcast("chemicalSearch")
+                  }, 50);
+                }
+                
                 
             });
 
