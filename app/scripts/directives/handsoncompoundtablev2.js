@@ -65,14 +65,9 @@ angular.module('chembiohubAssayApp')
                     col.TH = TH;
                     Handsontable.Dom.addEvent(button, 'click', function(event) {
                         //Cancel any existing showfilters flags so we dont get two highlighted columns
-                        
-                       
-                           
+
                         scope.cbh.sendToSearch(col); 
-                            
-                            
-                        
-                        
+
                         // 
                         angular.forEach($(TH).siblings(), function(el){
                             $timeout(function(){
@@ -169,17 +164,6 @@ angular.module('chembiohubAssayApp')
                     var cNames = [];
                     var projects = scope.cbh.projects.objects;
                     var showCompounds = false;
-                   
-
-
-                    
-
-                   
-
-
-
-
-
                     var columnHeaders = allCols.map(function(c) {
                         return renderers.getColumnLabel(c, scope);
                     });
@@ -307,18 +291,9 @@ angular.module('chembiohubAssayApp')
 
                     elem.wrap("<div id='myid' ></div>");
 
+                    $('.btn-toggle').dropdown();
+                    scope.elem = $("#myid");
 
-
-
-
-
-
-                        $('.btn-toggle').dropdown();
-                        scope.elem = $("#myid");
-
-
-
-                 
 
                     scope.hot1 = hot1;
                 	
@@ -339,11 +314,6 @@ angular.module('chembiohubAssayApp')
                 scope.$on("updateListView", function() {
                     redraw();
                 });
-
-                
-               
-                
-
 
 
             },

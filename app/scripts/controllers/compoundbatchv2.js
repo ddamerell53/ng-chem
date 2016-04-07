@@ -499,17 +499,7 @@ angular.module('chembiohubAssayApp')
             var timeSearched;
 
             function getResultsPage(pageNumber, filters) {
-                 // angular.forEach($rootScope.projects, function(myproj, index) {
-                 //        if (myproj.project_key == $stateParams.project__project_key__in) {
-                 //            if (myproj.editor) {
-                 //                 $scope.cbh.projAddingTo = $scope.cbh.projects.objects[index];
-                 //                 $scope.cbh.projAddingTo.updateCustomFields();
-                 //            }
-                 //        }
-                 //    });
-                // $scope.cbh.includedProjectKeys = ($scope.cbh.searchForm.project__project_key__in.length > 0) ? $scope.cbh.searchForm.project__project_key__in : $scope.cbh.projects.objects.map(function(p) {
-                //     return p.project_key
-                // });
+
                 SearchUrlParamsV2.setBaseDownloadUrl($scope.cbh, $stateParams);
                 $scope.resetCompoundList();
                 if($scope.cbh.selected_projects.length == 1){

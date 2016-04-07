@@ -54,7 +54,6 @@ angular.module('chembiohubAssayApp')
             angular.forEach(projectList.objects, function(myproj) {
                 if (myproj.project_key === projid) {
                     $scope.projectWithCustomFieldData = myproj;
-                    $scope.projectWithCustomFieldData.updateCustomFields();
                     $scope.projectObj = myproj;
                 }
             });

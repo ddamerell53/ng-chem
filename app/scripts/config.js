@@ -123,7 +123,7 @@ var skinReq = $http({  method: "get",
 
 var projReq = $http({  method: "get",
                     url: configuration.cbh_projects.list_endpoint,
-                    params: {"schemaform": true, "limit":1000, "project_type__saved_search_project_type": false, }, });
+                    params: {"do_cache": true, "limit":1000, "project_type__saved_search_project_type": false, }, });
 
 var userReq = $http({  method: "get",
                     url: configuration.users.list_endpoint,
@@ -135,6 +135,7 @@ $q.all([skinReq, projReq, userReq]).then(function(data){
   var skinObj = data[0];
   var projData = data[1];
   var userData = data[2];
+  skinObj.data.objects[0].tabular_data_schema = angular.copy(projData.data.tabular_data_schema);
   skinObj.data.objects[0].refresh_tabular_schema = function(){
     skinObj.data.objects[0].tabular_data_schema.copied_schema = angular.copy(skinObj.data.objects[0].tabular_data_schema.schema);
   }
@@ -198,25 +199,6 @@ var login = null;
           "schema" : schemaGetter(project.custom_field_config.project_data_fields),
           "viewForm" : viewFormGetter(project.custom_field_config.project_data_fields)
         }
-        project.updateCustomFields = function(){
-          
-          $timeout(function(){
-            project.recentlyUpdated = false;
-          }, 1000);
-          if (!project.recentlyUpdated){
-            project.recentlyUpdated = true;
-            angular.forEach(project.schemaform.form, function(item){
-            if(angular.isDefined(item.options)){
-              if (angular.isDefined(item.options.async)){
-                  item.options.async.call({}, item.options, "").then(function(data){
-                      project.schemaform.schema.properties[item.key].items = data.data;
-                  });
-              }
-            }
-          });
-          }
-        }
-        // project.updateCustomFields();
         
     });
       

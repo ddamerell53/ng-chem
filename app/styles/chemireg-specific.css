@@ -23,7 +23,11 @@ ul.pagination li a {
 }
 
 
+td.lightgreybackground {
+  background-color : #ededed 
+;
 
+}
 .ui-sortable {
  
     background-color: #ccc;

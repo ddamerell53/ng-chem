@@ -73,6 +73,14 @@ angular.module('chembiohubAssayApp')
                 return td
               };
 
+          var  emptyCustomFieldRenderer = function(instance, td, row, col, prop, value, cellProperties) {
+               
+                td.innerHTML = "";
+                td.title = "This field is not configured for this project or is restricted.";
+                td.className = "htCenter htMiddle lightgreybackground";
+                return td;
+
+              }
 
         var linkrend = function(instance, td, row, col, prop, value, cellProperties) {
                var escaped = Handsontable.helper.stringify(value);
@@ -317,14 +325,18 @@ angular.module('chembiohubAssayApp')
               customFieldRenderer: function(instance, td, row, col, prop, value, cellProperties) {
                 /* differentiate different renderer type for custom field */
                 var mol = instance.getSourceDataAtRow(row);
+                var projects = scope.cbh.projects.objects;
+
                 if(cellProperties.project_specific_schema[mol.project]){
                   var projSpecificRenderer = cellProperties.project_specific_schema[mol.project].renderer;
 
                   if(projSpecificRenderer){
                     return projSpecificRenderer(instance, td, row, col, prop, value, cellProperties);
+                  }else{
+                    return defaultCustomFieldRenderer(instance, td, row, col, prop, value, cellProperties);
                   }
                 }
-                return defaultCustomFieldRenderer(instance, td, row, col, prop, value, cellProperties);
+                return emptyCustomFieldRenderer(instance, td, row, col, prop, value, cellProperties);
 
                 
               },
