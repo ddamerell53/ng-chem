@@ -149,7 +149,9 @@ $q.all([skinReq, projReq, userReq]).then(function(data){
   };
 
 skinObj.data.objects[0].get_filtered_table_schema = function(name, selected_projects){
-   var project_uris =  selected_projects.map(function(p){return p.resource_uri;});
+
+   var project_ids =  selected_projects.map(function(p){return p.id;});
+    console.log("proj", project_ids)
    var schema = skinObj.data.objects[0].get_table_schema_by_name(name);
    var filtered = [];
    angular.forEach(schema, function(field){
@@ -157,10 +159,11 @@ skinObj.data.objects[0].get_filtered_table_schema = function(name, selected_proj
       var push = false;
       //check that this field is used by one of the projects we have filtered down to
       if(field.project_specific_schema){
-          angular.forEach(field.projects, function(puri){
-            if(project_uris.indexOf(puri)> -1){
+          angular.forEach(field.project_specific_schema, function(value, pid){
+            console.log(pid)
+            if(project_ids.indexOf(parseInt(pid)) > -1){
               push = true
-            }else if (project_uris.length == 0){
+            }else if (project_ids.length == 0){
               //Assume all projects if none selected
               push = true
             }

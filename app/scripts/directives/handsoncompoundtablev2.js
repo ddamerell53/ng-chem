@@ -112,7 +112,7 @@ angular.module('chembiohubAssayApp')
 
                         }
                         if(angular.isDefined(c.project_specific_schema)){
-                            angular.forEach(c.project_specific_schema, function( schem, projUri){
+                            angular.forEach(c.project_specific_schema, function( schem, pid){
                                 if(angular.isDefined(rend[schem.renderer_named])){
                                     schem.renderer = rend[schem.renderer_named]
                                 }
