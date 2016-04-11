@@ -7,7 +7,7 @@
  * # buttonInput
  */
 angular.module('chembiohubAssayApp')
-  .directive('buttonInput', function () {
+  .directive('buttonInput', function ($timeout) {
     return {
       template: '<bootstrap-decorator>\
                     <div class="form-group " ng-class="" ng-init="">\
@@ -23,7 +23,9 @@ angular.module('chembiohubAssayApp')
       restrict: 'E',
       link: function postLink(scope, element, attrs) {
         //element.html('this is the chemsvg directive');
-        scope.copyable = angular.copy(scope.copyModel)
+        
+        scope.copyable = angular.copy(scope.copyModel);
+
       
       },
        controller: ['$scope', function($scope) {
