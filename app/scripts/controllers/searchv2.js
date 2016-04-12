@@ -1,14 +1,12 @@
 'use strict';
 
 /**
- * @ngdoc function
- * @name chembiohubAssayApp.controller:SearchCtrl
+ * @ngdoc controller
+ * @name chembiohubAssayApp.controller:Searchv2Ctrl
  * @description
- * # SearchCtrl
- * Controller of the chembiohubAssayApp
+ * # Searchv2Ctrl
+ * This controller is responsible for fetching data to construct the search form for ChemiReg. It initialises the search and handles all of the search form changes - calls to update the results are broadcast around the application. It also handles the saved search functionality within the search page.
  */
-
-
 angular.module('chembiohubAssayApp')
     .controller('Searchv2Ctrl', ['$scope', '$http', '$rootScope', '$filter', '$stateParams', '$location', '$state', '$timeout', 'projectFactory', 'gridconfig', 'CBHCompoundBatch', 'urlConfig', 'SearchUrlParamsV2', '$modal', 'loggedInUser', 'ProjectTypeFactory', 'SavedSearchFactory', 
         function($scope, $http, $rootScope, $filter, $stateParams, $location, $state, $timeout, projectFactory, gridconfig, CBHCompoundBatch, urlConfig, SearchUrlParamsV2, $modal, loggedInUser, ProjectTypeFactory, SavedSearchFactory) {
@@ -17,12 +15,19 @@ angular.module('chembiohubAssayApp')
 
             $scope.cbh.appName = "ChemiReg";
             $scope.searchFormSchema = angular.copy($scope.cbh.projects.searchform);
-           $scope.cbh.statename = $state.current.name;
+            $scope.cbh.statename = $state.current.name;
             
            
             $scope.projectObj = {};
 
-
+            /**
+             * @ngdoc method
+             * @name $scope.cancel
+             * @methodOf chembiohubAssayApp.controller:Searchv2Ctrl
+             * @description
+             * Cancel the current search and reset the form
+             *
+             */
             $scope.cancel = function() {
                 $state.params = {};
                 $stateParams = {};
@@ -42,10 +47,16 @@ angular.module('chembiohubAssayApp')
                 });
             }
 
-            
-       
-
             /* SAVED SEARCH STUFF */
+            /**
+             * @ngdoc method
+             * @name $scope.hasSearchBeenPerformed
+             * @methodOf chembiohubAssayApp.controller:Searchv2Ctrl
+             * @description
+             * 
+             * 
+             * @returns {boolean} true/false are any current search parameters in the URL
+             */
             $scope.hasSearchBeenPerformed = function(){
                 if($state.params == {}){
                     return false;
@@ -53,6 +64,14 @@ angular.module('chembiohubAssayApp')
                 return true;
             }
 
+            /**
+             * @ngdoc method
+             * @name $scope.openNewSavedSearchPopup
+             * @methodOf chembiohubAssayApp.controller:Searchv2Ctrl
+             * @description
+             * Opens a ui-bootstrap modal window containing the form for saving a new saved search.
+             * 
+             */
             $scope.openNewSavedSearchPopup = function(){
                 //get the current search
                 //setup a model for the entry form
@@ -102,6 +121,14 @@ angular.module('chembiohubAssayApp')
                 });
             }
 
+            /**
+             * @ngdoc method
+             * @name $scope.openMySavedSearchPopup
+             * @methodOf chembiohubAssayApp.controller:Searchv2Ctrl
+             * @description
+             * Opens a ui-bootstrap modal window containing the current user saved searches
+             * 
+             */
             $scope.openMySavedSearchPopup = function(){
                 //Test data looks like:
                 $scope.links = [];
@@ -147,6 +174,17 @@ angular.module('chembiohubAssayApp')
 
             }
 
+            /**
+             * @ngdoc method
+             * @name $scope.saveSearch
+             * @methodOf chembiohubAssayApp.controller:Searchv2Ctrl
+             * @description
+             * Mechanism for creating a new SavedSearch project and batch for storing information.
+             * Fetches a new project of type saved_search_project_type, generates 2 searches to save:
+             * - a capped search as a snapshot of how the search returns at the present moment;
+             * - a reusable ssearch which just containss the parameters ssearcchedd for, which will show updated results if used in the future 
+             * 
+             */
             $scope.saveSearch = function(){
                 //$scope.errormess = ""
                 //from the project type service get saved_search_project_template (specify project_type.saved_search == true)
