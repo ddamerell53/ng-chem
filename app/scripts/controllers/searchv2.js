@@ -64,9 +64,6 @@ angular.module('chembiohubAssayApp')
                     newSavedSearchModel: function () {
                       return $scope.newSavedSearchModel;
                     },
-                    searchFormSchema: function(){
-                        return $scope.searchFormSchema;
-                    },
                     saveSearch: function(){
                         return $scope.saveSearch;
                     },
@@ -75,9 +72,9 @@ angular.module('chembiohubAssayApp')
                     }
 
                   }, 
-                  controller: function($scope, $modalInstance, newSavedSearchModel, searchFormSchema, ProjectTypeFactory, projectFactory, SavedSearchFactory, saveSearch) {
+                  controller: function($scope, $modalInstance, newSavedSearchModel,  ProjectTypeFactory, projectFactory, SavedSearchFactory, saveSearch, skinConfig) {
                     $scope.newSavedSearchModel = newSavedSearchModel;
-                    $scope.searchFormSchema = searchFormSchema;
+                    $scope.savedSearchSchemaForm = skinConfig.objects[0].savedsearch_schemaform;
 
                     $scope.saveSearch = saveSearch;
                     
@@ -165,6 +162,7 @@ angular.module('chembiohubAssayApp')
                     ProjectTypeFactory.get({"saved_search_project_type": true}, function(data){
                       
                       $scope.savedSearchType = data.objects[0];
+                      console.log($scope.savedSearchType);
                       
                       var d = new Date();
                       $scope.savedSearchType.project_template.name = $scope.newSavedSearchModel.alias + d.getTime().toString();

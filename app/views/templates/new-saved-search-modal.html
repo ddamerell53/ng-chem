@@ -10,7 +10,7 @@
                     <!-- form here -->
                     
                     <form novalidate name="myForm" id="myForm" role="form"  style="width:95%; display: table; margin: 0 auto;" ng-submit="doValidation(myForm)">
-                        <div class="form-group"  sf-schema="searchFormSchema.savesearch_schema" sf-form="searchFormSchema.savesearch_form" sf-model="newSavedSearchModel">
+                        <div class="form-group"  sf-schema="savedSearchSchemaForm.schema" sf-form="savedSearchSchemaForm.form" sf-model="newSavedSearchModel">
                         </div>
                         <div ng-if="isIE" class="pull-right">
                             <!-- ngSubmit outside the form object does not work on IE therefore put it inside the form-->

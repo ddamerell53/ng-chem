@@ -397,6 +397,7 @@ $urlRouterProvider.when('', '/projects/list');
             mol: ['CBHCompoundBatch', '$stateParams', '$timeout', function(CBHCompoundBatch, $stateParams, $timeout) {
               if($stateParams.idToClone){
                 return CBHCompoundBatch.get( $stateParams.idToClone ).then(function(data){
+                    data.customFields = data.custom_fields;
                     return data
                   
                 });

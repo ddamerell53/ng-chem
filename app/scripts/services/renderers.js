@@ -327,8 +327,8 @@ angular.module('chembiohubAssayApp')
                 var mol = instance.getSourceDataAtRow(row);
                 var projects = scope.cbh.projects.objects;
 
-                if(cellProperties.project_specific_schema[mol.project]){
-                  var projSpecificRenderer = cellProperties.project_specific_schema[mol.project].renderer;
+                if(cellProperties.project_specific_schema[mol.projectfull.id]){
+                  var projSpecificRenderer = cellProperties.project_specific_schema[mol.projectfull.id].renderer;
 
                   if(projSpecificRenderer){
                     return projSpecificRenderer(instance, td, row, col, prop, value, cellProperties);

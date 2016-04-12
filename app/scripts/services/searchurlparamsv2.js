@@ -99,6 +99,7 @@ angular.module('chembiohubAssayApp')
                 skinConfig.objects[0].chemicalSearch = data;
                 skinConfig.objects[0].chemicalSearch.pids = stateParams.pids;
                 $rootScope.$broadcast("chemicalFilterApplied");
+                $rootScope.$broadcast("searchParamsChanged");
               }, function(error){
 
               });
