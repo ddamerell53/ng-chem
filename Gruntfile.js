@@ -470,6 +470,21 @@ module.exports = function (grunt) {
         configFile: 'test/karma.conf.js',
         singleRun: true
       }
+    },
+    //api documentattion settings
+    ngdocs: {
+       options: {
+           dest: 'docs',
+           html5Mode: false,
+           scripts: [
+               'bower_components/angular/angular.js',
+               'bower_components/angular-animate/angular-animate.js'
+           ]
+       },
+       api: {
+           src: ['app/**/*.js', '!app/**/*-spec.js'],
+           title: 'Docs'
+       }
     }
   });
 
@@ -495,6 +510,8 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-connect-proxy');
 
   grunt.loadNpmTasks('grunt-angular-templates');
+
+  grunt.loadNpmTasks('grunt-ngdocs');
 
 
   grunt.registerTask('server', 'DEPRECATED TASK. Use the "serve" task instead', function (target) {
@@ -534,5 +551,9 @@ module.exports = function (grunt) {
     'newer:jshint',
     'test',
     'build'
+  ]);
+
+  grunt.registerTask('package', [
+    'ngdocs'
   ]);
 };

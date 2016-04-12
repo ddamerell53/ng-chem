@@ -4,7 +4,7 @@
  * @ngdoc function
  * @name chembiohubAssayApp.controller:AddcompoundsCtrl
  * @description
- * # AddcompoundsCtrl
+ * This controller is used to manage adding items to the system. It provides methods for the addition single page app and manages the flow of file upload, checking chemical data, storing temporary compound data (for editing via the system before final registration), sorting and filtering file content previews, reporting errors and warnings and submitting data to the server.
  * Controller of the chembiohubAssayApp
  */
 angular.module('chembiohubAssayApp')
