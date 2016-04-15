@@ -1,0 +1,38 @@
+<h1><code ng:non-bindable="">Searchv2Ctrl</code>
+<div><span class="hint">controller in module <code ng:non-bindable="">chembiohubAssayApp</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-searchv2ctrl-page"><h3 id="description_searchv2ctrl">Searchv2Ctrl</h3>
+<p>This controller is responsible for fetching data to construct the search form for ChemiReg. It initialises the search and handles all of the search form changes - calls to update the results are broadcast around the application. It also handles the saved search functionality within the search page.</p>
+</div></div>
+<div class="member method"><h2 id="methods">Methods</h2>
+<ul class="methods"><li><h3 id="methods_cancel">cancel()</h3>
+<div class="cancel"><div class="-scope-cancel-page"><p>Cancel the current search and reset the form</p>
+</div></div>
+</li>
+<li><h3 id="methods_hassearchbeenperformed">hasSearchBeenPerformed()</h3>
+<div class="hassearchbeenperformed"><h5 id="methods_hassearchbeenperformed_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-boolean">boolean</a></td><td><div class="-scope-hassearchbeenperformed-page"><p>true/false are any current search parameters in the URL</p>
+</div></td></tr></table></div>
+</li>
+<li><h3 id="methods_openmysavedsearchpopup">openMySavedSearchPopup()</h3>
+<div class="openmysavedsearchpopup"><div class="-scope-openmysavedsearchpopup-page"><p>Opens a ui-bootstrap modal window containing the current user saved searches</p>
+</div></div>
+</li>
+<li><h3 id="methods_opennewsavedsearchpopup">openNewSavedSearchPopup()</h3>
+<div class="opennewsavedsearchpopup"><div class="-scope-opennewsavedsearchpopup-page"><p>Opens a ui-bootstrap modal window containing the form for saving a new saved search.</p>
+</div></div>
+</li>
+<li><h3 id="methods_savesearch">saveSearch()</h3>
+<div class="savesearch"><div class="-scope-savesearch-page"><p>Mechanism for creating a new SavedSearch project and batch for storing information.
+Fetches a new project of type saved_search_project_type, generates 2 searches to save:</p>
+<ul>
+<li>a capped search as a snapshot of how the search returns at the present moment;</li>
+<li>a reusable ssearch which just containss the parameters ssearcchedd for, which will show updated results if used in the future </li>
+</ul>
+</div></div>
+</li>
+</ul>
+</div>
+</div>

@@ -6,6 +6,7 @@
  * @description
  * This controller is used to manage adding items to the system. It provides methods for the addition single page app and manages the flow of file upload, checking chemical data, storing temporary compound data (for editing via the system before final registration), sorting and filtering file content previews, reporting errors and warnings and submitting data to the server.
  * Controller of the chembiohubAssayApp
+ * This Controller is responsible for adding compound batches to the system in the bulk upload
  */
 angular.module('chembiohubAssayApp')
   .controller('AddCompoundsCtrl',['$scope', 
@@ -65,12 +66,29 @@ angular.module('chembiohubAssayApp')
         }
                 $scope.cbh.appName = "ChemiReg";
 
-
+        /**
+             * @ngdoc method
+             * @name $scope.setLoadingMessageHeight
+             * @methodOf chembiohubAssayApp.controller:AddCompoundsCtrl
+             * @description
+             * Set the position on the page of the loading message (ensuring it is always 200px from the top no matter where the user has scrolled to)
+             *
+             */
 
         $scope.setLoadingMessageHeight = function(){
             var scrollTop = $(window).scrollTop();
             $("#loading-message").css("top", (scrollTop +200) + "px")
         }
+
+        /**
+             * @ngdoc method
+             * @name $scope.saveTemporaryCompoundData
+             * @methodOf chembiohubAssayApp.controller:AddCompoundsCtrl
+             * @description
+             * Save all of the previewed compound batches and redirect the user to the search page
+             *
+             */
+
         $scope.saveTemporaryCompoundData = function(){
             $scope.setLoadingMessageHeight();
             $scope.currentlyLoading = true;
@@ -93,6 +111,15 @@ angular.module('chembiohubAssayApp')
         }
         $scope.cbh.statename = $state.current.name;
         console.log($state.current.name);
+
+        /**
+             * @ngdoc method
+             * @name $scope.cbh.saveChangesToTemporaryDataInController
+             * @methodOf chembiohubAssayApp.controller:AddCompoundsCtrl
+             * @description
+             * This function is called by the handsontable directive in order to save actions when a user fills down
+             *
+             */
         $scope.cbh.saveChangesToTemporaryDataInController = function(changes, sourceOfChange){
 
             if(changes && changes.length > 0){
@@ -115,7 +142,14 @@ angular.module('chembiohubAssayApp')
         }
 
 
-
+           /**
+             * @ngdoc method
+             * @name $scope.cbh.toggleWarningsFilter 
+             * @methodOf chembiohubAssayApp.controller:AddCompoundsCtrl
+             * @description
+             * Filter the previewed data based on whether it has a certain warning against it, changing the url without reloading
+             *
+             */
 
 
         $scope.cbh.toggleWarningsFilter = function(filterName){
@@ -139,6 +173,16 @@ angular.module('chembiohubAssayApp')
         }
 
 
+           /**
+             * @ngdoc method
+             * @name $scope.cbh.openStatusExplanation 
+             * @methodOf chembiohubAssayApp.controller:AddCompoundsCtrl
+             * @description
+             * Open a modal to explain how the statuses work against a particular uploaded molecule
+             *
+             */
+
+
         $scope.cbh.openStatusExplanation = function(){
           $scope.modalInstance = $modal.open({
             templateUrl: 'views/statuses.html',
@@ -151,7 +195,16 @@ angular.module('chembiohubAssayApp')
           });
         }
 
- 
+            /**
+             * @ngdoc method
+             * @name $scope.cbh.setMappedFieldInController 
+             * @methodOf chembiohubAssayApp.controller:AddCompoundsCtrl
+             * @description
+             *  Function is called when the user maps a particular field in the check boxes in the field mapping modal
+             *  Column data is re saved to the back end
+             *
+             */
+
         $scope.cbh.setMappedFieldInController = function(newFieldName, unCuratedFieldName){
             $scope.datasets[$scope.current_dataset_id].config.headers = $scope.compoundBatches.uncuratedHeaders;
             if ($scope.datasets[$scope.current_dataset_id].config.struccol == unCuratedFieldName && newFieldName== "SMILES for chemical structures"){
@@ -169,6 +222,16 @@ angular.module('chembiohubAssayApp')
             }
 
         };
+
+        /**
+             * @ngdoc method
+             * @name $scope.cancelFile
+             * @methodOf chembiohubAssayApp.controller:AddCompoundsCtrl
+             * @description
+             *  Cancel the current file and delete the dataset on the back end (although the file record itself is not removed)
+             *
+             */
+
 
         $scope.cancelFile = function(field) {
             var newParams = { projectKey: $stateParams.projectKey };
@@ -192,17 +255,49 @@ angular.module('chembiohubAssayApp')
                                                 "field_errors": 0,
                                                 "dupes": 0}}};
 
+
+        /**
+             * @ngdoc method
+             * @name $scope.setNull
+             * @methodOf chembiohubAssayApp.controller:AddCompoundsCtrl
+             * @description
+             *  reset the dataset id and rebuild the scope
+             *
+            */
+
+
         $scope.setNull = function(){
             $scope.current_dataset_id = "none";
             $scope.setup();
         }
 
 
-$scope.changeView = function(){
+
+        /**
+             * @ngdoc method
+             * @name $scope.changeView
+             * @methodOf chembiohubAssayApp.controller:AddCompoundsCtrl
+             * @description
+             *  deprecated - change to the galley view
+             *
+            */
+
+
+        $scope.changeView = function(){
                 $stateParams.viewType = $scope.listOrGallery.choice;
                 $state.params.viewType = $scope.listOrGallery.choice;
                 $location.search($state.params);
             }
+
+
+            /**
+             * @ngdoc method
+             * @name $scope.setup
+             * @methodOf chembiohubAssayApp.controller:AddCompoundsCtrl
+             * @description
+             *  reset the scope of the addcompounds page
+             *
+            */
 
         $scope.setup = function(){
             $scope.inputData = {inputstring : ""};
@@ -243,6 +338,17 @@ $scope.changeView = function(){
             
 
         }
+
+
+            /**
+             * @ngdoc method
+             * @name $scope.nullSorts
+             * @methodOf chembiohubAssayApp.controller:AddCompoundsCtrl
+             * @description
+             *  remove the sorts on the add compounds preview
+             *
+            */
+
         $scope.nullSorts = function(){
             $scope.compoundBatches.sorts =[];
              var newParams = angular.copy($stateParams);
@@ -260,6 +366,18 @@ $scope.changeView = function(){
 
         $scope.cbh.renderFilterLink = renderers.renderFilterLink;
         $scope.cbh.fileextension = "";
+
+
+
+            /**
+             * @ngdoc method
+             * @name $scope.cbh.addSort
+             * @methodOf chembiohubAssayApp.controller:AddCompoundsCtrl
+             * @description
+             *  Add a sort to the compound preview page
+             *
+            */
+
 
             $scope.cbh.addSort =  function(sortColumn, order){
                
@@ -303,6 +421,21 @@ $scope.changeView = function(){
 
 
         $scope.setNull();
+
+
+
+
+
+            /**
+             * @ngdoc method
+             * @name $scope.assignFile
+             * @methodOf chembiohubAssayApp.controller:AddCompoundsCtrl
+             * @description
+             *  The assignFile function is called on completion of an upload by flowjs.
+             *  The chembiohub backend provides a flowfile identifier
+             * This is added to a configuration object and set back again to the backend via the createMultipleBatch function
+            */
+
         $scope.assignFile = function(id, ext, file) {
 
             $scope.current_dataset_id = id;
@@ -332,6 +465,20 @@ $scope.changeView = function(){
             
         $scope.sketchMolfile={"molecule":{}};
                 $scope.molecule={"molfile":""};
+
+
+
+            /**
+             * @ngdoc method
+             * @name $scope.createMultiBatch
+             * @methodOf chembiohubAssayApp.controller:AddCompoundsCtrl
+             * @description
+             *  Sends the information about an uploaded file back to the backend in order to create a multiple batch object and to index the data from the file
+             * into elasticsearch. Once the data has been indexed then we change the URL to include the multiple batch ID that the user has just created
+             * This will enable the user to reload the page and to see the same data
+             * The initial request from the back end will bring back a list of the first page of items
+            */
+
 
         $scope.createMultiBatch = function(){
             $scope.setLoadingMessageHeight();
@@ -389,10 +536,17 @@ $scope.changeView = function(){
 
              }); 
         }
-        $scope.refreshCustFields = function(schema, options, search){
-            return $http.get(options.async.url + "?custom__field__startswith=" + search + "&custom_field=" + options.custom_field);
-        }
-       
+
+
+
+            /**
+             * @ngdoc method
+             * @name $scope.processSmilesData
+             * @methodOf chembiohubAssayApp.controller:AddCompoundsCtrl
+             * @description
+             *  Process the list of SMILES identifiers from the text box when the user presses the appropriate button
+            */
+
         $scope.processSmilesData = function(){
             $scope.current_dataset_id = $scope.inputData.inputstring;
             var conf =   {
@@ -416,6 +570,19 @@ $scope.changeView = function(){
 // the other controller
 
 //Make a function from all the scope setup items that need to change when the paging etc changes
+
+
+
+
+            /**
+             * @ngdoc method
+             * @name $scope.initialise
+             * @methodOf chembiohubAssayApp.controller:AddCompoundsCtrl
+             * @description
+             *  Tidy up and re-initialise the parts of the scope that rely on the data preview without cancelling the file
+            */
+
+
 
     $scope.initialise = function(){
         if($stateParams.viewType) {
@@ -459,6 +626,17 @@ $scope.changeView = function(){
     $scope.cbh.includedProjectKeys = [$scope.proj.project_key];
           
 
+
+
+            /**
+             * @ngdoc method
+             * @name $scope.changeNumberPerPage
+             * @methodOf chembiohubAssayApp.controller:AddCompoundsCtrl
+             * @description
+             *  Change the number of results shown per page in the compound preview
+            */
+
+
     $scope.changeNumberPerPage = function(viewType) {
         var newParams = angular.copy($stateParams);
         newParams.page = 1;
@@ -474,6 +652,19 @@ $scope.changeView = function(){
         $stateParams = newParams;
         $scope.initialise();
     };
+
+
+            /**
+             * @ngdoc method
+             * @name $scope.pageChanged
+             * @methodOf chembiohubAssayApp.controller:AddCompoundsCtrl
+             * @description
+             *  Paginate through the table view in the addcompounds preview
+            */
+
+
+
+
     $scope.pageChanged = function(newPage) {
         var newParams = angular.copy($stateParams);
         newParams.page = newPage;
@@ -489,19 +680,25 @@ $scope.changeView = function(){
         $scope.initialise();
 
     };
-    $scope.pageChanged2 = function(newPage) {
-        $scope.pageChanged();
-    };
+
+
+
     var childScope;
+
+
+            /**
+             * @ngdoc method
+             * @name $scope.imageCallback
+             * @methodOf chembiohubAssayApp.controller:AddCompoundsCtrl
+             * @description
+             *  Tell the table view to update after the new data has been loaded
+             * (we don't user two way data binding with handsontable for performance reasons and because in our other use case we want to keep a copy of the data in order to undo)
+            */
+
+
 
     $scope.imageCallback = function() {
         
-
-        // call $anchorScroll()
-        // if($stateParams.doScroll){
-        //     $location.hash('search-bottom');
-        //     $anchorScroll();
-        // }
 
         $timeout(function(){
                     $scope.compoundBatches.redraw ++;
@@ -509,7 +706,15 @@ $scope.changeView = function(){
         });
     }
 
-    
+                /**
+             * @ngdoc method
+             * @name getResultsPage
+             * @methodOf chembiohubAssayApp.controller:AddCompoundsCtrl
+             * @description
+             *  Get a page compound preview of results from the back end
+            */
+
+
     var  getResultsPage = function(pageNumber) {
         var limit = $scope.pagination.compoundBatchesPerPage.value;
         var offset = (pageNumber -1) * $scope.pagination.compoundBatchesPerPage.value;
@@ -558,12 +763,7 @@ $scope.changeView = function(){
                 $scope.searchFormSchema= angular.copy($scope.cbh.projects.searchform);
                 var pf = searchUrlParams.setup($stateParams, {molecule: {}});
                 $scope.searchForm = false; //angular.copy(pf.searchForm);
-                // var custFieldFormItem = $filter('filter')($scope.searchFormSchema.cf_form, {key:'search_custom_fields__kv_any'}, true);
-                // custFieldFormItem[0].options.async.call = $scope.refreshCustFields;
 
-                /*if($scope.searchForm.search_custom_fields__kv_any) {
-                    $scope.searchFormSchema.schema.properties.search_custom_fields__kv_any.items = $scope.searchForm.search_custom_fields__kv_any.map(function(i){return {value : i, label : i}});
-                }*/
              $scope.dataReady = true;
 
                 if(result.data.objects.length > 0){

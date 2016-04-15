@@ -1,0 +1,91 @@
+<h1><code ng:non-bindable="">CBHCompoundBatch</code>
+<div><span class="hint">service in module <code ng:non-bindable="">chembiohubAssayApp</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="chembiohubassayapp-cbhcompoundbatch-page"><h3 id="description_cbhcompoundbatch">CBHCompoundBatch</h3>
+<p>Service to provide interface to web API for adding and saving new data records into the system as well as validation of input, editing existing records, performing archiving. This service also provides the interface to the search APIs.</p>
+</div></div>
+<div class="member method"><h2 id="methods">Methods</h2>
+<ul class="methods"><li><h3 id="methods_createmultibatch">createMultiBatch()</h3>
+<div class="createmultibatch"><div class="createmultibatch-page"><p>Calls the cbh_compound_batches webservice to validate lists of data that are of varying types. Allowed types are file, smilesdata and sketch. Function diverts to the appropriate webservice call. </p>
+</div><h5 id="methods_createmultibatch_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-object">Object</a></td><td><div class="createmultibatch-page"><p>promise from API call to validate the given dataset</p>
+</div></td></tr></table></div>
+</li>
+<li><h3 id="methods_delete_index">delete_index()</h3>
+<div class="delete_index"><div class="delete-index-page"><p>Removes a specified index via an API call.</p>
+</div><h5 id="methods_delete_index_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-object">Object</a></td><td><div class="delete-index-page"><p>promise from API call to delete the specified index containing data object</p>
+</div></td></tr></table></div>
+</li>
+<li><h3 id="methods_fetchheaders">fetchHeaders()</h3>
+<div class="fetchheaders"></div>
+</li>
+<li><h3 id="methods_get">get()</h3>
+<div class="get"><div class="get-page"><p>Calls the cbh_compound_batches webservice endpoint to get a batch item. It is a convenience function for the default GET request.</p>
+</div><h5 id="methods_get_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-object">Object</a></td><td><div class="get-page"><p>promise from API call to retrieve the specified batch.</p>
+</div></td></tr></table></div>
+</li>
+<li><h3 id="methods_getaddcompoundsresults">getAddCompoundsResults()</h3>
+<div class="getaddcompoundsresults"><div class="getaddcompoundsresults-page"><p>Calls the cbh_compound_batches webservice to retrieve the set of batches for preview before confirming saving.</p>
+</div><h5 id="methods_getaddcompoundsresults_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-object">Object</a></td><td><div class="getaddcompoundsresults-page"><p>promise from API call to retrieve the specified batch set</p>
+</div></td></tr></table></div>
+</li>
+<li><h3 id="methods_getsinglemol">getSingleMol()</h3>
+<div class="getsinglemol"><div class="getsinglemol-page"><p>Set up defaults for a blank molecule object</p>
+</div><h5 id="methods_getsinglemol_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-object">Object</a></td><td><div class="getsinglemol-page"><p>molecule object containing default values</p>
+</div></td></tr></table></div>
+</li>
+<li><h3 id="methods_markasarchived">markAsArchived()</h3>
+<div class="markasarchived"><div class="markasarchived-page"><p>Calls the cbh_compound_batches webservice to archive a given batch.</p>
+</div><h5 id="methods_markasarchived_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-object">Object</a></td><td><div class="markasarchived-page"><p>promise from API call to archive the specified batch</p>
+</div></td></tr></table></div>
+</li>
+<li><h3 id="methods_paginate">paginate()</h3>
+<div class="paginate"></div>
+</li>
+<li><h3 id="methods_queryv2">queryv2()</h3>
+<div class="queryv2"><div class="queryv2-page"><p>Calls the cbh_compound_batches webservice endpoint to get a list of batch items. This is modified by currently applied filters and sorts in the search interface.</p>
+</div><h5 id="methods_queryv2_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-object">Object</a></td><td><div class="queryv2-page"><p>promise from API call to retrieve batches matching the search filters</p>
+</div></td></tr></table></div>
+</li>
+<li><h3 id="methods_reindexmodifiedcompound">reindexModifiedCompound()</h3>
+<div class="reindexmodifiedcompound"><div class="reindexmodifiedcompound-page"><p>Calls the  cbh_compound_batches webservice to trigger a reindexing of a given batch.</p>
+</div><h5 id="methods_reindexmodifiedcompound_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-object">Object</a></td><td><div class="reindexmodifiedcompound-page"><p>promise from API call to reindex the specified batch</p>
+</div></td></tr></table></div>
+</li>
+<li><h3 id="methods_savemultibatchmolecules">saveMultiBatchMolecules()</h3>
+<div class="savemultibatchmolecules"><div class="savemultibatchmolecules-page"><p>Calls the cbh_compound_batches webservice to save more than one chemical batch object.</p>
+</div><h5 id="methods_savemultibatchmolecules_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-object">Object</a></td><td><div class="savemultibatchmolecules-page"><p>promise from API call to save the given batches</p>
+</div></td></tr></table></div>
+</li>
+<li><h3 id="methods_savesinglecompound">saveSingleCompound()</h3>
+<div class="savesinglecompound"><div class="savesinglecompound-page"><p>Calls the cbh_compound_batches webservice to save one chemical batch object.</p>
+</div><h5 id="methods_savesinglecompound_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-object">Object</a></td><td><div class="savesinglecompound-page"><p>promise from API call to save the given dataset</p>
+</div></td></tr></table></div>
+</li>
+<li><h3 id="methods_search">search()</h3>
+<div class="search"></div>
+</li>
+<li><h3 id="methods_uploadbatch">uploadBatch()</h3>
+<div class="uploadbatch"></div>
+</li>
+<li><h3 id="methods_validate">validate()</h3>
+<div class="validate"><div class="validate-page"><p>Calls the cbh_compound_batches webservice to validate a drawn chemical element in ctab format.</p>
+</div><h5 id="methods_validate_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-object">Object</a></td><td><div class="validate-page"><p>promise from API call to validate the given molecule</p>
+</div></td></tr></table></div>
+</li>
+<li><h3 id="methods_validatebatch">validateBatch()</h3>
+<div class="validatebatch"></div>
+</li>
+<li><h3 id="methods_validatefiles">validateFiles()</h3>
+<div class="validatefiles"></div>
+</li>
+<li><h3 id="methods_validatelist">validateList()</h3>
+<div class="validatelist"><div class="validatelist-page"><p>Calls the cbh_compound_batches webservice to validate a set of batches.</p>
+</div><h5 id="methods_validatelist_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-object">Object</a></td><td><div class="validatelist-page"><p>promise from API call to validate the specified batch list</p>
+</div></td></tr></table></div>
+</li>
+</ul>
+</div>
+</div>

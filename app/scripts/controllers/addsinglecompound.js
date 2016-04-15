@@ -33,6 +33,18 @@ angular.module('chembiohubAssayApp')
             $scope.editMode = false;
 
             $scope.cbh.statename = $state.current.name;
+
+
+/**
+             * @ngdoc method
+             * @name $scope.revert
+             * @methodOf chembiohubAssayApp.controller:AddsinglecompoundCtrl
+             * @description
+             * Revert the drawn compound back to the cloned version,
+             * broadcast setMolecule in order to update the directive for chemdoodle
+             *
+             */
+
             $scope.revert = function(){
                 $scope.mol = angular.copy($scope.clonedMol);
                 $scope.mol.molecule = $scope.mol.ctab;
@@ -57,6 +69,19 @@ angular.module('chembiohubAssayApp')
                     $scope.projectObj = myproj;
                 }
             });
+
+
+        /**
+             * @ngdoc method
+             * @name $scope.$on("openedTaggingDropdown")
+             * @methodOf chembiohubAssayApp.controller:AddsinglecompoundCtrl
+             * @description
+             * The name openedTaggingDropdown is defined in the schema of the data addition UI for tag fields
+             * This function pulls back the dropdown autocomplete from the back end and sends it to the appropriate directive via a broadcast
+             *
+             */
+
+
             $scope.$on("openedTaggingDropdown", function(event, args){
                 var filters = {};
                 filters.pids = $scope.projectObj.id;
@@ -78,6 +103,17 @@ angular.module('chembiohubAssayApp')
                 $scope.dataReady = false;
                 $scope.dataset = undefined;
             });
+
+
+        /**
+             * @ngdoc method
+             * @name $scope.createMultiBatch
+             * @methodOf chembiohubAssayApp.controller:AddsinglecompoundCtrl
+             * @description
+             * Create a multiple batch object based on a drawing in the add single page (this is currently doen with multiple batches for consistency but would probaly be better done with single compounds)
+             *
+             */
+
 
             $scope.createMultiBatch = function(){
                 $scope.currentlyLoading = true;
@@ -121,11 +157,16 @@ angular.module('chembiohubAssayApp')
                  }); 
             }
 
+        /**
+             * @ngdoc method
+             * @name $scope.validateDrawn
+             * @methodOf chembiohubAssayApp.controller:AddsinglecompoundCtrl
+             * @description
+             * Validate the valancies etc of the drawn molecule by sending it to the back end
+             *  This could be better accomplished with the new chemical search API
+             */
 
 
-            $scope.removeAlert = function() {
-                $scope.update_success = false;
-            }
 
             //validate the drawn compound using the same mechanism as validation from file
             $scope.validateDrawn  = function(){
@@ -150,6 +191,19 @@ angular.module('chembiohubAssayApp')
             $scope.errormess = "";
             $scope.doArchiveItem = false;
 
+
+
+        /**
+             * @ngdoc method
+             * @name $scope.validateOtherFormData
+             * @methodOf chembiohubAssayApp.controller:AddsinglecompoundCtrl
+             * @description
+             * Standard schemaform submission code for validation of the custom fields when saving a molecule.
+             * Buttons that do not want this onSubmit function to run but are inside the form are implemented as <button type="button"></button>
+             */
+
+
+
             $scope.validateOtherFormData = function(myForm){
                 $scope.errormess = "";
                 //this step is necessary to ensure that required fields have data
@@ -168,6 +222,17 @@ angular.module('chembiohubAssayApp')
                 //TODO: account for string being too long for text field length (1028 chars)
 
             };
+
+
+
+
+        /**
+             * @ngdoc method
+             * @name $scope.saveTemporaryCompoundData
+             * @methodOf chembiohubAssayApp.controller:AddsinglecompoundCtrl
+             * @description
+             * Save single molecule and redirect the user to the search page
+             */
 
             $scope.saveTemporaryCompoundData = function(){
                 $scope.currentlyLoading = true;
@@ -211,6 +276,16 @@ angular.module('chembiohubAssayApp')
                     )       
             }
 
+
+        /**
+             * @ngdoc method
+             * @name $scope.addSupplementaryField
+             * @methodOf chembiohubAssayApp.controller:AddsinglecompoundCtrl
+             * @description
+             * Add an extra supplementary data field when editing a molecule's data
+             */
+
+
             $scope.addSupplementaryField = function(){
             	//do we have any supplementary fields already?
             	if ($scope.mol.supplementaryFields.length > 0){
@@ -247,6 +322,16 @@ angular.module('chembiohubAssayApp')
             	}
             	
             };
+
+
+
+        /**
+             * @ngdoc method
+             * @name $scope.removeSupplemetaryField
+             * @methodOf chembiohubAssayApp.controller:AddsinglecompoundCtrl
+             * @description
+             * Remove a supplementary data field when editing a molecule's data
+             */
             $scope.removeSupplemetaryField = function(removeid){
             	//pop item with this ID from supplementary fields
 
