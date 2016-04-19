@@ -199,13 +199,14 @@ angular.module('chembiohubAssayApp')
               $scope.modalInstance = $modalInstance;
               //this is no longer needed
               $scope.updatedProjectType = function(){
-                
-                if(projectId == -1){
+                $timeout(function(){
+                  if(projectId == -1){
                   
                       $scope.proj.custom_field_config = angular.copy($scope.proj.project_type.project_template.custom_field_config);
                  
                   
-                }
+                  }
+                });
               };
               $scope.setProjectType = function(){
                 //ensures that there is object equality for the project type
