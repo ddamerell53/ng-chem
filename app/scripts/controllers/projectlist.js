@@ -28,7 +28,7 @@ angular.module('chembiohubAssayApp')
         var refreshProjectTypes = function(){
           //TODO handle error here
                 ProjectTypeFactory.get({"saved_search_project_type": false}, function(data){
-                  var ptypeSet = false;
+                  var ptypeSet = 0;
                   $scope.projectTypes = data.objects.map(function(pType){
                       
                       if(pType.set_as_default){
@@ -37,10 +37,15 @@ angular.module('chembiohubAssayApp')
                       }
                       return {"name": pType.name, "value" : pType};
                     });
-                  
-                    if(!ptypeSet){
+                  $timeout(function(){
+                    if(ptypeSet == 0){
                       $scope.default_project_type = $scope.projectTypes[0];
+                      console.log("setting")
+                    }else{
+                      console.log("not setting")
                     }
+                  });
+                    
                  
                   
                   });
