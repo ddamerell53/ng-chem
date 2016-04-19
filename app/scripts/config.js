@@ -1,7 +1,7 @@
 
 'use strict';
 var arr = window.location.href.split("/");
-var part = "dev"
+var part = "dev/api"
 var bit =  "";
 var admin_base = "/";
 
