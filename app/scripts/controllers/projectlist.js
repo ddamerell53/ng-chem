@@ -22,7 +22,7 @@ angular.module('chembiohubAssayApp')
     urlConfig,
     loggedInUser,
     ProjectPermissionAllRoles) {
-      $scope.default_project_type = "";
+      $scope.default_project_type = undefined;
       $scope.links = [];
 
         var refreshProjectTypes = function(){
