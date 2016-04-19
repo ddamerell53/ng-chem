@@ -45,22 +45,9 @@ angular.module('chembiohubAssayApp')
                 
               }
 
-        $scope.loadSavedSearches = function(){
-            
-            var params = {'creator_uri': loggedInUser.resource_uri};
 
-            //TODO handle error here
-            $http.get( urlConfig.cbh_saved_search.list_endpoint  + "/get_list_elasticsearch/", {'params': params}).then(function(data){
-                
-                $scope.links = data.data.objects;
-                console.log($scope.links);
-                $scope.$apply();
-                
-            });
-        };
         
         refreshProjectTypes();
-        $scope.loadSavedSearches();
 
 
         $scope.openProjectWindow = function(projectId){
