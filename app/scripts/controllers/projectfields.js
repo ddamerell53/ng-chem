@@ -73,9 +73,12 @@ angular.module('chembiohubAssayApp')
                         
                         if(angular.isDefined(current)){
                           angular.forEach(key.slice(0,-1), function(p){ current = current[p]; }); 
-                          if(current.id){
+                          if(angular.isDefined(current)){
+                            if(current.id){
                               readonly=true;
-                           }
+                            }
+                          }
+                          
                         }
                         
                         return readonly;
