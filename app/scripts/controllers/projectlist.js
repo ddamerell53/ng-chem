@@ -35,6 +35,11 @@ angular.module('chembiohubAssayApp')
                       }
                       return {"name": pType.name, "value" : pType};
                     });
+                  $timeout(function(){
+                    if(angular.isUndefined($scope.default_project_type)){
+                      $scope.default_project_type = $scope.projectTypes[0];
+                    }
+                  });
                   
                   });
                 
