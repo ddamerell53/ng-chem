@@ -70,10 +70,14 @@ angular.module('chembiohubAssayApp')
                         //If this value has an ID then the user is NOT ALLOWED to change the field any more
                         var readonly = false;
                         var current=$scope.proj; 
-                        angular.forEach(key.slice(0,-1), function(p){ current = current[p]; }); 
-                        if(current.id){
-                          readonly=true;
+                        
+                        if(angular.isDefined(current)){
+                          angular.forEach(key.slice(0,-1), function(p){ current = current[p]; }); 
+                          if(current.id){
+                              readonly=true;
+                           }
                         }
+                        
                         return readonly;
                       }
 
@@ -199,14 +203,9 @@ angular.module('chembiohubAssayApp')
               $scope.modalInstance = $modalInstance;
               //this is no longer needed
               $scope.updatedProjectType = function(){
-                $timeout(function(){
                   if(projectId == -1){
-                  
                       $scope.proj.custom_field_config = angular.copy($scope.proj.project_type.project_template.custom_field_config);
-                 
-                  
                   }
-                });
               };
               $scope.setProjectType = function(){
                 //ensures that there is object equality for the project type
