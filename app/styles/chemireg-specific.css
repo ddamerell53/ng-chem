@@ -1182,6 +1182,15 @@ svg.svg.nonchem, li svg.svg.nonchem {
   border:0;
 }
 
+/* feedback glyphicons positioning */
+.has-feedback label ~ .form-control-feedback {
+    top: 25px;
+    right: -13px;
+}
+.glyphicon-asterisk.form-control-feedback {
+  color:red;
+}
+
 
 /* 16-column bootstrap grid classes */
 /*!

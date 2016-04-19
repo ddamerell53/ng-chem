@@ -426,7 +426,7 @@ angular.module('chembiohubAssayApp')
                     var myform = angular.copy($scope.cbh.projAddingTo.schemaform.form);
                     //we may need to replicate this within the search form...
                     angular.forEach(myform, function(item) {
-                        item['feedback'] = false;
+                        item['feedback'] = "{ 'glyphicon': true, 'glyphicon-asterisk': form.required && !hasSuccess() && !hasError() ,'glyphicon-ok': hasSuccess(), 'glyphicon-remove': hasError() }";
                         item['disableSuccessState'] = true;
 
                     });
@@ -450,6 +450,8 @@ angular.module('chembiohubAssayApp')
                     if (toggleAddingOff) {
                         $scope.addingData = false;
                     }
+                    //swithch off the validation info message
+                    $scope.errormess = "";
                 }
 
 
