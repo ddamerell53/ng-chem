@@ -777,7 +777,7 @@ angular.module('chembiohubAssayApp')
                     
                 }
                 else{
-                    if($state.current.name==="cbh.search"){
+                    if($state.current.name==="cbh.search" || $state.current.name==="cbh.searchv2"){
                         $scope.noData = "No Compounds Found. Why not try amending your search?";
                     }else{
                          $scope.noData = "No Compounds Found. To add compounds use the link above.";

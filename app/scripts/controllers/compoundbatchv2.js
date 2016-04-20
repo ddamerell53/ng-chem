@@ -540,7 +540,7 @@ angular.module('chembiohubAssayApp')
                             $scope.imageCallback();
                             $scope.noData = "No " + skinConfig.objects[0].result_alias + " found.";
                             if (!$scope.editModeUnreachable()){
-                                $scope.noData += " To add " + skinConfig.objects[0].result_alias + " click the links below."
+                                $scope.noData += " To add " + skinConfig.objects[0].result_alias + " click the Add Single or Add Multiple links below."
                             }
                            
                         }
