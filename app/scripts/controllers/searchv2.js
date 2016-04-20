@@ -205,7 +205,7 @@ angular.module('chembiohubAssayApp')
                       var d = new Date();
                       $scope.savedSearchType.project_template.name = $scope.newSavedSearchModel.alias + d.getTime().toString();
                       $scope.savedSearchType.project_template.custom_field_config.name = $scope.newSavedSearchModel.alias + d.getTime().toString();
-                      SearchUrlParamsV2.generate_capped_saved_search($stateParams).then(function(new_state_params){
+                      SearchUrlParamsV2.generate_capped_saved_search($stateParams, $scope.cbh.selected_projects).then(function(new_state_params){
                         //create a new URL string with the newly generated state params
                       var new_capped_url = $state.href($state.current.name, new_state_params);
                         //TODO: handle unreachable query or server side error

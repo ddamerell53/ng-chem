@@ -217,9 +217,13 @@ angular.module('chembiohubAssayApp')
          /* For saved search, we are limiting the set of returned items to provide a snapshot 
             of that search at the time specified.
             To do this, we need to get the result returned by the search with the highest batch ID */
-         searchUrlParamsV2.generate_capped_saved_search = function(params){
+         searchUrlParamsV2.generate_capped_saved_search = function(params, selected_projects){
             //get the params as JSON
-            var paramsObj = JSON.parse(atob(params.encoded_query));
+            //console.log(params.encoded_query);
+            var paramsObj = []
+            if(params.encoded_query){
+              paramsObj = JSON.parse(atob(params.encoded_query));
+            }
             var backend_query = {'limit':1, 'offset': 0};
             var importantParams = ['pids', 'archived', 'encoded_query'];
             angular.forEach(importantParams, function(p){
