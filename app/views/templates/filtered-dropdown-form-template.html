@@ -1,7 +1,7 @@
 <div    ng-controller="filtereddropdownController" class="form-group schema-form-{{form.type}} {{form.htmlClass}}"
      ng-class="{'has-error': form.disableErrorState !== true && hasError(), 'has-success': form.disableSuccessState !== true && hasSuccess(), 'has-feedback': form.feedback !== false }">
   <label class="control-label {{form.labelHtmlClass}}" ng-class="{'sr-only': !showTitle()}" for="{{form.key.slice(-1)[0]}}">{{form.title}} </label>
-<div class="dropdown" is-open="test" >
+<div class="dropdown"  >
                 <button ng-click="opened(form.key, '')" type="button" data-toggle="dropdown" class="btn btn-default btn-lg">
                         <span ng-if="!model[form.key[form.key.length -1]] || model[form.key[form.key.length -1]].length == 0">
                             Please select

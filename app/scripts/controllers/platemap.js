@@ -14,7 +14,6 @@ angular.module('chembiohubAssayApp')
             angular.forEach(projectList.objects, function(myproj) {
                 if (myproj.project_key === projectKey) {
                     $scope.projectObj = myproj;
-                    console.log("project is", $scope.projectObj);
                 }
             });
             $scope.newPlateForm = {}
@@ -23,6 +22,17 @@ angular.module('chembiohubAssayApp')
             //we need to use the searchform object in order to list UOX IDs for compounds
             //cherry pick the form and schema elements
             $scope.searchFormSchema = angular.copy($scope.cbh.projects.searchform);
+
+            var plateForm = angular.copy($scope.projectObj.schemaform.form);
+
+            $scope.projectObj.schemaform.schema.required = ['Name', 'Plate Size', 'Plate Type']
+
+            angular.forEach($scope.projectObj.schemaform.form, function(item) {
+                        item['feedback'] = "{ 'glyphicon': true, 'glyphicon-asterisk': form.required && !hasSuccess() && !hasError() ,'glyphicon-ok': hasSuccess(), 'glyphicon-remove': hasError() }";
+                        item['disableSuccessState'] = true;
+
+                    });
+
             //this needs replacing with the new 'staticItems' for the pick from list widget
 
             //we end up passing schemaFormHolder through to the platemap directive
@@ -35,7 +45,7 @@ angular.module('chembiohubAssayApp')
             
             
 
-            $scope.schemaFormHolder.required=[]
+            //$scope.schemaFormHolder.required=[]
             $scope.schemaFormHolder.well_form = [
                 //need: name, plate size, description, plate type
                 //choices here hard coded for now
@@ -143,21 +153,22 @@ angular.module('chembiohubAssayApp')
             $scope.setupNewPlateFromForm = function(form){
 
                 //the form now comes from the current project's custom field config
-
-
-            	console.log('validation happening')
-            	if(form.$valid && $scope.newPlateForm.name != "" && !form.$pristine){
+            	if(form.$valid && $scope.newPlateForm["Name"] != "" && $scope.newPlateForm["Plate Size"] != "" && $scope.newPlateForm["Plate Type"] != "" && !form.$pristine){
                     //build the well objects
-                    console.log('valid form')
                     $scope.showPlate = true;
                     $scope.errormess = "";
 	            	//being done in directive
 	            	//buildPlate($scope.newPlateForm)
                 }
                 else if(form.$pristine){
-                	console.log('invalid form')
-                    $scope.errormess = "You must add a Plate Name";
+                    $scope.errormess = "You must add a some details";
             
+                }
+                else if(form.$error){
+                    $scope.errormess = "There are required fields missing data";
+                }
+                else {
+                    $scope.errormess = "Some other error";
                 }
 
             	
@@ -174,7 +185,6 @@ angular.module('chembiohubAssayApp')
                 //TODO handle error here
 
                 //proid in this case is from the
-                console.log($scope.newPlateForm); 
                 var plateMapObj = {
                     "project": {"pk": $scope.projectObj.id},
                     "blinded_batch_id": "EMPTY_STRING",
@@ -191,10 +201,8 @@ angular.module('chembiohubAssayApp')
                     "properties" :{},  
                     "errors" :{}
                 }
-                //console.log(plateMapObj)
 
                CBHCompoundBatch.saveSingleCompound(plateMapObj).then(function(data){
-                    console.log(data);
                     $scope.plateSaved = true;
                     //forward to list?
                     $state.go("cbh.projects.project.listplates", {"projectKey": projectKey});
@@ -235,22 +243,18 @@ angular.module('chembiohubAssayApp')
 
                 $scope.cbh.changeSearchParams(filters);
                 filters = angular.copy($stateParams);
-                    
+                if(!filters.page){
+                    filters.page = 1;
+                }
                 filters.limit = $scope.batchesPerPage;
                 filters.offset = (filters.page - 1) * 5;
                 CBHCompoundBatch.queryv2(filters).then(function(data) {
                     $scope.totalCount = data.meta.total_count;
                     $scope.plates = data.objects;
                     //$scope.$apply();
-                    console.log($scope.plates.length)
                     if($stateParams.plate){
-                        console.log('plate found in url')
-                        console.log("$scope.plates",$scope.plates)
                         $scope.loadPlateSpecifiedInUrl();
                         
-                    }
-                    else{
-                        console.log('Cant find plate', $stateParams)
                     }
                 });
 
@@ -314,7 +318,6 @@ angular.module('chembiohubAssayApp')
             /* pagination function */
             $scope.pageChanged = function(newPage) {
                 $scope.plateSaved = false;
-                console.log("newPage", newPage);
                 var newParams = angular.copy($stateParams);
                 newParams.page = newPage;
                 newParams.compoundBatchesPerPage = $scope.batchesPerPage;

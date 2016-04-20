@@ -20,10 +20,13 @@ angular.module('chembiohubAssayApp')
                 plateSaved: "="
             },
             controller: ["$scope","$rootScope","$filter","CBHCompoundBatch",'$stateParams',function($scope, $rootScope, $filter, CBHCompoundBatch, $stateParams) {
-                if (parseInt($scope.plateForm["Plate Size"]) == 96) {
+                
+                var plate_size = parseInt($scope.plateForm["Plate Size"]);
+                
+                if (plate_size == 96) {
                     $scope.rows = ["A", "B", "C", "D", "E", "F", "G", "H", ];
                     $scope.cols = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", ];
-                } else if (parseInt($scope.plateForm["Plate Size"] == 48)) {
+                } else if (plate_size == 48) {
                     $scope.rows = ["A", "B", "C", "D"];
                     $scope.cols = ["1", "2", "3", "4", "5", "6"];
                 }
@@ -48,7 +51,6 @@ angular.module('chembiohubAssayApp')
                     })
                 }
                 //blank well for reference
-                console.log("plateForm wells is now ", $scope.plateForm.wells);
 
 	            $scope.wellForm = {}
 	            $scope.selectedWell = {}
