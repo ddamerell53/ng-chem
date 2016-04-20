@@ -72,7 +72,7 @@
                              <button type='submit' ng-show="editMode" value="Submit" class="btn btn-primary" form="inputForm"><span class="glyphicon glyphicon-share"></span> Update Project Data</button>
                             </h2>
                     </div>
-                    <div class="row" ng-if="errormess!=''">
+                    <div class="row" ng-if="errormess!='' || !editMode">
                         <div class="help-block col-xs-12 text-center">
                             <p class="nexa text-danger"><strong>{{errormess}}</strong></p>
                         </div>
@@ -132,7 +132,7 @@
                         </div>
                     </div>
                     <div ng-if="editMode" class="col-xs-12 col-md-6">
-                        <div class=" form-group" sf-schema="myschema" sf-form="firstForm" sf-model="mol.custom_fields"></div>
+                        <div class=" form-group" sf-schema="myschema" sf-form="firstForm" sf-model="mol.custom_fields" sf-options="{ feedback: { 'glyphicon': true, 'glyphicon-asterisk': form.required && !hasSuccess() && !hasError() , 'glyphicon-remove': hasError() } }"></div>
                     </div>
                     <div ng-if="editMode" class="col-xs-12 col-md-6">
                         <div class=" form-group" sf-schema="myschema" sf-form="secondForm" sf-model="mol.custom_fields"></div>
