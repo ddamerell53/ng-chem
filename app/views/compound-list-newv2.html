@@ -39,7 +39,7 @@
                                 <div class=" form-group" sf-schema="myschema" sf-form="form" sf-model="newMol.custom_fields" ></div>
                                 <div class="spacer"></div>
                             </div>
-                            <div class="row" ng-if="errormess!=''">
+                            <div class="row" ng-if="!myForm.$valid">
                                 <div class="help-block col-xs-12 text-center">
                                     <p class="nexa text-danger"><strong>{{errormess}}</strong></p>
                                 </div>

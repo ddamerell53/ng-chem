@@ -24,7 +24,6 @@ angular.module('chembiohubAssayApp')
                     $scope.idToClone = $scope.clonedMol.id;
                  }else{
                     $scope.idToClone = null;
-                    console.log($scope.mol)
                  }
 
 
@@ -49,6 +48,10 @@ angular.module('chembiohubAssayApp')
                 $scope.mol = angular.copy($scope.clonedMol);
                 $scope.mol.molecule = $scope.mol.ctab;
                 $scope.mol.id = null;
+                if(!$scope.idToClone){
+                    $scope.mol.molecule = "";
+                    $scope.mol.ctab = "";
+                }
                 $rootScope.$broadcast("setMolecule");
             }
             
@@ -99,6 +102,11 @@ angular.module('chembiohubAssayApp')
             var len = Math.ceil(myform.length / 2);
 
             $scope.myform = angular.copy(myform);
+            angular.forEach($scope.myform, function(item) {
+                        item['feedback'] = "{ 'glyphicon': true, 'glyphicon-asterisk': form.required && !hasSuccess() && !hasError() ,'glyphicon-ok': hasSuccess(), 'glyphicon-remove': hasError() }";
+                        item['disableSuccessState'] = true;
+
+                    });
             $scope.$on("moleculeChanged", function(){
                 $scope.dataReady = false;
                 $scope.dataset = undefined;
@@ -185,12 +193,14 @@ angular.module('chembiohubAssayApp')
                     "cancellers" : []
                 };
                 $scope.createMultiBatch();
+                $scope.$broadcast("schemaFormValidate");
             }
             
             //validation of form happens here
             $scope.errormess = "";
             $scope.doArchiveItem = false;
-
+            //should also do basic form validation as well
+            
 
 
         /**
@@ -294,12 +304,9 @@ angular.module('chembiohubAssayApp')
             		//get the last item in the list's ID
             		angular.forEach($scope.mol.supplementaryFields, function(supField, sindex){
             			
-            			console.log('supfield', supField)
-            			console.log('index', sindex)
             			if (sindex == ($scope.mol.supplementaryFields.length - 1)){
             				//increment that number by 1
             				var newId = (supField.id + 1);
-            				console.log(newId);
             				//create a new object with that ID
 	            			//push to supplementaryFields
             				$scope.mol.supplementaryFields.push({
