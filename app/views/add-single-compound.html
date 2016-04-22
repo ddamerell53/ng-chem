@@ -5,7 +5,7 @@
         </div>
     </div>
     <div class="row">
-        <form novalidate name="inputForm" role="form" style="width:95%; display: table; margin: 0 auto;" ng-submit="validateOtherFormData(inputForm)">
+        <form novalidate name="inputForm" role="form" id="inputForm" style="width:95%; display: table; margin: 0 auto;" ng-submit="validateOtherFormData(inputForm)">
             <div class="row">
                 <div class="col-sm-6 ">
                     <!-- <div ng-show="isIE" class = "alert-warning">
@@ -74,7 +74,7 @@
               
                     <!-- Buttons -->
             </div>
-            <div class="row" ng-if="errormess!=''">
+            <div class="row" ng-if="!inputForm.$valid">
                 <div class="help-block col-xs-12 text-center">
                     <p class="nexa text-danger"><strong>{{errormess}}</strong></p>
                 </div>
@@ -83,7 +83,7 @@
                     <div class="col-xs-12">
                         <div class="pull-right">
                             <button type="button" ng-show="mol.molecule == ''" disabled class="btn btn-lg btn-primary "><span class="glyphicon glyphicon-ok"></span> Validate compound</button>
-                            <button type="button"  ng-show="mol.molecule != '' && ! dataReady" ng-click="validateDrawn()" class="btn btn-lg btn-primary "><span class="glyphicon glyphicon-ok"></span> Validate compound</button>
+                            <button type="button"  ng-show="mol.molecule != '' && ! dataReady" ng-click="validateDrawn();" class="btn btn-lg btn-primary "><span class="glyphicon glyphicon-ok"></span> Validate compound</button>
                             
                             <button  ng-show="idToClone && mol.molecule != '' && dataReady && dataset.config.errors.length == 0" value="Submit" class="btn btn-lg btn-primary" ><span class="glyphicon glyphicon-share" ng-click="doArchiveItem = true"></span><span class="glyphicon glyphicon-ok"></span>Save compound and archive cloned compound</button>
                           
