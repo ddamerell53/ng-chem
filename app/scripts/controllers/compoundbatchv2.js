@@ -359,7 +359,6 @@ angular.module('chembiohubAssayApp')
             $scope.addingData = false;
 
             $scope.errormess = "";
-            $scope.toggleAddingOff = false;
 
             $scope.doSingleCompoundValidation = function(myForm){
                 $scope.errormess = "";
@@ -385,11 +384,16 @@ angular.module('chembiohubAssayApp')
 
                 CBHCompoundBatch.saveSingleCompound($scope.newMol).then(
                     function(data) {
+                        
+                        $scope.blankForm($scope.cbh.toggleAddingOff);
                         $scope.pageChanged(1);
-                        $scope.blankForm($scope.toggleAddingOff);
                     }
                 );
             };
+
+            $scope.$on("removeForm", function(){
+                console.log("rem")
+            })
 
             $scope.$on("cloneAnItem", function(event, item){
                 $scope.toggleAddData(item);
@@ -601,7 +605,6 @@ angular.module('chembiohubAssayApp')
                         });
 
                         $scope.cbh.changesToUndo = changes;
-                        console.log($scope.cbh.changesToUndo);
                         var patchData = {};
                         patchData.objects = itemsToChange;
                         //TODO handle error here
