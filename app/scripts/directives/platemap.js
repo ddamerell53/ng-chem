@@ -21,35 +21,38 @@ angular.module('chembiohubAssayApp')
             },
             controller: ["$scope","$rootScope","$filter","CBHCompoundBatch",'$stateParams',function($scope, $rootScope, $filter, CBHCompoundBatch, $stateParams) {
                 
-                var plate_size = parseInt($scope.plateForm["Plate Size"]);
+                $scope.initialisePlate = function(){
+                    var plate_size = parseInt($scope.plateForm["Plate Size"]);
                 
-                if (plate_size == 96) {
-                    $scope.rows = ["A", "B", "C", "D", "E", "F", "G", "H", ];
-                    $scope.cols = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", ];
-                } else if (plate_size == 48) {
-                    $scope.rows = ["A", "B", "C", "D"];
-                    $scope.cols = ["1", "2", "3", "4", "5", "6"];
-                }
-                //create a new onject for each of these combos
-                //plateForm.wells = {}
-                if (!$scope.plateForm.wells) {
-                    $scope.plateForm.wells = {}
-                    angular.forEach($scope.rows, function(row) {
-                        angular.forEach($scope.cols, function(col) {
-                            var wellname = row + col
+                    if (plate_size == 96) {
+                        $scope.rows = ["A", "B", "C", "D", "E", "F", "G", "H", ];
+                        $scope.cols = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", ];
+                    } else if (plate_size == 48) {
+                        $scope.rows = ["A", "B", "C", "D"];
+                        $scope.cols = ["1", "2", "3", "4", "5", "6"];
+                    }
+                    //create a new onject for each of these combos
+                    //plateForm.wells = {}
+                    if (!$scope.plateForm.wells) {
+                        $scope.plateForm.wells = {}
+                        angular.forEach($scope.rows, function(row) {
+                            angular.forEach($scope.cols, function(col) {
+                                var wellname = row + col
 
-                            //plateForm.wells = {}
                                 //plateForm.wells = {}
-                            $scope.plateForm.wells[wellname] = {
-                                'row': row,
-                                'col': col,
-                                'hasData': false,
-                                'uuid': [],
-                            }
+                                    //plateForm.wells = {}
+                                $scope.plateForm.wells[wellname] = {
+                                    'row': row,
+                                    'col': col,
+                                    'hasData': false,
+                                    'uuid': [],
+                                }
 
+                            })
                         })
-                    })
+                    }
                 }
+                $scope.initialisePlate();
                 //blank well for reference
 
 	            $scope.wellForm = {}
@@ -134,6 +137,8 @@ angular.module('chembiohubAssayApp')
                 $scope.showWellForm($scope.plateForm.wells["A1"]);
                 
                 $scope.$watch('plateForm', function() {
+                    //reinitialise plate layout where size changes
+                    $scope.initialisePlate();
                     $scope.showWellForm($scope.plateForm.wells["A1"]);
                 });
             }]

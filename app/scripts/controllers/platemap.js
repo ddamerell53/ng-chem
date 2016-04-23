@@ -161,7 +161,7 @@ angular.module('chembiohubAssayApp')
 	            	//buildPlate($scope.newPlateForm)
                 }
                 else if(form.$pristine){
-                    $scope.errormess = "You must add a some details";
+                    $scope.errormess = "You must add some details";
             
                 }
                 else if(form.$error){

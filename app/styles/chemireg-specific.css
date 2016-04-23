@@ -1132,9 +1132,12 @@ svg.svg.nonchem, li svg.svg.nonchem {
 }
 .proj-section > div {
   display:flex; 
-  justify-content: space-around; 
+  justify-content: flex-start; 
   align-items: center;
   flex: 1 100%;
+}
+.proj-section > div p {
+  margin-left:10px;
 }
 @media all and (min-width: 600px) {
   .proj-section.add, .proj-section.search, .proj-section.admin  {
