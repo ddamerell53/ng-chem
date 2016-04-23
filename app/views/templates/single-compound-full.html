@@ -99,7 +99,7 @@
                                             </div>
                                         </div>
                                     </li>
-                                    <li ng-show="item.value.attachments.length == 0">no attachments</li>
+                                    <li ng-show="item.value.attachments.length == 0 || !item.value">no attachments</li>
                                 </ul>
                             </div>
                         </div>
@@ -110,7 +110,6 @@
                             <div class="form-group" ng-if="item.isFileField == true">
                                 <label>{{item.key}}</label>
                                 <ul class="list-inline">
-                                    {{item}}
                                     <li ng-repeat="attachment in item.value.attachments" style="display:inline-table;">
                                         <div class="text-center col-xs-12 thumb-container">
                                             <!-- <img width="100" ng-if="{png:1,gif:1,jpg:1,jpeg:1}[is_uploading.getExtension()]" flow-img="is_uploading" /> -->

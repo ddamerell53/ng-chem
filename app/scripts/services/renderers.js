@@ -344,31 +344,33 @@ angular.module('chembiohubAssayApp')
               fileUploadRenderer: function(instance, td, row, col, prop, value, cellProperties){
                 //build an unordered, unstyled list
                 
-                console.log('prop',prop);
-                console.log('cellProperties',cellProperties);
+
                 var mol = instance.getSourceDataAtRow(row);
 
                 var dataLoc = cellProperties.prop;
                 var path = sfPath.normalize(dataLoc);
                 var field_obj = sfSelect(path, mol);
 
-
-                var htmllist = "<ul class='list-unstyled'>"
-                /*angular.forEach(field_obj.attachments, function(attc){
-                  htmllist += "<li>" + attc. + " files</li>";
-                });*/
-                if(field_obj.attachments.length == 1){
-                  htmllist += "<li class='text-success'>1 file</li>";
+                if(angular.isDefined(field_obj)){
+                  var htmllist = "<ul class='list-unstyled'>"
+                  /*angular.forEach(field_obj.attachments, function(attc){
+                    htmllist += "<li>" + attc. + " files</li>";
+                  });*/
+                  
+                  if(field_obj.attachments.length == 1){
+                    htmllist += "<li class='text-success'>1 file</li>";
+                  }
+                  else if(field_obj.attachments.length == 0){
+                    htmllist += "<li class='text-danger'>no files</li>";
+                  }
+                  else {
+                    htmllist += "<li class='text-success'>" + field_obj.attachments.length + " files</li>";
+                  }
+                  htmllist += "</ul>"
+                  td.className  += "htCenter htMiddle ";
+                  td.innerHTML = htmllist;
                 }
-                else if(field_obj.attachments.length == 0){
-                  htmllist += "<li class='text-danger'>no files</li>";
-                }
-                else {
-                  htmllist += "<li class='text-success'>" + field_obj.attachments.length + " files</li>";
-                }
-                htmllist += "</ul>"
-                td.className  += "htCenter htMiddle ";
-                td.innerHTML = htmllist;
+                
                 return td;
               },
               bulletRenderer:  function(instance, td, row, col, prop, value, cellProperties) {

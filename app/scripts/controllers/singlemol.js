@@ -188,7 +188,6 @@ angular.module('chembiohubAssayApp')
             $scope.closeInstance = false;
             $scope.updateBatch = function() {
                 //TODO handle error here
-                console.log("updateBatch called")
                 CBHCompoundBatch.patch($scope.mol ).then(
                     function(data) {
                         $scope.update_success = true;
@@ -212,6 +211,8 @@ angular.module('chembiohubAssayApp')
                 $scope.modalInstance.dismiss('cancel');
                 if($scope.isUpdated){
                     $rootScope.$broadcast("filtersUpdated",{});
+                }else{
+                    console.log("not updated")
                 }
             }
 
