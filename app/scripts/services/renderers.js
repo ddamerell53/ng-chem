@@ -147,8 +147,12 @@ angular.module('chembiohubAssayApp')
                 
                 return td;
               };
-        
+  
+
+
+
         var renderers = {
+             
               infoRenderer : function(instance, td, row, col, prop, value, cellProperties) {
                 var mol = instance.getSourceDataAtRow(row);
                 var html = "<ul class='noindent'>";

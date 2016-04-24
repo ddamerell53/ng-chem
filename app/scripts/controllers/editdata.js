@@ -2,9 +2,9 @@
 
 /**
  * @ngdoc function
- * @name ngChemApp.controller:AddDataCtrl
+ * @name ngChemApp.controller:EditDataCtrl
  * @description
- * # AddDataCtrl
+ * # EditDataCtrl
  * Controller of the ngChemApp. Used to control addition functions within the app. There are equivalents for Viewing and Editing data
  */
 angular.module('chembiohubAssayApp')
