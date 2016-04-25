@@ -53,8 +53,13 @@ angular.module('chembiohubAssayApp')
                     $scope.mol.ctab = "";
                 }
                 $rootScope.$broadcast("setMolecule");
+                $scope.errormess = "";   
+                $scope.dataReady = false;
+                $scope.dataset = undefined;           
             }
-            
+
+            $scope.errormess = "";  
+            $scope.doArchiveItem = false;
             $scope.dataReady = false;
             $scope.compoundBatches = {data:[], 
                 sorts:[],
@@ -197,8 +202,7 @@ angular.module('chembiohubAssayApp')
             }
             
             //validation of form happens here
-            $scope.errormess = "";
-            $scope.doArchiveItem = false;
+            
             //should also do basic form validation as well
             
 
