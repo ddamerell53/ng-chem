@@ -248,6 +248,7 @@ angular.module('chembiohubAssayApp')
                 }
                 filters.limit = $scope.batchesPerPage;
                 filters.offset = (filters.page - 1) * 5;
+                filters.pids = $scope.projectObj.id;
                 CBHCompoundBatch.queryv2(filters).then(function(data) {
                     $scope.totalCount = data.meta.total_count;
                     $scope.plates = data.objects;
