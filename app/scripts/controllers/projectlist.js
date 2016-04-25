@@ -2,10 +2,10 @@
 
 /**
  * @ngdoc function
- * @name ngChemApp.controller:ProjectlistCtrl
+ * @name chembiohubAssayApp.controller:ProjectlistCtrl
  * @description
  * # ProjectlistCtrl
- * Controller of the ngChemApp
+ * Controller of the chembiohubAssayApp
  */
 angular.module('chembiohubAssayApp')
   .controller('ProjectlistCtrl',function($rootScope, 

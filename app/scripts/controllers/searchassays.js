@@ -2,7 +2,7 @@
 
 /**
  * @ngdoc function
- * @name ngChemApp.controller:SearchAssaysCtrl
+ * @name chembiohubAssayApp.controller:SearchAssaysCtrl
  * @description
  * # SearchAssaysCtrl
  * Controller of the chembiohubAssayApp

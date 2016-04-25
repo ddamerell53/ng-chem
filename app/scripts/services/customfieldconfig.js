@@ -2,9 +2,9 @@
 
 /**
  * @ngdoc service
- * @name ngChemApp.customFieldConfig
+ * @name chembiohubAssayApp.customFieldConfig
  * @description
  * # customFieldConfig
- * Factory in the ngChemApp.
+ * Factory in the chembiohubAssayApp.
  */
 

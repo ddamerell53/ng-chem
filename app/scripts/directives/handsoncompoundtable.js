@@ -237,8 +237,16 @@ angular.module('chembiohubAssayApp')
                                     cName.fieldError = true;
                                     cName.uiClass = "";
                                     disabledOrSelected = cName;
-                                    //"<option  disabled >" +  cName.title + " (Invalid data for " + cName.friendly_field_type + ")</option>";
+                                    cName.displayError = "Data in this field cannot be mapped to this datatype";
                                 }
+                                //ensure files cannot be mapped to
+                                if(cName.type == "object"){
+                                    cName.disabled = true;
+                                    cName.uiClass = "";
+                                    disabledOrSelected = cName;
+                                    cName.displayError = "Field does not support bulk upload - add data through the edit function.";
+                                }
+
                                 if (!disabledOrSelected) {
                                     var weird = array.map(function(uncur) {
                                         //Check for other items that have been selected in the other dropdowns

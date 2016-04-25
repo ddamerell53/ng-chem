@@ -30,10 +30,10 @@ function detectIE() {
  
 /**
  * @ngdoc function
- * @name ngChemApp.controller:CbhCtrl
+ * @name chembiohubAssayApp.controller:CbhCtrl
  * @description
  * # CbhCtrl
- * Controller of the ngChemApp
+ * Controller of the chembiohubAssayApp
  */
 angular.module('chembiohubAssayApp')
   .controller('CbhCtrl', function($scope, $rootScope, $state, $location, $modal, urlConfig, loggedInUser, projectList, prefix, $compile, MessageFactory, skinConfig, InvitationFactory) {

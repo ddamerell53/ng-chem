@@ -2,10 +2,10 @@
 
 /**
  * @ngdoc function
- * @name ngChemApp.controller:AddsinglecompoundCtrl
+ * @name chembiohubAssayApp.controller:AddsinglecompoundCtrl
  * @description
  * # AddsinglecompoundCtrl
- * Controller of the ngChemApp
+ * Controller of the chembiohubAssayApp
  */
 
 

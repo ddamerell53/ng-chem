@@ -2,10 +2,10 @@
 
 /**
  * @ngdoc service
- * @name ngChemApp.ViewDataFactory
+ * @name chembiohubAssayApp.ViewDataFactory
  * @description
  * # ViewDataFactory
- * Factory in the ngChemApp.
+ * Factory in the chembiohubAssayApp.
  */
 angular.module('chembiohubAssayApp')
   .factory('ViewDataFactory', ['$resource', function ($resource) {

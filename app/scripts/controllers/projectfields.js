@@ -2,10 +2,10 @@
 
 /**
  * @ngdoc function
- * @name ngChemApp.controller:ProjectfieldsCtrl
+ * @name chembiohubAssayApp.controller:ProjectfieldsCtrl
  * @description
  * # ProjectfieldsCtrl
- * Controller of the ngChemApp
+ * Controller of the chembiohubAssayApp
  */
 angular.module('chembiohubAssayApp')
   .controller('ProjectfieldsCtrl', ["$scope", "$modalInstance", "$rootScope", "ProjectFactory", "projectId", "default_project_type", "projectTypes", "skinConfig",

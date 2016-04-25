@@ -2,10 +2,10 @@
 
 /**
  * @ngdoc function
- * @name ngChemApp.controller:DataoverviewCtrl
+ * @name chembiohubAssayApp.controller:DataoverviewCtrl
  * @description
  * # DataoverviewCtrl
- * Controller of the ngChemApp
+ * Controller of the chembiohubAssayApp
  */
 var showMappingPopupController = function($scope, $modalInstance, project_fields, sheet, $timeout, $filter, dataoverviewctrl) {
                         $scope.dataoverviewctrl = dataoverviewctrl;
