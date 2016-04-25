@@ -113,7 +113,7 @@ angular.module('chembiohubAssayApp')
                 
                 //get the file
                 console.log('file size',file.size);
-                if (file.size > 1000) {
+                if (file.size > 20000000) {
                     //cancel the file
                     file.flowObj.removeFile(file);
                     //get the form element ad change the validation message, mark as invalid
