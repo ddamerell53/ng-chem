@@ -27,7 +27,7 @@ angular.module('chembiohubAssayApp')
                  }
 
 
-/* File attachment functions */
+            /* File attachment functions */
             $scope.success = function(file, form_key) {
                 //apply the urls of the flowfile object to the correct custom field of $scope.mol.customFields - find the attachments array and add it
                 //put a new method in FlowFileFactory
@@ -53,6 +53,14 @@ angular.module('chembiohubAssayApp')
             $scope.removeFile = function(form_key, index, url) {
                 $scope.mol.customFields[form_key[0]].attachments = $filter('filter')($scope.mol.customFields[form_key[0]].attachments, function(value, index) {
                     return value.url !== url; })
+            }
+
+            $scope.sizeCheck = function(file, form_key){
+                
+                //get the file
+                //check the file size
+                //if it's bigger than it should be, cancel the upload
+                //warn the user
             }
             
 

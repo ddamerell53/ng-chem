@@ -80,6 +80,7 @@ angular.module('chembiohubAssayApp')
                 //put a new method in FlowFileFactory
                 //need to modify this so that the items are added to the value part of the schema item returned by the API
                 //TODO handle error here
+                console.log('success being called');
                 var AttachmentFactory = FlowFileFactory.cbhChemFlowFile;
                 AttachmentFactory.get({
                     'identifier': file.uniqueIdentifier
@@ -107,6 +108,14 @@ angular.module('chembiohubAssayApp')
                 //    return value.url !== url; })
             }
 
+            $scope.sizeCheck = function(file, form_key){
+                
+                //get the file
+                //check the file size
+                //if it's bigger than it should be, cancel the upload
+                //warn the user
+            }
+
             $scope.openClone = function() {
                 
                 if ($scope.mol.projectfull.project_type.show_compounds) {
@@ -127,7 +136,8 @@ angular.module('chembiohubAssayApp')
               else {
                 $scope.editMode = false;              
               }
-              $scope.$broadcast('schemaFormRedraw');
+              $scope.mol = angular.copy(mol);
+              $scope.$apply();
               
             }
 

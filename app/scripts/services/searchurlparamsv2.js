@@ -234,13 +234,17 @@ angular.module('chembiohubAssayApp')
             var promise = CBHCompoundBatch.queryv2(backend_query).then(function(result) {
 
               //get the single result, and add this as a parameter to encoded_query
-              var cap_batch_id = result.objects[0].id
-              var capping_query = {
-                "query_type":"less_than",
-                "less_than": cap_batch_id,
-                "field_path":"id"
+              
+              if(result.objects.length > 0){
+                var cap_batch_id = result.objects[0].id
+                var capping_query = {
+                  "query_type":"less_than",
+                  "less_than": cap_batch_id,
+                  "field_path":"id"
+                }
+                paramsObj.push(capping_query);
               }
-              paramsObj.push(capping_query);
+
               params.encoded_query = btoa(JSON.stringify(paramsObj));
               //we haven't changed the search parameters - we're just getting what they would be if capped so no need to notify about parameter changes
               return params
