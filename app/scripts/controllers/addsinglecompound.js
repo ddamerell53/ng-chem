@@ -58,9 +58,17 @@ angular.module('chembiohubAssayApp')
             $scope.sizeCheck = function(file, form_key){
                 
                 //get the file
-                //check the file size
-                //if it's bigger than it should be, cancel the upload
-                //warn the user
+                console.log('file size',file.size);
+                if (file.size > 1000) {
+                    //cancel the file
+                    file.flowObj.removeFile(file);
+                    //get the form element ad change the validation message, mark as invalid
+                    alert("This system has a file size limit of 20Mb per file. Please try with a smaller file.");
+                    return false;
+                    
+
+                }
+                
             }
             
 
