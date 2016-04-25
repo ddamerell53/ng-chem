@@ -79,6 +79,7 @@
                     </div>
                     <div class="alert alert-success" ng-show="update_success">Project Data Updated Successfully</div>
                     <div class="col-xs-12 col-md-6" ng-hide="editMode">
+
                         <div ng-repeat="item in firstList track by item.key">
                             <button-input copy-model="item.value" disabled="true" label="::item.key" ng-if="item.isFileField == false"></button-input>
                             <div class="form-group" ng-if="item.isFileField == true">
@@ -105,6 +106,7 @@
                         </div>
                     </div>
                     <div class="col-xs-12 col-md-6" ng-hide="editMode">
+
                         <div ng-repeat="item in secondList track by item.key">
                             <button-input copy-model="item.value" disabled="true" label="::item.key" ng-if="item.isFileField == false"></button-input>
                             <div class="form-group" ng-if="item.isFileField == true">
@@ -134,7 +136,7 @@
                         <div class=" form-group" sf-schema="myschema" sf-form="firstForm" sf-model="mol.custom_fields" sf-options="{ feedback: { 'glyphicon': true, 'glyphicon-asterisk': form.required && !hasSuccess() && !hasError() , 'glyphicon-remove': hasError() } }"></div>
                     </div>
                     <div ng-if="editMode" class="col-xs-12 col-md-6">
-                        <div class=" form-group" sf-schema="myschema" sf-form="secondForm" sf-model="mol.custom_fields"></div>
+                        <div class=" form-group" sf-schema="myschema" sf-form="secondForm" sf-model="mol.custom_fields" sf-options="{ feedback: { 'glyphicon': true, 'glyphicon-asterisk': form.required && !hasSuccess() && !hasError() , 'glyphicon-remove': hasError() } }"></div>
                     </div>
                 </div>
                 <div class="spacer"></div>

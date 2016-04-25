@@ -706,6 +706,14 @@ angular.module('chembiohubAssayApp')
                     return value.url !== url; })
             }
             
+            $scope.sizeCheck = function(file, form_key){
+                
+                //get the file
+                //check the file size
+                //if it's bigger than it should be, cancel the upload
+                //warn the user
+            }
+
             
           
             angular.element($window).bind('resize', function() {

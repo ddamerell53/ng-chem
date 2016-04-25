@@ -204,6 +204,15 @@ angular.module('chembiohubAssayApp')
                     $scope.mol.customFields[form_key[0]].attachments  = $filter('filter')($scope.mol.customFields[form_key[0]].attachments, function(value, index) {return value.url !== url;})
                   }
 
+                  $scope.sizeCheck = function(file, form_key){
+                
+                      //get the file
+                      //check the file size
+                      //if it's bigger than it should be, cancel the upload
+                      //warn the user
+                  }
+
+
 
                   $scope.isNewCompoundsInterface = isNewCompoundsInterface;
                   $scope.editMode = false;
