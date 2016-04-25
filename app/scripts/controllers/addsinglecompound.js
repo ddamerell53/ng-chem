@@ -10,8 +10,8 @@
 
 
 angular.module('chembiohubAssayApp')
-    .controller('AddSingleCompoundCtrl', ['$scope', '$rootScope', '$timeout', '$filter', '$state', '$stateParams', 'CBHCompoundBatch', 'ProjectFactory', 'MessageFactory', 'mol', 'projectList', 
-        function($scope, $rootScope, $timeout, $filter, $state, $stateParams, CBHCompoundBatch, ProjectFactory, MessageFactory, mol, projectList) {
+    .controller('AddSingleCompoundCtrl', ['$scope', '$rootScope', '$timeout', '$filter', '$state', '$stateParams', 'CBHCompoundBatch', 'ProjectFactory', 'MessageFactory', 'mol', 'projectList','FlowFileFactory', 
+        function($scope, $rootScope, $timeout, $filter, $state, $stateParams, CBHCompoundBatch, ProjectFactory, MessageFactory, mol, projectList, FlowFileFactory) {
 
             //need a combination of the initial setup of the add compounds page and the edit part of the single mol popup
             var projectKey = $stateParams.projectKey;
@@ -27,7 +27,34 @@ angular.module('chembiohubAssayApp')
                  }
 
 
+/* File attachment functions */
+            $scope.success = function(file, form_key) {
+                //apply the urls of the flowfile object to the correct custom field of $scope.mol.customFields - find the attachments array and add it
+                //put a new method in FlowFileFactory
 
+                //TODO handle error here
+                var AttachmentFactory = FlowFileFactory.cbhChemFlowFile;
+                AttachmentFactory.get({
+                    'identifier': file.uniqueIdentifier
+                }, function(data) {
+                    //add this to attachments in the form element (find it by form key in mol.customFields)
+                    var downloadUri = data.download_uri
+                    var attachment_obj = {
+                        url: downloadUri,
+                        printName: file.name,
+                        mimeType: file.file.type,
+                    }
+                    $scope.mol.customFields[form_key[0]].attachments.push(attachment_obj)
+
+                })
+
+            };
+
+            $scope.removeFile = function(form_key, index, url) {
+                $scope.mol.customFields[form_key[0]].attachments = $filter('filter')($scope.mol.customFields[form_key[0]].attachments, function(value, index) {
+                    return value.url !== url; })
+            }
+            
 
             $scope.editMode = false;
 
