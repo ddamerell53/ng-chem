@@ -67,7 +67,7 @@ angular.module('chembiohubAssayApp')
 	            $scope.showWellForm = function(well){
                     $scope.plateSaved = false;
 	            	$scope.selectedWell = well;
-					$scope.wellForm = well;
+					$scope.wellForm = angular.copy(well);
 					//updateFields();
 					$rootScope.$broadcast('schemaFormRedraw');
 					         	
@@ -118,6 +118,20 @@ angular.module('chembiohubAssayApp')
 
 	            }
 
+                $scope.doSavePlate = function(wellFormFE){
+                    //has the current selected well got a dirty form but hasData == false?
+                    //if so, mark that well as hasData so when saved and retrieved, well is green
+                    if(wellFormFE.$dirty){
+                        angular.extend($scope.plateForm.wells[$scope.selectedWellLocation], $scope.wellForm);
+                        if(!$scope.plateForm.wells[$scope.selectedWellLocation].justCleared){
+                            $scope.plateForm.wells[$scope.selectedWellLocation].hasData = true
+                        }
+                        $scope.plateForm.wells[$scope.selectedWellLocation].justCleared = false
+                    }
+                    //then use the save function
+                    $scope.savePlateFunction();
+                }
+
                 //need to implement this as the click function for the filtered dropdown for the UOX ID lookup
                 $scope.$on("openedSearchDropdown", function(event, args){
                     var filters = angular.copy($stateParams);
@@ -141,6 +155,8 @@ angular.module('chembiohubAssayApp')
                     $scope.initialisePlate();
                     $scope.showWellForm($scope.plateForm.wells["A1"]);
                 });
+
+                
             }]
         };
     }]);
