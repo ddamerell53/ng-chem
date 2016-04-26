@@ -106,7 +106,7 @@ angular.module('chembiohubAssayApp')
                     $scope.doValidation = function(myForm){
                         console.log('doValidation being called', myForm)
                         if(myForm.$valid && $scope.newSavedSearchModel.alias != "" && !myForm.$pristine){
-                            $scope.saveSearch();
+                            $scope.saveSearch(); //make this a promise? and also delay closing of modal buy 1 sec so message can be displayed.
                             $modalInstance.dismiss('cancel');
                         }
                         else if(myForm.$pristine){
@@ -147,13 +147,17 @@ angular.module('chembiohubAssayApp')
                         links: function () {
                           //console.log('links',$scope.links);
                           return $scope.links;
+                        },
+                        doFreshSearch: function(){
+                          return $scope.doFreshSearch;
                         }
 
                       }, 
-                      controller: function($scope, $modalInstance, links, loggedInUser) {
+                      controller: function($scope, $modalInstance, links, loggedInUser, doFreshSearch) {
                         $scope.links = links;
                         $scope.loggedInUser = loggedInUser;
                         $scope.modalInstance = $modalInstance;
+                        $scope.doFreshSearch = doFreshSearch;
 
                         $scope.cancel = function () {
                           $modalInstance.dismiss('cancel');
@@ -174,6 +178,29 @@ angular.module('chembiohubAssayApp')
 
             }
 
+            $scope.$on('chemicalSearchReady', function(){
+              if($scope.cbh.cameFromSavedSearch == true){
+                //Called during the loading of the page if
+                //the page has been loaded from a saved search in order
+                //to ensure the chemical search is up to date
+                $scope.cbh.cameFromSavedSearch = false;
+                $rootScope.$broadcast("chemicalFilterApplied");
+                $timeout(function(){
+                  
+                  $rootScope.$broadcast("searchParamsChanged");
+                },50);
+                
+
+              }
+            })
+
+            $scope.doFreshSearch = function(searchObj){
+
+              //trigger the new search as though structure has been changed.
+              $scope.cbh.cameFromSavedSearch = true;
+
+            }
+
             /**
              * @ngdoc method
              * @name $scope.saveSearch
@@ -182,7 +209,7 @@ angular.module('chembiohubAssayApp')
              * Mechanism for creating a new SavedSearch project and batch for storing information.
              * Fetches a new project of type saved_search_project_type, generates 2 searches to save:
              * - a capped search as a snapshot of how the search returns at the present moment;
-             * - a reusable ssearch which just containss the parameters ssearcchedd for, which will show updated results if used in the future 
+             * - a reusable search which just contains the parameters searched for, which will show updated results if used in the future 
              * 
              */
             $scope.saveSearch = function(){
@@ -207,9 +234,14 @@ angular.module('chembiohubAssayApp')
                       $scope.savedSearchType.project_template.custom_field_config.name = $scope.newSavedSearchModel.alias + d.getTime().toString();
                       SearchUrlParamsV2.generate_capped_saved_search($stateParams, $scope.cbh.selected_projects).then(function(new_state_params){
                         //create a new URL string with the newly generated state params
+                      //is this a structural search? Indicate if so
+                      var chemSearch = ""
+                      if($stateParams.chemical_search_id){
+                        chemSearch = $stateParams.chemical_search_id;
+                      }
                       var new_capped_url = $state.href($state.current.name, new_state_params);
                         //TODO: handle unreachable query or server side error
-                        projectFactory.save($scope.savedSearchType.project_template, function(data){
+                        projectFactory.save($scope.savedSearchType.project_template, function(data, chemSearch){
                             var resource_uri = data.resource_uri;
                             //change capped_url to the newly retrieved capped url
                             var savedSearchObj = {
@@ -218,7 +250,8 @@ angular.module('chembiohubAssayApp')
                                 "custom_fields": {
                                     alias: $scope.newSavedSearchModel.alias,
                                     url: window.location.href,
-                                    capped_url: new_capped_url
+                                    capped_url: new_capped_url,
+                                    chem_search: chemSearch
                                 },
                             }
                             var ssf = SavedSearchFactory.list;

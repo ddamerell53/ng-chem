@@ -95,11 +95,20 @@ angular.module('chembiohubAssayApp')
 
             if(stateParams.chemical_search_id){
               //get it
+              
+                              
+
               chemicalSearch.get({"id" :stateParams.chemical_search_id}, function(data){
                 skinConfig.objects[0].chemicalSearch = data;
                 skinConfig.objects[0].chemicalSearch.pids = stateParams.pids;
-                $rootScope.$broadcast("chemicalFilterApplied");
-                $rootScope.$broadcast("searchParamsChanged");
+                
+                
+                if(cbh.cameFromSavedSearch == true){
+                  $rootScope.$broadcast("chemicalSearch");
+                }else {
+                  $rootScope.$broadcast("chemicalFilterApplied");
+                  $rootScope.$broadcast("searchParamsChanged");
+                }
               }, function(error){
 
               });
@@ -136,6 +145,7 @@ angular.module('chembiohubAssayApp')
 
       searchUrlParamsV2.generate_chemical_params = function(params){
         params.chemical_search_id = skinConfig.objects[0].chemicalSearch.id;
+        console.log("new id", params.chemical_search_id)
         skinConfig.objects[0].chemicalSearch.filter_is_applied = true;
         return params;
       }

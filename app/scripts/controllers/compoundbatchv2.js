@@ -32,6 +32,7 @@ angular.module('chembiohubAssayApp')
                 var data = skinConfig.objects[0].chemicalSearch
                 data.id = undefined;
                 chemicalSearch.save(data, function(data){
+                    console.log(data)
                     skinConfig.objects[0].chemicalSearch = data;
                     $rootScope.$broadcast("chemicalSearchReady");
                 });

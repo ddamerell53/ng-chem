@@ -14,7 +14,7 @@
                 <strong>
                     <a ng-click="textBtnForm{{$index}}.$show()" ng-hide="textBtnForm{{$index}}.$visible"><span class="glyphicon glyphicon-pencil" title="edit" ng-if="loggedInUser.username == link.custom_fields.owner_key && link.custom_fields.to_remove == false"></span></a>&nbsp;
                     <span editable-text="link.custom_fields.alias" e-form="textBtnForm{{$index}}">{{ link.custom_fields.alias }}</span>&nbsp;
-                    <span><a href="{{ link.custom_fields.url }}" ng-click="cancel()">Use this search</a> </span>
+                    <span><a href="{{ link.custom_fields.url }}" ng-click="doFreshSearch();cancel();">Use this search</a> </span>
                 </strong><br>
 
                 <small><a href="{{ link.custom_fields.capped_url }}" ng-click="cancel()"><span class="glyphicon glyphicon-time"></span>&nbsp;see original results from {{ link.created | date }}</a> </small>
