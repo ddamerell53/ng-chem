@@ -160,10 +160,19 @@ skinObj.data.objects[0].get_filtered_table_schema = function(name, selected_proj
       if(field.project_specific_schema){
           angular.forEach(field.project_specific_schema, function(value, pid){
             if(project_ids.indexOf(parseInt(pid)) > -1){
+              if(project_ids.length == 1){
+                //Only make it possible to edit field if only one project is selected (there are other checks for permissions elsewhere)
+                field.editable = true;
+              }else{
+                field.editable = false;
+              }
               push = true
             }else if (project_ids.length == 0){
               //Assume all projects if none selected
               push = true
+              field.editable = false;
+            }else{
+              field.editable = false;
             }
           });
       }else{

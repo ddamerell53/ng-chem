@@ -124,6 +124,8 @@ angular.module('chembiohubAssayApp')
                         //make the editable cells not readonly
                         //On the new compounds interface then this will work for the 
                         //action item
+                        console.log(scope.cbh.editMode);
+                        console.log(c.editable);
                         if(c.editable && (scope.cbh.editMode || isNewCompoundsInterface)){
                             c.readOnly = false;
                         }else{
