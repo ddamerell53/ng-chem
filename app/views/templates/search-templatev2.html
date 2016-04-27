@@ -36,34 +36,45 @@
         <!-- Query to pull in titles -->
 
         <!-- Terms aggregation to uniquely group Titles and limit each to the appropriate level -->
-        <div class="form-group form-group-lg">
-          <div class="col-xs-12">
-            <div class="input-group">
-              <span class="input-group-btn dropdown"  >
-                <button  id="projectOptions" data-toggle="dropdown" class="btn btn-primary btn-lg" style="min-width:220px; text-align:left">
-                <span ng-if="cbh.selected_projects.length==0">No Project Filter</span>
-                <span ng-if="cbh.selected_projects.length==1">{{cbh.selected_projects[0].name}}</span>
-                <span ng-if="cbh.selected_projects.length > 1">{{cbh.selected_projects.length}} projects selected</span>
-                <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu col" style="width:220px" aria-labelledby="projectOptions">
-
-               <li ><a ng-click="cbh.selectAllProjects()"  class="ng-scope">Select All</a></li>
-               <li ><a ng-click="cbh.deSelectAllProjects()"  class="ng-scope">Deselect All</a></li>
-               <li ><hr/></li>
-               <li ><div class="col-xs-12"><input  placeholder="Search by name" type="text" ng-model="projectfilter"></input></div></li>
-               <li ng-repeat="project in cbh.projects.objects | filter:{name:projectfilter}"><a ng-click="cbh.toggleProjectFiltered(project);  $event.stopPropagation();"  class="ng-scope"><span class="glyphicon" ng-class="project.filtered ? 'glyphicon-check' : 'glyphicon-unchecked'"></span>{{project.name}}</a></li>
-           </ul>
-
-            </span>
+        <!-- <form class=""> -->
+            <div class="col-xs-6 col-sm-5 col-md-4 col-lg-2">
+                <div class="form-group form-group-lg">
+                      
+                        <div class="input-group">
+                          <div class=" dropdown" >
+                            <button  id="projectOptions" type="button" data-toggle="dropdown" class="btn btn-primary btn-lg" style=" text-align:left">
+                            <span ng-if="cbh.selected_projects.length==0">No Project Filter</span>
+                            <span ng-if="cbh.selected_projects.length==1">{{cbh.selected_projects[0].name}}</span>
+                            <span ng-if="cbh.selected_projects.length > 1">{{cbh.selected_projects.length}} projects selected</span>
+                            <span class="caret text-right"></span>
+                            </button>
+                            <ul class="dropdown-menu col" style="width:220px" aria-labelledby="projectOptions">
             
-
-           <input type="text" ng-model="cbh.textsearch" class="form-control" placeholder="Search ChemBio Hub Platform">
-
-       </div>
-
-    </div>
-    </div>
+                           <li ><a ng-click="cbh.selectAllProjects()"  class="ng-scope">Select All</a></li>
+                           <li ><a ng-click="cbh.deSelectAllProjects()"  class="ng-scope">Deselect All</a></li>
+                           <li ><hr/></li>
+                           <li ><div class="col-xs-12"><input  placeholder="Search by name" type="text" ng-model="projectfilter"></input></div></li>
+                           <li ng-repeat="project in cbh.projects.objects | filter:{name:projectfilter}"><a ng-click="cbh.toggleProjectFiltered(project);  $event.stopPropagation();"  class="ng-scope"><span class="glyphicon" ng-class="project.filtered ? 'glyphicon-check' : 'glyphicon-unchecked'"></span>{{project.name}}</a></li>
+                       </ul>
+            
+                        </div>
+                        
+            
+                       
+            
+                   </div>
+            
+                
+                </div>
+            </div>
+            <div class="col-xs-6 col-sm-7 col-md-8 col-lg-10">
+                <div class="form-group form-group-lg">
+                    <div class="input-group " style="border:1px solid #002147; border-radius:4px;">
+                        <span class="input-group-addon" style="margin-left:20px;"><span class="glyphicon glyphicon-search"></span></span><input type="text" ng-model="cbh.textsearch" class="form-control" placeholder="Search ChemBio Hub Platform" >
+                    </div>
+                </div>
+            
+        <!-- </form> -->
 
     <!-- <ul class="dropdown-menu" ng-show="cbh.textsearch != ''" style="width:600px;margin-left:200px;">
                             
@@ -81,7 +92,7 @@
 
 
 
-    </div>
+        </div>
     <div class="row">    
         <!-- Holder for existing filters here -->
         <div class="col-xs-12"  style="margin:5px 0;">
