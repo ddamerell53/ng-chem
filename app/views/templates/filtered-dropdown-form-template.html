@@ -20,7 +20,8 @@
                         </span>
                     <span class="caret" ></span>
                 </button>
-                <ul class="dropdown-menu" style="min-width:300px;max-width:300px;"  style="padding-top:5px; padding-bottom:5px; border-bottom:0;" >
+                <input type="hidden" name="someData" schema-validate="form" value="{{model[form.key[form.key.length -1]]}}" ng-model="model[form.key[form.key.length -1]]" />
+                <ul class="dropdown-menu"  style="min-width:300px;max-width:300px;"  style="padding-top:5px; padding-bottom:5px; border-bottom:0;" >
                   
                      <li ng-show="items.length == 0 && loading == true" class="col-xs-12 pick-list-item">Loading...</li>
                      <li ng-show="numberItemsMissing==0" class="col-xs-12 pick-list-item">Click on an item to select</li> 

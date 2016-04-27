@@ -14,7 +14,8 @@ angular.module('chembiohubAssayApp')
             var mol = {}
             $scope.mol = {}
             var myform, len;
-            $scope.editMode = false;
+
+
 
             //TODO handle error here
             $http.get(urlConfig.cbh_compound_batches_v2.list_endpoint + "/" + $stateParams.uniqId + "/").then(function(data) {
@@ -53,15 +54,41 @@ angular.module('chembiohubAssayApp')
                 myform = $scope.projectWithCustomFieldData.schemaform.form;
 
                 len = Math.ceil(myform.length / 2);
-                $scope.firstForm = angular.copy(myform).splice(0, len);
-                $scope.secondForm = angular.copy(myform).splice(len);
-                $scope.myform2 = angular.copy(myform);
+                if($stateParams.edit){
+                    var fieldName = $stateParams.edit.substring(14,$stateParams.edit.length)
+                    angular.forEach(myform, function(f){
+                        if(f.key == fieldName){
+                            $scope.firstForm = [angular.copy(f)];
+                            $scope.secondForm = [];
+                            $scope.myform2 = angular.copy($scope.firstForm);
+                            $scope.init();
 
-                $scope.init();
+                            $scope.myschema = angular.copy($scope.projectWithCustomFieldData.schemaform.schema);
+                            
+                            $scope.modalInstance = $modalInstance;
+                        }
+                    });
+                    
+                    $scope.editMode = true;
+                }else{
+                    $scope.editMode = false;
+                    $scope.firstForm = angular.copy(myform).splice(0, len);
+                    $scope.secondForm = angular.copy(myform).splice(len);
+                    $scope.myform2  = angular.copy(myform);
+                    $scope.init();
 
-                $scope.myschema = $scope.projectWithCustomFieldData.schemaform.schema;
+                    $scope.myschema = angular.copy($scope.projectWithCustomFieldData.schemaform.schema);
+                            
+                    $scope.modalInstance = $modalInstance;
+                    
+                }
                 
-                $scope.modalInstance = $modalInstance;
+
+                
+
+                 
+                    
+
                 $timeout(function(){
                     $scope.$apply();
                 })
