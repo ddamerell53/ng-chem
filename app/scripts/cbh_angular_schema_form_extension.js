@@ -127,8 +127,6 @@ angular.module('schemaForm')
               var autocompleteStatic = $filter('filter')(sortedStaticItems, {key: $scope.autoComp})
               //Merge together the static items from the schema with the dynamic items from the back end
               //This gives a total list of items as desired
-              console.log(autocompleteStatic)
-              console.log(autocompletedata.items)
               $scope.items = mergeKeyArrays(autocompletedata.items, autocompleteStatic) ;
               if($scope.autoComp){
                 var autoCompleteExistsOnBackend = false;

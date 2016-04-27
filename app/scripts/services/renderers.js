@@ -53,7 +53,7 @@ angular.module('chembiohubAssayApp')
                   //td.insertBefore( button, td.firstChild );
                   $(button).appendTo($(holderRow));
                   $(td.firstChild).css('margin-bottom', '18px').appendTo($(holderRow));
-
+                  $(holderRow).css('margin', '5px');
                   $(holderRow).appendTo($(td));
 
                   var mol = instance.getSourceDataAtRow(row);
@@ -63,10 +63,11 @@ angular.module('chembiohubAssayApp')
                     e.preventDefault(); // prevent selection quirk
                     e.stopPropagation();
                     
-                    
-                    scope.cbh.openSingleMol(mol, false, prop);
+                    $state.go($state.current.name + '.record', {'uniqId': mol.id, 'edit' : prop});
                   
                   });
+
+                  
 
                 }
                 
