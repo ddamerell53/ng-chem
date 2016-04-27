@@ -25,8 +25,8 @@
                         <a ng-if="project.editor && !project.project_type.plate_map_project_type" ui-sref="cbh.projects.project.addcompounds({projectKey: project.project_key})"><span class="glyphicon glyphicon-plus-sign"></span> Add multiple {{project.project_type.show_compounds ? 'compounds' : 'inventory items' }}</a>
                         <br ng-if="project.editor && project.project_type.plate_map_project_type">
                         <a ng-if="project.editor && project.project_type.plate_map_project_type" ui-sref="cbh.projects.project.addplate({projectKey: project.project_key})"><span class="glyphicon glyphicon-plus-sign"></span> Add Plate</a>
-                        <br ng-if="project.project_type.plate_map_project_type">
-                        <a ng-if="project.editor && project.project_type.plate_map_project_type" ui-sref="cbh.projects.project.listplates({projectKey: project.project_key})"><span class="glyphicon glyphicon-plus-sign"></span> List Plates</a>
+                        <!-- <br ng-if="project.project_type.plate_map_project_type">
+                        <a ng-if="project.editor && project.project_type.plate_map_project_type" ui-sref="cbh.projects.project.listplates({projectKey: project.project_key})"><span class="glyphicon glyphicon-plus-sign"></span> List Plates</a> -->
 
                         
                     </p>

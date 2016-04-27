@@ -153,6 +153,7 @@ angular.module('chembiohubAssayApp')
             $scope.setupNewPlateFromForm = function(form){
 
                 //the form now comes from the current project's custom field config
+                $scope.errormess = "";
             	if(form.$valid && $scope.newPlateForm["Name"] != "" && $scope.newPlateForm["Plate Size"] != "" && $scope.newPlateForm["Plate Type"] != "" && !form.$pristine){
                     //build the well objects
                     $scope.showPlate = true;
@@ -165,7 +166,18 @@ angular.module('chembiohubAssayApp')
             
                 }
                 else if(form.$error){
-                    $scope.errormess = "There are required fields missing data";
+                    
+                    if($scope.newPlateForm["Name"] == ""){
+                        $scope.errormess = $scope.errormess + "Name, ";
+                    }
+                    if(!$scope.newPlateForm["Plate Size"]){
+                        $scope.errormess = $scope.errormess + "Plate Size, ";
+                    }
+                    if($scope.newPlateForm["Plate Type"] == ""){
+                        $scope.errormess = $scope.errormess + "Plate Type ";
+                    }
+                    $scope.errormess = $scope.errormess + "cannot be empty.";
+
                 }
                 else {
                     $scope.errormess = "Some other error";

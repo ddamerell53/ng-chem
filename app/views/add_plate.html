@@ -10,10 +10,10 @@
 		                        <div class="help-block ">{{errormess}}</div>
 		                    </div>
 		                </div>
-					<form novalidate name="inputForm" role="form"  style="width:95%; display: table; margin: 0 auto;" >
-    					
-						<div class="row" sf-schema="projectObj.schemaform.schema" sf-form="projectObj.schemaform.form" sf-model="newPlateForm" >
-
+					<form novalidate name="inputForm" role="form"  style="width:95%; display: table; margin: 0 auto;"  >
+    					<fieldset ng-disabled="showPlate">
+							<div class="row" sf-schema="projectObj.schemaform.schema" sf-form="projectObj.schemaform.form" sf-model="newPlateForm" >
+						</fieldset>
 						</div>
 
 						<div class="row">
