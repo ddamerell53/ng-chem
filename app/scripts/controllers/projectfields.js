@@ -7,10 +7,53 @@
  * # ProjectfieldsCtrl
  * Controller of the chembiohubAssayApp
  */
+
+
 angular.module('chembiohubAssayApp')
   .controller('ProjectfieldsCtrl', ["$scope", "$modalInstance", "$rootScope", "ProjectFactory", "projectId", "default_project_type", "projectTypes", "skinConfig",
     function($scope, $modalInstance, $rootScope, ProjectFactory,  projectId, default_project_type, projectTypes, skinConfig) {
             $scope.isIE = detectIE();
+            var isPlateMapType = function(key){
+              var readonly = false;
+                        var current=$scope.proj; 
+                        
+                        if(angular.isDefined(current)){
+                          angular.forEach(key.slice(0,-1), function(p){ current = current[p]; }); 
+                          if(angular.isDefined(current)){
+                            
+                            if(current.readonly_on_create){
+                              readonly=true;
+                            }
+                          }
+                          
+                        }
+                        
+                        return readonly;
+            }
+            var isReadOnlyFunc= function(key){
+                        //This function takes the key of the individual copy of this form that is in the array of forms in schema form
+                        //The function is called because of a modification to the default template of angular schema form found in 
+                        //cbh_angular_schema_form_extension.js We iterate the object path to find the model value for the project data field in question
+                        //If this value has an ID then the user is NOT ALLOWED to change the field any more
+                        var readonly = false;
+                        var current=$scope.proj; 
+                        
+                        if(angular.isDefined(current)){
+                          angular.forEach(key.slice(0,-1), function(p){ current = current[p]; }); 
+                          if(angular.isDefined(current)){
+                            if(current.id){
+                              readonly=true;
+                            }
+                          }
+                          
+                        }
+                        if(!readonly){
+                          return isPlateMapType(key);
+                        }
+
+                        return readonly;
+                      }
+            
             var field_types = skinConfig.objects[0].field_type_choices;
               var restrictions = [
                 {"value": "open","name":"Open"},
@@ -63,32 +106,14 @@ angular.module('chembiohubAssayApp')
                     "feedback": false,
                       "title": "Name",
                       "required": true,
-                      "isReadOnly" : function(key){
-                        //This function takes the key of the individual copy of this form that is in the array of forms in schema form
-                        //The function is called because of a modification to the default template of angular schema form found in 
-                        //cbh_angular_schema_form_extension.js We iterate the object path to find the model value for the project data field in question
-                        //If this value has an ID then the user is NOT ALLOWED to change the field any more
-                        var readonly = false;
-                        var current=$scope.proj; 
-                        
-                        if(angular.isDefined(current)){
-                          angular.forEach(key.slice(0,-1), function(p){ current = current[p]; }); 
-                          if(angular.isDefined(current)){
-                            if(current.id){
-                              readonly=true;
-                            }
-                          }
-                          
-                        }
-                        
-                        return readonly;
-                      }
+                      "isReadOnly" : isReadOnlyFunc
 
 
                     },
                       {"title": "Required",
                       "type":"select",
                       "disableSuccessState":true,
+                      "isReadOnly" : isReadOnlyFunc,
                         "key":"custom_field_config.project_data_fields[].required",
                         "default":false,
                         "titleMap": [{"value":true, "name":"Yes"}, {"value":false, "name":"No"}],
@@ -100,6 +125,7 @@ angular.module('chembiohubAssayApp')
                         "disableSuccessState":true,
                         "type":"select",
                     "htmlClass": "col-sm-2",
+                    "isReadOnly" : isReadOnlyFunc
                     
                       },
                       {"title":"Description",
@@ -126,6 +152,7 @@ angular.module('chembiohubAssayApp')
                         "title": "Default Value",
                         "disableSuccessState":true,
                         "feedback": false,
+                        "isReadOnly" : isReadOnlyFunc,
                        "condition": "model.custom_field_config.project_data_fields[arrayIndex].required"
                      }, 
                       {  "htmlClass": "col-sm-6",
@@ -133,6 +160,7 @@ angular.module('chembiohubAssayApp')
                         "disableSuccessState":true,
                         "feedback": false,
                         "title": "Allowed values (comma-separated)",
+                        "isReadOnly" : isPlateMapType,
                        "condition": "(model.custom_field_config.project_data_fields[arrayIndex].field_type == 'uiselect' || model.custom_field_config.project_data_fields[arrayIndex].field_type == 'uiselecttags' || model.custom_field_config.project_data_fields[arrayIndex].field_type == 'uiselecttag' || model.custom_field_config.project_data_fields[arrayIndex].field_type == 'radios')"
                      }
                     ]
