@@ -150,6 +150,7 @@ $q.all([skinReq, projReq, userReq]).then(function(data){
 
 skinObj.data.objects[0].get_filtered_table_schema = function(name, selected_projects){
 
+console.log("start getting schema");
    var project_ids =  selected_projects.map(function(p){return p.id;});
    var schema = skinObj.data.objects[0].get_table_schema_by_name(name);
    var filtered = [];
@@ -160,7 +161,7 @@ skinObj.data.objects[0].get_filtered_table_schema = function(name, selected_proj
       if(field.project_specific_schema){
           angular.forEach(field.project_specific_schema, function(value, pid){
             
-            if(project_ids.indexOf(parseInt(pid)) > -1){
+            if(project_ids.indexOf(pid) > -1){
               
               push = true
             }else if (project_ids.length == 0){
@@ -177,7 +178,7 @@ skinObj.data.objects[0].get_filtered_table_schema = function(name, selected_proj
       }
 
    });
-   
+   console.log("end getting schema");
    return filtered;
   };
   
