@@ -100,10 +100,9 @@ angular.module('chembiohubAssayApp')
                     $scope.cancel = function () {
                       $modalInstance.dismiss('cancel');
                     };
-                    $scope.currentlySaving = false;
                     $scope.saveSearch = function(){
-                      $scope.currentlySaving = true;
-                      saveSearch($scope.cancel);
+                      $scope.cancel();
+                      saveSearch();
                     };
                     
                     
@@ -111,7 +110,6 @@ angular.module('chembiohubAssayApp')
 
                     
                     $scope.doValidation = function(myForm){
-                        console.log('doValidation being called', myForm)
                         if(myForm.$valid && $scope.newSavedSearchModel.alias != "" && !myForm.$pristine){
                             $scope.saveSearch(); //make this a promise? and also delay closing of modal buy 1 sec so message can be displayed.
                         }
@@ -218,7 +216,7 @@ angular.module('chembiohubAssayApp')
              * - a reusable search which just contains the parameters searched for, which will show updated results if used in the future 
              * 
              */
-            $scope.saveSearch = function(callback){
+            $scope.saveSearch = function(){
                 //$scope.errormess = ""
                 //from the project type service get saved_search_project_template (specify project_type.saved_search == true)
                 //from what is returned, set the name and the name on the custom field config to (alias + timestamp) for uniqueness
@@ -230,6 +228,7 @@ angular.module('chembiohubAssayApp')
                 //send back to the savedsearch service
 
                     //TODO: handle unreachable query or server side error
+                    $scope.currentlyLoading = true;
                     ProjectTypeFactory.get({"saved_search_project_type": true}, function(data){
                       
                       $scope.savedSearchType = data.objects[0];
@@ -264,7 +263,8 @@ angular.module('chembiohubAssayApp')
                             ssf.save(savedSearchObj, function(data){
                                 //search is now saved - close the modal
                                 //make sure reindex is called on the correct thing within data
-                                callback();
+                                
+                                $scope.currentlyLoading = false;
                             });   
                         });
                       });
