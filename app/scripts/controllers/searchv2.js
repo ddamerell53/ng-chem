@@ -94,20 +94,26 @@ angular.module('chembiohubAssayApp')
                   controller: function($scope, $modalInstance, newSavedSearchModel,  ProjectTypeFactory, projectFactory, SavedSearchFactory, saveSearch, skinConfig) {
                     $scope.newSavedSearchModel = newSavedSearchModel;
                     $scope.savedSearchSchemaForm = skinConfig.objects[0].savedsearch_schemaform;
-
-                    $scope.saveSearch = saveSearch;
                     
                     $scope.modalInstance = $modalInstance;
-                    $scope.errormess = "";
 
                     $scope.cancel = function () {
                       $modalInstance.dismiss('cancel');
                     };
+                    $scope.currentlySaving = false;
+                    $scope.saveSearch = function(){
+                      $scope.currentlySaving = true;
+                      saveSearch($scope.cancel);
+                    };
+                    
+                    
+                    $scope.errormess = "";
+
+                    
                     $scope.doValidation = function(myForm){
                         console.log('doValidation being called', myForm)
                         if(myForm.$valid && $scope.newSavedSearchModel.alias != "" && !myForm.$pristine){
                             $scope.saveSearch(); //make this a promise? and also delay closing of modal buy 1 sec so message can be displayed.
-                            $modalInstance.dismiss('cancel');
                         }
                         else if(myForm.$pristine){
                             $scope.errormess = "You must add a title";
@@ -212,7 +218,7 @@ angular.module('chembiohubAssayApp')
              * - a reusable search which just contains the parameters searched for, which will show updated results if used in the future 
              * 
              */
-            $scope.saveSearch = function(){
+            $scope.saveSearch = function(callback){
                 //$scope.errormess = ""
                 //from the project type service get saved_search_project_template (specify project_type.saved_search == true)
                 //from what is returned, set the name and the name on the custom field config to (alias + timestamp) for uniqueness
@@ -227,7 +233,6 @@ angular.module('chembiohubAssayApp')
                     ProjectTypeFactory.get({"saved_search_project_type": true}, function(data){
                       
                       $scope.savedSearchType = data.objects[0];
-                      console.log($scope.savedSearchType);
                       
                       var d = new Date();
                       $scope.savedSearchType.project_template.name = $scope.newSavedSearchModel.alias + d.getTime().toString();
@@ -259,7 +264,7 @@ angular.module('chembiohubAssayApp')
                             ssf.save(savedSearchObj, function(data){
                                 //search is now saved - close the modal
                                 //make sure reindex is called on the correct thing within data
-                              
+                                callback();
                             });   
                         });
                       });
