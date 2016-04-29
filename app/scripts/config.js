@@ -150,7 +150,6 @@ $q.all([skinReq, projReq, userReq]).then(function(data){
 
 skinObj.data.objects[0].get_filtered_table_schema = function(name, selected_projects){
 
-console.log("start getting schema");
    var project_ids =  selected_projects.map(function(p){return p.id;});
    var schema = skinObj.data.objects[0].get_table_schema_by_name(name);
    var filtered = [];
@@ -178,7 +177,6 @@ console.log("start getting schema");
       }
 
    });
-   console.log("end getting schema");
    return filtered;
   };
   
