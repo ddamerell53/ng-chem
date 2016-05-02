@@ -14,9 +14,7 @@
 window.searchParamsString = "?pids=&page=&compoundBatchesPerPage=&viewType=&limit&offset&encoded_query=&encoded_sorts=&encoded_hides=&textsearch=&chemical_search_id=";
 
 window.searchResolve = {
-        gridconfig: ['CompoundListSetup', function(CompoundListSetup) {
-          return CompoundListSetup;
-        }],
+        
         projectFactory: ['ProjectFactory', function(ProjectFactory) {
           return ProjectFactory;
         }],
@@ -100,9 +98,7 @@ $urlRouterProvider.when('', '/projects/list');
       //url: '/search',
       //params: ['project__project_key', 'flexmatch', 'with_substructure', 'similar_to', 'fpValue', 'created__gte', 'created__lte', 'molfile', 'smiles', 'limit', 'offset', 'random'],
       resolve: {
-        gridconfig: ['CompoundListSetup', function(CompoundListSetup) {
-          return CompoundListSetup;
-        }],
+        
         projectFactory: ['ProjectFactory', function(ProjectFactory) {
           return ProjectFactory;
         }],
@@ -268,9 +264,7 @@ $urlRouterProvider.when('', '/projects/list');
       url: '/projects',
 
       resolve: {
-        gridconfig: ['CompoundListSetup', function(CompoundListSetup) {
-          return CompoundListSetup;
-        }],
+        
         messages: ['MessageFactory', function(MessageFactory) {
           return MessageFactory.getMessages();
         }],

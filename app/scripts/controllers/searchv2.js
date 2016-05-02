@@ -8,8 +8,8 @@
  * This controller is responsible for fetching data to construct the search form for ChemiReg. It initialises the search and handles all of the search form changes - calls to update the results are broadcast around the application. It also handles the saved search functionality within the search page.
  */
 angular.module('chembiohubAssayApp')
-    .controller('Searchv2Ctrl', ['$scope', '$http', '$rootScope', '$filter', '$stateParams', '$location', '$state', '$timeout', 'projectFactory', 'gridconfig', 'CBHCompoundBatch', 'urlConfig', 'SearchUrlParamsV2', '$modal', 'loggedInUser', 'ProjectTypeFactory', 'SavedSearchFactory', 
-        function($scope, $http, $rootScope, $filter, $stateParams, $location, $state, $timeout, projectFactory, gridconfig, CBHCompoundBatch, urlConfig, SearchUrlParamsV2, $modal, loggedInUser, ProjectTypeFactory, SavedSearchFactory) {
+    .controller('Searchv2Ctrl', ['$scope', '$http', '$rootScope', '$filter', '$stateParams', '$location', '$state', '$timeout', 'projectFactory', 'CBHCompoundBatch', 'urlConfig', 'SearchUrlParamsV2', '$modal', 'loggedInUser', 'ProjectTypeFactory', 'SavedSearchFactory', 
+        function($scope, $http, $rootScope, $filter, $stateParams, $location, $state, $timeout, projectFactory, CBHCompoundBatch, urlConfig, SearchUrlParamsV2, $modal, loggedInUser, ProjectTypeFactory, SavedSearchFactory) {
             
 
 
