@@ -23,24 +23,10 @@
                 	</li>
                      <li class="col-xs-12">Click to hide or show</li> 
                      <li ><div class="col-xs-12"><input  placeholder="Search by name" type="text" ng-model="hidefilt"></input></div></li>
-                     <li ng-repeat="col in cbh.tabular_data_schema | filter:{knownBy : hidefilt}:strict">
-                     	<a ng-click="toggleHide(col)">
-                     		<span class="glyphicon" ng-class="col.hide=='hide' ? 'glyphicon-eye-close' : 'glyphicon-eye-open'"></span>
-                            <span  style="{{col.hide=='hide' ? 'color:grey !important' : ''}}">{{col.knownBy}}</span>
-                     		
-                     	</a>
-                     </li>
+                     
                 </ul>
                </div>
-			<!-- <li class="breadcrumb" ng-repeat="bc in hide_objects" >
-				<span class="bcname" ng-click="filterClicked(bc)">{{bc.knownBy}}</span>
-				<span class="glyphicon glyphicon-eye-close" ></span>
-				<button type="button" class="close" aria-label="Close" ng-click="closeHideBreadcrumb(bc)"><span aria-hidden="true">&times;</span></button>
-			</li>
-
-			<li ng-if="!hide_objects || hide_objects.length == 0">
-				<small>No hidden columns</small>
-			</li> -->
+			
 		</ul>
 	</fieldset>
 

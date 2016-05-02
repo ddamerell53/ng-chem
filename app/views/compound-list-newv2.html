@@ -60,12 +60,12 @@
                         <div class="hot-loading text-center" style="width:100%">
                             <img src="images/ring.gif" style="margin-top:100px; margin-left: auto; margin-right:auto">
                         </div>
-                        
+                        <handsoncompoundtablev2 uncurated-headers="compoundBatches.uncuratedHeaders" sorts="compoundBatches.sorts" cbh="cbh" compounds="compoundBatches.data"  excluded="compoundBatches.excluded" warnings-filter="warningsFilter" redraw="compoundBatches.redraw" columns="compoundBatches.tabular_data_schema" searchform-schema="searchFormSchema" search-form="searchForm" show-blanks="compoundBatches.showBlanks" show-non-blanks="compoundBatches.showNonBlanks" messages="messages" column="column"></handsoncompoundtablev2>
                     </div>
                     <!-- This table is only there to make sure that the ng-paginate directive works as the ng-paginate directive needs an ng-repeat-->
                     <table ng-show="">
                         <tr dir-paginate="compoundBatch in compoundBatches.data | itemsPerPage: pagination.compoundBatchesPerPage.value" total-items="totalCompoundBatches" current-page="pagination.current">
-                            <td>{{ compoundBatch }}</td>
+                            <td>{{ $index }}</td>
                         </tr>
                     </table>
                 </div>
