@@ -55,8 +55,6 @@ angular.module('chembiohubAssayApp')
                 $rootScope.$broadcast("setMolecule");
                     
                     
-           
-                
             });
 
             $scope.$on("chemicalFilterApplied",function( event, args){
@@ -126,6 +124,7 @@ angular.module('chembiohubAssayApp')
               changed = true;
             }
             var params = SearchUrlParamsV2.generate_filter_params($stateParams);
+
             $scope.cbh.changeSearchParams(params, true);
             $scope.cbh.justAdded = false;
         });
@@ -244,6 +243,7 @@ angular.module('chembiohubAssayApp')
                     proj.filtered = true;
                 }
                 var params = SearchUrlParamsV2.get_project_params($stateParams, $scope.cbh.selected_projects);
+
                 $scope.cbh.changeSearchParams(params, true);
                 $scope.cbh.justAdded = false;
            }
@@ -253,6 +253,12 @@ angular.module('chembiohubAssayApp')
             $scope.cbh.changeSearchParams = function(newParams, notify) {
                 //General function to search and move to a new URL
                 // var pf = SearchUrlParamsV2.fromForm($scope.cbh.searchForm);
+
+                if($scope.editModeUnreachable() && $scope.cbh.editMode){
+                    //reset the edit mode if the conditions are not met
+                    $scope.cbh.editMode = false;
+                    params.editMode = false;
+                }
 
                 if (notify) {
                     $scope.pagination.current = 1;
