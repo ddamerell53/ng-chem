@@ -160,7 +160,7 @@ skinObj.data.objects[0].get_filtered_table_schema = function(name, selected_proj
       if(field.project_specific_schema){
           angular.forEach(field.project_specific_schema, function(value, pid){
             
-            if(project_ids.indexOf(pid) > -1){
+            if(project_ids.indexOf(parseInt(pid)) > -1){
               
               push = true
             }else if (project_ids.length == 0){
