@@ -65,7 +65,7 @@
                     <!-- This table is only there to make sure that the ng-paginate directive works as the ng-paginate directive needs an ng-repeat-->
                     <table ng-show="">
                         <tr dir-paginate="compoundBatch in compoundBatches.data | itemsPerPage: pagination.compoundBatchesPerPage.value" total-items="totalCompoundBatches" current-page="pagination.current">
-                            <td>{{ compoundBatch }}</td>
+                            <td>{{ $index }}</td>
                         </tr>
                     </table>
                 </div>

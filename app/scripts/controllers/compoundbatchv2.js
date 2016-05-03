@@ -557,9 +557,18 @@ angular.module('chembiohubAssayApp')
                         }
                     }
                 }, function(error){
-                    $scope.resetCompoundList();
-                    $scope.noData = "Sorry, there was an error with that query. No data found.";
-                    $scope.imageCallback();
+                    if(error.status == 503){
+                        $timeout(function(){
+                            console.log("retrying waiting for response from structure search")
+                           getResultsPage(pageNumber, filters); 
+                       }, 5000);
+                        
+                    }else{
+                        $scope.resetCompoundList();
+                        $scope.noData = "Sorry, there was an error with that query. No data found.";
+                        $scope.imageCallback();
+                    }
+                    
                 }
                 );
                 if( $scope.cbh.showSingle){

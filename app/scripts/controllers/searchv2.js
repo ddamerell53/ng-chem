@@ -8,8 +8,8 @@
  * This controller is responsible for fetching data to construct the search form for ChemiReg. It initialises the search and handles all of the search form changes - calls to update the results are broadcast around the application. It also handles the saved search functionality within the search page.
  */
 angular.module('chembiohubAssayApp')
-    .controller('Searchv2Ctrl', ['$scope', '$http', '$rootScope', '$filter', '$stateParams', '$location', '$state', '$timeout', 'projectFactory', 'gridconfig', 'CBHCompoundBatch', 'urlConfig', 'SearchUrlParamsV2', '$modal', 'loggedInUser', 'ProjectTypeFactory', 'SavedSearchFactory', 
-        function($scope, $http, $rootScope, $filter, $stateParams, $location, $state, $timeout, projectFactory, gridconfig, CBHCompoundBatch, urlConfig, SearchUrlParamsV2, $modal, loggedInUser, ProjectTypeFactory, SavedSearchFactory) {
+    .controller('Searchv2Ctrl', ['$scope', '$http', '$rootScope', '$filter', '$stateParams', '$location', '$state', '$timeout', 'projectFactory', 'CBHCompoundBatch', 'urlConfig', 'SearchUrlParamsV2', '$modal', 'loggedInUser', 'ProjectTypeFactory', 'SavedSearchFactory', 
+        function($scope, $http, $rootScope, $filter, $stateParams, $location, $state, $timeout, projectFactory, CBHCompoundBatch, urlConfig, SearchUrlParamsV2, $modal, loggedInUser, ProjectTypeFactory, SavedSearchFactory) {
             
 
 
@@ -94,20 +94,24 @@ angular.module('chembiohubAssayApp')
                   controller: function($scope, $modalInstance, newSavedSearchModel,  ProjectTypeFactory, projectFactory, SavedSearchFactory, saveSearch, skinConfig) {
                     $scope.newSavedSearchModel = newSavedSearchModel;
                     $scope.savedSearchSchemaForm = skinConfig.objects[0].savedsearch_schemaform;
-
-                    $scope.saveSearch = saveSearch;
                     
                     $scope.modalInstance = $modalInstance;
-                    $scope.errormess = "";
 
                     $scope.cancel = function () {
                       $modalInstance.dismiss('cancel');
                     };
+                    $scope.saveSearch = function(){
+                      $scope.cancel();
+                      saveSearch();
+                    };
+                    
+                    
+                    $scope.errormess = "";
+
+                    
                     $scope.doValidation = function(myForm){
-                        console.log('doValidation being called', myForm)
                         if(myForm.$valid && $scope.newSavedSearchModel.alias != "" && !myForm.$pristine){
                             $scope.saveSearch(); //make this a promise? and also delay closing of modal buy 1 sec so message can be displayed.
-                            $modalInstance.dismiss('cancel');
                         }
                         else if(myForm.$pristine){
                             $scope.errormess = "You must add a title";
@@ -235,10 +239,10 @@ angular.module('chembiohubAssayApp')
                 //send back to the savedsearch service
 
                     //TODO: handle unreachable query or server side error
+                    $scope.currentlyLoading = true;
                     ProjectTypeFactory.get({"saved_search_project_type": true}, function(data){
                       
                       $scope.savedSearchType = data.objects[0];
-                      console.log($scope.savedSearchType);
                       
                       var d = new Date();
                       $scope.savedSearchType.project_template.name = $scope.newSavedSearchModel.alias + d.getTime().toString();
@@ -270,7 +274,8 @@ angular.module('chembiohubAssayApp')
                             ssf.save(savedSearchObj, function(data){
                                 //search is now saved - close the modal
                                 //make sure reindex is called on the correct thing within data
-                              
+                                
+                                $scope.currentlyLoading = false;
                             });   
                         });
                       });
