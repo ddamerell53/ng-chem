@@ -6,6 +6,7 @@
  * @restrict 'E'
  * @description
  * # appProgress
+ * not used
  * @deprecated
  */
 angular.module('chembiohubAssayApp')

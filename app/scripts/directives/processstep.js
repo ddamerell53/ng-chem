@@ -6,6 +6,8 @@
  * @restrict 'E'
  * @description
  * # processStep
+ * not used
+ * @deprecated
  */
 angular.module('chembiohubAssayApp')
   .directive('processStep', function () {

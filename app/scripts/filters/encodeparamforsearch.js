@@ -3,7 +3,6 @@
 /**
  * @ngdoc filter
  * @name chembiohubAssayApp.filter:encodeParamForSearch
- * @function
  * @description
  * # encodeParamForSearch
  * Filter in the chembiohubAssayApp.

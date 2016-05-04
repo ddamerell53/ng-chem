@@ -5,9 +5,22 @@
 </h1>
 <div><h2 id="description">Description</h2>
 <div class="description"><div class="chembiohubassayapp-directive-page chembiohubassayapp-directive-platemap-page"><h3 id="description_platemap">platemap</h3>
+<p>Directive to render a 96 or 48 well plate map and allow a form for each well to be populated with data. 
+When a well contains data, it changes colour (to green). Currently selected well has a red border.</p>
 </div></div>
 <h2 id="usage">Usage</h2>
-<div class="usage">as element:<pre class="prettyprint linenums">&lt;platemap&gt;
+<div class="usage">as element:<pre class="prettyprint linenums">&lt;platemap
+       plate-form="{object}"
+       schema-form-holder="{object}"
+       cbh="{object}"
+       save-plate-function="{function}"
+       plate-saved="{boolean}"&gt;
 &lt;/platemap&gt;</pre>
-</div>
+<h4 id="usage_parameters">Parameters</h4><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>plateForm</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="chembiohubassayapp-directive-page chembiohubassayapp-directive-platemap-page"><p>Information about the plate being rendered from a separate form (plate dimensions, name etc)</p>
+</div></td></tr><tr><td>schemaFormHolder</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="chembiohubassayapp-directive-page chembiohubassayapp-directive-platemap-page"><p>Object containing the angular schema form config for the individual well forms.</p>
+</div></td></tr><tr><td>cbh</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="chembiohubassayapp-directive-page chembiohubassayapp-directive-platemap-page"><p>The top level cbh object to help with globals and configuration</p>
+</div></td></tr><tr><td>savePlateFunction</td><td><a href="" class="label type-hint type-hint-function">function</a></td><td><div class="chembiohubassayapp-directive-page chembiohubassayapp-directive-platemap-page"><p>Pass-through function so that when the user saves the phole plate within the directive,
+the save functions etc can be called in the parent scope.</p>
+</div></td></tr><tr><td>plateSaved</td><td><a href="" class="label type-hint type-hint-boolean">boolean</a></td><td><div class="chembiohubassayapp-directive-page chembiohubassayapp-directive-platemap-page"><p>Boolean passthrough so the parent scope knows a plate has been saved - can be used for a list update callback if required.</p>
+</div></td></tr></tbody></table></div>
 </div>

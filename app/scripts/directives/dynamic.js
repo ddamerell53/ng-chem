@@ -6,6 +6,8 @@
  * @restrict 'A'
  * @description
  * # dynamic
+ * not used
+ * @deprecated
  */
 angular.module('chembiohubAssayApp')
 app.directive('dynamic', function ($compile) {

@@ -7,7 +7,12 @@
  * 
  * @description
  * # chemsvg
- * Creates a data point
+ * Renders a chemical structure provided in SMILES format as a 2D SVG format image.
+ * @param {string} size Dimensions of the generated image in pixels.
+ * @param {string} smiles String representation of chemicasl structure in SMILES format
+ * @param {string} dataType Not used
+ * @param {string} baseUrl If the smiles input is from ChemDraw, store that in the scope
+ * @param {object} properties  Contains extra configuration parameters from the app or work out correct SMILES from a supplied SMARTS format structure.
  * 
  */
 angular.module('chembiohubAssayApp')

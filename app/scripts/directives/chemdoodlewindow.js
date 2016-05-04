@@ -6,6 +6,10 @@
  * @restrict 'E'
  * @description An angular directive to house ChemDoodle chemical sketcher and retain information from a rootScope variable.
  * # chemdoodleWindow
+ * @param {string} sketchMolfile  .
+ * @param {function} fetchData  .
+ * @param {object} molecule  .
+ * @deprecated
  */
 angular.module('chembiohubAssayApp')
   .directive('chemdoodleWindow', [ '$rootScope','$window','$timeout', function ($rootScope, $window, $timeout) {

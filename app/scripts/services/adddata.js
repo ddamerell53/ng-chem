@@ -6,6 +6,7 @@
  * @description
  * # addData
  * Factory in the chembiohubAssayApp.
+ * @deprecated
  */
 angular.module('chembiohubAssayApp')
   .factory('AddDataFactory', ['$resource', 'urlConfig', function ($resource, urlConfig) {

@@ -5,9 +5,90 @@
 </h1>
 <div><h2 id="description">Description</h2>
 <div class="description"><div class="chembiohubassayapp-directive-page chembiohubassayapp-directive-searchbreadcrumbs-page"><h3 id="description_searchbreadcrumbs">searchBreadcrumbs</h3>
+<p>Visual representation of applied search parameters. Since each subform is displayed separately, the app needs to show the user 
+which filters, sorts and searches they&#39;ve applied. Also simplifies removing one aspect of a search.</p>
 </div></div>
 <h2 id="usage">Usage</h2>
-<div class="usage">as element:<pre class="prettyprint linenums">&lt;search-breadcrumbs&gt;
+<div class="usage">as element:<pre class="prettyprint linenums">&lt;search-breadcrumbs
+       cbh="{object}"&gt;
 &lt;/search-breadcrumbs&gt;</pre>
+<h3 id="usage_directive-info">Directive info</h3>
+<div class="directive-info"><ul><li>This directive creates new scope.</li>
+</ul>
+</div>
+<h4 id="usage_directive-info_parameters">Parameters</h4><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>cbh</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="chembiohubassayapp-directive-page chembiohubassayapp-directive-searchbreadcrumbs-page"><p>The top level cbh object to help with globals and configuration</p>
+</div></td></tr></tbody></table></div>
+<div class="member method"><h2 id="methods">Methods</h2>
+<ul class="methods"><li><h3 id="methods_$scope$on">$scope.$on(searchParamsChanged, callback)</h3>
+<div class="$scope$on"><div class="chembiohubassayapp-directive-page chembiohubassayapp-directive-searchbreadcrumbs-scope-on-page"><p>The name searchParamsChanged is defined in the schema of the data addition UI for tag fields
+This function alters the scoped variables for filters and sorts so they can be rendered in the breadcrums template.</p>
+</div><h5 id="methods_$scope$on_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>searchParamsChanged</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="chembiohubassayapp-directive-page chembiohubassayapp-directive-searchbreadcrumbs-scope-on-page"><p>the name of the broadcast to act on</p>
+</div></td></tr><tr><td>callback</td><td><a href="" class="label type-hint type-hint-function">function</a></td><td><div class="chembiohubassayapp-directive-page chembiohubassayapp-directive-searchbreadcrumbs-scope-on-page"><p>the callback function to trigger functionality</p>
+</div></td></tr></tbody></table></div>
+</li>
+<li><h3 id="methods_$scope$on">$scope.$on(chemicalFilterApplied, callback)</h3>
+<div class="$scope$on"><div class="chembiohubassayapp-directive-page chembiohubassayapp-directive-searchbreadcrumbs-scope-on-page"><p>The name chemicalFilterApplied is defined in the schema of the data addition UI for tag fields
+This function locates the structure column in the results table and processes the chemical search to identify 
+what sort of structure search to perform.</p>
+</div><h5 id="methods_$scope$on_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>chemicalFilterApplied</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="chembiohubassayapp-directive-page chembiohubassayapp-directive-searchbreadcrumbs-scope-on-page"><p>the name of the broadcast to act on</p>
+</div></td></tr><tr><td>callback</td><td><a href="" class="label type-hint type-hint-function">function</a></td><td><div class="chembiohubassayapp-directive-page chembiohubassayapp-directive-searchbreadcrumbs-scope-on-page"><p>the callback function to trigger functionality</p>
+</div></td></tr></tbody></table></div>
+</li>
+<li><h3 id="methods_$scope$on">$scope.$on(removeStructureSearch, callback)</h3>
+<div class="$scope$on"><div class="chembiohubassayapp-directive-page chembiohubassayapp-directive-searchbreadcrumbs-scope-on-page"><p>The name removeStructureSearch is defined in the schema of the data addition UI for tag fields
+This function causes any structure serach information to be deleted (set as undefined).</p>
+</div><h5 id="methods_$scope$on_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>removeStructureSearch</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="chembiohubassayapp-directive-page chembiohubassayapp-directive-searchbreadcrumbs-scope-on-page"><p>the name of the broadcast to act on</p>
+</div></td></tr><tr><td>callback</td><td><a href="" class="label type-hint type-hint-function">function</a></td><td><div class="chembiohubassayapp-directive-page chembiohubassayapp-directive-searchbreadcrumbs-scope-on-page"><p>the callback function to trigger functionality</p>
+</div></td></tr></tbody></table></div>
+</li>
+<li><h3 id="methods_$scopeclosefilterbreadcrumb">$scope.closeFilterBreadcrumb(bc)</h3>
+<div class="$scopeclosefilterbreadcrumb"><div class="chembiohubassayapp-directive-page chembiohubassayapp-directive-searchbreadcrumbs-scope-closefilterbreadcrumb-page"><p>Function which removes a search filter from the applied search query and breadcrumbs list. Causes cascading broadcasts of 
+cleanupFilters and filtersUpdated for other parts of the search mechanism within the app.</p>
+</div><h5 id="methods_$scopeclosefilterbreadcrumb_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>bc</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="chembiohubassayapp-directive-page chembiohubassayapp-directive-searchbreadcrumbs-scope-closefilterbreadcrumb-page"><p>query object containing information about current breadcrumb</p>
+</div></td></tr></tbody></table></div>
+</li>
+<li><h3 id="methods_$scopeclosehidebreadcrumb">$scope.closeHideBreadcrumb(bc)</h3>
+<div class="$scopeclosehidebreadcrumb"><div class="chembiohubassayapp-directive-page chembiohubassayapp-directive-searchbreadcrumbs-scope-closehidebreadcrumb-page"><p>Function which removes a filter to redisplay an individual column from the results table. Causes a cascading broadcast of 
+removeHide for other parts of the search mechanism within the app.</p>
+</div><h5 id="methods_$scopeclosehidebreadcrumb_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>bc</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="chembiohubassayapp-directive-page chembiohubassayapp-directive-searchbreadcrumbs-scope-closehidebreadcrumb-page"><p>query object containing information about current breadcrumb</p>
+</div></td></tr></tbody></table></div>
+</li>
+<li><h3 id="methods_$scopeclosesortbreadcrumb">$scope.closeSortBreadcrumb(bc)</h3>
+<div class="$scopeclosesortbreadcrumb"><div class="chembiohubassayapp-directive-page chembiohubassayapp-directive-searchbreadcrumbs-scope-closesortbreadcrumb-page"><p>Close action for a breadcrumb. Remove from list</p>
+</div><h5 id="methods_$scopeclosesortbreadcrumb_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>bc</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="chembiohubassayapp-directive-page chembiohubassayapp-directive-searchbreadcrumbs-scope-closesortbreadcrumb-page"><p>query object containing information about current breadcrumb</p>
+</div></td></tr></tbody></table></div>
+</li>
+<li><h3 id="methods_$scopefilterclicked">$scope.filterClicked(bc)</h3>
+<div class="$scopefilterclicked"><div class="chembiohubassayapp-directive-page chembiohubassayapp-directive-searchbreadcrumbs-scope-filterclicked-page"><p>Causes cascading broadcast of columnSelection for other parts of the search mechanism within the app and within this directive.</p>
+</div><h5 id="methods_$scopefilterclicked_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>bc</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="chembiohubassayapp-directive-page chembiohubassayapp-directive-searchbreadcrumbs-scope-filterclicked-page"><p>query object containing information about current breadcrumb</p>
+</div></td></tr></tbody></table></div>
+</li>
+<li><h3 id="methods_$scopefiltertypename">$scope.filterTypeName(obj)</h3>
+<div class="$scopefiltertypename"><div class="chembiohubassayapp-directive-page chembiohubassayapp-directive-searchbreadcrumbs-scope-filtertypename-page"><p>This function pulls out the human readable name of the filter for display</p>
+</div><h5 id="methods_$scopefiltertypename_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>obj</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="chembiohubassayapp-directive-page chembiohubassayapp-directive-searchbreadcrumbs-scope-filtertypename-page"><p>query object containing information about currently applied filter</p>
+</div></td></tr></tbody></table></div>
+</li>
+<li><h3 id="methods_$scoperemovestructuresearch">$scope.removeStructureSearch()</h3>
+<div class="$scoperemovestructuresearch"><div class="chembiohubassayapp-directive-page chembiohubassayapp-directive-searchbreadcrumbs-scope-removestructuresearch-page"><p>Causes cascading broadcast of removeStructureSearch for other parts of the search mechanism within the app and within this directive.</p>
+</div></div>
+</li>
+<li><h3 id="methods_$scopesetfilterasstring">$scope.setfilterAsString(obj)</h3>
+<div class="$scopesetfilterasstring"><div class="chembiohubassayapp-directive-page chembiohubassayapp-directive-searchbreadcrumbs-scope-setfilterasstring-page"><p>This function is used to create a human-readable interpretation of the applied filter parameters, such as &#39;Between&#39;, &#39;and/or&#39; and 
+descriptive sufixes.</p>
+</div><h5 id="methods_$scopesetfilterasstring_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>obj</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="chembiohubassayapp-directive-page chembiohubassayapp-directive-searchbreadcrumbs-scope-setfilterasstring-page"><p>query object containing information about currently applied filter</p>
+</div></td></tr></tbody></table></div>
+</li>
+<li><h3 id="methods_$scopetogglehide">$scope.toggleHide(bc)</h3>
+<div class="$scopetogglehide"><div class="chembiohubassayapp-directive-page chembiohubassayapp-directive-searchbreadcrumbs-scope-togglehide-page"><p>Function which adds or removes one filter to show or hide an individual column from the results table. Causes a cascading broadcast of 
+removeHide or addHide for other parts of the search mechanism within the app.</p>
+</div><h5 id="methods_$scopetogglehide_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>bc</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="chembiohubassayapp-directive-page chembiohubassayapp-directive-searchbreadcrumbs-scope-togglehide-page"><p>query object containing information about current breadcrumb and the command issued</p>
+</div></td></tr></tbody></table></div>
+</li>
+<li><h3 id="methods_$scopeunhideall">$scope.unHideAll()</h3>
+<div class="$scopeunhideall"><div class="chembiohubassayapp-directive-page chembiohubassayapp-directive-searchbreadcrumbs-scope-unhideall-page"><p>Function which removes any filters to hide individual columns from the results table. Causes a cascading broadcast of 
+removeAllHides for other parts of the search mechanism within the app.</p>
+</div></div>
+</li>
+</ul>
 </div>
 </div>

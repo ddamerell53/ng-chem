@@ -5,9 +5,22 @@
 </h1>
 <div><h2 id="description">Description</h2>
 <div class="description"><div class="chembiohubassayapp-directive-page chembiohubassayapp-directive-buttoninput-page"><h3 id="description_buttoninput">buttonInput</h3>
+<p>Builds a two-mode form element - an &quot;edit&quot; mode display which is a regular form element and a 
+&quot;readonly&quot; version which is a disabled text form element displaying the field value. This is then accessible 
+by a &quot;click to copy&quot; mechanism provided by (TODO link)</p>
 </div></div>
 <h2 id="usage">Usage</h2>
-<div class="usage">as element:<pre class="prettyprint linenums">&lt;button-input&gt;
+<div class="usage">as element:<pre class="prettyprint linenums">&lt;button-input
+       copy-model="{object}"
+       disabled
+       label="{string}"&gt;
 &lt;/button-input&gt;</pre>
+<h3 id="usage_directive-info">Directive info</h3>
+<div class="directive-info"><ul><li>This directive creates new scope.</li>
+</ul>
 </div>
+<h4 id="usage_directive-info_parameters">Parameters</h4><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>copyModel</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="chembiohubassayapp-directive-page chembiohubassayapp-directive-buttoninput-page"><p>Used to store data for the read and edit states, acts like a form element</p>
+</div></td></tr><tr><td>disabled</td><td><a href="" class="label type-hint type-hint-boolean">boolean</a></td><td><div class="chembiohubassayapp-directive-page chembiohubassayapp-directive-buttoninput-page"><p>Flag for displaying this element as a disabled form element (not used)</p>
+</div></td></tr><tr><td>label</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="chembiohubassayapp-directive-page chembiohubassayapp-directive-buttoninput-page"><p>Text title for the field</p>
+</div></td></tr></tbody></table></div>
 </div>

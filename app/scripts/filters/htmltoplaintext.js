@@ -2,8 +2,7 @@
 
 /**
  * @ngdoc filter
- * @name chembiohubAssayApp.filter:htmlToPlainText
- * @function
+ * @name chembiohubAssayApp.filter:htmlToPlaintext
  * @description
  * # htmlToPlainText
  * Filter in the chembiohubAssayApp.

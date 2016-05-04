@@ -2,8 +2,7 @@
 
 /**
  * @ngdoc filter
- * @name chembiohubAssayApp.filter:titleCase
- * @function
+ * @name chembiohubAssayApp.filter:titlecase
  * @description
  * # titleCase
  * Filter in the chembiohubAssayApp.

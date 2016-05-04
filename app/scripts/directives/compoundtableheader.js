@@ -6,6 +6,8 @@
  * @restrict 'E'
  * @description
  * # compoundTableHeader
+ * not used
+ * @depracated
  */
 angular.module('chembiohubAssayApp')
   .directive('compoundtableheader', function () {

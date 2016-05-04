@@ -4,8 +4,16 @@
  * @ngdoc directive
  * @name chembiohubAssayApp.directive:handsoncompoundtablev2
  * @restrict 'E'
+ * @scope
  * @description
- * # HandsOnCompoundTable
+ * # HandsOnCompoundTableV2
+ * @param {integer} redraw Number of individual table rows which must be redrawn following a completed edit event.
+ * @param {array} compounds The set of batches being rendered into the table
+ * @param {object} cbh The top level cbh object to help with globals and configuration
+ * @param {array} uncuratedHeaders List of header objects for uncurated columns (supplementary fields)
+ * @param {array} columns A list of objects which configure which columns to show in the table and which data type the appropriate cells are.
+ * @param {object} messages The messages object which allows setting of helper messages on each column.
+ * @param {array} plugins Array containing any plugins (as objects) which need to be passed to handsontable to render cells in a particular way.
  */
 angular.module('chembiohubAssayApp')
     .directive('handsoncompoundtablev2', ["$timeout", "$compile", "renderers", "$rootScope", "$filter", "$modal", "$window", function($timeout, $compile, renderers, $rootScope, $filter, $modal, $window) {

@@ -4,10 +4,28 @@
 </div>
 </h1>
 <div><h2 id="description">Description</h2>
-<div class="description"><div class="chembiohubassayapp-directive-page chembiohubassayapp-directive-handsoncompoundtablev2-page"><h3 id="description_handsoncompoundtable">HandsOnCompoundTable</h3>
+<div class="description"><div class="chembiohubassayapp-directive-page chembiohubassayapp-directive-handsoncompoundtablev2-page"><h3 id="description_handsoncompoundtablev2">HandsOnCompoundTableV2</h3>
 </div></div>
 <h2 id="usage">Usage</h2>
-<div class="usage">as element:<pre class="prettyprint linenums">&lt;handsoncompoundtablev2&gt;
+<div class="usage">as element:<pre class="prettyprint linenums">&lt;handsoncompoundtablev2
+       redraw="{integer}"
+       compounds="{array}"
+       cbh="{object}"
+       uncurated-headers="{array}"
+       columns="{array}"
+       messages="{object}"
+       plugins="{array}"&gt;
 &lt;/handsoncompoundtablev2&gt;</pre>
+<h3 id="usage_directive-info">Directive info</h3>
+<div class="directive-info"><ul><li>This directive creates new scope.</li>
+</ul>
 </div>
+<h4 id="usage_directive-info_parameters">Parameters</h4><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>redraw</td><td><a href="" class="label type-hint type-hint-integer">integer</a></td><td><div class="chembiohubassayapp-directive-page chembiohubassayapp-directive-handsoncompoundtablev2-page"><p>Number of individual table rows which must be redrawn following a completed edit event.</p>
+</div></td></tr><tr><td>compounds</td><td><a href="" class="label type-hint type-hint-array">array</a></td><td><div class="chembiohubassayapp-directive-page chembiohubassayapp-directive-handsoncompoundtablev2-page"><p>The set of batches being rendered into the table</p>
+</div></td></tr><tr><td>cbh</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="chembiohubassayapp-directive-page chembiohubassayapp-directive-handsoncompoundtablev2-page"><p>The top level cbh object to help with globals and configuration</p>
+</div></td></tr><tr><td>uncuratedHeaders</td><td><a href="" class="label type-hint type-hint-array">array</a></td><td><div class="chembiohubassayapp-directive-page chembiohubassayapp-directive-handsoncompoundtablev2-page"><p>List of header objects for uncurated columns (supplementary fields)</p>
+</div></td></tr><tr><td>columns</td><td><a href="" class="label type-hint type-hint-array">array</a></td><td><div class="chembiohubassayapp-directive-page chembiohubassayapp-directive-handsoncompoundtablev2-page"><p>A list of objects which configure which columns to show in the table and which data type the appropriate cells are.</p>
+</div></td></tr><tr><td>messages</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="chembiohubassayapp-directive-page chembiohubassayapp-directive-handsoncompoundtablev2-page"><p>The messages object which allows setting of helper messages on each column.</p>
+</div></td></tr><tr><td>plugins</td><td><a href="" class="label type-hint type-hint-array">array</a></td><td><div class="chembiohubassayapp-directive-page chembiohubassayapp-directive-handsoncompoundtablev2-page"><p>Array containing any plugins (as objects) which need to be passed to handsontable to render cells in a particular way.</p>
+</div></td></tr></tbody></table></div>
 </div>

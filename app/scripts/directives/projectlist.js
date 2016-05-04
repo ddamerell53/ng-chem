@@ -6,15 +6,13 @@
  * @restrict 'E'
  * @description
  * # projectList
+ * Renders a list of projects and also contains a convenience method for adding styling classes to SVGs defined using img tags
  */
 angular.module('chembiohubAssayApp')
   .directive('projectList',  function () {
     return {
       templateUrl: 'views/templates/project-list.html',
       restrict: 'E',
-      /*link: function postLink(scope, element, attrs) {
-        element.text('this is the projectList directive');
-      },*/
       controller: ['$scope', '$timeout', function($scope, $timeout) {
 
       	
@@ -23,6 +21,15 @@ angular.module('chembiohubAssayApp')
       	
       }],
       link: function(scope, element, attrs){
+
+        /**
+         * @ngdoc method
+         * @name chembiohubAssayApp.directive:projectList#scope.svgify
+         * @methodOf chembiohubAssayApp.directive:projectList
+         * @description
+         * Take an SVG location defined in an image tag, apply style rules and classes and convert to inline SVG.
+         *
+         */
         scope.svgify = function(){
             jQuery('img.svg').each(function(){
                 var $img = jQuery(this);

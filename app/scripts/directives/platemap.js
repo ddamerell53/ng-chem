@@ -6,6 +6,14 @@
  * @restrict 'E'
  * @description
  * # platemap
+ * Directive to render a 96 or 48 well plate map and allow a form for each well to be populated with data. 
+ * When a well contains data, it changes colour (to green). Currently selected well has a red border.
+ * @param {object} plateForm Information about the plate being rendered from a separate form (plate dimensions, name etc)
+ * @param {object} schemaFormHolder Object containing the angular schema form config for the individual well forms.
+ * @param {object} cbh The top level cbh object to help with globals and configuration
+ * @param {function} savePlateFunction Pass-through function so that when the user saves the phole plate within the directive, 
+ * the save functions etc can be called in the parent scope.
+ * @param {boolean} plateSaved Boolean passthrough so the parent scope knows a plate has been saved - can be used for a list update callback if required.
  */
 angular.module('chembiohubAssayApp')
     .directive('platemap',['$filter', 'CBHCompoundBatch', '$stateParams', function($filter, CBHCompoundBatch, $stateParams) {

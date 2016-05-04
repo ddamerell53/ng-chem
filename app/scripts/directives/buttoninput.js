@@ -4,8 +4,16 @@
  * @ngdoc directive
  * @name chembiohubAssayApp.directive:buttonInput
  * @restrict 'E'
+ * @scope
  * @description
  * # buttonInput
+ * Builds a two-mode form element - an "edit" mode display which is a regular form element and a 
+ * "readonly" version which is a disabled text form element displaying the field value. This is then accessible 
+ * by a "click to copy" mechanism provided by (TODO link)
+ *
+ * @param {object} copyModel  Used to store data for the read and edit states, acts like a form element
+ * @param {boolean} disabled  Flag for displaying this element as a disabled form element (not used)
+ * @param {string} label  Text title for the field
  */
 angular.module('chembiohubAssayApp')
   .directive('buttonInput', function ($timeout) {

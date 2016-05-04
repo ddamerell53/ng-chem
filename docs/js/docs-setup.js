@@ -262,7 +262,7 @@ NG_DOCS={
       "type": "directive",
       "moduleName": "chembiohubAssayApp",
       "shortDescription": "buttonInput",
-      "keywords": "api buttoninput chembiohubassayapp directive"
+      "keywords": "accessible acts api builds buttoninput chembiohubassayapp click copy copymodel data directive disabled display displaying edit element field flag form label link mechanism mode provided read readonly regular store text title two-mode version"
     },
     {
       "section": "api",
@@ -271,7 +271,7 @@ NG_DOCS={
       "type": "directive",
       "moduleName": "chembiohubAssayApp",
       "shortDescription": "An angular directive to house ChemDoodle chemical sketcher and retain information from a rootScope variable.",
-      "keywords": "angular api chembiohubassayapp chemdoodle chemdoodlewindow chemical directive house retain rootscope sketcher variable"
+      "keywords": "angular api chembiohubassayapp chemdoodle chemdoodlewindow chemical directive fetchdata house molecule retain rootscope sketcher sketchmolfile variable"
     },
     {
       "section": "api",
@@ -280,7 +280,7 @@ NG_DOCS={
       "type": "directive",
       "moduleName": "chembiohubAssayApp",
       "shortDescription": "chemsvg",
-      "keywords": "api chembiohubassayapp chemsvg creates data directive point"
+      "keywords": "api app baseurl chembiohubassayapp chemdraw chemical chemicasl chemsvg configuration correct datatype dimensions directive extra format generated image input parameters pixels properties provided renders representation scope size smarts smiles store string structure supplied svg work"
     },
     {
       "section": "api",
@@ -293,12 +293,12 @@ NG_DOCS={
     },
     {
       "section": "api",
-      "id": "chembiohubAssayApp.directive:diableAnimation",
-      "shortName": "diableAnimation",
+      "id": "chembiohubAssayApp.directive:disableAnimation",
+      "shortName": "disableAnimation",
       "type": "directive",
       "moduleName": "chembiohubAssayApp",
-      "shortDescription": "diableAnimation",
-      "keywords": "api chembiohubassayapp diableanimation directive"
+      "shortDescription": "disableAnimation",
+      "keywords": "api chembiohubassayapp directive disableanimation"
     },
     {
       "section": "api",
@@ -316,7 +316,7 @@ NG_DOCS={
       "type": "directive",
       "moduleName": "chembiohubAssayApp",
       "shortDescription": "HandsOnCompoundTable",
-      "keywords": "api chembiohubassayapp directive handsoncompoundtable"
+      "keywords": "api chembiohubassayapp directive handsoncompoundtable handsoncompoundtablev2 version"
     },
     {
       "section": "api",
@@ -324,8 +324,8 @@ NG_DOCS={
       "shortName": "handsoncompoundtablev2",
       "type": "directive",
       "moduleName": "chembiohubAssayApp",
-      "shortDescription": "HandsOnCompoundTable",
-      "keywords": "api chembiohubassayapp directive handsoncompoundtable"
+      "shortDescription": "HandsOnCompoundTableV2",
+      "keywords": "allows api appropriate array batches cbh cells chembiohubassayapp column columns completed compounds configuration configure data directive edit event fields globals handsoncompoundtablev2 handsontable header help helper individual level list messages number object objects passed plugins redraw redrawn render rendered rows set setting table top type uncurated uncuratedheaders"
     },
     {
       "section": "api",
@@ -334,7 +334,7 @@ NG_DOCS={
       "type": "directive",
       "moduleName": "chembiohubAssayApp",
       "shortDescription": "platemap",
-      "keywords": "api chembiohubassayapp directive platemap"
+      "keywords": "allow angular api boolean border callback called cbh changes chembiohubassayapp colour config configuration currently data dimensions directive form forms function functions globals green help individual level list map object parent pass-through passthrough phole plate plateform platemap platesaved populated red render rendered required save saved saveplatefunction saves schema schemaformholder scope selected separate top update user"
     },
     {
       "section": "api",
@@ -352,7 +352,7 @@ NG_DOCS={
       "type": "directive",
       "moduleName": "chembiohubAssayApp",
       "shortDescription": "projectList",
-      "keywords": "api chembiohubassayapp directive projectlist"
+      "keywords": "adding api apply chembiohubassayapp classes convenience convert defined directive image img inline list location method projectlist projects renders rules scope style styling svg svgify svgs tag tags"
     },
     {
       "section": "api",
@@ -361,7 +361,7 @@ NG_DOCS={
       "type": "directive",
       "moduleName": "chembiohubAssayApp",
       "shortDescription": "searchBreadcrumbs",
-      "keywords": "api chembiohubassayapp directive searchbreadcrumbs"
+      "keywords": "$on $scope action addhide addition adds alters api app applied aspect bc breadcrumb breadcrumbs breadcrums broadcast broadcasts callback cascading cbh chembiohubassayapp chemical chemicalfilterapplied cleanupfilters close closefilterbreadcrumb closehidebreadcrumb closesortbreadcrumb column columns columnselection command configuration create current currently data defined deleted descriptive directive display displayed fields filter filterclicked filters filtersupdated filtertypename function functionality globals help hide human human-readable identify individual interpretation issued level list locates mechanism method obj object parameters parts perform processes pulls query readable redisplay remove removeallhides removehide removes removestructuresearch removing rendered representation schema scoped search searchbreadcrumbs searches searchparamschanged separately serach setfilterasstring simplifies sort sorts structure subform sufixes table tag template togglehide top trigger ui undefined unhideall user variables ve visual"
     },
     {
       "section": "api",
@@ -392,8 +392,8 @@ NG_DOCS={
     },
     {
       "section": "api",
-      "id": "chembiohubAssayApp.filter:htmlToPlainText",
-      "shortName": "htmlToPlainText",
+      "id": "chembiohubAssayApp.filter:htmlToPlaintext",
+      "shortName": "htmlToPlaintext",
       "type": "filter",
       "moduleName": "chembiohubAssayApp",
       "shortDescription": "htmlToPlainText",
@@ -405,13 +405,13 @@ NG_DOCS={
       "shortName": "notEmpty",
       "type": "filter",
       "moduleName": "chembiohubAssayApp",
-      "shortDescription": "Ensures that an object is not empty",
+      "shortDescription": "notEmpty",
       "keywords": "api chembiohubassayapp empty ensures filter notempty object"
     },
     {
       "section": "api",
-      "id": "chembiohubAssayApp.filter:titleCase",
-      "shortName": "titleCase",
+      "id": "chembiohubAssayApp.filter:removeSpaces",
+      "shortName": "removeSpaces",
       "type": "filter",
       "moduleName": "chembiohubAssayApp",
       "shortDescription": "titleCase",
@@ -419,8 +419,8 @@ NG_DOCS={
     },
     {
       "section": "api",
-      "id": "chembiohubAssayApp.filter:titleCase",
-      "shortName": "titleCase",
+      "id": "chembiohubAssayApp.filter:titlecase",
+      "shortName": "titlecase",
       "type": "filter",
       "moduleName": "chembiohubAssayApp",
       "shortDescription": "titleCase",

@@ -1,3 +1,5 @@
+//These are both @deprecated
+
 angular.module('chembiohubAssayApp.directives',[])
 .directive('draggable', function () {
 	return {

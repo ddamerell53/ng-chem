@@ -3,7 +3,6 @@
 /**
  * @ngdoc filter
  * @name chembiohubAssayApp.filter:toTrusted
- * @function
  * @description
  * # toTrusted
  * Filter in the chembiohubAssayApp.

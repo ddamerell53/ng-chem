@@ -6,6 +6,7 @@
  * @restrict 'E'
  * @description
  * # HandsOnCompoundTable
+ * Old version of handsoncompoundtable - now handsoncompoundtablev2
  * @deprecated
  */
 angular.module('chembiohubAssayApp')

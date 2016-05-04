@@ -3,11 +3,9 @@
 /**
  * @ngdoc filter
  * @name chembiohubAssayApp.filter:notEmpty
- * @function
  * @description
- Ensures that an object is not empty
  * # notEmpty
- * Filter in the chembiohubAssayApp.
+ * Ensures that an object is not empty.
  */
 angular.module('chembiohubAssayApp')
   .filter('notEmpty', function () {
