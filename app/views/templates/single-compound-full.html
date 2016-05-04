@@ -40,7 +40,7 @@
                     </div>
 
                     <div class="col-xs-12 col-md-6">
-                        <button-input ng-if="mol.created_by" copy-model="mol.created_by" disabled="true" label="'Added By'"></button-input>
+                        <button-input ng-if="mol.userfull.display_name" copy-model="mol.userfull.display_name" disabled="true" label="'Added By'"></button-input>
                         <div ng-if="projectObj.project_type.show_compounds == true">
                             <button-input copy-model="mol.canonical_smiles" disabled="true" label="'SMILES'"></button-input>
                             <button-input copy-model="mol.standard_inchi" disabled="true" label="'Standard INCHI'"></button-input>

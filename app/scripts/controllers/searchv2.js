@@ -136,7 +136,7 @@ angular.module('chembiohubAssayApp')
             $scope.openMySavedSearchPopup = function(){
                 //Test data looks like:
                 $scope.links = [];
-                var encoded_username= $filter("encodeParamForSearch")({"field_path": "created_by", "value": loggedInUser.display_name});
+                var encoded_username= $filter("encodeParamForSearch")({"field_path": "userfull.display_name", "value": loggedInUser.display_name});
 
                 var params = {'encoded_query': encoded_username};
 
@@ -155,7 +155,6 @@ angular.module('chembiohubAssayApp')
                         doFreshSearch: function(){
                           return $scope.doFreshSearch;
                         }
-
                       }, 
                       controller: function($scope, $modalInstance, links, loggedInUser, doFreshSearch) {
                         $scope.links = links;

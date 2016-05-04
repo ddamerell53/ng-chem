@@ -51,12 +51,22 @@ angular.module('chembiohubAssayApp').value('urlConfig',
   configuration
 );
 
+var initInjector = angular.injector(["ng", "ngCookies"]);
+
+var $cookies = initInjector.get("$cookies");
+
+var pref = part.split("/")[0];
+var csrf = $cookies[pref + "csrftoken"]
+
+angular.module('chembiohubAssayApp').value('csrftoken',  
+  csrf
+);
+
 angular.module('chembiohubAssayApp').value('prefix',  
   part
 );
 
 
-var initInjector = angular.injector(["ng"]);
 
 var $http = initInjector.get("$http");
 var $q = initInjector.get("$q");
@@ -100,6 +110,18 @@ var formGetter = function(project_data_fields, htmlClass, project){
             angular.forEach(project_data_fields, function(field){
               var form = angular.copy(field.edit_form.form[0]);
               form.htmlClass = htmlClass;
+              if(form.uploadOptions){
+                //Set the unique identifier generator function
+                form.uploadOptions.modal.flow.init = { 
+                                                      'target': project.flowjs_upload_url, 
+                                                      'headers': {
+                                                          'X-CSRFToken': csrf
+                                                       },
+                                                       'generateUniqueIdentifier' : function (file) {
+                                                            return file.name + "-" + file.size + "-" + Date.now();
+                                                        }
+                                                      };
+              }
               
               edit_form.push(form);
             });
