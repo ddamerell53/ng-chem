@@ -3,6 +3,7 @@
 /**
  * @ngdoc directive
  * @name chembiohubAssayApp.directive:platemap
+ * @restrict 'E'
  * @description
  * # platemap
  */

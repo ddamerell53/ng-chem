@@ -12,6 +12,13 @@
 <div class="cancel"><div class="-scope-cancel-page"><p>Cancel the current search and reset the form</p>
 </div></div>
 </li>
+<li><h3 id="methods_dofreshsearch">doFreshSearch()</h3>
+<div class="dofreshsearch"><div class="-scope-dofreshsearch-page"><p>Method for conducting a saved search based on saved parameters.
+This method enusers that any parameters indicating a set of results, or a capping ID,
+are removed from the search. It also ensures the correct processes for URL building and 
+filter breadcrumb building are carried out.</p>
+</div></div>
+</li>
 <li><h3 id="methods_hassearchbeenperformed">hasSearchBeenPerformed()</h3>
 <div class="hassearchbeenperformed"><h5 id="methods_hassearchbeenperformed_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-boolean">boolean</a></td><td><div class="-scope-hassearchbeenperformed-page"><p>true/false are any current search parameters in the URL</p>
 </div></td></tr></table></div>
@@ -29,7 +36,7 @@
 Fetches a new project of type saved_search_project_type, generates 2 searches to save:</p>
 <ul>
 <li>a capped search as a snapshot of how the search returns at the present moment;</li>
-<li>a reusable ssearch which just containss the parameters ssearcchedd for, which will show updated results if used in the future </li>
+<li>a reusable search which just contains the parameters searched for, which will show updated results if used in the future </li>
 </ul>
 </div></div>
 </li>

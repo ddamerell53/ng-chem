@@ -1,15 +1,14 @@
 'use strict';
 
 /**
- * @ngdoc function
- * @name chembiohubAssayApp.controller:AddcompoundsCtrl
+ * @ngdoc controller
+ * @name chembiohubAssayApp.controller:AddCompoundsCtrl
  * @description
  * # AddcompoundsCtrl
  * This controller is used to manage adding items to the system. It provides methods for the addition single page app and manages the flow of file upload, checking chemical data, storing temporary compound data (for editing via the system before final registration), sorting and filtering file content previews, reporting errors and warnings and submitting data to the server.
  * Controller of the chembiohubAssayApp
  * This Controller is responsible for adding compound batches to the system in the bulk upload
  */
-
 angular.module('chembiohubAssayApp')
   .controller('AddCompoundsCtrl',['$scope', 
     '$state', 
@@ -69,13 +68,13 @@ angular.module('chembiohubAssayApp')
                 $scope.cbh.appName = "ChemiReg";
 
         /**
-             * @ngdoc method
-             * @name $scope.setLoadingMessageHeight
-             * @methodOf chembiohubAssayApp.controller:AddCompoundsCtrl
-             * @description
-             * Set the position on the page of the loading message (ensuring it is always 200px from the top no matter where the user has scrolled to)
-             *
-             */
+         * @ngdoc method
+         * @name chembiohubAssayApp.controller:AddCompoundsCtrl#$scope.setLoadingMessageHeight
+         * @methodOf chembiohubAssayApp.controller:AddCompoundsCtrl
+         * @description
+         * Set the position on the page of the loading message (ensuring it is always 200px from the top no matter where the user has scrolled to)
+         *
+         */
         $scope.setLoadingMessageHeight = function(){
             var scrollTop = $(window).scrollTop();
             $("#loading-message").css("top", (scrollTop +200) + "px")
@@ -83,7 +82,7 @@ angular.module('chembiohubAssayApp')
 
         /**
              * @ngdoc method
-             * @name $scope.saveTemporaryCompoundData
+             * @name chembiohubAssayApp.controller:AddCompoundsCtrl#$scope.saveTemporaryCompoundData
              * @methodOf chembiohubAssayApp.controller:AddCompoundsCtrl
              * @description
              * Save all of the previewed compound batches and redirect the user to the search page
@@ -114,7 +113,7 @@ angular.module('chembiohubAssayApp')
 
         /**
              * @ngdoc method
-             * @name $scope.cbh.saveChangesToTemporaryDataInController
+             * @name chembiohubAssayApp.controller:AddCompoundsCtrl#$scope.cbh.saveChangesToTemporaryDataInController
              * @methodOf chembiohubAssayApp.controller:AddCompoundsCtrl
              * @description
              * This function is called by the handsontable directive in order to save actions when a user fills down
@@ -144,8 +143,9 @@ angular.module('chembiohubAssayApp')
 
            /**
              * @ngdoc method
-             * @name $scope.cbh.toggleWarningsFilter 
+             * @name chembiohubAssayApp.controller:AddCompoundsCtrl#$scope.cbh.toggleWarningsFilter 
              * @methodOf chembiohubAssayApp.controller:AddCompoundsCtrl
+             * @param {string} filterName the name of the filter
              * @description
              * Filter the previewed data based on whether it has a certain warning against it, changing the url without reloading
              *
@@ -173,7 +173,7 @@ angular.module('chembiohubAssayApp')
 
            /**
              * @ngdoc method
-             * @name $scope.cbh.openStatusExplanation 
+             * @name chembiohubAssayApp.controller:AddCompoundsCtrl#$scope.cbh.openStatusExplanation 
              * @methodOf chembiohubAssayApp.controller:AddCompoundsCtrl
              * @description
              * Open a modal to explain how the statuses work against a particular uploaded molecule
@@ -193,7 +193,7 @@ angular.module('chembiohubAssayApp')
 
             /**
              * @ngdoc method
-             * @name $scope.cbh.setMappedFieldInController 
+             * @name chembiohubAssayApp.controller:AddCompoundsCtrl#$scope.cbh.setMappedFieldInController 
              * @methodOf chembiohubAssayApp.controller:AddCompoundsCtrl
              * @description
              *  Function is called when the user maps a particular field in the check boxes in the field mapping modal
@@ -220,7 +220,7 @@ angular.module('chembiohubAssayApp')
 
         /**
              * @ngdoc method
-             * @name $scope.cancelFile
+             * @name chembiohubAssayApp.controller:AddCompoundsCtrl#$scope.cancelFile
              * @methodOf chembiohubAssayApp.controller:AddCompoundsCtrl
              * @description
              *  Cancel the current file and delete the dataset on the back end (although the file record itself is not removed)
@@ -251,7 +251,7 @@ angular.module('chembiohubAssayApp')
 
         /**
              * @ngdoc method
-             * @name $scope.setNull
+             * @name chembiohubAssayApp.controller:AddCompoundsCtrl#$scope.setNull
              * @methodOf chembiohubAssayApp.controller:AddCompoundsCtrl
              * @description
              *  reset the dataset id and rebuild the scope
@@ -266,7 +266,7 @@ angular.module('chembiohubAssayApp')
 
         /**
              * @ngdoc method
-             * @name $scope.changeView
+             * @name chembiohubAssayApp.controller:AddCompoundsCtrl#$scope.changeView
              * @methodOf chembiohubAssayApp.controller:AddCompoundsCtrl
              * @description
              *  deprecated - change to the galley view
@@ -281,7 +281,7 @@ angular.module('chembiohubAssayApp')
 
             /**
              * @ngdoc method
-             * @name $scope.setup
+             * @name chembiohubAssayApp.controller:AddCompoundsCtrl#$scope.setup
              * @methodOf chembiohubAssayApp.controller:AddCompoundsCtrl
              * @description
              *  reset the scope of the addcompounds page
@@ -330,7 +330,7 @@ angular.module('chembiohubAssayApp')
 
             /**
              * @ngdoc method
-             * @name $scope.nullSorts
+             * @name chembiohubAssayApp.controller:AddCompoundsCtrl#$scope.nullSorts
              * @methodOf chembiohubAssayApp.controller:AddCompoundsCtrl
              * @description
              *  remove the sorts on the add compounds preview
@@ -358,7 +358,7 @@ angular.module('chembiohubAssayApp')
 
             /**
              * @ngdoc method
-             * @name $scope.cbh.addSort
+             * @name chembiohubAssayApp.controller:AddCompoundsCtrl#$scope.cbh.addSort
              * @methodOf chembiohubAssayApp.controller:AddCompoundsCtrl
              * @description
              *  Add a sort to the compound preview page
@@ -413,7 +413,7 @@ angular.module('chembiohubAssayApp')
 
             /**
              * @ngdoc method
-             * @name $scope.assignFile
+             * @name chembiohubAssayApp.controller:AddCompoundsCtrl#$scope.assignFile
              * @methodOf chembiohubAssayApp.controller:AddCompoundsCtrl
              * @description
              *  The assignFile function is called on completion of an upload by flowjs.
@@ -454,7 +454,7 @@ angular.module('chembiohubAssayApp')
 
             /**
              * @ngdoc method
-             * @name $scope.createMultiBatch
+             * @name chembiohubAssayApp.controller:AddCompoundsCtrl#$scope.createMultiBatch
              * @methodOf chembiohubAssayApp.controller:AddCompoundsCtrl
              * @description
              *  Sends the information about an uploaded file back to the backend in order to create a multiple batch object and to index the data from the file
@@ -523,7 +523,7 @@ angular.module('chembiohubAssayApp')
 
             /**
              * @ngdoc method
-             * @name $scope.processSmilesData
+             * @name chembiohubAssayApp.controller:AddCompoundsCtrl#$scope.processSmilesData
              * @methodOf chembiohubAssayApp.controller:AddCompoundsCtrl
              * @description
              *  Process the list of SMILES identifiers from the text box when the user presses the appropriate button
@@ -557,7 +557,7 @@ angular.module('chembiohubAssayApp')
 
             /**
              * @ngdoc method
-             * @name $scope.initialise
+             * @name chembiohubAssayApp.controller:AddCompoundsCtrl#$scope.initialise
              * @methodOf chembiohubAssayApp.controller:AddCompoundsCtrl
              * @description
              *  Tidy up and re-initialise the parts of the scope that rely on the data preview without cancelling the file
@@ -608,7 +608,7 @@ angular.module('chembiohubAssayApp')
 
             /**
              * @ngdoc method
-             * @name $scope.changeNumberPerPage
+             * @name chembiohubAssayApp.controller:AddCompoundsCtrl#$scope.changeNumberPerPage
              * @methodOf chembiohubAssayApp.controller:AddCompoundsCtrl
              * @description
              *  Change the number of results shown per page in the compound preview
@@ -632,7 +632,7 @@ angular.module('chembiohubAssayApp')
 
             /**
              * @ngdoc method
-             * @name $scope.pageChanged
+             * @name chembiohubAssayApp.controller:AddCompoundsCtrl#$scope.pageChanged
              * @methodOf chembiohubAssayApp.controller:AddCompoundsCtrl
              * @description
              *  Paginate through the table view in the addcompounds preview
@@ -660,7 +660,7 @@ angular.module('chembiohubAssayApp')
 
             /**
              * @ngdoc method
-             * @name $scope.imageCallback
+             * @name chembiohubAssayApp.controller:AddCompoundsCtrl#$scope.imageCallback
              * @methodOf chembiohubAssayApp.controller:AddCompoundsCtrl
              * @description
              *  Tell the table view to update after the new data has been loaded
@@ -677,7 +677,7 @@ angular.module('chembiohubAssayApp')
 
                 /**
              * @ngdoc method
-             * @name getResultsPage
+             * @name chembiohubAssayApp.controller:AddCompoundsCtrl#getResultsPage
              * @methodOf chembiohubAssayApp.controller:AddCompoundsCtrl
              * @description
              *  Get a page compound preview of results from the back end

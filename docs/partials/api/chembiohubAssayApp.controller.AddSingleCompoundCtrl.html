@@ -1,0 +1,76 @@
+<h1><code ng:non-bindable="">AddSingleCompoundCtrl</code>
+<div><span class="hint">controller in module <code ng:non-bindable="">chembiohubAssayApp</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-addsinglecompoundctrl-page"><h3 id="description_addsinglecompoundctrl">AddsinglecompoundCtrl</h3>
+<p>Controller of the chembiohubAssayApp</p>
+</div></div>
+<div class="member method"><h2 id="methods">Methods</h2>
+<ul class="methods"><li><h3 id="methods_$scope$on">$scope.$on(openedTaggingDropdown, callback)</h3>
+<div class="$scope$on"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-addsinglecompoundctrl-scope-on-page"><p>The name openedTaggingDropdown is defined in the schema of the data addition UI for tag fields
+This function pulls back the dropdown autocomplete from the back end and sends it to the appropriate directive via a broadcast</p>
+</div><h5 id="methods_$scope$on_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>openedTaggingDropdown</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-addsinglecompoundctrl-scope-on-page"><p>the name of the broadcast to act on</p>
+</div></td></tr><tr><td>callback</td><td><a href="" class="label type-hint type-hint-function">function</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-addsinglecompoundctrl-scope-on-page"><p>the callback function to trigger functionality</p>
+</div></td></tr></tbody></table></div>
+</li>
+<li><h3 id="methods_$scopeaddsupplementaryfield">$scope.addSupplementaryField()</h3>
+<div class="$scopeaddsupplementaryfield"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-addsinglecompoundctrl-scope-addsupplementaryfield-page"><p>Add an extra supplementary data field when editing a molecule&#39;s data</p>
+</div></div>
+</li>
+<li><h3 id="methods_$scopecreatemultibatch">$scope.createMultiBatch()</h3>
+<div class="$scopecreatemultibatch"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-addsinglecompoundctrl-scope-createmultibatch-page"><p>Create a multiple batch object based on a drawing in the add single page (this is currently doen with multiple batches for consistency but would probaly be better done with single compounds)</p>
+</div></div>
+</li>
+<li><h3 id="methods_$scoperemovefile">$scope.removeFile(form_key, index, url)</h3>
+<div class="$scoperemovefile"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-addsinglecompoundctrl-scope-removefile-page"><p>Remove a file from the list of uploaded files on a File Upload field&#39;s attachments object. This is to remove it from the display
+and also the saved record. This function is injected into the angular schema form file upload widget.</p>
+</div><h5 id="methods_$scoperemovefile_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>form_key</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-addsinglecompoundctrl-scope-removefile-page"><p>the identity of the form, allowing multiple forms on the page to use this function</p>
+</div></td></tr><tr><td>index</td><td><a href="" class="label type-hint type-hint-integer">integer</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-addsinglecompoundctrl-scope-removefile-page"><p>the position of the upoaded file in the attachments list</p>
+</div></td></tr><tr><td>url</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-addsinglecompoundctrl-scope-removefile-page"><p>the URL fo the file to be used as a condition check for removal.</p>
+</div></td></tr></tbody></table></div>
+</li>
+<li><h3 id="methods_$scoperemovesupplemetaryfield">$scope.removeSupplemetaryField(removeId)</h3>
+<div class="$scoperemovesupplemetaryfield"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-addsinglecompoundctrl-scope-removesupplemetaryfield-page"><p>Remove a supplementary data field when editing a molecule&#39;s data</p>
+</div><h5 id="methods_$scoperemovesupplemetaryfield_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>removeId</td><td><a href="" class="label type-hint type-hint-int">int</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-addsinglecompoundctrl-scope-removesupplemetaryfield-page"><p>The id of the field to be removed</p>
+</div></td></tr></tbody></table></div>
+</li>
+<li><h3 id="methods_$scoperevert">$scope.revert()</h3>
+<div class="$scoperevert"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-addsinglecompoundctrl-scope-revert-page"><p>Revert the drawn compound back to the cloned version,
+broadcast setMolecule in order to update the directive for chemdoodle</p>
+</div></div>
+</li>
+<li><h3 id="methods_$scopesavetemporarycompounddata">$scope.saveTemporaryCompoundData()</h3>
+<div class="$scopesavetemporarycompounddata"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-addsinglecompoundctrl-scope-savetemporarycompounddata-page"><p>Save single molecule and redirect the user to the search page</p>
+</div></div>
+</li>
+<li><h3 id="methods_$scopesizecheck">$scope.sizeCheck(file, form_key)</h3>
+<div class="$scopesizecheck"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-addsinglecompoundctrl-scope-sizecheck-page"><p>Check an uploaded file for attachment is less than 20Mb. File is removed from the upload queue if it exceeds this limit.
+This function is injected into the angular schema form file upload widget.</p>
+</div><h5 id="methods_$scopesizecheck_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>file</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-addsinglecompoundctrl-scope-sizecheck-page"><p>the FlowFile object to be checked for file size limits</p>
+</div></td></tr><tr><td>form_key</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-addsinglecompoundctrl-scope-sizecheck-page"><p>the identity of the form, allowing multiple forms on the page to use this function</p>
+</div></td></tr></tbody></table><h5 id="methods_$scopesizecheck_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-boolean">boolean</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-addsinglecompoundctrl-scope-sizecheck-page"><p>boolean  false returned if validation fails</p>
+</div></td></tr></table></div>
+</li>
+<li><h3 id="methods_$scopesuccess">$scope.success(file, form_key)</h3>
+<div class="$scopesuccess"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-addsinglecompoundctrl-scope-success-page"><p>Call a POST command to save the uploaded attachment file&#39;s URL and unique identifier against the batch record.
+and also the saved record. This function is injected into the angular schema form file upload widget.</p>
+</div><h5 id="methods_$scopesuccess_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>file</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-addsinglecompoundctrl-scope-success-page"><p>the FlowFile object to be uploaded</p>
+</div></td></tr><tr><td>form_key</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-addsinglecompoundctrl-scope-success-page"><p>the identity of the form, allowing multiple forms on the page to use this function</p>
+</div></td></tr></tbody></table></div>
+</li>
+<li><h3 id="methods_$scopevalidatedrawn">$scope.validateDrawn()</h3>
+<div class="$scopevalidatedrawn"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-addsinglecompoundctrl-scope-validatedrawn-page"><p>Validate the valancies etc of the drawn molecule by sending it to the back end.
+This could be better accomplished with the new chemical search API.</p>
+</div></div>
+</li>
+<li><h3 id="methods_$scopevalidateotherformdata">$scope.validateOtherFormData(myForm)</h3>
+<div class="$scopevalidateotherformdata"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-addsinglecompoundctrl-scope-validateotherformdata-page"><p>Standard schemaform submission code for validation of the custom fields when saving a molecule.
+Buttons that do not want this onSubmit function to run but are inside the form are implemented as <button type="button"></button></p>
+</div><h5 id="methods_$scopevalidateotherformdata_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>myForm</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-addsinglecompoundctrl-scope-validateotherformdata-page"><p>form object which needs validating</p>
+</div></td></tr></tbody></table></div>
+</li>
+</ul>
+</div>
+</div>

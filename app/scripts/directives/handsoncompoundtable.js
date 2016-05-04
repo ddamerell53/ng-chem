@@ -2,9 +2,11 @@
 
 /**
  * @ngdoc directive
- * @name chembiohubAssayApp.directive:HandsOnCompoundTable
+ * @name chembiohubAssayApp.directive:handsoncompoundtable
+ * @restrict 'E'
  * @description
  * # HandsOnCompoundTable
+ * @deprecated
  */
 angular.module('chembiohubAssayApp')
     .directive('handsoncompoundtable', ["$timeout", "$compile", "renderers", "$rootScope", "$filter", "$modal", function($timeout, $compile, renderers, $rootScope, $filter, $modal) {

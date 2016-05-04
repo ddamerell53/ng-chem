@@ -2,7 +2,8 @@
 
 /**
  * @ngdoc directive
- * @name chembiohubAssayApp.directive:compoundTableHeader
+ * @name chembiohubAssayApp.directive:compoundtableheader
+ * @restrict 'E'
  * @description
  * # compoundTableHeader
  */

@@ -3,6 +3,7 @@
 /**
  * @ngdoc directive
  * @name chembiohubAssayApp.directive:buttonInput
+ * @restrict 'E'
  * @description
  * # buttonInput
  */

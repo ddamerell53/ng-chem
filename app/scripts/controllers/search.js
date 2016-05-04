@@ -1,11 +1,12 @@
 'use strict';
 
 /**
- * @ngdoc function
+ * @ngdoc controller
  * @name chembiohubAssayApp.controller:SearchCtrl
  * @description
  * # SearchCtrl
  * Controller of the chembiohubAssayApp
+ * @deprecated
  */
 
 

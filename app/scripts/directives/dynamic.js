@@ -3,6 +3,7 @@
 /**
  * @ngdoc directive
  * @name chembiohubAssayApp.directive:dynamic
+ * @restrict 'A'
  * @description
  * # dynamic
  */

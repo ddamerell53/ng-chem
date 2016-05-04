@@ -1,11 +1,12 @@
 'use strict';
 
 /**
- * @ngdoc function
+ * @ngdoc controller
  * @name chembiohubAssayApp.controller:CompoundbatchCtrl
  * @description
  * # CompoundbatchCtrl
  * Controller of the chembiohubAssayApp
+ * @deprecated
  */
 angular.module('chembiohubAssayApp')
     .controller('CompoundbatchCtrl', ['$scope', '$rootScope', '$state', '$stateParams', '$timeout', 'CBHCompoundBatch', 'urlConfig', '$window', '$location', '$anchorScroll', '$filter', 'searchUrlParams',

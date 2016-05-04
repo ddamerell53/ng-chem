@@ -3,9 +3,12 @@
 /**
  * @ngdoc directive
  * @name chembiohubAssayApp.directive:chemsvg
- Creates a data point
+ * @restrict 'E'
+ * 
  * @description
  * # chemsvg
+ * Creates a data point
+ * 
  */
 angular.module('chembiohubAssayApp')
   .directive('chemsvg', function ($compile) {

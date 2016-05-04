@@ -2,7 +2,8 @@
 
 /**
  * @ngdoc directive
- * @name chembiohubAssayApp.directive:HandsOnCompoundTable
+ * @name chembiohubAssayApp.directive:handsoncompoundtablev2
+ * @restrict 'E'
  * @description
  * # HandsOnCompoundTable
  */

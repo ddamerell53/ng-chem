@@ -1,15 +1,5 @@
 'use strict';
 
-/**
- * @ngdoc function
- * @name chembiohubAssayApp.controller:BatchesCtrl
- * @description
- * # BatchesCtrl
- * Controller of the chembiohubAssayApp
- */
-
-
-
 var ngFooter = function ($scope, grid) {
     $scope.pagingOptions = grid.pagingOptions;
     $scope.maxRows = function () {
@@ -75,6 +65,14 @@ var ngFooter = function ($scope, grid) {
         return curPage <= 1;
     };
 };
+
+/**
+ * @ngdoc controller
+ * @name chembiohubAssayApp.controller:BatchesCtrl
+ * @description
+ * # BatchesCtrl
+ * Controller of the chembiohubAssayApp
+ */
 angular.module('chembiohubAssayApp')
 
   .controller('BatchesCtrl',['$scope', '$modal', '$timeout', '$q', '$state', '$stateParams','$location', 'gridconfig', 'projectKey', 'MessageFactory', 'CBHCompoundBatch', 'paramsAndForm', function ($scope, $modal, $timeout, $q, $state, $stateParams, $location, gridconfig, projectKey, MessageFactory, CBHCompoundBatch, paramsAndForm) {

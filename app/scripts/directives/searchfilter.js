@@ -3,8 +3,14 @@
 /**
  * @ngdoc directive
  * @name chembiohubAssayApp.directive:searchFilter
+ * @restrict 'E'
+ * @scope
+ * 
  * @description
  * # SearchFilter
+ * Directive to render a panel showing different search filtering options
+ *
+ * @param {object} cbh The top level cbh object to help with globals and configuration
  */
 angular.module('chembiohubAssayApp')
   .directive('searchFilter', [ function () {
