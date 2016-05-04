@@ -3,6 +3,7 @@
 /**
  * @ngdoc directive
  * @name chembiohubAssayApp.directive:searchBreadcrumbs
+ * @restrict 'E'
  * @description
  * # searchBreadcrumbs
  */

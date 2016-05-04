@@ -13,9 +13,10 @@
 </div><h5 id="methods_createmultibatch_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-object">Object</a></td><td><div class="createmultibatch-page"><p>promise from API call to validate the given dataset</p>
 </div></td></tr></table></div>
 </li>
-<li><h3 id="methods_delete_index">delete_index()</h3>
+<li><h3 id="methods_delete_index">delete_index(The)</h3>
 <div class="delete_index"><div class="delete-index-page"><p>Removes a specified index via an API call.</p>
-</div><h5 id="methods_delete_index_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-object">Object</a></td><td><div class="delete-index-page"><p>promise from API call to delete the specified index containing data object</p>
+</div><h5 id="methods_delete_index_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>The</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="delete-index-page"><p>name of the index to remove</p>
+</div></td></tr></tbody></table><h5 id="methods_delete_index_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-object">Object</a></td><td><div class="delete-index-page"><p>promise from API call to delete the specified index containing data object</p>
 </div></td></tr></table></div>
 </li>
 <li><h3 id="methods_fetchheaders">fetchHeaders()</h3>
@@ -26,9 +27,24 @@
 </div><h5 id="methods_get_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-object">Object</a></td><td><div class="get-page"><p>promise from API call to retrieve the specified batch.</p>
 </div></td></tr></table></div>
 </li>
-<li><h3 id="methods_getaddcompoundsresults">getAddCompoundsResults()</h3>
+<li><h3 id="methods_getaddcompoundsresults">getAddCompoundsResults(mb_id, limit, offset, filter, sorts)</h3>
 <div class="getaddcompoundsresults"><div class="getaddcompoundsresults-page"><p>Calls the cbh_compound_batches webservice to retrieve the set of batches for preview before confirming saving.</p>
-</div><h5 id="methods_getaddcompoundsresults_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-object">Object</a></td><td><div class="getaddcompoundsresults-page"><p>promise from API call to retrieve the specified batch set</p>
+</div><h5 id="methods_getaddcompoundsresults_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>mb_id</td><td><a href="" class="label type-hint type-hint-int">int</a></td><td><div class="getaddcompoundsresults-page"><ul>
+<li>The id of the multiple batch to fetch results for</li>
+</ul>
+</div></td></tr><tr><td>limit</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="getaddcompoundsresults-page"><ul>
+<li>The number of batches to return</li>
+</ul>
+</div></td></tr><tr><td>offset</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="getaddcompoundsresults-page"><ul>
+<li>The amount to offest for paging</li>
+</ul>
+</div></td></tr><tr><td>filter</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="getaddcompoundsresults-page"><ul>
+<li>Any filtering (search) parameters which have been applied via the search interface</li>
+</ul>
+</div></td></tr><tr><td>sorts</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="getaddcompoundsresults-page"><ul>
+<li>Any sorting (search) parameters which have been applied via the search interface</li>
+</ul>
+</div></td></tr></tbody></table><h5 id="methods_getaddcompoundsresults_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-object">Object</a></td><td><div class="getaddcompoundsresults-page"><p>promise from API call to retrieve the specified batch set</p>
 </div></td></tr></table></div>
 </li>
 <li><h3 id="methods_getsinglemol">getSingleMol()</h3>
@@ -36,9 +52,10 @@
 </div><h5 id="methods_getsinglemol_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-object">Object</a></td><td><div class="getsinglemol-page"><p>molecule object containing default values</p>
 </div></td></tr></table></div>
 </li>
-<li><h3 id="methods_markasarchived">markAsArchived()</h3>
+<li><h3 id="methods_markasarchived">markAsArchived(The)</h3>
 <div class="markasarchived"><div class="markasarchived-page"><p>Calls the cbh_compound_batches webservice to archive a given batch.</p>
-</div><h5 id="methods_markasarchived_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-object">Object</a></td><td><div class="markasarchived-page"><p>promise from API call to archive the specified batch</p>
+</div><h5 id="methods_markasarchived_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>The</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="markasarchived-page"><p>id of the batch to archive</p>
+</div></td></tr></tbody></table><h5 id="methods_markasarchived_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-object">Object</a></td><td><div class="markasarchived-page"><p>promise from API call to archive the specified batch</p>
 </div></td></tr></table></div>
 </li>
 <li><h3 id="methods_paginate">paginate()</h3>
@@ -49,9 +66,10 @@
 </div><h5 id="methods_queryv2_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-object">Object</a></td><td><div class="queryv2-page"><p>promise from API call to retrieve batches matching the search filters</p>
 </div></td></tr></table></div>
 </li>
-<li><h3 id="methods_reindexmodifiedcompound">reindexModifiedCompound()</h3>
+<li><h3 id="methods_reindexmodifiedcompound">reindexModifiedCompound(The)</h3>
 <div class="reindexmodifiedcompound"><div class="reindexmodifiedcompound-page"><p>Calls the  cbh_compound_batches webservice to trigger a reindexing of a given batch.</p>
-</div><h5 id="methods_reindexmodifiedcompound_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-object">Object</a></td><td><div class="reindexmodifiedcompound-page"><p>promise from API call to reindex the specified batch</p>
+</div><h5 id="methods_reindexmodifiedcompound_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>The</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="reindexmodifiedcompound-page"><p>id of the batch to reindex</p>
+</div></td></tr></tbody></table><h5 id="methods_reindexmodifiedcompound_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-object">Object</a></td><td><div class="reindexmodifiedcompound-page"><p>promise from API call to reindex the specified batch</p>
 </div></td></tr></table></div>
 </li>
 <li><h3 id="methods_savemultibatchmolecules">saveMultiBatchMolecules()</h3>

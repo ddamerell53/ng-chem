@@ -55,7 +55,7 @@ angular.module('chembiohubAssayApp')
      * @methodOf chembiohubAssayApp.CBHCompoundBatch
      * @description
      * Removes a specified index via an API call.
-     * @params {string} The name of the index to remove
+     * @param {string} The name of the index to remove
      * @returns {Object} promise from API call to delete the specified index containing data object
      *
      */
@@ -75,7 +75,7 @@ angular.module('chembiohubAssayApp')
      * @methodOf chembiohubAssayApp.CBHCompoundBatch
      * @description
      * Calls the  cbh_compound_batches webservice to trigger a reindexing of a given batch.
-     * @params {string} The id of the batch to reindex
+     * @param {string} The id of the batch to reindex
      * @returns {Object} promise from API call to reindex the specified batch
      *
      */
@@ -90,7 +90,7 @@ angular.module('chembiohubAssayApp')
      * @methodOf chembiohubAssayApp.CBHCompoundBatch
      * @description
      * Calls the cbh_compound_batches webservice to archive a given batch.
-     * @params {string} The id of the batch to archive
+     * @param {string} The id of the batch to archive
      * @returns {Object} promise from API call to archive the specified batch
      *
      */
@@ -104,11 +104,11 @@ angular.module('chembiohubAssayApp')
      * @methodOf chembiohubAssayApp.CBHCompoundBatch
      * @description
      * Calls the cbh_compound_batches webservice to retrieve the set of batches for preview before confirming saving.
-     * @params {int} mb_id - The id of the multiple batch to fetch results for
-     * @params {string} limit - The number of batches to return
-     * @params {string} offset - The amount to offest for paging
-     * @params {string} filter - Any filtering (search) parameters which have been applied via the search interface
-     * @params {string} sorts - Any sorting (search) parameters which have been applied via the search interface
+     * @param {int} mb_id - The id of the multiple batch to fetch results for
+     * @param {string} limit - The number of batches to return
+     * @param {string} offset - The amount to offest for paging
+     * @param {string} filter - Any filtering (search) parameters which have been applied via the search interface
+     * @param {string} sorts - Any sorting (search) parameters which have been applied via the search interface
      * @returns {Object} promise from API call to retrieve the specified batch set
      *
      */

@@ -29,7 +29,7 @@ function detectIE() {
 
  
 /**
- * @ngdoc function
+ * @ngdoc controller
  * @name chembiohubAssayApp.controller:CbhCtrl
  * @description
  * # CbhCtrl

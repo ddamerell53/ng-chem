@@ -3,6 +3,7 @@
 /**
  * @ngdoc directive
  * @name chembiohubAssayApp.directive:processStep
+ * @restrict 'E'
  * @description
  * # processStep
  */

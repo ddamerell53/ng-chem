@@ -3,8 +3,10 @@
 /**
  * @ngdoc directive
  * @name chembiohubAssayApp.directive:appProgress
+ * @restrict 'E'
  * @description
  * # appProgress
+ * @deprecated
  */
 angular.module('chembiohubAssayApp')
   .directive('appProgress', [ function () {

@@ -1,20 +1,36 @@
 'use strict';
 
 /**
- * @ngdoc function
- * @name chembiohubAssayApp.controller:CompoundbatchCtrl
+ * @ngdoc controller
+ * @name chembiohubAssayApp.controller:Compoundbatchv2Ctrl
  * @description
- * # CompoundbatchCtrl
+ * # Compoundbatchv2Ctrl
  * Controller of the chembiohubAssayApp
  */
 angular.module('chembiohubAssayApp')
     .controller('Compoundbatchv2Ctrl', ['$scope', '$rootScope', '$state', '$stateParams', '$timeout', 'CBHCompoundBatch', 'urlConfig', '$window', '$location', '$anchorScroll', '$filter', 'SearchUrlParamsV2','skinConfig', 'FlowFileFactory', 'chemicalSearch',
         function($scope, $rootScope, $state, $stateParams, $timeout, CBHCompoundBatch, urlConfig, $window, $location, $anchorScroll, $filter, SearchUrlParamsV2, skinConfig, FlowFileFactory, chemicalSearch) {
             
+            /**
+             * @ngdoc method
+             * @name chembiohubAssayApp.controller:Compoundbatchv2Ctrl#scope.cbh.resetSearch
+             * @methodOf chembiohubAssayApp.controller:Compoundbatchv2Ctrl
+             * @description
+             * Set the search form to its default empty state, with no search parameters. Also resets the URL.
+             *
+             */
             $scope.cbh.resetSearch = function(){
                 $state.go($state.current.name,  {}, {reload: true, inherit: false});
             }
 
+            /**
+             * @ngdoc method
+             * @name chembiohubAssayApp.controller:Compoundbatchv2Ctrl#scope.resetCompoundList
+             * @methodOf chembiohubAssayApp.controller:Compoundbatchv2Ctrl
+             * @description
+             * Clears prevous search hits list for searches that hit an error or simply return no hits.
+             *
+             */
             $scope.resetCompoundList = function(){
                 //We need the base statename, not the modal statename
                 $scope.totalCompoundBatches = 0;
@@ -28,6 +44,16 @@ angular.module('chembiohubAssayApp')
                 };
             }
 
+            /**
+             * @ngdoc method
+             * @name chembiohubAssayApp.controller:Compoundbatchv2Ctrl#$scope.$on
+             * @methodOf chembiohubAssayApp.controller:Compoundbatchv2Ctrl
+             * @description
+             * Initialises chemical search by posting chemical search parameter data which has been assembled in skinConfig
+             * @param {string} chemicalSearch  the name of the broadcast to act on
+             * @param {function} callback  the callback function to trigger functionality
+             *
+             */
             $scope.$on("chemicalSearch", function(event ){
                 var data = skinConfig.objects[0].chemicalSearch
                 data.id = undefined;
@@ -38,6 +64,16 @@ angular.module('chembiohubAssayApp')
                 });
             });
 
+            /**
+             * @ngdoc method
+             * @name chembiohubAssayApp.controller:Compoundbatchv2Ctrl#$scope.$on
+             * @methodOf chembiohubAssayApp.controller:Compoundbatchv2Ctrl
+             * @description
+             * Clears structure search related parameters from the page.
+             * @param {string} removeStructureSearch  the name of the broadcast to act on
+             * @param {function} callback  the callback function to trigger functionality
+             *
+             */
             $scope.$on("removeStructureSearch", function(){
                 var qt = angular.copy(skinConfig.objects[0].chemicalSearch.query_type);
                 skinConfig.objects[0].chemicalSearch.molfile = "";
@@ -57,6 +93,17 @@ angular.module('chembiohubAssayApp')
                     
             });
 
+            /**
+             * @ngdoc method
+             * @name chembiohubAssayApp.controller:Compoundbatchv2Ctrl#$scope.$on
+             * @methodOf chembiohubAssayApp.controller:Compoundbatchv2Ctrl
+             * @description
+             * Calls the function to serialize chemical search parameters into a URL friendly format. In turn notifies 
+             * cbh object that its should update the URL parameters in the state.
+             * @param {string} chemicalFilterApplied  the name of the broadcast to act on
+             * @param {function} callback  the callback function to trigger functionality
+             *
+             */
             $scope.$on("chemicalFilterApplied",function( event, args){
                     var params = SearchUrlParamsV2.generate_chemical_params($stateParams);
                     $scope.cbh.changeSearchParams(params, true);
@@ -64,7 +111,17 @@ angular.module('chembiohubAssayApp')
             });
 
 
-
+            /**
+             * @ngdoc method
+             * @name chembiohubAssayApp.controller:Compoundbatchv2Ctrl#$scope.$on
+             * @methodOf chembiohubAssayApp.controller:Compoundbatchv2Ctrl
+             * @description
+             * Calls the function to serialize chemical search parameters into a URL friendly format. In turn notifies 
+             * cbh object that 
+             * @param {string} openedSearchDropdown  the name of the broadcast to act on
+             * @param {function} callback  the callback function to trigger functionality
+             *
+             */
             $scope.$on("openedSearchDropdown", function(event, args){
                 var filters = angular.copy($stateParams);
                 var activeCol = null;

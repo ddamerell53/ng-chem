@@ -197,6 +197,17 @@ angular.module('chembiohubAssayApp')
               }
             })
 
+            /**
+             * @ngdoc method
+             * @name $scope.doFreshSearch
+             * @methodOf chembiohubAssayApp.controller:Searchv2Ctrl
+             * @description
+             * Method for conducting a saved search based on saved parameters.
+             * This method enusers that any parameters indicating a set of results, or a capping ID,
+             * are removed from the search. It also ensures the correct processes for URL building and 
+             * filter breadcrumb building are carried out.
+             * 
+             */
             $scope.doFreshSearch = function(searchObj){
 
               //trigger the new search as though structure has been changed.

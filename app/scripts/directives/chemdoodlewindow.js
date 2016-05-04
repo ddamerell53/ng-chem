@@ -3,6 +3,7 @@
 /**
  * @ngdoc directive
  * @name chembiohubAssayApp.directive:chemdoodleWindow
+ * @restrict 'E'
  * @description An angular directive to house ChemDoodle chemical sketcher and retain information from a rootScope variable.
  * # chemdoodleWindow
  */

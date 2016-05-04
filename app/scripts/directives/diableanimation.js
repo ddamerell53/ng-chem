@@ -3,6 +3,7 @@
 /**
  * @ngdoc directive
  * @name chembiohubAssayApp.directive:diableAnimation
+ * @restrict 'A'
  * @description
  * # diableAnimation
  */

@@ -1,11 +1,12 @@
 'use strict';
 
 /**
- * @ngdoc function
+ * @ngdoc controller
  * @name chembiohubAssayApp.controller:SearchAssaysCtrl
  * @description
  * # SearchAssaysCtrl
  * Controller of the chembiohubAssayApp
+ * @deprecated
  */
 angular.module('chembiohubAssayApp')
   .controller('SearchAssaysCtrl', ['$scope', '$filter', '$modal', 'urlConfig', '$stateParams', '$state','$location','userList', function ($scope, $filter, $modal, urlConfig, $stateParams, $state, $location, userList) {

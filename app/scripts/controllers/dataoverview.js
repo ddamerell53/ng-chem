@@ -1,12 +1,5 @@
 'use strict';
 
-/**
- * @ngdoc function
- * @name chembiohubAssayApp.controller:DataoverviewCtrl
- * @description
- * # DataoverviewCtrl
- * Controller of the chembiohubAssayApp
- */
 var showMappingPopupController = function($scope, $modalInstance, project_fields, sheet, $timeout, $filter, dataoverviewctrl) {
                         $scope.dataoverviewctrl = dataoverviewctrl;
 
@@ -327,7 +320,14 @@ var getSheetsByFile = function(dpc,fileId, $scope, FlowFileFactory, destroying, 
                     }
 
 
-
+/**
+ * @ngdoc controller
+ * @name chembiohubAssayApp.controller:DataOverviewCtrl
+ * @description
+ * # DataOverviewCtrl
+ * Controller of the chembiohubAssayApp
+ * @deprecated
+ */
 angular.module('chembiohubAssayApp')
     .controller('DataOverviewCtrl', ['$scope', 'AddDataFactory', '$modal', '$resource', '$stateParams', '$state', '$timeout', '$interval', 'prefix', 'urlConfig', '$cookies', 'FlowFileFactory', 'DraftFactory', 'projectKey', '$filter',
         

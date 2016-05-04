@@ -1,14 +1,12 @@
 'use strict';
 
 /**
- * @ngdoc function
- * @name chembiohubAssayApp.controller:AddsinglecompoundCtrl
+ * @ngdoc controller
+ * @name chembiohubAssayApp.controller:AddSingleCompoundCtrl
  * @description
  * # AddsinglecompoundCtrl
  * Controller of the chembiohubAssayApp
  */
-
-
 angular.module('chembiohubAssayApp')
     .controller('AddSingleCompoundCtrl', ['$scope', '$rootScope', '$timeout', '$filter', '$state', '$stateParams', 'CBHCompoundBatch', 'ProjectFactory', 'MessageFactory', 'mol', 'projectList','FlowFileFactory', 
         function($scope, $rootScope, $timeout, $filter, $state, $stateParams, CBHCompoundBatch, ProjectFactory, MessageFactory, mol, projectList, FlowFileFactory) {
@@ -28,6 +26,18 @@ angular.module('chembiohubAssayApp')
 
 
             /* File attachment functions */
+
+            /**
+             * @ngdoc method
+             * @name chembiohubAssayApp.controller:AddSingleCompoundCtrl#$scope.success
+             * @methodOf chembiohubAssayApp.controller:AddSingleCompoundCtrl
+             * @description
+             * Call a POST command to save the uploaded attachment file's URL and unique identifier against the batch record.
+             * and also the saved record. This function is injected into the angular schema form file upload widget.
+             * @param {object} file  the FlowFile object to be uploaded
+             * @param {string} form_key  the identity of the form, allowing multiple forms on the page to use this function
+             *
+             */
             $scope.success = function(file, form_key) {
                 //apply the urls of the flowfile object to the correct custom field of $scope.mol.customFields - find the attachments array and add it
                 //put a new method in FlowFileFactory
@@ -50,11 +60,35 @@ angular.module('chembiohubAssayApp')
 
             };
 
+            /**
+             * @ngdoc method
+             * @name chembiohubAssayApp.controller:AddSingleCompoundCtrl#$scope.removeFile
+             * @methodOf chembiohubAssayApp.controller:AddSingleCompoundCtrl
+             * @description
+             * Remove a file from the list of uploaded files on a File Upload field's attachments object. This is to remove it from the display
+             * and also the saved record. This function is injected into the angular schema form file upload widget.
+             * @param {string} form_key  the identity of the form, allowing multiple forms on the page to use this function
+             * @param {integer} index  the position of the upoaded file in the attachments list
+             * @param {string} url  the URL fo the file to be used as a condition check for removal.
+             *
+             */
             $scope.removeFile = function(form_key, index, url) {
                 $scope.mol.customFields[form_key[0]].attachments = $filter('filter')($scope.mol.customFields[form_key[0]].attachments, function(value, index) {
                     return value.url !== url; })
             }
 
+            /**
+             * @ngdoc method
+             * @name chembiohubAssayApp.controller:AddSingleCompoundCtrl#$scope.sizeCheck
+             * @methodOf chembiohubAssayApp.controller:AddSingleCompoundCtrl
+             * @description
+             * Check an uploaded file for attachment is less than 20Mb. File is removed from the upload queue if it exceeds this limit.
+             * This function is injected into the angular schema form file upload widget.
+             * @param {object} file  the FlowFile object to be checked for file size limits
+             * @param {string} form_key  the identity of the form, allowing multiple forms on the page to use this function
+             * @returns {boolean} boolean  false returned if validation fails
+             *
+             */
             $scope.sizeCheck = function(file, form_key){
                 
                 //get the file
@@ -77,16 +111,15 @@ angular.module('chembiohubAssayApp')
             $scope.cbh.statename = $state.current.name;
 
 
-/**
+            /**
              * @ngdoc method
-             * @name $scope.revert
-             * @methodOf chembiohubAssayApp.controller:AddsinglecompoundCtrl
+             * @name chembiohubAssayApp.controller:AddSingleCompoundCtrl#$scope.revert
+             * @methodOf chembiohubAssayApp.controller:AddSingleCompoundCtrl
              * @description
              * Revert the drawn compound back to the cloned version,
              * broadcast setMolecule in order to update the directive for chemdoodle
              *
              */
-
             $scope.revert = function(){
                 $scope.mol = angular.copy($scope.clonedMol);
                 $scope.mol.molecule = $scope.mol.ctab;
@@ -122,17 +155,17 @@ angular.module('chembiohubAssayApp')
             });
 
 
-        /**
+            /**
              * @ngdoc method
-             * @name $scope.$on("openedTaggingDropdown")
-             * @methodOf chembiohubAssayApp.controller:AddsinglecompoundCtrl
+             * @name chembiohubAssayApp.controller:AddSingleCompoundCtrl#$scope.$on
+             * @methodOf chembiohubAssayApp.controller:AddSingleCompoundCtrl
              * @description
              * The name openedTaggingDropdown is defined in the schema of the data addition UI for tag fields
              * This function pulls back the dropdown autocomplete from the back end and sends it to the appropriate directive via a broadcast
+             * @param {string} openedTaggingDropdown  the name of the broadcast to act on
+             * @param {function} callback  the callback function to trigger functionality
              *
              */
-
-
             $scope.$on("openedTaggingDropdown", function(event, args){
                 var filters = {};
                 filters.pids = $scope.projectObj.id;
@@ -163,8 +196,8 @@ angular.module('chembiohubAssayApp')
 
         /**
              * @ngdoc method
-             * @name $scope.createMultiBatch
-             * @methodOf chembiohubAssayApp.controller:AddsinglecompoundCtrl
+             * @name chembiohubAssayApp.controller:AddSingleCompoundCtrl#$scope.createMultiBatch
+             * @methodOf chembiohubAssayApp.controller:AddSingleCompoundCtrl
              * @description
              * Create a multiple batch object based on a drawing in the add single page (this is currently doen with multiple batches for consistency but would probaly be better done with single compounds)
              *
@@ -213,19 +246,16 @@ angular.module('chembiohubAssayApp')
                  }); 
             }
 
-        /**
+            /**
              * @ngdoc method
-             * @name $scope.validateDrawn
-             * @methodOf chembiohubAssayApp.controller:AddsinglecompoundCtrl
+             * @name chembiohubAssayApp.controller:AddSingleCompoundCtrl#$scope.validateDrawn
+             * @methodOf chembiohubAssayApp.controller:AddSingleCompoundCtrl
              * @description
-             * Validate the valancies etc of the drawn molecule by sending it to the back end
-             *  This could be better accomplished with the new chemical search API
+             * Validate the valancies etc of the drawn molecule by sending it to the back end.
+             * This could be better accomplished with the new chemical search API.
              */
-
-
-
-            //validate the drawn compound using the same mechanism as validation from file
             $scope.validateDrawn  = function(){
+                //validate the drawn compound using the same mechanism as validation from file
                 var conf = {
                         "multiplebatch": null,
                         "sketch": $scope.mol.molecule,
@@ -250,17 +280,15 @@ angular.module('chembiohubAssayApp')
             
 
 
-        /**
+            /**
              * @ngdoc method
-             * @name $scope.validateOtherFormData
-             * @methodOf chembiohubAssayApp.controller:AddsinglecompoundCtrl
+             * @name chembiohubAssayApp.controller:AddSingleCompoundCtrl#$scope.validateOtherFormData
+             * @methodOf chembiohubAssayApp.controller:AddSingleCompoundCtrl
+             * @param {object} myForm form object which needs validating
              * @description
              * Standard schemaform submission code for validation of the custom fields when saving a molecule.
              * Buttons that do not want this onSubmit function to run but are inside the form are implemented as <button type="button"></button>
              */
-
-
-
             $scope.validateOtherFormData = function(myForm){
                 $scope.errormess = "";
                 //this step is necessary to ensure that required fields have data
@@ -283,14 +311,13 @@ angular.module('chembiohubAssayApp')
 
 
 
-        /**
+            /**
              * @ngdoc method
-             * @name $scope.saveTemporaryCompoundData
-             * @methodOf chembiohubAssayApp.controller:AddsinglecompoundCtrl
+             * @name chembiohubAssayApp.controller:AddSingleCompoundCtrl#$scope.saveTemporaryCompoundData
+             * @methodOf chembiohubAssayApp.controller:AddSingleCompoundCtrl
              * @description
              * Save single molecule and redirect the user to the search page
              */
-
             $scope.saveTemporaryCompoundData = function(){
                 $scope.currentlyLoading = true;
                 $scope.dataset.config.customFields = $scope.mol.customFields;
@@ -334,15 +361,13 @@ angular.module('chembiohubAssayApp')
             }
 
 
-        /**
+            /**
              * @ngdoc method
-             * @name $scope.addSupplementaryField
-             * @methodOf chembiohubAssayApp.controller:AddsinglecompoundCtrl
+             * @name chembiohubAssayApp.controller:AddSingleCompoundCtrl#$scope.addSupplementaryField
+             * @methodOf chembiohubAssayApp.controller:AddSingleCompoundCtrl
              * @description
              * Add an extra supplementary data field when editing a molecule's data
              */
-
-
             $scope.addSupplementaryField = function(){
             	//do we have any supplementary fields already?
             	if ($scope.mol.supplementaryFields.length > 0){
@@ -379,12 +404,13 @@ angular.module('chembiohubAssayApp')
 
 
 
-        /**
+            /**
              * @ngdoc method
-             * @name $scope.removeSupplemetaryField
-             * @methodOf chembiohubAssayApp.controller:AddsinglecompoundCtrl
+             * @name chembiohubAssayApp.controller:AddSingleCompoundCtrl#$scope.removeSupplemetaryField
+             * @methodOf chembiohubAssayApp.controller:AddSingleCompoundCtrl
              * @description
              * Remove a supplementary data field when editing a molecule's data
+             * @param {int} removeId  The id of the field to be removed
              */
             $scope.removeSupplemetaryField = function(removeid){
             	//pop item with this ID from supplementary fields

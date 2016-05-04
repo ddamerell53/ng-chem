@@ -3,6 +3,7 @@
 /**
  * @ngdoc directive
  * @name chembiohubAssayApp.directive:projectList
+ * @restrict 'E'
  * @description
  * # projectList
  */

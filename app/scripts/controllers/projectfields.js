@@ -1,14 +1,12 @@
 'use strict';
 
 /**
- * @ngdoc function
+ * @ngdoc controller
  * @name chembiohubAssayApp.controller:ProjectfieldsCtrl
  * @description
  * # ProjectfieldsCtrl
  * Controller of the chembiohubAssayApp
  */
-
-
 angular.module('chembiohubAssayApp')
   .controller('ProjectfieldsCtrl', ["$scope", "$modalInstance", "$rootScope", "ProjectFactory", "projectId", "default_project_type", "projectTypes", "skinConfig",
     function($scope, $modalInstance, $rootScope, ProjectFactory,  projectId, default_project_type, projectTypes, skinConfig) {

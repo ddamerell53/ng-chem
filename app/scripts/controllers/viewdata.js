@@ -1,11 +1,12 @@
 'use strict';
 
 /**
- * @ngdoc function
+ * @ngdoc controller
  * @name chembiohubAssayApp.controller:ViewDataCtrl
  * @description
  * # ViewdataCtrl
  * Controller of the chembiohubAssayApp
+ * @deprecated
  */
 angular.module('chembiohubAssayApp')
   .controller('ViewDataCtrl', ['$scope', 'ViewDataFactory', '$resource', '$stateParams','$timeout', function ($scope, ViewDataFactory, $resource, $stateParams, $timeout) {
