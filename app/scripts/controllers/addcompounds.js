@@ -26,6 +26,7 @@ angular.module('chembiohubAssayApp')
     'searchUrlParams',
     '$modal',
     'skinConfig',
+    'csrftoken',
     function ($scope, 
         $state, 
         $stateParams,
@@ -41,20 +42,13 @@ angular.module('chembiohubAssayApp')
         renderers,
         searchUrlParams,
         $modal,
-        skinConfig
+        skinConfig,
+        csrftoken
         ) {
         $scope.skinConfig = skinConfig.objects[0];
 
-        $scope.csrftoken = $cookies[prefix.split("/")[0] + "csrftoken"];
-       $scope.flowinit = {
-                target: urlConfig.instance_path.url_frag + 'flow/upload/',
-                headers: {
-                    'X-CSRFToken': $scope.csrftoken
-                },
-                generateUniqueIdentifier: function (file) {
-                    return file.name + "-" + file.size + "-" + Date.now();
-                }
-            };
+        $scope.csrftoken = csrftoken;
+       
         //build an object to hold all of the changed information each time the user does something
         $scope.projects = $scope.cbh.projects.objects;
                       angular.forEach($scope.projects, function(proj) {
@@ -62,6 +56,17 @@ angular.module('chembiohubAssayApp')
                           $scope.proj = proj;
                         }
                       });
+
+        $scope.flowinit = {
+                target: $scope.proj.flowjs_upload_url,
+                headers: {
+                    'X-CSRFToken': $scope.csrftoken
+                },
+                generateUniqueIdentifier: function (file) {
+                    return file.name + "-" + file.size + "-" + Date.now();
+                }
+        };
+
         $scope.toggleDataSummary = {
             showFlag: true,
         }
