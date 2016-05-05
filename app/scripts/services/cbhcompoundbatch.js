@@ -121,7 +121,7 @@ angular.module('chembiohubAssayApp')
         if((filter.bool.must.length + filter.bool.must_not.length + filter.bool.should.length ) > 0){
           params.query = JSON.stringify(filter);
         }else{
-          console.log(filter.bool);
+          
         }
         var promise = $http.get(urlConfig.cbh_compound_batches.list_endpoint + "/get_part_processed_multiple_batch/"
                             ,{ params:params }  //JSON sorts string
@@ -183,7 +183,7 @@ angular.module('chembiohubAssayApp')
         };
         currentDataset.cancellers.push(cancel);
         var promise;
-        console.log("gothere");
+        
         if(currentDataset.config.type == "file"){
           promise = $http.post(urlConfig.cbh_compound_batches.list_endpoint + "/validate_files/"
                             ,currentDataset.config  ,

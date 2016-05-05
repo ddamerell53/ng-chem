@@ -5,7 +5,7 @@
  * @name chembiohubAssayApp.controller:SearchCtrl
  * @description
  * # SearchCtrl
- * Controller of the chembiohubAssayApp
+ * Deprecated in favour of Searchv2Ctrl
  * @deprecated
  */
 
@@ -20,7 +20,6 @@ angular.module('chembiohubAssayApp')
                 return $http.get(options.async.url + "?chembl_id__chembl_id__startswith=" + search);
             }
             $scope.refreshCustFields = function(schema, options, search) {
-                console.log("refreshCustFields called");
                 var urlToSearch = $scope.cbh.withoutCustomFieldsUrl + "&custom__field__startswith=" + search;
                 return $http.get(options.async.url + "?" + urlToSearch )
                        /*.success(function(data){
@@ -66,7 +65,6 @@ angular.module('chembiohubAssayApp')
             /*$scope.projectFrom = $stateParams.projectFrom;*/
             $scope.projectObj = {}
             //we need the project pbject for this key
-            //console.log("project key in", $stateParams.project__project_key__in);
             
             if($stateParams.project__project_key__in  && $stateParams.justAdded){
                 $scope.justAdded = $stateParams.justAdded;
@@ -256,7 +254,6 @@ angular.module('chembiohubAssayApp')
                       $modalInstance.dismiss('cancel');
                     };
                     $scope.doValidation = function(myForm){
-                        console.log('doValidation being called', myForm)
                         if(myForm.$valid && $scope.newSavedSearchModel.alias != "" && !myForm.$pristine){
                             $scope.saveSearch();
                             $modalInstance.dismiss('cancel');
@@ -285,7 +282,6 @@ angular.module('chembiohubAssayApp')
                       size: 'md',
                       resolve: {
                         links: function () {
-                          //console.log('links',$scope.links);
                           return $scope.links;
                         }
 
@@ -327,7 +323,6 @@ angular.module('chembiohubAssayApp')
 
                 //if(myForm.$valid){
                      
-                    console.log('still being found');
                     ProjectTypeFactory.get({"saved_search_project_type": true}, function(data){
                       
                       $scope.savedSearchType = data.objects[0];
@@ -351,7 +346,6 @@ angular.module('chembiohubAssayApp')
                                 "properties" :{},  
                                 "errors" :{}
                             }
-                            console.log(savedSearchObj)
 
                             var ssf = SavedSearchFactory.list;
 
@@ -359,7 +353,6 @@ angular.module('chembiohubAssayApp')
                             ssf.save(savedSearchObj, function(data){
                                 //search is now saved - close the modal
                                 //make sure reindex is called on the correct thing within data
-                                console.log('inside save');
                                 var params = {"id": data.id}
 
                                 $http.post( urlConfig.cbh_saved_search.list_endpoint  + "/reindex_compound/" , params)
@@ -374,12 +367,10 @@ angular.module('chembiohubAssayApp')
                 //}
                 //else{
                 //    $scope.errormess = "You must add a title";
-                //    console.log("assigning");
                 //}
 
             }
             $timeout(function(){
-                console.log("schema redraw timeout");
                 $rootScope.$broadcast('schemaFormRedraw');
             }, 2000);
 

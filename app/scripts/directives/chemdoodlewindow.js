@@ -76,7 +76,7 @@ angular.module('chembiohubAssayApp')
 
         $timeout(function(){redraw(500)});  
         function redraw(doIt){
-          console.log("red")
+          
             var noredraw = false;
             if(angular.isDefined(element.molecules)){
                 var mol = ChemDoodle.writeMOL(element.getMolecule()).valueOf();
@@ -103,7 +103,7 @@ angular.module('chembiohubAssayApp')
               //call repaint to display either the retained or default molecule
               element.repaint();
           }else{
-            console.log("notredraw");
+            
           }
         }
         

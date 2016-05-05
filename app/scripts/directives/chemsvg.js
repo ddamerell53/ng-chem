@@ -34,7 +34,7 @@ angular.module('chembiohubAssayApp')
             $scope.getSmiles = function() {
                 $scope.src="";
                 // $scope.encSmiles = btoa($scope.smiles.replace("Molecule from ChemDoodle Web Components", ""));
-                // //console.log($scope.encSmiles);
+                
                 var params = {
                   size: $scope.size,
                   ctab: $scope.smiles,

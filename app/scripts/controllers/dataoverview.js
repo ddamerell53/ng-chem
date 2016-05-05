@@ -310,7 +310,6 @@ var getSheetsByFile = function(dpc,fileId, $scope, FlowFileFactory, destroying, 
 
                         }, 
                         function(errorData){
-                          //console.log(errorData.statusText + ": " + errorData.data.error);
                           //launch a popup
                           //$scope.loadingMessage = errorData.statusText + ": " + errorData.data.error;
                           dataoverviewctrl.errorPopup(errorData.data.error + ". Please note only XLSX files are permitted.");
@@ -587,7 +586,6 @@ angular.module('chembiohubAssayApp')
                 }
 
                 dpc.saveDraft = function(form_data){
-                    console.log("Saving draft");
                     //save the contents of the form to either a django object or a redis cache object
                     var df = DraftFactory.save_draft
                     var dfresult = df.get({
@@ -596,7 +594,7 @@ angular.module('chembiohubAssayApp')
                     });
                     dfresult.$promise.then(function(data) {
                         //do stuff here to indicate draft has been saved (if the message comes back correctly)
-                        console.log('dpc draft saved', data);
+                        
                     });
 
                 }
@@ -838,7 +836,6 @@ angular.module('chembiohubAssayApp')
                     $scope.removeFile = function(form_key, index, url){
                         //can I access the model for the attachment field? Yes
                         if( angular.isUndefined($scope.popup_data.main_data.project_data[form_key[0]])){
-                            console.log("setting to null")
                             $scope.popup_data.main_data.project_data[form_key[0]] = {'attachments': []}
                         }
                         $scope.popup_data.main_data.project_data[form_key[0]].attachments = $filter('filter')($scope.popup_data.main_data.project_data[form_key[0]].attachments, function(value, index) {return value.url !== url;})
@@ -876,7 +873,6 @@ angular.module('chembiohubAssayApp')
                             });
                         }
                         /*$scope.saveDraft = function(form_data){
-                            console.log("Saving draft");
                             //save the contents of the form to either a django cache object or a redis cache 
                             var df = DraftFactory.save_draft
                             var dfresult = df.get({
@@ -885,7 +881,6 @@ angular.module('chembiohubAssayApp')
                             });
                             dfresult.$promise.then(function(data) {
                                 //do stuff here to indicate draft has been saved (if the message comes back correctly)
-                                console.log('edit draft saved', data);
                             });
 
                         };
@@ -904,7 +899,6 @@ angular.module('chembiohubAssayApp')
                             });
                             dfresult.$promise.then(function(data) {
                                 //put the loaded data into the form's model
-                                console.log('modal edit load draft', data);
                             });
                         }
 
@@ -956,7 +950,6 @@ angular.module('chembiohubAssayApp')
                 );
             }
             /*dataoverviewctrl.saveDraft = function(form_data){
-                //console.log("saving new object draft");
                 var df = DraftFactory.save_draft;
                 var dfresult = df.get({
                     //put the draft content to save here
@@ -964,7 +957,6 @@ angular.module('chembiohubAssayApp')
                 });
                 dfresult.$promise.then(function(data) {
                     //do stuff here to indicate draft has been saved (if the message comes back correctly)
-                    console.log('dataoverviewctrl save draft', data);
                 });
             }
             dataoverviewctrl.displayDraftList = false;
@@ -981,7 +973,6 @@ angular.module('chembiohubAssayApp')
                 });
                 dfresult.$promise.then(function(data) {
                     //put the loaded data into the form's model
-                    console.log('dataoverviewctrl save draft', data);
                 });
             }
             dataoverviewctrl.loadDraftList = function(){
@@ -998,7 +989,6 @@ angular.module('chembiohubAssayApp')
                 dataoverviewctrl.autosave = $interval(function(){$scope.saveDraft();}, 2000);    
             }
             $scope.$watch("dataoverviewctrl.addingChild",function handleChange( newValue, oldValue ) {
-                        console.log("addingChild has changed");
                         if(newValue == true){
                             dataoverviewctrl.autosave = $interval(function(){dataoverviewctrl.saveDraft();}, 2000);  
                         }

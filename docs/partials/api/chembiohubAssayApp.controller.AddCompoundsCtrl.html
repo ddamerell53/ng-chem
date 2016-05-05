@@ -10,44 +10,56 @@ Controller of the chembiohubAssayApp
 This Controller is responsible for adding compound batches to the system in the bulk upload</p>
 </div></div>
 <div class="member method"><h2 id="methods">Methods</h2>
-<ul class="methods"><li><h3 id="methods_$scopeassignfile">$scope.assignFile()</h3>
+<ul class="methods"><li><h3 id="methods_$scopeassignfile">$scope.assignFile(id, ext, file)</h3>
 <div class="$scopeassignfile"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-addcompoundsctrl-scope-assignfile-page"><p>The assignFile function is called on completion of an upload by flowjs.
 The chembiohub backend provides a flowfile identifier
 This is added to a configuration object and set back again to the backend via the createMultipleBatch function</p>
-</div></div>
+</div><h5 id="methods_$scopeassignfile_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>id</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-addcompoundsctrl-scope-assignfile-page"><p>Current dataset id</p>
+</div></td></tr><tr><td>ext</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-addcompoundsctrl-scope-assignfile-page"><p>File extension to use</p>
+</div></td></tr><tr><td>file</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-addcompoundsctrl-scope-assignfile-page"><p>FlowFile object</p>
+</div></td></tr></tbody></table></div>
 </li>
-<li><h3 id="methods_$scopecancelfile">$scope.cancelFile()</h3>
+<li><h3 id="methods_$scopecancelfile">$scope.cancelFile(field)</h3>
 <div class="$scopecancelfile"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-addcompoundsctrl-scope-cancelfile-page"><p>Cancel the current file and delete the dataset on the back end (although the file record itself is not removed)</p>
-</div></div>
+</div><h5 id="methods_$scopecancelfile_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>field</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-addcompoundsctrl-scope-cancelfile-page"><p>Not used - should be removed</p>
+</div></td></tr></tbody></table></div>
 </li>
-<li><h3 id="methods_$scopecbhaddsort">$scope.cbh.addSort()</h3>
+<li><h3 id="methods_$scopecbhaddsort">$scope.cbh.addSort(sortColumn, order)</h3>
 <div class="$scopecbhaddsort"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-addcompoundsctrl-scope-cbh-addsort-page"><p>Add a sort to the compound preview page</p>
-</div></div>
+</div><h5 id="methods_$scopecbhaddsort_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>sortColumn</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-addcompoundsctrl-scope-cbh-addsort-page"><p>The key of the column to add the sort on</p>
+</div></td></tr><tr><td>order</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-addcompoundsctrl-scope-cbh-addsort-page"><p>The sort direction</p>
+</div></td></tr></tbody></table></div>
 </li>
 <li><h3 id="methods_$scopecbhopenstatusexplanation">$scope.cbh.openStatusExplanation()</h3>
 <div class="$scopecbhopenstatusexplanation"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-addcompoundsctrl-scope-cbh-openstatusexplanation-page"><p>Open a modal to explain how the statuses work against a particular uploaded molecule</p>
 </div></div>
 </li>
-<li><h3 id="methods_$scopecbhsavechangestotemporarydataincontroller">$scope.cbh.saveChangesToTemporaryDataInController()</h3>
-<div class="$scopecbhsavechangestotemporarydataincontroller"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-addcompoundsctrl-scope-cbh-savechangestotemporarydataincontroller-page"><p>This function is called by the handsontable directive in order to save actions when a user fills down</p>
-</div></div>
-</li>
-<li><h3 id="methods_$scopecbhsetmappedfieldincontroller">$scope.cbh.setMappedFieldInController()</h3>
-<div class="$scopecbhsetmappedfieldincontroller"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-addcompoundsctrl-scope-cbh-setmappedfieldincontroller-page"><p>Function is called when the user maps a particular field in the check boxes in the field mapping modal
-Column data is re saved to the back end</p>
-</div></div>
-</li>
-<li><h3 id="methods_$scopecbhtogglewarningsfilter">$scope.cbh.toggleWarningsFilter(filterName)</h3>
-<div class="$scopecbhtogglewarningsfilter"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-addcompoundsctrl-scope-cbh-togglewarningsfilter-page"><p>Filter the previewed data based on whether it has a certain warning against it, changing the url without reloading</p>
-</div><h5 id="methods_$scopecbhtogglewarningsfilter_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>filterName</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-addcompoundsctrl-scope-cbh-togglewarningsfilter-page"><p>the name of the filter</p>
+<li><h3 id="methods_$scopecbhsavechangestotemporarydataincontroller">$scope.cbh.saveChangesToTemporaryDataInController(changes, sourceOfChange)</h3>
+<div class="$scopecbhsavechangestotemporarydataincontroller"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-addcompoundsctrl-scope-cbh-savechangestotemporarydataincontroller-page"><p>This function is called by the handsontable directive in order to save actions when a user fills down.</p>
+</div><h5 id="methods_$scopecbhsavechangestotemporarydataincontroller_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>changes</td><td><a href="" class="label type-hint type-hint-array">array</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-addcompoundsctrl-scope-cbh-savechangestotemporarydataincontroller-page"><p>List of objects representing an individual change which has been applied in edit mode</p>
+</div></td></tr><tr><td>sourceOfChange</td><td><a href="" class="label type-hint type-hint-array">array</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-addcompoundsctrl-scope-cbh-savechangestotemporarydataincontroller-page"><p>Not currently used. Supplied from a handsontable hook.</p>
 </div></td></tr></tbody></table></div>
 </li>
-<li><h3 id="methods_$scopechangenumberperpage">$scope.changeNumberPerPage()</h3>
+<li><h3 id="methods_$scopecbhsetmappedfieldincontroller">$scope.cbh.setMappedFieldInController(newFieldName, unCuratedFieldName)</h3>
+<div class="$scopecbhsetmappedfieldincontroller"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-addcompoundsctrl-scope-cbh-setmappedfieldincontroller-page"><p>Function is called when the user maps a particular field in the check boxes in the field mapping modal
+Column data is re-saved to the back end</p>
+</div><h5 id="methods_$scopecbhsetmappedfieldincontroller_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>newFieldName</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-addcompoundsctrl-scope-cbh-setmappedfieldincontroller-page"><p>name of the existing field which is having another field mapped to it</p>
+</div></td></tr><tr><td>unCuratedFieldName</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-addcompoundsctrl-scope-cbh-setmappedfieldincontroller-page"><p>name of the field to be mapped to an existing field</p>
+</div></td></tr></tbody></table></div>
+</li>
+<li><h3 id="methods_$scopecbhtogglewarningsfilter">$scope.cbh.toggleWarningsFilter(filterName, filterName)</h3>
+<div class="$scopecbhtogglewarningsfilter"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-addcompoundsctrl-scope-cbh-togglewarningsfilter-page"><p>Filter the previewed data based on whether it has a certain warning against it, changing the url without reloading</p>
+</div><h5 id="methods_$scopecbhtogglewarningsfilter_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>filterName</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-addcompoundsctrl-scope-cbh-togglewarningsfilter-page"><p>the name of the filter</p>
+</div></td></tr><tr><td>filterName</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-addcompoundsctrl-scope-cbh-togglewarningsfilter-page"><p>the name of the filter which may have warnings</p>
+</div></td></tr></tbody></table></div>
+</li>
+<li><h3 id="methods_$scopechangenumberperpage">$scope.changeNumberPerPage(viewType)</h3>
 <div class="$scopechangenumberperpage"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-addcompoundsctrl-scope-changenumberperpage-page"><p>Change the number of results shown per page in the compound preview</p>
-</div></div>
+</div><h5 id="methods_$scopechangenumberperpage_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>viewType</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-addcompoundsctrl-scope-changenumberperpage-page"><p>Whether this is list or gallery view</p>
+</div></td></tr></tbody></table></div>
 </li>
 <li><h3 id="methods_$scopechangeview">$scope.changeView()</h3>
-<div class="$scopechangeview"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-addcompoundsctrl-scope-changeview-page"><p>deprecated - change to the galley view</p>
+<div class="$scopechangeview"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-addcompoundsctrl-scope-changeview-page"><p>Change to the gallery view. Not used</p>
 </div></div>
 </li>
 <li><h3 id="methods_$scopecreatemultibatch">$scope.createMultiBatch()</h3>
@@ -70,9 +82,10 @@ The initial request from the back end will bring back a list of the first page o
 <div class="$scopenullsorts"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-addcompoundsctrl-scope-nullsorts-page"><p>remove the sorts on the add compounds preview</p>
 </div></div>
 </li>
-<li><h3 id="methods_$scopepagechanged">$scope.pageChanged()</h3>
+<li><h3 id="methods_$scopepagechanged">$scope.pageChanged(newPage)</h3>
 <div class="$scopepagechanged"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-addcompoundsctrl-scope-pagechanged-page"><p>Paginate through the table view in the addcompounds preview</p>
-</div></div>
+</div><h5 id="methods_$scopepagechanged_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>newPage</td><td><a href="" class="label type-hint type-hint-integer">integer</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-addcompoundsctrl-scope-pagechanged-page"><p>page number of page to use</p>
+</div></td></tr></tbody></table></div>
 </li>
 <li><h3 id="methods_$scopeprocesssmilesdata">$scope.processSmilesData()</h3>
 <div class="$scopeprocesssmilesdata"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-addcompoundsctrl-scope-processsmilesdata-page"><p>Process the list of SMILES identifiers from the text box when the user presses the appropriate button</p>
@@ -94,9 +107,10 @@ The initial request from the back end will bring back a list of the first page o
 <div class="$scopesetup"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-addcompoundsctrl-scope-setup-page"><p>reset the scope of the addcompounds page</p>
 </div></div>
 </li>
-<li><h3 id="methods_getresultspage">getResultsPage()</h3>
+<li><h3 id="methods_getresultspage">getResultsPage(pageNumber)</h3>
 <div class="getresultspage"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-addcompoundsctrl-getresultspage-page"><p>Get a page compound preview of results from the back end</p>
-</div></div>
+</div><h5 id="methods_getresultspage_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>pageNumber</td><td><a href="" class="label type-hint type-hint-integer">integer</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-addcompoundsctrl-getresultspage-page"><p>The page of results to use (after factoring in offset)</p>
+</div></td></tr></tbody></table></div>
 </li>
 </ul>
 </div>

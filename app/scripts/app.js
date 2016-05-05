@@ -1,15 +1,5 @@
 'use strict';
 
-/**
- * @ngdoc overview
- * @name chembiohubAssayApp
- * @description
- * # chembiohubAssayApp
- *
- * Main module of the application.
- */
-
-
 
 window.searchParamsString = "?pids=&page=&compoundBatchesPerPage=&viewType=&limit&offset&encoded_query=&encoded_sorts=&encoded_hides=&textsearch=&chemical_search_id=";
 
@@ -22,7 +12,15 @@ window.searchResolve = {
           return MessageFactory.getMessages();
         }],
       }
-
+      
+/**
+ * @ngdoc overview
+ * @name chembiohubAssayApp
+ * @description
+ * # chembiohubAssayApp
+ *
+ * Main module of the application.
+ */
 angular.module('chembiohubAssayApp')
 
 //Giving single molecule view a state to not break the back button and help with new API
@@ -217,7 +215,6 @@ $urlRouterProvider.when('', '/projects/list');
       resolve: {
         /*project_with_forms : ['AddDataFactory',function(AddDataFactory){
           return AddDataFactory.pwf.get(function(data){
-            console.log(data)
             return data;
           }).$promise;
         }
@@ -551,7 +548,7 @@ $urlRouterProvider.when('', '/projects/list');
     });
 
     $rootScope.$on('$stateChangeError', function(event, toState, toParams, fromState, fromParams, error) {
-      console.log(error);
+      //TODO handle
     });
 
 
@@ -562,13 +559,12 @@ $urlRouterProvider.when('', '/projects/list');
     return {
       response: function(response) {
         if (response.status === 401) {
-          console.log("Response 401");
+          //TODO handle
         }
         return response || $q.when(response);
       },
       responseError: function(rejection) {
         // if (rejection.status === 401) {
-        //     console.log("Response Error 401",rejection);
         //     window.location = urlConfig.instance_path.url_frag + "login"
         //     //$location.path('/login').search('returnTo', $location.path());
         // }

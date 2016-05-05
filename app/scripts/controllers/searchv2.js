@@ -149,7 +149,6 @@ angular.module('chembiohubAssayApp')
                       size: 'md',
                       resolve: {
                         links: function () {
-                          //console.log('links',$scope.links);
                           return $scope.links;
                         },
                         doFreshSearch: function(){

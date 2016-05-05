@@ -5,12 +5,12 @@
  * @name chembiohubAssayApp.controller:SinglemolCtrl
  * @description
  * # SinglemolCtrl
- * Controller of the chembiohubAssayApp
+ * This controller handles fetching, editing and cloning data for viewing a single record within a modal window (which has its own route).
  */
 angular.module('chembiohubAssayApp')
     .controller('SinglemolCtrl', ['$scope', '$rootScope', '$modalInstance', '$timeout', 'CBHCompoundBatch', 'ProjectFactory', '$cookies', 'FlowFileFactory', '$filter', '$stateParams', 'urlConfig', '$state', '$window', 'projectList',
         function($scope, $rootScope, $modalInstance, $timeout, CBHCompoundBatch, ProjectFactory, $cookies, FlowFileFactory, $filter, $stateParams, urlConfig, $state, $window, projectList) {
-            console.log('stateParams In Controller', $stateParams);
+            
             var mol = {}
             $scope.mol = {}
             var myform, len;
@@ -107,7 +107,7 @@ angular.module('chembiohubAssayApp')
                 //put a new method in FlowFileFactory
                 //need to modify this so that the items are added to the value part of the schema item returned by the API
                 //TODO handle error here
-                console.log('success being called');
+                
                 var AttachmentFactory = FlowFileFactory.cbhChemFlowFile;
                 AttachmentFactory.get({
                     'identifier': file.uniqueIdentifier
@@ -139,7 +139,7 @@ angular.module('chembiohubAssayApp')
             $scope.sizeCheck = function(file, form_key){
                 
                 //get the file
-                console.log('file size',file.size);
+                
                 if (file.size > 20000000) {
                     //cancel the file
                     file.flowObj.removeFile(file);
@@ -156,7 +156,7 @@ angular.module('chembiohubAssayApp')
                 
                 if ($scope.mol.projectfull.project_type.show_compounds) {
                     //If this is a compounds project redirect to compound clone page
-                    console.log("newcompounds")
+                    
                     $state.go("cbh.projects.project.addsingle", { 'projectKey': $scope.mol.projectfull.project_key, idToClone: $scope.mol.id }, { reload: true });
                 } else {
                     $rootScope.$broadcast("cloneAnItem", mol);
@@ -258,7 +258,7 @@ angular.module('chembiohubAssayApp')
                 if($scope.isUpdated){
                     $rootScope.$broadcast("filtersUpdated",{});
                 }else{
-                    console.log("not updated")
+                    
                 }
             }
 
@@ -267,7 +267,7 @@ angular.module('chembiohubAssayApp')
             //$scope.doArchiveItem = false;
 
             $scope.validateFormData = function(myEditedForm){
-                console.log('doValidation being called', myEditedForm)
+                
                 $scope.errormess = "";
                 //this step is necessary to ensure that required fields have data
                 //and for validation check on the form as a whole to fail if required fields are missing

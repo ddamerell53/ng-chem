@@ -1,6 +1,14 @@
 'use strict';
 
-
+/**
+ * @ngdoc method
+ * @name chembiohubAssayApp.controller:CbhCtrl#detectIE
+ * @methodOf chembiohubAssayApp.controller:CbhCtrl
+ * @description
+ * Work out if the current browser is a version of Internet Explorer. We do this becuase the Chemdoodle chemistry sketcher doesn't behave
+ * as expected in some IE versions so workarounds have to be applied. Method examines the user agent for the presence of IE, Edge or Trident.
+ * @returns {boolean} boolean to flag that the browser is IE.
+*/
 function detectIE() {
     var ua = window.navigator.userAgent;
 
@@ -33,7 +41,7 @@ function detectIE() {
  * @name chembiohubAssayApp.controller:CbhCtrl
  * @description
  * # CbhCtrl
- * Controller of the chembiohubAssayApp
+ * Main controller for the app. Contains global configuration and global methods which can be overridden in individual controllers.
  */
 angular.module('chembiohubAssayApp')
   .controller('CbhCtrl', function($scope, $rootScope, $state, $location, $modal, urlConfig, loggedInUser, projectList, prefix, $compile, MessageFactory, skinConfig, InvitationFactory) {
@@ -67,6 +75,15 @@ angular.module('chembiohubAssayApp')
 
             angular.element("info-box", function() {});
           });
+
+          /**
+           * @ngdoc method
+           * @name chembiohubAssayApp.controller:CbhCtrl#$scope.isLoggedIn
+           * @methodOf chembiohubAssayApp.controller:CbhCtrl
+           * @description
+           * Check that a user has been recorded as being logged in against this controller
+           * @returns {boolean} loggedIn flag that user is logged in or not
+          */
           $scope.isLoggedIn = function() {
             var loggedIn = false;
             if (cbh.logged_in_user.id > 0) {
@@ -75,10 +92,27 @@ angular.module('chembiohubAssayApp')
             return loggedIn;
           };
 
+          /**
+           * @ngdoc method
+           * @name chembiohubAssayApp.controller:CbhCtrl#$rootScope.getUrlBase
+           * @methodOf chembiohubAssayApp.controller:CbhCtrl
+           * @description
+           * Retrieve the base URL for this install of ShowYourWorking
+           * @returns {string} url_frag domain name an subdomain for this instance of the app
+          */
           $rootScope.getUrlBase = function() {
             return urlConfig.instance_path.url_frag;
           };
 
+          /**
+           * @ngdoc method
+           * @name chembiohubAssayApp.controller:CbhCtrl#$scope.getProjectObj
+           * @methodOf chembiohubAssayApp.controller:CbhCtrl
+           * @description
+           * Retrieve a project by key from list of available projects
+           * @param {string} projectKey string for project lookup
+           * @returns {object} proj The project object
+          */
           $scope.getProjectObj = function(projectKey) {
             angular.forEach($scope.projects, function(proj) {
               if (projectKey == proj.project_key) {
@@ -86,9 +120,22 @@ angular.module('chembiohubAssayApp')
               }
             });
           };
+
           cbh.messages = MessageFactory.getMessages();
 
-          /* Create an object for communication between handsontable and the search form WRT custom fields */
+          /**
+           * @ngdoc method
+           * @name chembiohubAssayApp.controller:CbhCtrl#cbh.createCustomFieldTransport
+           * @methodOf chembiohubAssayApp.controller:CbhCtrl
+           * @description
+           * Create an object for communication between handsontable and the search form with respect to custom fields 
+           * Not currently used
+           * @param {string} newValue  The new definition
+           * @param {string} oldValue .
+           * @param {string} arrayContains .
+           * @returns {object} proj The project object
+           * @deprecated
+          */
           cbh.createCustomFieldTransport = function(newValue, oldValue, arrayContains) {
             var addOrRemove = ""
 
@@ -139,8 +186,18 @@ angular.module('chembiohubAssayApp')
             }
 
           }
+
+          /**
+           * @ngdoc method
+           * @name chembiohubAssayApp.controller:CbhCtrl#cbh.openFilterPopup
+           * @methodOf chembiohubAssayApp.controller:CbhCtrl
+           * @description
+           * Opens a bootstrap UI modal window for holding a filter form
+           * Not currently used
+           * @param {object} col  The new definition
+           * @deprecated
+          */
           cbh.openFilterPopup = function(col) {
-                console.log('col', col);
                 $scope.col = angular.copy(col);
                 $scope.modalInstance = $modal.open({
                   templateUrl: 'views/templates/compound-table-filter.html',
@@ -167,6 +224,16 @@ angular.module('chembiohubAssayApp')
         
           
           /* Global error handling popup for displaying generic error messages */
+          /**
+           * @ngdoc method
+           * @name chembiohubAssayApp.controller:CbhCtrl#cbh.errorPopup
+           * @methodOf chembiohubAssayApp.controller:CbhCtrl
+           * @description
+           * Opens a bootstrap UI modal window for holding an error message
+           * Not currently used
+           * @param {object} input_popup_data  data to display
+           * @deprecated
+          */
           cbh.errorPopup = function(input_popup_data) {
 
             $scope.popup_data = angular.copy(input_popup_data);
@@ -192,9 +259,16 @@ angular.module('chembiohubAssayApp')
             });
           };
           /* 
-             Global invitation popup for inviting external users to use the system.
-             Creates a new user with the details supplied here and emails the invitee.
+             
+             
            */
+          /**
+           * @ngdoc function
+           * @name chembiohubAssayApp.controller:CbhCtrl#cbh.invitationPopup
+           * @methodOf chembiohubAssayApp.controller:CbhCtrl
+           * @description
+           * Global invitation popup for inviting external users to use the system. Creates a new user with the details supplied here and emails the invitee.
+          */
           cbh.invitationPopup = function() {
 
             //$scope.popup_data = angular.copy(input_popup_data);
@@ -203,6 +277,13 @@ angular.module('chembiohubAssayApp')
               size: 'md',
               controller: function($scope, $modalInstance, InvitationFactory) {
                 
+                /**
+                 * @ngdoc method
+                 * @name chembiohubAssayApp.controller:CbhCtrl#$scope.clearForm
+                 * @methodOf chembiohubAssayApp.controller:CbhCtrl
+                 * @description
+                 * Removes all data from the current invitation form
+                */
                 $scope.clearForm = function(){
                   $scope.invite = {
                     firstName:'',
@@ -218,6 +299,14 @@ angular.module('chembiohubAssayApp')
                 
                 $scope.modalInstance = $modalInstance;
                 $scope.clearForm();
+
+                /**
+                 * @ngdoc method
+                 * @name chembiohubAssayApp.controller:CbhCtrl#$scope.setWatcher
+                 * @methodOf chembiohubAssayApp.controller:CbhCtrl
+                 * @description
+                 * Starts a reminder timer for the back end - if an invited user hasn't registered after an invite wihtin a certiain time frame, remind them with a follw up email.
+                */
                 $scope.setWatcher = function(){
                   $scope.watch = $scope.$watch("invite.email", function(old,newob){
                     if(old != newob){
@@ -225,6 +314,7 @@ angular.module('chembiohubAssayApp')
                     }
                   });
                 }
+
                 $scope.setWatcher();
                 $scope.projects = [];
                 angular.forEach(cbh.projects.objects, function(proj){
@@ -233,11 +323,25 @@ angular.module('chembiohubAssayApp')
                   }
                 });
 
+                /**
+                 * @ngdoc method
+                 * @name chembiohubAssayApp.controller:CbhCtrl#$scope.cancel
+                 * @methodOf chembiohubAssayApp.controller:CbhCtrl
+                 * @description
+                 * Cancel the invitation and close the popup window
+                */
                 $scope.cancel = function () {
                   $scope.validationMessage = "";
                   $modalInstance.dismiss('cancel');
                 };
 
+                /**
+                 * @ngdoc method
+                 * @name chembiohubAssayApp.controller:CbhCtrl#$scope.sendInvite
+                 * @methodOf chembiohubAssayApp.controller:CbhCtrl
+                 * @description
+                 * Validate the completed invitation form and if valid, send the invite via back end.
+                */
                 $scope.sendInvite = function() {
                   //check fields are filled in
                   //send info to backend to set up new users
@@ -293,6 +397,15 @@ angular.module('chembiohubAssayApp')
             });
           };
 
+          /**
+           * @ngdoc method
+           * @name chembiohubAssayApp.controller:CbhCtrl#cbh.currentPageClass
+           * @methodOf chembiohubAssayApp.controller:CbhCtrl
+           * @description
+           * Add a css class indicating that the item corresponds to the current page (for paging etc)
+           * @param {object} state_to_match  object representing the current ui-router state
+           * @returns {string} string empty string if false, 'curent-page' if true
+          */
           cbh.currentPageClass = function(state_to_match) {
             if ($state.includes(state_to_match)) {
               return 'current-page';

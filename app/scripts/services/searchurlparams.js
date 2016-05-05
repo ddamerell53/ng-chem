@@ -134,7 +134,7 @@ angular.module('chembiohubAssayApp')
                 //now need to reset the other structure search types so they do not contain molecular data
                 resetStructure(searchForm.substruc);
             }else {
-                console.log("here")
+                
                 params[searchForm.substruc] = undefined;
                 // resetStructure(searchForm.substruc);
             }

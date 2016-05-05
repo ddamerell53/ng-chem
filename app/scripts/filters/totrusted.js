@@ -5,7 +5,8 @@
  * @name chembiohubAssayApp.filter:toTrusted
  * @description
  * # toTrusted
- * Filter in the chembiohubAssayApp.
+ * Not used
+ * @deprecated
  */
 angular.module('chembiohubAssayApp')
   .filter('toTrusted', ['$sce', function($sce){

@@ -18,7 +18,7 @@ angular.module('chembiohubAssayApp')
             link: function preLink(scope, element, attrs) {
                 var redraw;
                 var jsonSchemaColDefs;
-                //console.log(scope.searchformSchema);
+                
                 function labelifyCustomField(field) {
                     //for the column uiselect filters, we don't need the column name
                     var parts = field.split("|");
@@ -30,7 +30,7 @@ angular.module('chembiohubAssayApp')
                     return startsWith == fieldSplit[0];
                 }
                 scope.cbh.toggleMappedFieldInDirective = function(newFieldId, unCuratedFieldName) {
-                        //console.log(newFieldId);
+                        
                         if (newFieldId === "") {
                             angular.forEach(scope.uncuratedHeaders,
                                 function(hdr) {
@@ -520,11 +520,11 @@ angular.module('chembiohubAssayApp')
                                     //might need to change this to traverse the DOM and find if the button has the success class
                                     // td > a > button
                                     var firstCellButton = firstCell.children[0].children[0];
-                                    console.log(firstCellButton.className)
+                                    
                                     if (firstCellButton.className == 'btn btn-success') {
                                         var firstValueArchived = true;
                                     }
-                                    console.log('start', start.row)
+                                    
                                     
                                     for (var rowNo = start.row; rowNo <= end.row; rowNo++) {
                                         var cellAtRow = this.getCell(rowNo, colNo);
@@ -532,7 +532,7 @@ angular.module('chembiohubAssayApp')
                                         var mol = this.getSourceDataAtRow(rowNo);
                                         var split = mol.project.split("/");
                                         var projid = split[split.length - 1];
-                                        console.log('getting here');
+                                        
 
                                         if (firstValueArchived && cellLink.children[0].className == ('btn btn-danger')) {
                                             
@@ -573,7 +573,7 @@ angular.module('chembiohubAssayApp')
 
                     var container1,
                         hot1;
-                    /*console.log('showing element', element);
+                    /*
                     container1 = document.createElement('DIV');
                     container1.style.overflowX = 'scroll';
                     container1.id = 'myid';*/
@@ -584,7 +584,7 @@ angular.module('chembiohubAssayApp')
                     while (element[0].firstChild) {
                         element[0].removeChild(element[0].firstChild);
                     }
-                    //console.log(container1);
+                    
                     //container1.appendChild(container);
                     element[0].appendChild(container);
                     var hot1 = new Handsontable(container, hotObj);
@@ -687,8 +687,6 @@ angular.module('chembiohubAssayApp')
                 }
                 scope.$watch("redraw", function(newValue, oldValue) {
                     redraw();
-                    console.log('redraw being called via watch');
-                    
 
                 }, true);
 

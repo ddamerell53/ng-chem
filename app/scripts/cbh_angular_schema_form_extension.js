@@ -28,20 +28,15 @@ function mergeKeyArrays(left, right)
  
     while (left.length && right.length) {
         if (left[0].key.toLowerCase() < right[0].key.toLowerCase()) {
-            console.log(left[0]);
-            console.log(right[0]);
             result.push(left.shift());
 
         }else if(left[0].key.toLowerCase() === right[0].key.toLowerCase()){
             //If the keys are equal then only include one of the two keys
-            console.log("equal")
 
             result.push(left.shift());
             //Remove the item from the right array without 
             right.shift();
         } else {
-            console.log(left[0]);
-            console.log(right[0]);
             result.push(right.shift());
         }
     }

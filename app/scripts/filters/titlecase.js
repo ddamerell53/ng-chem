@@ -5,7 +5,7 @@
  * @name chembiohubAssayApp.filter:titlecase
  * @description
  * # titleCase
- * Filter in the chembiohubAssayApp.
+ * Converts a supplied sentence string to title case, ignoring joining words and articles.
  */
 angular.module('chembiohubAssayApp')
   .filter('titlecase', function () {

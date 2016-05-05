@@ -5,7 +5,8 @@
  * @name chembiohubAssayApp.controller:PlatemapCtrl
  * @description
  * # PlatemapCtrl
- * Controller of the chembiohubAssayApp
+ * This is used to control Plate Map functionality - users can define some required parameters to set up their plate, then sequentially add data to each well. 
+ * It is intended to link added records by their system ID to a particular plate for an overview.
  */
 angular.module('chembiohubAssayApp')
     .controller('PlatemapCtrl', ['$scope', '$rootScope', 'urlConfig', '$filter', 'loggedInUser', '$stateParams','$state', 'projectKey', 'projectList', 'CBHCompoundBatch',

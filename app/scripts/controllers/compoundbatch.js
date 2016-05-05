@@ -494,7 +494,6 @@ angular.module('chembiohubAssayApp')
 
 
             $scope.undoChanges = function() {
-                console.log("test")
                 $scope.currentlyLoading = true;
                 $scope.compoundBatches.data = angular.copy($scope.compoundBatches.backup);
                 var itemsToChange = $scope.cbh.changesToUndo.map(function(item) {

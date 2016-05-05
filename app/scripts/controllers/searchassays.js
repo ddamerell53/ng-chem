@@ -6,6 +6,7 @@
  * @description
  * # SearchAssaysCtrl
  * Controller of the chembiohubAssayApp
+ * not used
  * @deprecated
  */
 angular.module('chembiohubAssayApp')
@@ -59,11 +60,11 @@ $scope.$watch(
       $scope.selections.l1 = decodeURIComponent($stateParams.l1).split(",");
     }
     if ($stateParams.l2) {
-      //console.log('decoded',decodeURIComponent($stateParams.l2))
+      
       $scope.selections.l2 = decodeURIComponent($stateParams.l2).split(",");
     }
     if ($stateParams.useruris) {
-      //console.log('decoded',decodeURIComponent($stateParams.l2))
+      
       $scope.userData.useruris = decodeURIComponent($stateParams.useruris).split(",");
 
     }
@@ -154,7 +155,7 @@ function arraysEqual(a, b) {
                 );
 
 
-    //console.log($scope.indexVMOnInit);
+    
     $scope.searchFieldsCount = 0;
     $scope.advancedSearchFields = []
   	$scope.addCustomField = function() {
@@ -191,7 +192,7 @@ function arraysEqual(a, b) {
 
     $scope.isSelectedInUrl = function(level, uri){
       angular.forEach($scope.selections[level], function(item){
-        console.log(level);
+        
         if(item == uri) {
           return true;
         }
@@ -270,13 +271,10 @@ function arraysEqual(a, b) {
     }
 
     $scope.showDetailPopup = function(cfc_uri, project_data){
-      /*console.log('cfcuri', cfc_uri);
-      console.log('proj_data', project_data);*/
 
       //look up the custom field config object
       //pass this and the data to the popup
       $http.get(cfc_uri).then(function(response){
-           //console.log(response.data.project_data_fields);
            //map these to project_data before adding to popup
            //example on the dataoverview template page when initialising popups there
             //$scope.popup_data = angular.copy(response.data);
@@ -313,8 +311,6 @@ function arraysEqual(a, b) {
       //for this highlight set, is there a highlight present for this level?
       
       angular.forEach(highlights, function(val, key){
-        /*console.log('val', val);
-        console.log('key', key);*/
         if(key.indexOf(level) == 0){
           return val;
         }

@@ -5,7 +5,8 @@
  * @name chembiohubAssayApp.controller:Compoundbatchv2Ctrl
  * @description
  * # Compoundbatchv2Ctrl
- * Controller of the chembiohubAssayApp
+ * This controller handles edit functionality and result retrieval within the compound search page. It is the backing for the tables displaying search results, and handles switching to edit mode (and saving changes) and archive mode, along with pagination, 
+ * filter and sort functionality, as well as applying search form selections and parameters to the displayed results.
  */
 angular.module('chembiohubAssayApp')
     .controller('Compoundbatchv2Ctrl', ['$scope', '$rootScope', '$state', '$stateParams', '$timeout', 'CBHCompoundBatch', 'urlConfig', '$window', '$location', '$anchorScroll', '$filter', 'SearchUrlParamsV2','skinConfig', 'FlowFileFactory', 'chemicalSearch',
@@ -58,7 +59,6 @@ angular.module('chembiohubAssayApp')
                 var data = skinConfig.objects[0].chemicalSearch
                 data.id = undefined;
                 chemicalSearch.save(data, function(data){
-                    console.log(data)
                     skinConfig.objects[0].chemicalSearch = data;
                     $rootScope.$broadcast("chemicalSearchReady");
                 });
@@ -140,7 +140,16 @@ angular.module('chembiohubAssayApp')
                 });
                 
             })
-
+            
+            /**
+             * @ngdoc method
+             * @name chembiohubAssayApp.controller:Compoundbatchv2Ctrl#$scope.cbh.sendToSearch
+             * @methodOf chembiohubAssayApp.controller:Compoundbatchv2Ctrl
+             * @description
+             * Change the current search parameters and broadcast a columnSelection event based on filter selections for a supplied column.
+             * @param {object} col object representing a handsontable column
+             *
+             */
             $scope.cbh.sendToSearch = function(col){
                 
                 $timeout(function(){
@@ -154,7 +163,16 @@ angular.module('chembiohubAssayApp')
                 }); 
             }
 
-
+        /**
+         * @ngdoc method
+         * @name chembiohubAssayApp.controller:Compoundbatchv2Ctrl#$scope.$on
+         * @methodOf chembiohubAssayApp.controller:Compoundbatchv2Ctrl
+         * @description
+         * Removes filters from the scope objects and resets them to their defaults.
+         * @param {string} cleanupFilters  The name of the broadcast to act on
+         * @param {function} callback  the callback function to trigger functionality
+         *
+         */
         $scope.$on("cleanupFilters", function(event, args){
             angular.forEach(skinConfig.objects[0].query_schemaform.default.schema.properties, function(value, key){
                 if(key != "query_type" && key){
@@ -168,7 +186,16 @@ angular.module('chembiohubAssayApp')
 
 
      
-
+        /**
+         * @ngdoc method
+         * @name chembiohubAssayApp.controller:Compoundbatchv2Ctrl#$scope.$on
+         * @methodOf chembiohubAssayApp.controller:Compoundbatchv2Ctrl
+         * @description
+         * Notifies the app that filters have been changed in the form or via url. This listener sends the changes to generate new url parameters
+         * @param {string} filtersUpdated  The name of the broadcast to act on
+         * @param {function} callback  the callback function to trigger functionality
+         *
+         */
         $scope.$on("filtersUpdated",function( event, args){
             var index = skinConfig.objects[0].filters_applied.indexOf(args.field_path);
             var changed = false;
@@ -186,6 +213,16 @@ angular.module('chembiohubAssayApp')
             $scope.cbh.justAdded = false;
         });
 
+        /**
+         * @ngdoc method
+         * @name chembiohubAssayApp.controller:Compoundbatchv2Ctrl#$scope.$on
+         * @methodOf chembiohubAssayApp.controller:Compoundbatchv2Ctrl
+         * @description
+         * Remove all filters which hide columns and send to generate new search parameters with these removed.
+         * @param {string} removeAllHides  The name of the broadcast to act on
+         * @param {function} callback  the callback function to trigger functionality
+         *
+         */
         $scope.$on("removeAllHides",function( event, args){
             
             skinConfig.objects[0].hides_applied = [];
@@ -193,9 +230,17 @@ angular.module('chembiohubAssayApp')
             $scope.cbh.changeSearchParams(params, true);
         });
 
-
-
-         $scope.$on("removeHide",function( event, args){
+        /**
+         * @ngdoc method
+         * @name chembiohubAssayApp.controller:Compoundbatchv2Ctrl#$scope.$on
+         * @methodOf chembiohubAssayApp.controller:Compoundbatchv2Ctrl
+         * @description
+         * Show a previously hidden column and send to generate new search parameters with this accounted for.
+         * @param {string} removeHide  The name of the broadcast to act on
+         * @param {function} callback  the callback function to trigger functionality
+         *
+         */
+        $scope.$on("removeHide",function( event, args){
             
             var index = skinConfig.objects[0].hides_applied.indexOf(args.field_path);
             if(index > -1){
@@ -205,7 +250,17 @@ angular.module('chembiohubAssayApp')
             $scope.cbh.changeSearchParams(params, true);
         });
 
-         $scope.$on("addHide",function( event, args){
+        /**
+         * @ngdoc method
+         * @name chembiohubAssayApp.controller:Compoundbatchv2Ctrl#$scope.$on
+         * @methodOf chembiohubAssayApp.controller:Compoundbatchv2Ctrl
+         * @description
+         * Hide a previously shown column and send to generate new search parameters with this accounted for.
+         * @param {string} addHide  The name of the broadcast to act on
+         * @param {function} callback  the callback function to trigger functionality
+         *
+         */
+        $scope.$on("addHide",function( event, args){
             var index = skinConfig.objects[0].hides_applied.indexOf(args.field_path);
             if(index > -1){
               skinConfig.objects[0].hides_applied.splice(index, 1);
@@ -214,10 +269,19 @@ angular.module('chembiohubAssayApp')
             var params = SearchUrlParamsV2.generate_hide_params($stateParams);
             $scope.cbh.changeSearchParams(params, true);
             
-            
         });
 
-         $scope.$on("addSort",function( event, args){
+        /**
+         * @ngdoc method
+         * @name chembiohubAssayApp.controller:Compoundbatchv2Ctrl#$scope.$on
+         * @methodOf chembiohubAssayApp.controller:Compoundbatchv2Ctrl
+         * @description
+         * Sort a column and send to generate new search parameters with this accounted for.
+         * @param {string} addSort  The name of the broadcast to act on
+         * @param {function} callback  the callback function to trigger functionality
+         *
+         */
+        $scope.$on("addSort",function( event, args){
             var index = skinConfig.objects[0].sorts_applied.indexOf(args.field_path);
             if(index > -1){
               skinConfig.objects[0].sorts_applied.splice(index, 1);
@@ -228,8 +292,17 @@ angular.module('chembiohubAssayApp')
             $scope.cbh.changeSearchParams(params, true);
         });
 
-
-         $scope.$on("removeSort",function( event, args){
+        /**
+         * @ngdoc method
+         * @name chembiohubAssayApp.controller:Compoundbatchv2Ctrl#$scope.$on
+         * @methodOf chembiohubAssayApp.controller:Compoundbatchv2Ctrl
+         * @description
+         * Remove a sort on a column, reverting to any default sort direction and send to generate new search parameters with this accounted for.
+         * @param {string} removeSort  The name of the broadcast to act on
+         * @param {function} callback  the callback function to trigger functionality
+         *
+         */
+        $scope.$on("removeSort",function( event, args){
 
             var index = skinConfig.objects[0].sorts_applied.indexOf(args.field_path);
             if(index > -1){
@@ -259,7 +332,14 @@ angular.module('chembiohubAssayApp')
                 true
             );
 
-
+           /**
+             * @ngdoc method
+             * @name chembiohubAssayApp.controller:Compoundbatchv2Ctrl#$scope.cbh.selectAllProjects
+             * @methodOf chembiohubAssayApp.controller:Compoundbatchv2Ctrl
+             * @description
+             * Add all projects to the projects filter and generate new search parameters for this selection
+             *
+             */
            $scope.cbh.selectAllProjects = function(){
                 $scope.cbh.selected_projects = [];
                 angular.forEach($scope.cbh.projects.objects, function(p){
@@ -274,6 +354,14 @@ angular.module('chembiohubAssayApp')
                 $scope.cbh.justAdded = false;
            }
             
+            /**
+             * @ngdoc method
+             * @name chembiohubAssayApp.controller:Compoundbatchv2Ctrl#$scope.cbh.deSelectAllProjects
+             * @methodOf chembiohubAssayApp.controller:Compoundbatchv2Ctrl
+             * @description
+             * Remove all projects from the projects filter and generate new search parameters for this selection
+             *
+             */
             $scope.cbh.deSelectAllProjects = function(){
                 $scope.cbh.selected_projects = [];
                 angular.forEach($scope.cbh.projects.objects, function(p){
@@ -282,9 +370,18 @@ angular.module('chembiohubAssayApp')
                 var params = SearchUrlParamsV2.get_project_params($stateParams, $scope.cbh.selected_projects);
                 $scope.cbh.changeSearchParams(params, true);
                 $scope.cbh.justAdded = false;
-           }
+            }
 
-           $scope.cbh.toggleProjectFiltered = function(proj){
+            /**
+             * @ngdoc method
+             * @name chembiohubAssayApp.controller:Compoundbatchv2Ctrl#$scope.cbh.toggleProjectFiltered
+             * @methodOf chembiohubAssayApp.controller:Compoundbatchv2Ctrl
+             * @description
+             * Add or remove specified project from the projects filter and generate new search parameters for this selections
+             * @param {object} proj The project object which has been toggled in the project selector.
+             *
+             */
+            $scope.cbh.toggleProjectFiltered = function(proj){
                 var justToggledOn = true;
 
                 angular.forEach($scope.cbh.selected_projects,function( sel, index, array){
@@ -303,10 +400,18 @@ angular.module('chembiohubAssayApp')
 
                 $scope.cbh.changeSearchParams(params, true);
                 $scope.cbh.justAdded = false;
-           }
-            
+            }
 
-            
+            /**
+             * @ngdoc method
+             * @name chembiohubAssayApp.controller:Compoundbatchv2Ctrl#$scope.cbh.changeSearchParams
+             * @methodOf chembiohubAssayApp.controller:Compoundbatchv2Ctrl
+             * @description
+             * Main function to search and move to a new URL. Checks first that user is not in edit mode.
+             * @param {object} newParams Search parameters which have been newly built from other filter broadcast events.
+             * @param {boolean} notify Flag that the new search result should be set at page 1
+             *
+             */
             $scope.cbh.changeSearchParams = function(newParams, notify) {
                 //General function to search and move to a new URL
                 // var pf = SearchUrlParamsV2.fromForm($scope.cbh.searchForm);
@@ -335,12 +440,28 @@ angular.module('chembiohubAssayApp')
                 getResultsPage($scope.pagination.current, newParams);
             }
 
+            /**
+             * @ngdoc method
+             * @name chembiohubAssayApp.controller:Compoundbatchv2Ctrl#$scope.changeView
+             * @methodOf chembiohubAssayApp.controller:Compoundbatchv2Ctrl
+             * @description
+             * Switches between list and gallery views and re-applies to search. Called from paging bar html.
+             *
+             */
             $scope.changeView = function(){
                 $stateParams.viewType = $scope.listOrGallery.choice;
                 $state.params.viewType = $scope.listOrGallery.choice;
                 $location.search($state.params);
             }
 
+            /**
+             * @ngdoc method
+             * @name chembiohubAssayApp.controller:Compoundbatchv2Ctrl#$scope.setUpPageNumbers
+             * @methodOf chembiohubAssayApp.controller:Compoundbatchv2Ctrl
+             * @description
+             * Initialises the choices available for number of results per search page
+             *
+             */
             $scope.cbh.setUpPageNumbers = function() {
                 // complicated way of deciding number per page
                 $scope.listOrGallery = {
@@ -389,6 +510,15 @@ angular.module('chembiohubAssayApp')
                 }
             }
 
+            /**
+             * @ngdoc method
+             * @name chembiohubAssayApp.controller:Compoundbatchv2Ctrl#$scope.cbh.patchRecord
+             * @methodOf chembiohubAssayApp.controller:Compoundbatchv2Ctrl
+             * @description
+             * Make changes to an existing molecule record. Uses a PATCH web service call. Sends a call to refresh displayed records.
+             * @param {object} mol The molecule object to be patched
+             *
+             */
             $scope.cbh.patchRecord = function(mol) {
                 $scope.compoundBatches.backup = angular.copy($scope.compoundBatches.data);
                 //TODO handle error here
@@ -408,7 +538,14 @@ angular.module('chembiohubAssayApp')
 
             $scope.cbh.setUpPageNumbers();
 
-
+            /**
+             * @ngdoc method
+             * @name chembiohubAssayApp.controller:Compoundbatchv2Ctrl#$scope.cbh.toggleEditMode
+             * @methodOf chembiohubAssayApp.controller:Compoundbatchv2Ctrl
+             * @description
+             * Switch edit mode on or off. Also changes search parameters to refelct choice of edit mode, and scrolls to start of data set.
+             *
+             */
             $scope.cbh.toggleEditMode = function() {
                 $scope.cbh.editMode = !$scope.cbh.editMode;
                 var newParams = angular.copy($stateParams);
@@ -424,6 +561,15 @@ angular.module('chembiohubAssayApp')
 
             $scope.errormess = "";
 
+            /**
+             * @ngdoc method
+             * @name chembiohubAssayApp.controller:Compoundbatchv2Ctrl#$scope.doSingleCompoundValidation
+             * @methodOf chembiohubAssayApp.controller:Compoundbatchv2Ctrl
+             * @description
+             * Perform client side validation of the compound addition form.
+             * @param {object} myForm Whole form object for client-side validation.
+             *
+             */
             $scope.doSingleCompoundValidation = function(myForm){
                 $scope.errormess = "";
                 //this step is necessary to ensure that required fields have data
@@ -443,6 +589,15 @@ angular.module('chembiohubAssayApp')
 
             };
 
+            /**
+             * @ngdoc method
+             * @name chembiohubAssayApp.controller:Compoundbatchv2Ctrl#$scope.saveSingleCompound
+             * @methodOf chembiohubAssayApp.controller:Compoundbatchv2Ctrl
+             * @description
+             * Save one compound from the addition form. Object to be saved is in the scope as newMol. 
+             * Convenience method for the CBHCompoundBatch web service. On completion, signals that the page has changed.
+             *
+             */
             $scope.saveSingleCompound = function() {
                 //adding validation here
 
@@ -455,15 +610,43 @@ angular.module('chembiohubAssayApp')
                 );
             };
 
+            /**
+             * @ngdoc method
+             * @name chembiohubAssayApp.controller:Compoundbatchv2Ctrl#$scope.$on
+             * @methodOf chembiohubAssayApp.controller:Compoundbatchv2Ctrl
+             * @description
+             * Remove the currently displayed form. Not yet implemented here.
+             * @param {string} removeForm  The name of the broadcast to act on
+             * @param {function} callback  the callback function to trigger functionality
+             *
+             */
             $scope.$on("removeForm", function(){
-                console.log("rem")
+                //TODO handle
             })
 
+            /**
+             * @ngdoc method
+             * @name chembiohubAssayApp.controller:Compoundbatchv2Ctrl#$scope.$on
+             * @methodOf chembiohubAssayApp.controller:Compoundbatchv2Ctrl
+             * @description
+             * Convenience command to turn on the add data form with data pre-populated when user requests to clone an item.
+             * @param {string} cloneAnItem  The name of the broadcast to act on
+             * @param {function} callback  the callback function to trigger functionality
+             *
+             */
             $scope.$on("cloneAnItem", function(event, item){
                 $scope.toggleAddData(item);
 
             })
 
+            /**
+             * @ngdoc method
+             * @name chembiohubAssayApp.controller:Compoundbatchv2Ctrl#$scope.toggleAddData
+             * @methodOf chembiohubAssayApp.controller:Compoundbatchv2Ctrl
+             * @description
+             * Switch the item addition form on or off. If currently in edit mode, switches off edit mode first
+             *
+             */
             $scope.toggleAddData = function(item) {
                 if($scope.cbh.editMode){
                     $scope.cbh.toggleEditMode();
@@ -477,6 +660,16 @@ angular.module('chembiohubAssayApp')
                 }
             }
 
+            /**
+             * @ngdoc method
+             * @name chembiohubAssayApp.controller:Compoundbatchv2Ctrl#$scope.$on
+             * @methodOf chembiohubAssayApp.controller:Compoundbatchv2Ctrl
+             * @description
+             * Listens for use of a tagging/uiselect form element to populate the available choices from the back end.
+             * @param {string} openedTaggingDropdown  The name of the broadcast to act on
+             * @param {function} callback  the callback function to trigger functionality
+             *
+             */
             $scope.$on("openedTaggingDropdown", function(event, args){
                 var filters = {};
                 filters.pids = $scope.cbh.projAddingTo.id;
@@ -489,6 +682,16 @@ angular.module('chembiohubAssayApp')
                 
             })
 
+            /**
+             * @ngdoc method
+             * @name chembiohubAssayApp.controller:Compoundbatchv2Ctrl#$scope.blankForm
+             * @methodOf chembiohubAssayApp.controller:Compoundbatchv2Ctrl
+             * @description
+             * Set up a new blank form with the correct prject fields for adding a new batch record.
+             * @param {boolean} toggleAddingOff Indicates whether this form is intended to add a new record from scratch.
+             * @param {boolean} cloned Whether this is called from a clone command
+             *
+             */
             $scope.blankForm = function(toggleAddingOff, cloned) {
                 if (angular.isDefined($scope.cbh.projAddingTo)) {
                     var myform = angular.copy($scope.cbh.projAddingTo.schemaform.form);
@@ -529,7 +732,16 @@ angular.module('chembiohubAssayApp')
 
   
 
-
+            /**
+             * @ngdoc method
+             * @name chembiohubAssayApp.controller:Compoundbatchv2Ctrl#$scope.changeNumberPerPage
+             * @methodOf chembiohubAssayApp.controller:Compoundbatchv2Ctrl
+             * @description
+             * Change the number of records per page and start at page 1
+             * Initiates changes to search parameters and consequently URL.
+             * @param {string} viewType Either 'list' or 'gallery'.
+             *
+             */
             $scope.changeNumberPerPage = function(viewType) {
                 var newParams = angular.copy($stateParams);
                 newParams.page = 1;
@@ -539,6 +751,17 @@ angular.module('chembiohubAssayApp')
 
 
             };
+
+            /**
+             * @ngdoc method
+             * @name chembiohubAssayApp.controller:Compoundbatchv2Ctrl#$scope.pageChanged
+             * @methodOf chembiohubAssayApp.controller:Compoundbatchv2Ctrl
+             * @description
+             * Listens for paging actions and sets the paging search parameters correctly. 
+             * Initiates changes to search parameters and consequently URL.
+             * @param {integer} newPage .
+             *
+             */
             $scope.pageChanged = function(newPage) {
                 var newParams = angular.copy($stateParams);
                 newParams.page = newPage;
@@ -548,6 +771,16 @@ angular.module('chembiohubAssayApp')
 
             };
 
+            /**
+             * @ngdoc method
+             * @name chembiohubAssayApp.controller:Compoundbatchv2Ctrl#$scope.pageChanged2
+             * @methodOf chembiohubAssayApp.controller:Compoundbatchv2Ctrl
+             * @description
+             * Listens for paging actions and sets the paging search parameters correctly. 
+             * Initiates changes to search parameters and consequently URL.
+             * @param {integer} newPage .
+             *
+             */
             $scope.pageChanged2 = function(newPage) {
                 var newParams = angular.copy($stateParams);
                 newParams.page = newPage;
@@ -557,7 +790,15 @@ angular.module('chembiohubAssayApp')
 
             };
 
-
+            /**
+             * @ngdoc method
+             * @name chembiohubAssayApp.controller:Compoundbatchv2Ctrl#$scope.imageCallback
+             * @methodOf chembiohubAssayApp.controller:Compoundbatchv2Ctrl
+             * @description
+             * Forces a page re-render to cascade down to chemical images.
+             * Initiates changes to search parameters and consequently URL.
+             *
+             */
             $scope.imageCallback = function() {
                 $scope.compoundBatches.redraw++;
             }
@@ -568,6 +809,17 @@ angular.module('chembiohubAssayApp')
 
             var timeSearched;
 
+            /**
+             * @ngdoc method
+             * @name chembiohubAssayApp.controller:Compoundbatchv2Ctrl#getResultsPage
+             * @methodOf chembiohubAssayApp.controller:Compoundbatchv2Ctrl
+             * @description
+             * Sets up the correct search URL to use for the current parameters and filters (including paging) and carries out the searchvia web service call.
+             * After web service calls, results set populated into scope.
+             * @param {integer} pageNumber The page number of the results set returned.
+             * @param {object} filters The currently set search filters on the form.
+             *
+             */
             function getResultsPage(pageNumber, filters) {
 
                 SearchUrlParamsV2.setBaseDownloadUrl($scope.cbh, $stateParams);
@@ -622,7 +874,6 @@ angular.module('chembiohubAssayApp')
                 }, function(error){
                     if(error.status == 503){
                         $timeout(function(){
-                            console.log("retrying waiting for response from structure search")
                            getResultsPage(pageNumber, filters); 
                        }, 5000);
                         
@@ -641,12 +892,19 @@ angular.module('chembiohubAssayApp')
                 }
             }
 
+            /**
+             * @ngdoc method
+             * @name chembiohubAssayApp.controller:Compoundbatchv2Ctrl#$scope.undoChanges
+             * @methodOf chembiohubAssayApp.controller:Compoundbatchv2Ctrl
+             * @description
+             * Reset changes on a temporary batch item and re-patch them if necessary back to their original state.
+             *
+             */
             $scope.undoChanges = function() {
                 $scope.compoundBatches.data = angular.copy($scope.compoundBatches.backup);
                 var itemsToChange = $scope.cbh.changesToUndo.map(function(item) {
                     return $scope.compoundBatches.data[item[0]]
                 });
-                console.log(itemsToChange)
                 //TODO handle error here
                 CBHCompoundBatch.patchList({
                     "objects": itemsToChange
@@ -657,12 +915,31 @@ angular.module('chembiohubAssayApp')
                 });
             }
 
+            /**
+             * @ngdoc method
+             * @name chembiohubAssayApp.controller:Compoundbatchv2Ctrl#$scope.$on
+             * @methodOf chembiohubAssayApp.controller:Compoundbatchv2Ctrl
+             * @description
+             * Listens for updates to list view and creates a backup version to use for undo.
+             * @param {string} updateListView  The name of the broadcast to act on
+             * @param {function} callback  the callback function to trigger functionality
+             *
+             */
             $scope.$on("updateListView", function() {
                 $scope.compoundBatches.backup = angular.copy($scope.compoundBatches.data);
-            });
+            });            
 
-            
-
+            /**
+             * @ngdoc method
+             * @name chembiohubAssayApp.controller:Compoundbatchv2Ctrl#$scope.cbh.saveChangesToCompoundDataInController
+             * @methodOf chembiohubAssayApp.controller:Compoundbatchv2Ctrl
+             * @description
+             * Sets up the correct search URL to use for the current parameters and filters (including paging) and carries out the searchvia web service call.
+             * After web service calls, results set populated into scope.
+             * @param {integer} changes The page number of the results set returned.
+             * @param {object} sourceOfChange The currently set search filters on the form.
+             *
+             */
             $scope.cbh.saveChangesToCompoundDataInController = function(changes, sourceOfChange) {
                 //set the backup before updating
                 $scope.cbh.changesToUndo = [];
@@ -782,7 +1059,6 @@ angular.module('chembiohubAssayApp')
             $scope.sizeCheck = function(file, form_key){
                 
                 //get the file
-                console.log('file size',file.size);
                 if (file.size > 20000000) {
                     //cancel the file
                     file.flowObj.removeFile(file);

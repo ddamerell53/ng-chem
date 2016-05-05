@@ -5,7 +5,7 @@
  * @name chembiohubAssayApp.filter:htmlToPlaintext
  * @description
  * # htmlToPlainText
- * Filter in the chembiohubAssayApp.
+ * Removes HTML special characters and markup from a supplied string
  */
 angular.module('chembiohubAssayApp')
   .filter('htmlToPlaintext', function() {

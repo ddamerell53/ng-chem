@@ -5,7 +5,8 @@
  * @name chembiohubAssayApp.controller:AddSingleCompoundCtrl
  * @description
  * # AddsinglecompoundCtrl
- * Controller of the chembiohubAssayApp
+ * This controller is used to power the registration of compounds via the Chemdoodle sketcher. It creates a batch containing a single record, mirroring an SD file containing one record, 
+ * so that the same validation, temporary data  and saving pathways can be used.
  */
 angular.module('chembiohubAssayApp')
     .controller('AddSingleCompoundCtrl', ['$scope', '$rootScope', '$timeout', '$filter', '$state', '$stateParams', 'CBHCompoundBatch', 'ProjectFactory', 'MessageFactory', 'mol', 'projectList','FlowFileFactory', 
@@ -92,7 +93,6 @@ angular.module('chembiohubAssayApp')
             $scope.sizeCheck = function(file, form_key){
                 
                 //get the file
-                console.log('file size',file.size);
                 if (file.size > 20000000) {
                     //cancel the file
                     file.flowObj.removeFile(file);

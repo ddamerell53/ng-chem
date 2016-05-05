@@ -5,6 +5,78 @@
 </h1>
 <div><h2 id="description">Description</h2>
 <div class="description"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-cbhctrl-page"><h3 id="description_cbhctrl">CbhCtrl</h3>
-<p>Controller of the chembiohubAssayApp</p>
+<p>Main controller for the app. Contains global configuration and global methods which can be overridden in individual controllers.</p>
 </div></div>
+<div class="member method"><h2 id="methods">Methods</h2>
+<ul class="methods"><li><h3 id="methods_$rootscopegeturlbase">$rootScope.getUrlBase()</h3>
+<div class="$rootscopegeturlbase"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-cbhctrl-rootscope-geturlbase-page"><p>Retrieve the base URL for this install of ShowYourWorking</p>
+</div><h5 id="methods_$rootscopegeturlbase_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-cbhctrl-rootscope-geturlbase-page"><p>url_frag domain name an subdomain for this instance of the app</p>
+</div></td></tr></table></div>
+</li>
+<li><h3 id="methods_$scopecancel">$scope.cancel()</h3>
+<div class="$scopecancel"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-cbhctrl-scope-cancel-page"><p>Cancel the invitation and close the popup window</p>
+</div></div>
+</li>
+<li><h3 id="methods_$scopeclearform">$scope.clearForm()</h3>
+<div class="$scopeclearform"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-cbhctrl-scope-clearform-page"><p>Removes all data from the current invitation form</p>
+</div></div>
+</li>
+<li><h3 id="methods_$scopegetprojectobj">$scope.getProjectObj(projectKey)</h3>
+<div class="$scopegetprojectobj"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-cbhctrl-scope-getprojectobj-page"><p>Retrieve a project by key from list of available projects</p>
+</div><h5 id="methods_$scopegetprojectobj_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>projectKey</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-cbhctrl-scope-getprojectobj-page"><p>string for project lookup</p>
+</div></td></tr></tbody></table><h5 id="methods_$scopegetprojectobj_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-cbhctrl-scope-getprojectobj-page"><p>proj The project object</p>
+</div></td></tr></table></div>
+</li>
+<li><h3 id="methods_$scopeisloggedin">$scope.isLoggedIn()</h3>
+<div class="$scopeisloggedin"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-cbhctrl-scope-isloggedin-page"><p>Check that a user has been recorded as being logged in against this controller</p>
+</div><h5 id="methods_$scopeisloggedin_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-boolean">boolean</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-cbhctrl-scope-isloggedin-page"><p>loggedIn flag that user is logged in or not</p>
+</div></td></tr></table></div>
+</li>
+<li><h3 id="methods_$scopesendinvite">$scope.sendInvite()</h3>
+<div class="$scopesendinvite"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-cbhctrl-scope-sendinvite-page"><p>Validate the completed invitation form and if valid, send the invite via back end.</p>
+</div></div>
+</li>
+<li><h3 id="methods_$scopesetwatcher">$scope.setWatcher()</h3>
+<div class="$scopesetwatcher"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-cbhctrl-scope-setwatcher-page"><p>Starts a reminder timer for the back end - if an invited user hasn&#39;t registered after an invite wihtin a certiain time frame, remind them with a follw up email.</p>
+</div></div>
+</li>
+<li><h3 id="methods_cbhcreatecustomfieldtransport">cbh.createCustomFieldTransport(newValue, oldValue, arrayContains)</h3>
+<div class="cbhcreatecustomfieldtransport"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-cbhctrl-cbh-createcustomfieldtransport-page"><p>Create an object for communication between handsontable and the search form with respect to custom fields 
+Not currently used</p>
+</div><h5 id="methods_cbhcreatecustomfieldtransport_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>newValue</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-cbhctrl-cbh-createcustomfieldtransport-page"><p>The new definition</p>
+</div></td></tr><tr><td>oldValue</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-cbhctrl-cbh-createcustomfieldtransport-page"><p>.</p>
+</div></td></tr><tr><td>arrayContains</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-cbhctrl-cbh-createcustomfieldtransport-page"><p>.</p>
+</div></td></tr></tbody></table><h5 id="methods_cbhcreatecustomfieldtransport_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-cbhctrl-cbh-createcustomfieldtransport-page"><p>proj The project object</p>
+</div></td></tr></table></div>
+</li>
+<li><h3 id="methods_cbhcurrentpageclass">cbh.currentPageClass(state_to_match)</h3>
+<div class="cbhcurrentpageclass"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-cbhctrl-cbh-currentpageclass-page"><p>Add a css class indicating that the item corresponds to the current page (for paging etc)</p>
+</div><h5 id="methods_cbhcurrentpageclass_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>state_to_match</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-cbhctrl-cbh-currentpageclass-page"><p>object representing the current ui-router state</p>
+</div></td></tr></tbody></table><h5 id="methods_cbhcurrentpageclass_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-cbhctrl-cbh-currentpageclass-page"><p>string empty string if false, &#39;curent-page&#39; if true</p>
+</div></td></tr></table></div>
+</li>
+<li><h3 id="methods_cbherrorpopup">cbh.errorPopup(input_popup_data)</h3>
+<div class="cbherrorpopup"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-cbhctrl-cbh-errorpopup-page"><p>Opens a bootstrap UI modal window for holding an error message
+Not currently used</p>
+</div><h5 id="methods_cbherrorpopup_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>input_popup_data</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-cbhctrl-cbh-errorpopup-page"><p>data to display</p>
+</div></td></tr></tbody></table></div>
+</li>
+<li><h3 id="methods_cbhinvitationpopup">cbh.invitationPopup()</h3>
+<div class="cbhinvitationpopup"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-cbhctrl-cbh-invitationpopup-page"><p>Global invitation popup for inviting external users to use the system. Creates a new user with the details supplied here and emails the invitee.</p>
+</div></div>
+</li>
+<li><h3 id="methods_cbhopenfilterpopup">cbh.openFilterPopup(col)</h3>
+<div class="cbhopenfilterpopup"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-cbhctrl-cbh-openfilterpopup-page"><p>Opens a bootstrap UI modal window for holding a filter form
+Not currently used</p>
+</div><h5 id="methods_cbhopenfilterpopup_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>col</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-cbhctrl-cbh-openfilterpopup-page"><p>The new definition</p>
+</div></td></tr></tbody></table></div>
+</li>
+<li><h3 id="methods_detectie">detectIE()</h3>
+<div class="detectie"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-cbhctrl-detectie-page"><p>Work out if the current browser is a version of Internet Explorer. We do this becuase the Chemdoodle chemistry sketcher doesn&#39;t behave
+as expected in some IE versions so workarounds have to be applied. Method examines the user agent for the presence of IE, Edge or Trident.</p>
+</div><h5 id="methods_detectie_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-boolean">boolean</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-cbhctrl-detectie-page"><p>boolean to flag that the browser is IE.</p>
+</div></td></tr></table></div>
+</li>
+</ul>
+</div>
 </div>

@@ -5,7 +5,7 @@
  * @name chembiohubAssayApp.controller:ProjectfieldsCtrl
  * @description
  * # ProjectfieldsCtrl
- * Controller of the chembiohubAssayApp
+ * This controller is used for the project setup functionality (adding and editing projects through the user interface).
  */
 angular.module('chembiohubAssayApp')
   .controller('ProjectfieldsCtrl', ["$scope", "$modalInstance", "$rootScope", "ProjectFactory", "projectId", "default_project_type", "projectTypes", "skinConfig",
@@ -348,7 +348,7 @@ angular.module('chembiohubAssayApp')
                          ProjectFactory.update({"projectId": $scope.proj.id}, $scope.proj, callback);
                       }
                     }else{
-                      console.log(myForm);
+                      //
                     }
 
                   }else{

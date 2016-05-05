@@ -5,7 +5,7 @@
  * @name chembiohubAssayApp.controller:AboutCtrl
  * @description
  * # AboutCtrl
- * Controller of the chembiohubAssayApp
+ * not used
  * @deprecated
  */
 angular.module('chembiohubAssayApp')

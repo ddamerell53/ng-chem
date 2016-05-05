@@ -7,7 +7,7 @@
  * @description
  * # compoundTableHeader
  * not used
- * @depracated
+ * @deprecated
  */
 angular.module('chembiohubAssayApp')
   .directive('compoundtableheader', function () {

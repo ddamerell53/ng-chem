@@ -5,7 +5,8 @@
  * @name chembiohubAssayApp.filter:notEmpty
  * @description
  * # notEmpty
- * Ensures that an object is not empty.
+ * Tests that a JSON object is not empty. Used as a display conditional.
+ * @returns {boolean} boolean whether the object is empty or not. 
  */
 angular.module('chembiohubAssayApp')
   .filter('notEmpty', function () {

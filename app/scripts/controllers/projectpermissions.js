@@ -5,7 +5,8 @@
  * @name chembiohubAssayApp.controller:ProjectpermissionsCtrl
  * @description
  * # ProjectpermissionsCtrl
- * Controller of the chembiohubAssayApp
+ * This controller is used to fetch and initiate changes to project permissions for the UI admin tasks. 
+ * It utilises a number of services to perform these tasks.
  */
 angular.module('chembiohubAssayApp')
   .controller('ProjectpermissionsCtrl', [

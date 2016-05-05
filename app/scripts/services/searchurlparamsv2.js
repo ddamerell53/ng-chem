@@ -145,7 +145,7 @@ angular.module('chembiohubAssayApp')
 
       searchUrlParamsV2.generate_chemical_params = function(params){
         params.chemical_search_id = skinConfig.objects[0].chemicalSearch.id;
-        console.log("new id", params.chemical_search_id)
+        
         skinConfig.objects[0].chemicalSearch.filter_is_applied = true;
         return params;
       }
@@ -179,7 +179,7 @@ angular.module('chembiohubAssayApp')
         searchUrlParamsV2.generate_hide_params = function(params){
           var schema = skinConfig.objects[0].tabular_data_schema.copied_schema;
           var hides = skinConfig.objects[0].hides_applied;
-          console.log(hides)
+          
           var hideObjs = [];
           angular.forEach(hides, function(field_path){
             hideObjs.push(schema[field_path]);
@@ -229,7 +229,7 @@ angular.module('chembiohubAssayApp')
             To do this, we need to get the result returned by the search with the highest batch ID */
          searchUrlParamsV2.generate_capped_saved_search = function(params, selected_projects){
             //get the params as JSON
-            //console.log(params.encoded_query);
+            
             var paramsObj = []
             if(params.encoded_query){
               paramsObj = JSON.parse(atob(params.encoded_query));

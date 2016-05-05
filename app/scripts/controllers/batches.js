@@ -72,6 +72,8 @@ var ngFooter = function ($scope, grid) {
  * @description
  * # BatchesCtrl
  * Controller of the chembiohubAssayApp
+ * not currently used
+ * @deprecated
  */
 angular.module('chembiohubAssayApp')
 

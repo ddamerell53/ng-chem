@@ -5,7 +5,7 @@
  * @name chembiohubAssayApp.filter:encodeParamForSearch
  * @description
  * # encodeParamForSearch
- * Filter in the chembiohubAssayApp.
+ * Converts data from a multi-select, pick-from-list form element to a string for use in web service calls
  */
 angular.module('chembiohubAssayApp')
   .filter('encodeParamForSearch', function () {

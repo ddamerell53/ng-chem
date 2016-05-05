@@ -73,7 +73,7 @@ NG_DOCS={
       "type": "controller",
       "moduleName": "chembiohubAssayApp",
       "shortDescription": "AddcompoundsCtrl",
-      "keywords": "$scope actions add addcompounds addcompoundsctrl adding addition addsort api app appropriate assignfile backend based batch batches binding box boxes bring bulk button called cancel cancelfile cancelling case cbh change changenumberperpage changeview changing check checking chembiohub chembiohubassayapp chemical column completion compound compounds configuration content controller copy create created createmultibatch createmultiplebatch current data dataset delete deprecated directive don editing elasticsearch enable errors explain field file fills filter filtering filtername final flow flowfile flowjs function galley getresultspage handsontable identifier identifiers imagecallback include indexed initial initialise items list loaded loading manage manages mapping maps matter message method methods modal molecule multiple nullsorts number object open openstatusexplanation order pagechanged paginate parts performance position presses preview previewed previews process processsmilesdata re-initialise reasons rebuild record redirect registration reload reloading rely remove removed reporting request reset responsible save savechangestotemporarydataincontroller saved savetemporarycompounddata scope scrolled search sends server set setloadingmessageheight setmappedfieldincontroller setnull setup single smiles sort sorting sorts statuses storing submitting system table temporary text tidy togglewarningsfilter top undo update upload uploaded url user view warning warnings work"
+      "keywords": "$scope actions add addcompounds addcompoundsctrl adding addition addsort api app applied appropriate assignfile backend based batch batches binding box boxes bring bulk button called cancel cancelfile cancelling case cbh change changenumberperpage changes changeview changing check checking chembiohub chembiohubassayapp chemical column completion compound compounds configuration content controller copy create created createmultibatch createmultiplebatch current currently data dataset delete direction directive don edit editing elasticsearch enable errors existing explain ext extension factoring field file fills filter filtering filtername final flow flowfile flowjs function gallery getresultspage handsontable hook identifier identifiers imagecallback include indexed individual initial initialise items key list loaded loading manage manages mapped mapping maps matter message method methods modal mode molecule multiple newfieldname newpage nullsorts number object objects offset open openstatusexplanation order pagechanged pagenumber paginate parts performance position presses preview previewed previews process processsmilesdata re-initialise re-saved reasons rebuild record redirect registration reload reloading rely remove removed reporting representing request reset responsible save savechangestotemporarydataincontroller savetemporarycompounddata scope scrolled search sends server set setloadingmessageheight setmappedfieldincontroller setnull setup single smiles sort sortcolumn sorting sorts sourceofchange statuses storing submitting supplied system table temporary text tidy togglewarningsfilter top uncuratedfieldname undo update upload uploaded url user view viewtype warning warnings work"
     },
     {
       "section": "api",
@@ -82,7 +82,7 @@ NG_DOCS={
       "type": "controller",
       "moduleName": "chembiohubAssayApp",
       "shortDescription": "AddDataCtrl",
-      "keywords": "adddatactrl addition api app chembiohubassayapp control controller data editing equivalents functions viewing"
+      "keywords": "adddatactrl api chembiohubassayapp controller"
     },
     {
       "section": "api",
@@ -91,7 +91,7 @@ NG_DOCS={
       "type": "controller",
       "moduleName": "chembiohubAssayApp",
       "shortDescription": "AddsinglecompoundCtrl",
-      "keywords": "$on $scope accomplished add addition addsinglecompoundctrl addsupplementaryfield allowing angular api appropriate attachment attachments autocomplete based batch batches better boolean broadcast button buttons call callback check checked chembiohubassayapp chemdoodle chemical cloned code command compound compounds condition consistency controller create createmultibatch currently custom data defined directive display doen drawing drawn dropdown editing exceeds extra fails false field fields file files flowfile fo form form_key forms function functionality identifier identity implemented injected inside limit limits list method molecule multiple myform object onsubmit openedtaggingdropdown order position post probaly pulls queue record redirect removal remove removed removefile removeid removesupplemetaryfield returned revert save saved savetemporarycompounddata saving schema schemaform search sending sends setmolecule single size sizecheck standard submission success supplementary tag trigger type ui unique update upload uploaded upoaded url user valancies validate validatedrawn validateotherformdata validating validation version widget"
+      "keywords": "$on $scope accomplished add addition addsinglecompoundctrl addsupplementaryfield allowing angular api appropriate attachment attachments autocomplete based batch batches better boolean broadcast button buttons call callback check checked chembiohubassayapp chemdoodle chemical cloned code command compound compounds condition consistency controller create createmultibatch creates currently custom data defined directive display doen drawing drawn dropdown editing exceeds extra fails false field fields file files flowfile fo form form_key forms function functionality identifier identity implemented injected inside limit limits list method mirroring molecule multiple myform object onsubmit openedtaggingdropdown order pathways position post power probaly pulls queue record redirect registration removal remove removed removefile removeid removesupplemetaryfield returned revert save saved savetemporarycompounddata saving schema schemaform sd search sending sends setmolecule single size sizecheck sketcher standard submission success supplementary tag temporary trigger type ui unique update upload uploaded upoaded url user valancies validate validatedrawn validateotherformdata validating validation version widget"
     },
     {
       "section": "api",
@@ -100,7 +100,7 @@ NG_DOCS={
       "type": "controller",
       "moduleName": "chembiohubAssayApp",
       "shortDescription": "BatchesCtrl",
-      "keywords": "api batchesctrl chembiohubassayapp controller"
+      "keywords": "api batchesctrl chembiohubassayapp controller currently"
     },
     {
       "section": "api",
@@ -109,7 +109,7 @@ NG_DOCS={
       "type": "controller",
       "moduleName": "chembiohubAssayApp",
       "shortDescription": "CbhCtrl",
-      "keywords": "api cbhctrl chembiohubassayapp controller"
+      "keywords": "$rootscope $scope add agent api app applied arraycontains base becuase behave boolean bootstrap browser cancel cbh cbhctrl certiain check chembiohubassayapp chemdoodle chemistry class clearform close col communication completed configuration controller controllers corresponds create createcustomfieldtransport creates css curent-page current currently currentpageclass custom data definition details detectie display doesn domain edge email emails empty error errorpopup examines expected explorer external false fields filter flag follw form frame function getprojectobj geturlbase global handsontable hasn holding indicating individual input_popup_data install instance internet invitation invitationpopup invite invited invitee inviting isloggedin item key list logged loggedin lookup main message method methods modal newvalue object oldvalue openfilterpopup opens overridden paging popup presence proj project projectkey projects recorded registered remind reminder removes representing respect retrieve search send sendinvite setwatcher showyourworking sketcher starts state_to_match string subdomain supplied system time timer trident true ui ui-router url url_frag user users valid validate version versions wihtin window work workarounds"
     },
     {
       "section": "api",
@@ -127,7 +127,7 @@ NG_DOCS={
       "type": "controller",
       "moduleName": "chembiohubAssayApp",
       "shortDescription": "Compoundbatchv2Ctrl",
-      "keywords": "$on $scope api assembled broadcast callback calls cbh chembiohubassayapp chemical chemicalfilterapplied chemicalsearch clears compoundbatchv2ctrl controller data default empty error form format friendly function functionality hit hits initialises list method notifies object openedsearchdropdown parameter parameters posting prevous removestructuresearch resetcompoundlist resets resetsearch return scope search searches serialize set simply skinconfig structure trigger turn update url"
+      "keywords": "$on $scope accounted actions add addhide adding addition addsort api app applying archive assembled backing backup bar based batch blank blankform broadcast built call callback called calls carries cascade cbh cbhcompoundbatch change changed changenumberperpage changes changesearchparams changeview checks chembiohubassayapp chemical chemicalfilterapplied chemicalsearch choice choices cleanupfilters clears client client-side clone cloneanitem cloned col column columns columnselection command completion compound compoundbatchv2ctrl consequently controller convenience correct correctly creates current currently data default defaults deselectallprojects direction displayed displaying dosinglecompoundvalidation edit element empty error event events existing fields filter filters filtersupdated flag forces form format friendly function functionality gallery generate getresultspage handles handsontable hidden hide hit hits html imagecallback images implemented indicates initialises initiates intended item list listener listens main method mode mol molecule move myform newly newmol newpage newparams notifies notify number object objects openedsearchdropdown openedtaggingdropdown original pagechanged pagechanged2 pagenumber pagination paging parameter parameters patch patched patchrecord perform populate populated posting pre-populated prevous prject proj project projects re-applies re-patch re-render record records refelct refresh remove removeallhides removed removeform removehide removes removesort removestructuresearch representing requests reset resetcompoundlist resets resetsearch result retrieval return returned reverting save savechangestocompounddataincontroller saved savesinglecompound saving scope scratch scrolls search searches searchvia selectallprojects selection selections selector send sends sendtosearch serialize service set sets setuppagenumbers side signals simply skinconfig sort sourceofchange start structure supplied switch switches switching tables tagging temporary toggleadddata toggleaddingoff toggled toggleeditmode toggleprojectfiltered trigger turn undo undochanges update updatelistview updates url user validation version view views viewtype web"
     },
     {
       "section": "api",
@@ -154,7 +154,7 @@ NG_DOCS={
       "type": "controller",
       "moduleName": "chembiohubAssayApp",
       "shortDescription": "PlatemapCtrl",
-      "keywords": "api chembiohubassayapp controller platemapctrl"
+      "keywords": "add api chembiohubassayapp control controller data define functionality intended link map overview parameters plate platemapctrl records required sequentially set system users"
     },
     {
       "section": "api",
@@ -163,7 +163,7 @@ NG_DOCS={
       "type": "controller",
       "moduleName": "chembiohubAssayApp",
       "shortDescription": "ProjectCtrl",
-      "keywords": "api chembiohubassayapp controller projectctrl"
+      "keywords": "angular api appropriate chembiohubassayapp controller display essentially fetch holder list project projectctrl projects services user"
     },
     {
       "section": "api",
@@ -172,7 +172,7 @@ NG_DOCS={
       "type": "controller",
       "moduleName": "chembiohubAssayApp",
       "shortDescription": "ProjectfieldsCtrl",
-      "keywords": "api chembiohubassayapp controller projectfieldsctrl"
+      "keywords": "api chembiohubassayapp controller editing functionality interface project projectfieldsctrl projects setup user"
     },
     {
       "section": "api",
@@ -190,7 +190,7 @@ NG_DOCS={
       "type": "controller",
       "moduleName": "chembiohubAssayApp",
       "shortDescription": "ProjectpermissionsCtrl",
-      "keywords": "api chembiohubassayapp controller projectpermissionsctrl"
+      "keywords": "admin api changes chembiohubassayapp controller fetch initiate number perform permissions project projectpermissionsctrl services tasks ui utilises"
     },
     {
       "section": "api",
@@ -208,7 +208,7 @@ NG_DOCS={
       "type": "controller",
       "moduleName": "chembiohubAssayApp",
       "shortDescription": "SearchCtrl",
-      "keywords": "api chembiohubassayapp controller searchctrl"
+      "keywords": "api chembiohubassayapp controller deprecated favour searchctrl searchv2ctrl"
     },
     {
       "section": "api",
@@ -226,7 +226,7 @@ NG_DOCS={
       "type": "controller",
       "moduleName": "chembiohubAssayApp",
       "shortDescription": "SinglemolCtrl",
-      "keywords": "api chembiohubassayapp controller singlemolctrl"
+      "keywords": "api chembiohubassayapp cloning controller data editing fetching handles modal record route single singlemolctrl viewing window"
     },
     {
       "section": "api",
@@ -388,7 +388,7 @@ NG_DOCS={
       "type": "filter",
       "moduleName": "chembiohubAssayApp",
       "shortDescription": "encodeParamForSearch",
-      "keywords": "api chembiohubassayapp encodeparamforsearch filter"
+      "keywords": "api calls chembiohubassayapp converts data element encodeparamforsearch filter form multi-select pick-from-list service string web"
     },
     {
       "section": "api",
@@ -397,7 +397,7 @@ NG_DOCS={
       "type": "filter",
       "moduleName": "chembiohubAssayApp",
       "shortDescription": "htmlToPlainText",
-      "keywords": "api chembiohubassayapp filter htmltoplaintext"
+      "keywords": "api characters chembiohubassayapp filter html htmltoplaintext markup removes special string supplied"
     },
     {
       "section": "api",
@@ -406,7 +406,7 @@ NG_DOCS={
       "type": "filter",
       "moduleName": "chembiohubAssayApp",
       "shortDescription": "notEmpty",
-      "keywords": "api chembiohubassayapp empty ensures filter notempty object"
+      "keywords": "api boolean chembiohubassayapp conditional display empty filter json notempty object tests"
     },
     {
       "section": "api",
@@ -415,7 +415,7 @@ NG_DOCS={
       "type": "filter",
       "moduleName": "chembiohubAssayApp",
       "shortDescription": "titleCase",
-      "keywords": "api chembiohubassayapp filter titlecase"
+      "keywords": "api chembiohubassayapp converts create currently display example fields filter inputted key order originally replaced spaces text titlecase unique user-created"
     },
     {
       "section": "api",
@@ -424,7 +424,7 @@ NG_DOCS={
       "type": "filter",
       "moduleName": "chembiohubAssayApp",
       "shortDescription": "titleCase",
-      "keywords": "api chembiohubassayapp filter titlecase"
+      "keywords": "api articles case chembiohubassayapp converts filter ignoring joining sentence string supplied title titlecase"
     },
     {
       "section": "api",

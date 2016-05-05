@@ -5,7 +5,7 @@
  * @name chembiohubAssayApp.controller:AddDataCtrl
  * @description
  * # AddDataCtrl
- * Controller of the chembiohubAssayApp. Used to control addition functions within the app. There are equivalents for Viewing and Editing data
+ * not used
  * @deprecated
  */
 angular.module('chembiohubAssayApp')
@@ -17,8 +17,6 @@ angular.module('chembiohubAssayApp')
   	var addctrl = this;
   	//method to generate the form for a given level of a given datapoint classification
   	addctrl.getForm = function(dc, level, data_form_id) {
-  		console.log("dc is ", dc);
-  		console.log("level is ", level);
       var res;
             angular.forEach($scope.assayctrl.proj.enabled_forms, function(form){
               if (form.id == data_form_id){
@@ -147,22 +145,10 @@ angular.module('chembiohubAssayApp')
   		//then redirect to view this data in a non-edit page, with an edit button for them to make changes, which takes them to the edit page.
 
   		$scope.level_datapoint.project_data = $scope.test_model.project_data;
-  		//console.log($scope.level_datapoint);
+  		
   		$scope.clone[$stateParams.lev] = $scope.level_datapoint;
-  		//console.log($scope.clone);
+  		
   		$scope.clone.$save();
-
-  		// var post_resource = AddDataFactory.dataClassification;
-  		// var post_promise = post_resource.get( {'dc': $stateParams.dc}, function(dc){
-  		// 	dc = $scope.clone;
-
-  		// 	dc.$save({'dc': $stateParams.dc}, function(data){
-  		// 		console.log(data);
-  		// 	});
-  		// });
-  		/*post_promise.$resource.then(function(data){
-  			console.log(data);
-  		})*/
 
   	}
 
