@@ -2,10 +2,13 @@
 
 /**
  * @ngdoc service
- * @name chembiohubAssayApp.projectfactory
+ * @name chembiohubAssayApp.ProjectFactory
  * @description
- * # projectfactory
- * Factory in the chembiohubAssayApp.
+ * # ProjectFactory
+ * Factory for providing convenient, parameterised access to the project related API endpoints.
+ * @param {object} $resource angular library for constructing webservice calls from URLs.
+ * @param {object} urlConfig app config object containing aliases for all available web service endpoints.
+ * @returns {object} $resource angular service containing access to the project list endpoint with custom PATCH alias (update).
  */
 angular.module('chembiohubAssayApp')
   .factory('ProjectFactory' ,function ($resource, urlConfig) {

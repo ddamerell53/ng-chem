@@ -5,9 +5,10 @@
  * @name chembiohubAssayApp.HTTPProject
  * @description
  * # HTTPProject
- * Factory in the chembiohubAssayApp.
+ * Not currently used
 
  http://stackoverflow.com/questions/23968129/limiting-http-interceptor-to-specific-domain
+ * @deprecated
  */
 angular.module('chembiohubAssayApp')
   .factory('HTTPProject', ["$stateParams", function ($http, $stateParams) {

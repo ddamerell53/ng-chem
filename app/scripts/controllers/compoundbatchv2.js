@@ -14,7 +14,7 @@ angular.module('chembiohubAssayApp')
             
             /**
              * @ngdoc method
-             * @name chembiohubAssayApp.controller:Compoundbatchv2Ctrl#scope.cbh.resetSearch
+             * @name chembiohubAssayApp.controller:Compoundbatchv2Ctrl#$scope.cbh.resetSearch
              * @methodOf chembiohubAssayApp.controller:Compoundbatchv2Ctrl
              * @description
              * Set the search form to its default empty state, with no search parameters. Also resets the URL.
@@ -26,7 +26,7 @@ angular.module('chembiohubAssayApp')
 
             /**
              * @ngdoc method
-             * @name chembiohubAssayApp.controller:Compoundbatchv2Ctrl#scope.resetCompoundList
+             * @name chembiohubAssayApp.controller:Compoundbatchv2Ctrl#$scope.resetCompoundList
              * @methodOf chembiohubAssayApp.controller:Compoundbatchv2Ctrl
              * @description
              * Clears prevous search hits list for searches that hit an error or simply return no hits.
@@ -966,6 +966,15 @@ angular.module('chembiohubAssayApp')
 
 
             };
+
+            /**
+             * @ngdoc method
+             * @name chembiohubAssayApp.controller:Compoundbatchv2Ctrl#$scope.initialise
+             * @methodOf chembiohubAssayApp.controller:Compoundbatchv2Ctrl
+             * @description
+             * Sets up the datasets and filters from the url on page load.
+             *
+             */
             $scope.initialise = function() {
                
                 if ($stateParams.mb_id) {
@@ -988,6 +997,16 @@ angular.module('chembiohubAssayApp')
 
 
             }
+
+            /**
+             * @ngdoc method
+             * @name chembiohubAssayApp.controller:Compoundbatchv2Ctrl#$scope.editModeUnreachable
+             * @methodOf chembiohubAssayApp.controller:Compoundbatchv2Ctrl
+             * @description
+             * This function works out whether the current loggeed in user can enter edit mode with the currently  selected project.
+             * @returns {boolean} boolean Answer to the question "Is edit mode unreachable?"
+             *
+             */
             $scope.editModeUnreachable = function() {
                 if($stateParams.archived == true && !angular.isUndefined($stateParams.archived)){
                     //You can't edit archived items except to
@@ -1002,7 +1021,17 @@ angular.module('chembiohubAssayApp')
                 return true;
             }
 
-             $scope.cbh.setupParams = function(){
+            /**
+             * @ngdoc method
+             * @name chembiohubAssayApp.controller:Compoundbatchv2Ctrl#$scope.cbh.setupParams
+             * @methodOf chembiohubAssayApp.controller:Compoundbatchv2Ctrl
+             * @description
+             * Performs the first params setup on page load. Examines the url to locate search parameters, uses the SearchUrlParamsV2 service 
+             * to create a properly encoded url string to use in a web service call in another part of the application. Broadcasts a 
+             * searchParamsChanged event.
+             *
+             */
+            $scope.cbh.setupParams = function(){
                 
                 
                 var pf = SearchUrlParamsV2.generate_form($stateParams, $scope.cbh);
@@ -1029,6 +1058,17 @@ angular.module('chembiohubAssayApp')
             $scope.cbh.setupParams();
 
             /* File attachment functions */
+            /**
+             * @ngdoc method
+             * @name chembiohubAssayApp.controller:Compoundbatchv2Ctrl#$scope.success
+             * @methodOf chembiohubAssayApp.controller:Compoundbatchv2Ctrl
+             * @description
+             * Call a POST command to save the uploaded attachment file's URL and unique identifier against the batch record.
+             * and also the saved record. This function is injected into the angular schema form file upload widget.
+             * @param {object} file  the FlowFile object to be uploaded
+             * @param {string} form_key  the identity of the form, allowing multiple forms on the page to use this function
+             *
+             */
             $scope.success = function(file, form_key) {
                 //apply the urls of the flowfile object to the correct custom field of $scope.mol.customFields - find the attachments array and add it
                 //put a new method in FlowFileFactory
@@ -1051,11 +1091,35 @@ angular.module('chembiohubAssayApp')
 
             }
 
+            /**
+             * @ngdoc method
+             * @name chembiohubAssayApp.controller:Compoundbatchv2Ctrl#$scope.removeFile
+             * @methodOf chembiohubAssayApp.controller:Compoundbatchv2Ctrl
+             * @description
+             * Remove a file from the list of uploaded files on a File Upload field's attachments object. This is to remove it from the display
+             * and also the saved record. This function is injected into the angular schema form file upload widget.
+             * @param {string} form_key  the identity of the form, allowing multiple forms on the page to use this function
+             * @param {integer} index  the position of the upoaded file in the attachments list
+             * @param {string} url  the URL fo the file to be used as a condition check for removal.
+             *
+             */
             $scope.removeFile = function(form_key, index, url) {
                 $scope.newMol.custom_fields[form_key[0]].attachments = $filter('filter')($scope.newMol.custom_fields[form_key[0]].attachments, function(value, index) {
                     return value.url !== url; })
             }
             
+            /**
+             * @ngdoc method
+             * @name chembiohubAssayApp.controller:Compoundbatchv2Ctrl#$scope.sizeCheck
+             * @methodOf chembiohubAssayApp.controller:Compoundbatchv2Ctrl
+             * @description
+             * Check an uploaded file for attachment is less than 20Mb. File is removed from the upload queue if it exceeds this limit.
+             * This function is injected into the angular schema form file upload widget.
+             * @param {object} file  the FlowFile object to be checked for file size limits
+             * @param {string} form_key  the identity of the form, allowing multiple forms on the page to use this function
+             * @returns {boolean} boolean  false returned if validation fails
+             *
+             */
             $scope.sizeCheck = function(file, form_key){
                 
                 //get the file

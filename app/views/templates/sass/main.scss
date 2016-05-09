@@ -174,11 +174,21 @@ h1.tablehead, h2.tablehead, h3.tablehead, h4.tablehead {
 
 @media (min-width: 767px) {
   .flexbig {
+    display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: -moz-box-flex;
     display: flex;
   }
 }
 
 .flex {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: -moz-box-flex;
   display: flex;
 }
 

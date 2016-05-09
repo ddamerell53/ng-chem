@@ -6,6 +6,7 @@
  * @description
  * # EditDataCtrl
  * Controller of the chembiohubAssayApp. Used to control addition functions within the app. There are equivalents for Viewing and Editing data
+ * Not currently used
  * @deprecated
  */
 angular.module('chembiohubAssayApp')

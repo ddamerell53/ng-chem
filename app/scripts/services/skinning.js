@@ -2,15 +2,16 @@
 
 /**
  * @ngdoc service
- * @name chembiohubAssayApp.skinning
+ * @name chembiohubAssayApp.SkinningFactory
  * @description
- * # skinning
- * Factory in the chembiohubAssayApp.
+ * # SkinningFactory
+ * Factory for providing convenient, parameterised access to the skinning related API endpoints (cbh_skinning).
+ * @param {object} $resource angular library for constructing webservice calls from URLs.
+ * @returns {object} $resource angular service containing access to the skinning endpoint.
  */
 angular.module('chembiohubAssayApp')
   .factory('SkinningFactory', function ($resource) {
-    // Service logic
-    // ...
 
     return $resource(urlConfig.cbh_skinning.list_endpoint , { }, { });
+
   });

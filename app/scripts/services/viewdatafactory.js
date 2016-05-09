@@ -5,7 +5,8 @@
  * @name chembiohubAssayApp.ViewDataFactory
  * @description
  * # ViewDataFactory
- * Factory in the chembiohubAssayApp.
+ * Part of the old assayreg implementation - not currently used
+ * @deprecated
  */
 angular.module('chembiohubAssayApp')
   .factory('ViewDataFactory', ['$resource', function ($resource) {

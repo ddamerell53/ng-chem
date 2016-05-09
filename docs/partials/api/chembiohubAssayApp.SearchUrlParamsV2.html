@@ -5,6 +5,71 @@
 </h1>
 <div><h2 id="description">Description</h2>
 <div class="description"><div class="chembiohubassayapp-searchurlparamsv2-page"><h3 id="description_searchurlparamsv2">SearchUrlParamsV2</h3>
-<p>Provider in the chembiohubAssayApp.</p>
+<p>Factory for providing URL compatible search parameters from a supplied elasticsearch query object or from current state parameters.</p>
 </div></div>
+<div class="member method"><h2 id="methods">Methods</h2>
+<ul class="methods"><li><h3 id="methods_ngparamserializer">ngParamSerializer(params)</h3>
+<div class="ngparamserializer"><div class="chembiohubassayapp-searchurlparamsv2-ngparamserializer-page"><p>Serializer for the current search parameters, pperfomrs encodeURIComponent on each in turn and returns a concatenated string.</p>
+</div><h5 id="methods_ngparamserializer_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>params</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="chembiohubassayapp-searchurlparamsv2-ngparamserializer-page"><p>object containing key value pairs representing the current search query.</p>
+</div></td></tr></tbody></table><h5 id="methods_ngparamserializer_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="chembiohubassayapp-searchurlparamsv2-ngparamserializer-page"><p>parts the URI encoded concatenated string.</p>
+</div></td></tr></table></div>
+</li>
+<li><h3 id="methods_searchurlparamsv2generate_capped_saved_search">searchUrlParamsV2.generate_capped_saved_search(params)</h3>
+<div class="searchurlparamsv2generate_capped_saved_search"><div class="chembiohubassayapp-searchurlparamsv2-searchurlparamsv2-generate-capped-saved-search-page"><p>Explanation here</p>
+</div><h5 id="methods_searchurlparamsv2generate_capped_saved_search_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>params</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="chembiohubassayapp-searchurlparamsv2-searchurlparamsv2-generate-capped-saved-search-page"><p>The top-level global cbh controller object</p>
+</div></td></tr></tbody></table></div>
+</li>
+<li><h3 id="methods_searchurlparamsv2generate_chemical_params">searchUrlParamsV2.generate_chemical_params(params)</h3>
+<div class="searchurlparamsv2generate_chemical_params"><div class="chembiohubassayapp-searchurlparamsv2-searchurlparamsv2-generate-chemical-params-page"><p>Concatenates chemical search parameters, which may not be in an expected format, into the existing specified params object. 
+Also alters the skinConfig object to signal that a chemical search has been added.</p>
+</div><h5 id="methods_searchurlparamsv2generate_chemical_params_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>params</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="chembiohubassayapp-searchurlparamsv2-searchurlparamsv2-generate-chemical-params-page"><p>Object containing search parameters in JSON format.</p>
+</div></td></tr></tbody></table><h5 id="methods_searchurlparamsv2generate_chemical_params_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="chembiohubassayapp-searchurlparamsv2-searchurlparamsv2-generate-chemical-params-page"><p>params The altered params object.</p>
+</div></td></tr></table></div>
+</li>
+<li><h3 id="methods_searchurlparamsv2generate_filter_params">searchUrlParamsV2.generate_filter_params(params)</h3>
+<div class="searchurlparamsv2generate_filter_params"><div class="chembiohubassayapp-searchurlparamsv2-searchurlparamsv2-generate-filter-params-page"><p>Concatenates search filter parameters, including appropriate subqueries, into the existing specified params object. 
+Also alters the skinConfig object to signal that a filter has been added, and broadcasts a <a href="#/api/chembiohubAssayApp.SearchUrlParamsV2#properties_searchurlparamsv2.generate_form">searchParamsChanged</a> searchParamsChanged event.</p>
+</div><h5 id="methods_searchurlparamsv2generate_filter_params_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>params</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="chembiohubassayapp-searchurlparamsv2-searchurlparamsv2-generate-filter-params-page"><p>Object containing search parameters in JSON format.</p>
+</div></td></tr></tbody></table><h5 id="methods_searchurlparamsv2generate_filter_params_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="chembiohubassayapp-searchurlparamsv2-searchurlparamsv2-generate-filter-params-page"><p>params The altered params object.</p>
+</div></td></tr></table></div>
+</li>
+<li><h3 id="methods_searchurlparamsv2generate_hide_params">searchUrlParamsV2.generate_hide_params(params)</h3>
+<div class="searchurlparamsv2generate_hide_params"><div class="chembiohubassayapp-searchurlparamsv2-searchurlparamsv2-generate-hide-params-page"><p>Explanation here</p>
+</div><h5 id="methods_searchurlparamsv2generate_hide_params_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>params</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="chembiohubassayapp-searchurlparamsv2-searchurlparamsv2-generate-hide-params-page"><p>Object containing search parameters in JSON format.</p>
+</div></td></tr></tbody></table><h5 id="methods_searchurlparamsv2generate_hide_params_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="chembiohubassayapp-searchurlparamsv2-searchurlparamsv2-generate-hide-params-page"><p>params The altered params object.</p>
+</div></td></tr></table></div>
+</li>
+<li><h3 id="methods_searchurlparamsv2generate_sort_params">searchUrlParamsV2.generate_sort_params(params)</h3>
+<div class="searchurlparamsv2generate_sort_params"><div class="chembiohubassayapp-searchurlparamsv2-searchurlparamsv2-generate-sort-params-page"><p>Explanation here</p>
+</div><h5 id="methods_searchurlparamsv2generate_sort_params_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>params</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="chembiohubassayapp-searchurlparamsv2-searchurlparamsv2-generate-sort-params-page"><p>Object containing search parameters in JSON format.</p>
+</div></td></tr></tbody></table><h5 id="methods_searchurlparamsv2generate_sort_params_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="chembiohubassayapp-searchurlparamsv2-searchurlparamsv2-generate-sort-params-page"><p>params The altered params object.</p>
+</div></td></tr></table></div>
+</li>
+<li><h3 id="methods_searchurlparamsv2get_project_params">searchUrlParamsV2.get_project_params(params)</h3>
+<div class="searchurlparamsv2get_project_params"><div class="chembiohubassayapp-searchurlparamsv2-searchurlparamsv2-get-project-params-page"><p>Explanation here</p>
+</div><h5 id="methods_searchurlparamsv2get_project_params_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>params</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="chembiohubassayapp-searchurlparamsv2-searchurlparamsv2-get-project-params-page"><p>The top-level global cbh controller object</p>
+</div></td></tr></tbody></table></div>
+</li>
+<li><h3 id="methods_searchurlparamsv2get_textsearch_params">searchUrlParamsV2.get_textsearch_params(params)</h3>
+<div class="searchurlparamsv2get_textsearch_params"><div class="chembiohubassayapp-searchurlparamsv2-searchurlparamsv2-get-textsearch-params-page"><p>Explanation here</p>
+</div><h5 id="methods_searchurlparamsv2get_textsearch_params_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>params</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="chembiohubassayapp-searchurlparamsv2-searchurlparamsv2-get-textsearch-params-page"><p>The top-level global cbh controller object</p>
+</div></td></tr></tbody></table></div>
+</li>
+<li><h3 id="methods_searchurlparamsv2setbasedownloadurl">searchUrlParamsV2.setBaseDownloadUrl(cbh, params)</h3>
+<div class="searchurlparamsv2setbasedownloadurl"><div class="chembiohubassayapp-searchurlparamsv2-searchurlparamsv2-setbasedownloadurl-page"><p>Creates a fully resolved URL do use as a starting point for building a download URL for the current installation, 
+with parameters and limits to be added later.</p>
+</div><h5 id="methods_searchurlparamsv2setbasedownloadurl_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>cbh</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="chembiohubassayapp-searchurlparamsv2-searchurlparamsv2-setbasedownloadurl-page"><p>The top-level global cbh controller object</p>
+</div></td></tr><tr><td>params</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="chembiohubassayapp-searchurlparamsv2-searchurlparamsv2-setbasedownloadurl-page"><p>Object containing search parameters in JSON format</p>
+</div></td></tr></tbody></table></div>
+</li>
+</ul>
+</div>
+<div class="member property"><h2 id="properties">Properties</h2>
+<ul class="properties"><li><h3 id="properties_searchurlparamsv2generate_form">searchUrlParamsV2.generate_form</h3>
+<div class="searchurlparamsv2generate_form"><div class="chembiohubassayapp-searchurlparamsv2-searchurlparamsv2-generate-form-page"><p>Create a form model object based on the current state parameters and other supplied parameters if appropriate. This method fires off 
+an number of broadcast events relating to page redraws, chemical search initialisation etc.</p>
+</div></div>
+</li>
+</ul>
+</div>
 </div>

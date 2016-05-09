@@ -2,21 +2,27 @@
 
 /**
  * @ngdoc service
- * @name chembiohubAssayApp.addData
+ * @name chembiohubAssayApp.InvitationFactory
  * @description
- * # addData
- * Factory in the chembiohubAssayApp.
+ * # FlowFileFactory
+ * Factory which provides convenient, parameterised access to invitation related web service endpoints. Not currently used.
+ * @param {object} $resource angular library for constructing webservice calls from URLs.
+ * @param {object} urlConfig app config object containing aliases for all available web service endpoints.
+ * @returns {object} object Object containing keyed $resource objects
+ * @deprecated
  */
 angular.module('chembiohubAssayApp')
   .factory('InvitationFactory', ['$resource', 'urlConfig', function ($resource, urlConfig) {
-    // Service logic
-    // ...
 
     //http://www.sitepoint.com/creating-crud-app-minutes-angulars-resource/
 
-
-
-    //var supply_whole_uri = $resource('', {supply_uri: '@uri'});
+    /**
+     * @ngdoc property
+     * @name chembiohubAssayApp.InvitationFactory#invite
+     * @propertyOf chembiohubAssayApp.InvitationFactory
+     * @description
+     * Not currently used
+     */
     var invite = $resource(urlConfig.invitations.list_endpoint, + 'invite_user/');
 
     

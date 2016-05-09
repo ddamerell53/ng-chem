@@ -8,4 +8,66 @@
 <p>This is used to control Plate Map functionality - users can define some required parameters to set up their plate, then sequentially add data to each well. 
 It is intended to link added records by their system ID to a particular plate for an overview.</p>
 </div></div>
+<div class="member method"><h2 id="methods">Methods</h2>
+<ul class="methods"><li><h3 id="methods_$scopecbhchangesearchparams">$scope.cbh.changeSearchParams(newParams, notify)</h3>
+<div class="$scopecbhchangesearchparams"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-platemapctrl-scope-cbh-changesearchparams-page"><p>Overrides a global cbh method for searching and moving to a new URL</p>
+</div><h5 id="methods_$scopecbhchangesearchparams_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>newParams</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-platemapctrl-scope-cbh-changesearchparams-page"><p>Search parameters to use for this page transition</p>
+</div></td></tr><tr><td>notify</td><td><a href="" class="label type-hint type-hint-boolean">boolean</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-platemapctrl-scope-cbh-changesearchparams-page"><p>not used - defaults to false in this instance</p>
+</div></td></tr></tbody></table></div>
+</li>
+<li><h3 id="methods_$scopecbhloadplatespecifiedinurl">$scope.cbh.loadPlateSpecifiedInUrl()</h3>
+<div class="$scopecbhloadplatespecifiedinurl"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-platemapctrl-scope-cbh-loadplatespecifiedinurl-page"><p>Load the specified plate - batch id from URL - into the platemap directive form for editing.</p>
+</div></div>
+</li>
+<li><h3 id="methods_$scopecbhloadplatespecifiedinurl">$scope.cbh.loadPlateSpecifiedInUrl()</h3>
+<div class="$scopecbhloadplatespecifiedinurl"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-platemapctrl-scope-cbh-loadplatespecifiedinurl-page"><p>Load the specified plate - batch id from URL - into the platemap directive form for editing.</p>
+</div></div>
+</li>
+<li><h3 id="methods_$scopeclearform">$scope.clearForm(form)</h3>
+<div class="$scopeclearform"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-platemapctrl-scope-clearform-page"><p>Remove all information from the specified plate form and reset to pristine state.</p>
+</div><h5 id="methods_$scopeclearform_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>form</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-platemapctrl-scope-clearform-page"><p>the form object to be reset to a pristine state</p>
+</div></td></tr></tbody></table></div>
+</li>
+<li><h3 id="methods_$scopeloadplatemaps">$scope.loadPlateMaps()</h3>
+<div class="$scopeloadplatemaps"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-platemapctrl-scope-loadplatemaps-page"><p>Fetch the list of all platemaps for the given project (via URL)</p>
+</div></div>
+</li>
+<li><h3 id="methods_$scopepagechanged">$scope.pageChanged(newPage)</h3>
+<div class="$scopepagechanged"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-platemapctrl-scope-pagechanged-page"><p>Pagination function for the plate list
+Sets the scope flaag plateSaved for confirmation in user interface.</p>
+</div><h5 id="methods_$scopepagechanged_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>newPage</td><td><a href="" class="label type-hint type-hint-integer">integer</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-platemapctrl-scope-pagechanged-page"><p>the page defining the subset of results to show (based on items per page)</p>
+</div></td></tr></tbody></table></div>
+</li>
+<li><h3 id="methods_$scopepatchwholeplate">$scope.patchWholePlate()</h3>
+<div class="$scopepatchwholeplate"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-platemapctrl-scope-patchwholeplate-page"><p>Send whole plate, including associated wells, to the batch mechanissm for patching to save.
+Sets the scope flaag plateSaved for confirmation in user interface.</p>
+</div></div>
+</li>
+<li><h3 id="methods_$scopesavewholeplate">$scope.saveWholePlate()</h3>
+<div class="$scopesavewholeplate"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-platemapctrl-scope-savewholeplate-page"><p>We need two different functions for the save action when saving a plate. 
+When we have a new plate from scratch, we want to create it in the DB. 
+When we are editing a plate, we want to patch the plate. 
+Create a plate object from the current form so that when it is saved using the batch mechanissm, it is patched of appropriate.
+Pass this function to the directive for the appropriate page. </p>
+</div></div>
+</li>
+<li><h3 id="methods_$scopesetupnewplatefromform">$scope.setupNewPlateFromForm(form)</h3>
+<div class="$scopesetupnewplatefromform"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-platemapctrl-scope-setupnewplatefromform-page"><p>Validates the form for setting up a new plate and sets thee sshowPlate flag to true, which unhides the plate graphic.
+Parameters are then passed through to the platemap directive directly and held in scope here.</p>
+</div><h5 id="methods_$scopesetupnewplatefromform_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>form</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-platemapctrl-scope-setupnewplatefromform-page"><p>the form object used to set up a new plate.</p>
+</div></td></tr></tbody></table></div>
+</li>
+</ul>
+</div>
+<div class="member property"><h2 id="properties">Properties</h2>
+<ul class="properties"><li><h3 id="properties_$scopeschemaformholderwell_form">$scope.schemaFormHolder.well_form</h3>
+<div class="$scopeschemaformholderwell_form"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-platemapctrl-scope-schemaformholder-well-form-page"><p>Form definition for the angular schema form for an individual plate well.</p>
+</div></div>
+</li>
+<li><h3 id="properties_$scopeschemaformholderwell_schema">$scope.schemaFormHolder.well_schema</h3>
+<div class="$scopeschemaformholderwell_schema"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-platemapctrl-scope-schemaformholder-well-schema-page"><p>Schema definition for the angular schema form for an individual plate well.</p>
+</div></div>
+</li>
+</ul>
+</div>
 </div>

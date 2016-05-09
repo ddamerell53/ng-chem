@@ -1,5 +1,5 @@
 
-        <div class="row grey-to-white {{!project.project_type.show_compounds ? 'nonchem' : ''}}" ng-repeat="project in projects | filter:search:strict" style="margin-bottom:15px; margin-left:10px; border-radius:10px; align-items:center; display:flex; flex-flow: wrap row;">
+        <div class="row grey-to-white {{!project.project_type.show_compounds ? 'nonchem' : ''}}" ng-repeat="project in projects | filter:search:strict" style="margin-bottom:15px; margin-left:10px; border-radius:10px; align-items:center; display: -webkit-box; display: -moz-box; display: -ms-flexbox; display: -webkit-flex; display: -moz-box-flex;  display:flex; flex-flow: wrap row;">
             <div class="proj-section proj-list-header {{!project.project_type.show_compounds ? 'nonchem' : ''}}" style="height:100%">
 
                 <h2 class="blue" style="display:inline-block; padding-bottom:0; margin-bottom: 0;">

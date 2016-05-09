@@ -5,6 +5,7 @@
  * @name chembiohubAssayApp.customFieldConfig
  * @description
  * # customFieldConfig
- * Factory in the chembiohubAssayApp.
+ * Empty file
+ * @deprecated
  */
 

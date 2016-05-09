@@ -1,5 +1,7 @@
 'use strict';
 
+//DEPRECATED - do not use
+
 var showMappingPopupController = function($scope, $modalInstance, project_fields, sheet, $timeout, $filter, dataoverviewctrl) {
                         $scope.dataoverviewctrl = dataoverviewctrl;
 
@@ -324,7 +326,7 @@ var getSheetsByFile = function(dpc,fileId, $scope, FlowFileFactory, destroying, 
  * @name chembiohubAssayApp.controller:DataOverviewCtrl
  * @description
  * # DataOverviewCtrl
- * Controller of the chembiohubAssayApp
+ * Not currently used
  * @deprecated
  */
 angular.module('chembiohubAssayApp')

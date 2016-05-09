@@ -5,6 +5,28 @@
 </h1>
 <div><h2 id="description">Description</h2>
 <div class="description"><div class="chembiohubassayapp-platemapfactory-page"><h3 id="description_platemapfactory">PlateMapFactory</h3>
-<p>Factory in the chembiohubAssayApp.</p>
+<p>Factory which provides convenient, parameterised access to plate map related web service endpoints (cbh_plate_map).</p>
 </div></div>
+<h2 id="usage">Usage</h2>
+<div class="usage"><pre class="prettyprint linenums">PlateMapFactory($resource, urlConfig);</pre>
+<h4 id="usage_parameters">Parameters</h4><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>$resource</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="chembiohubassayapp-platemapfactory-page"><p>angular library for constructing webservice calls from URLs.</p>
+</div></td></tr><tr><td>urlConfig</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="chembiohubassayapp-platemapfactory-page"><p>app config object containing aliases for all available web service endpoints.</p>
+</div></td></tr></tbody></table><h4 id="usage_returns">Returns</h4><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="chembiohubassayapp-platemapfactory-page"><p>object Object containing keyed $resource objects</p>
+</div></td></tr></table></div>
+<div class="member property"><h2 id="properties">Properties</h2>
+<ul class="properties"><li><h3 id="properties_list">list</h3>
+<div class="list"><div class="chembiohubassayapp-platemapfactory-list-page"><p>Resource alias for retrieveing lists of available platemaps, or a single platemap by ID. Alos provides a custom PATCH alias (update).</p>
+</div></div>
+</li>
+<li><h3 id="properties_list_es">list_es</h3>
+<div class="list_es"><div class="chembiohubassayapp-platemapfactory-list-es-page"><p>Resource alias for accessing platemap objects stored in the elasticsearch index. 
+Optional parameter to limit by user who has created the plate record.</p>
+</div></div>
+</li>
+<li><h3 id="properties_reindex">reindex</h3>
+<div class="reindex"><div class="chembiohubassayapp-platemapfactory-reindex-page"><p>Resource alias for reindexing a batch record representing a plate map.</p>
+</div></div>
+</li>
+</ul>
+</div>
 </div>

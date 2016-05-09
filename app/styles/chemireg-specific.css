@@ -1083,6 +1083,11 @@ li.breadcrumb.ng-enter.ng-enter-active {
   min-height:100px; 
   max-height:100px; 
   height:100px;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: -moz-box-flex;
   display: flex; 
   align-items: center;
 }
@@ -1098,11 +1103,21 @@ li.breadcrumb.ng-enter.ng-enter-active {
     bottom:0;
     left: 15px;
     transition: opacity 0.3s ease-in-out;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: -moz-box-flex;
     display: flex; 
     align-items: center;
 }
 .thumb-overlay p {
   line-height: 0.8em;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: -moz-box-flex;
   display: flex; 
   align-items: center;
 }
@@ -1125,12 +1140,22 @@ svg.svg.nonchem, li svg.svg.nonchem {
 .proj-section {
   padding:10px;
   width:100%;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: -moz-box-flex;
   display:flex;
 }
 .proj-section.proj-list-header {
   padding-bottom:0;
 }
 .proj-section > div {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: -moz-box-flex;
   display:flex; 
   justify-content: flex-start; 
   align-items: center;

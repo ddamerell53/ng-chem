@@ -21,6 +21,19 @@ filter and sort functionality, as well as applying search form selections and pa
 </div></td></tr><tr><td>callback</td><td><a href="" class="label type-hint type-hint-function">function</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-compoundbatchv2ctrl-scope-on-page"><p>the callback function to trigger functionality</p>
 </div></td></tr></tbody></table></div>
 </li>
+<li><h3 id="methods_$scope$on">$scope.$on(addSort, callback)</h3>
+<div class="$scope$on"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-compoundbatchv2ctrl-scope-on-page"><p>Sort a column and send to generate new search parameters with this accounted for.</p>
+</div><h5 id="methods_$scope$on_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>addSort</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-compoundbatchv2ctrl-scope-on-page"><p>The name of the broadcast to act on</p>
+</div></td></tr><tr><td>callback</td><td><a href="" class="label type-hint type-hint-function">function</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-compoundbatchv2ctrl-scope-on-page"><p>the callback function to trigger functionality</p>
+</div></td></tr></tbody></table></div>
+</li>
+<li><h3 id="methods_$scope$on">$scope.$on(openedSearchDropdown, callback)</h3>
+<div class="$scope$on"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-compoundbatchv2ctrl-scope-on-page"><p>Calls the function to serialize chemical search parameters into a URL friendly format. In turn notifies 
+cbh object that </p>
+</div><h5 id="methods_$scope$on_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>openedSearchDropdown</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-compoundbatchv2ctrl-scope-on-page"><p>the name of the broadcast to act on</p>
+</div></td></tr><tr><td>callback</td><td><a href="" class="label type-hint type-hint-function">function</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-compoundbatchv2ctrl-scope-on-page"><p>the callback function to trigger functionality</p>
+</div></td></tr></tbody></table></div>
+</li>
 <li><h3 id="methods_$scope$on">$scope.$on(removeAllHides, callback)</h3>
 <div class="$scope$on"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-compoundbatchv2ctrl-scope-on-page"><p>Remove all filters which hide columns and send to generate new search parameters with these removed.</p>
 </div><h5 id="methods_$scope$on_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>removeAllHides</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-compoundbatchv2ctrl-scope-on-page"><p>The name of the broadcast to act on</p>
@@ -30,6 +43,12 @@ filter and sort functionality, as well as applying search form selections and pa
 <li><h3 id="methods_$scope$on">$scope.$on(removeForm, callback)</h3>
 <div class="$scope$on"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-compoundbatchv2ctrl-scope-on-page"><p>Remove the currently displayed form. Not yet implemented here.</p>
 </div><h5 id="methods_$scope$on_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>removeForm</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-compoundbatchv2ctrl-scope-on-page"><p>The name of the broadcast to act on</p>
+</div></td></tr><tr><td>callback</td><td><a href="" class="label type-hint type-hint-function">function</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-compoundbatchv2ctrl-scope-on-page"><p>the callback function to trigger functionality</p>
+</div></td></tr></tbody></table></div>
+</li>
+<li><h3 id="methods_$scope$on">$scope.$on(removeHide, callback)</h3>
+<div class="$scope$on"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-compoundbatchv2ctrl-scope-on-page"><p>Show a previously hidden column and send to generate new search parameters with this accounted for.</p>
+</div><h5 id="methods_$scope$on_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>removeHide</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-compoundbatchv2ctrl-scope-on-page"><p>The name of the broadcast to act on</p>
 </div></td></tr><tr><td>callback</td><td><a href="" class="label type-hint type-hint-function">function</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-compoundbatchv2ctrl-scope-on-page"><p>the callback function to trigger functionality</p>
 </div></td></tr></tbody></table></div>
 </li>
@@ -58,19 +77,6 @@ cbh object that its should update the URL parameters in the state.</p>
 </div></td></tr><tr><td>callback</td><td><a href="" class="label type-hint type-hint-function">function</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-compoundbatchv2ctrl-scope-on-page"><p>the callback function to trigger functionality</p>
 </div></td></tr></tbody></table></div>
 </li>
-<li><h3 id="methods_$scope$on">$scope.$on(addSort, callback)</h3>
-<div class="$scope$on"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-compoundbatchv2ctrl-scope-on-page"><p>Sort a column and send to generate new search parameters with this accounted for.</p>
-</div><h5 id="methods_$scope$on_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>addSort</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-compoundbatchv2ctrl-scope-on-page"><p>The name of the broadcast to act on</p>
-</div></td></tr><tr><td>callback</td><td><a href="" class="label type-hint type-hint-function">function</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-compoundbatchv2ctrl-scope-on-page"><p>the callback function to trigger functionality</p>
-</div></td></tr></tbody></table></div>
-</li>
-<li><h3 id="methods_$scope$on">$scope.$on(openedSearchDropdown, callback)</h3>
-<div class="$scope$on"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-compoundbatchv2ctrl-scope-on-page"><p>Calls the function to serialize chemical search parameters into a URL friendly format. In turn notifies 
-cbh object that </p>
-</div><h5 id="methods_$scope$on_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>openedSearchDropdown</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-compoundbatchv2ctrl-scope-on-page"><p>the name of the broadcast to act on</p>
-</div></td></tr><tr><td>callback</td><td><a href="" class="label type-hint type-hint-function">function</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-compoundbatchv2ctrl-scope-on-page"><p>the callback function to trigger functionality</p>
-</div></td></tr></tbody></table></div>
-</li>
 <li><h3 id="methods_$scope$on">$scope.$on(chemicalSearch, callback)</h3>
 <div class="$scope$on"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-compoundbatchv2ctrl-scope-on-page"><p>Initialises chemical search by posting chemical search parameter data which has been assembled in skinConfig</p>
 </div><h5 id="methods_$scope$on_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>chemicalSearch</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-compoundbatchv2ctrl-scope-on-page"><p>the name of the broadcast to act on</p>
@@ -80,12 +86,6 @@ cbh object that </p>
 <li><h3 id="methods_$scope$on">$scope.$on(cloneAnItem, callback)</h3>
 <div class="$scope$on"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-compoundbatchv2ctrl-scope-on-page"><p>Convenience command to turn on the add data form with data pre-populated when user requests to clone an item.</p>
 </div><h5 id="methods_$scope$on_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>cloneAnItem</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-compoundbatchv2ctrl-scope-on-page"><p>The name of the broadcast to act on</p>
-</div></td></tr><tr><td>callback</td><td><a href="" class="label type-hint type-hint-function">function</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-compoundbatchv2ctrl-scope-on-page"><p>the callback function to trigger functionality</p>
-</div></td></tr></tbody></table></div>
-</li>
-<li><h3 id="methods_$scope$on">$scope.$on(removeHide, callback)</h3>
-<div class="$scope$on"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-compoundbatchv2ctrl-scope-on-page"><p>Show a previously hidden column and send to generate new search parameters with this accounted for.</p>
-</div><h5 id="methods_$scope$on_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>removeHide</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-compoundbatchv2ctrl-scope-on-page"><p>The name of the broadcast to act on</p>
 </div></td></tr><tr><td>callback</td><td><a href="" class="label type-hint type-hint-function">function</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-compoundbatchv2ctrl-scope-on-page"><p>the callback function to trigger functionality</p>
 </div></td></tr></tbody></table></div>
 </li>
@@ -122,6 +122,10 @@ cbh object that </p>
 </div><h5 id="methods_$scopecbhpatchrecord_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>mol</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-compoundbatchv2ctrl-scope-cbh-patchrecord-page"><p>The molecule object to be patched</p>
 </div></td></tr></tbody></table></div>
 </li>
+<li><h3 id="methods_$scopecbhresetsearch">$scope.cbh.resetSearch()</h3>
+<div class="$scopecbhresetsearch"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-compoundbatchv2ctrl-scope-cbh-resetsearch-page"><p>Set the search form to its default empty state, with no search parameters. Also resets the URL.</p>
+</div></div>
+</li>
 <li><h3 id="methods_$scopecbhsavechangestocompounddataincontroller">$scope.cbh.saveChangesToCompoundDataInController(changes, sourceOfChange)</h3>
 <div class="$scopecbhsavechangestocompounddataincontroller"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-compoundbatchv2ctrl-scope-cbh-savechangestocompounddataincontroller-page"><p>Sets up the correct search URL to use for the current parameters and filters (including paging) and carries out the searchvia web service call.
 After web service calls, results set populated into scope.</p>
@@ -137,6 +141,12 @@ After web service calls, results set populated into scope.</p>
 <div class="$scopecbhsendtosearch"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-compoundbatchv2ctrl-scope-cbh-sendtosearch-page"><p>Change the current search parameters and broadcast a columnSelection event based on filter selections for a supplied column.</p>
 </div><h5 id="methods_$scopecbhsendtosearch_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>col</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-compoundbatchv2ctrl-scope-cbh-sendtosearch-page"><p>object representing a handsontable column</p>
 </div></td></tr></tbody></table></div>
+</li>
+<li><h3 id="methods_$scopecbhsetupparams">$scope.cbh.setupParams()</h3>
+<div class="$scopecbhsetupparams"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-compoundbatchv2ctrl-scope-cbh-setupparams-page"><p>Performs the first params setup on page load. Examines the url to locate search parameters, uses the SearchUrlParamsV2 service 
+to create a properly encoded url string to use in a web service call in another part of the application. Broadcasts a 
+searchParamsChanged event.</p>
+</div></div>
 </li>
 <li><h3 id="methods_$scopecbhtoggleeditmode">$scope.cbh.toggleEditMode()</h3>
 <div class="$scopecbhtoggleeditmode"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-compoundbatchv2ctrl-scope-cbh-toggleeditmode-page"><p>Switch edit mode on or off. Also changes search parameters to refelct choice of edit mode, and scrolls to start of data set.</p>
@@ -162,9 +172,18 @@ Initiates changes to search parameters and consequently URL.</p>
 </div><h5 id="methods_$scopedosinglecompoundvalidation_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>myForm</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-compoundbatchv2ctrl-scope-dosinglecompoundvalidation-page"><p>Whole form object for client-side validation.</p>
 </div></td></tr></tbody></table></div>
 </li>
+<li><h3 id="methods_$scopeeditmodeunreachable">$scope.editModeUnreachable()</h3>
+<div class="$scopeeditmodeunreachable"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-compoundbatchv2ctrl-scope-editmodeunreachable-page"><p>This function works out whether the current loggeed in user can enter edit mode with the currently  selected project.</p>
+</div><h5 id="methods_$scopeeditmodeunreachable_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-boolean">boolean</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-compoundbatchv2ctrl-scope-editmodeunreachable-page"><p>boolean Answer to the question &quot;Is edit mode unreachable?&quot;</p>
+</div></td></tr></table></div>
+</li>
 <li><h3 id="methods_$scopeimagecallback">$scope.imageCallback()</h3>
 <div class="$scopeimagecallback"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-compoundbatchv2ctrl-scope-imagecallback-page"><p>Forces a page re-render to cascade down to chemical images.
 Initiates changes to search parameters and consequently URL.</p>
+</div></div>
+</li>
+<li><h3 id="methods_$scopeinitialise">$scope.initialise()</h3>
+<div class="$scopeinitialise"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-compoundbatchv2ctrl-scope-initialise-page"><p>Sets up the datasets and filters from the url on page load.</p>
 </div></div>
 </li>
 <li><h3 id="methods_$scopepagechanged">$scope.pageChanged(newPage)</h3>
@@ -179,6 +198,18 @@ Initiates changes to search parameters and consequently URL.</p>
 </div><h5 id="methods_$scopepagechanged2_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>newPage</td><td><a href="" class="label type-hint type-hint-integer">integer</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-compoundbatchv2ctrl-scope-pagechanged2-page"><p>.</p>
 </div></td></tr></tbody></table></div>
 </li>
+<li><h3 id="methods_$scoperemovefile">$scope.removeFile(form_key, index, url)</h3>
+<div class="$scoperemovefile"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-compoundbatchv2ctrl-scope-removefile-page"><p>Remove a file from the list of uploaded files on a File Upload field&#39;s attachments object. This is to remove it from the display
+and also the saved record. This function is injected into the angular schema form file upload widget.</p>
+</div><h5 id="methods_$scoperemovefile_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>form_key</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-compoundbatchv2ctrl-scope-removefile-page"><p>the identity of the form, allowing multiple forms on the page to use this function</p>
+</div></td></tr><tr><td>index</td><td><a href="" class="label type-hint type-hint-integer">integer</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-compoundbatchv2ctrl-scope-removefile-page"><p>the position of the upoaded file in the attachments list</p>
+</div></td></tr><tr><td>url</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-compoundbatchv2ctrl-scope-removefile-page"><p>the URL fo the file to be used as a condition check for removal.</p>
+</div></td></tr></tbody></table></div>
+</li>
+<li><h3 id="methods_$scoperesetcompoundlist">$scope.resetCompoundList()</h3>
+<div class="$scoperesetcompoundlist"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-compoundbatchv2ctrl-scope-resetcompoundlist-page"><p>Clears prevous search hits list for searches that hit an error or simply return no hits.</p>
+</div></div>
+</li>
 <li><h3 id="methods_$scopesavesinglecompound">$scope.saveSingleCompound()</h3>
 <div class="$scopesavesinglecompound"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-compoundbatchv2ctrl-scope-savesinglecompound-page"><p>Save one compound from the addition form. Object to be saved is in the scope as newMol. 
 Convenience method for the CBHCompoundBatch web service. On completion, signals that the page has changed.</p>
@@ -187,6 +218,21 @@ Convenience method for the CBHCompoundBatch web service. On completion, signals 
 <li><h3 id="methods_$scopesetuppagenumbers">$scope.setUpPageNumbers()</h3>
 <div class="$scopesetuppagenumbers"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-compoundbatchv2ctrl-scope-setuppagenumbers-page"><p>Initialises the choices available for number of results per search page</p>
 </div></div>
+</li>
+<li><h3 id="methods_$scopesizecheck">$scope.sizeCheck(file, form_key)</h3>
+<div class="$scopesizecheck"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-compoundbatchv2ctrl-scope-sizecheck-page"><p>Check an uploaded file for attachment is less than 20Mb. File is removed from the upload queue if it exceeds this limit.
+This function is injected into the angular schema form file upload widget.</p>
+</div><h5 id="methods_$scopesizecheck_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>file</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-compoundbatchv2ctrl-scope-sizecheck-page"><p>the FlowFile object to be checked for file size limits</p>
+</div></td></tr><tr><td>form_key</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-compoundbatchv2ctrl-scope-sizecheck-page"><p>the identity of the form, allowing multiple forms on the page to use this function</p>
+</div></td></tr></tbody></table><h5 id="methods_$scopesizecheck_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-boolean">boolean</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-compoundbatchv2ctrl-scope-sizecheck-page"><p>boolean  false returned if validation fails</p>
+</div></td></tr></table></div>
+</li>
+<li><h3 id="methods_$scopesuccess">$scope.success(file, form_key)</h3>
+<div class="$scopesuccess"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-compoundbatchv2ctrl-scope-success-page"><p>Call a POST command to save the uploaded attachment file&#39;s URL and unique identifier against the batch record.
+and also the saved record. This function is injected into the angular schema form file upload widget.</p>
+</div><h5 id="methods_$scopesuccess_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>file</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-compoundbatchv2ctrl-scope-success-page"><p>the FlowFile object to be uploaded</p>
+</div></td></tr><tr><td>form_key</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-compoundbatchv2ctrl-scope-success-page"><p>the identity of the form, allowing multiple forms on the page to use this function</p>
+</div></td></tr></tbody></table></div>
 </li>
 <li><h3 id="methods_$scopetoggleadddata">$scope.toggleAddData()</h3>
 <div class="$scopetoggleadddata"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-compoundbatchv2ctrl-scope-toggleadddata-page"><p>Switch the item addition form on or off. If currently in edit mode, switches off edit mode first</p>
@@ -202,14 +248,6 @@ After web service calls, results set populated into scope.</p>
 </div><h5 id="methods_getresultspage_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>pageNumber</td><td><a href="" class="label type-hint type-hint-integer">integer</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-compoundbatchv2ctrl-getresultspage-page"><p>The page number of the results set returned.</p>
 </div></td></tr><tr><td>filters</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-compoundbatchv2ctrl-getresultspage-page"><p>The currently set search filters on the form.</p>
 </div></td></tr></tbody></table></div>
-</li>
-<li><h3 id="methods_scopecbhresetsearch">scope.cbh.resetSearch()</h3>
-<div class="scopecbhresetsearch"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-compoundbatchv2ctrl-scope-cbh-resetsearch-page"><p>Set the search form to its default empty state, with no search parameters. Also resets the URL.</p>
-</div></div>
-</li>
-<li><h3 id="methods_scoperesetcompoundlist">scope.resetCompoundList()</h3>
-<div class="scoperesetcompoundlist"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-compoundbatchv2ctrl-scope-resetcompoundlist-page"><p>Clears prevous search hits list for searches that hit an error or simply return no hits.</p>
-</div></div>
 </li>
 </ul>
 </div>

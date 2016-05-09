@@ -18,6 +18,15 @@ angular.module('chembiohubAssayApp')
     $scope.help_lookup = "projects_help"
     $rootScope.glyphicon = "folder-open";
 
+    /**
+     * @ngdoc method
+     * @name chembiohubAssayApp.controller:ProjectCtrl#$scope.getMessage
+     * @methodOf chembiohubAssayApp.controller:ProjectCtrl
+     * @description
+     * Remove all information from the specified plate form and reset to pristine state.
+     * @param {object} lookup_str  key to use as a lookup in MessageFactory for an appropriate help message.
+     *
+     */
     $scope.getMessage = function(lookup_str){
         return MessageFactory.getMessage(lookup_str);
 

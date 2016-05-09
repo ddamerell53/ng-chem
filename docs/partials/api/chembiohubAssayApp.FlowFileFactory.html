@@ -5,6 +5,35 @@
 </h1>
 <div><h2 id="description">Description</h2>
 <div class="description"><div class="chembiohubassayapp-flowfilefactory-page"><h3 id="description_flowfilefactory">FlowFileFactory</h3>
-<p>Factory in the chembiohubAssayApp.</p>
+<p>Factory which provides convenient, parameterised access to file-related web service endpoints.</p>
 </div></div>
+<h2 id="usage">Usage</h2>
+<div class="usage"><pre class="prettyprint linenums">FlowFileFactory($resource, urlConfig);</pre>
+<h4 id="usage_parameters">Parameters</h4><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>$resource</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="chembiohubassayapp-flowfilefactory-page"><p>angular library for constructing webservice calls from URLs.</p>
+</div></td></tr><tr><td>urlConfig</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="chembiohubassayapp-flowfilefactory-page"><p>app config object containing aliases for all available web service endpoints.</p>
+</div></td></tr></tbody></table><h4 id="usage_returns">Returns</h4><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="chembiohubassayapp-flowfilefactory-page"><p>object Object containing keyed $resource objects</p>
+</div></td></tr></table></div>
+<div class="member property"><h2 id="properties">Properties</h2>
+<ul class="properties"><li><h3 id="properties_cbhattachments">cbhAttachments</h3>
+<div class="cbhattachments"><div class="chembiohubassayapp-flowfilefactory-cbhattachments-page"><p>Resource alias for accessing the FlowFile API for file attachments with option to pull back a single file by ID.</p>
+</div></div>
+</li>
+<li><h3 id="properties_cbhbaseattachment">cbhBaseAttachment</h3>
+<div class="cbhbaseattachment"><div class="chembiohubassayapp-flowfilefactory-cbhbaseattachment-page"><p>Part of the old assayreg implementation - now deprecated</p>
+</div></div>
+</li>
+<li><h3 id="properties_cbhchemflowfile">cbhChemFlowFile</h3>
+<div class="cbhchemflowfile"><div class="chembiohubassayapp-flowfilefactory-cbhchemflowfile-page"><p>Resource for accessing file attachment files for individual batch records. Optional parameter (identifier) to pull back a single file.</p>
+</div></div>
+</li>
+<li><h3 id="properties_cbhflowfile">cbhFlowfile</h3>
+<div class="cbhflowfile"><div class="chembiohubassayapp-flowfilefactory-cbhflowfile-page"><p>Resource alias for accessing the FlowFile API for data upload with option to pull back a single file by ID.</p>
+</div></div>
+</li>
+<li><h3 id="properties_cbhsaveattachment">cbhSaveAttachment</h3>
+<div class="cbhsaveattachment"><div class="chembiohubassayapp-flowfilefactory-cbhsaveattachment-page"><p>Part of the old assayreg file upload API - left here by way of example code but not currently used.</p>
+</div></div>
+</li>
+</ul>
+</div>
 </div>

@@ -5,6 +5,51 @@
 </h1>
 <div><h2 id="description">Description</h2>
 <div class="description"><div class="chembiohubassayapp-messagefactory-page"><h3 id="description_messagefactory">MessageFactory</h3>
-<p>Factory in the chembiohubAssayApp.</p>
+<p>Factory class providing simple access to system messages. Each message is stored with a unique key inside a JSON object 
+so that it can be referenced and reused in the front end and also by the angular-info-box library. 
+Messages are stored in sections appropriate for their usage.</p>
 </div></div>
+<div class="member method"><h2 id="methods">Methods</h2>
+<ul class="methods"><li><h3 id="methods_messagefactorygetlegends">MessageFactory.getLegends()</h3>
+<div class="messagefactorygetlegends"><div class="chembiohubassayapp-messagefactory-messagefactory-getlegends-page"><p>Get the legends object containing all legends. Used to pass through to another library or method which may be unable to directly access the factory.</p>
+</div></div>
+</li>
+<li><h3 id="methods_messagefactorygetmessage">MessageFactory.getMessage(lookup_str)</h3>
+<div class="messagefactorygetmessage"><div class="chembiohubassayapp-messagefactory-messagefactory-getmessage-page"><p>Get the message from the internal messages. if it&#39;s there return it, else return an empty string to avoid null pointers.</p>
+</div><h5 id="methods_messagefactorygetmessage_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>lookup_str</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="chembiohubassayapp-messagefactory-messagefactory-getmessage-page"><p>The key of the message to be retrieved.</p>
+</div></td></tr></tbody></table></div>
+</li>
+<li><h3 id="methods_messagefactorygetmessages">MessageFactory.getMessages()</h3>
+<div class="messagefactorygetmessages"><div class="chembiohubassayapp-messagefactory-messagefactory-getmessages-page"><p>Get the message object containing all messages. Used to pass through to another library or method which may be unable to directly access the factory.</p>
+</div></div>
+</li>
+<li><h3 id="methods_messagefactorygetstatuses">MessageFactory.getStatuses()</h3>
+<div class="messagefactorygetstatuses"><div class="chembiohubassayapp-messagefactory-messagefactory-getstatuses-page"><p>Get the statuses object containing all statuses. Used to pass through to another library or method which may be unable to directly access the factory.</p>
+</div></div>
+</li>
+<li><h3 id="methods_messagefactorygetuploadactions">MessageFactory.getUploadActions()</h3>
+<div class="messagefactorygetuploadactions"><div class="chembiohubassayapp-messagefactory-messagefactory-getuploadactions-page"><p>Get the upload_actions object containing all upload_actions strings. Used to pass through to another library or method which may be unable to directly access the factory.</p>
+</div></div>
+</li>
+</ul>
+</div>
+<div class="member property"><h2 id="properties">Properties</h2>
+<ul class="properties"><li><h3 id="properties_legends">legends</h3>
+<div class="legends"><div class="chembiohubassayapp-messagefactory-legends-page"><p>Object which holds key value pairs of system legends (for documenation images and explanations).</p>
+</div></div>
+</li>
+<li><h3 id="properties_messages">messages</h3>
+<div class="messages"><div class="chembiohubassayapp-messagefactory-messages-page"><p>Object which holds key value pairs of system messages.</p>
+</div></div>
+</li>
+<li><h3 id="properties_statuses">statuses</h3>
+<div class="statuses"><div class="chembiohubassayapp-messagefactory-statuses-page"><p>Object which holds key value pairs of system statuses.</p>
+</div></div>
+</li>
+<li><h3 id="properties_upload_actions">upload_actions</h3>
+<div class="upload_actions"><div class="chembiohubassayapp-messagefactory-upload-actions-page"><p>Object which holds key value pairs of system upload action messages.</p>
+</div></div>
+</li>
+</ul>
+</div>
 </div>

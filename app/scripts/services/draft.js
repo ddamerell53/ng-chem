@@ -2,10 +2,11 @@
 
 /**
  * @ngdoc service
- * @name chembiohubAssayApp.DraftFactory
+ * @name chembiohubAssayApp.service:DraftFactory
  * @description
  * # DraftFactory
- * Factory in the chembiohubAssayApp.
+ * Not currently used. Was intended to provide a rudimentary draft and edit history for textarea fields.
+ * @deprecated
  */
 angular.module('chembiohubAssayApp')
   .factory('DraftFactory',  ['$resource', 'urlConfig', function ($resource, urlConfig) {

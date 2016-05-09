@@ -46,7 +46,14 @@ angular.module('chembiohubAssayApp')
             
             
 
-            //$scope.schemaFormHolder.required=[]
+            /**
+             * @ngdoc property
+             * @name chembiohubAssayApp.controller:PlatemapCtrl#$scope.schemaFormHolder.well_form
+             * @propertyOf chembiohubAssayApp.controller:PlatemapCtrl
+             * @description
+             * Form definition for the angular schema form for an individual plate well.
+             *
+             */
             $scope.schemaFormHolder.well_form = [
                 //need: name, plate size, description, plate type
                 //choices here hard coded for now
@@ -96,6 +103,14 @@ angular.module('chembiohubAssayApp')
                     },
             ];
 
+            /**
+             * @ngdoc property
+             * @name chembiohubAssayApp.controller:PlatemapCtrl#$scope.schemaFormHolder.well_schema
+             * @propertyOf chembiohubAssayApp.controller:PlatemapCtrl
+             * @description
+             * Schema definition for the angular schema form for an individual plate well.
+             *
+             */
             $scope.schemaFormHolder.well_schema = {
                 "type": "object",
                 "properties": {
@@ -145,12 +160,34 @@ angular.module('chembiohubAssayApp')
             
 
             /* Functional Stuff */
+
+            /**
+             * @ngdoc method
+             * @name chembiohubAssayApp.controller:PlatemapCtrl#$scope.clearForm
+             * @methodOf chembiohubAssayApp.controller:PlatemapCtrl
+             * @description
+             * Remove all information from the specified plate form and reset to pristine state.
+             * @param {object} form  the form object to be reset to a pristine state
+             *
+             */
             $scope.clearForm = function(form){
             	$scope.newPlateForm = {}
             	form.$setPristine();
             	$scope.showPlate = false;
             }
+
             $scope.showPlate = false;
+
+            /**
+             * @ngdoc method
+             * @name chembiohubAssayApp.controller:PlatemapCtrl#$scope.setupNewPlateFromForm
+             * @methodOf chembiohubAssayApp.controller:PlatemapCtrl
+             * @description
+             * Validates the form for setting up a new plate and sets thee sshowPlate flag to true, which unhides the plate graphic.
+             * Parameters are then passed through to the platemap directive directly and held in scope here.
+             * @param {object} form  the form object used to set up a new plate.
+             *
+             */
             $scope.setupNewPlateFromForm = function(form){
 
                 //the form now comes from the current project's custom field config
@@ -189,10 +226,18 @@ angular.module('chembiohubAssayApp')
 
             }
 
-            //we need two different functions for the save action when saving a plate
-            //when we have a new plate from scratch, we want to create it in the DB
-            //when we are editing a plate, we want to patch the plate
-            //pass this function to the directive for the appropriate page
+            /**
+             * @ngdoc method
+             * @name chembiohubAssayApp.controller:PlatemapCtrl#$scope.saveWholePlate
+             * @methodOf chembiohubAssayApp.controller:PlatemapCtrl
+             * @description
+             * We need two different functions for the save action when saving a plate. 
+             * When we have a new plate from scratch, we want to create it in the DB. 
+             * When we are editing a plate, we want to patch the plate. 
+             * Create a plate object from the current form so that when it is saved using the batch mechanissm, it is patched of appropriate.
+             * Pass this function to the directive for the appropriate page. 
+             *
+             */
             $scope.saveWholePlate = function(){
             	
                 //TODO handle error here
@@ -220,18 +265,25 @@ angular.module('chembiohubAssayApp')
                     //forward to list?
                     $state.go("cbh.projects.project.listplates", {"projectKey": projectKey});
                });
-                            
-                  
-                        
-                      
+                                 
             }
 
+            /**
+             * @ngdoc method
+             * @name chembiohubAssayApp.controller:PlatemapCtrl#$scope.cbh.changeSearchParams
+             * @methodOf chembiohubAssayApp.controller:PlatemapCtrl
+             * @description
+             * Overrides a global cbh method for searching and moving to a new URL
+             * @param {object} newParams Search parameters to use for this page transition
+             * @param {boolean} notify not used - defaults to false in this instance
+             *
+             */
             $scope.cbh.changeSearchParams = function(newParams, notify) {
                 //General function to search and move to a new URL
                 
                 $state.params = newParams;
                 $stateParams = newParams;
-                // $location.search(newParams);
+                
                 $state.go($state.current, newParams, {
                     // prevent the events onStart and onSuccess from firing
                     notify: false,
@@ -242,11 +294,20 @@ angular.module('chembiohubAssayApp')
                     // inherit the current params on the url
                     inherit: true
                 });
-                //getResultsPage($scope.pagination.current, newParams);
+                
             }
 
 
             /* Listings page code */
+
+            /**
+             * @ngdoc method
+             * @name chembiohubAssayApp.controller:PlatemapCtrl#$scope.loadPlateMaps
+             * @methodOf chembiohubAssayApp.controller:PlatemapCtrl
+             * @description
+             * Fetch the list of all platemaps for the given project (via URL)
+             *
+             */
             $scope.loadPlateMaps = function(){
                 //add a project type filter within the params
 	            var params = {'pids': $scope.projectObj.id};
@@ -280,14 +341,27 @@ angular.module('chembiohubAssayApp')
 	        $scope.showEditingForm = false;
 	        $scope.editingPlateId = 0
 
-            /* 
-            When we create a new plate, we need to set that plate for editing
-            */
+            
+            /**
+             * @ngdoc method
+             * @name chembiohubAssayApp.controller:PlatemapCtrl#$scope.cbh.loadPlateSpecifiedInUrl
+             * @methodOf chembiohubAssayApp.controller:PlatemapCtrl
+             * @description
+             * Load the specified plate - batch id from URL - into the platemap directive form for editing.
+             *
+             */
             $scope.loadPlateSpecifiedInUrl = function(){
                 $scope.loadPlateForEditing(parseInt($stateParams.plate));
             }
 
-            //fetch the whole plate to put into the form for editing.
+            /**
+             * @ngdoc method
+             * @name chembiohubAssayApp.controller:PlatemapCtrl#$scope.cbh.loadPlateSpecifiedInUrl
+             * @methodOf chembiohubAssayApp.controller:PlatemapCtrl
+             * @description
+             * Load the specified plate - batch id from URL - into the platemap directive form for editing.
+             *
+             */
 	        $scope.loadPlateForEditing = function(plateId){
 	        	//find the plate in the list
                 $scope.plateSaved = false;
@@ -309,7 +383,15 @@ angular.module('chembiohubAssayApp')
 	        	
 	        }
 
-
+            /**
+             * @ngdoc method
+             * @name chembiohubAssayApp.controller:PlatemapCtrl#$scope.patchWholePlate
+             * @methodOf chembiohubAssayApp.controller:PlatemapCtrl
+             * @description
+             * Send whole plate, including associated wells, to the batch mechanissm for patching to save.
+             * Sets the scope flaag plateSaved for confirmation in user interface.
+             *
+             */
             $scope.patchWholePlate = function(){
             	//$scope.plates has all the plates
             	//find the one we want as specified by editingPlateId
@@ -329,7 +411,17 @@ angular.module('chembiohubAssayApp')
 
             }
 
-            /* pagination function */
+            
+            /**
+             * @ngdoc method
+             * @name chembiohubAssayApp.controller:PlatemapCtrl#$scope.pageChanged
+             * @methodOf chembiohubAssayApp.controller:PlatemapCtrl
+             * @description
+             * Pagination function for the plate list
+             * Sets the scope flaag plateSaved for confirmation in user interface.
+             * @param {integer} newPage the page defining the subset of results to show (based on items per page)
+             *
+             */
             $scope.pageChanged = function(newPage) {
                 $scope.plateSaved = false;
                 var newParams = angular.copy($stateParams);

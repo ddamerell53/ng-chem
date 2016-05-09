@@ -4,7 +4,11 @@
 </div>
 </h1>
 <div><h2 id="description">Description</h2>
-<div class="description"><div class="chembiohubassayapp-directive-page chembiohubassayapp-directive-handsoncompoundtablev2-page"><h3 id="description_handsoncompoundtablev2">HandsOnCompoundTableV2</h3>
+<div class="description"><div class="chembiohubassayapp-directive-page chembiohubassayapp-directive-handsoncompoundtablev2-page"><h3 id="description_handsoncompoundtablev2">handsoncompoundtablev2</h3>
+<p>An implementation of handsontable, a javascript table library which adds support for column sorting, header events, 
+drag-to-fill, cell events and more. We have implemented this to providde custom functionality which would not have played well 
+with the angular implementation of handsontable (ng-handsontable) and also to get around existing bugs within handsontable.
+A number of methods have been implemented to override native handsontable functionality. These are noted in these docs.</p>
 </div></div>
 <h2 id="usage">Usage</h2>
 <div class="usage">as element:<pre class="prettyprint linenums">&lt;handsoncompoundtablev2
@@ -28,4 +32,62 @@
 </div></td></tr><tr><td>messages</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="chembiohubassayapp-directive-page chembiohubassayapp-directive-handsoncompoundtablev2-page"><p>The messages object which allows setting of helper messages on each column.</p>
 </div></td></tr><tr><td>plugins</td><td><a href="" class="label type-hint type-hint-array">array</a></td><td><div class="chembiohubassayapp-directive-page chembiohubassayapp-directive-handsoncompoundtablev2-page"><p>Array containing any plugins (as objects) which need to be passed to handsontable to render cells in a particular way.</p>
 </div></td></tr></tbody></table></div>
+<div class="member method"><h2 id="methods">Methods</h2>
+<ul class="methods"><li><h3 id="methods_addbuttonmenuevent">addButtonMenuEvent(button, col, TH)</h3>
+<div class="addbuttonmenuevent"><div class="chembiohubassayapp-directive-page chembiohubassayapp-directive-handsoncompoundtablev2-addbuttonmenuevent-page"><p>AAdds an event listener to a supplied button which is then appended to a supplied column. 
+The event listener triggers a search event and colour change for the column header to highlight the selection.</p>
+</div><h5 id="methods_addbuttonmenuevent_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>button</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="chembiohubassayapp-directive-page chembiohubassayapp-directive-handsoncompoundtablev2-addbuttonmenuevent-page"><p>DOM elemnt to add an event listener to</p>
+</div></td></tr><tr><td>col</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="chembiohubassayapp-directive-page chembiohubassayapp-directive-handsoncompoundtablev2-addbuttonmenuevent-page"><p>The column object being acted on.</p>
+</div></td></tr><tr><td>TH</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="chembiohubassayapp-directive-page chembiohubassayapp-directive-handsoncompoundtablev2-addbuttonmenuevent-page"><p>Table header DOM element where button will be inserted</p>
+</div></td></tr></tbody></table></div>
+</li>
+<li><h3 id="methods_buildbutton">buildButton(col)</h3>
+<div class="buildbutton"><div class="chembiohubassayapp-directive-page chembiohubassayapp-directive-handsoncompoundtablev2-buildbutton-page"><p>Constructs a DOM element to use as a filter launcher within handsontable.</p>
+</div><h5 id="methods_buildbutton_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>col</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="chembiohubassayapp-directive-page chembiohubassayapp-directive-handsoncompoundtablev2-buildbutton-page"><p>The column object being acted on.</p>
+</div></td></tr></tbody></table><h5 id="methods_buildbutton_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="chembiohubassayapp-directive-page chembiohubassayapp-directive-handsoncompoundtablev2-buildbutton-page"><p>button  DOM element (button) containing the correct label and CSS class names</p>
+</div></td></tr></table></div>
+</li>
+<li><h3 id="methods_buildinfospans">buildInfoSpans(col)</h3>
+<div class="buildinfospans"><div class="chembiohubassayapp-directive-page chembiohubassayapp-directive-handsoncompoundtablev2-buildinfospans-page"><p>Constructs a DOM element containing warnings or success messages for mapped columns within handsontable.</p>
+</div><h5 id="methods_buildinfospans_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>col</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="chembiohubassayapp-directive-page chembiohubassayapp-directive-handsoncompoundtablev2-buildinfospans-page"><p>The column object being acted on.</p>
+</div></td></tr></tbody></table><h5 id="methods_buildinfospans_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="chembiohubassayapp-directive-page chembiohubassayapp-directive-handsoncompoundtablev2-buildinfospans-page"><p>mappingOptions DOM element (span) containing warnings or success messages for mapped columns.</p>
+</div></td></tr></table></div>
+</li>
+<li><h3 id="methods_redraw">redraw()</h3>
+<div class="redraw"><div class="chembiohubassayapp-directive-page chembiohubassayapp-directive-handsoncompoundtablev2-redraw-page"><p>Starts the rendering process for handsontable and sets some of the handsontable override methods.</p>
+</div></div>
+</li>
+</ul>
+</div>
+<div class="member property"><h2 id="properties">Properties</h2>
+<ul class="properties"><li><h3 id="properties_hotobjafterchange">hotObj.afterChange</h3>
+<div class="hotobjafterchange"><div class="chembiohubassayapp-directive-page chembiohubassayapp-directive-handsoncompoundtablev2-hotobj-afterchange-page"><p>Hook into a handsontable method. 
+afterChange is a function that is called when there  has been a DOM or data change to the table.</p>
+</div></div>
+</li>
+<li><h3 id="properties_hotobjaftergetcolheader">hotObj.afterGetColHeader</h3>
+<div class="hotobjaftergetcolheader"><div class="chembiohubassayapp-directive-page chembiohubassayapp-directive-handsoncompoundtablev2-hotobj-aftergetcolheader-page"><p>Override of handsontable method. 
+afterGetColHeader is a function that is called when the html of the header has already been set 
+which allows DOM manipulation after the TH has been created to add all the extra info spans, buttons with listeners etc.
+there are lots of useful hooks provided by Handsontable 
+<a href="http://docs.handsontable.com/0.15.0-beta3/Hooks.html">http://docs.handsontable.com/0.15.0-beta3/Hooks.html</a> </p>
+</div></div>
+</li>
+<li><h3 id="properties_hotobjbeforeautofill">hotObj.beforeAutofill</h3>
+<div class="hotobjbeforeautofill"><div class="chembiohubassayapp-directive-page chembiohubassayapp-directive-handsoncompoundtablev2-hotobj-beforeautofill-page"><p>Hook into a handsontable method. 
+beforeAutofill is a function that is called when there  has been a cell drag event on the table. 
+It allows insertion or other preprocessing on the cells being altered by drag-to-fill
+Here we are checking that the table is in edit mode or archive mode, then:</p>
+<ol>
+<li>If in archive mode, altering the archive buttons to be unarchive/undo buttons or vice versa;</li>
+<li>Send bacck to handsontable to perform any other logic for this listener hook.</li>
+</ol>
+</div></div>
+</li>
+<li><h3 id="properties_hotobj">hotobj</h3>
+<div class="hotobj"><div class="chembiohubassayapp-directive-page chembiohubassayapp-directive-handsoncompoundtablev2-hotobj-page"><p>Local configuration object for handsontable. This also contains overridden methods for handsontable<br>for custom event handler behaviour for example.</p>
+</div></div>
+</li>
+</ul>
+</div>
 </div>

@@ -2,10 +2,11 @@
 
 /**
  * @ngdoc service
- * @name chembiohubAssayApp.chemFileValidation
+ * @name chembiohubAssayApp.service:chemFileValidation
  * @description
  * # chemFileValidation
- * Factory in the chembiohubAssayApp.
+ * Not currently used
+ * @deprecated
  */
 angular.module('chembiohubAssayApp')
   .factory('chemFileValidation', function () {

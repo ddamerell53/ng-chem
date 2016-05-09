@@ -5,38 +5,81 @@
  * @name chembiohubAssayApp.MessageFactory
  * @description
  * # MessageFactory
- * Factory in the chembiohubAssayApp.
+ * Factory class providing simple access to system messages. Each message is stored with a unique key inside a JSON object 
+ * so that it can be referenced and reused in the front end and also by the angular-info-box library. 
+ * Messages are stored in sections appropriate for their usage.
+ * @returns {object} MessageFactory the factory object with access to the methods.
  */
 angular.module('chembiohubAssayApp')
   .factory('MessageFactory', function (){
-    // Service logic
-    // ...
 
     var MessageFactory = {}
 
+    /**
+     * @ngdoc method
+     * @name chembiohubAssayApp.MessageFactory#MessageFactory.getMessage
+     * @methodOf chembiohubAssayApp.MessageFactory
+     * @description
+     * Get the message from the internal messages. if it's there return it, else return an empty string to avoid null pointers.
+     * @param {string} lookup_str  The key of the message to be retrieved.
+     *
+     */
     MessageFactory.getMessage = function(lookup_str) {
-      //get the message from the internal messages
-      //if it's there return it
-      //else return an empty string so that the i is not displayed if there is no message
+
       if(messages[lookup_str]){
         return messages[lookup_str];
         //we will elaborate on this to pluralize, add specified numbers etc - get this simple lookup working first
       }
       else {
-        //return "Message could not be found, please check config"
         return "";
       }
 
     }
+
+    /**
+     * @ngdoc method
+     * @name chembiohubAssayApp.MessageFactory#MessageFactory.getMessages
+     * @methodOf chembiohubAssayApp.MessageFactory
+     * @description
+     * Get the message object containing all messages. Used to pass through to another library or method which may be unable to directly access the factory.
+     *
+     */
     MessageFactory.getMessages = function(){
         return messages;
     }
+
+    /**
+     * @ngdoc method
+     * @name chembiohubAssayApp.MessageFactory#MessageFactory.getLegends
+     * @methodOf chembiohubAssayApp.MessageFactory
+     * @description
+     * Get the legends object containing all legends. Used to pass through to another library or method which may be unable to directly access the factory.
+     *
+     */
     MessageFactory.getLegends = function() {
         return legends;
     }
+
+    /**
+     * @ngdoc method
+     * @name chembiohubAssayApp.MessageFactory#MessageFactory.getStatuses
+     * @methodOf chembiohubAssayApp.MessageFactory
+     * @description
+     * Get the statuses object containing all statuses. Used to pass through to another library or method which may be unable to directly access the factory.
+     *
+     */
     MessageFactory.getStatuses = function() {
         return statuses;
     }
+
+    /**
+     * @ngdoc method
+     * @name chembiohubAssayApp.MessageFactory#MessageFactory.getUploadActions
+     * @methodOf chembiohubAssayApp.MessageFactory
+     * @description
+     * Get the upload_actions object containing all upload_actions strings. Used to pass through to another library or method which may be unable to directly access the factory.
+     *
+     */
     MessageFactory.getUploadActions = function() {
         return upload_actions;
     }
@@ -44,6 +87,14 @@ angular.module('chembiohubAssayApp')
     //we can maybe use this factory in the future for administering / editing messages?
     //move the message text to a backend service?
 
+    /**
+     * @ngdoc property
+     * @name chembiohubAssayApp.MessageFactory#messages
+     * @propertyOf chembiohubAssayApp.MessageFactory
+     * @description
+     * Object which holds key value pairs of system messages.
+     *
+     */
     var messages = {
         //"home": {
             wizard_intro_text: "To upload multiple compounds you will need a list of SMILES; an InChI key or list of InChI keys; or either a SD, ChemDraw or Excel file.",
@@ -120,6 +171,14 @@ angular.module('chembiohubAssayApp')
 
     }
 
+    /**
+     * @ngdoc property
+     * @name chembiohubAssayApp.MessageFactory#statuses
+     * @propertyOf chembiohubAssayApp.MessageFactory
+     * @description
+     * Object which holds key value pairs of system statuses.
+     *
+     */
     var statuses = {
         status_1: {
             name: "New",
@@ -147,6 +206,14 @@ angular.module('chembiohubAssayApp')
         },
     }
 
+    /**
+     * @ngdoc property
+     * @name chembiohubAssayApp.MessageFactory#upload_actions
+     * @propertyOf chembiohubAssayApp.MessageFactory
+     * @description
+     * Object which holds key value pairs of system upload action messages.
+     *
+     */
     var upload_actions = {
         action_1 : {
             name: "New Batch",
@@ -158,6 +225,14 @@ angular.module('chembiohubAssayApp')
         }
     }
 
+    /**
+     * @ngdoc property
+     * @name chembiohubAssayApp.MessageFactory#legends
+     * @propertyOf chembiohubAssayApp.MessageFactory
+     * @description
+     * Object which holds key value pairs of system legends (for documenation images and explanations).
+     *
+     */
     var legends = {
         legend_uox_id: {
             name: "UOx ID",

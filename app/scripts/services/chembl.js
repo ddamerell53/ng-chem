@@ -3,6 +3,15 @@
 var app = angular.module('chembiohubAssayApp');
 
 /** Factories for querying APIs **/
+/**
+ * @ngdoc service
+ * @name chembiohubAssayApp.service:ChEMBLFactory
+ * @description
+ * # ChEMBLFactory
+ * Not currently used
+ * @deprecated
+ * When a well contains data, it changes colour (to green). Currently selected well has a red border.
+ */
 app.factory('ChEMBLFactory',[ '$http', function ($http) {
 	
 	//efine your web service location here.
