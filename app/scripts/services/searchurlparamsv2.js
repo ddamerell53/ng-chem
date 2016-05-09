@@ -195,7 +195,8 @@ angular.module('chembiohubAssayApp')
          * @methodOf chembiohubAssayApp.SearchUrlParamsV2
          * @description
          * Concatenates search filter parameters, including appropriate subqueries, into the existing specified params object. 
-         * Also alters the skinConfig object to signal that a filter has been added, and broadcasts a {@link chembiohubAssayApp.SearchUrlParamsV2#properties_searchUrlParamsV2.generate_form searchParamsChanged} searchParamsChanged event.
+         * Also alters the skinConfig object to signal that a filter has been added (or removed), and broadcasts a {@link chembiohubAssayApp.directive:searchBreadcrumbs#$scope.$on searchParamsChanged} 
+         * searchParamsChanged event.
          * @param {object} params Object containing search parameters in JSON format.
          * @returns {object} params The altered params object.
          */
@@ -230,7 +231,9 @@ angular.module('chembiohubAssayApp')
          * @name chembiohubAssayApp.SearchUrlParamsV2#searchUrlParamsV2.generate_hide_params
          * @methodOf chembiohubAssayApp.SearchUrlParamsV2
          * @description
-         * Explanation here
+         * Concatenates hide column parameters into the existing specified params object. 
+         * Also alters the skinConfig object to signal that a hide column filter has been added (or removed), and broadcasts a {@link chembiohubAssayApp.directive:searchBreadcrumbs#$scope.$on searchParamsChanged} 
+         * searchParamsChanged event.
          * @param {object} params Object containing search parameters in JSON format.
          * @returns {object} params The altered params object.
          */
@@ -254,7 +257,9 @@ angular.module('chembiohubAssayApp')
          * @name chembiohubAssayApp.SearchUrlParamsV2#searchUrlParamsV2.generate_sort_params
          * @methodOf chembiohubAssayApp.SearchUrlParamsV2
          * @description
-         * Explanation here
+         * Concatenates sort column parameters into the existing specified params object. 
+         * Also alters the skinConfig object to signal that a hide column filter has been added (or removed), and broadcasts a {@link chembiohubAssayApp.directive:searchBreadcrumbs#$scope.$on searchParamsChanged} 
+         * searchParamsChanged event.
          * @param {object} params Object containing search parameters in JSON format.
          * @returns {object} params The altered params object.
          */
@@ -281,8 +286,10 @@ angular.module('chembiohubAssayApp')
          * @name chembiohubAssayApp.SearchUrlParamsV2#searchUrlParamsV2.get_textsearch_params
          * @methodOf chembiohubAssayApp.SearchUrlParamsV2
          * @description
-         * Explanation here
-         * @param {object} params The top-level global cbh controller object
+         * perform a base64 encoding on a string to use in text search and add back into the stateParams object
+         * @param {object} stateParams Search parameters from the current $state.
+         * @param {string} textsearch String to use as a text search parameter
+         * @returns {object} stateParams The altered stateParams object
          */
         searchUrlParamsV2.get_textsearch_params = function(stateParams, textsearch) {
             //Adding a function here so everything is in one place that affects the search params
@@ -295,8 +302,10 @@ angular.module('chembiohubAssayApp')
          * @name chembiohubAssayApp.SearchUrlParamsV2#searchUrlParamsV2.get_project_params
          * @methodOf chembiohubAssayApp.SearchUrlParamsV2
          * @description
-         * Explanation here
-         * @param {object} params The top-level global cbh controller object
+         * For the supplied currently selected projects object, add these into the state Parameters
+         * @param {object} stateParams Search parameters from the current $state.
+         * @param {string} selected_projects Collection of currently selected project objects.
+         * @returns {object} stateParams The altered stateParams object
          */
         searchUrlParamsV2.get_project_params = function(stateParams, selected_projects) {
             var pids = selected_projects.map(function(p) {
@@ -306,16 +315,16 @@ angular.module('chembiohubAssayApp')
             return stateParams
         }
 
-        /* For saved search, we are limiting the set of returned items to provide a snapshot 
-           of that search at the time specified.
-           To do this, we need to get the result returned by the search with the highest batch ID */
         /**
          * @ngdoc method
          * @name chembiohubAssayApp.SearchUrlParamsV2#searchUrlParamsV2.generate_capped_saved_search
          * @methodOf chembiohubAssayApp.SearchUrlParamsV2
          * @description
-         * Explanation here
+         * For saved search, we are limiting the set of returned items to provide a snapshot 
+         * of that search at the time specified.
+         * To do this, we need to get the result returned by the search with the highest batch ID
          * @param {object} params The top-level global cbh controller object
+         * @param {promise} promise The eventual result of a web service call to {@link chembiohubAssayApp.service:CBHCompoundBatch# queryv2}.
          */
         searchUrlParamsV2.generate_capped_saved_search = function(params, selected_projects) {
             //get the params as JSON
