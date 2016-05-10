@@ -5,6 +5,43 @@
 </h1>
 <div><h2 id="description">Description</h2>
 <div class="description"><div class="chembiohubassayapp-renderers-page"><h3 id="description_renderers">renderers</h3>
-<p>Factory in the chembiohubAssayApp.</p>
+<p>This factory provides a variety of methods for correctly rendering cells and table row headers for our handsontable implementation.
+Each is referenced by key within the renderers variable. Includes different link renderers for different scenarios (image/file/standard) 
+as well as implementations for triggering modals, safe HTML rendering, bullet lists, field totals etc.</p>
 </div></div>
+<h2 id="usage">Usage</h2>
+<div class="usage"><pre class="prettyprint linenums">renderers($timeout, $compile, $state, $rootScope, sfPath, sfSelect);</pre>
+<h4 id="usage_parameters">Parameters</h4><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>$timeout</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="chembiohubassayapp-renderers-page"><p>Angular library - timeout handler</p>
+</div></td></tr><tr><td>$compile</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="chembiohubassayapp-renderers-page"><p>Angular library - HTML re-rendering compiler</p>
+</div></td></tr><tr><td>$state</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="chembiohubassayapp-renderers-page"><p>Access to the current page state (url path, parameters)</p>
+</div></td></tr><tr><td>$rootScope</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="chembiohubassayapp-renderers-page"><p>The root scope</p>
+</div></td></tr><tr><td>sfPath</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="chembiohubassayapp-renderers-page"><p>splits datalocation - json path split into words</p>
+</div></td></tr><tr><td>sfSelect</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="chembiohubassayapp-renderers-page"><p>sfSelect selects a json path from the current object</p>
+</div></td></tr></tbody></table><h4 id="usage_returns">Returns</h4><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="chembiohubassayapp-renderers-page"><p>data object containing all available renderer objects.</p>
+</div></td></tr></table></div>
+<div class="member method"><h2 id="methods">Methods</h2>
+<ul class="methods"><li><h3 id="methods_renderfilter">renderFilter(warningsFilter, fieldKey, title)</h3>
+<div class="renderfilter"><div class="chembiohubassayapp-renderers-renderfilter-page"><p>Generate a HTML string which will be used as the button in the tcolumn header to switch on the filter window section.</p>
+</div><h5 id="methods_renderfilter_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>warningsFilter</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="chembiohubassayapp-renderers-renderfilter-page"><p>triggers a class change for text to show up correctly.</p>
+</div></td></tr><tr><td>fieldKey</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="chembiohubassayapp-renderers-renderfilter-page"><p>key to use to locate the correct column header</p>
+</div></td></tr><tr><td>title</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="chembiohubassayapp-renderers-renderfilter-page"><p>The text to use for the button</p>
+</div></td></tr></tbody></table><h5 id="methods_renderfilter_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="chembiohubassayapp-renderers-renderfilter-page"><p>string The HTML to insert into the column header.</p>
+</div></td></tr></table></div>
+</li>
+<li><h3 id="methods_strip_tags">strip_tags(input, allowed)</h3>
+<div class="strip_tags"><div class="chembiohubassayapp-renderers-strip-tags-page"><p>Remove HTML tags and comments from supplied text</p>
+</div><h5 id="methods_strip_tags_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>input</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="chembiohubassayapp-renderers-strip-tags-page"><p>the string to have tagged stripped</p>
+</div></td></tr><tr><td>allowed</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="chembiohubassayapp-renderers-strip-tags-page"><p>tags which can be safely included in input</p>
+</div></td></tr></tbody></table><h5 id="methods_strip_tags_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="chembiohubassayapp-renderers-strip-tags-page"><p>input the modified input string</p>
+</div></td></tr></table></div>
+</li>
+</ul>
+</div>
+<div class="member property"><h2 id="properties">Properties</h2>
+<ul class="properties"><li><h3 id="properties_data">data</h3>
+<div class="data"><div class="chembiohubassayapp-renderers-data-page"><p>Returned object which contains all of the individual renderer implementations</p>
+</div></div>
+</li>
+</ul>
+</div>
 </div>

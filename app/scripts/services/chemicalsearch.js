@@ -5,7 +5,7 @@
  * @name chembiohubAssayApp.service:chemicalSearch
  * @description
  * # chemicalSearch
- * Factory in the chembiohubAssayApp.Provides a service convenience class for the cbh_chemical_search webservice.
+ * Factory in the chembiohubAssayApp.Provides a service convenience class for the ({@link https://github.com/thesgc/chembiohub_ws/wiki/Chemical-Search-API cbh_chemical_search}) webservice.
  * @param {object} $resource angular library for constructing webservice calls from URLs.
  * @param {object} urlConfig app config object containing aliases for all available web service endpoints.
  */

@@ -406,7 +406,7 @@ NG_DOCS={
       "type": "service",
       "moduleName": "chembiohubAssayApp",
       "shortDescription": "FlowFileFactory",
-      "keywords": "$resource access accessing alias aliases angular api app assayreg attachment attachments batch calls cbhattachments cbhbaseattachment cbhchemflowfile cbhflowfile cbhsaveattachment chembiohubassayapp code config constructing convenient currently data deprecated endpoints example factory file file-related files flowfile flowfilefactory identifier implementation individual keyed left library object objects option optional parameter parameterised property pull records resource service single unique upload urlconfig urls web webservice"
+      "keywords": "$resource access accessing alias aliases angular api app assayreg attachment attachments batch calls cbh_flowfiles cbhattachments cbhbaseattachment cbhchemflowfile cbhflowfile cbhsaveattachment chembiohubassayapp code config constructing convenient currently data deprecated endpoints example factory file file-related files flowfile flowfilefactory https identifier implementation individual keyed left library object objects option optional parameter parameterised post-flowfile-when-uploading property pull records resource service single unique upload urlconfig urls web webservice"
     },
     {
       "section": "api",
@@ -460,7 +460,7 @@ NG_DOCS={
       "type": "service",
       "moduleName": "chembiohubAssayApp",
       "shortDescription": "ProjectFactory",
-      "keywords": "$resource access alias aliases angular api app calls chembiohubassayapp config constructing convenient custom endpoint endpoints factory library list object parameterised patch project projectfactory providing service urlconfig urls web webservice"
+      "keywords": "$resource access alias aliases angular api app calls cbh_projects chembiohubassayapp config constructing convenient custom endpoint endpoints factory https library list object parameterised patch project projectfactory providing service urlconfig urls web webservice"
     },
     {
       "section": "api",
@@ -478,7 +478,7 @@ NG_DOCS={
       "type": "service",
       "moduleName": "chembiohubAssayApp",
       "shortDescription": "Projectpermissions",
-      "keywords": "api chembiohubassayapp factory projectpermissions service"
+      "keywords": "$resource access alias aliases angular api app calls cbh_permissions chembiohubassayapp config constructing convenient custom endpoint endpoints factory https library list object parameterised patch project projectpermissions providing service type urlconfig urls web webservice"
     },
     {
       "section": "api",
@@ -487,16 +487,7 @@ NG_DOCS={
       "type": "service",
       "moduleName": "chembiohubAssayApp",
       "shortDescription": "ProjectType",
-      "keywords": "api chembiohubassayapp factory projecttype service"
-    },
-    {
-      "section": "api",
-      "id": "chembiohubAssayApp.renderers",
-      "shortName": "chembiohubAssayApp.renderers",
-      "type": "service",
-      "moduleName": "chembiohubAssayApp",
-      "shortDescription": "renderers",
-      "keywords": "api chembiohubassayapp factory renderers service"
+      "keywords": "$resource access alias aliases angular api app calls cbh_project_types chembiohubassayapp config constructing convenient custom endpoint endpoints factory https library list object parameterised patch project projecttype providing service type urlconfig urls web webservice"
     },
     {
       "section": "api",
@@ -505,7 +496,7 @@ NG_DOCS={
       "type": "service",
       "moduleName": "chembiohubAssayApp",
       "shortDescription": "SavedSearchFactory",
-      "keywords": "api chembiohubassayapp factory savedsearchfactory service"
+      "keywords": "$resource access aliases angular api app calls cbh_saved_search chembiohubassayapp config constructing convenient endpoint endpoints factory https library list object parameterised project providing saved savedsearchfactory search service urlconfig urls web webservice"
     },
     {
       "section": "api",
@@ -550,7 +541,7 @@ NG_DOCS={
       "type": "service",
       "moduleName": "chembiohubAssayApp",
       "shortDescription": "chemicalSearch",
-      "keywords": "$resource aliases angular api app calls cbh_chemical_search chembiohubassayapp chemicalsearch class config constructing convenience endpoints factory library object service urlconfig urls web webservice"
+      "keywords": "$resource aliases angular api app calls cbh_chemical_search chembiohubassayapp chemicalsearch class config constructing convenience endpoints factory https library object service urlconfig urls web webservice"
     },
     {
       "section": "api",
@@ -560,6 +551,15 @@ NG_DOCS={
       "moduleName": "chembiohubAssayApp",
       "shortDescription": "DraftFactory",
       "keywords": "api chembiohubassayapp currently draft draftfactory edit fields history intended provide rudimentary service textarea"
+    },
+    {
+      "section": "api",
+      "id": "chembiohubAssayApp.service:renderers",
+      "shortName": "renderers",
+      "type": "service",
+      "moduleName": "chembiohubAssayApp",
+      "shortDescription": "renderers",
+      "keywords": "$compile $rootscope $state $timeout access addition adds allowed angular api appropriate archive archivedrenderer base64 belongs boolean builds bullet bulletrenderer button calls catch-all cell cellproperties cells centerednumericrenderer change check checked chembiohubassayapp chemical class clone clonerenderer col collection column comments compiler compounds config content convenience correct correctly coverrenderer created current custom customfieldrenderer data datalocation default defaultcustomfieldrenderer desc details displayed dom edit editing element empty emptycustomfieldrenderer event examined factory feedback field fieldkey files fileuploadrenderer filter flag formatted function generate getcolumnlabel getrenderers glyphs handler handontable handsontable header headers hold holder hooks html human image implementation implementations include included includes indicate indicator indicators individual inforenderer input inputs insert instance isnewcompounds json key label launch library link listeners lists locate located mapping method methods modal modallinkrenderer modals mode modified number object objects overrides parameters passthrough path popup project projectrenderer prop property re-rendering readable readonly record referenced remove renderer renderers renderfilter renderfilterlink rendering representation represents returned root row safe safehtmlrenderer safely scenarios sco scope selects service sfpath sfselect split splits string strip_tags stripped supplementary supplied switch table tagged tags tcolumn td temporary text timeout title totals trigger triggering triggers turn type unchecked uploaded variable variety warningsfilter window"
     },
     {
       "section": "api",
@@ -577,7 +577,7 @@ NG_DOCS={
       "type": "service",
       "moduleName": "chembiohubAssayApp",
       "shortDescription": "UserFactory",
-      "keywords": "$resource access account aliases angular api app calls chembiohubassayapp config constructing convenient endpoint endpoints factory library list object parameterised project providing service urlconfig urls user userfactory web webservice"
+      "keywords": "$resource access account aliases angular api app calls chembiohubassayapp config constructing convenient endpoint endpoints factory https library list object parameterised project providing service urlconfig urls user userfactory users web webservice"
     },
     {
       "section": "api",

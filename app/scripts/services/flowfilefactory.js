@@ -5,7 +5,7 @@
  * @name chembiohubAssayApp.FlowFileFactory
  * @description
  * # FlowFileFactory
- * Factory which provides convenient, parameterised access to file-related web service endpoints.
+ * Factory which provides convenient, parameterised access to file-related web service endpoints ({@link https://github.com/thesgc/chembiohub_ws/wiki/Flow-File-and-Download-API#post-flowfile-when-uploading cbh_flowfiles}).
  * @param {object} $resource angular library for constructing webservice calls from URLs.
  * @param {object} urlConfig app config object containing aliases for all available web service endpoints.
  * @returns {object} object Object containing keyed $resource objects
