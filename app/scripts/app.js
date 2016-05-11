@@ -13,14 +13,7 @@ window.searchResolve = {
         }],
       }
       
-/**
- * @ngdoc overview
- * @name chembiohubAssayApp
- * @description
- * # chembiohubAssayApp
- *
- * Main module of the application.
- */
+
 angular.module('chembiohubAssayApp')
 
 //Giving single molecule view a state to not break the back button and help with new API

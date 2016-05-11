@@ -5,12 +5,12 @@ NG_DOCS={
   "pages": [
     {
       "section": "api",
-      "id": "chembiohubAssayApp",
-      "shortName": "chembiohubAssayApp",
+      "id": "index",
+      "shortName": "index",
       "type": "overview",
-      "moduleName": "chembiohubAssayApp",
-      "shortDescription": "chembiohubAssayApp",
-      "keywords": "api application chembiohubassayapp main module overview"
+      "moduleName": "index",
+      "shortDescription": "Welcome to the ShowYourWorking angular API docs",
+      "keywords": "add-multiple add-project add-single adding addition admin angular api app application attach attributes backend base batch batches box build cells change changing chemical chemistry classes clone column compound config configuration contact create custom data data-mapping decision default definitions described description detailed details directive displayed django docs documentation edit email enable errors examine exception existing export field fields file files filter filters find finding flow flowfile format front full get-chemical-search get-list-of-temp-batches get-project-permissions get-project-types get-projects get-users github githubusercontent headers hopefully href http https image import importing input interface inventory involved io json l951 list loaded main manageable manager mapping meant message methods modal mode multiple number options order overview parts patch-compound-or-inventory-batch permissions place png post-flowfile-when-uploading post-project post-update-multiple-batch-custom-fields post-update-temp-batches post-validate-files prepopulate problem proj-permissions project project-list project-selector projects provide py record records renderered response saved schema screens script search search-results selector service set setupdatabase_and_index shortcut showyourworking single sketcher skinningconfig smiles sort system takes temp template temporary type types update upload uploaded uploading users validate validation views work works"
     },
     {
       "section": "api",
@@ -594,7 +594,7 @@ NG_DOCS={
   },
   "html5Mode": false,
   "editExample": true,
-  "startPage": "/api",
+  "startPage": "/api/chembiohubAssayApp",
   "scripts": [
     "angular.js",
     "angular-animate.js"
