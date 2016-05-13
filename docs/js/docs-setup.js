@@ -14,30 +14,12 @@ NG_DOCS={
     },
     {
       "section": "api",
-      "id": "chembiohubAssayApp.addData",
-      "shortName": "chembiohubAssayApp.addData",
-      "type": "service",
-      "moduleName": "chembiohubAssayApp",
-      "shortDescription": "addData",
-      "keywords": "adddata api chembiohubassayapp factory service"
-    },
-    {
-      "section": "api",
       "id": "chembiohubAssayApp.CBHCompoundBatch",
       "shortName": "chembiohubAssayApp.CBHCompoundBatch",
       "type": "service",
       "moduleName": "chembiohubAssayApp",
       "shortDescription": "CBHCompoundBatch",
       "keywords": "adding allowed amount api apis applied appropriate archive archiving batch batches belong blank call calls cbh_compound_batches cbhcompoundbatch chembiohubassayapp chemical config confirming convenience createmultibatch ctab currentdataset currently daata data dataset default defaults delete delete_index diverts drawn editing elasticsearch element endpoint existing fetch fetchheaders file filter filtering filters format function getaddcompoundsresults getsinglemol input interface item items limit list lists markasarchived matching mb_id method modified moleculaar molecule multiple number object offest offset paginate paging parameters parammeters performing post_data preview project projectkey promise provide query queryv2 records reindex reindexing reindexmodifiedcompound remove removes request retrieve return save saved savemultibatchmolecules savesinglecompound saving search service set sketch smilesdata sorting sorts specifies system trigger types uploadbatch validate validatebatch validated validatefiles validatelist validation values varying web webservice"
-    },
-    {
-      "section": "api",
-      "id": "chembiohubAssayApp.controller:AboutCtrl",
-      "shortName": "AboutCtrl",
-      "type": "controller",
-      "moduleName": "chembiohubAssayApp",
-      "shortDescription": "AboutCtrl",
-      "keywords": "aboutctrl api chembiohubassayapp controller"
     },
     {
       "section": "api",
@@ -50,30 +32,12 @@ NG_DOCS={
     },
     {
       "section": "api",
-      "id": "chembiohubAssayApp.controller:AddDataCtrl",
-      "shortName": "AddDataCtrl",
-      "type": "controller",
-      "moduleName": "chembiohubAssayApp",
-      "shortDescription": "AddDataCtrl",
-      "keywords": "adddatactrl api chembiohubassayapp controller"
-    },
-    {
-      "section": "api",
       "id": "chembiohubAssayApp.controller:AddSingleCompoundCtrl",
       "shortName": "AddSingleCompoundCtrl",
       "type": "controller",
       "moduleName": "chembiohubAssayApp",
       "shortDescription": "AddsinglecompoundCtrl",
       "keywords": "$on $scope accomplished add addition addsinglecompoundctrl addsupplementaryfield allowing angular api appropriate attachment attachments autocomplete based batch batches better boolean broadcast button buttons call callback check checked chembiohubassayapp chemdoodle chemical cloned code command compound compounds condition consistency controller create createmultibatch creates currently custom data defined directive display doen drawing drawn dropdown editing exceeds extra fails false field fields file files flowfile fo form form_key forms function functionality identifier identity implemented injected inside limit limits list method mirroring molecule multiple myform object onsubmit openedtaggingdropdown order pathways position post power probaly pulls queue record redirect registration removal remove removed removefile removeid removesupplemetaryfield returned revert save saved savetemporarycompounddata saving schema schemaform sd search sending sends setmolecule single size sizecheck sketcher standard submission success supplementary tag temporary trigger type ui unique update upload uploaded upoaded url user valancies validate validatedrawn validateotherformdata validating validation version widget"
-    },
-    {
-      "section": "api",
-      "id": "chembiohubAssayApp.controller:BatchesCtrl",
-      "shortName": "BatchesCtrl",
-      "type": "controller",
-      "moduleName": "chembiohubAssayApp",
-      "shortDescription": "BatchesCtrl",
-      "keywords": "api batchesctrl chembiohubassayapp controller currently"
     },
     {
       "section": "api",
@@ -101,24 +65,6 @@ NG_DOCS={
       "moduleName": "chembiohubAssayApp",
       "shortDescription": "Compoundbatchv2Ctrl",
       "keywords": "$on $scope accounted actions add addhide adding addition addsort allowing angular answer api app application applying archive assembled attachment attachments backing backup bar based batch blank blankform boolean broadcast broadcasts built call callback called calls carries cascade cbh cbhcompoundbatch change changed changenumberperpage changes changesearchparams changeview check checked checks chembiohubassayapp chemical chemicalfilterapplied chemicalsearch choice choices cleanupfilters clears client client-side clone cloneanitem cloned col column columns columnselection command completion compound compoundbatchv2ctrl condition consequently controller convenience correct correctly create creates current currently data datasets default defaults deselectallprojects direction display displayed displaying dosinglecompoundvalidation edit editmodeunreachable element empty encoded enter error event events examines exceeds existing fails false field fields file files filter filters filtersupdated flag flowfile fo forces form form_key format forms friendly function functionality gallery generate getresultspage handles handsontable hidden hide hit hits html identifier identity imagecallback images implemented indicates initialise initialises initiates injected intended item limit limits list listener listens load locate loggeed main method mode mol molecule move multiple myform newly newmol newpage newparams notifies notify number object objects openedsearchdropdown openedtaggingdropdown original pagechanged pagechanged2 pagenumber pagination paging parameter parameters params patch patched patchrecord perform performs populate populated position post posting pre-populated prevous prject proj project projects properly question queue re-applies re-patch re-render record records refelct refresh removal remove removeallhides removed removefile removeform removehide removes removesort removestructuresearch representing requests reset resetcompoundlist resets resetsearch result retrieval return returned reverting save savechangestocompounddataincontroller saved savesinglecompound saving schema scope scratch scrolls search searches searchparamschanged searchurlparamsv2 searchvia selectallprojects selected selection selections selector send sends sendtosearch serialize service set sets setup setuppagenumbers setupparams side signals simply size sizecheck skinconfig sort sourceofchange start string structure success supplied switch switches switching tables tagging temporary toggleadddata toggleaddingoff toggled toggleeditmode toggleprojectfiltered trigger turn undo undochanges unique unreachable update updatelistview updates upload uploaded upoaded url user validation version view views viewtype web widget works"
-    },
-    {
-      "section": "api",
-      "id": "chembiohubAssayApp.controller:DataOverviewCtrl",
-      "shortName": "DataOverviewCtrl",
-      "type": "controller",
-      "moduleName": "chembiohubAssayApp",
-      "shortDescription": "DataOverviewCtrl",
-      "keywords": "api chembiohubassayapp controller currently dataoverviewctrl"
-    },
-    {
-      "section": "api",
-      "id": "chembiohubAssayApp.controller:EditDataCtrl",
-      "shortName": "EditDataCtrl",
-      "type": "controller",
-      "moduleName": "chembiohubAssayApp",
-      "shortDescription": "EditDataCtrl",
-      "keywords": "addition api app chembiohubassayapp control controller currently data editdatactrl editing equivalents functions viewing"
     },
     {
       "section": "api",
@@ -167,15 +113,6 @@ NG_DOCS={
     },
     {
       "section": "api",
-      "id": "chembiohubAssayApp.controller:SearchAssaysCtrl",
-      "shortName": "SearchAssaysCtrl",
-      "type": "controller",
-      "moduleName": "chembiohubAssayApp",
-      "shortDescription": "SearchAssaysCtrl",
-      "keywords": "api chembiohubassayapp controller searchassaysctrl"
-    },
-    {
-      "section": "api",
       "id": "chembiohubAssayApp.controller:SearchCtrl",
       "shortName": "SearchCtrl",
       "type": "controller",
@@ -203,33 +140,6 @@ NG_DOCS={
     },
     {
       "section": "api",
-      "id": "chembiohubAssayApp.controller:ViewDataCtrl",
-      "shortName": "ViewDataCtrl",
-      "type": "controller",
-      "moduleName": "chembiohubAssayApp",
-      "shortDescription": "ViewdataCtrl",
-      "keywords": "api chembiohubassayapp controller viewdatactrl"
-    },
-    {
-      "section": "api",
-      "id": "chembiohubAssayApp.customFieldConfig",
-      "shortName": "chembiohubAssayApp.customFieldConfig",
-      "type": "service",
-      "moduleName": "chembiohubAssayApp",
-      "shortDescription": "customFieldConfig",
-      "keywords": "api chembiohubassayapp customfieldconfig empty file service"
-    },
-    {
-      "section": "api",
-      "id": "chembiohubAssayApp.directive:appProgress",
-      "shortName": "appProgress",
-      "type": "directive",
-      "moduleName": "chembiohubAssayApp",
-      "shortDescription": "appProgress",
-      "keywords": "api appprogress chembiohubassayapp directive"
-    },
-    {
-      "section": "api",
       "id": "chembiohubAssayApp.directive:buttonInput",
       "shortName": "buttonInput",
       "type": "directive",
@@ -239,48 +149,12 @@ NG_DOCS={
     },
     {
       "section": "api",
-      "id": "chembiohubAssayApp.directive:chemdoodleWindow",
-      "shortName": "chemdoodleWindow",
-      "type": "directive",
-      "moduleName": "chembiohubAssayApp",
-      "shortDescription": "An angular directive to house ChemDoodle chemical sketcher and retain information from a rootScope variable.",
-      "keywords": "angular api chembiohubassayapp chemdoodle chemdoodlewindow chemical directive fetchdata house molecule retain rootscope sketcher sketchmolfile variable"
-    },
-    {
-      "section": "api",
       "id": "chembiohubAssayApp.directive:chemsvg",
       "shortName": "chemsvg",
       "type": "directive",
       "moduleName": "chembiohubAssayApp",
       "shortDescription": "chemsvg",
       "keywords": "api app baseurl chembiohubassayapp chemdraw chemical chemicasl chemsvg configuration correct datatype dimensions directive extra format generated image input parameters pixels properties provided renders representation scope size smarts smiles store string structure supplied svg work"
-    },
-    {
-      "section": "api",
-      "id": "chembiohubAssayApp.directive:compoundtableheader",
-      "shortName": "compoundtableheader",
-      "type": "directive",
-      "moduleName": "chembiohubAssayApp",
-      "shortDescription": "compoundTableHeader",
-      "keywords": "api chembiohubassayapp compoundtableheader directive"
-    },
-    {
-      "section": "api",
-      "id": "chembiohubAssayApp.directive:disableAnimation",
-      "shortName": "disableAnimation",
-      "type": "directive",
-      "moduleName": "chembiohubAssayApp",
-      "shortDescription": "disableAnimation",
-      "keywords": "api chembiohubassayapp directive disableanimation"
-    },
-    {
-      "section": "api",
-      "id": "chembiohubAssayApp.directive:dynamic",
-      "shortName": "dynamic",
-      "type": "directive",
-      "moduleName": "chembiohubAssayApp",
-      "shortDescription": "dynamic",
-      "keywords": "api chembiohubassayapp directive dynamic"
     },
     {
       "section": "api",
@@ -308,15 +182,6 @@ NG_DOCS={
       "moduleName": "chembiohubAssayApp",
       "shortDescription": "platemap",
       "keywords": "$on $scope add adding adds algorithm allow angular api appropriate autocomplete beccomes boolean border broadcast build builds call callback called cbh changes check chembiohubassayapp clearwell colour config configuration cuase currently daata data dimensions directive dosaveplate dropdown elements find fit form forms function functionality functions globals green grid help html individual initialiseplate iswellselected level list map method model object openedsearchdropdown parent pass-through passthrough patch phole plate plateform platemap plates platesaved populate populated pristine pulls ratios re-render ready red redraw remove render rendered required reset save saved saveplatefunction saves savewell schema schemaformholder scope selected sends separate showwellform todo top trigger update user wellformfe wellhasdata wells"
-    },
-    {
-      "section": "api",
-      "id": "chembiohubAssayApp.directive:processStep",
-      "shortName": "processStep",
-      "type": "directive",
-      "moduleName": "chembiohubAssayApp",
-      "shortDescription": "processStep",
-      "keywords": "api chembiohubassayapp directive processstep"
     },
     {
       "section": "api",
@@ -374,30 +239,12 @@ NG_DOCS={
     },
     {
       "section": "api",
-      "id": "chembiohubAssayApp.filter:removeSpaces",
-      "shortName": "removeSpaces",
-      "type": "filter",
-      "moduleName": "chembiohubAssayApp",
-      "shortDescription": "titleCase",
-      "keywords": "api chembiohubassayapp converts create currently display example fields filter inputted key order originally replaced spaces text titlecase unique user-created"
-    },
-    {
-      "section": "api",
       "id": "chembiohubAssayApp.filter:titlecase",
       "shortName": "titlecase",
       "type": "filter",
       "moduleName": "chembiohubAssayApp",
       "shortDescription": "titleCase",
       "keywords": "api articles case chembiohubassayapp converts filter ignoring joining sentence string supplied title titlecase"
-    },
-    {
-      "section": "api",
-      "id": "chembiohubAssayApp.filter:toTrusted",
-      "shortName": "toTrusted",
-      "type": "filter",
-      "moduleName": "chembiohubAssayApp",
-      "shortDescription": "toTrusted",
-      "keywords": "api chembiohubassayapp filter totrusted"
     },
     {
       "section": "api",
@@ -410,30 +257,12 @@ NG_DOCS={
     },
     {
       "section": "api",
-      "id": "chembiohubAssayApp.HTTPProject",
-      "shortName": "chembiohubAssayApp.HTTPProject",
-      "type": "service",
-      "moduleName": "chembiohubAssayApp",
-      "shortDescription": "HTTPProject",
-      "keywords": "api chembiohubassayapp currently http httpproject service"
-    },
-    {
-      "section": "api",
       "id": "chembiohubAssayApp.InvitationFactory",
       "shortName": "chembiohubAssayApp.InvitationFactory",
       "type": "service",
       "moduleName": "chembiohubAssayApp",
       "shortDescription": "FlowFileFactory",
       "keywords": "$resource access aliases angular api app calls chembiohubassayapp config constructing convenient currently endpoints factory flowfilefactory invitation invitationfactory invite keyed library object objects parameterised property service urlconfig urls web webservice"
-    },
-    {
-      "section": "api",
-      "id": "chembiohubAssayApp.LoginService",
-      "shortName": "chembiohubAssayApp.LoginService",
-      "type": "service",
-      "moduleName": "chembiohubAssayApp",
-      "shortDescription": "LoginService",
-      "keywords": "api app chembiohubassayapp config currently imported js loginservice service unused"
     },
     {
       "section": "api",
@@ -518,39 +347,12 @@ NG_DOCS={
     },
     {
       "section": "api",
-      "id": "chembiohubAssayApp.service:ChEMBLFactory",
-      "shortName": "ChEMBLFactory",
-      "type": "service",
-      "moduleName": "chembiohubAssayApp",
-      "shortDescription": "ChEMBLFactory",
-      "keywords": "api border changes chembiohubassayapp chemblfactory colour currently data green red selected service"
-    },
-    {
-      "section": "api",
-      "id": "chembiohubAssayApp.service:chemFileValidation",
-      "shortName": "chemFileValidation",
-      "type": "service",
-      "moduleName": "chembiohubAssayApp",
-      "shortDescription": "chemFileValidation",
-      "keywords": "api chembiohubassayapp chemfilevalidation currently service"
-    },
-    {
-      "section": "api",
       "id": "chembiohubAssayApp.service:chemicalSearch",
       "shortName": "chemicalSearch",
       "type": "service",
       "moduleName": "chembiohubAssayApp",
       "shortDescription": "chemicalSearch",
       "keywords": "$resource aliases angular api app calls cbh_chemical_search chembiohubassayapp chemicalsearch class config constructing convenience endpoints factory https library object service urlconfig urls web webservice"
-    },
-    {
-      "section": "api",
-      "id": "chembiohubAssayApp.service:DraftFactory",
-      "shortName": "DraftFactory",
-      "type": "service",
-      "moduleName": "chembiohubAssayApp",
-      "shortDescription": "DraftFactory",
-      "keywords": "api chembiohubassayapp currently draft draftfactory edit fields history intended provide rudimentary service textarea"
     },
     {
       "section": "api",
@@ -578,15 +380,6 @@ NG_DOCS={
       "moduleName": "chembiohubAssayApp",
       "shortDescription": "UserFactory",
       "keywords": "$resource access account aliases angular api app calls chembiohubassayapp config constructing convenient endpoint endpoints factory https library list object parameterised project providing service urlconfig urls user userfactory users web webservice"
-    },
-    {
-      "section": "api",
-      "id": "chembiohubAssayApp.ViewDataFactory",
-      "shortName": "chembiohubAssayApp.ViewDataFactory",
-      "type": "service",
-      "moduleName": "chembiohubAssayApp",
-      "shortDescription": "ViewDataFactory",
-      "keywords": "api assayreg chembiohubassayapp currently implementation service viewdatafactory"
     }
   ],
   "apis": {

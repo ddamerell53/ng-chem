@@ -202,24 +202,6 @@ $urlRouterProvider.when('', '/projects/list');
 
     })
 
-
-    .state('cbh.search_assays', {
-      url: '/search-assays?textsearch=&l0=&l1=&l2=&start=&end=&useruris=',
-      resolve: {
-        /*project_with_forms : ['AddDataFactory',function(AddDataFactory){
-          return AddDataFactory.pwf.get(function(data){
-            return data;
-          }).$promise;
-        }
-
-        ]*/
-      },
-      templateUrl: 'views/searchassays.html',
-      controller: 'SearchAssaysCtrl',
-      controllerAs: 'searchassay',
-
-
-    })
     .state('cbh.help', {
       //parent: 'Default',
       url: '/help',
@@ -400,88 +382,7 @@ $urlRouterProvider.when('', '/projects/list');
 
 
       })
-    .state('cbh.projects.project.assay', {
-      url: 'assay/',
-      controllerAs: 'assayctrl',
-      abstract:true,
-      resolve: {
-        project_with_forms : ['projectKey','AddDataFactory',function(projectKey, AddDataFactory){
-          return AddDataFactory.pwf.get({"project_key": projectKey }, function(data){
-            return data;
-          }).$promise;
-        }
-
-        ]
-      },
-      controller:  function($scope, $stateParams, $rootScope, AddDataFactory, project_with_forms, projectKey, CustomFieldConfig) {
-            var assayctrl = this;
-            assayctrl.dfc_lookup  = {};
-            assayctrl.proj = project_with_forms.objects[0];
-            $scope.cbh.appName = "AssayReg";
-
-            angular.forEach(assayctrl.proj.data_form_configs, function(dfc){
-              dfc.get_main_schema = function(){
-                return CustomFieldConfig.getSchema(dfc[dfc.last_level].project_data_fields);
-                
-              };
-              dfc.get_main_form = function(){
-                return CustomFieldConfig.getForm(dfc[dfc.last_level].project_data_fields);
-              }
-              assayctrl.dfc_lookup[dfc.resource_uri] = dfc;
-              if(dfc.last_level == "l0"){
-                assayctrl.l0_dfc = dfc;
-                assayctrl.l0_cfc = assayctrl.l0_dfc["l0"];
-                assayctrl.l0_schema = dfc.get_main_schema();
-                assayctrl.l0_form = dfc.get_main_form();
-              }
-            });
-            angular.forEach(assayctrl.proj.data_form_configs, function(dfc){
-              dfc.full_permitted_children = dfc.permitted_children.map(function(uri){
-                return assayctrl.dfc_lookup[uri];
-              })
-            });
-
-            
-        },
-      templateUrl: 'views/demo-add.html',
-
-    })
-
-
-    /* ASSAYREG IMPLEMENTATION */
-    .state('cbh.projects.project.assay.add_data', {
-      url: 'add_data/:dc?lev=&data_form_id=',
-      templateUrl: 'views/add-data.html',
-      controller: 'AddDataCtrl',
-      controllerAs: 'addctrl',
-    })
-
-    .state('cbh.projects.project.assay.edit_data', {
-      url: 'edit_data/:dc?lev=',
-      templateUrl: 'views/edit-data.html',
-      controller: 'EditDataCtrl',
-      controllerAs: 'editctrl',
-    })
-
-    .state('cbh.projects.project.assay.view_data', {
-      url: 'view_data/:dc',
-      templateUrl: 'views/view-data.html',
-      controller: 'ViewDataCtrl',
-      controllerAs: 'viewctrl',
-    })
-
-    .state('cbh.projects.project.assay.data_overview', {
-      url: 'data_overview/',
-      templateUrl: 'views/data-overview.html',
-      controller: 'DataOverviewCtrl',
-      controllerAs: 'dataoverviewctrl',
-      /*views: {
-        'multiple': {
-          templateUrl: 'views/assayupload.html',
-          controller: 'AssayUploadCtrl',
-        },
-      },*/
-    })
+    
 
     /* PLATE MAP IMPLEMENTATION */
     .state('cbh.projects.project.addplate', {
@@ -520,7 +421,7 @@ $urlRouterProvider.when('', '/projects/list');
 
 
 
-  }).run(function($http, $cookies, $rootScope, $document, $state, $urlMatcherFactory, LoginService, projectList, urlConfig, prefix, csrftoken) {
+  }).run(function($http, $cookies, $rootScope, $document, $state, $urlMatcherFactory, projectList, urlConfig, prefix, csrftoken) {
 
     $http.defaults.headers.post['X-CSRFToken'] = csrftoken;
     $http.defaults.headers.patch['X-CSRFToken'] = csrftoken;

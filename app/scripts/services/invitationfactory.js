@@ -9,7 +9,6 @@
  * @param {object} $resource angular library for constructing webservice calls from URLs.
  * @param {object} urlConfig app config object containing aliases for all available web service endpoints.
  * @returns {object} object Object containing keyed $resource objects
- * @deprecated
  */
 angular.module('chembiohubAssayApp')
   .factory('InvitationFactory', ['$resource', 'urlConfig', function ($resource, urlConfig) {
