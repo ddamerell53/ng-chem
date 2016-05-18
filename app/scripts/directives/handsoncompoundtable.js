@@ -428,8 +428,6 @@ angular.module('chembiohubAssayApp')
                             ]);
                         }
 
-                        //allCols = allCols.concat(scope.plugins.map(function(plugin){return plugin.handsontable_column}));
-
 
 
                     }
@@ -717,7 +715,6 @@ angular.module('chembiohubAssayApp')
                 "showBlanks": "=",
                 "showNonBlanks": "=",
                 "messages": "=",
-                "plugins": "=",
             }
         };
     }]);
