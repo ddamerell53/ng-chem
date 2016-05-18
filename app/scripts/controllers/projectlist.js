@@ -5,7 +5,7 @@
  * @name chembiohubAssayApp.controller:ProjectlistCtrl
  * @description
  * # ProjectlistCtrl
- * Controller of the chembiohubAssayApp
+ * Retrieves lists of projects for the project list page, as well as controlling the Add Project modal window.
  */
 angular.module('chembiohubAssayApp')
   .controller('ProjectlistCtrl',function($rootScope, 
@@ -24,6 +24,14 @@ angular.module('chembiohubAssayApp')
       $scope.default_project_type = undefined;
       $scope.links = [];
 
+        /**
+         * @ngdoc method
+         * @name chembiohubAssayApp.controller:ProjectlistCtrl#refreshProjectTypes
+         * @methodOf chembiohubAssayApp.controller:ProjectlistCtrl
+         * @description
+         * Retrieves non-saved-search project types and maps the default fields for that project so the can be used within the Add Project modal.
+         * 
+         */
         var refreshProjectTypes = function(){
           //TODO handle error here
                 ProjectTypeFactory.get({"saved_search_project_type": false}, function(data){
@@ -52,7 +60,15 @@ angular.module('chembiohubAssayApp')
         
         refreshProjectTypes();
 
-
+        /**
+         * @ngdoc method
+         * @name chembiohubAssayApp.controller:ProjectlistCtrl#$scope.openProjectWindow
+         * @methodOf chembiohubAssayApp.controller:ProjectlistCtrl
+         * @description
+         * Opens and controls the Add Project modal window in the Project List page.
+         * @param {integer} projectId The next sequential project ID to use for this newly created project.
+         * 
+         */
         $scope.openProjectWindow = function(projectId){
 
             $scope.projectId = projectId
@@ -75,7 +91,15 @@ angular.module('chembiohubAssayApp')
    
         }
 
-        
+        /**
+         * @ngdoc method
+         * @name chembiohubAssayApp.controller:ProjectlistCtrl#$scope.openEditPermissions
+         * @methodOf chembiohubAssayApp.controller:ProjectlistCtrl
+         * @description
+         * Opens and controls the Edit  modal window in the Project List page.
+         * @param {integer} projectId The next sequential project ID to use for this newly created project.
+         * 
+         */
         $scope.openEditPermissions = function(proj){
             //Note same template because we are using angular schema form
             $scope.projectId = proj.id;

@@ -27,7 +27,7 @@ These are screens of the main views of the application and will hopefully provid
 
 | I want to look at... | I need to go to... |
 |------|------------|
-| 1. Where the project list comes from | <a href="https://github.com/thesgc/chembiohub_ws/wiki/Project-API#get-projects">GET Projects to list all projects</a> |
+| 1. Where the project list comes from | <a href="/docs/#/api/chembiohubAssayApp.controller:ProjectlistCtrl">ProjectlistCtrl</a> |
 | 2. Adding a new project | <a href="#add-project">Add New Project modal</a> |
 | 3. Changing permissions on a project | <a href="#proj-permissions">Change permissions modal</a> |
 | 4. Adding data to a project | <ul><li><a href="#add-single">add a single record</a></li><li><a href="#add-multiple">add multiple records</a></li></ul> |
@@ -120,7 +120,6 @@ var chembiohubAssayApp =  angular.module('chembiohubAssayApp', [
     'chemdoodleAngular',
     'lightApp',
     'ngAnimate',
-    // 'ngAria',
     'ngCookies',
     'ngMessages',
     'ngResource',
@@ -141,8 +140,5 @@ var chembiohubAssayApp =  angular.module('chembiohubAssayApp', [
     'ui.sortable',
     'angularUtils.directives.dirPagination',
     'angular-info-box',
-    'elasticui',
     'schemaForm-file-upload',
-    //'schemaForm-chemdoodle',
-    'xeditable',
   ]);
