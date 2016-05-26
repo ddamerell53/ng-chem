@@ -66,11 +66,7 @@ angular.module('chembiohubAssayApp')
           $scope.projects = projectList.objects;
 
           $rootScope.projects = projectList.objects;
-          $scope.projects.map(function(proj) {
-            if (!proj.is_default) {
-              $scope.isDefault = false;
-            }
-          });
+          
           angular.element(document).ready(function() {
 
             angular.element("info-box", function() {});
