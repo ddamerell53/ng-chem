@@ -9,16 +9,17 @@
  * It is intended to link added records by their system ID to a particular plate for an overview.
  */
 angular.module('chembiohubAssayApp')
-    .controller('PlatemapCtrl', ['$scope', '$rootScope', 'urlConfig', '$filter', 'loggedInUser', '$stateParams','$state', 'projectKey', 'projectList', 'CBHCompoundBatch',
-        function($scope, $rootScope, urlConfig, $filter, loggedInUser, $stateParams, $state, projectKey, projectList, CBHCompoundBatch) {
+    .controller('PlatemapCtrl', ['$scope', '$rootScope', 'urlConfig', '$filter', 'loggedInUser', '$stateParams','$state', 'projectKey', 'projectList', 'CBHCompoundBatch', 'SearchUrlParamsV2',
+        function($scope, $rootScope, urlConfig, $filter, loggedInUser, $stateParams, $state, projectKey, projectList, CBHCompoundBatch, SearchUrlParamsV2) {
         	/* Setup stuff */
             angular.forEach(projectList.objects, function(myproj) {
                 if (myproj.project_key === projectKey) {
                     $scope.projectObj = myproj;
                 }
             });
-            $scope.newPlateForm = {}
-            $scope.schemaFormHolder = {}
+            $scope.newPlateForm = {};
+            $scope.schemaFormHolder = {};
+            $scope.plateSearchForm = {};
 
             //we need to use the searchform object in order to list UOX IDs for compounds
             //cherry pick the form and schema elements
@@ -156,6 +157,75 @@ angular.module('chembiohubAssayApp')
                 },
                 "required":[]
             }
+
+            $scope.schemaFormHolder.plate_search_form = [
+                { 
+                        'title' : 'Pick from list',
+                        'key' : 'uuid', 
+                        'knownBy' : 'uuid', 
+                        "htmlClass": "col-xs-3",
+                        "onChange": "updated(modelValue,form)",
+                        "disableSuccessState":true,
+                        "feedback": true,
+                        "type" : "filtereddropdown",
+                        "options":{
+                          "tagging" : true,
+                          "fetchDataEventName" : "openedSearchDropdown",
+                          "dataArrivesEventName" : "autoCompleteData",
+                          "multiple" : false,
+                          "staticItems" : []
+                        }
+
+
+                        
+                    },
+                    {
+                    "key": "oxid",
+                    "knownBy": "oxid",
+                    "title": "SGC Oxford ID",
+                    "htmlClass": "col-xs-3",
+                    "disableSuccessState": true,
+                    "feedback": false
+
+                }
+
+            ];
+
+            $scope.schemaFormHolder.plate_search_schema = {
+                "type": "object",
+                "properties": {
+                    
+                    "uuid":{
+                      "type" : "filtereddropdown",
+                      "items": {
+                        "type": "string"
+                      },
+                      'format': "filtereddropdown",
+                      "default" : [],
+                      "options":{
+                          "tagging" : true,
+                          "fetchDataEventName" : "openedSearchDropdown",
+                          "dataArrivesEventName" : "autoCompleteData",
+                          "multiple" : false,
+                          "staticItems" : []
+                        }
+
+                    },
+                    "oxid": {
+                        "title": "SGC Oxford ID",
+                        "type": "string"
+                    },
+
+                    
+                },
+                "required":[]
+            };
+/*
+            $scope.reset = function(){
+                console.log('reset');
+                $scope.plateSearchForm = {};
+                $rootScope.$broadcast('schemaFormRedraw');
+            }*/
 
             
 
@@ -310,11 +380,18 @@ angular.module('chembiohubAssayApp')
              */
             $scope.loadPlateMaps = function(){
                 //add a project type filter within the params
-	            var params = {'pids': $scope.projectObj.id};
 
-                var filters = angular.copy($stateParams);
+                //var filters = angular.copy($stateParams);
+
+                if($scope.plateSearchForm.uuid){
+                    //tried setting up a textsearch to see if the uuid is anywhere in the object - didn't work
+                    var filters = SearchUrlParamsV2.get_textsearch_params($stateParams, $scope.plateSearchForm.uuid);
+
+                }
+                else {
+                    var filters = angular.copy($stateParams);
+                }
                 
-
                 $scope.cbh.changeSearchParams(filters);
                 filters = angular.copy($stateParams);
                 if(!filters.page){
@@ -323,6 +400,18 @@ angular.module('chembiohubAssayApp')
                 filters.limit = $scope.batchesPerPage;
                 filters.offset = (filters.page - 1) * 5;
                 filters.pids = $scope.projectObj.id;
+                /*if($scope.plateSearchForm.uuid){
+                    //tried using the documented way of specifying a keyword search - didn't work
+
+                    //var encoded_uuid = $filter("encodeParamForSearch")({"field_path": "custom_fields.wells", "query_type":"keyword", "keyword_or_phrase": $scope.plateSearchForm.uuid});
+                    console.log('uuid',$scope.plateSearchForm.uuid);
+
+                    //tried using an alternative way using examples from existing filter use - didn't work
+                    var encoded_uuid = $filter("encodeParamForSearch")({"field_path": "custom_fields.wells",  "value": $scope.plateSearchForm.uuid});
+                    filters.encoded_query = encoded_uuid;
+                }*/
+                
+                
                 CBHCompoundBatch.queryv2(filters).then(function(data) {
                     $scope.totalCount = data.meta.total_count;
                     $scope.plates = data.objects;
@@ -434,5 +523,42 @@ angular.module('chembiohubAssayApp')
                 //do the search here
 
             };
+
+            /**
+             * @ngdoc method
+             * @name chembiohubAssayApp.directive:platemap#$scope.$on
+             * @methodOf chembiohubAssayApp.directive:platemap
+             * @description
+             * This function pulls back the dropdown autocomplete data from the back end and sends it to the appropriate directive via a broadcast
+             * @param {string} openedSearchDropdown  the name of the broadcast to act on
+             * @param {function} callback  the callback function to trigger functionality
+             *
+             */
+            $scope.$on("openedSearchDropdown", function(event, args){
+                var filters = angular.copy($stateParams);
+                //call to fetch uuid autocomplete results looks like this:
+                //http://localhost:9000/dev/cbh_compound_batches_v2?autocomplete=&autocomplete_field_path=uuid&compoundBatchesPerPage=50&encoded_query=W10%3D&limit=50&offset=0&page=1&pids=3
+                filters.autocomplete_field_path = 'uuid';
+                filters.autocomplete = args.autocomplete;
+                CBHCompoundBatch.queryv2(filters).then(function(result) {
+                    //this is broadcasting to a dynamic $on method within the pickfromlist widget (within cbh_angular_schema_form_extension.js)
+                    //which is why if you look for the braodcast name elsewhere you won't find it.
+                    //it looks for the name defined in dataArrivesEventName within the schema form element
+                    $rootScope.$broadcast("autoCompleteData", result);
+                    //also broadcast a page changed event which will pick up paging data as well?
+                });
+                
+            });
+
+            $scope.$watch('plateSearchForm.uuid', function(){
+                //$scope.loadPlateMaps();
+                if($scope.plateSearchForm.uuid){
+                    if(typeof $scope.plateSearchForm.uuid === "string" ){
+                        $scope.loadPlateMaps();
+                    }
+                    
+                }
+                
+            });
         }
     ]);

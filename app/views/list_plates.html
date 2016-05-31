@@ -7,7 +7,13 @@
 				
 				<!-- New plate form -->
 				<div class="container-flex" ng-init="loadPlateMaps()">
+					<!-- Form here -->
 					
+	                <form novalidate name="searchPlates" id="searchPlates" role="form" >
+	                	<div class="col-xs-12">
+	                		<div class="row" sf-schema="schemaFormHolder.plate_search_schema" sf-form="schemaFormHolder.plate_search_form" sf-model="plateSearchForm">
+	                	</div>
+	                </form>
 					<div class="col-xs-8">
                         <dir-pagination-controls on-page-change="pageChanged(newPageNumber)" max-size="5">
                         </dir-pagination-controls>

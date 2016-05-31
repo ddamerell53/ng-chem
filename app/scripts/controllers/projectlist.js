@@ -96,7 +96,7 @@ angular.module('chembiohubAssayApp')
          * @name chembiohubAssayApp.controller:ProjectlistCtrl#$scope.openEditPermissions
          * @methodOf chembiohubAssayApp.controller:ProjectlistCtrl
          * @description
-         * Opens and controls the Edit  modal window in the Project List page.
+         * Opens and controls the Edit Project modal window in the Project List page.
          * @param {integer} projectId The next sequential project ID to use for this newly created project.
          * 
          */
