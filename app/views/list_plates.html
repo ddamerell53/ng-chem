@@ -8,15 +8,23 @@
 				<!-- New plate form -->
 				<div class="container-flex" ng-init="loadPlateMaps()">
 					<!-- Form here -->
-					
+					{{plateSearchForm.uuidglobal}}
 	                <form novalidate name="searchPlates" id="searchPlates" role="form" >
 	                	<div class="col-xs-12">
-	                		<div class="row" sf-schema="schemaFormHolder.plate_search_schema" sf-form="schemaFormHolder.plate_search_form" sf-model="plateSearchForm">
+	                		<div class="row" sf-schema="schemaFormHolder.plate_search_schema" sf-form="schemaFormHolder.plate_search_form" sf-model="plateSearchForm" ng-if="!showEditingForm">
+	                		
 	                	</div>
 	                </form>
-					<div class="col-xs-8">
+
+	                <div class="col-xs-2" ng-if="showEditingForm" ng-click="showSearchFormInstead()">
+	                	<button class="btn btn-primary" >Show form</button>&nbsp;
+	                	<!-- This needs some form of warning if any changes have been made to a well? Flag back from plate directive? -->
+	                </div>
+					<div class="col-xs-4">
+						
                         <dir-pagination-controls on-page-change="pageChanged(newPageNumber)" max-size="5">
-                        </dir-pagination-controls>
+                                                </dir-pagination-controls>
+           
 	                </div>
 					<table class="table table-responsive">
 						<thead>
