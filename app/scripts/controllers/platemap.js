@@ -323,10 +323,10 @@ angular.module('chembiohubAssayApp')
                     //"customFields": $scope.newPlateForm,
                     "custom_fields": {
                     	"Description": $scope.newPlateForm['Description'],
-						"Name": $scope.newPlateForm['Name'],
-						"Plate Size": $scope.newPlateForm['Plate Size'],
-						"Plate Type": $scope.newPlateForm['Plate Type'],
-						"wells": $scope.newPlateForm.wells,
+          						"Name": $scope.newPlateForm['Name'],
+          						"Plate Size": $scope.newPlateForm['Plate Size'],
+          						"Plate Type": $scope.newPlateForm['Plate Type'],
+          						"wells": $scope.newPlateForm.wells,
                     },
                     "uncurated_fields":{},
                     "warnings" :{}, 
@@ -371,7 +371,6 @@ angular.module('chembiohubAssayApp')
                 
             }
 
-            
             /* Listings page code */
 
             /**
@@ -379,16 +378,15 @@ angular.module('chembiohubAssayApp')
              * @name chembiohubAssayApp.controller:PlatemapCtrl#$scope.loadPlateMaps
              * @methodOf chembiohubAssayApp.controller:PlatemapCtrl
              * @description
-             * Fetch the list of all platemaps for the given project (via URL)
+             * Fetch the list of all platemaps for the given project (via URL). This includes any paging or search parameters that may be set.
              *
              */
             $scope.loadPlateMaps = function(){
-                //add a project type filter within the params
 
-                //var filters = angular.copy($stateParams);
-
+                //has the user specified a UOX ID to narrow down the plates with?
                 if($scope.plateSearchForm.uuidglobal){
-                    //tried setting up a textsearch to see if the uuid is anywhere in the object - didn't work
+                    //tried setting up a textsearch to see if the uuid is anywhere in the object - 
+                    //needed config adding to the elasticsearch client and also adding to the indexed fields list in base.py
                     var filters = SearchUrlParamsV2.get_textsearch_params($stateParams, $scope.plateSearchForm.uuidglobal[0]);
 
                 }
