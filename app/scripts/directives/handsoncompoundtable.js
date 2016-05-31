@@ -483,6 +483,7 @@ angular.module('chembiohubAssayApp')
                         },
                         maxRows: scope.compounds.length,
                         renderAllRows: true,
+                        autoRowSize: true,
                         fillHandle: "vertical",
                         height: 500,
                     }

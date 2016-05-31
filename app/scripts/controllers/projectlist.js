@@ -132,11 +132,7 @@ angular.module('chembiohubAssayApp')
         $rootScope.projName = $scope.cbh.skinning.project_alias + "s";
         $rootScope.glyphicon = "folder-open";
 
-        //if a new user has no projects associated, refdirect them to a default view with supplementary info
-        // if(angular.equals({}, $rootScope.projects)) {
-        //   $state.go('cbh.projects.empty');
-        // }
-        $scope.isDefault = true;
+
         $scope.toggleDataSummary = {
           showFlag: false,
         }
