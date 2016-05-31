@@ -236,6 +236,7 @@ angular.module('chembiohubAssayApp')
                         //so we can force-set the minimum number of columns to be the length of the allCols item
                         //https://github.com/handsontable/handsontable/issues/3008
                         minCols: allCols.length,
+                        autoRowSize: true,
 
                         
                         /**
