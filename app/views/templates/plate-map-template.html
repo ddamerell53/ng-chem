@@ -36,7 +36,10 @@
 
 			</div>
 			<div class="row">
-				<div class="col pull-right">
+				<div class="col-xs-6 pull-left" style="min-height:100px;">
+					<img src="data:image/png;base64,{{imgHolder.imgstr}}" ng-if="imgHolder.imgstr" class="img img-thumbnail">
+				</div>			
+				<div class="col-xs-6 pull-right text-right">
 					<span ng-if="savingWell"><img src="images/ajax-loader.gif"></span>&nbsp;
 					<button class="btn btn-success" ng-click="saveWell(singleWellForm)">
 						Save Well
@@ -49,7 +52,7 @@
 			<div class="row pull-right mt">
 				<div class="col-xs-12">
 					<span ng-if="plateSaved" class="alert-success">Plate saved</span>&nbsp;
-					<button class="btn btn-success" ng-click="doSavePlate(singleWellForm)">Save Plate</button>
+					<button class="btn btn-lg btn-success" ng-click="doSavePlate(singleWellForm)">Save Plate</button>
 				</div>
 			</div>
 

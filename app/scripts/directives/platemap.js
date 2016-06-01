@@ -28,7 +28,7 @@ angular.module('chembiohubAssayApp')
                 savePlateFunction: "&",
                 plateSaved: "="
             },
-            controller: ["$scope","$rootScope","$filter","CBHCompoundBatch",'$stateParams',function($scope, $rootScope, $filter, CBHCompoundBatch, $stateParams) {
+            controller: ["$scope","$rootScope","$filter","CBHCompoundBatch",'$stateParams','$timeout',function($scope, $rootScope, $filter, CBHCompoundBatch, $stateParams, $timeout) {
                 
                 /**
                  * @ngdoc method
@@ -92,10 +92,40 @@ angular.module('chembiohubAssayApp')
                  * @param {object} well  the well object to populate into the form.
                  *
                  */
+                $scope.imgHolder = {
+                    imgstr: ""
+                };
 	            $scope.showWellForm = function(well){
                     $scope.plateSaved = false;
 	            	$scope.selectedWell = well;
 					$scope.wellForm = angular.copy(well);
+                    $scope.imgHolder = {
+                        imgstr: ""
+                    };
+                    console.log('$scope.wellForm', $scope.wellForm)
+                    //this where the lookup happens to get a single molecule to obtain the image?
+                    //if well form has a compound assigned, look it up to get the image in base64
+                    if($scope.wellForm.uuid){
+
+                        var filters = angular.copy($stateParams);
+                        filters.textsearch = undefined;
+                        filters.projectKey = undefined;
+                        //var encoded_uuid = $filter("encodeParamForSearch")({"field_path": "uuid", "query_type":"phrase", "phrase": });
+                        var encoded_uuid = $filter("encodeParamForSearch")({"field_path": "uuid", "value": $scope.wellForm.uuid});
+                        filters.encoded_query = encoded_uuid;
+                        console.log('filters', filters);
+                        console.log("uuid", $scope.wellForm.uuid );
+
+                        CBHCompoundBatch.queryv2(filters).then(function(result) {
+                            
+                            console.log(result);
+                            $timeout(function(){
+                               $scope.imgHolder.imgstr = result.objects[0].image;
+                            }, 100);
+                            
+
+                        });
+                    }
 					//updateFields();
 					$rootScope.$broadcast('schemaFormRedraw');
 					         	
@@ -120,6 +150,9 @@ angular.module('chembiohubAssayApp')
                                 'uuid': [],
                                 'justCleared': true,
                             };
+                    $scope.imgHolder = {
+                        imgstr: ""
+                    };
                     
                     //updateFields();
                     $rootScope.$broadcast('schemaFormRedraw');
@@ -206,38 +239,13 @@ angular.module('chembiohubAssayApp')
                     //then use the save function
                     $scope.savePlateFunction();
                 }
-
-                //need to implement this as the click function for the filtered dropdown for the UOX ID lookup
-                /**
-                 * @ngdoc method
-                 * @name chembiohubAssayApp.directive:platemap#$scope.$on
-                 * @methodOf chembiohubAssayApp.directive:platemap
-                 * @description
-                 * This function pulls back the dropdown autocomplete data from the back end and sends it to the appropriate directive via a broadcast
-                 * @param {string} openedSearchDropdown  the name of the broadcast to act on
-                 * @param {function} callback  the callback function to trigger functionality
-                 *
-                 */
-                $scope.$on("openedSearchDropdown", function(event, args){
-                    var filters = angular.copy($stateParams);
-                    //call to fetch uuid autocomplete results looks like this:
-                    //http://localhost:9000/dev/cbh_compound_batches_v2?autocomplete=&autocomplete_field_path=uuid&compoundBatchesPerPage=50&encoded_query=W10%3D&limit=50&offset=0&page=1&pids=3
-                    filters.autocomplete_field_path = 'uuid';
-                    filters.autocomplete = args.autocomplete;
-                    CBHCompoundBatch.queryv2(filters).then(function(result) {
-                        //this is broadcasting to a dynamic $on method within the pickfromlist widget (within cbh_angular_schema_form_extension.js)
-                        //which is why if you look for the braodcast name elsewhere you won't find it.
-                        //it looks for the name defined in dataArrivesEventName within the schema form element
-                        $rootScope.$broadcast("autoCompleteData", result);
-                    });
-                    
-                })
                 
                 $scope.showWellForm($scope.plateForm.wells["A1"]);
                 
                 $scope.$watch('plateForm', function() {
                     //reinitialise plate layout where size changes
                     $scope.initialisePlate();
+
                     $scope.showWellForm($scope.plateForm.wells["A1"]);
                 });
 

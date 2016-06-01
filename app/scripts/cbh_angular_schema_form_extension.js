@@ -238,7 +238,7 @@ angular.module('schemaForm')
                   }
                   $scope.autoCompNotInList = undefined;
               }else{
-                  $scope.model[$scope.form.key[0]] = "";
+                  $scope.model[$scope.form.key[0]] = undefined;
                   if(isNewItem){
                     $scope.newTags.splice(newTagIndex, 1);
                   }

@@ -25,22 +25,6 @@ angular.module('chembiohubAssayApp')
         'update': { method:'PATCH' }
     });
 
-    /*.queryv2 = function(filters) {
-        
-         var promise = $http( 
-            {
-                url: urlConfig.cbh_compound_batches_v2.list_endpoint ,
-                method: 'GET',
-                params: filters
-            }
-            ).then(
-            function(data){
-                return data.data;
-            }
-        );
-        return promise;
-    };*/
-
     /**
      * @ngdoc property
      * @name chembiohubAssayApp.PlateMapFactory#list_es
