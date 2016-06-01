@@ -251,12 +251,12 @@ angular.module('chembiohubAssayApp')
 
                 $scope.$watch('wellForm.sgcglobalid', function(){
 
-
+                    //is this still al completely blank?
                     if($scope.wellForm.sgcglobalid && $scope.wellForm.uuid.length == 0){
                         var filters = angular.copy($stateParams);
                         filters.textsearch = undefined;
                         filters.projectKey = undefined;
-                        //var encoded_uuid = $filter("encodeParamForSearch")({"field_path": "uuid", "query_type":"phrase", "phrase": });
+                        //find the uuid corresponding to the selected SGC global ID - set up an encoded query
                         var encoded_globalid = $filter("encodeParamForSearch")({"field_path": "custom_fields.SGCGlobalID", "value": $scope.wellForm.sgcglobalid});
                         filters.encoded_query = encoded_globalid;
 
@@ -291,11 +291,6 @@ angular.module('chembiohubAssayApp')
                         });
 
 
-                    }
-
-                    else {
-                        console.log('sgcglobalid',$scope.wellForm.sgcglobalid);
-                        console.log('uuid',$scope.wellForm.uuid);
                     }
 
 
