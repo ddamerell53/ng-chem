@@ -249,6 +249,58 @@ angular.module('chembiohubAssayApp')
                     $scope.showWellForm($scope.plateForm.wells["A1"]);
                 });
 
+                $scope.$watch('wellForm.sgcglobalid', function(){
+
+
+                    if($scope.wellForm.sgcglobalid && $scope.wellForm.uuid.length == 0){
+                        var filters = angular.copy($stateParams);
+                        filters.textsearch = undefined;
+                        filters.projectKey = undefined;
+                        //var encoded_uuid = $filter("encodeParamForSearch")({"field_path": "uuid", "query_type":"phrase", "phrase": });
+                        var encoded_globalid = $filter("encodeParamForSearch")({"field_path": "custom_fields.SGCGlobalID", "value": $scope.wellForm.sgcglobalid});
+                        filters.encoded_query = encoded_globalid;
+
+                        CBHCompoundBatch.queryv2(filters).then(function(result) {
+
+                            //assign the uuid to the well
+                            //now do the image lookup
+                            $scope.wellForm.uuid = result.objects[0].uuid;
+
+                            filters = angular.copy($stateParams);
+                            filters.textsearch = undefined;
+                            filters.projectKey = undefined;
+                            //var encoded_uuid = $filter("encodeParamForSearch")({"field_path": "uuid", "query_type":"phrase", "phrase": });
+                            var encoded_uuid = $filter("encodeParamForSearch")({"field_path": "uuid", "value": $scope.wellForm.uuid});
+                            filters.encoded_query = encoded_uuid;
+                            console.log('filters', filters);
+                            console.log("uuid", $scope.wellForm.uuid );
+
+                            CBHCompoundBatch.queryv2(filters).then(function(result) {
+                                
+                                console.log(result);
+                                $timeout(function(){
+                                   $scope.imgHolder.imgstr = result.objects[0].image;
+                                }, 100);
+                                
+
+                            });
+                            
+                            
+                            
+
+                        });
+
+
+                    }
+
+                    else {
+                        console.log('sgcglobalid',$scope.wellForm.sgcglobalid);
+                        console.log('uuid',$scope.wellForm.uuid);
+                    }
+
+
+                }, true);
+
                 
             }]
         };

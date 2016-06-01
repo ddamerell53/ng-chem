@@ -28,17 +28,21 @@
 </div>
 <div class="col-lg-5">
 	<div ng-show="wellForm.row">
+		<img src="data:image/png;base64,{{imgHolder.imgstr}}" ng-if="imgHolder.imgstr" class="img img-thumbnail pull-right" style="margin:0 15px;">
+		<div class="pull-right" style="margin: 0 15px; min-height:90px;" ng-if="!imgHolder.imgstr"></div>
 		<h2 class="blue">{{wellForm.row}}{{wellForm.col}}</h2>
 		<!-- form for well details here -->
 		<form novalidate name="singleWellForm" role="form"  style="width:95%; display: table; margin: 0 auto;" >
-			
+			<!-- <div class="row">
+				<div class="col-xs-6 pull-left" style="min-height:100px;">
+					
+				</div>	
+			</div> -->
 			<div class="row" sf-schema="schemaFormHolder.well_schema" sf-form="schemaFormHolder.well_form" sf-model="plateForm.wells[wellForm.row + wellForm.col]">
 
 			</div>
 			<div class="row">
-				<div class="col-xs-6 pull-left" style="min-height:100px;">
-					<img src="data:image/png;base64,{{imgHolder.imgstr}}" ng-if="imgHolder.imgstr" class="img img-thumbnail">
-				</div>			
+						
 				<div class="col-xs-6 pull-right text-right">
 					<span ng-if="savingWell"><img src="images/ajax-loader.gif"></span>&nbsp;
 					<button class="btn btn-success" ng-click="saveWell(singleWellForm)">

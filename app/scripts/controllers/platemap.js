@@ -81,8 +81,15 @@ angular.module('chembiohubAssayApp')
                     "htmlClass": "col-sm-4",
                     "disableSuccessState": true,
                     "feedback": false
+                },  {
+                    "key": "uuid",
+                    "knownBy": "uuid",
+                    "title": "ChemBio Hub ID",
+                    "htmlClass": "col-sm-4",
+                    "disableSuccessState": true,
+                    "feedback": false
                 }, 
-                { 
+                /*{ 
                         'title' : 'ChemBio Hub ID',
                         'key' : 'uuid', 
                         'knownBy' : 'uuid', 
@@ -101,7 +108,7 @@ angular.module('chembiohubAssayApp')
 
 
                         
-                    },
+                    },*/
                 { 
                         'title' : 'SGC Global ID',
                         'key' : 'sgcglobalid', 
@@ -152,11 +159,19 @@ angular.module('chembiohubAssayApp')
                         "title": "Concentration",
                         "type": "string",
                         "pattern": "^[a-zA-Z0-9_ /&]*$",
+                      "disableSuccessState": true,
+                      "feedback": false
+
+                    },
+                    "uuid": {
+                        "title": "ChemBio Hub ID",
+                        "type": "string",
+                        "pattern": "^[a-zA-Z0-9_ /&]*$",
 	                    "disableSuccessState": true,
 	                    "feedback": false
 
                     },
-                    "uuid":{
+                    /*"uuid":{
                       "type" : "filtereddropdown",
                       "items": {
                         "type": "string"
@@ -171,7 +186,7 @@ angular.module('chembiohubAssayApp')
                           "staticItems" : []
                         }
 
-                    },
+                    },*/
                     "sgcglobalid":{
                       "type" : "filtereddropdown",
                       "items": {
