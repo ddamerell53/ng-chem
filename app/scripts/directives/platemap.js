@@ -257,7 +257,7 @@ angular.module('chembiohubAssayApp')
                         filters.textsearch = undefined;
                         filters.projectKey = undefined;
                         //find the uuid corresponding to the selected SGC global ID - set up an encoded query
-                        var encoded_globalid = $filter("encodeParamForSearch")({"field_path": "custom_fields.SGCGlobalID", "value": $scope.wellForm.sgcglobalid});
+                        var encoded_globalid = $filter("encodeParamForSearch")({"field_path": "custom_fields.SGC Global ID", "value": $scope.wellForm.sgcglobalid});
                         filters.encoded_query = encoded_globalid;
 
                         CBHCompoundBatch.queryv2(filters).then(function(result) {

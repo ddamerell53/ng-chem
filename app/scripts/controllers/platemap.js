@@ -655,7 +655,7 @@ angular.module('chembiohubAssayApp')
                 var filters = angular.copy($stateParams);
                 //call to fetch uuid autocomplete results looks like this:
                 //http://localhost:9000/dev/cbh_compound_batches_v2?autocomplete=&autocomplete_field_path=uuid&compoundBatchesPerPage=50&encoded_query=W10%3D&limit=50&offset=0&page=1&pids=3
-                filters.autocomplete_field_path = 'custom_fields.SGCGlobalID';
+                filters.autocomplete_field_path = 'custom_fields.SGC Global ID';
                 filters.autocomplete = args.autocomplete;
                 CBHCompoundBatch.queryv2(filters).then(function(result) {
                     //this is broadcasting to a dynamic $on method within the pickfromlist widget (within cbh_angular_schema_form_extension.js)
