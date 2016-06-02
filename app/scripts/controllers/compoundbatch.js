@@ -18,7 +18,7 @@ angular.module('chembiohubAssayApp')
             };
             $scope.urlConfig = urlConfig;
             $scope.totalCompoundBatches = 0;
-            //$scope.stateProjectKey = $stateParams.projectKey;
+            //$scope.stateProjectKey = $stateParams.project_key;
             $scope.projects = $scope.cbh.projects.objects;
             $scope.$watch(function($scope) {
                 //anchor scroll to top when the search form is hidden or shown
@@ -160,10 +160,10 @@ angular.module('chembiohubAssayApp')
                     $scope.formChunks = myform.chunk(Math.ceil($scope.cbh.projAddingTo.schemaform.form.length / 3));
 
                     $scope.newMol = {
-                        "customFields": {}
+                        "custom_fields": {}
                     };
                     if(cloned){
-                        $scope.newMol.customFields = angular.copy(cloned.customFields);
+                        $scope.newMol.custom_fields = angular.copy(cloned.custom_fields);
                         $scope.newMol.id = undefined;
                         $scope.newMol.resource_uri = undefined;
                     }
@@ -222,7 +222,7 @@ angular.module('chembiohubAssayApp')
             $scope.addingData = false;
 
             $scope.saveSingleCompound = function(toggleAddingOff) {
-                CBHCompoundBatch.saveSingleCompound($scope.cbh.projAddingTo.project_key, '', $scope.newMol.customFields).then(
+                CBHCompoundBatch.saveSingleCompound($scope.cbh.projAddingTo.project_key, '', $scope.newMol.custom_fields).then(
                     function(data) {
                         CBHCompoundBatch.reindexModifiedCompound(data.data.id).then(function(reindexed) {
                             $scope.pageChanged(1);
@@ -389,11 +389,11 @@ angular.module('chembiohubAssayApp')
                 filters.showBlanks = $stateParams.showBlanks;
                 filters.textsearch = $stateParams.textsearch;
                 if (filters.showBlanks) {
-                    filters.showBlanks = filters.showBlanks.replace("customFields", "custom_fields")
+                    filters.showBlanks = filters.showBlanks.replace("custom_fields", "custom_fields")
                 }
                 filters.showNonBlanks = $stateParams.showNonBlanks;
                 if (filters.showNonBlanks) {
-                    filters.showNonBlanks = filters.showNonBlanks.replace("customFields", "custom_fields")
+                    filters.showNonBlanks = filters.showNonBlanks.replace("custom_fields", "custom_fields")
                 }
 
 

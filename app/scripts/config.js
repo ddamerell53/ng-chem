@@ -231,11 +231,11 @@ var login = null;
           projData.data
     );
 
-     var projectKeys= projData.data.objects.map(function(item){
+     var project_keys= projData.data.objects.map(function(item){
         return item.project_key;
     });
-     window.projectKeys = projectKeys;
-    window.projectUrlMatcher = "/{projectKey:" + projectKeys.join('|') + "}/";
+     window.project_keys = project_keys;
+    window.projectUrlMatcher = "/{project_key:" + project_keys.join('|') + "}/";
     angular.element(document).ready(function() {
         angular.bootstrap(angular.element( document.querySelector( '#bodytest' ) ), ["chembiohubAssayApp"]);
     });

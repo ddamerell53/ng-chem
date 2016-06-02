@@ -103,7 +103,7 @@ angular.module('chembiohubAssayApp')
             }*/
 
             $scope.success = function(file, form_key) {
-                //apply the urls of the flowfile object to the correct custom field of $scope.mol.customFields - find the attachments array and add it
+                //apply the urls of the flowfile object to the correct custom field of $scope.mol.custom_fields - find the attachments array and add it
                 //put a new method in FlowFileFactory
                 //need to modify this so that the items are added to the value part of the schema item returned by the API
                 //TODO handle error here
@@ -112,7 +112,7 @@ angular.module('chembiohubAssayApp')
                 AttachmentFactory.get({
                     'identifier': file.uniqueIdentifier
                 }, function(data) {
-                    //add this to attachments in the form element (find it by form key in mol.customFields)
+                    //add this to attachments in the form element (find it by form key in mol.custom_fields)
                     var downloadUri = data.download_uri
                     var attachment_obj = {
                         url: downloadUri,
@@ -157,7 +157,7 @@ angular.module('chembiohubAssayApp')
                 if ($scope.mol.projectfull.project_type.show_compounds) {
                     //If this is a compounds project redirect to compound clone page
                     
-                    $state.go("cbh.projects.project.addsingle", { 'projectKey': $scope.mol.projectfull.project_key, idToClone: $scope.mol.id }, { reload: true });
+                    $state.go("cbh.projects.project.addsingle", { 'project_key': $scope.mol.projectfull.project_key, idToClone: $scope.mol.id }, { reload: true });
                 } else {
                     $rootScope.$broadcast("cloneAnItem", mol);
                     $modalInstance.dismiss("cancel");

@@ -251,7 +251,7 @@ angular.module('chembiohubAssayApp')
                         var mol = instance.getSourceDataAtRow(row);
                         var html = "<ul class='noindent'>";
                         var errors = [
-                            ["parseError", "<li ><span class='alert-danger'>Data not processable</span></li>"],
+                            ["parseerror", "<li ><span class='alert-danger'>Data not processable</span></li>"],
                             ["smilesParseError", "<li ><span class='alert-danger'>SMILES not processable: </span><br><small class='blue'>SMILESHERE</small></li>"],
                             ["inchiCreationError", "<li ><span class='alert-danger'>Could not generate InChi: </span><br><small class='blue'>SMILESHERE</small></li>"],
                             ["duplicate", "<li ><span class='alert-warning'>Duplicated record</span></li>"],
@@ -359,7 +359,7 @@ angular.module('chembiohubAssayApp')
                             e.preventDefault(); // prevent selection quirk
                             mol.properties.archived = toArchive;
                             value = toArchive;
-                            mol.projectKey = mol.projectfull.project_key;
+                            mol.project_key = mol.projectfull.project_key;
                             scope.cbh.patchRecord(mol);
                         });
                         Handsontable.Dom.empty(td);
@@ -401,7 +401,7 @@ angular.module('chembiohubAssayApp')
                                 e.preventDefault(); // prevent selection quirk
                                 if (scope.cbh.projAddingTo.project_type.show_compounds) {
                                     //If this is a compounds project redirect to compound clone page
-                                    $state.go("cbh.projects.project.addsingle", { "projectKey": scope.cbh.projAddingTo.project_key, "idToClone": mol.id }, { reload: true });
+                                    $state.go("cbh.projects.project.addsingle", { "project_key": scope.cbh.projAddingTo.project_key, "idToClone": mol.id }, { reload: true });
                                 } else {
                                     scope.$apply(function() {
                                         $rootScope.$broadcast("cloneAnItem", mol)

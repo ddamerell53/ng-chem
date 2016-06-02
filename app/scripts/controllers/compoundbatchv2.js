@@ -315,7 +315,7 @@ angular.module('chembiohubAssayApp')
             
             $scope.urlConfig = urlConfig;
             $scope.totalCompoundBatches = 0;
-            //$scope.stateProjectKey = $stateParams.projectKey;
+            //$scope.stateProjectKey = $stateParams.project_key;
             $scope.projects = $scope.cbh.projects.objects;
             $scope.cbh.column = {}
 
@@ -1070,7 +1070,7 @@ angular.module('chembiohubAssayApp')
              *
              */
             $scope.success = function(file, form_key) {
-                //apply the urls of the flowfile object to the correct custom field of $scope.mol.customFields - find the attachments array and add it
+                //apply the urls of the flowfile object to the correct custom field of $scope.mol.custom_fields - find the attachments array and add it
                 //put a new method in FlowFileFactory
 
                 //TODO handle error here
@@ -1078,7 +1078,7 @@ angular.module('chembiohubAssayApp')
                 AttachmentFactory.get({
                     'identifier': file.uniqueIdentifier
                 }, function(data) {
-                    //add this to attachments in the form element (find it by form key in mol.customFields)
+                    //add this to attachments in the form element (find it by form key in mol.custom_fields)
                     var downloadUri = data.download_uri
                     var attachment_obj = {
                         url: downloadUri,

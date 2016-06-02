@@ -9,11 +9,11 @@
  * It is intended to link added records by their system ID to a particular plate for an overview.
  */
 angular.module('chembiohubAssayApp')
-    .controller('PlatemapCtrl', ['$scope', '$rootScope', 'urlConfig', '$filter', 'loggedInUser', '$stateParams','$state', 'projectKey', 'projectList', 'CBHCompoundBatch',
-        function($scope, $rootScope, urlConfig, $filter, loggedInUser, $stateParams, $state, projectKey, projectList, CBHCompoundBatch) {
+    .controller('PlatemapCtrl', ['$scope', '$rootScope', 'urlConfig', '$filter', 'loggedInUser', '$stateParams','$state', 'project_key', 'projectList', 'CBHCompoundBatch',
+        function($scope, $rootScope, urlConfig, $filter, loggedInUser, $stateParams, $state, project_key, projectList, CBHCompoundBatch) {
         	/* Setup stuff */
             angular.forEach(projectList.objects, function(myproj) {
-                if (myproj.project_key === projectKey) {
+                if (myproj.project_key === project_key) {
                     $scope.projectObj = myproj;
                 }
             });
@@ -246,7 +246,7 @@ angular.module('chembiohubAssayApp')
                 var plateMapObj = {
                     "project": {"pk": $scope.projectObj.id},
                     "blinded_batch_id": "EMPTY_STRING",
-                    //"customFields": $scope.newPlateForm,
+                    //"custom_fields": $scope.newPlateForm,
                     "custom_fields": {
                     	"Description": $scope.newPlateForm['Description'],
 						"Name": $scope.newPlateForm['Name'],
@@ -263,7 +263,7 @@ angular.module('chembiohubAssayApp')
                CBHCompoundBatch.saveSingleCompound(plateMapObj).then(function(data){
                     $scope.plateSaved = true;
                     //forward to list?
-                    $state.go("cbh.projects.project.listplates", {"projectKey": projectKey});
+                    $state.go("cbh.projects.project.listplates", {"project_key": project_key});
                });
                                  
             }

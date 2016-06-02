@@ -106,12 +106,12 @@ angular.module('chembiohubAssayApp')
            * @methodOf chembiohubAssayApp.controller:CbhCtrl
            * @description
            * Retrieve a project by key from list of available projects
-           * @param {string} projectKey string for project lookup
+           * @param {string} project_key string for project lookup
            * @returns {object} proj The project object
           */
-          $scope.getProjectObj = function(projectKey) {
+          $scope.getProjectObj = function(project_key) {
             angular.forEach($scope.projects, function(proj) {
-              if (projectKey == proj.project_key) {
+              if (project_key == proj.project_key) {
                 return proj;
               }
             });

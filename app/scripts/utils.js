@@ -107,9 +107,9 @@ function smilesOrInchi(in_str) {
     return type_str;
 }
 
-function prepCustomFields(customFields){
+function prepCustomFields(custom_fields){
     var obj = {};
-        var fields = customFields.map(function(d){
+        var fields = custom_fields.map(function(d){
             if (d.name && d.value){
                 obj[d.name] = d.value;
             }

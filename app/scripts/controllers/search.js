@@ -314,8 +314,8 @@ angular.module('chembiohubAssayApp')
                 //$scope.errormess = ""
                 //from the project type service get saved_search_project_template (specify project_type.saved_search == true)
                 //from what is returned, set the name and the name on the custom field config to (alias + timestamp) for uniqueness
-                //set compound_batch.customFields.Url to be search url
-                //set compound_batch.customFields.Alias to be alias
+                //set compound_batch.custom_fields.Url to be search url
+                //set compound_batch.custom_fields.Alias to be alias
                 //post to the create project resource
                 //from what is returned get the resource_uri and project_key
                 //set blinded_batch_id = "EMPTY_STRING"
@@ -335,13 +335,13 @@ angular.module('chembiohubAssayApp')
                             var resource_uri = data.resource_uri;
                             var savedSearchObj = {
                                 "project": data.resource_uri,
-                                "projectKey": data.project_key,
+                                "project_key": data.project_key,
                                 "blindedBatchId": "EMPTY_STRING",
-                                "customFields": {
+                                "custom_fields": {
                                     alias: $scope.newSavedSearchModel.alias,
                                     url: window.location.href,
                                 },
-                                "uncuratedFields":{},
+                                "uncurated_fields":{},
                                 "warnings" :{}, 
                                 "properties" :{},  
                                 "errors" :{}

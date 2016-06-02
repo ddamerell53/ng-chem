@@ -13,7 +13,7 @@ angular.module('chembiohubAssayApp')
         function($scope, $rootScope, $timeout, $filter, $state, $stateParams, CBHCompoundBatch, ProjectFactory, MessageFactory, mol, projectList, FlowFileFactory) {
 
             //need a combination of the initial setup of the add compounds page and the edit part of the single mol popup
-            var projectKey = $stateParams.projectKey;
+            var project_key = $stateParams.project_key;
               $scope.clonedMol = angular.copy(mol);
                     
                     $scope.mol = angular.copy(mol);
@@ -40,7 +40,7 @@ angular.module('chembiohubAssayApp')
              *
              */
             $scope.success = function(file, form_key) {
-                //apply the urls of the flowfile object to the correct custom field of $scope.mol.customFields - find the attachments array and add it
+                //apply the urls of the flowfile object to the correct custom field of $scope.mol.custom_fields - find the attachments array and add it
                 //put a new method in FlowFileFactory
 
                 //TODO handle error here
@@ -48,14 +48,14 @@ angular.module('chembiohubAssayApp')
                 AttachmentFactory.get({
                     'identifier': file.uniqueIdentifier
                 }, function(data) {
-                    //add this to attachments in the form element (find it by form key in mol.customFields)
+                    //add this to attachments in the form element (find it by form key in mol.custom_fields)
                     var downloadUri = data.download_uri
                     var attachment_obj = {
                         url: downloadUri,
                         printName: file.name,
                         mimeType: file.file.type,
                     }
-                    $scope.mol.customFields[form_key[0]].attachments.push(attachment_obj)
+                    $scope.mol.custom_fields[form_key[0]].attachments.push(attachment_obj)
 
                 })
 
@@ -74,7 +74,7 @@ angular.module('chembiohubAssayApp')
              *
              */
             $scope.removeFile = function(form_key, index, url) {
-                $scope.mol.customFields[form_key[0]].attachments = $filter('filter')($scope.mol.customFields[form_key[0]].attachments, function(value, index) {
+                $scope.mol.custom_fields[form_key[0]].attachments = $filter('filter')($scope.mol.custom_fields[form_key[0]].attachments, function(value, index) {
                     return value.url !== url; })
             }
 
@@ -144,7 +144,7 @@ angular.module('chembiohubAssayApp')
                 columns: []};
             var orderBy = $filter('orderBy');
 
-            var projid = projectKey;
+            var projid = project_key;
             $scope.projectWithCustomFieldData;
 
             angular.forEach(projectList.objects, function(myproj) {
@@ -225,7 +225,7 @@ angular.module('chembiohubAssayApp')
                             //Here we change the URL without changing the state
                              /*$state.go ($state.current.name, 
                                     {"mb_id" : $scope.dataset.config.multiplebatch,
-                                    "projectKey": $stateParams.projectKey}, 
+                                    "project_key": $stateParams.project_key}, 
                                     { location: true, 
                                         inherit: false, 
                                         relative: $state.$current, 
@@ -260,9 +260,9 @@ angular.module('chembiohubAssayApp')
                         "multiplebatch": null,
                         "sketch": $scope.mol.molecule,
                         "type": "sketch",
-                        "customFields": $scope.mol.customFields,
+                        "custom_fields": $scope.mol.custom_fields,
                         "supplementaryFields": $scope.mol.supplementaryFields,
-                        "projectKey" : projectKey,
+                        "project_key" : project_key,
                         "struccol" : "",
                         "state" : "validate"};
                 //also need to get the project and supplementary field data through
@@ -320,7 +320,7 @@ angular.module('chembiohubAssayApp')
              */
             $scope.saveTemporaryCompoundData = function(){
                 $scope.currentlyLoading = true;
-                $scope.dataset.config.customFields = $scope.mol.customFields;
+                $scope.dataset.config.custom_fields = $scope.mol.custom_fields;
                 var callback = function(){
 
                     $scope.cbh.justAdded = true;
@@ -338,7 +338,7 @@ angular.module('chembiohubAssayApp')
                             $scope.cbh.hideSearchForm=true;
                             if($scope.idToClone && $scope.doArchiveItem){
                                $scope.clonedMol.properties.archived = "true";
-                               $scope.clonedMol.projectKey = $scope.projectWithCustomFieldData.project_key;
+                               $scope.clonedMol.project_key = $scope.projectWithCustomFieldData.project_key;
                                CBHCompoundBatch.patch($scope.clonedMol).then(function(data) {
                                     CBHCompoundBatch.reindexModifiedCompound(data.id).then(function(reindexed) {
                                         callback();

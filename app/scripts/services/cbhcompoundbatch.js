@@ -30,7 +30,7 @@ angular.module('chembiohubAssayApp')
                          chemblId: "",
                          created: "",
                          ctab: "",
-                         customFields: {},
+                         custom_fields: {},
                          editableBy: {},
                          id: null,
                          knownDrug: 0,
@@ -135,13 +135,13 @@ angular.module('chembiohubAssayApp')
      * @methodOf chembiohubAssayApp.CBHCompoundBatch
      * @description
      * Calls the cbh_compound_batches webservice to validate a set of batches.
-     * @params {string} projectKey - specifies the project which the batches will belong to
+     * @params {string} project_key - specifies the project which the batches will belong to
      * @params {Object} values - The set of batches to archive
      * @returns {Object} promise from API call to validate the specified batch list
      *
      */   
-    CBHCompoundBatch.validateList = function(projectKey, values){
-        values.projectKey = projectKey;
+    CBHCompoundBatch.validateList = function(project_key, values){
+        values.project_key = project_key;
         var promise = $http.post( urlConfig.cbh_compound_batches.list_endpoint  + "/validate_list/" , values).then(
             function(data){
                 return data.data;
@@ -156,13 +156,13 @@ angular.module('chembiohubAssayApp')
      * @methodOf chembiohubAssayApp.CBHCompoundBatch
      * @description
      * Calls the cbh_compound_batches webservice to validate a drawn chemical element in ctab format.
-     * @params {string} projectKey - specifies the project which the batches will belong to
+     * @params {string} project_key - specifies the project which the batches will belong to
      * @params {Object} values - The moleculaar daata in ctab (mol) format
      * @returns {Object} promise from API call to validate the given molecule
      *
      */
-    CBHCompoundBatch.validate = function(projectKey, data) {
-      return $http.post( urlConfig.cbh_compound_batches.list_endpoint + "/validate/", {"ctab":data, "projectKey": projectKey});
+    CBHCompoundBatch.validate = function(project_key, data) {
+      return $http.post( urlConfig.cbh_compound_batches.list_endpoint + "/validate/", {"ctab":data, "project_key": project_key});
 
     };
 
@@ -256,9 +256,9 @@ angular.module('chembiohubAssayApp')
      * @methodOf chembiohubAssayApp.CBHCompoundBatch
      * @deprecated
      */
-    CBHCompoundBatch.validateBatch = function(projectKey,molfiles) {
+    CBHCompoundBatch.validateBatch = function(project_key,molfiles) {
 
-        return $http.post( urlConfig.cbh_compound_batches.list_endpoint + "/bulk/validate", {"projectKey": projectKey, ctab:molfile });
+        return $http.post( urlConfig.cbh_compound_batches.list_endpoint + "/bulk/validate", {"project_key": project_key, ctab:molfile });
     };
 
     /**
@@ -267,9 +267,9 @@ angular.module('chembiohubAssayApp')
      * @methodOf chembiohubAssayApp.CBHCompoundBatch
      * @deprecated
      */
-    CBHCompoundBatch.uploadBatch = function(projectKey, molfiles) {
+    CBHCompoundBatch.uploadBatch = function(project_key, molfiles) {
 
-        return $http.post( urlConfig.cbh_compound_batches.list_endpoint + "/bulk/upload", {"projectKey": projectKey,ctab:molfile });
+        return $http.post( urlConfig.cbh_compound_batches.list_endpoint + "/bulk/upload", {"project_key": project_key,ctab:molfile });
     };
     /**
      * @ngdoc method
@@ -277,9 +277,9 @@ angular.module('chembiohubAssayApp')
      * @methodOf chembiohubAssayApp.CBHCompoundBatch
      * @deprecated
      */
-    CBHCompoundBatch.fetchHeaders = function(projectKey, file_name) {
+    CBHCompoundBatch.fetchHeaders = function(project_key, file_name) {
 
-        return $http.post( urlConfig.cbh_batch_upload.list_endpoint + "/headers/", {"projectKey" :projectKey, file_name:file_name });
+        return $http.post( urlConfig.cbh_batch_upload.list_endpoint + "/headers/", {"project_key" :project_key, file_name:file_name });
     };
 
     // CBHCompoundBatch.query = function(filters) {
@@ -453,8 +453,8 @@ angular.module('chembiohubAssayApp')
      * @deprecated
      */
     CBHCompoundBatch.paginate = function(page_url) {
-        /*filters.projectKey = projectKey;
-        filters.project__project_key = projectKey;*/
+        /*filters.project_key = project_key;
+        filters.project__project_key = project_key;*/
          var promise = $http( 
             {
                 url: page_url,
@@ -483,8 +483,8 @@ angular.module('chembiohubAssayApp')
      * @methodOf chembiohubAssayApp.CBHCompoundBatch
      * @deprecated
      */
-    CBHCompoundBatch.validateFiles = function(projectKey,file_name, struccol) {
-        var promise = $http.post( urlConfig.cbh_compound_batches.list_endpoint + "/validate_files/" , {"projectKey": projectKey, "file_name":file_name, "struccol":struccol}).then(
+    CBHCompoundBatch.validateFiles = function(project_key,file_name, struccol) {
+        var promise = $http.post( urlConfig.cbh_compound_batches.list_endpoint + "/validate_files/" , {"project_key": project_key, "file_name":file_name, "struccol":struccol}).then(
             function(data){
                 return data.data;
             }

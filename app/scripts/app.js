@@ -330,21 +330,21 @@ $urlRouterProvider.when('', '/projects/list');
     .state('cbh.projects.project', {
         url: window.projectUrlMatcher,
         templateUrl: 'views/project-full.html',
-        controller: function($scope, $rootScope, $state, projectKey) {
+        controller: function($scope, $rootScope, $state, project_key) {
           //need to check here thaat project is valid
           //we already have a list of allowed projects - if none of these, redirect to project list?
-          $rootScope.projectKey = projectKey;
+          $rootScope.project_key = project_key;
           $scope.cbh.searchPage = function() {
             $state.go('cbh.search', {
-              "project__project_key__in": projectKey
+              "project__project_key__in": project_key
             }, {
               reload: true
             });
           };
         },
         resolve: {
-          projectKey: ['$stateParams', function($stateParams) {
-            return $stateParams.projectKey;
+          project_key: ['$stateParams', function($stateParams) {
+            return $stateParams.project_key;
           }]
         }
       })
@@ -365,7 +365,7 @@ $urlRouterProvider.when('', '/projects/list');
             mol: ['CBHCompoundBatch', '$stateParams', '$timeout', function(CBHCompoundBatch, $stateParams, $timeout) {
               if($stateParams.idToClone){
                 return CBHCompoundBatch.get( $stateParams.idToClone ).then(function(data){
-                    data.customFields = data.custom_fields;
+                    data.custom_fields = data.custom_fields;
                     return data
                   
                 });
@@ -373,7 +373,7 @@ $urlRouterProvider.when('', '/projects/list');
                 else{
                     return {
                         molecule: "",
-                        customFields: {},
+                        custom_fields: {},
                         supplementaryFields: [],
                     }
                 }
@@ -432,7 +432,7 @@ $urlRouterProvider.when('', '/projects/list');
       var projKeys = projectList.objects.map(function(item) {
         return item.project_key;
       });
-      $rootScope.urlMatcher = $urlMatcherFactory.compile("/{projectKey:" + projKeys.join('|') + "}/?limit&offset");
+      $rootScope.urlMatcher = $urlMatcherFactory.compile("/{project_key:" + projKeys.join('|') + "}/?limit&offset");
     
 
 

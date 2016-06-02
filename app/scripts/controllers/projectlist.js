@@ -104,7 +104,7 @@ angular.module('chembiohubAssayApp')
         $rootScope.headline = $scope.cbh.skinning.project_alias + " List";
         $rootScope.subheading = "A list of all of the projects you have access to.";
         $rootScope.help_lookup = "";
-        $rootScope.projectKey = $scope.cbh.skinning.project_alias + "s";
+        $rootScope.project_key = $scope.cbh.skinning.project_alias + "s";
         $rootScope.projName = $scope.cbh.skinning.project_alias + "s";
         $rootScope.glyphicon = "folder-open";
 

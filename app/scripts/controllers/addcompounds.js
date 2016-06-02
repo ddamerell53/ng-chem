@@ -17,7 +17,7 @@ angular.module('chembiohubAssayApp')
     '$timeout', 
     '$location',
     '$filter',
-    'projectKey', 
+    'project_key', 
     'prefix', 
     'urlConfig', 
     'CBHCompoundBatch', 
@@ -34,7 +34,7 @@ angular.module('chembiohubAssayApp')
         $timeout,
         $location, 
         $filter,
-        projectKey, 
+        project_key, 
         prefix, 
         urlConfig, 
         CBHCompoundBatch,
@@ -52,7 +52,7 @@ angular.module('chembiohubAssayApp')
         //build an object to hold all of the changed information each time the user does something
         $scope.projects = $scope.cbh.projects.objects;
                       angular.forEach($scope.projects, function(proj) {
-                        if(proj.project_key == projectKey) {
+                        if(proj.project_key == project_key) {
                           $scope.proj = proj;
                         }
                       });
@@ -237,7 +237,7 @@ angular.module('chembiohubAssayApp')
          *
          */
         $scope.cancelFile = function(field) {
-            var newParams = { projectKey: $stateParams.projectKey };
+            var newParams = { project_key: $stateParams.project_key };
             if($scope.datasets[$scope.current_dataset_id].config.multiplebatch){
                 CBHCompoundBatch.delete_index($scope.datasets[$scope.current_dataset_id].config);
             }
@@ -446,7 +446,7 @@ angular.module('chembiohubAssayApp')
                     "multiplebatch": null,
                     "type": "file",
                     "fileextension" : ext,
-                    "projectKey" : projectKey,
+                    "project_key" : project_key,
                     "struccol" : "",
                     "state" : "validate"};
 
@@ -502,7 +502,7 @@ angular.module('chembiohubAssayApp')
                         //Here we change the URL without changing the state
                          $state.go ($state.current.name, 
                                 {"mb_id" : $scope.datasets[$scope.current_dataset_id].config.multiplebatch,
-                                "projectKey": $stateParams.projectKey}, 
+                                "project_key": $stateParams.project_key}, 
                                 { location: true, 
                                     inherit: false, 
                                     relative: $state.$current, 
@@ -551,7 +551,7 @@ angular.module('chembiohubAssayApp')
                     "multiplebatch": null,
                     "smilesdata" : $scope.inputData.inputstring,
                     "type": "smilesdata",
-                    "projectKey" : projectKey,
+                    "project_key" : project_key,
                     "struccol" : "",
                     "state" : "validate"};
              $scope.datasets[$scope.current_dataset_id] = {
@@ -717,7 +717,7 @@ angular.module('chembiohubAssayApp')
             }
             if($scope.warningsFilter == "warnings.withstructure"){
 ;                filter.bool.must_not.push({"term": {"warnings.withoutstructure": "true"}});
-                filter.bool.must_not.push({"term": {"warnings.parseError": "true"}});
+                filter.bool.must_not.push({"term": {"warnings.parseerror": "true"}});
             }else{
                 var term = {"term": {}};
 

@@ -284,7 +284,7 @@ angular.module('chembiohubAssayApp')
                                 copyto: copyto,
                                 mappingOptions: optList,
                                 knownBy: un.name,
-                                data: "uncuratedFields." + un.name,
+                                data: "uncurated_fields." + un.name,
                                 readOnly: true,
                                 className: "htCenter htMiddle ",
                                 renderer: "linkRenderer",
