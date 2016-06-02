@@ -3,8 +3,8 @@
                 </div> --> <!-- <div ng-if="projectFrom" class="col-sm-12 alert alert-success mb" > --> <!--  <div ng-if="justAdded" class="col-xs-12 alert alert-success mb">
                     Your saved {{projectObj.project_type.show_compounds == true ? 'compounds' : 'items' }} are shown below. You can now either view the full project or add more items.
                     <button ui-sref="cbh.search({project__project_key_in: selected_projects[0], multiple_batch_id:undefined})" ng-click="cbh.hideSearchForm=false;" class="  btn btn-primary ">View full project</button>
-                    <button ui-sref="cbh.projects.project.addsingle({projectKey: selected_projects[0]})" class=" btn btn-primary" ng-show="projectObj.project_type.show_compounds">Draw another compound</button>
-                    <button ui-sref="cbh.projects.project.addcompounds({projectKey: selected_projects[0]})" class=" btn btn-primary">Add more {{selected_projects[0].project_type.show_compounds == true ? 'compounds' : 'items' }} via file</button>
+                    <button ui-sref="cbh.projects.project.addsingle({project_key: selected_projects[0]})" class=" btn btn-primary" ng-show="projectObj.project_type.show_compounds">Draw another compound</button>
+                    <button ui-sref="cbh.projects.project.addcompounds({project_key: selected_projects[0]})" class=" btn btn-primary">Add more {{selected_projects[0].project_type.show_compounds == true ? 'compounds' : 'items' }} via file</button>
                 </div> --> <!-- <div  ng-show="stateName != 'cbh.projects.project.addcompounds'"  >
                             <input size="10" type="text" ng-model="cbh.textsearch" />
                         </div> --> <!-- <div class="row" sf-schema="searchFormSchema.simple_schema" sf-form="searchFormSchema.simple_form" sf-model="cbh.searchForm">

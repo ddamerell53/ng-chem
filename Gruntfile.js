@@ -479,8 +479,7 @@ module.exports = function (grunt) {
            scripts: [
                'bower_components/angular/angular.js',
                'bower_components/angular-animate/angular-animate.js'
-           ],
-           startPage: '/api/chembiohubAssayApp'
+           ]
        },
        api: {
            src: ['app/**/*.js', '!app/**/*-spec.js'],

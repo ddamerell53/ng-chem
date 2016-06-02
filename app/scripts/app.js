@@ -393,7 +393,7 @@ $urlRouterProvider.when('', '/projects/list');
     })
 
     .state('cbh.projects.project.listplates', {
-      url: 'plates/?plate=&page=&compoundBatchesPerPage=',
+      url: 'plates/?plate=&page=&compoundBatchesPerPage=&textsearch=',
       templateUrl: 'views/list_plates.html',
       controller: 'PlatemapCtrl',
     });
@@ -491,4 +491,7 @@ $urlRouterProvider.when('', '/projects/list');
     //Http Intercpetor to check auth failures for xhr requests
     $httpProvider.interceptors.push('authHttpResponseInterceptor');
     $httpProvider.interceptors.push('globalInterceptor');
+  }])
+  .config(['$compileProvider', function($compileProvider){
+    $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|file|blob):|data:image\//);
   }]);
