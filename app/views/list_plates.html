@@ -31,7 +31,8 @@
 							<tr>
 								<th ng-repeat="field in projectObj.custom_field_config.project_data_fields">{{field.edit_form.form[0].key}}</th>
 								<th>Added on</th>
-								<th>Edit</th>
+								<th>Show Plate</th>
+								<th ng-if="plateSearchForm.uuidglobal.length || plateSearchForm.oxid.length">Hit location</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -40,6 +41,7 @@
 								<td ng-repeat="field in projectObj.custom_field_config.project_data_fields">{{plate.custom_fields[field.edit_form.form[0].key]}}</td>
 								<td>{{plate.created | date: "d MMM yyyy"}}</td>
 								<td data-plate-id="{{plate.id}}"><span class="glyphicon glyphicon-pencil" ng-click="loadPlateForEditing(plate.id)" style="cursor:pointer;"></span></td>
+								<td ng-if="plateSearchForm.uuidglobal.length || plateSearchForm.oxid.length">{{ hitLocations(plate) }}</td>
 							</tr>
 							<tr ng-if="plates.length == 0">
 								<td colspan="6">no items</td>

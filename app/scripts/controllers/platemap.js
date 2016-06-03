@@ -10,8 +10,8 @@
  */
 angular.module('chembiohubAssayApp')
 
-    .controller('PlatemapCtrl', ['$scope', '$rootScope', 'urlConfig', '$filter', 'loggedInUser', '$stateParams','$state', 'projectKey', 'projectList', 'CBHCompoundBatch', 'SearchUrlParamsV2', 'PlateMapFactory',
-        function($scope, $rootScope, urlConfig, $filter, loggedInUser, $stateParams, $state, projectKey, projectList, CBHCompoundBatch, SearchUrlParamsV2, PlateMapFactory) {
+    .controller('PlatemapCtrl', ['$scope', '$rootScope', 'urlConfig', '$filter', 'loggedInUser', '$stateParams','$state', 'project_key', 'projectList', 'CBHCompoundBatch', 'SearchUrlParamsV2', 'PlateMapFactory',
+        function($scope, $rootScope, urlConfig, $filter, loggedInUser, $stateParams, $state, project_key, projectList, CBHCompoundBatch, SearchUrlParamsV2, PlateMapFactory) {
         	/* Setup stuff */
             angular.forEach(projectList.objects, function(myproj) {
                 if (myproj.project_key === project_key) {
@@ -82,34 +82,7 @@ angular.module('chembiohubAssayApp')
                     "htmlClass": "col-sm-4",
                     "disableSuccessState": true,
                     "feedback": false
-                },  {
-                    "key": "uuid",
-                    "knownBy": "uuid",
-                    "title": "ChemBio Hub ID",
-                    "htmlClass": "col-sm-4",
-                    "disableSuccessState": true,
-                    "feedback": false
-                }, 
-                /*{ 
-                        'title' : 'ChemBio Hub ID',
-                        'key' : 'uuid', 
-                        'knownBy' : 'uuid', 
-                        "htmlClass": "col-sm-6",
-                        "onChange": "updated(modelValue,form)",
-                        "disableSuccessState":true,
-                        "feedback": true,
-                        "type" : "filtereddropdown",
-                        "options":{
-                          "tagging" : true,
-                          "fetchDataEventName" : "openedSearchDropdownWell",
-                          "dataArrivesEventName" : "autoCompleteData",
-                          "multiple" : false,
-                          "staticItems" : []
-                        }
-
-
-                        
-                    },*/
+                },
                 { 
                         'title' : 'SGC Global ID',
                         'key' : 'sgcglobalid', 
@@ -129,7 +102,17 @@ angular.module('chembiohubAssayApp')
 
 
                         
-                    },
+                },
+                {
+                    "key": "uuid",
+                    "knownBy": "uuid",
+                    "title": "ChemBio Hub ID",
+                    "htmlClass": "col-sm-4",
+                    "disableSuccessState": true,
+                    "feedback": false
+                }, 
+                
+                
             ];
 
             /**
@@ -164,37 +147,13 @@ angular.module('chembiohubAssayApp')
                       "feedback": false
 
                     },
-                    "uuid": {
-                        "title": "ChemBio Hub ID",
-                        "type": "string",
-                        "pattern": "^[a-zA-Z0-9_ /&]*$",
-	                    "disableSuccessState": true,
-	                    "feedback": false
-
-                    },
-                    /*"uuid":{
-                      "type" : "filtereddropdown",
-                      "items": {
-                        "type": "string"
-                      },
-                      'format': "filtereddropdown",
-                      "default" : [],
-                      "options":{
-                          "tagging" : true,
-                          "fetchDataEventName" : "openedSearchDropdownWell",
-                          "dataArrivesEventName" : "autoCompleteData",
-                          "multiple" : false,
-                          "staticItems" : []
-                        }
-
-                    },*/
                     "sgcglobalid":{
                       "type" : "filtereddropdown",
                       "items": {
                         "type": "string"
                       },
                       'format': "filtereddropdown",
-                      "default" : [],
+                      "default" : undefined,
                       "options":{
                           "tagging" : true,
                           "fetchDataEventName" : "openedSearchDropdownSGC",
@@ -204,6 +163,15 @@ angular.module('chembiohubAssayApp')
                         }
 
                     },
+                    "uuid": {
+                        "title": "ChemBio Hub ID",
+                        "type": "string",
+                        "pattern": "^[a-zA-Z0-9_ /&]*$",
+	                    "disableSuccessState": true,
+	                    "feedback": false
+
+                    },
+                    
 
                     
                 },
@@ -269,7 +237,7 @@ angular.module('chembiohubAssayApp')
                         "type": "string"
                       },
                       'format': "filtereddropdown",
-                      "default" : [],
+                      "default" : undefined,
                       "options":{
                           "tagging" : false,
                           "fetchDataEventName" : "openedSearchDropdown",
@@ -586,6 +554,53 @@ angular.module('chembiohubAssayApp')
                 //do the search here
 
             };
+
+            $scope.hitLocations = function(plate) {
+              
+              var wellsJson = JSON.parse(plate.custom_fields.wells);
+              var arr = _.pairs(wellsJson);
+
+              //find/filter wells which have a uuid assigned
+              var hits = "";
+              var addToHits = function(str){
+                if(hits == ""){
+                  hits = str
+                }
+                else {
+                  hits = hits + ", " + str;  
+                }
+              }
+              angular.forEach(arr, function(well){
+                
+                //each well is now an array where well[0] is the well location and well[1] is the well form
+                if(well[1].uuid != undefined || well[1].sgcglobalid != undefined){
+
+                  //now check if there is a match to the search term
+                  if($scope.plateSearchForm.uuidglobal == well[1].uuid){
+
+                    addToHits(well[0]);
+
+                  }
+                  else if($scope.plateSearchForm.oxid){
+                    //console.log(well[1]);
+                    if(typeof well[1].sgcglobalid === 'string'){
+                      
+                      var n = well[1].sgcglobalid.indexOf($scope.plateSearchForm.oxid, 0);
+                      
+                      if(n > -1){
+                        
+                        addToHits(well[0]);
+                      }
+                    }
+                    
+                  }
+
+                }
+
+              })
+
+              return hits;
+            }
 
             /**
              * @ngdoc method
