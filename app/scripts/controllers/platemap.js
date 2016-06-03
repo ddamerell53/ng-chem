@@ -538,7 +538,7 @@ angular.module('chembiohubAssayApp')
              * @methodOf chembiohubAssayApp.controller:PlatemapCtrl
              * @description
              * Pagination function for the plate list
-             * Sets the scope flaag plateSaved for confirmation in user interface.
+             * Sets the scope flag plateSaved for confirmation in user interface.
              * @param {integer} newPage the page defining the subset of results to show (based on items per page)
              *
              */
@@ -555,51 +555,58 @@ angular.module('chembiohubAssayApp')
 
             };
 
+            /**
+             * @ngdoc method
+             * @name chembiohubAssayApp.controller:PlatemapCtrl#$scope.hitLocations
+             * @methodOf chembiohubAssayApp.controller:PlatemapCtrl
+             * @description
+             * Gets the wells which trigger a hit for the plate search form, creates a string list and sends back to the table
+             * Works out hits from whichever search parameter has been used.
+             * @param {string} plate a string representation of the JSON representing the plate from the table row.
+             *
+             */
             $scope.hitLocations = function(plate) {
               
-              var wellsJson = JSON.parse(plate.custom_fields.wells);
-              var arr = _.pairs(wellsJson);
+                var wellsJson = JSON.parse(plate.custom_fields.wells);
+                var arr = _.pairs(wellsJson);
 
-              //find/filter wells which have a uuid assigned
-              var hits = "";
-              var addToHits = function(str){
-                if(hits == ""){
-                  hits = str
-                }
-                else {
-                  hits = hits + ", " + str;  
-                }
-              }
-              angular.forEach(arr, function(well){
-                
-                //each well is now an array where well[0] is the well location and well[1] is the well form
-                if(well[1].uuid != undefined || well[1].sgcglobalid != undefined){
-
-                  //now check if there is a match to the search term
-                  if($scope.plateSearchForm.uuidglobal == well[1].uuid){
-
-                    addToHits(well[0]);
-
+                //find/filter wells which have a uuid assigned
+                var hits = "";
+                var addToHits = function(str){
+                  if(hits == ""){
+                    hits = str
                   }
-                  else if($scope.plateSearchForm.oxid){
-                    //console.log(well[1]);
-                    if(typeof well[1].sgcglobalid === 'string'){
-                      
-                      var n = well[1].sgcglobalid.indexOf($scope.plateSearchForm.oxid, 0);
-                      
-                      if(n > -1){
-                        
-                        addToHits(well[0]);
-                      }
+                  else {
+                    hits = hits + ", " + str;  
+                  }
+                }
+                angular.forEach(arr, function(well){
+                  
+                  //each well is now an array where well[0] is the well location and well[1] is the well form
+                  if(well[1].uuid != undefined || well[1].sgcglobalid != undefined){
+
+                    //now check if there is a match to the search term
+                    if($scope.plateSearchForm.uuidglobal == well[1].uuid){
+
+                      addToHits(well[0]);
+
                     }
-                    
+                    else if($scope.plateSearchForm.oxid){
+                      //console.log(well[1]);
+                      if(typeof well[1].sgcglobalid === 'string'){
+                        var n = well[1].sgcglobalid.indexOf($scope.plateSearchForm.oxid, 0);
+                        if(n > -1){
+                          addToHits(well[0]);
+                        }
+                      }
+                      
+                    }
+
                   }
 
-                }
+                })
 
-              })
-
-              return hits;
+                return hits;
             }
 
             /**
