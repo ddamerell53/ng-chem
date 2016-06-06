@@ -97,9 +97,18 @@ angular.module('chembiohubAssayApp')
             $scope.setLoadingMessageHeight();
             $scope.currentlyLoading = true;
             $scope.cbh.justAdded = true;
+            var postData = {
+                "multiplebatch" : $scope.datasets[$scope.current_dataset_id].config.multiplebatch,
+                "task_id_for_save" : $scope.datasets[$scope.current_dataset_id].config.task_id_for_save
+            }
             CBHCompoundBatch.saveMultiBatchMolecules($scope.datasets[$scope.current_dataset_id].config).then(
                     function(data){
-                        $state.transitionTo("cbh.searchv2", 
+                        if(data.status == 202){
+                            //not yet saved properly
+                            $scope.datasets[$scope.current_dataset_id].config.task_id_for_save = data.data.task_id_for_save;
+                            $timeout($scope.saveTemporaryCompoundData, 500);
+                        }else if(data.status == 201){
+                            $state.transitionTo("cbh.searchv2", 
                                         {encoded_query: $filter("encodeParamForSearch")({"field_path": "multiple_batch_id", "value": $scope.datasets[$scope.current_dataset_id].config.multiplebatch + ""}), 
                              pids : [$scope.proj.id]},
                             { location: true, 
@@ -107,6 +116,8 @@ angular.module('chembiohubAssayApp')
                                             relative: null, 
                                             notify: true }
                                         );
+                        }
+                        
 
                     }, function(error){
                         $scope.currentlyLoading = false;
@@ -461,7 +472,7 @@ angular.module('chembiohubAssayApp')
                 "config": conf,
                 "cancellers" : []
             }
-            $timeout($scope.createMultiBatch,200);
+            $timeout($scope.createMultiBatch,1000);
         };
             
         $scope.sketchMolfile={"molecule":{}};
@@ -486,27 +497,30 @@ angular.module('chembiohubAssayApp')
             CBHCompoundBatch.createMultiBatch(
                 $scope.datasets[$scope.current_dataset_id]).then(
                     function(data){
-                        $scope.currentlyLoading = false;
-                        $scope.filesInProcessing = false;
+                        // $scope.currentlyLoading = false;
+                        // $scope.filesInProcessing = false;
                         $scope.datasets[$scope.current_dataset_id].config = data.data;
-                        $scope.dataReady = true;
-                        $scope.compoundBatches.uncuratedHeaders = data.data.headers;
+                        // $scope.dataReady = true;
+                        // $scope.compoundBatches.uncuratedHeaders = data.data.headers;
                        
 
-                        $scope.imageCallback();
-                        $scope.compoundBatches.data =data.data.objects;
-                        $scope.compoundBatches.savestats = data.data.savestats;
-                        $scope.totalCompoundBatches = data.data.batchstats.total;
+                        // $scope.imageCallback();
+                        // $scope.compoundBatches.data =data.data.objects;
+                        // $scope.compoundBatches.savestats = data.data.savestats;
+                        // $scope.totalCompoundBatches = data.data.batchstats.total;
 
 
                         //Here we change the URL without changing the state
-                         $state.go ($state.current.name, 
-                                {"mb_id" : $scope.datasets[$scope.current_dataset_id].config.multiplebatch,
-                                "project_key": $stateParams.project_key}, 
-                                { location: true, 
-                                    inherit: false, 
-                                    relative: $state.$current, 
-                                    notify: true });
+                        var newParams =  {"mb_id" : $scope.datasets[$scope.current_dataset_id].config.multiplebatch,
+                                "project_key": $stateParams.project_key}
+                         $state.transitionTo($state.current.name, 
+                                             newParams, 
+                                            { location: true, 
+                                                inherit: false, 
+                                                relative: $state.$current, 
+                                                notify: false });
+                         $stateParams = newParams;
+                         $scope.initialise();
                         // $stateParams.mb_id = $scope.datasets[$scope.current_dataset_id].config.multiplebatch;
 
                         //returns a multiple batch id and a status
@@ -614,6 +628,7 @@ angular.module('chembiohubAssayApp')
             }
 
              if (angular.isDefined($stateParams.mb_id)){
+
                 getResultsPage($scope.pagination.current);
             }
         // getResultsPage($scope.pagination.current);
@@ -752,6 +767,8 @@ angular.module('chembiohubAssayApp')
                 $scope.searchForm = false; //angular.copy(pf.searchForm);
 
              $scope.dataReady = true;
+             $scope.currentlyLoading = false;
+            $scope.filesInProcessing = false;
 
                 if(result.data.objects.length > 0){
                     var size = ($scope.listOrGallery.choice=="gallery") ? 100 : 75;
@@ -771,6 +788,12 @@ angular.module('chembiohubAssayApp')
                     }
                 }
             
+       }, function(error){
+          if(error.status == 409){
+            $timeout(function(){
+                getResultsPage(pageNumber);
+            }, 500);
+          };
        });    
 
        
