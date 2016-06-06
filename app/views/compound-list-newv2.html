@@ -30,14 +30,23 @@
                         </div>
                         <div class="spacer"></div>
                     </div>
-                    <div ng-if="addingData && cbh.projAddingTo.project_type.show_compounds == false">
+                    <div ng-if="addingData">
                         <div class="col-xs-12">
                             <h2 class="blue"><small><span class="glyphicon glyphicon-plus"></span>Adding {{cbh.projAddingTo.project_type.show_compounds == true ? 'compounds' : 'items' }} to {{cbh.projAddingTo.name}} </small></h2>
                         </div>
                         <form name="myForm" id="myForm" role="form" ng-submit="doSingleCompoundValidation(myForm)">
-                            <div ng-repeat="form in formChunks" class="col-xs-12 col-sm-4">
-                                <div class=" form-group" sf-schema="myschema" sf-form="form" sf-model="newMol.custom_fields" ></div>
-                                <div class="spacer"></div>
+                            <div class="col-sm-4" ng-if="cbh.projAddingTo.project_type.show_compounds == true">
+                                <chemdoodlewrapper molfile="newMol.ctab" elementid="'addACompound'" molecule-changed-event-name="addACompoundChanged" set-molecule-event-name="setAddACompound">
+                                    <canvas id="addACompound"></canvas>
+                                </chemdoodlewrapper>
+                            </div>
+                            <div class="col-xs-12 col-sm-8">
+                                <div ng-repeat="formPair in formChunks" class="col-xs-12">
+                                    <div ng-repeat="form in formPair" class="col-sm-6">
+                                        <div class=" form-group" sf-schema="myschema" sf-form="form" sf-model="newMol.custom_fields" ></div>
+                                    </div>
+                                    <div class="spacer"></div>
+                                </div>
                             </div>
                             <div class="row" ng-if="!myForm.$valid">
                                 <div class="help-block col-xs-12 text-center">

@@ -114,6 +114,7 @@ angular.module('chembiohubAssayApp')
 
                     if (cbh.cameFromSavedSearch == true) {
                         $rootScope.$broadcast("chemicalSearch");
+
                     } else {
                         $rootScope.$broadcast("chemicalFilterApplied");
                         $rootScope.$broadcast("searchParamsChanged");

@@ -1,13 +1,14 @@
 
 <div class="row">
-<div class="col-md-3 holder"  >
+<div class="col-xs-12">
+<div class="col-md-2 holder"  >
 	<fieldset class="breadcrumbs">
 		<legend>Hidden Fields</legend>
 		<ul class="list-inline">
 			<div class="dropdown">
 				<button id="hidefieldOptions" type="button" data-toggle="dropdown"class="btn btn-primary btn-lg">
 					<span ng-if="!hide_objects || hide_objects.length == 0">
-                     		Nothing Hidden
+                     		None Hidden
                      	</span>
                      <span ng-if="hide_objects.length == 1">
                      		{{hide_objects[0].knownBy}}
@@ -36,7 +37,7 @@
 	</fieldset>
 
 </div>
-<div class="col-md-4 holder" >
+<div class="col-md-3 holder" >
 
 	<fieldset class="breadcrumbs">
 		<legend>Sorts</legend>
@@ -50,11 +51,37 @@
 				<button type="button" class="close" aria-label="Close" ng-click="closeSortBreadcrumb(bc)"><span aria-hidden="true">&times;</span></button>
 			</li>
 			<li ng-if="!sort_objects || sort_objects.length == 0">
-				<small>No sorts</small>
+				<small>No sorts (click on a field header to sort)</small>
 			</li>
 
 		</ul>
 	</fieldset>
+</div>
+<div class="col-md-2 holder" >
+
+    <fieldset class="breadcrumbs">
+        <legend>Structure Search</legend>
+        <ul class="list-inline">
+            
+            <!-- need this to be able to launch the filter window too. Just use broadcast? -->
+            <li class="breadcrumb" style="width:100%" >
+                
+                <p class="nexa" >
+                    <button ng-if="chemicalfilter" type="button" class="close pull-right" aria-label="Close" ng-click="removeStructureSearch()"><span aria-hidden="true">&times;</span></button>
+                    <span class="glyphicon glyphicon-filter pull-right" ></span>
+                    <span ng-if="!chemicalfilter" class="bcname" ng-click="filterClicked(structureCol)">None</span><br>
+                    <span ng-if="!chemicalfilter" class="bcname" ng-click="filterClicked(structureCol)" style="font-size:0.8em; color:#aaa;">(edit)</span>
+                   
+                    <img  ng-click="filterClicked(structureCol)" style="cursor:pointer;margin-top:-20px;" ng-if="chemicalfilter.image" ng-src="data:image/png;base64,{{chemicalfilter.image}}"></img>
+                    <span ng-if="chemicalfilter" class="bcname pull-right" ng-click="filterClicked(structureCol)" style="font-size:0.8em; color:#aaa;">(edit)</span>
+                    
+                </p>
+
+            </li>
+
+        </ul>
+    </fieldset>
+
 </div>
 <div class="col-md-4 holder" >
 
@@ -63,20 +90,7 @@
 		<ul class="list-inline">
 			
 			<!-- need this to be able to launch the filter window too. Just use broadcast? -->
-            <li class="breadcrumb" ng-if="chemicalfilter" >
-                
-                <p class="nexa">
-                    <button type="button" class="close pull-right" aria-label="Close" ng-click="removeStructureSearch()"><span aria-hidden="true">&times;</span></button>
-                    <span class="glyphicon glyphicon-filter pull-right" ></span>
-                    <span class="bcname" ng-click="filterClicked(structureCol)">Structure Search</span><br>
-                    <span class="bcname" ng-click="filterClicked(structureCol)" style="font-size:0.8em; color:#aaa;">{{queryName}}</span>
-                    
-                    <img ng-if="chemicalfilter.image" ng-src="data:image/png;base64,{{chemicalfilter.image}}"></img>
 
-                    
-                </p>
-
-            </li>
 			<li class="breadcrumb" ng-repeat="bc in filter_objects" >
 				
 				<p class="nexa">
@@ -89,8 +103,8 @@
 				</p>
 
 			</li>
-			<li ng-if="!chemicalfilter && (!filter_objects || filter_objects.length == 0 )">
-				<small>No filters</small>
+			<li ng-if="(!filter_objects || filter_objects.length == 0 )">
+				<small>No filters (click on a field header to filter)</small>
 			</li>
 
 		</ul>
@@ -99,5 +113,6 @@
 </div>
 <div class="col-md-1">
     <button style="margin-top:30px" class="btn btn-lg btn-danger pull-right" ng-click="cbh.resetSearch()">Reset</button>
+</div>
 </div>
 </div>
