@@ -150,22 +150,7 @@ angular.module('chembiohubAssayApp')
         return promise;
     }
 
-    /**
-     * @ngdoc method
-     * @name validate
-     * @methodOf chembiohubAssayApp.CBHCompoundBatch
-     * @description
-     * Calls the cbh_compound_batches webservice to validate a drawn chemical element in ctab format.
-     * @params {string} project_key - specifies the project which the batches will belong to
-     * @params {Object} values - The moleculaar daata in ctab (mol) format
-     * @returns {Object} promise from API call to validate the given molecule
-     *
-     */
-    CBHCompoundBatch.validate = function(project_key, data) {
-      return $http.post( urlConfig.cbh_compound_batches.list_endpoint + "/validate/", {"ctab":data, "project_key": project_key});
-
-    };
-
+ 
     /**
      * @ngdoc method
      * @name createMultiBatch
@@ -202,15 +187,7 @@ angular.module('chembiohubAssayApp')
                                          
                             });
         }
-        if(currentDataset.config.type == "sketch"){
-          promise = $http.post(urlConfig.cbh_compound_batches.list_endpoint + "/validate_drawn/"
-                            ,currentDataset.config  ,
-                            {
-                              
-                              timeout: canceller.promise,
-                                         
-                            });
-        }
+        
         
         return  promise;
                   
