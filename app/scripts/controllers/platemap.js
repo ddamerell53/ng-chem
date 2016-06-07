@@ -188,7 +188,7 @@ angular.module('chembiohubAssayApp')
              */
             $scope.schemaFormHolder.plate_search_form = [
                 { 
-                        'title' : 'Choose a UOX ID',
+                        'title' : 'Choose a SGC Global ID',
                         'key' : 'uuidglobal', 
                         'knownBy' : 'uuidglobal', 
                         "htmlClass": "col-xs-3",
@@ -198,7 +198,7 @@ angular.module('chembiohubAssayApp')
                         "type" : "filtereddropdown",
                         "options":{
                           "tagging" : false,
-                          "fetchDataEventName" : "openedSearchDropdown",
+                          "fetchDataEventName" : "openedSearchDropdownSGC",
                           "dataArrivesEventName" : "autoCompleteData",
                           "multiple" : false,
                           "staticItems" : []
@@ -210,7 +210,7 @@ angular.module('chembiohubAssayApp')
                     {
                     "key": "oxid",
                     "knownBy": "oxid",
-                    "title": "SGC Oxford ID",
+                    "title": "Text Search",
                     "htmlClass": "col-xs-3",
                     "disableSuccessState": true,
                     "feedback": false
@@ -224,7 +224,7 @@ angular.module('chembiohubAssayApp')
              * @name chembiohubAssayApp.controller:PlatemapCtrl#$scope.schemaFormHolder.well_schema
              * @propertyOf chembiohubAssayApp.controller:PlatemapCtrl
              * @description
-             * Schema definition for the angular schema form for narrowing down the platemap list based on a CBH ID or SGCOxford ID.
+             * Schema definition for the angular schema form for narrowing down the platemap list based on a CBH ID or SGC Oxford ID.
              *
              */
             $scope.schemaFormHolder.plate_search_schema = {
@@ -240,7 +240,7 @@ angular.module('chembiohubAssayApp')
                       "default" : undefined,
                       "options":{
                           "tagging" : false,
-                          "fetchDataEventName" : "openedSearchDropdown",
+                          "fetchDataEventName" : "openedSearchDropdownSGC",
                           "dataArrivesEventName" : "autoCompleteData",
                           "multiple" : false,
                           "staticItems" : []
@@ -248,7 +248,7 @@ angular.module('chembiohubAssayApp')
 
                     },
                     "oxid": {
-                        "title": "SGC Oxford ID",
+                        "title": "Text Search",
                         "type": "string"
                     },
 
@@ -410,7 +410,7 @@ angular.module('chembiohubAssayApp')
             $scope.loadPlateMaps = function(){
 
                 //has the user specified a UOX ID to narrow down the plates with?
-                console.log("loadPlateMaps", $scope.plateSearchForm);
+                
                 if(typeof $scope.plateSearchForm.uuidglobal === "string"){
                     //tried setting up a textsearch to see if the uuid is anywhere in the object - 
                     //needed config adding to the elasticsearch client and also adding to the indexed fields list in base.py
@@ -566,46 +566,75 @@ angular.module('chembiohubAssayApp')
              *
              */
             $scope.hitLocations = function(plate) {
-              
+                if($scope.plateSearchForm.oxid == undefined && $scope.plateSearchForm.uuidglobal == undefined){
+                  return "";
+                }
                 var wellsJson = JSON.parse(plate.custom_fields.wells);
                 var arr = _.pairs(wellsJson);
 
                 //find/filter wells which have a uuid assigned
                 var hits = "";
-                var addToHits = function(str){
-                  if(hits == ""){
-                    hits = str
-                  }
-                  else {
-                    hits = hits + ", " + str;  
-                  }
-                }
+                
+                
                 angular.forEach(arr, function(well){
                   
                   //each well is now an array where well[0] is the well location and well[1] is the well form
                   if(well[1].uuid != undefined || well[1].sgcglobalid != undefined){
 
                     //now check if there is a match to the search term
-                    if($scope.plateSearchForm.uuidglobal == well[1].uuid){
+                    if($scope.plateSearchForm.uuidglobal && $scope.plateSearchForm.uuidglobal == well[1].sgcglobalid){
 
-                      addToHits(well[0]);
+                      //addToHits(well[0]);
+                      if(hits == ""){
+                        hits = well[0]
+                      }
+                      else {
+                        hits = hits + ", " + well[0];  
+                      }
 
                     }
-                    else if($scope.plateSearchForm.oxid){
-                      //console.log(well[1]);
-                      if(typeof well[1].sgcglobalid === 'string'){
-                        var n = well[1].sgcglobalid.indexOf($scope.plateSearchForm.oxid, 0);
-                        if(n > -1){
-                          addToHits(well[0]);
-                        }
-                      }
+                    else if($scope.plateSearchForm.oxid && $scope.plateSearchForm.oxid != '' && $scope.plateSearchForm.oxid != undefined){
+                      
+                      //if(typeof well[1].sgcglobalid === 'string'){
+
+                        //get all the values for the well object
+                        var vals = _.values(well[1]);
+
+                        angular.forEach(vals, function(va){
+                          if(typeof va === 'string' && va != ""){
+                            var n = va.indexOf($scope.plateSearchForm.oxid, 0);
+                            
+                            if(n > -1){
+                              //addToHits(well[0]);
+                              if(hits == ""){
+                                hits = well[0]
+                              }
+                              else {
+                                hits = hits + ", " + well[0];  
+                              }
+                            }
+                          }
+                          
+                        });
+
+                        
+                      //}
                       
                     }
 
                   }
 
-                })
+                });
 
+                /*function addToHits(str){
+                  if(hits == ""){
+                    hits = str
+                  }
+                  else {
+                    hits = hits + ", " + str;  
+                  }
+                }*/
+                
                 return hits;
             }
 
