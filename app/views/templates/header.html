@@ -32,7 +32,7 @@
                 <a id="projectsBtn" class="mt-8" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     
                         <div class="dropdown" ng-show="isLoggedIn()" style="background-color:rgb(68,104,125); padding:16px;">
-                            <strong class="text-center nexa" style="padding-top:5px; color:white;"><img src="https://chembiohub.ox.ac.uk/hub/bower_components/chembiohub-theme/img/CBH_2_2_LowRes.png" style="height:45px">{{cbh.appName}}</strong>&nbsp;<span class="caret" style="color:white;"></span>
+                            <strong class="text-center nexa" style="padding-top:5px; color:white;"><img src="bower_components/chembiohub-theme/img/CBH_2_2_LowRes.png" style="height:45px">{{cbh.appName}}</strong>&nbsp;<span class="caret" style="color:white;"></span>
                             <ul class="dropdown-menu ng-animate" role="menu" aria-labelledby="projectsBtn" style="width:210px;">
                                 <li role="presentation" style="background-color:#ddd; padding:0 8px;"><span class="glyphicon glyphicon-user"></span> <strong class="nexa"><span>{{cbh.logged_in_user.first_name || cbh.logged_in_user.username}}</span></strong></li>
                                 <li role="presentation" ng-if="cbh.logged_in_user.is_superuser" style="padding: 0 8px;"><a ng-href="{{cbh.api_base}}/admin"><span class="glyphicon glyphicon-cog"></span> <strong class="nexa">Admin Panel</strong></a></li>
