@@ -106,7 +106,7 @@ angular.module('chembiohubAssayApp')
                         if(data.status == 202){
                             //not yet saved properly
                             $scope.datasets[$scope.current_dataset_id].config.task_id_for_save = data.data.task_id_for_save;
-                            $timeout($scope.saveTemporaryCompoundData, 500);
+                            $scope.saveTemporaryCompoundData();
                         }else if(data.status == 201){
                             $state.transitionTo("cbh.searchv2", 
                                         {encoded_query: $filter("encodeParamForSearch")({"field_path": "multiple_batch_id", "value": $scope.datasets[$scope.current_dataset_id].config.multiplebatch + ""}), 
