@@ -354,34 +354,7 @@ $urlRouterProvider.when('', '/projects/list');
         controller: 'AddCompoundsCtrl',
         // reloadOnSearch: false
       })
-      .state('cbh.projects.project.addsingle', {
-        url: 'addsingle/?mb_id=&warningsFilter=&idToClone=',
-        templateUrl: 'views/add-single-compound.html',
-        controller: 'AddSingleCompoundCtrl',
-        params: {
-          idToClone : undefined
-        },
-        resolve: {
-            mol: ['CBHCompoundBatch', '$stateParams', '$timeout', function(CBHCompoundBatch, $stateParams, $timeout) {
-              if($stateParams.idToClone){
-                return CBHCompoundBatch.get( $stateParams.idToClone ).then(function(data){
-                    data.custom_fields = data.custom_fields;
-                    return data
-                  
-                });
-                }
-                else{
-                    return {
-                        molecule: "",
-                        custom_fields: {},
-                        supplementaryFields: [],
-                    }
-                }
-            }],
-        }
-
-
-      })
+      
     
 
     /* PLATE MAP IMPLEMENTATION */

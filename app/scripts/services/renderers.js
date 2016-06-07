@@ -399,15 +399,12 @@ angular.module('chembiohubAssayApp')
 
                             Handsontable.Dom.addEvent(a, 'click', function(e) {
                                 e.preventDefault(); // prevent selection quirk
-                                if (scope.cbh.projAddingTo.project_type.show_compounds) {
-                                    //If this is a compounds project redirect to compound clone page
-                                    $state.go("cbh.projects.project.addsingle", { "project_key": scope.cbh.projAddingTo.project_key, "idToClone": mol.id }, { reload: true });
-                                } else {
+                                
                                     scope.$apply(function() {
                                         $rootScope.$broadcast("cloneAnItem", mol)
                                     });
 
-                                }
+                                
 
                             });
                             Handsontable.Dom.empty(td);

@@ -154,14 +154,10 @@ angular.module('chembiohubAssayApp')
 
             $scope.openClone = function() {
                 
-                if ($scope.mol.projectfull.project_type.show_compounds) {
-                    //If this is a compounds project redirect to compound clone page
-                    
-                    $state.go("cbh.projects.project.addsingle", { 'project_key': $scope.mol.projectfull.project_key, idToClone: $scope.mol.id }, { reload: true });
-                } else {
+                
                     $rootScope.$broadcast("cloneAnItem", mol);
                     $modalInstance.dismiss("cancel");
-                }
+                
 
             }
 

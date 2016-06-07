@@ -248,15 +248,12 @@ angular.module('chembiohubAssayApp')
          * @param {function} callback  the callback function to trigger functionality
          *
          */
+
         $scope.$on("chemicalFilterApplied", function(){
             //get whatever the applied filter is
+            console.log("chemfilt")
             $scope.chemicalfilter = angular.copy(skinConfig.objects[0].chemicalSearch);
-            angular.forEach($scope.cbh.tabular_data_schema, function(col){
-              if(col.knownBy=="Structure"){
-                $scope.structureCol = col;
-              }
-              
-            });
+            
             var titles = skinConfig.objects[0].chem_query_schemaform.default.form[0].items[0].titleMap;
             angular.forEach(titles, function(t){
               if(t.value == $scope.chemicalfilter.query_type){
@@ -265,6 +262,12 @@ angular.module('chembiohubAssayApp')
             })
         });
       
+      angular.forEach($scope.cbh.tabular_data_schema, function(col){
+              if(col.knownBy=="Structure"){
+                $scope.structureCol = col;
+              }
+              
+            });
 
 
       }],

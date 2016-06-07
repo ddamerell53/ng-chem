@@ -18,10 +18,8 @@
                         <li ><strong class="nexa"><span>add</span></strong></li>
                     </ul>
                     <p style="margin: 0 0 0 20px;">
-                        <a ng-if="project.editor && project.project_type.show_compounds && !project.project_type.plate_map_project_type" ui-sref="cbh.projects.project.addsingle({project_key: project.project_key})" ><span class="glyphicon glyphicon-pencil"></span> Draw compound</a>
-                        <br ng-if="project.editor && project.project_type.show_compounds && !project.project_type.plate_map_project_type">
-                        <a ng-if="project.editor && !project.project_type.show_compounds && !project.project_type.plate_map_project_type" ng-click="toggleSingleForm.showFlag = !toggleSingleForm.showFlag; cbh.showSingle = true" ui-sref="cbh.searchv2({pids: project.id })"><span class="glyphicon glyphicon-plus-sign"></span> Add single {{project.project_type.show_compounds ? 'compound' : 'inventory item'}}</a>
-                        <br ng-if="project.editor && !project.project_type.show_compounds && !project.project_type.plate_map_project_type">
+                        <a ng-if="project.editor && !project.project_type.plate_map_project_type" ng-click="toggleSingleForm.showFlag = !toggleSingleForm.showFlag; cbh.showSingle = true" ui-sref="cbh.searchv2({pids: project.id })"><span class="glyphicon glyphicon-plus-sign"></span> Add single {{project.project_type.show_compounds ? 'compound' : 'inventory item'}}</a>
+                        <br ng-if="project.editor &&  !project.project_type.plate_map_project_type">
                         <a ng-if="project.editor && !project.project_type.plate_map_project_type" ui-sref="cbh.projects.project.addcompounds({project_key: project.project_key})"><span class="glyphicon glyphicon-plus-sign"></span> Add multiple {{project.project_type.show_compounds ? 'compounds' : 'inventory items' }}</a>
                         <br ng-if="project.editor && project.project_type.plate_map_project_type">
                         <a ng-if="project.editor && project.project_type.plate_map_project_type" ui-sref="cbh.projects.project.addplate({project_key: project.project_key})"><span class="glyphicon glyphicon-plus-sign"></span> Add Plate</a>

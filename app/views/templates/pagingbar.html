@@ -36,12 +36,10 @@
                             <label ng-if="addingData || editModeUnreachable()" class="btn btn-default" disabled title="{{cbh.messages.edit_mode_unavailable_projects}}">
                                 <span class="glyphicon glyphicon-pencil"></span><span class="hidden-xs hidden-sm hidden-md"> Edit</span>
                             </label>
-                            <label ng-if="!cbh.editMode && !editModeUnreachable() && cbh.projAddingTo.project_type.show_compounds == false" class="btn btn-default" ng-class="{ active: addingData === true }" >
+                            <label ng-if="!cbh.editMode && !editModeUnreachable()" class="btn btn-default" ng-class="{ active: addingData === true }" >
                                 <input type="radio"  ng-click="toggleAddData()" id="list-btn"  style="display:none;"  ><span class="glyphicon glyphicon-plus"></span><span class="hidden-xs hidden-sm hidden-md"> Add Single</span>
                             </label>
-                            <label  ui-sref="cbh.projects.project.addsingle({project_key: cbh.projAddingTo.project_key})" ng-if="!cbh.editMode && !editModeUnreachable() && cbh.projAddingTo.project_type.show_compounds == true" class="btn btn-default"  >
-                                <span class="glyphicon glyphicon-plus"></span><span class="hidden-xs hidden-sm hidden-md"> Add Single</span>
-                            </label>
+                            
                             <label ng-if="editModeUnreachable() || cbh.editMode" class="btn btn-default" disabled title="{{cbh.messages.edit_mode_unavailable_projects}}">
                                 <span class="glyphicon glyphicon-plus"></span><span class="hidden-xs hidden-sm hidden-md"> Add Single</span>
                             </label>

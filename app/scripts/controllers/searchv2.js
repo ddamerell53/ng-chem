@@ -270,7 +270,6 @@ angular.module('chembiohubAssayApp')
                             //change capped_url to the newly retrieved capped url
                             var savedSearchObj = {
                                 "project": {"pk" :data.id},
-                                "blinded_batch_id": "EMPTY_ID",
                                 "custom_fields": {
                                     alias: $scope.newSavedSearchModel.alias,
                                     url: window.location.href,

@@ -588,6 +588,9 @@ angular.module('chembiohubAssayApp')
                 //TODO: account for string being too long for text field length (1028 chars)
 
             };
+            //Event names for adding and setting compounds for the editor
+            $scope.addACompoundChanged = 'addACompoundChanged';
+            $scope.setAddACompound = 'setAddACompound';
 
             /**
              * @ngdoc method
@@ -701,18 +704,27 @@ angular.module('chembiohubAssayApp')
                         item['disableSuccessState'] = true;
 
                     });
+
+
                     $scope.myschema = angular.copy($scope.cbh.projAddingTo.schemaform.schema);
-                    $scope.formChunks = myform.chunk(Math.ceil($scope.cbh.projAddingTo.schemaform.form.length / 3));
+                    //split into arrays of length 1 inside arrays of length 2
+                    var toSplitInto = $scope.cbh.projAddingTo.project_type.show_compounds ? 2 : 3;
+                    $scope.formChunks = myform.chunk(1).chunk(toSplitInto);
 
                     $scope.newMol = {
+                        "ctab" : "",
                         "custom_fields": {},
                         "project": {"pk" : $scope.cbh.projAddingTo.id}
                     };
+
                     if(cloned){
+                        $scope.newMol.ctab = angular.copy(cloned.ctab);
                         $scope.newMol.custom_fields = angular.copy(cloned.custom_fields);
                         $scope.newMol.id = undefined;
                         $scope.newMol.resource_uri = undefined;
                     }
+                    //send the event name which sets the chemdoodle
+                    $rootScope.$broadcast($scope.setAddACompound);
                     //need to also make the form pristine and remove (usually incorrect) validation cues...
                     //we've removed the feedback because it is broken in angular schema form and therefore inconsistent.
                     angular.forEach($scope.formChunks, function(chunk) {
