@@ -242,6 +242,9 @@ angular.module('chembiohubAssayApp')
                             $rootScope.$broadcast("filtersUpdated",{});
                         }
 
+
+                        
+
                     }
                 );
             }
@@ -250,12 +253,11 @@ angular.module('chembiohubAssayApp')
                 //clear mol, redraw schema form to remove cached data from file upload plugin then dismiss instance
                 $scope.mol = {}
                 $scope.$broadcast('schemaFormRedraw');
-                $scope.modalInstance.dismiss('cancel');
                 if($scope.isUpdated){
                     $rootScope.$broadcast("filtersUpdated",{});
-                }else{
-                    
                 }
+                $scope.modalInstance.dismiss('cancel');
+                
             }
 
             //validation of form happens here

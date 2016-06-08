@@ -97,7 +97,8 @@
 					<button type="button" class="close pull-right" aria-label="Close" ng-click="closeFilterBreadcrumb(bc)"><span aria-hidden="true">&times;</span></button>
 					<span class="glyphicon glyphicon-filter pull-right" ></span>
 					<span class="bcname" ng-click="filterClicked(bc)">{{bc.knownBy}}</span><br>
-					<span class="bcname" ng-click="filterClicked(bc)" style="font-size:0.8em; color:#aaa;">{{bc.display_filter}}</span>
+					<span class="bcname" ng-click="filterClicked(bc)" style="font-size:0.8em; color:#aaa;">{{bc.display_filter | limitTo: 50}}</span>
+                    <span class="bcname" ng-if="bc.display_filter.length > 50" style="font-size:0.8em; color:#aaa;">...</span>
 
 					
 				</p>

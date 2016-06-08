@@ -9,7 +9,7 @@
                         <span ng-show="form.options.multiple && (model[form.key[form.key.length -1]].length < 4 && model[form.key[form.key.length -1]].length > 0)"  >
                             {{model[form.key[form.key.length -1]].length}} item<span ng-show="model[form.key[form.key.length -1]].length !=1"  >s</span> selected...
                             <span ng-repeat="item in model[form.key[form.key.length -1]] track by $index">
-                                    {{item}}<span ng-if="$index!=2 && model[form.key[form.key.length -1]].length !=1">,</span>
+                                    {{item | limitTo: 20 }}<span ng-if="item.length > 20">...</span><span ng-if="$index!=2 && model[form.key[form.key.length -1]].length !=1">,</span>
                             </span>
                         </span>
                         <span ng-show="form.options.multiple && model[form.key[form.key.length -1]].length > 3"  >
