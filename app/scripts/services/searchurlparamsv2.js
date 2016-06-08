@@ -108,6 +108,7 @@ angular.module('chembiohubAssayApp')
 
 
                 chemicalSearch.get({ "id": stateParams.chemical_search_id }, function(data) {
+                    
                     skinConfig.objects[0].chemicalSearch = data;
                     skinConfig.objects[0].chemicalSearch.pids = stateParams.pids;
 

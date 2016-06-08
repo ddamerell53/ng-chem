@@ -32,9 +32,10 @@ angular.module('chembiohubAssayApp')
              * Clears prevous search hits list for searches that hit an error or simply return no hits.
              *
              */
+             
             $scope.resetCompoundList = function(){
                 //We need the base statename, not the modal statename
-                $scope.totalCompoundBatches = 0;
+                
                 var stateName = $state.current.name.replace(".record", "")
                 $scope.cbh.tabular_data_schema = skinConfig.objects[0].get_filtered_table_schema(stateName, $scope.cbh.selected_projects);
 
@@ -834,6 +835,9 @@ angular.module('chembiohubAssayApp')
              */
             function getResultsPage(pageNumber, filters) {
 
+                var scroll = $(".wtHolder").scrollLeft();
+
+
                 SearchUrlParamsV2.setBaseDownloadUrl($scope.cbh, $stateParams);
                 $scope.resetCompoundList();
                 if($scope.cbh.selected_projects.length == 1){
@@ -882,6 +886,10 @@ angular.module('chembiohubAssayApp')
                         if (angular.isDefined($stateParams.showNonBlanks)) {
                             $scope.compoundBatches.showNonBlanks = JSON.parse($stateParams.showNonBlanks)
                         }
+                        $timeout(function(){
+                            $(".wtHolder").scrollLeft(scroll);
+                        });
+
                     }
                 }, function(error){
                     if(error.status == 503){
@@ -1146,17 +1154,22 @@ angular.module('chembiohubAssayApp')
                 }
                 
             }
-
-            
+            var w = angular.element($window);
+            var windowWidth = w.width();
           
             angular.element($window).bind('resize', function() {
                     //On resize we needto go to the underlying controiller to ensure that the whole of the directive is rebuilt
                     //That way the scrollbars will work properly
-                    if($state.current.name.indexOf("record") == -1){
+                    
+                    var newWindowWidth = w.width();
+                    
+                    if(newWindowWidth != windowWidth && $state.current.name.indexOf("record") == -1){
                         $scope.$apply(function() {
                             $rootScope.$broadcast("filtersUpdated",{});
                         });
                     }
+                    $timeout(function(){windowWidth = newWindowWidth});
+
                    
                 });
 

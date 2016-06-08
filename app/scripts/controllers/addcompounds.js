@@ -106,7 +106,7 @@ angular.module('chembiohubAssayApp')
                         if(data.status == 202){
                             //not yet saved properly
                             $scope.datasets[$scope.current_dataset_id].config.task_id_for_save = data.data.task_id_for_save;
-                            $timeout($scope.saveTemporaryCompoundData, 500);
+                            $scope.saveTemporaryCompoundData();
                         }else if(data.status == 201){
                             $state.transitionTo("cbh.searchv2", 
                                         {encoded_query: $filter("encodeParamForSearch")({"field_path": "multiple_batch_id", "value": $scope.datasets[$scope.current_dataset_id].config.multiplebatch + ""}), 
@@ -774,6 +774,7 @@ angular.module('chembiohubAssayApp')
                     var size = ($scope.listOrGallery.choice=="gallery") ? 100 : 75;
 
                     $scope.imageCallback();
+
                 }else if( ( $scope.pagination.current * parseInt($scope.pagination.compoundBatchesPerPage.value)) > $scope.totalCompoundBatches){
                     if($scope.pagination.current != 1){
                         $scope.pageChanged(1);
@@ -787,6 +788,7 @@ angular.module('chembiohubAssayApp')
                          $scope.noData = "No Compounds Found. To add compounds use the link above.";
                     }
                 }
+                        
             
        }, function(error){
           if(error.status == 409){

@@ -481,6 +481,7 @@ angular.module('chembiohubAssayApp')
                             TH.firstChild.appendChild(infospans);
                             TH.style['white-space'] = 'normal';
                         },
+                        
                         maxRows: scope.compounds.length,
                         renderAllRows: true,
                         autoRowSize: true,

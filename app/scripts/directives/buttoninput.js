@@ -35,9 +35,20 @@ angular.module('chembiohubAssayApp')
         
         scope.copyable = angular.copy(scope.copyModel);
 
+        var watcher = scope.$watch(function(scope) {
+                    return scope.copyModel;
+                }, 
+          function(newdata, olddata){
+          if(newdata != olddata){
+            scope.copyable = angular.copy(scope.copyModel);
+          }
+        })
+
       
       },
        controller: ['$scope', function($scope) {
+
+
          
            
        }],

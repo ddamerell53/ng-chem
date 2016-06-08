@@ -150,6 +150,7 @@ angular.module('chembiohubAssayApp')
                  *
                  */
                 redraw = function() {
+
                     var rend = renderers.getRenderers(scope, isNewCompoundsInterface);
                     var allCols = [];
 
@@ -255,25 +256,31 @@ angular.module('chembiohubAssayApp')
                          */
                         afterGetColHeader: function(col, TH) {
 
-                            var instance = this,
+                            
+                            if(angular.element(TH.firstChild)[0].children.length < 3){
+                                var instance = this,
                                 button = buildButton(allCols[col]),
                                 infospans = buildInfoSpans(allCols[col]);
 
-                            addButtonMenuEvent(button, allCols[col], TH);
-                            while (TH.firstChild.lastChild != TH.firstChild.firstChild) {
-                                TH.firstChild.removeChild(TH.firstChild.lastChild);
-
+                                addButtonMenuEvent(button, allCols[col], TH);
+                                var br = document.createElement('br');
+                                TH.firstChild.appendChild(br);
+                                TH.firstChild.appendChild(button);
+                                TH.firstChild.appendChild(infospans);
+                                TH.style['white-space'] = 'normal';
                             }
-                            var br = document.createElement('br');
-                            TH.firstChild.appendChild(br);
-                            TH.firstChild.appendChild(button);
-                            TH.firstChild.appendChild(infospans);
-                            TH.style['white-space'] = 'normal';
+                            
+                            
+                        },
+                        afterColumnResize : function(col){
+                            allCols[col]["setWidth"] = this.getColWidth(col);
                         },
                         maxRows: scope.compounds.length,
                         renderAllRows: true,
                         fillHandle: "vertical",
                         height: 600,
+                        colWidths:allCols.map(function(c){if (c.setWidth) {return c.setWidth} else{return 150;}}),
+                        manualColumnResize: true
                     }
                     if (isNewCompoundsInterface) {
                         /**
@@ -408,6 +415,7 @@ angular.module('chembiohubAssayApp')
 
                 }
                 scope.$watch("redraw", function(newValue, oldValue) {
+                    
                     redraw();
                 }, true);
 
