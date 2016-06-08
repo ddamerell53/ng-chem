@@ -30,11 +30,12 @@
 					<a ng-click="scrollTo('chem-search')"><strong class="nexa">Chemical searching</strong></a> | 
 					<a ng-click="scrollTo('edit-data')"><strong class="nexa">Edit your data</strong></a> | 
 					<a ng-click="scrollTo('export-data')"><strong class="nexa">Export your data</strong></a> | 
+					<a ng-click="scrollTo('platemaps')"><strong class="nexa">Platemaps</strong></a> 
 				</div>
 				
 				
 				<h2 class="blue" id="problem">What to do if you have a problem</h2>
-				<p><strong class="nexa blue">If you encounter a problem with AssayReg, and this help document does not provide the answer please use the AssayReg menu box to submit an issue - click the AssayReg logo and select <em>Report an Issue</em> Alternatively please email ChemBio Hub - <a href="mailto:info@chembiohub.ox.ac.uk" role="button" class="btn btn-default"><span class="glyphicon glyphicon-envelope"></span> info@chembiohub.ox.ac.uk</a></strong></p>
+				<p><strong class="nexa blue">If you encounter a problem with the ChemBio Hub platform, and this help document does not provide the answer please use the ChemBio Hub platform menu box to submit an issue - click the logo and select <em>Report an Issue</em> Alternatively please email ChemBio Hub - <a href="mailto:info@chembiohub.ox.ac.uk" role="button" class="btn btn-default"><span class="glyphicon glyphicon-envelope"></span> info@chembiohub.ox.ac.uk</a>. Support is currently very limited so it may take some time for someone to contact you with an answer.</strong></p>
 
 
 				<h2 class="blue" id="setup">Set up a new project</h2>
@@ -128,6 +129,21 @@
 
 				<h2 class="blue" id="export-data">Export your data</h2>
 				<p>If you want to export your data in an excel file, you can do so on the search page. Pick your search parameters and when you're ready, choose <strong class="blue nexa">Export all to Excel</strong> from the Export menu. If you have any Chemistry projects, you can also <strong class="blue nexa">Export all to SDF</strong>.</p>
+
+				<p class="text-right"><a ng-click="scrollTo('top')">back to top</a></p>
+
+				<h2 class="blue" id="platemaps">Platemaps</h2>
+				<p>You can set up projects which allow addition of <strong class="nexa">Platemaps</strong>. This means that you can create a grid of 48 or 96 wells (currently) and "assign" items from other projects to each well. To do this, from the project list page, click Add Project. Fill in the form as described in the <a href="#setup">Setup new project</a> section, ensuring you choose "Plate Map" as the project type. This will autocreate some default fields - please leave these as they are. When you have set up your project, Click the Add Plate link which is in the summary box.</p>
+				
+				<p>Fill in the form that is shown, and click Create New Plate. You will now see a plate grid displayed, with empty (white) wells - you're ready to start filling your plate.</p>
+
+				<p>To add something, click the desired well and it will be highlighted with a red ring. A form is displayed next to the plate. Fill in the details you need to and click Save Well. The well will turn green to show that it contains data.</p>
+
+				<p>When you have finished adding wells, click Save Plate. It will then show up in the Plate List, which is where the page forwards to the when you save a new plate. You can also access this list from the project summary or from the link at the top of the Add Plate page.</p>
+
+				<p>You can add more data to a plate later - in the plate list, click the pencil icon in the Show Plate column. Add or change wells as you did before - after making changes, click Save Well and then Save Plate.</p>
+
+				<p>You can fine tune your platemap list by either SGC Global ID or a general text search. Only plates which have a well containing the selected SGC Global ID will be shown, along with which well it's in. You can use the text search to look for anything else within your wells - barcodes, etc.</p>
 
 				
 
