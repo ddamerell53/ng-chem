@@ -263,7 +263,6 @@ angular.module('chembiohubAssayApp')
 
                                 addButtonMenuEvent(button, allCols[col], TH);
                                 while (TH.firstChild.lastChild != TH.firstChild.firstChild) {
-                                    console.log(TH.firstChild);
                                     TH.firstChild.removeChild(TH.firstChild.lastChild);
 
                                 }
