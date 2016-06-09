@@ -257,18 +257,21 @@ angular.module('chembiohubAssayApp')
                         afterGetColHeader: function(col, TH) {
 
                             
-                            if(angular.element(TH.firstChild)[0].children.length < 3){
                                 var instance = this,
                                 button = buildButton(allCols[col]),
                                 infospans = buildInfoSpans(allCols[col]);
 
                                 addButtonMenuEvent(button, allCols[col], TH);
+                                while (TH.firstChild.lastChild != TH.firstChild.firstChild) {
+                                    TH.firstChild.removeChild(TH.firstChild.lastChild);
+
+                                }
                                 var br = document.createElement('br');
                                 TH.firstChild.appendChild(br);
                                 TH.firstChild.appendChild(button);
                                 TH.firstChild.appendChild(infospans);
                                 TH.style['white-space'] = 'normal';
-                            }
+                            
                             
                             
                         },
