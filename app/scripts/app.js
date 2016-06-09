@@ -84,40 +84,7 @@ $urlRouterProvider.when('', '/projects/list');
 
 
 
-    .state('cbh.search', {
-      url: '/search?creator_uri=textsearch=created_by=editMode=&archived=&scroll=&scrollTop=&sorts=&page=&compoundBatchesPerPage=&project__project_key__in&functional_group&flexmatch&related_molregno__chembl__chembl_id__in&with_substructure&similar_to&fpValue&created__gte&created__lte&molfile&smiles&search_custom_fields__kv_any&multiple_batch_id=&viewType=&doScroll=&showBlanks=&showNonBlanks=&limit&offset&justAdded=',
-      //url: '/search',
-      //params: ['project__project_key', 'flexmatch', 'with_substructure', 'similar_to', 'fpValue', 'created__gte', 'created__lte', 'molfile', 'smiles', 'limit', 'offset', 'random'],
-      resolve: {
-        
-        projectFactory: ['ProjectFactory', function(ProjectFactory) {
-          return ProjectFactory;
-        }],
-
-        messages: ['MessageFactory', function(MessageFactory) {
-          return MessageFactory.getMessages();
-        }],
-
-      },
-
-      views: {
-        '': {
-          templateUrl: 'views/search.html',
-        },
-        'form@cbh.search': {
-          controller: 'SearchCtrl',
-          templateUrl: 'views/templates/search-template.html'
-        },
-
-        'newresults@cbh.search': {
-          templateUrl: 'views/compound-list-new.html',
-          controller: 'CompoundbatchCtrl'
-        },
-
-      }
-
-
-    })
+    
 
     .state('cbh.searchv2', {
       url: '/searchv2' + window.searchParamsString + "&editMode=",

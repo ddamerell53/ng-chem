@@ -604,12 +604,14 @@ angular.module('chembiohubAssayApp')
              */
             $scope.saveSingleCompound = function() {
                 //adding validation here
-
+                $scope.compoundSaveError = "";
                 CBHCompoundBatch.saveSingleCompound($scope.newMol).then(
                     function(data) {
                         
                         $scope.blankForm($scope.cbh.toggleAddingOff);
                         $scope.pageChanged(1);
+                    }, function(error){
+                        $scope.compoundSaveError = $scope.cbh.projAddingTo.project_type.show_compounds ? "Sorry, this compound could not be saved, please check that the number of bonds around each atom is correct." : "Unknown error occured when saving this item";
                     }
                 );
             };
@@ -697,6 +699,7 @@ angular.module('chembiohubAssayApp')
              *
              */
             $scope.blankForm = function(toggleAddingOff, cloned) {
+                $scope.compoundSaveError = "";
                 if (angular.isDefined($scope.cbh.projAddingTo)) {
                     var myform = angular.copy($scope.cbh.projAddingTo.schemaform.form);
                     //we may need to replicate this within the search form...
