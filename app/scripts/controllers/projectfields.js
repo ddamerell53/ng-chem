@@ -335,20 +335,26 @@ angular.module('chembiohubAssayApp')
                   $scope.errormess = "";
                   if(myForm.$valid){
                      var callback = function(data){
-                    $modalInstance.dismiss('cancel');
-                    location.reload(true);
-                  };
+                        $modalInstance.dismiss('cancel');
+                        location.reload(true);
+                      };
+                    var errback = function(error){
+                      if(error.status == 409){
+                          $scope.errormess = "This project name is already taken, please update project name.";
+                      }else{
+                          $scope.errormess = "Unknown error when saving project.";
+                      }
+
+                    }
                   
                   checkForDuplicateNames();
                     if( !$scope.errormess ){
                       if($scope.operation = "add"){
-                         ProjectFactory.save($scope.proj, callback);
+                         ProjectFactory.save($scope.proj, callback, errback);
 
                       }else{
                          ProjectFactory.update({"projectId": $scope.proj.id}, $scope.proj, callback);
                       }
-                    }else{
-                      //
                     }
 
                   }else{

@@ -53,6 +53,11 @@
                                     <p class="nexa text-danger"><strong>{{errormess}}</strong></p>
                                 </div>
                             </div>
+                            <div class="row" ng-if="compoundSaveError">
+                                <div class="help-block col-xs-12 text-center">
+                                    <p class="nexa text-danger"><strong>{{compoundSaveError}}</strong></p>
+                                </div>
+                            </div>
                             <div class="row">
                                 <div class="col-xs-12">
                                     <div class="pull-right">
@@ -64,6 +69,7 @@
                                 </div>
                             </div>
                         </form>
+                        
                     </div>
                     <div id="myhot" style="margin-top:5px;">
                         <div class="hot-loading text-center" style="width:100%">
