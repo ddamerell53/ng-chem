@@ -4,7 +4,7 @@
     <p class="nexa" style="color:white;" ng-if="showLoadingMessage"><small>loading {{noOfRecords}} records...</small></p>
     <p class="nexa" style="color:white;" ng-if="isLargeFileYet() > 6 && isLargeFileYet() < 20 && showLoadingMessage"><small>This is a large file and may take some time... Please wait.</small></p>
     <p class="nexa" style="color:white;" ng-if="isLargeFileYet() > 20 && showLoadingMessage"><small>Still working on your file... Thanks for your patience.</small></p>
-    <p class="nexa" style="color:white;" ng-if="showSavingMessage"><small>saving {{noOfRecords}} records...</small></p>
+    <p class="nexa" style="color:white;" ng-if="showSavingMessage"><small>saving {{compoundBatches.savestats.newbatches}} records...</small></p>
     <p class="nexa" style="color:white;" ng-if="isLargeFileYet() > 6 && isLargeFileYet() < 20 && showSavingMessage"><small>This is a large dataset and may take some time... Please wait.</small></p>
     <p class="nexa" style="color:white;" ng-if="isLargeFileYet() > 20 && showSavingMessage"><small>Still working on your dataset... Thanks for your patience.</small></p>
 </div>
@@ -114,12 +114,12 @@
                    
                 <div>
                     <strong class="nexa"><ng-pluralize count="compoundBatches.savestats.newbatches"
-                            when="{'0': '0 new batches ',
-                             'one': '1 new batch ',
-                              'other': '{} new batches '}"></ng-pluralize> will be saved to the database and <ng-pluralize count="compoundBatches.savestats.ignoring"
-                            when="{'0': '0 batches ',
-                             'one': '1 batch ',
-                              'other': '{} new batches '}"></ng-pluralize> will be ignored.
+                            when="{'0': '0 new batches',
+                             'one': '1 new batch',
+                              'other': '{} new batches'}"></ng-pluralize>&nbsp;will be saved to the database and&nbsp;<ng-pluralize count="compoundBatches.savestats.ignoring"
+                            when="{'0': '0 batches',
+                             'one': '1 batch',
+                              'other': '{} new batches'}"></ng-pluralize>&nbsp;will be ignored.
                     </strong>
                 </div>
                 <!-- Add a statement here if there are no records selected to upload explaining why save button disabled -->
