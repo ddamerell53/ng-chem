@@ -70,7 +70,13 @@ angular.module('chembiohubAssayApp')
         $scope.toggleDataSummary = {
             showFlag: true,
         }
-                $scope.cbh.appName = "ChemiReg";
+
+        $scope.largeFileUploadCheck = 0;
+
+        $scope.isLargeFileYet = function(){
+            return $scope.largeFileUploadCheck;
+        }
+        $scope.cbh.appName = "ChemiReg";
 
         /**
          * @ngdoc method
@@ -85,6 +91,9 @@ angular.module('chembiohubAssayApp')
             $("#loading-message").css("top", (scrollTop +200) + "px")
         }
 
+        $scope.tempSaveFailed = false;
+        $scope.showLoadingMessage = false;
+        $scope.showSavingMessage = false;
         /**
          * @ngdoc method
          * @name chembiohubAssayApp.controller:AddCompoundsCtrl#$scope.saveTemporaryCompoundData
@@ -96,7 +105,12 @@ angular.module('chembiohubAssayApp')
         $scope.saveTemporaryCompoundData = function(){
             $scope.setLoadingMessageHeight();
             $scope.currentlyLoading = true;
-            $scope.cbh.justAdded = true;
+            $scope.showSavingMessage = true;
+            $scope.largeFileUploadCheck = 0;
+            //$scope.cbh.justAdded = true;
+            $timeout(function(){ $scope.setLoadingMessageHeight();});
+            //need to put up a "saving..."" window same as loading window.
+            //switch between loading and saving messages dependent on saving flags.
             var postData = {
                 "multiplebatch" : $scope.datasets[$scope.current_dataset_id].config.multiplebatch,
                 "task_id_for_save" : $scope.datasets[$scope.current_dataset_id].config.task_id_for_save
@@ -107,6 +121,7 @@ angular.module('chembiohubAssayApp')
                             //not yet saved properly
                             $scope.datasets[$scope.current_dataset_id].config.task_id_for_save = data.data.task_id_for_save;
                             $scope.saveTemporaryCompoundData();
+                            $scope.largeFileUploadCheck++;
                         }else if(data.status == 201){
                             $state.transitionTo("cbh.searchv2", 
                                         {encoded_query: $filter("encodeParamForSearch")({"field_path": "multiple_batch_id", "value": $scope.datasets[$scope.current_dataset_id].config.multiplebatch + ""}), 
@@ -121,6 +136,25 @@ angular.module('chembiohubAssayApp')
 
                     }, function(error){
                         $scope.currentlyLoading = false;
+                        $scope.showSavingMessage = false;
+                        //go back to the start once this has failed
+                        //message for the user
+                        $scope.tempSaveFailed = true;
+                        
+                        //the user has to click a button to start again - wipes data
+                        //also button for contacting someone - report an error on the bar that says "number of new batches saved" (#status-bar)
+                        //change "edit data message" to sorry your data could not be processed
+
+
+                        
+
+
+
+
+
+                        $scope.datasets = [];
+
+
                     }
                 )       
         }
@@ -472,7 +506,8 @@ angular.module('chembiohubAssayApp')
                 "config": conf,
                 "cancellers" : []
             }
-            $timeout($scope.createMultiBatch,1000);
+            //$timeout($scope.createMultiBatch,1000);
+            $scope.createMultiBatch();
         };
             
         $scope.sketchMolfile={"molecule":{}};
@@ -493,6 +528,7 @@ angular.module('chembiohubAssayApp')
         $scope.createMultiBatch = function(){
             $scope.setLoadingMessageHeight();
             $scope.currentlyLoading = true;
+            $scope.showLoadingMessage = true;
             $timeout(function(){ $scope.setLoadingMessageHeight();});
             CBHCompoundBatch.createMultiBatch(
                 $scope.datasets[$scope.current_dataset_id]).then(
@@ -500,10 +536,10 @@ angular.module('chembiohubAssayApp')
                         // $scope.currentlyLoading = false;
                         // $scope.filesInProcessing = false;
                         $scope.datasets[$scope.current_dataset_id].config = data.data;
+                        $scope.noOfRecords = data.data.total_processing;
                         // $scope.dataReady = true;
                         // $scope.compoundBatches.uncuratedHeaders = data.data.headers;
-                       
-
+                        
                         // $scope.imageCallback();
                         // $scope.compoundBatches.data =data.data.objects;
                         // $scope.compoundBatches.savestats = data.data.savestats;
@@ -546,6 +582,7 @@ angular.module('chembiohubAssayApp')
                         $scope.datasets[$scope.current_dataset_id].config.status = "add";
                         $scope.dataReady = false;
                         $scope.currentlyLoading = false;
+                        $scope.showLoadingMessage = false;
 
              }); 
         }
@@ -768,6 +805,7 @@ angular.module('chembiohubAssayApp')
 
              $scope.dataReady = true;
              $scope.currentlyLoading = false;
+             $scope.showLoadingMessage = false;
             $scope.filesInProcessing = false;
 
                 if(result.data.objects.length > 0){
@@ -791,11 +829,22 @@ angular.module('chembiohubAssayApp')
                         
             
        }, function(error){
+        //this error is the polling part - if the data is not yet ready, wait 500ms and redo getResultsPage
           if(error.status == 409){
             $timeout(function(){
+                $scope.largeFileUploadCheck++;
                 getResultsPage(pageNumber);
             }, 500);
-          };
+          }
+          else {
+            //set error message for user
+            console.log(error); //for David
+            $scope.datasets[$scope.current_dataset_id].config.errors = [MessageFactory.getMessage("file_error")];
+            $scope.datasets[$scope.current_dataset_id].config.status = "add";
+                        $scope.dataReady = false;
+                        $scope.currentlyLoading = false;
+                        $scope.showLoadingMessage = false;
+          }
        });    
 
        
