@@ -73,6 +73,15 @@ angular.module('chembiohubAssayApp')
 
         $scope.largeFileUploadCheck = 0;
 
+        /**
+         * @ngdoc method
+         * @name chembiohubAssayApp.controller:AddCompoundsCtrl#$scope.isLargeFileYet
+         * @methodOf chembiohubAssayApp.controller:AddCompoundsCtrl
+         * @description
+         * Check for the loading and saving screens to display a message dependent on how much time has elapsed in that process.
+         * @returns {integer} $scope.largeFileUploadCheck a number representing how many 0.5 second passes there have been after polling the server.
+         *
+         */
         $scope.isLargeFileYet = function(){
             return $scope.largeFileUploadCheck;
         }
@@ -141,17 +150,6 @@ angular.module('chembiohubAssayApp')
                         //message for the user
                         $scope.tempSaveFailed = true;
                         
-                        //the user has to click a button to start again - wipes data
-                        //also button for contacting someone - report an error on the bar that says "number of new batches saved" (#status-bar)
-                        //change "edit data message" to sorry your data could not be processed
-
-
-                        
-
-
-
-
-
                         $scope.datasets = [];
 
 
