@@ -113,7 +113,7 @@ angular.module('chembiohubAssayApp')
             
             file_error: "File cannot be processed even though the format appears valid. If you have questions please contact the ChemBio Hub team.",
             file_format_error: "File cannot be processed, the format is invalid. Files must be xlsx, cdxml, cdx or sdf format and labelled as such.",
-            file_too_large: "File contains too many records to be able to process in one action - please consider splitting your input file into smaller parts.",
+            file_too_large: "File contains too many records to be able to process in one action - please consider splitting your input file into smaller parts or asking your administrator to increase the file size limits.",
             oops: "Oops, should not have got here, if you have not pressed back on the browser, gone to an outdated bookmark or lost your data by refreshing please let the AssayReg team know. Click cancel to restart.",
 
         //},
