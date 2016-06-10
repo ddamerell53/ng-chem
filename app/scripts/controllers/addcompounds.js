@@ -63,7 +63,7 @@ angular.module('chembiohubAssayApp')
                     'X-CSRFToken': $scope.csrftoken
                 },
                 generateUniqueIdentifier: function (file) {
-                    return file.name + "-" + file.size + "-" + Date.now();
+                    return encodeURIComponent(file.name) + "-" + file.size + "-" + Date.now();
                 }
         };
 
@@ -122,14 +122,15 @@ angular.module('chembiohubAssayApp')
             //switch between loading and saving messages dependent on saving flags.
             var postData = {
                 "multiplebatch" : $scope.datasets[$scope.current_dataset_id].config.multiplebatch,
-                "task_id_for_save" : $scope.datasets[$scope.current_dataset_id].config.task_id_for_save
+                "task_id_for_save" : $scope.datasets[$scope.current_dataset_id].config.task_id_for_save,
+                "project_key": $scope.proj.project_key
             }
-            CBHCompoundBatch.saveMultiBatchMolecules($scope.datasets[$scope.current_dataset_id].config).then(
+            CBHCompoundBatch.saveMultiBatchMolecules(postData).then(
                     function(data){
                         if(data.status == 202){
                             //not yet saved properly
                             $scope.datasets[$scope.current_dataset_id].config.task_id_for_save = data.data.task_id_for_save;
-                            $scope.saveTemporaryCompoundData();
+                            $timeout($scope.saveTemporaryCompoundData, 300);
                             $scope.largeFileUploadCheck++;
                         }else if(data.status == 201){
                             $state.transitionTo("cbh.searchv2", 
@@ -150,7 +151,7 @@ angular.module('chembiohubAssayApp')
                         //message for the user
                         $scope.tempSaveFailed = true;
                         
-                        $scope.datasets = [];
+                        //$scope.datasets = [];
 
 
                     }
@@ -787,54 +788,56 @@ angular.module('chembiohubAssayApp')
             offset, 
             filter, 
             $stateParams.sorts).then(function(result){
-                $scope.cbh.fileextension = result.data.fileextension;
-                $scope.totalCompoundBatches = result.data.meta.totalCount;
-                $scope.compoundBatches.data =result.data.objects;
-                $scope.compoundBatches.uncuratedHeaders = result.data.headers;
-                $scope.compoundBatches.savestats = result.data.savestats;
-                $scope.current_dataset_id = $stateParams.mb_id;
-                $scope.datasets[$scope.current_dataset_id] = {
-                    "config": result.data,
-                    "cancellers" : []
-                }
-                $scope.searchFormSchema= angular.copy($scope.cbh.projects.searchform);
-                var pf = searchUrlParams.setup($stateParams, {molecule: {}});
-                $scope.searchForm = false; //angular.copy(pf.searchForm);
+                if(result.status == 202){
+                    $timeout(function(){
+                        $scope.largeFileUploadCheck++;
+                        getResultsPage(pageNumber);
+                    }, 500);
+                  }else{
+                    $scope.cbh.fileextension = result.data.fileextension;
+                        $scope.totalCompoundBatches = result.data.meta.totalCount;
+                        $scope.compoundBatches.data =result.data.objects;
+                        $scope.compoundBatches.uncuratedHeaders = result.data.headers;
+                        $scope.compoundBatches.savestats = result.data.savestats;
+                        $scope.current_dataset_id = $stateParams.mb_id;
+                        $scope.datasets[$scope.current_dataset_id] = {
+                            "config": result.data,
+                            "cancellers" : []
+                        }
+                        $scope.searchFormSchema= angular.copy($scope.cbh.projects.searchform);
+                        var pf = searchUrlParams.setup($stateParams, {molecule: {}});
+                        $scope.searchForm = false; //angular.copy(pf.searchForm);
 
-             $scope.dataReady = true;
-             $scope.currentlyLoading = false;
-             $scope.showLoadingMessage = false;
-            $scope.filesInProcessing = false;
+                     $scope.dataReady = true;
+                     $scope.currentlyLoading = false;
+                     $scope.showLoadingMessage = false;
+                    $scope.filesInProcessing = false;
 
-                if(result.data.objects.length > 0){
-                    var size = ($scope.listOrGallery.choice=="gallery") ? 100 : 75;
+                        if(result.data.objects.length > 0){
+                            var size = ($scope.listOrGallery.choice=="gallery") ? 100 : 75;
 
-                    $scope.imageCallback();
+                            $scope.imageCallback();
 
-                }else if( ( $scope.pagination.current * parseInt($scope.pagination.compoundBatchesPerPage.value)) > $scope.totalCompoundBatches){
-                    if($scope.pagination.current != 1){
-                        $scope.pageChanged(1);
-                    }
-                    
-                }
-                else{
-                    if($state.current.name==="cbh.search" || $state.current.name==="cbh.searchv2"){
-                        $scope.noData = "No Compounds Found. Why not try amending your search?";
-                    }else{
-                         $scope.noData = "No Compounds Found. To add compounds use the link above.";
-                    }
-                }
+                        }else if( ( $scope.pagination.current * parseInt($scope.pagination.compoundBatchesPerPage.value)) > $scope.totalCompoundBatches){
+                            if($scope.pagination.current != 1){
+                                $scope.pageChanged(1);
+                            }
+                            
+                        }
+                        else{
+                            if($state.current.name==="cbh.search" || $state.current.name==="cbh.searchv2"){
+                                $scope.noData = "No Compounds Found. Why not try amending your search?";
+                            }else{
+                                 $scope.noData = "No Compounds Found. To add compounds use the link above.";
+                            }
+                        }
+                  }
+                
                         
             
        }, function(error){
         //this error is the polling part - if the data is not yet ready, wait 500ms and redo getResultsPage
-          if(error.status == 409){
-            $timeout(function(){
-                $scope.largeFileUploadCheck++;
-                getResultsPage(pageNumber);
-            }, 500);
-          }
-          else {
+          
             //set error message for user
             console.log(error); //for David
             $scope.datasets[$scope.current_dataset_id].config.errors = [MessageFactory.getMessage("file_error")];
@@ -842,7 +845,7 @@ angular.module('chembiohubAssayApp')
                         $scope.dataReady = false;
                         $scope.currentlyLoading = false;
                         $scope.showLoadingMessage = false;
-          }
+          
        });    
 
        

@@ -118,7 +118,7 @@ var formGetter = function(project_data_fields, htmlClass, project){
                                                           'X-CSRFToken': csrf
                                                        },
                                                        'generateUniqueIdentifier' : function (file) {
-                                                            return file.name + "-" + file.size + "-" + Date.now();
+                                                            return encodeURIComponent(file.name) + "-" + file.size + "-" + Date.now();
                                                         }
                                                       };
               }
