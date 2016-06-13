@@ -410,6 +410,20 @@ angular.module('chembiohubAssayApp')
             }
           }
 
+          $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){ 
+              //fetch the cbh_skinning config and replace the maintenance parts the cached version (cbh.skinning)
+              $http({  method: "get",
+                    url: urlConfig.cbh_skinning.list_endpoint
+                  }).then(function(data){
+                    //console.log(data.data.objects[0]);
+                    cbh.skinning.maintenance_warning = data.data.objects[0].maintenance_warning
+                    cbh.skinning.maintenance_warning_message = data.data.objects[0].maintenance_warning_message
+                    cbh.skinning.maintenance_warning_start = data.data.objects[0].maintenance_warning_start
+                    cbh.skinning.maintenance_warning_end = data.data.objects[0].maintenance_warning_end
+                  });
+
+          })
+
 
 
 
