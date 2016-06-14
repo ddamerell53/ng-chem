@@ -54,18 +54,20 @@ angular.module('chembiohubAssayApp')
                       angular.forEach($scope.projects, function(proj) {
                         if(proj.project_key == project_key) {
                           $scope.proj = proj;
+                          $scope.flowinit = {
+                                target: $scope.proj.flowjs_upload_url,
+                                headers: {
+                                    'X-CSRFToken': $scope.csrftoken
+                                },
+                                generateUniqueIdentifier: function (file) {
+                                    return encodeURIComponent(file.name) + "-" + file.size + "-" + Date.now();
+                                }
+
+                        };
+                         $scope.cbh.includedProjectKeys = [$scope.proj.project_key];
                         }
                       });
 
-        $scope.flowinit = {
-                target: $scope.proj.flowjs_upload_url,
-                headers: {
-                    'X-CSRFToken': $scope.csrftoken
-                },
-                generateUniqueIdentifier: function (file) {
-                    return encodeURIComponent(file.name) + "-" + file.size + "-" + Date.now();
-                }
-        };
 
         $scope.toggleDataSummary = {
             showFlag: true,
@@ -669,7 +671,7 @@ angular.module('chembiohubAssayApp')
             }
         // getResultsPage($scope.pagination.current);
     }   
-    $scope.cbh.includedProjectKeys = [$scope.proj.project_key];
+    
           
 
 
