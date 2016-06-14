@@ -19,7 +19,7 @@ NG_DOCS={
       "type": "service",
       "moduleName": "chembiohubAssayApp",
       "shortDescription": "CBHCompoundBatch",
-      "keywords": "adding allowed amount api apis applied appropriate archive archiving batch batches belong blank call calls cbh_compound_batches cbhcompoundbatch chembiohubassayapp chemical config confirming convenience createmultibatch ctab currentdataset currently daata data dataset default defaults delete delete_index diverts drawn editing elasticsearch element endpoint existing fetch fetchheaders file filter filtering filters format function getaddcompoundsresults getsinglemol input interface item items limit list lists markasarchived matching mb_id method modified moleculaar molecule multiple number object offest offset paginate paging parameters parammeters performing post_data preview project projectkey promise provide query queryv2 records reindex reindexing reindexmodifiedcompound remove removes request retrieve return save saved savemultibatchmolecules savesinglecompound saving search service set sketch smilesdata sorting sorts specifies system trigger types uploadbatch validate validatebatch validated validatefiles validatelist validation values varying web webservice"
+      "keywords": "adding allowed amount api apis applied appropriate archive archiving batch batches belong blank call calls cbh_compound_batches cbhcompoundbatch chembiohubassayapp chemical config confirming convenience createmultibatch currentdataset currently data dataset default defaults delete delete_index diverts editing elasticsearch endpoint existing fetch fetchheaders file filter filtering filters format function getaddcompoundsresults getsinglemol input interface item items limit list lists markasarchived matching mb_id method modified molecule multiple number object offest offset paginate paging parameters parammeters performing post_data preview project project_key promise provide query queryv2 records reindex reindexing reindexmodifiedcompound remove removes request retrieve return save saved savemultibatchmolecules savesinglecompound saving search service set sketch smilesdata sorting sorts specifies system trigger types uploadbatch validate validatebatch validated validatefiles validatelist validation values varying web webservice"
     },
     {
       "section": "api",
@@ -28,16 +28,7 @@ NG_DOCS={
       "type": "controller",
       "moduleName": "chembiohubAssayApp",
       "shortDescription": "AddcompoundsCtrl",
-      "keywords": "$scope actions add addcompounds addcompoundsctrl adding addition addsort api app applied appropriate assignfile backend based batch batches binding box boxes bring bulk button called cancel cancelfile cancelling case cbh change changenumberperpage changes changeview changing check checking chembiohub chembiohubassayapp chemical column completion compound compounds configuration content controller copy create created createmultibatch createmultiplebatch current currently data dataset delete direction directive don edit editing elasticsearch enable errors existing explain ext extension factoring field file fills filter filtering filtername final flow flowfile flowjs function gallery getresultspage handsontable hook identifier identifiers imagecallback include indexed individual initial initialise items key list loaded loading manage manages mapped mapping maps matter message method methods modal mode molecule multiple newfieldname newpage nullsorts number object objects offset open openstatusexplanation order pagechanged pagenumber paginate parts performance position presses preview previewed previews process processsmilesdata re-initialise re-saved reasons rebuild record redirect registration reload reloading rely remove removed reporting representing request reset responsible save savechangestotemporarydataincontroller savetemporarycompounddata scope scrolled search sends server set setloadingmessageheight setmappedfieldincontroller setnull setup single smiles sort sortcolumn sorting sorts sourceofchange statuses storing submitting supplied system table temporary text tidy togglewarningsfilter top uncuratedfieldname undo update upload uploaded url user view viewtype warning warnings work"
-    },
-    {
-      "section": "api",
-      "id": "chembiohubAssayApp.controller:AddSingleCompoundCtrl",
-      "shortName": "AddSingleCompoundCtrl",
-      "type": "controller",
-      "moduleName": "chembiohubAssayApp",
-      "shortDescription": "AddsinglecompoundCtrl",
-      "keywords": "$on $scope accomplished add addition addsinglecompoundctrl addsupplementaryfield allowing angular api appropriate attachment attachments autocomplete based batch batches better boolean broadcast button buttons call callback check checked chembiohubassayapp chemdoodle chemical cloned code command compound compounds condition consistency controller create createmultibatch creates currently custom data defined directive display doen drawing drawn dropdown editing exceeds extra fails false field fields file files flowfile fo form form_key forms function functionality identifier identity implemented injected inside limit limits list method mirroring molecule multiple myform object onsubmit openedtaggingdropdown order pathways position post power probaly pulls queue record redirect registration removal remove removed removefile removeid removesupplemetaryfield returned revert save saved savetemporarycompounddata saving schema schemaform sd search sending sends setmolecule single size sizecheck sketcher standard submission success supplementary tag temporary trigger type ui unique update upload uploaded upoaded url user valancies validate validatedrawn validateotherformdata validating validation version widget"
+      "keywords": "$scope actions add addcompounds addcompoundsctrl adding addition addsort api app applied appropriate assignfile backend based batch batches binding box boxes bring bulk button called cancel cancelfile cancelling case cbh change changenumberperpage changes changeview changing check checking chembiohub chembiohubassayapp chemical column completion compound compounds configuration content controller copy create created createmultibatch createmultiplebatch current currently data dataset delete dependent direction directive display don edit editing elapsed elasticsearch enable errors existing explain ext extension factoring field file fills filter filtering filtername final flow flowfile flowjs function gallery getresultspage handsontable hook identifier identifiers imagecallback include indexed individual initial initialise islargefileyet items key largefileuploadcheck list loaded loading manage manages mapped mapping maps matter message method methods modal mode molecule multiple newfieldname newpage nullsorts number object objects offset open openstatusexplanation order pagechanged pagenumber paginate parts passes performance polling position presses preview previewed previews process processsmilesdata re-initialise re-saved reasons rebuild record redirect registration reload reloading rely remove removed reporting representing request reset responsible save savechangestotemporarydataincontroller savetemporarycompounddata saving scope screens scrolled search second sends server set setloadingmessageheight setmappedfieldincontroller setnull setup single smiles sort sortcolumn sorting sorts sourceofchange statuses storing submitting supplied system table temporary text tidy time togglewarningsfilter top uncuratedfieldname undo update upload uploaded url user view viewtype warning warnings work"
     },
     {
       "section": "api",
@@ -46,16 +37,7 @@ NG_DOCS={
       "type": "controller",
       "moduleName": "chembiohubAssayApp",
       "shortDescription": "CbhCtrl",
-      "keywords": "$rootscope $scope add agent api app applied arraycontains base becuase behave boolean bootstrap browser cancel cbh cbhctrl certiain check chembiohubassayapp chemdoodle chemistry class clearform close col communication completed configuration controller controllers corresponds create createcustomfieldtransport creates css curent-page current currently currentpageclass custom data definition details detectie display doesn domain edge email emails empty error errorpopup examines expected explorer external false fields filter flag follw form frame function getprojectobj geturlbase global handsontable hasn holding indicating individual input_popup_data install instance internet invitation invitationpopup invite invited invitee inviting isloggedin item key list logged loggedin lookup main message method methods modal newvalue object oldvalue openfilterpopup opens overridden paging popup presence proj project projectkey projects recorded registered remind reminder removes representing respect retrieve search send sendinvite setwatcher showyourworking sketcher starts state_to_match string subdomain supplied system time timer trident true ui ui-router url url_frag user users valid validate version versions wihtin window work workarounds"
-    },
-    {
-      "section": "api",
-      "id": "chembiohubAssayApp.controller:CompoundbatchCtrl",
-      "shortName": "CompoundbatchCtrl",
-      "type": "controller",
-      "moduleName": "chembiohubAssayApp",
-      "shortDescription": "CompoundbatchCtrl",
-      "keywords": "api chembiohubassayapp compoundbatchctrl controller"
+      "keywords": "$rootscope $scope add agent api app applied arraycontains base becuase behave boolean bootstrap browser cancel cbh cbhctrl certiain check chembiohubassayapp chemdoodle chemistry class clearform close col communication completed configuration controller controllers corresponds create createcustomfieldtransport creates css curent-page current currently currentpageclass custom data definition details detectie display doesn domain edge email emails empty error errorpopup examines expected explorer external false fields filter flag follw form frame function getprojectobj geturlbase global handsontable hasn holding indicating individual input_popup_data install instance internet invitation invitationpopup invite invited invitee inviting isloggedin item key list logged loggedin lookup main message method methods modal newvalue object oldvalue openfilterpopup opens overridden paging popup presence proj project project_key projects recorded registered remind reminder removes representing respect retrieve search send sendinvite setwatcher showyourworking sketcher starts state_to_match string subdomain supplied system time timer trident true ui ui-router url url_frag user users valid validate version versions wihtin window work workarounds"
     },
     {
       "section": "api",
@@ -73,7 +55,7 @@ NG_DOCS={
       "type": "controller",
       "moduleName": "chembiohubAssayApp",
       "shortDescription": "PlatemapCtrl",
-      "keywords": "$scope action add angular api appropriate associated batch cbh changesearchparams chembiohubassayapp clearform confirmation control controller create current data db defaults define defining definition directive directly editing false fetch flaag flag form function functionality functions global graphic held including individual instance intended interface items link list load loadplatemaps loadplatespecifiedinurl map mechanissm method moving newpage newparams notify object overrides overview pagechanged pagination parameters pass passed patch patched patching patchwholeplate plate platemap platemapctrl platemaps platesaved pristine project property records remove required reset save saved savewholeplate saving schema schemaformholder scope scratch search searching send sequentially set sets setting setupnewplatefromform sshowplate subset system thee transition true unhides url user users validates well_form well_schema wells"
+      "keywords": "$scope action add angular api appropriate associated based batch cbh changesearchparams chembiohubassayapp clearform confirmation control controller create creates current data db defaults define defining definition directive directly editing false fetch flaag flag form function functionality functions global graphic held hit hitlocations hits includes including individual instance intended interface items json link list load loadplatemaps loadplatespecifiedinurl map mechanism mechanissm method moving narrowing newpage newparams notify object overrides overview oxford pagechanged pagination paging parameter parameters pass passed patch patched patching patchwholeplate plate platemap platemapctrl platemaps platesaved pristine project property records remove representation representing required reset row save saved savewholeplate saving schema schemaformholder scope scratch search searching send sends sequentially set sets setting setupnewplatefromform sgc sgcoxford sshowplate string subset system table thee transition trigger true unhides url user users validates well_form well_schema wells whichever works"
     },
     {
       "section": "api",
@@ -100,7 +82,7 @@ NG_DOCS={
       "type": "controller",
       "moduleName": "chembiohubAssayApp",
       "shortDescription": "ProjectlistCtrl",
-      "keywords": "api chembiohubassayapp controller projectlistctrl"
+      "keywords": "$scope add api chembiohubassayapp controller controlling controls created default edit fields list lists maps method modal newly non-saved-search openeditpermissions openprojectwindow opens project projectid projectlistctrl projects refreshprojecttypes retrieves sequential types window"
     },
     {
       "section": "api",
@@ -110,15 +92,6 @@ NG_DOCS={
       "moduleName": "chembiohubAssayApp",
       "shortDescription": "ProjectpermissionsCtrl",
       "keywords": "admin api changes chembiohubassayapp controller fetch initiate number perform permissions project projectpermissionsctrl services tasks ui utilises"
-    },
-    {
-      "section": "api",
-      "id": "chembiohubAssayApp.controller:SearchCtrl",
-      "shortName": "SearchCtrl",
-      "type": "controller",
-      "moduleName": "chembiohubAssayApp",
-      "shortDescription": "SearchCtrl",
-      "keywords": "api chembiohubassayapp controller deprecated favour searchctrl searchv2ctrl"
     },
     {
       "section": "api",
@@ -172,7 +145,7 @@ NG_DOCS={
       "type": "directive",
       "moduleName": "chembiohubAssayApp",
       "shortDescription": "handsoncompoundtablev2",
-      "keywords": "aadds acted add addbuttonmenuevent adds afterchange aftergetcolheader allows altered altering angular api appended appropriate archive array bacck batches beforeautofill behaviour bugs buildbutton buildinfospans button buttons called cbh cell cells change checking chembiohubassayapp class col colour column columns completed compounds configuration configure constructs correct created css custom data describing directive docs dom drag drag-to-fill edit element elemnt event events example existing extra fields filter function functionality globals handler handsoncompoundtablev2 handsontable header help helper highlight hook hooks hotobj html http implementation implemented individual info inserted insertion javascript label launcher level library list listener listeners local logic lots manipulation mapped mappingoptions messages method methods mode modified names native number object objects overridden override passed perform played plugins preprocessing process property providde provided redraw redrawn render rendered rendering representation rows search selection send set sets setting sorting sourceofchange spans start starts success supplied support table top triggers type unarchive uncurated uncuratedheaders versa vice warnings"
+      "keywords": "aadds acted add addbuttonmenuevent adds afterchange aftergetcolheader allows altered altering angular api appended appropriate archive bacck batches beforeautofill behaviour bugs buildbutton buildinfospans button buttons called cbh cell cells change checking chembiohubassayapp class col colour column columns completed compounds configuration configure constructs correct created css custom data describing directive docs dom drag drag-to-fill edit element elemnt event events example existing extra fields filter function functionality globals handler handsoncompoundtablev2 handsontable header help helper highlight hook hooks hotobj html http implementation implemented individual info inserted insertion javascript label launcher level library list listener listeners local logic lots manipulation mapped mappingoptions messages method methods mode modified names native number object objects overridden override perform played preprocessing process property providde provided redraw redrawn rendered rendering representation rows search selection send set sets setting sorting sourceofchange spans start starts success supplied support table top triggers type unarchive uncurated uncuratedheaders versa vice warnings"
     },
     {
       "section": "api",
@@ -181,7 +154,7 @@ NG_DOCS={
       "type": "directive",
       "moduleName": "chembiohubAssayApp",
       "shortDescription": "platemap",
-      "keywords": "$on $scope add adding adds algorithm allow angular api appropriate autocomplete beccomes boolean border broadcast build builds call callback called cbh changes check chembiohubassayapp clearwell colour config configuration cuase currently daata data dimensions directive dosaveplate dropdown elements find fit form forms function functionality functions globals green grid help html individual initialiseplate iswellselected level list map method model object openedsearchdropdown parent pass-through passthrough patch phole plate plateform platemap plates platesaved populate populated pristine pulls ratios re-render ready red redraw remove render rendered required reset save saved saveplatefunction saves savewell schema schemaformholder scope selected sends separate showwellform todo top trigger update user wellformfe wellhasdata wells"
+      "keywords": "$on $scope add adding adds algorithm allow angular api appropriate autocomplete beccomes boolean border broadcast build builds call callback called cbh changes check chembiohubassayapp clearwell colour config configuration cuase currently daata data dimensions directive dosaveplate dropdown elements find fit form forms function functionality functions globals green grid help html individual initialiseplate iswellselected level list map method model object openedsearchdropdown openedsearchdropdownsgc openedsearchdropdownwell parent pass-through passthrough patch phole plate plateform platemap plates platesaved populate populated pristine pulls ratios re-render ready red redraw remove render rendered required reset save saved saveplatefunction saves savewell schema schemaformholder scope selected sends separate showwellform todo top trigger update user wellformfe wellhasdata wells"
     },
     {
       "section": "api",
