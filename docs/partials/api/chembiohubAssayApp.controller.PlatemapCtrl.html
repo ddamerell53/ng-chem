@@ -28,13 +28,19 @@ It is intended to link added records by their system ID to a particular plate fo
 </div><h5 id="methods_$scopeclearform_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>form</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-platemapctrl-scope-clearform-page"><p>the form object to be reset to a pristine state</p>
 </div></td></tr></tbody></table></div>
 </li>
+<li><h3 id="methods_$scopehitlocations">$scope.hitLocations(plate)</h3>
+<div class="$scopehitlocations"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-platemapctrl-scope-hitlocations-page"><p>Gets the wells which trigger a hit for the plate search form, creates a string list and sends back to the table
+Works out hits from whichever search parameter has been used.</p>
+</div><h5 id="methods_$scopehitlocations_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>plate</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-platemapctrl-scope-hitlocations-page"><p>a string representation of the JSON representing the plate from the table row.</p>
+</div></td></tr></tbody></table></div>
+</li>
 <li><h3 id="methods_$scopeloadplatemaps">$scope.loadPlateMaps()</h3>
-<div class="$scopeloadplatemaps"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-platemapctrl-scope-loadplatemaps-page"><p>Fetch the list of all platemaps for the given project (via URL)</p>
+<div class="$scopeloadplatemaps"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-platemapctrl-scope-loadplatemaps-page"><p>Fetch the list of all platemaps for the given project (via URL). This includes any paging or search parameters that may be set.</p>
 </div></div>
 </li>
 <li><h3 id="methods_$scopepagechanged">$scope.pageChanged(newPage)</h3>
 <div class="$scopepagechanged"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-platemapctrl-scope-pagechanged-page"><p>Pagination function for the plate list
-Sets the scope flaag plateSaved for confirmation in user interface.</p>
+Sets the scope flag plateSaved for confirmation in user interface.</p>
 </div><h5 id="methods_$scopepagechanged_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>newPage</td><td><a href="" class="label type-hint type-hint-integer">integer</a></td><td><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-platemapctrl-scope-pagechanged-page"><p>the page defining the subset of results to show (based on items per page)</p>
 </div></td></tr></tbody></table></div>
 </li>
@@ -47,7 +53,7 @@ Sets the scope flaag plateSaved for confirmation in user interface.</p>
 <div class="$scopesavewholeplate"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-platemapctrl-scope-savewholeplate-page"><p>We need two different functions for the save action when saving a plate. 
 When we have a new plate from scratch, we want to create it in the DB. 
 When we are editing a plate, we want to patch the plate. 
-Create a plate object from the current form so that when it is saved using the batch mechanissm, it is patched of appropriate.
+Create a plate object from the current form so that when it is saved using the batch mechanism, it is patched if appropriate.
 Pass this function to the directive for the appropriate page. </p>
 </div></div>
 </li>
@@ -66,6 +72,14 @@ Parameters are then passed through to the platemap directive directly and held i
 </li>
 <li><h3 id="properties_$scopeschemaformholderwell_schema">$scope.schemaFormHolder.well_schema</h3>
 <div class="$scopeschemaformholderwell_schema"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-platemapctrl-scope-schemaformholder-well-schema-page"><p>Schema definition for the angular schema form for an individual plate well.</p>
+</div></div>
+</li>
+<li><h3 id="properties_$scopeschemaformholderwell_schema">$scope.schemaFormHolder.well_schema</h3>
+<div class="$scopeschemaformholderwell_schema"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-platemapctrl-scope-schemaformholder-well-schema-page"><p>Form definition for the angular schema form for narrowing down the platemap list based on a CBH ID or SGCOxford ID.</p>
+</div></div>
+</li>
+<li><h3 id="properties_$scopeschemaformholderwell_schema">$scope.schemaFormHolder.well_schema</h3>
+<div class="$scopeschemaformholderwell_schema"><div class="chembiohubassayapp-controller-page chembiohubassayapp-controller-platemapctrl-scope-schemaformholder-well-schema-page"><p>Schema definition for the angular schema form for narrowing down the platemap list based on a CBH ID or SGC Oxford ID.</p>
 </div></div>
 </li>
 </ul>
